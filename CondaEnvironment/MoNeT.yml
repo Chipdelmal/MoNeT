@@ -1,11 +1,25 @@
 name: MoNeT
 channels:
   - marufr
+  - conda-forge
   - defaults
 dependencies:
+  - bleach=1.5.0=py27_0
+  - ca-certificates=2017.11.5=0
+  - certifi=2017.11.5=py27_0
+  - funcsigs=1.0.2=py_2
+  - futures=3.2.0=py27_0
+  - html5lib=0.9999999=py27_0
+  - markdown=2.6.9=py27_0
+  - mock=2.0.0=py27_0
+  - openssl=1.0.2n=0
+  - pbr=3.1.1=py27_0
+  - protobuf=3.5.1=py27_2
+  - tensorboard=0.4.0rc3=py27_2
+  - tensorflow=1.4.0=py27_0
+  - webencodings=0.5=py27_0
+  - werkzeug=0.12.2=py_1
   - asn1crypto=0.23.0=py27h862e517_0
-  - ca-certificates=2017.08.26=ha1e5d58_0
-  - certifi=2017.11.5=py27hfa9a1c4_0
   - cffi=1.11.2=py27h21b8a49_0
   - chardet=3.0.4=py27h2842e91_1
   - cryptography=2.1.4=py27hdbc5e8f_0
@@ -26,7 +40,6 @@ dependencies:
   - nbformat=4.4.0=py27hddc86d0_0
   - networkx=2.0=py27h2503496_0
   - numpy=1.13.3=py27h62f9060_0
-  - openssl=1.0.2n=hdbc3d79_0
   - pip=9.0.1=py27h1567d89_4
   - plotly=2.2.2=py27h596dad6_0
   - pycparser=2.18=py27h0d28d88_1
@@ -48,5 +61,7 @@ dependencies:
   - xz=5.2.3=h0278029_2
   - zlib=1.2.11=hf3cbc9b_2
   - python-igraph=0.7.1.post6=py27_0
+  - pip:
+    - tensorflow-tensorboard==0.4.0rc3
 prefix: /Users/chipdelmal/miniconda3/envs/MoNeT
 
