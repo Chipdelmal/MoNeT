@@ -1,4 +1,4 @@
-# NetworkX Centrality
+## NetworkX Centrality
 
 This script takes two arguments: a *graphml* object name and a *string* to name the output:
 

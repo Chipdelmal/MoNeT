@@ -1,4 +1,4 @@
-# Conda Environment
+## Conda Environment
 
 To install the *conda* environment containing: _iGraph_, _NetworkX_, _PlotLy_ , _SciKit_ and _TensorFlow_; run the following command in terminal (requires _Anaconda_):
 

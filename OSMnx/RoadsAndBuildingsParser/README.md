@@ -1,6 +1,6 @@
-# Roads and Buildings Shapefiles Exporter
+## Roads and Buildings Shapefiles Exporter
 
-## Instructions
+### Instructions
 
 Run the *exportRoadAndBuildings.py* script to parse the shapefiles for a particular *lat-long* coordinate:
 
@@ -16,6 +16,6 @@ This will generate folders within the *SHP* path. These folders will contain the
 
 <img src="https://chipdelmal.github.io/MGDrivE/images/combinedView.png" width=100%>
 
-## Requirements
+### Requirements
 
 This scripts requires [OSMnx](https://github.com/gboeing/osmnx) to work.
