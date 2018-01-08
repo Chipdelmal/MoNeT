@@ -6,7 +6,7 @@ This repository was created to facilitate collaboration in network analysis rout
 
 ## Contributors
 
-<a href="https://sarafinasmith.github.io/">Sarafina Smith</a>, Biyonka Liang, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Daniel Citron, <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>
+<a href="https://sarafinasmith.github.io/">Sarafina Smith</a>, Sabrina Wong, Biyonka Liang, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Daniel Citron, <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>
 
 ## PI's
 
