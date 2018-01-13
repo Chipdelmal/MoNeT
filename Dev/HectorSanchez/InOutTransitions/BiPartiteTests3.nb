@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[   2070343,      41763]
-NotebookOptionsPosition[   2064620,      41621]
-NotebookOutlinePosition[   2065006,      41638]
-CellTagsIndexPosition[   2064963,      41635]
+NotebookDataLength[   2070369,      41759]
+NotebookOptionsPosition[   2064646,      41617]
+NotebookOutlinePosition[   2065032,      41634]
+CellTagsIndexPosition[   2064989,      41631]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -28748,37 +28748,29 @@ Cell[CellGroupData[{
 Cell[BoxData[{
  RowBox[{"Grid", "[", 
   RowBox[{"{", "\[IndentingNewLine]", 
-   RowBox[{
+   RowBox[{"(*", 
     RowBox[{
      RowBox[{
-      RowBox[{"Style", "[", 
-       RowBox[{"#", ",", "25"}], "]"}], "&"}], "/@", 
-     RowBox[{"{", 
       RowBox[{
-      "\"\<A. Point Type\>\"", ",", "\"\<B. Geo-Cluster\>\"", ",", 
-       "\"\<C. Source/Sink Analysis\>\""}], "}"}]}], ",", 
-    "\[IndentingNewLine]", 
-    RowBox[{"{", 
-     RowBox[{"graph2", ",", "geoClusters2", ",", "geoClusters3"}], "}"}]}], 
+       RowBox[{"Style", "[", 
+        RowBox[{"#", ",", "20"}], "]"}], "&"}], "/@", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A. Point Type\>\"", ",", "\"\<B. Geographical-Cluster\>\"", ",", 
+        "\"\<C. Sink/Source Analysis\>\""}], "}"}]}], ","}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"graph2", ",", "geoClusters2", ",", "geoClusters3"}], "}"}], 
    "\[IndentingNewLine]", "}"}], "]"}], "\[IndentingNewLine]", 
  RowBox[{"Export", "[", 
   RowBox[{"\"\<SinksAndSources.pdf\>\"", ",", "%"}], "]"}]}], "Input",
- CellChangeTimes->{{3.7247931265439587`*^9, 3.724793155773402*^9}, 
-   3.724794853418418*^9},ExpressionUUID->"afe94c60-b56c-4c2d-b7b4-\
+ CellChangeTimes->{{3.7247931265439587`*^9, 3.724793155773402*^9}, {
+  3.724794853418418*^9, 3.724794881562886*^9}, {3.724794919220821*^9, 
+  3.724794951150714*^9}},ExpressionUUID->"afe94c60-b56c-4c2d-b7b4-\
 fafbcbaa4ea0"],
 
 Cell[BoxData[
  TagBox[GridBox[{
-    {
-     StyleBox["\<\"A. Point Type (M,F,L,S?)\"\>",
-      StripOnInput->False,
-      FontSize->25], 
-     StyleBox["\<\"B. Geo-Cluster\"\>",
-      StripOnInput->False,
-      FontSize->25], 
-     StyleBox["\<\"C. Source/Sink Analysis\"\>",
-      StripOnInput->False,
-      FontSize->25]},
     {
      GraphicsBox[
       NamespaceBox["NetworkGraphics",
@@ -29574,6 +29566,7 @@ wFBo79OVX3zAWwr6+w==
               {RGBColor[0.293416, 0.0574044, 0.529412], Thickness[
                0.0024926351402575013`], 
                {Arrowheads[{{0.0075, 0.5}}], 
+                
                 ArrowBox[{{-86.0580521276043, -77.39865145985019}, \
 {-114.48873400261203`, -105.70351270370233`}}]}},
               "0.02492635140257501`"],
@@ -30325,7 +30318,6 @@ wFBo79OVX3zAWwr6+w==
               {RGBColor[0.293416, 0.0574044, 0.529412], Thickness[
                0.00100348797260206], 
                {Arrowheads[{{0.0075, 0.5}}], 
-                
                 ArrowBox[{{-262.08076152589484`, -391.3137833609931}, \
 {-243.19869363039982`, -293.46659970952487`}}]}},
               "0.010034879726020601`"],
@@ -30510,6 +30502,7 @@ wFBo79OVX3zAWwr6+w==
               {RGBColor[0.293416, 0.0574044, 0.529412], Thickness[
                0.002172497684058257], 
                {Arrowheads[{{0.0075, 0.5}}], 
+                
                 ArrowBox[{{-337.929293591035, -294.6710339177468}, \
 {-292.2086876347309, -299.9987156504535}}]}},
               "0.02172497684058257`"],
@@ -32409,8 +32402,7 @@ cP0NN9508y233nb7HRfvvOvS3ffc537v+w+cwCdW
                0.747726057828072, 0.8230498565826395, 0.9136912323931232], 
                Thickness[0.0003583235956808476]}, DirectedEdge["15", "10"] -> {
                RGBColor[0.293416, 0.0574044, 0.529412], 
-               Thickness[0.0012950373744274456`]}, DirectedEdge["21", "18"] -> 
-             {
+               Thickness[0.0012950373744274456`]}, DirectedEdge["21", "18"] -> {
                RGBColor[0.293416, 0.0574044, 0.529412], 
                Thickness[0.0012915885630162803`]}, DirectedEdge["24", "3"] -> {
                RGBColor[
@@ -39012,16 +39004,20 @@ wFBo79OVX3zAWwr6+w==
    AutoDelete->False,
    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
   "Grid"]], "Output",
- CellChangeTimes->{3.724793156308838*^9, 3.72479344347859*^9, 
-  3.724794247459856*^9, 
-  3.724794583169973*^9},ExpressionUUID->"24a6d854-894a-453f-9261-\
-372b941d73e5"],
+ CellChangeTimes->{
+  3.724793156308838*^9, 3.72479344347859*^9, 3.724794247459856*^9, 
+   3.724794583169973*^9, {3.724794868415297*^9, 3.724794882082831*^9}, 
+   3.7247949199532757`*^9, 
+   3.724794951604183*^9},ExpressionUUID->"00512b1e-5fdb-461d-8a88-\
+e245265c9e81"],
 
 Cell[BoxData["\<\"SinksAndSources.pdf\"\>"], "Output",
- CellChangeTimes->{3.724793156308838*^9, 3.72479344347859*^9, 
-  3.724794247459856*^9, 
-  3.724794584924725*^9},ExpressionUUID->"d430330c-c388-4561-bcd0-\
-c392e15c9f24"]
+ CellChangeTimes->{
+  3.724793156308838*^9, 3.72479344347859*^9, 3.724794247459856*^9, 
+   3.724794583169973*^9, {3.724794868415297*^9, 3.724794882082831*^9}, 
+   3.7247949199532757`*^9, 
+   3.724794952609229*^9},ExpressionUUID->"dda0dfef-8bd0-4e56-b580-\
+cd84f951d082"]
 }, Open  ]]
 }, Open  ]],
 
@@ -41739,30 +41735,30 @@ Cell[1426292, 28714, 2025, 28, 26, "Output", "ExpressionUUID" -> \
 "77c7d331-84c3-448f-ab85-f152b922bbbf"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1428354, 28747, 793, 20, 91, "Input", "ExpressionUUID" -> \
+Cell[1428354, 28747, 906, 22, 91, "Input", "ExpressionUUID" -> \
 "afe94c60-b56c-4c2d-b7b4-fafbcbaa4ea0"],
-Cell[1429150, 28769, 514457, 10248, 729, "Output", "ExpressionUUID" -> \
-"24a6d854-894a-453f-9261-372b941d73e5"],
-Cell[1943610, 39019, 224, 4, 26, "Output", "ExpressionUUID" -> \
-"d430330c-c388-4561-bcd0-c392e15c9f24"]
+Cell[1429263, 28771, 514269, 10240, 707, "Output", "ExpressionUUID" -> \
+"00512b1e-5fdb-461d-8a88-e245265c9e81"],
+Cell[1943535, 39013, 325, 6, 26, "Output", "ExpressionUUID" -> \
+"dda0dfef-8bd0-4e56-b580-cd84f951d082"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1943883, 39029, 150, 3, 49, "Chapter", "ExpressionUUID" -> \
+Cell[1943909, 39025, 150, 3, 49, "Chapter", "ExpressionUUID" -> \
 "11e23712-a837-4e92-afdf-54a9857acbdd"],
 Cell[CellGroupData[{
-Cell[1944058, 39036, 3073, 69, 139, "Input", "ExpressionUUID" -> \
+Cell[1944084, 39032, 3073, 69, 139, "Input", "ExpressionUUID" -> \
 "8ebd5ec5-bae2-40f1-a34d-0206dbaff522"],
-Cell[1947134, 39107, 114407, 2427, 70, "Output", "ExpressionUUID" -> \
+Cell[1947160, 39103, 114407, 2427, 70, "Output", "ExpressionUUID" -> \
 "296c6afb-70cc-46a5-bcc2-2ee408728ea4"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2061578, 41539, 169, 3, 26, "Input", "ExpressionUUID" -> \
+Cell[2061604, 41535, 169, 3, 26, "Input", "ExpressionUUID" -> \
 "80980dd2-db19-4641-9888-e50f8834eb2a"],
-Cell[2061750, 41544, 1058, 24, 70, "Output", "ExpressionUUID" -> \
+Cell[2061776, 41540, 1058, 24, 70, "Output", "ExpressionUUID" -> \
 "ddb142b1-3a65-4ae1-99e9-2882e94df09c"]
 }, Open  ]],
-Cell[2062823, 41571, 1781, 47, 43, "Input", "ExpressionUUID" -> \
+Cell[2062849, 41567, 1781, 47, 43, "Input", "ExpressionUUID" -> \
 "472ecb8e-677a-4178-af6d-ff2ed61e89a2"]
 }, Closed]]
 }
