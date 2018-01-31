@@ -25,6 +25,6 @@ To export environment to *YML* (after activating):
 To load MoNeT as a kernel in jupyter:
 
 ```
-source activate myenv
+source activate MoNeT
 python -m ipykernel install --user --name MoNeT --display-name "Python (MoNeT)"
 ```
