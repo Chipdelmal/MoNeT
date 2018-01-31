@@ -21,3 +21,10 @@ To install *Miniconda*:
 To export environment to *YML* (after activating):
 
 ```conda env export > MoNeT.yml```
+
+To load MoNeT as a kernel in jupyter:
+
+```
+source activate myenv
+python -m ipykernel install --user --name MoNeT --display-name "Python (MoNeT)"
+```
