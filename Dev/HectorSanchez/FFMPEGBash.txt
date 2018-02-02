@@ -1,0 +1,26 @@
+## Lossless 8k
+ffmpeg -start_number 1 -r 35 -f image2 -s 7680x4320 -i partiteness%06d.png -vcodec libx264 -preset veryslow -crf 0 -pix_fmt yuv420p Partiteness.mp4
+ffmpeg -i Partiteness.mp4 -vf fps=35,scale=320:-1:flags=lanczos,palettegen palette.png
+ffmpeg -i Partiteness.mp4 -i palette.png -filter_complex "fps=40,scale=500:500:flags=lanczos[x];[x][1:v]paletteuse" Partiteness.gif
+
+
+## Lossy 8k
+ffmpeg -start_number 1 -r 24 -f image2 -s 7680x4320 -i graph%05d.png -vcodec libx264 -preset veryslow -crf 15 -pix_fmt yuv420p MGDrivE8kLossy.mp4
+
+## Lossless 4K (use rescale)
+ffmpeg -start_number 1 -r 24 -f image2 -s 3840x2160 -i graph%05d.png -vcodec libx264 -preset veryslow -crf 0 -pix_fmt yuv420p MGDrivE4k.mp4
+
+## Reduce File Size
+ffmpeg -i MGDrivE8k.mp4 -vf scale=3840:2160 MGDrivE4k.mp4
+
+
+
+ffmpeg -start_number 1 -r 20 -f image2 -s 7680x4320 -i graph%05d.png -vcodec libx264 -preset veryslow -crf 15 output.mp4
+
+ffmpeg -start_number 1 -r 35 -f image2 -i graph%05d.png -vcodec libx264 -preset veryslow -refs 16 -crf 0 -pix_fmt yuv420p flocking.mp4
+
+7680x4320
+3840x2160
+
+ffmpeg -i MGDrivE.mp4 -vf 'scale=3840:2160:force_original_aspect_ratio=decrease,pad=3840:2160:x=(3840-iw)/2:y=(2160-ih)/2:color=white' MGDriveCropped.mp4  
+
