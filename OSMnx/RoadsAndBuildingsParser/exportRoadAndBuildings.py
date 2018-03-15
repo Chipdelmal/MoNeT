@@ -31,7 +31,7 @@ buildings=ox.buildings_from_point(point=locCoord,distance=distance)
 ox.save_gdf_shapefile(buildings,filename=placeName,folder="SHP/Buildings")
 # Roads ##########################################################
 roads=ox.graph_from_point(locCoord,distance=distance,network_type='drive')
-ox.save_graphml(roads,filename='comoros.graphml',folder="NTW/Roads")
+ox.save_graphml(roads,filename=placeName,folder="NTW/Roads")
 ox.save_graph_shapefile(roads, filename=placeName,folder="SHP/Roads")
 # Image ##########################################################
 make_plot(placeName,locCoord,dpi=500,dist=distance,default_width=1)

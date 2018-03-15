@@ -10,3 +10,8 @@ python exportRoadAndBuildings.py "ArroyoGrande" 35.1149 -120.5922 2000
 python exportRoadAndBuildings.py "PaloAlto" 37.4560 -122.1273 1500
 python exportRoadAndBuildings.py "FosterCity" 37.5557 -122.2634 1500
 python exportRoadAndBuildings.py "ComorosCandidate" -11.7079 43.4235 1000
+
+python exportRoadAndBuildings.py "YorkeyMap" -16.8115 145.7218 1750
+python exportRoadAndBuildings.py "YorkeysKnob_OneCluser" -16.8134 145.7168 2500
+
+python exportRoadAndBuildings.py "ComorosMain" -11.7181 43.2593 1000
