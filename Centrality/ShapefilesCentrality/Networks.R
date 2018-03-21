@@ -5,7 +5,7 @@ library(MGDrivEv2)
 library(viridis)
 library(igraph)
 library(ggplot2)
-setwd("/Users/sanchez.hmsc/Documents/GitHub/MGDrivE/Main/")
+setwd("/Users/sanchez.hmsc/Documents/GitHub/MoNet/")
 ####################################################################################
 rangeScaling=function(x){(x-min(x))/(max(x)-min(x))}
 plotGraphCentrality=function(centralityVector,rawGeoData,scalingConstant){
