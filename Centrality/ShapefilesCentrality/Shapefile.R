@@ -16,7 +16,7 @@ library(rgdal)
 ################################################################################
 # Select the name tag of the location (same as the one used in the OSMnx parser)
 # Setup your MoNeT base directory
-placeNameTag="YorkeysKnob"
+placeNameTag="Moroni_Large"
 setwd("~/Documents/GitHub/MoNeT/")
 outputFolder="./Centrality/ShapefilesCentrality/"
 ################################################################################
@@ -38,7 +38,7 @@ colnames(matrixLatLongs)=c("Latitude","Longitude")
 ################################################################################
 # Calculate the distances matrix and the movement kernel
 distancesMatrix=calc_haversine(matrixLatLongs)
-movementKernel=calc_HurdleExpKernel(distancesMatrix,MGDrivE::kernels$exp_rate,.5)
+#movementKernel=calc_HurdleExpKernel(distancesMatrix,MGDrivE::kernels$exp_rate,.5)
 ################################################################################
 # Generate the network to analyse
 graph=graph_from_adjacency_matrix(distancesMatrix,weighted=TRUE)
@@ -56,7 +56,7 @@ data_long=reshape2::melt(data=data,measure.vars=c("centrality"))
 ################################################################################
 # Generate and export scatter plot
 ggplot(data=as.data.frame(data),aes(x=Latitude,y=Longitude)) +
-  geom_point(aes(color=centrality),size=8,shape=16,alpha=.65) +
+  geom_point(aes(color=centrality),size=4,shape=16,alpha=.65) +
   scale_color_viridis(
     name="Centrality",
     guide=guide_legend(keyheight=unit(3,units="mm"),keywidth=unit(12,units="mm"),label.position="bottom",title.position='top',nrow=10)
@@ -65,7 +65,7 @@ ggsave(paste0(outputFolder,"/images/",placeNameTag,"_centralityScatter.pdf"),wid
 ################################################################################
 # Generate and export hex plot
 ggplot(data=as.data.frame(data),aes(x=Latitude,y=Longitude))  +
-    stat_summary_hex(aes(z=centrality),size=25,alpha=.95,bins=nrow(matrixLatLongs)/25) +
+    stat_summary_hex(aes(z=centrality),size=25,alpha=.95,bins=round(nrow(matrixLatLongs)/50)) +
     scale_fill_viridis(option="B") + theme_light()
 ggsave(paste0(outputFolder,"/images/",placeNameTag,"_centralityHex.pdf"),width=30,height=30)
 ################################################################################
