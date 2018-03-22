@@ -4,6 +4,11 @@ This repository was created to facilitate collaboration in network analysis rout
 
 <img src="./Media/npartite.jpg" align="middle">
 
+## Description
+
+<img src="./Media/MoroniPoint.jpg" width="50%" align="middle">
+<img src="./Media/MoroniHex.jpg" width="50%" align="middle">
+
 ## Authors
 
 <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Biyonka Liang, Sarafina Smith, Sabrina Wong<br>
