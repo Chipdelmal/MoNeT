@@ -5,6 +5,7 @@
 # Mosquito Networks Taskforce
 # Minimum distances calculator to scale maps
 ################################################################################
+rm(list=ls());gc()
 library(maptools)
 library(shapefiles)
 library(ggplot2)
@@ -16,7 +17,7 @@ library(rgdal)
 ################################################################################
 # Select the name tag of the location (same as the one used in the OSMnx parser)
 # Setup your MoNeT base directory
-placeNameTag="Berkeley"
+placeNameTag="YorkeysKnob"
 setwd("~/Documents/GitHub/MoNeT/")
 outputFolder="./Dev/HectorSanchez/DistancesAnalysis/"
 ################################################################################

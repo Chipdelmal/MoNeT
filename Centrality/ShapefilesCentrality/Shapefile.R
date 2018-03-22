@@ -5,6 +5,7 @@
 # Mosquito Networks Taskforce
 # Centrality parser for shapefiles in R
 ################################################################################
+rm(list=ls());gc()
 library(maptools)
 library(shapefiles)
 library(ggplot2)
@@ -16,7 +17,7 @@ library(rgdal)
 ################################################################################
 # Select the name tag of the location (same as the one used in the OSMnx parser)
 # Setup your MoNeT base directory
-placeNameTag="Moroni_Large"
+placeNameTag="PaloAlto"
 setwd("~/Documents/GitHub/MoNeT/")
 outputFolder="./Centrality/ShapefilesCentrality/"
 ################################################################################
