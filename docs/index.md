@@ -13,7 +13,7 @@ This repository was created to facilitate collaboration in network analysis rout
 
 Mosquito movement across landscapes can be approximately modeled by transition probabilities that are defined by the distances between resources points in a spatial plane. This is because mosquitoes move from point to point in search of resources and to fulfill biological needs. Taking this into account, it makes sense to think of this landscape as a network of resources, where the mosquito movement is directed between sites.
 
-<img src="./media/MoroniPoint.jpg" width="50%" align="middle"><img src="./Media/MoroniHex.jpg" width="50%" align="middle">
+<img src="./media/MoroniPoint.jpg" width="50%" align="middle"><img src="./media/MoroniHex.jpg" width="50%" align="middle">
 
 ## Workflows
 
