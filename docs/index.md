@@ -44,6 +44,8 @@ The study of gene-drives' spread in realistic landscapes is of upmost importance
 
 A script to parse and export SHP files from buildings roads polygons from [Open Street Map](https://www.openstreetmap.org/#map=14/-11.7114/43.2587) using [OSMnx](https://github.com/gboeing/osmnx).
 
+<img src="./media/Berkeley.png" width="50%" align="middle"><img src="./media/YorkeysKnob.png" width="50%" align="middle">
+
 ### [Python Module](./PythonModule.html)
 
 A compilation of the functions created as part of the project.
