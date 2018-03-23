@@ -1,6 +1,11 @@
-## Conda Environment
+---
+title: Conda Environment
+layout: default
+---
 
-To install the *conda* environment containing: _iGraph_, _NetworkX_, _PlotLy_ , _SciKit_ and _TensorFlow_; run the following command in terminal (requires _Anaconda_):
+## Installation Instructions
+
+To install the *conda* environment containing: _iGraph_, _NetworkX_, _PlotLy_  and _SciKit_; run the following command in terminal (requires _Anaconda_):
 
 ```conda env create -f MoNeT.yml -n MoNeT```
 
