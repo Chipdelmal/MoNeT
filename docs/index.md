@@ -1,3 +1,9 @@
+---
+title: MoNeT
+layout: default
+---
+
+# Mosquito Networks Taskforce
 
 This repository was created to facilitate collaboration in network analysis routines useful for both *MGDrivE* and *MASH* projects. Its main objective is to create a set of tools that allow us to study landscapes in a way that is relevant in terms of mosquito-borne diseases.
 
