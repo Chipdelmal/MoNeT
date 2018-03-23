@@ -17,7 +17,8 @@ Mosquito movement across landscapes can be approximately modeled by transition p
 
 The broad-scope of the project has been divided into several workflows that follow the over-arching theme of analyzing mosquito movement in geographic point sets.
 
-<h3> [Mosquito Sinks and Sources Detection](./SinkSource.html) </h3>
+
+### [Mosquito Sinks and Sources Detection](./SinkSource.html)
 
 Mosquito-flow in the landscape is defined by the biological needs of the insects and the availability of resources (in a simple scenario). In certain situations, these variables might generate structures where mosquitos flows are highly directional between geographical clusters. This workflow was created to investigate which properties of the landscapes give birth to these kind of dynamics.
 
@@ -44,7 +45,7 @@ The study of gene-drives' spread in realistic landscapes is of upmost importance
 
 A script to parse and export SHP files from buildings roads polygons from [Open Street Map](https://www.openstreetmap.org/#map=14/-11.7114/43.2587) using [OSMnx](https://github.com/gboeing/osmnx).
 
-<img src="./media/Berkeley.png" width="50%" align="middle"><img src="./media/YorkeysKnob.png" width="50%" align="middle">
+<img src="./media/Berkeley.jpg" width="50%" align="middle"><img src="./media/YorkeysKnob.jpg" width="50%" align="middle">
 
 ### [Python Module](./PythonModule.html)
 
