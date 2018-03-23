@@ -52,25 +52,13 @@ A script to parse and export SHP files from buildings roads polygons from [Open 
 
 A compilation of the functions created as part of the project.
 
-```python
-################################################################################
-# ╔╦╗┌─┐╔╗╔┌─┐╔╦╗
-# ║║║│ │║║║├┤  ║
-# ╩ ╩└─┘╝╚╝└─┘ ╩
-# Mosquito Networks Taskforce
-# Python module with network analysis routines
-# Authors: Biyonka Liang, Sarafina Smith, Sabrina Wong, Héctor M. Sánchez C.
-################################################################################
-```
+<img src="./media/monet.jpg" width="100%" align="middle">
+
 
 ### [Conda Environment](./CondaEnvironment.html)
 
 The environment that contains all the packages required to run our routines.
 
-
-```shell
-conda env create -f MoNeT.yml -n MoNeT
-```
 
 ## Authors
 
