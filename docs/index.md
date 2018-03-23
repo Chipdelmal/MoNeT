@@ -16,6 +16,7 @@ Mosquito movement across landscapes can be approximately modeled by transition p
 ## Workflows
 
 The broad-scope of the project has been divided into several workflows that follow the over-arching theme of analyzing mosquito movement in geographic point sets.
+Click on the titles for more information.
 
 
 ### [Mosquito Sinks and Sources Detection](./SinkSource.html)
@@ -51,9 +52,25 @@ A script to parse and export SHP files from buildings roads polygons from [Open 
 
 A compilation of the functions created as part of the project.
 
+```python
+################################################################################
+# ╔╦╗┌─┐╔╗╔┌─┐╔╦╗
+# ║║║│ │║║║├┤  ║
+# ╩ ╩└─┘╝╚╝└─┘ ╩
+# Mosquito Networks Taskforce
+# Python module with network analysis routines
+# Authors: Biyonka Liang, Sarafina Smith, Sabrina Wong, Héctor M. Sánchez C.
+################################################################################
+```
+
 ### [Conda Environment](./CondaEnvironment.html)
 
 The environment that contains all the packages required to run our routines.
+
+
+```shell
+conda env create -f MoNeT.yml -n MoNeT
+```
 
 ## Authors
 

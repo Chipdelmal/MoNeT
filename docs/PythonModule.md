@@ -1,1 +1,1 @@
-## Community Detection
+## Python Module
