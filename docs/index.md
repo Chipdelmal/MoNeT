@@ -61,4 +61,4 @@ The environment that contains all the packages required to run our routines.
 
 ## PI's
 
-John M. Marshall and David L. Smith
+[John M. Marshall](http://sph.berkeley.edu/john-marshall) and [David L. Smith](http://www.healthdata.org/about/david-smith)
