@@ -1,7 +1,3 @@
----
-title: Conda Environment
-layout: default
----
 
 ## Installation Instructions
 
@@ -43,3 +39,9 @@ To load MoNeT as a kernel in jupyter:
 source activate MoNeT
 python -m ipykernel install --user --name MoNeT --display-name "Python (MoNeT)"
 ```
+
+<hr>
+
+## Authors
+
+Sarafina Smith, Sabrina Wong, Biyonka Liang, Héctor M. Sánchez C.

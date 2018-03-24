@@ -3,7 +3,7 @@ title: MoNeT: Mosquito Networks Taskforce
 layout: default
 ---
 
-This project was born to facilitate collaboration in network analysis routines useful for both [*MGDrivE*](https://chipdelmal.github.io/MGDrivE/) and [*MASH*](https://smitdave.github.io/MASH-Main/) projects. Its main objective is to create a set of tools that allow us to study landscapes in a way that is relevant in terms of mosquito-borne diseases.
+<i>This project was born to facilitate collaboration in network analysis routines useful for both [*MGDrivE*](https://chipdelmal.github.io/MGDrivE/) and [*MASH*](https://smitdave.github.io/MASH-Main/) projects. Its main objective is to create a set of tools that allow us to study landscapes in a way that is relevant in terms of mosquito-borne diseases.</i>
 
 <hr>
 
@@ -49,19 +49,22 @@ The study of gene-drives' spread in realistic landscapes is of upmost importance
 
 These routines were created as standalone functions to support the main research questions asked in the project.
 
-## [OSMnx Parser](./OSMnx.html)
-
-A script to parse and export SHP files from buildings roads polygons from [Open Street Map](https://www.openstreetmap.org/#map=14/-11.7114/43.2587) using [OSMnx](https://github.com/gboeing/osmnx).
-
-<img src="./media/Berkeley.jpg" width="50%" align="middle"><img src="./media/YorkeysKnob.jpg" width="50%" align="middle">
-
 ## [Python Module](./PythonModule.html)
 
 A compilation of the functions created as part of the project.
 
+<img src="./media/monet.jpg" width="50%" align="middle">
+
 ## [Conda Environment](./CondaEnvironment.html)
 
 The environment that contains all the packages required to run our routines.
+
+## [OSMnx Parser](./OSMnx.html)
+
+A script to parse and export SHP files from buildings roads polygons from [Open Street Map](https://www.openstreetmap.org/#map=14/-11.7114/43.2587) using [OSMnx](https://github.com/gboeing/osmnx).
+
+<img src="./media/YorkeysKnob.jpg" width="50%" align="middle"><img src="./media/Berkeley.jpg" width="50%" align="middle">
+
 
 <hr>
 
