@@ -1,5 +1,5 @@
 ---
-title: MoNeT: Mosquito Networks Taskforce
+title: MoNeT (Mosquito Networks Taskforce)
 layout: default
 ---
 
