@@ -73,3 +73,10 @@ A script to parse and export SHP files from buildings roads polygons from [Open 
 Dev: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Biyonka Liang, Sarafina Smith, Sabrina Wong, Daniel Citron<br>
 
 PI's: [John M. Marshall](http://sph.berkeley.edu/john-marshall) and [David L. Smith](http://www.healthdata.org/about/david-smith)
+
+<hr>
+
+<center>
+<img src="./media/berkeleyLogo.jpg" height="50px">
+<img src="./media/ihmeLogo.jpg" height="50px">
+</center>
