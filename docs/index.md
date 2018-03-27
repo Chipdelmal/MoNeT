@@ -31,7 +31,6 @@ Mosquito-flow in the landscape is defined by the biological needs of the insects
 
 Targeted vector control interventions are usually applied on the field without taking into account the movement of mosquitos across the landscape. This, however, might not be the most optimal way of trying to eradicate these insects. In this workflow, we try to create and test a clustering algorithm that takes into account both: mosquito movement, and geographical constraints; to understand the factors that would promote more efficient mosquito-control campaigns.
 
-<!--Authors: Biyonka Liang, Héctor M. Sánchez C., Sean L. Wu, Daniel Citron, John M. Marshall, David L. Smith-->
 
 ## [Centrality Analysis of Landscapes](./Centrality.html)
 
@@ -70,13 +69,13 @@ A script to parse and export SHP files from buildings roads polygons from [Open 
 
 # Authors
 
-Dev: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Biyonka Liang, Sarafina Smith, Sabrina Wong, Daniel Citron<br>
+Dev: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, Biyonka Liang, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Sarafina Smith, Sabrina Wong, Daniel Citron<br>
 
 PI's: [John M. Marshall](http://sph.berkeley.edu/john-marshall) and [David L. Smith](http://www.healthdata.org/about/david-smith)
 
 <hr>
 
 <center>
-<img src="./media/berkeleyLogo.jpg" height="50px">
-<img src="./media/ihmeLogo.jpg" height="50px">
+<img src="./media/berkeleyLogo.jpg" height="100px">
+<img src="./media/ihmeLogo.jpg" height="100px">
 </center>
