@@ -6,4 +6,4 @@
 
 ## Authors
 
-Sabrina Wong, Sarafina Smith, Héctor M. Sánchez C.
+Héctor M. Sánchez C., Sabrina Wong, Sarafina Smith, John M. Marshall

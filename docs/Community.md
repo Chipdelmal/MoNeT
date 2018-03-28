@@ -1,4 +1,4 @@
-## Community Detection
+## Clustering of Directed Networks with Geographical Constraints
 
 
 <hr>

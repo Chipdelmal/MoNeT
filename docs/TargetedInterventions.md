@@ -24,6 +24,10 @@ This is confirmed by running random walkers on top of our transitions network:
 
 <img src="./media/05_markovSteady2.jpg" width="100%" align="middle">
 
-This analysis can be elevated to higher dimensions of point types and more flexible transition probabilities between classes (less partite-ness):
+This analysis can be elevated to arbitrarily high dimensions of point types, and more flexible transition probabilities between classes (less partite-ness):
 
 <img src="./media/00_clustering2.jpg" width="50%" align="middle"><img src="./media/03_MarkovStationary2.jpg" width="50%" align="middle">
+
+## Authors
+
+Héctor M. Sánchez C., Biyonka Liang, Sean L. Wu, David L. Smith

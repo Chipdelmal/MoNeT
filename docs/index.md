@@ -79,7 +79,7 @@ Dev: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, Biyonka
 
 PI's: [John M. Marshall](http://sph.berkeley.edu/john-marshall) and [David L. Smith](http://www.healthdata.org/about/david-smith)
 
-<hr>
+
 
 <center>
 <img src="./media/berkeleyLogo.jpg" height="75px">
