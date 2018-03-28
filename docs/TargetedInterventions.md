@@ -14,9 +14,9 @@ For this example, we will simulate two types of nodes (_n=2_) as shown in the fi
 
 This results in an _n_-dimensional network in which mosquitoes move. If we think of mosquitoes as being simplified to random walkers in the network, we can reduce their movement to a Markov process in which their next step depends on their current location (assuming they have fulfilled their biological need). With this information, we can calculate the steady-state distribution of the nodes:
 
-<img src="./media/04_MarkovSteady.jpg" width="100%" align="middle">
+<img src="./media/04_markovSteady.jpg" width="100%" align="middle">
 
-With that information we can rescale our network to highlight the nodes in which our random-walking mosquitoes spend more time (the ones to which they jump more often):
+And, to visualize this better, we can rescale our network to highlight the nodes in which our random-walking mosquitoes spend more time (the ones to which they jump more often):
 
 <img src="./media/03_MarkovStationary.jpg" width="100%" align="middle">
 
