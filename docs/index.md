@@ -44,6 +44,12 @@ The study of gene-drives' spread in realistic landscapes is of upmost importance
 
 <hr>
 
+## [Targeted interventions](./TargetedInterventions.html)
+
+Identifying the most important points in landscapes in terms of mosquito-control interventions' effectiveness is far from a trivial task. These individuals move in probabilistic patterns according to their intrinsic biological needs, and environmental factors. To maximize the effect of the deployed measures to kill them, we need to take into account these variables, and this is what this workflow is all about.
+
+<img src="./media/00_clustering.jpg" width="50%" align="middle"><img src="./media/03_MarkovStationary.jpg" width="50%" align="middle">
+
 # Auxiliary Scripts and Libraries
 
 These routines were created as standalone functions to support the main research questions asked in the project.
@@ -76,6 +82,6 @@ PI's: [John M. Marshall](http://sph.berkeley.edu/john-marshall) and [David L. Sm
 <hr>
 
 <center>
-<img src="./media/berkeleyLogo.jpg" height="100px">
-<img src="./media/ihmeLogo.jpg" height="100px">
+<img src="./media/berkeleyLogo.jpg" height="75px">
+<img src="./media/ihmeLogo.jpg" height="75px">
 </center>
