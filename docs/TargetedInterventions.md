@@ -1,10 +1,29 @@
 ## Targeted Interventions
 
-### Spatial Clustering and Stochastic Movement
+As mentioned before, to make the most efficient use of our mosquito-control interventions, we need to make an analysis that takes into account not only the geographic distribution of households in the environment, but also the biological needs of the mosquitoes as they move through it.
 
-<img src="./media/00_clustering.jpg" width="50%" align="middle"><img src="./media/01_Movement.jpg" width="50%" align="middle">
+To do so, we start by laying out our simulated landscape:
 
+<img src="./media/00_clustering.jpg" width="100%" align="middle">
 
-### Effectiveness Ranking in Terms of Movement
+Once that is done, we can assign _n_ number of classes to simulate the different types of habitats. This can be done by defining an _n_-partite space for the network, where _n_ is the number of types of nodes, and the strength of the directionality defines the "partite-ness" of the connections (one a fully partite network and 0.5 equal to having each type of node being equally probable regardless of its class).
+
+For this example, we will simulate two types of nodes (_n=2_) as shown in the figure that follows:
+
+<img src="./media/01_Movement.jpg" width="100%" align="middle">
+
+This results in an _n_-dimensional network in which mosquitoes move. If we think of mosquitoes as being simplified to random walkers in the network, we can reduce their movement to a Markov process in which their next step depends on their current location (assuming they have fulfilled their biological need). With this information, we can calculate the steady-state distribution of the nodes:
+
+<img src="./media/04_MarkovSteady.jpg" width="100%" align="middle">
+
+With that information we can rescale our network to highlight the nodes in which our random-walking mosquitoes spend more time (the ones to which they jump more often):
 
 <img src="./media/03_MarkovStationary.jpg" width="100%" align="middle">
+
+This is confirmed by running random walkers on top of our transitions network:
+
+<img src="./media/05_markovSteady2.png" width="100%" align="middle">
+
+This analysis can be elevated to higher dimensions of point types and more flexible transition probabilities between classes (less partite-ness):
+
+<img src="./media/00_clustering2.jpg" width="50%" align="middle"><img src="./media/03_MarkovStationary2.jpg" width="50%" align="middle">
