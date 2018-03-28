@@ -42,13 +42,13 @@ The study of gene-drives' spread in realistic landscapes is of upmost importance
 
 <i>Aedes aegypti</i>  mosquitos avoid flying over roads; which, in turn, modifies the expected movement flows on the landscape. We would like to study how this specific variable affects the broad-scale dynamics of mosquito movement to understand the effects this would have in diseases transmission; but for now this is still an open line to be tackled.
 
-<hr>
-
 ## [Targeted interventions](./TargetedInterventions.html)
 
 Identifying the most important points in landscapes in terms of mosquito-control interventions' effectiveness is far from a trivial task. These individuals move in probabilistic patterns according to their intrinsic biological needs, and environmental factors. To maximize the effect of the deployed measures to kill them, we need to take into account these variables, and this is what this workflow is all about.
 
 <img src="./media/00_clustering.jpg" width="50%" align="middle"><img src="./media/03_MarkovStationary.jpg" width="50%" align="middle">
+
+<hr>
 
 # Auxiliary Scripts and Libraries
 
