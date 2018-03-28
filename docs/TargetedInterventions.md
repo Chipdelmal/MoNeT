@@ -1,5 +1,7 @@
 ## Targeted Interventions
 
+### Brief Description
+
 As mentioned before, to make the most efficient use of our mosquito-control interventions, we need to make an analysis that takes into account not only the geographic distribution of households in the environment, but also the biological needs of the mosquitoes as they move through it.
 
 To do so, we start by laying out our simulated landscape:
@@ -28,6 +30,10 @@ This analysis can be elevated to arbitrarily high dimensions of point types, and
 
 <img src="./media/00_clustering2.jpg" width="50%" align="middle"><img src="./media/03_MarkovStationary2.jpg" width="50%" align="middle">
 
-## Authors
+### Next Steps
+
+The natural next step for this workflow would be to simulate mosquitoes on the network, and compare the death rates of applying in different random and targeted schemes.
+
+### Authors
 
 Héctor M. Sánchez C., Biyonka Liang, Sean L. Wu, Daniel Citron, David L. Smith
