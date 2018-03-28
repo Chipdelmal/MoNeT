@@ -22,7 +22,7 @@ With that information we can rescale our network to highlight the nodes in which
 
 This is confirmed by running random walkers on top of our transitions network:
 
-<img src="./media/05_markovSteady2.png" width="100%" align="middle">
+<img src="./media/05_markovSteady2.jpg" width="100%" align="middle">
 
 This analysis can be elevated to higher dimensions of point types and more flexible transition probabilities between classes (less partite-ness):
 
