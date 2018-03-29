@@ -48,9 +48,12 @@ Identifying the most important points in landscapes in terms of mosquito-control
 
 <img src="./media/00_clustering.jpg" width="50%" align="middle"><img src="./media/03_MarkovStationary.jpg" width="50%" align="middle">
 
+## [Potentially Useful Network Metrics](./NetworkMetrics.html)
+
+This document contains some of the notes we have compiled on the networks metrics that could provide some insights of how mosquito movement shapes the transmission of both: diseases and gene drives. This is mainly a brainstorming space for ideas to be shared and discussed.
+
 <hr>
 
-## [Potentially Useful Network Metrics in Mosquito Context](./NetworkMetrics.html)
 
 # Auxiliary Scripts and Libraries
 
