@@ -52,6 +52,10 @@ Identifying the most important points in landscapes in terms of mosquito-control
 
 This document contains some of the notes we have compiled on the networks metrics that could provide some insights of how mosquito movement shapes the transmission of both: diseases and gene drives. This is mainly a brainstorming space for ideas to be shared and discussed.
 
+## [Pointsets Generation](./Pointsets.html)
+
+Even though we can parse real-world landscapes from OpenStreet Map, generating random points distributions is still useful in terms of theoretical questions about how these distributions affect the metrics and results of our analyses.
+
 <hr>
 
 
