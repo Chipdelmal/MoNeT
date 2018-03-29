@@ -1,6 +1,12 @@
 ## Clustering of Directed Networks with Geographical Constraints
 
 
+### Geographical Clustering
+
+### Kernel-Based Clustering
+
+### Compromise
+
 <hr>
 
 ## Authors
