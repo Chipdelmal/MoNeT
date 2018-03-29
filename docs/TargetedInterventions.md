@@ -32,7 +32,12 @@ This analysis can be elevated to arbitrarily high dimensions of point types, and
 
 ### Next Steps
 
-The natural next step for this workflow would be to simulate mosquitoes on the network, and compare the death rates of applying in different random and targeted schemes.
+* The natural next step for this workflow would be to simulate mosquitoes on the network, and compare the death rates of applying in different random and targeted schemes.
+* Another research line would focus on analyzing the effects of directionality on the centrality of the nodes.
+
+<img src="./media/MarkovGrid.jpg" width="100%" align="middle">
+
+
 
 ### Authors
 
