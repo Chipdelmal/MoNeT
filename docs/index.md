@@ -50,6 +50,8 @@ Identifying the most important points in landscapes in terms of mosquito-control
 
 <hr>
 
+## [Potentially Useful Network Metrics in Mosquito Context](./NetworkMetrics.html)
+
 # Auxiliary Scripts and Libraries
 
 These routines were created as standalone functions to support the main research questions asked in the project.

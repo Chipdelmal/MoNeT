@@ -36,4 +36,4 @@ The natural next step for this workflow would be to simulate mosquitoes on the n
 
 ### Authors
 
-Héctor M. Sánchez C., Biyonka Liang, Sean L. Wu, Daniel Citron, David L. Smith
+Héctor M. Sánchez C.\*, Biyonka Liang\*, Sean L. Wu, Daniel Citron, David L. Smith
