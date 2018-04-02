@@ -7,7 +7,7 @@
 A brief summary of measures to determine important nodes in a network. In a broad sense, centrality can be classified into radial or medial centrality. Radial centrality measures the walks in a network which start or end at a given vertex (e.g. degree centrality or eigenvalue centrality) while medial centrality measures the walks which pass through a vertex (e.g. betweenness centrality). In this note I focus on medial centrality.
 
 
-#### Betweenness Centrality
+#### Betweenness Centrality
 
 The number of times a node acts as a bridge between 2 other nodes. These summations can be normalized by dividing by $$\frac{(n-1)(n-2)}{2}$$, the number of edges in a connected graph.
 
@@ -34,7 +34,7 @@ Communicability centrality is a form of betweenness centrality that falls in bet
 <hr>
 
 
-### Influence
+### Influence
 
 Node influence metrics quantify the influence of every node in the network, rather than identifying the most important nodes like centrality measures do. Metrics based on random walks include accessibility, dynamic influence, impact. Under these metrics spread is observed in discrete time.
 
@@ -64,34 +64,12 @@ Assuming mosquito movement can be approximated by random walkers in a directed-p
 ### Other Metrics
 
 
-#### Diameter
-
-Longest shortest path in the network. This would be to the most extreme shortest case of mosquito migration between nodes.
-
-
-#### Average Path Length
-
-Mean of the minimum paths between all the nodes. Correlated to migration speed and, therefore, information flow in a network.
-
-
-#### Connected Components
-
-Clusters of nodes that are fully connected. In terms of mosquito movement we could ask ourselves the question: <i>How low does the migration rate between clusters have to be to consider two clusters connected/disconnected?</i>
-
-
-#### Clustering Coefficients
-
-How many of my neighbors neighbors are neighbors themselves? This gives us a measure of the local density of the network at any given node.
-
-
-#### Small Worlds
-
-Measurement of the efficiency of the network in transmitting information as it scales up in size.
-
-
-#### Connectivity
-
-Nodes or edges that need to be removed to isolate parts of the network from each other.
+* Diameter: Longest shortest path in the network. This would be to the most extreme shortest case of mosquito migration between nodes.
+* Average Path Length: Mean of the minimum paths between all the nodes. Correlated to migration speed and, therefore, information flow in a network.
+* Connected Components: Clusters of nodes that are fully connected. In terms of mosquito movement we could ask ourselves the question: <i>How low does the migration rate between clusters have to be to consider two clusters connected/disconnected?</i>
+* Clustering Coefficients: How many of my neighbors neighbors are neighbors themselves? This gives us a measure of the local density of the network at any given node.
+* Small Worlds: Measurement of the efficiency of the network in transmitting information as it scales up in size.
+* Connectivity: Nodes or edges that need to be removed to isolate parts of the network from each other.
 
 <hr>
 
