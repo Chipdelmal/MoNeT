@@ -32,7 +32,7 @@ This analysis can be elevated to arbitrarily high dimensions of point types, and
 
 * The next step for this workflow would be to simulate mosquitoes on the network, and compare the death rates of applying in different random and targeted schemes.
 * It would also be interesting to analyze the effects of interventions that have killing mosquitoes as an objective, and compare them to interventions that are oriented towards repelling them. This is because repellency would reshape the flow of mosquitoes in the network.
-* Another research line would focus on analyzing the effects of directionality on the [centrality](./NetworkMetrics.html) of the nodes and how the [pointsets](./Pointsets.html) can have an effect on these metrics.
+* Another research line would focus on analyzing the effects of directionality on the [centrality](./Centrality.html) of the nodes and how the [pointsets](./Pointsets.html) can have an effect on these metrics.
 * [Clustering the communities](./Community.html) of these mosquito movement patterns for hierarchical aggregation of landscapes is another line of research we are currently pursuing.
 
 <img src="./media/MarkovGrid.jpg" width="100%" align="middle">

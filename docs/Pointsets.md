@@ -1,5 +1,5 @@
-# Pointsets Generation
+## Pointsets Generation
 
-## Authors
+### Authors
 
 Sean L. Wu
