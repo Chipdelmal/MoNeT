@@ -63,19 +63,9 @@ Even though we can parse real-world landscapes from OpenStreet Map, generating r
 
 These routines were created as standalone functions to support the main research questions asked in the project.
 
-## [Python Module](./PythonModule.html)
-
-A compilation of the functions created as part of the project.
-
-<img src="./media/monet.jpg" width="50%" align="middle">
-
-## [Conda Environment](./CondaEnvironment.html)
-
-The environment that contains all the packages required to run our routines.
-
-## [OSMnx Parser](./OSMnx.html)
-
-A script to parse and export SHP files from buildings roads polygons from [Open Street Map](https://www.openstreetmap.org/#map=14/-11.7114/43.2587) using [OSMnx](https://github.com/gboeing/osmnx).
+* [Python Module](./PythonModule.html): A compilation of the functions created as part of the project.
+* [Conda Environment](./CondaEnvironment.html): The environment that contains all the packages required to run our routines.
+* [OSMnx Parser](./OSMnx.html): A script to parse and export SHP files from buildings roads polygons from [Open Street Map](https://www.openstreetmap.org/#map=14/-11.7114/43.2587) using [OSMnx](https://github.com/gboeing/osmnx).
 
 <img src="./media/YorkeysKnob.jpg" width="50%" align="middle"><img src="./media/Berkeley.jpg" width="50%" align="middle">
 
