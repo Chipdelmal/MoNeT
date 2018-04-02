@@ -1,6 +1,6 @@
 ## Centrality Measures
 
-In terms of mosquito movement, there is a case to be made in terms of using approximations that allow us to get a broad-scope idea of where we should focus our elimination efforts.
+Identifying the most important nodes in our landscape in terms of mosquito movement is a crucial task. Network theory provides with a set of tools that have been used in the past to analyze flow of information/matter (water, electricity, messages, traffic, etcetera), and obtain the sections of the movement matrix that are crucial in terms of mosquito movement (hubs and bridges).
 
 <img src="./media/MoroniPoint.jpg" width="50%" align="middle"><img src="./media/MoroniHex.jpg" width="50%" align="middle">
 
@@ -16,7 +16,7 @@ Our first attempt to analyze these mosquito movement patterns was to calculate t
 <img src="./media/YorkeysKnob_centralityScatter.jpg" width="50%" align="middle"><img src="./media/YorkeysKnob_centralityHex.jpg" width="50%" align="middle">
 
 
-#### Hierarchical Clustering and Iterative Centrality Calculation
+#### Hierarchical Clustering and Iterative Centrality Calculation for Hubs Detection
 
 Some centrality measures work by internaly generating a hierarchical agglomeration of points. It would be interesting to apply the clustering to each of the levels of hierarchy because it would give us different levels of granularity in terms of importance of the nodes as a function of the connection of communities.
 
@@ -25,8 +25,7 @@ Some centrality measures work by internaly generating a hierarchical agglomerati
 
 This idea of hierarchical clustering and iterative centrality calculations should also link in with the analysis of the mosquito movement as [markov processes](./TargetedInterventions.html). This is because we could cluster the pointsets at different levels of aggregation, and then run random walkers on the different levels of aggregation. Once we do that, we could compare the results on an entomological/epidemiological metric that is relevant in terms of spatial resolution.
 
-<img src="./media/GordonvaleHex.jpg" width="100%" align="middle">
-<img src="./media/GordonvaleScatter.jpg" width="100%" align="middle">
+<img src="./media/GordonvaleScatter.jpg" width="50%" align="middle"><img src="./media/GordonvaleHex.jpg" width="50%" align="middle">
 
 ### Authors
 
