@@ -2,4 +2,4 @@
 
 ### Authors
 
-Sean L. Wu
+Sean L. Wu, Biyonka Liang, Héctor M. Sánchez C., John M. Marshall, David L. Smith
