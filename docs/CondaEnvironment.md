@@ -19,7 +19,7 @@ To close the environment:
 source deactivate
 ```
 
-## Other Notes
+### Other Notes
 
 To install *Miniconda*:
 
@@ -42,6 +42,6 @@ python -m ipykernel install --user --name MoNeT --display-name "Python (MoNeT)"
 
 <hr>
 
-## Authors
+### Authors
 
-Sarafina Smith, Sabrina Wong, Biyonka Liang, Héctor M. Sánchez C.
+Héctor M. Sánchez C.

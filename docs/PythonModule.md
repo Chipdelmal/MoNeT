@@ -7,4 +7,4 @@ This module is a compilation of the different functions used throughout a reposi
 
 ## Authors
 
-Sarafina Smith, Sabrina Wong, Biyonka Liang, Héctor M. Sánchez C.
+Biyonka Liang, Sarafina Smith, Sabrina Wong

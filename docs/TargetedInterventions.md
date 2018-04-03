@@ -38,7 +38,6 @@ This analysis can be elevated to arbitrarily high dimensions of point types, and
 <img src="./media/MarkovGrid.jpg" width="100%" align="middle">
 
 
-
 ### Authors
 
 Héctor M. Sánchez C.\*, Biyonka Liang\*, Sean L. Wu, Sarafina Smith, Sabrina Wong, Daniel Citron, David L. Smith
