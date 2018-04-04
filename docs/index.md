@@ -5,11 +5,15 @@ layout: default
 
 <i>This project was born to facilitate collaboration in network analysis routines useful for both [*MGDrivE*](https://chipdelmal.github.io/MGDrivE/) and [*MASH*](https://smitdave.github.io/MASH-Main/) projects. Its main objective is to create a set of tools that allow us to study landscapes in a way that is relevant in terms of mosquito-borne diseases.</i>
 
+<center>
+SITE UNDER CONSTRUCTION
+</center>
+
 <hr>
 
 # Description
 
-Mosquito movement across landscapes can be approximately modeled by transition probabilities that are defined by the distances between resources points in a spatial plane. This is because mosquitoes move from point to point in search of resources and to fulfill biological needs. Taking this into account, it makes sense to think of this landscape as a network of resources, where the mosquito movement is directed between sites.
+Mosquito movement across landscapes can be approximately modeled by transition probabilities that are defined by the distances between resources points in a spatial plane. This is because mosquitoes move from point to point in search of resources and to fulfill biological needs. Taking this into account, it makes sense to think of this landscape as a network of resources, where the mosquito movement is directed between sites...
 
 <img src="./media/MoroniPoint.jpg" width="50%" align="middle"><img src="./media/MoroniHex.jpg" width="50%" align="middle">
 
