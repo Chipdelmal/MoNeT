@@ -6,7 +6,11 @@ As mentioned before, the distance between households is an important metric in t
 
 The most basic metric to get this analysis started was to obtain the centroids of the polygons of the buildings parsed by our [OSMnx script](./OSMnx.html) and calculate the distance to the closest house in the vicinity. This has allowed us to calibrate randomly generated landscapes to be consistent with realistic landscapes. The script has also allowed us to compare different settings such as densely populated areas such as Berkeley, Californa; against Gordonvale, and Yorkeys Knob, Australia (where _Wolbachia_ test releases have taken place in the past).
 
-<img src="./media/Berkeley_minDistances.jpg" width="30%" align="middle"><img src="./media/Gordonvale_minDistances.jpg" width="30%" align="middle"><img src="./media/YorkeysKnob_minDistances.jpg" width="30%" align="middle">
+<center>
+  <img src="./media/Berkeley_minDistances.jpg" width="75%">
+  <img src="./media/Gordonvale_minDistances.jpg" width="75%">
+  <img src="./media/YorkeysKnob_minDistances.jpg" width="75%">
+</center>
 
 ### Authors
 

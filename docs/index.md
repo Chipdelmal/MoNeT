@@ -80,7 +80,8 @@ These routines were created as standalone functions to support the main research
 * Dev: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, Biyonka Liang, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Sarafina Smith, Sabrina Wong, Daniel Citron<br>
 * PI's: [John M. Marshall](http://sph.berkeley.edu/john-marshall) and [David L. Smith](http://www.healthdata.org/about/david-smith)
 
+<br>
 
 <center>
-<img src="./media/berkeleyLogo.jpg" height="60px"><img src="./media/ihmeLogo.jpg" height="60px">
+<img src="./media/berkeleyLogo.jpg" height="60px" style="margin-right: 50px;"><img src="./media/ihmeLogo.jpg" height="60px" style="margin-right: 50px;">
 </center>
