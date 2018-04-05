@@ -81,7 +81,7 @@ These routines were created as standalone functions to support the main research
 
 # Authors
 
-* Dev: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, Biyonka Liang, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Sarafina Smith, Sabrina Wong, Daniel Citron<br>
+* Dev: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, Biyonka Liang, Sarafina Smith, Sabrina Wong, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Daniel Citron<br>
 * PI's: [John M. Marshall](http://sph.berkeley.edu/john-marshall) and [David L. Smith](http://www.healthdata.org/about/david-smith)
 
 <br>
