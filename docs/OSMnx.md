@@ -6,6 +6,8 @@ This script allows us to parse buildings and roads polygons from [Open Street Ma
 
 ## Instructions
 
+Install the [OSMnx](https://github.com/gboeing/osmnx)  package (the use of its [conda environment](https://anaconda.org/conda-forge/osmnx) is strongly suggested).
+
 Run the *exportRoadAndBuildings.py* script to parse the shapefiles for a particular *lat-long* coordinate:
 
 ```shell
