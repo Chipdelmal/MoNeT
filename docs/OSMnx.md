@@ -11,6 +11,7 @@ Install the [OSMnx](https://github.com/gboeing/osmnx)  package (the use of its [
 Run the *exportRoadAndBuildings.py* script to parse the shapefiles for a particular *lat-long* coordinate:
 
 ```shell
+source activate osmnx
 python exportRoadAndBuildings.py "PLACE_NAME" lat long dist
 ```
 Where the "PLACE_NAME" is an arbitrary tag defined by the user to name the output files.
