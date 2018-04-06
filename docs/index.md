@@ -31,9 +31,6 @@ Mosquito-flow in the landscape is defined by the biological needs of the insects
 
 <img src="./media/npartite.jpg" width="100%" align="middle">
 
-## [Clustering of Directed Networks with Geographical Constraints](./Community.html)
-
-Targeted vector control interventions are usually applied on the field without taking into account the movement of mosquitos across the landscape. This, however, might not be the most optimal way of trying to eradicate these insects. In this workflow, we try to create and test a clustering algorithm that takes into account both: mosquito movement, and geographical constraints; to understand the factors that would promote more efficient mosquito-control campaigns.
 
 ## [Targeted Interventions](./TargetedInterventions.html)
 
@@ -54,6 +51,12 @@ The distance between households is thought to be an important metric in terms of
 ## [Potentially Useful Network Metrics](./NetworkMetrics.html)
 
 This document contains some of the notes we have compiled on the networks metrics that could provide some insights of how mosquito movement shapes the transmission of both: diseases and gene drives. This is mainly a brainstorming space for ideas to be shared and discussed.
+
+
+## [Clustering of Directed Networks with Geographical Constraints](./Community.html)
+
+Targeted vector control interventions are usually applied on the field without taking into account the movement of mosquitos across the landscape. This, however, might not be the most optimal way of trying to eradicate these insects. In this workflow, we try to create and test a clustering algorithm that takes into account both: mosquito movement, and geographical constraints; to understand the factors that would promote more efficient mosquito-control campaigns.
+
 
 ## [Pointsets Generation](./Pointsets.html)
 
