@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      6363,        168]
-NotebookOptionsPosition[      5797,        149]
-NotebookOutlinePosition[      6185,        166]
-CellTagsIndexPosition[      6142,        163]
+NotebookDataLength[     40907,        882]
+NotebookOptionsPosition[     40146,        861]
+NotebookOutlinePosition[     40535,        878]
+CellTagsIndexPosition[     40492,        875]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -50,6 +50,30 @@ Cell[BoxData[{
       "\[IndentingNewLine]", "}"}]}]}], "\[IndentingNewLine]", 
    "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
+  RowBox[{"DiskBlend", "[", 
+   RowBox[{"colorA_", ",", "colorB_"}], "]"}], ":=", 
+  RowBox[{"Graphics", "[", "\[IndentingNewLine]", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Blend", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"{", "\[IndentingNewLine]", 
+          RowBox[{"colorA", ",", "\[IndentingNewLine]", "colorB"}], 
+          "\[IndentingNewLine]", "}"}], "\[IndentingNewLine]", ",", "x"}], 
+        "]"}], ",", 
+       RowBox[{"Disk", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{".5", "x"}]}], "}"}], ",", ".1"}], "]"}]}], "}"}], 
+     "\[IndentingNewLine]", ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "0", ",", "1", ",", 
+       RowBox[{"1", "/", "10"}]}], "}"}]}], "]"}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
   RowBox[{"HEXtoRGB", "=", 
    RowBox[{
     RowBox[{"RGBColor", "@@", 
@@ -63,91 +87,779 @@ Cell[BoxData[{
             RowBox[{"\"\<#\>\"", "\[Rule]", "\"\<16^^\>\""}]}], "]"}]}], ",", 
          "256", ",", "3"}], "]"}], "/", "255."}], ")"}]}], "&"}]}], 
   ";"}]}], "Input",
- CellChangeTimes->{{3.732903198001059*^9, 
-  3.732903198232457*^9}},ExpressionUUID->"bc1ea987-6d09-496c-96f3-\
+ CellChangeTimes->{{3.732903198001059*^9, 3.732903198232457*^9}, {
+  3.732903884836843*^9, 3.732903885100936*^9}, {3.732903959841284*^9, 
+  3.73290396582439*^9}, {3.7329039993409147`*^9, 3.732904045199239*^9}, {
+  3.732904310589734*^9, 
+  3.732904310690572*^9}},ExpressionUUID->"bc1ea987-6d09-496c-96f3-\
 76ddae639551"],
 
 Cell[CellGroupData[{
 
-Cell[BoxData[{
+Cell[BoxData[
  RowBox[{
-  RowBox[{"hexColors", "=", 
-   RowBox[{"{", 
-    RowBox[{"\"\<#FF5757\>\"", ",", "\"\<#7A5FE8\>\""}], "}"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"rgbColors", "=", 
-   RowBox[{"HEXtoRGB", "/@", "hexColors"}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Define", " ", "Color", " ", "Palette"}], "*)"}], 
+  "\[IndentingNewLine]", 
   RowBox[{
-   RowBox[{"rgbaColors", "=", 
-    RowBox[{
-     RowBox[{
-      RowBox[{"GenerateBlendSetting", "[", "#", "]"}], "&"}], "/@", 
-     "rgbColors"}]}], ";"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{"Graphics", "[", "\[IndentingNewLine]", 
-  RowBox[{"Table", "[", 
    RowBox[{
-    RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{"hexColors", "=", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<#8466FF\>\"", ",", "\"\<#FF6666\>\"", ",", "\"\<#75FF66\>\"", ",", 
+       "\"\<#FF66F5\>\"", ",", "\"\<#FFFA73\>\""}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Convert", " ", "color", " ", "spaces"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"rgbColors", "=", 
+    RowBox[{"HEXtoRGB", "/@", "hexColors"}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rgbaColors", "=", 
      RowBox[{
-      RowBox[{"Blend", "[", 
-       RowBox[{
-        RowBox[{"{", "\[IndentingNewLine]", 
-         RowBox[{
-          RowBox[{"rgbaColors", "[", 
-           RowBox[{"[", 
-            RowBox[{"1", ",", "2"}], "]"}], "]"}], ",", "\[IndentingNewLine]", 
-          RowBox[{"rgbaColors", "[", 
-           RowBox[{"[", 
-            RowBox[{"2", ",", "2"}], "]"}], "]"}]}], "}"}], 
-        "\[IndentingNewLine]", ",", "x"}], "]"}], ",", 
-      RowBox[{"Disk", "[", 
-       RowBox[{"{", 
+      RowBox[{
+       RowBox[{"GenerateBlendSetting", "[", "#", "]"}], "&"}], "/@", 
+      "rgbColors"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "Blend", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"colorTuples", "=", 
+     RowBox[{"Tuples", "[", 
+      RowBox[{"rgbColors", ",", "2"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   
+   RowBox[{
+    RowBox[{"blends", "=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"DiskBlend", "[", 
         RowBox[{
-         RowBox[{"8", "x"}], ",", "0"}], "}"}], "]"}]}], "}"}], 
-    "\[IndentingNewLine]", ",", 
-    RowBox[{"{", 
-     RowBox[{"x", ",", "0", ",", "1", ",", 
-      RowBox[{"1", "/", "10"}]}], "}"}]}], "]"}], "]"}]}], "Input",
+         RowBox[{"#", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], ",", 
+         RowBox[{"#", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "&"}], "/@", 
+      "colorTuples"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Partition", "[", 
+     RowBox[{"blends", ",", 
+      RowBox[{"Ceiling", "[", 
+       RowBox[{"Length", "[", "blends", "]"}], "]"}]}], "]"}], "//", 
+    "Grid"}]}]}]], "Input",
  CellChangeTimes->{{3.7329025351181602`*^9, 3.732902560960348*^9}, {
   3.732902694410244*^9, 3.732902725026415*^9}, {3.732902759080768*^9, 
   3.732902809476018*^9}, {3.732903168110785*^9, 3.732903168665703*^9}, {
   3.732903246943429*^9, 3.732903249422542*^9}, {3.732903336180517*^9, 
-  3.7329033838508797`*^9}},ExpressionUUID->"ccb96de3-ff68-4cec-af1f-\
+  3.7329033838508797`*^9}, {3.732903624194007*^9, 3.732903681781035*^9}, {
+  3.732903756654744*^9, 3.732903759495145*^9}, {3.7329037971479683`*^9, 
+  3.7329038358985*^9}, {3.7329039795235243`*^9, 3.732904009971031*^9}, {
+  3.732904053410021*^9, 3.7329040882181396`*^9}, {3.732904155088902*^9, 
+  3.732904339439349*^9}},ExpressionUUID->"ccb96de3-ff68-4cec-af1f-\
 8c560c3e6d58"],
 
 Cell[BoxData[
- GraphicsBox[{
-   {RGBColor[1., 0.3411764705882353, 0.3411764705882353], Opacity[1], 
-    DiskBox[{0, 0}]}, 
-   {RGBColor[0.947843137254902, 0.34431372549019607`, 0.39803921568627454`], 
-    Opacity[1], DiskBox[NCache[{Rational[4, 5], 0}, {0.8, 0}]]}, 
-   {RGBColor[0.8956862745098039, 0.3474509803921569, 0.4549019607843137], 
-    Opacity[1], DiskBox[NCache[{Rational[8, 5], 0}, {1.6, 0}]]}, 
-   {RGBColor[0.8435294117647059, 0.35058823529411764`, 0.5117647058823529], 
-    Opacity[1], DiskBox[NCache[{Rational[12, 5], 0}, {2.4, 0}]]}, 
-   {RGBColor[0.7913725490196079, 0.35372549019607846`, 0.5686274509803921], 
-    Opacity[1], DiskBox[NCache[{Rational[16, 5], 0}, {3.2, 0}]]}, 
-   {RGBColor[0.7392156862745098, 0.3568627450980392, 0.6254901960784314], 
-    Opacity[1], DiskBox[{4, 0}]}, 
-   {RGBColor[0.6870588235294117, 0.36, 0.6823529411764706], Opacity[1], 
-    DiskBox[NCache[{Rational[24, 5], 0}, {4.8, 0}]]}, 
-   {RGBColor[0.6349019607843137, 0.3631372549019608, 0.7392156862745098], 
-    Opacity[1], DiskBox[NCache[{Rational[28, 5], 0}, {5.6, 0}]]}, 
-   {RGBColor[0.5827450980392157, 0.36627450980392157`, 0.7960784313725491], 
-    Opacity[1], DiskBox[NCache[{Rational[32, 5], 0}, {6.4, 0}]]}, 
-   {RGBColor[0.5305882352941176, 0.3694117647058824, 0.8529411764705882], 
-    Opacity[1], DiskBox[NCache[{Rational[36, 5], 0}, {7.2, 0}]]}, 
-   {RGBColor[0.4784313725490196, 0.37254901960784315`, 0.9098039215686274], 
-    Opacity[1], DiskBox[{8, 0}]}}]], "Output",
+ RowBox[{"{", 
+  RowBox[{
+   InterpretationBox[
+    ButtonBox[
+     TooltipBox[
+      GraphicsBox[{
+        {GrayLevel[0], RectangleBox[{0, 0}]}, 
+        {GrayLevel[0], RectangleBox[{1, -1}]}, 
+        {RGBColor[0.5176470588235293, 0.4, 1.], 
+         RectangleBox[{0, -1}, {2, 1}]}},
+       AspectRatio->1,
+       DefaultBaseStyle->"ColorSwatchGraphics",
+       Frame->True,
+       FrameStyle->RGBColor[
+        0.34509803921568627`, 0.2666666666666667, 0.6666666666666667],
+       FrameTicks->None,
+       ImageSize->
+        Dynamic[{
+         Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+          Magnification]}],
+       PlotRangePadding->None],
+      "RGBColor[0.5176470588235293, 0.4, 1.]"],
+     Appearance->None,
+     BaseStyle->{},
+     BaselinePosition->Baseline,
+     ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
+       If[
+        Not[
+         AbsoluteCurrentValue["Deployed"]], 
+        SelectionMove[Typeset`box$, All, Expression]; 
+        FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
+        FrontEnd`Private`$ColorSelectorInitialColor = 
+         RGBColor[0.5176470588235293, 0.4, 1.]; 
+        FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
+        MathLink`CallFrontEnd[
+          FrontEnd`AttachCell[Typeset`box$, 
+           FrontEndResource["RGBColorValueSelector"], {0, {Left, Bottom}}, {
+           Left, Top}, 
+           "ClosingActions" -> {
+            "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
+     DefaultBaseStyle->{},
+     Evaluator->Automatic,
+     Method->"Preemptive"],
+    RGBColor[0.5176470588235293, 0.4, 1.],
+    Editable->False,
+    Selectable->False], ",", 
+   InterpretationBox[
+    ButtonBox[
+     TooltipBox[
+      GraphicsBox[{
+        {GrayLevel[0], RectangleBox[{0, 0}]}, 
+        {GrayLevel[0], RectangleBox[{1, -1}]}, 
+        {RGBColor[1., 0.4, 0.4], RectangleBox[{0, -1}, {2, 1}]}},
+       AspectRatio->1,
+       DefaultBaseStyle->"ColorSwatchGraphics",
+       Frame->True,
+       FrameStyle->RGBColor[
+        0.6666666666666667, 0.2666666666666667, 0.2666666666666667],
+       FrameTicks->None,
+       ImageSize->
+        Dynamic[{
+         Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+          Magnification]}],
+       PlotRangePadding->None],
+      "RGBColor[1., 0.4, 0.4]"],
+     Appearance->None,
+     BaseStyle->{},
+     BaselinePosition->Baseline,
+     ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
+       If[
+        Not[
+         AbsoluteCurrentValue["Deployed"]], 
+        SelectionMove[Typeset`box$, All, Expression]; 
+        FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
+        FrontEnd`Private`$ColorSelectorInitialColor = RGBColor[1., 0.4, 0.4]; 
+        FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
+        MathLink`CallFrontEnd[
+          FrontEnd`AttachCell[Typeset`box$, 
+           FrontEndResource["RGBColorValueSelector"], {0, {Left, Bottom}}, {
+           Left, Top}, 
+           "ClosingActions" -> {
+            "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
+     DefaultBaseStyle->{},
+     Evaluator->Automatic,
+     Method->"Preemptive"],
+    RGBColor[1., 0.4, 0.4],
+    Editable->False,
+    Selectable->False], ",", 
+   InterpretationBox[
+    ButtonBox[
+     TooltipBox[
+      GraphicsBox[{
+        {GrayLevel[0], RectangleBox[{0, 0}]}, 
+        {GrayLevel[0], RectangleBox[{1, -1}]}, 
+        {RGBColor[0.4588235294117647, 1., 0.4], 
+         RectangleBox[{0, -1}, {2, 1}]}},
+       AspectRatio->1,
+       DefaultBaseStyle->"ColorSwatchGraphics",
+       Frame->True,
+       FrameStyle->RGBColor[
+        0.3058823529411765, 0.6666666666666667, 0.2666666666666667],
+       FrameTicks->None,
+       ImageSize->
+        Dynamic[{
+         Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+          Magnification]}],
+       PlotRangePadding->None],
+      "RGBColor[0.4588235294117647, 1., 0.4]"],
+     Appearance->None,
+     BaseStyle->{},
+     BaselinePosition->Baseline,
+     ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
+       If[
+        Not[
+         AbsoluteCurrentValue["Deployed"]], 
+        SelectionMove[Typeset`box$, All, Expression]; 
+        FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
+        FrontEnd`Private`$ColorSelectorInitialColor = 
+         RGBColor[0.4588235294117647, 1., 0.4]; 
+        FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
+        MathLink`CallFrontEnd[
+          FrontEnd`AttachCell[Typeset`box$, 
+           FrontEndResource["RGBColorValueSelector"], {0, {Left, Bottom}}, {
+           Left, Top}, 
+           "ClosingActions" -> {
+            "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
+     DefaultBaseStyle->{},
+     Evaluator->Automatic,
+     Method->"Preemptive"],
+    RGBColor[0.4588235294117647, 1., 0.4],
+    Editable->False,
+    Selectable->False], ",", 
+   InterpretationBox[
+    ButtonBox[
+     TooltipBox[
+      GraphicsBox[{
+        {GrayLevel[0], RectangleBox[{0, 0}]}, 
+        {GrayLevel[0], RectangleBox[{1, -1}]}, 
+        {RGBColor[1., 0.4, 0.9607843137254902], 
+         RectangleBox[{0, -1}, {2, 1}]}},
+       AspectRatio->1,
+       DefaultBaseStyle->"ColorSwatchGraphics",
+       Frame->True,
+       FrameStyle->RGBColor[
+        0.6666666666666667, 0.2666666666666667, 0.6405228758169935],
+       FrameTicks->None,
+       ImageSize->
+        Dynamic[{
+         Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+          Magnification]}],
+       PlotRangePadding->None],
+      "RGBColor[1., 0.4, 0.9607843137254902]"],
+     Appearance->None,
+     BaseStyle->{},
+     BaselinePosition->Baseline,
+     ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
+       If[
+        Not[
+         AbsoluteCurrentValue["Deployed"]], 
+        SelectionMove[Typeset`box$, All, Expression]; 
+        FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
+        FrontEnd`Private`$ColorSelectorInitialColor = 
+         RGBColor[1., 0.4, 0.9607843137254902]; 
+        FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
+        MathLink`CallFrontEnd[
+          FrontEnd`AttachCell[Typeset`box$, 
+           FrontEndResource["RGBColorValueSelector"], {0, {Left, Bottom}}, {
+           Left, Top}, 
+           "ClosingActions" -> {
+            "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
+     DefaultBaseStyle->{},
+     Evaluator->Automatic,
+     Method->"Preemptive"],
+    RGBColor[1., 0.4, 0.9607843137254902],
+    Editable->False,
+    Selectable->False], ",", 
+   InterpretationBox[
+    ButtonBox[
+     TooltipBox[
+      GraphicsBox[{
+        {GrayLevel[0], RectangleBox[{0, 0}]}, 
+        {GrayLevel[0], RectangleBox[{1, -1}]}, 
+        {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+         RectangleBox[{0, -1}, {2, 1}]}},
+       AspectRatio->1,
+       DefaultBaseStyle->"ColorSwatchGraphics",
+       Frame->True,
+       FrameStyle->RGBColor[
+        0.6666666666666667, 0.6535947712418301, 0.30065359477124187`],
+       FrameTicks->None,
+       ImageSize->
+        Dynamic[{
+         Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+          Magnification]}],
+       PlotRangePadding->None],
+      "RGBColor[1., 0.9803921568627451, 0.45098039215686275]"],
+     Appearance->None,
+     BaseStyle->{},
+     BaselinePosition->Baseline,
+     ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
+       If[
+        Not[
+         AbsoluteCurrentValue["Deployed"]], 
+        SelectionMove[Typeset`box$, All, Expression]; 
+        FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
+        FrontEnd`Private`$ColorSelectorInitialColor = 
+         RGBColor[1., 0.9803921568627451, 0.45098039215686275`]; 
+        FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
+        MathLink`CallFrontEnd[
+          FrontEnd`AttachCell[Typeset`box$, 
+           FrontEndResource["RGBColorValueSelector"], {0, {Left, Bottom}}, {
+           Left, Top}, 
+           "ClosingActions" -> {
+            "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
+     DefaultBaseStyle->{},
+     Evaluator->Automatic,
+     Method->"Preemptive"],
+    RGBColor[1., 0.9803921568627451, 0.45098039215686275`],
+    Editable->False,
+    Selectable->False]}], "}"}]], "Output",
  CellChangeTimes->{{3.732902803666238*^9, 3.732902809907363*^9}, 
    3.732903169531783*^9, 3.732903249875593*^9, {3.732903368710556*^9, 
-   3.732903384222039*^9}},ExpressionUUID->"7ac63b8b-845d-4ffc-a343-\
-3c9db4d589ba"]
-}, Open  ]]
+   3.732903384222039*^9}, {3.732903679743855*^9, 3.732903682318434*^9}, {
+   3.7329037679514933`*^9, 3.7329038362671757`*^9}, {3.732903980338747*^9, 
+   3.732904046314815*^9}, {3.73290408620332*^9, 3.732904088604074*^9}, {
+   3.732904156933426*^9, 3.732904238868651*^9}, {3.732904272147558*^9, 
+   3.7329043125245*^9}},ExpressionUUID->"9f8d4bb9-85d5-4d57-9061-\
+e9e8091c3fac"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     GraphicsBox[{
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.5658823529411764, 0.4, 0.94], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.6141176470588234, 0.4, 0.88], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.6623529411764706, 0.4, 0.8200000000000001], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.7105882352941176, 0.4, 0.76], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7588235294117647, 0.4, 0.7], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.8070588235294117, 0.4, 0.64], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.8552941176470588, 0.4, 0.5800000000000001], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.9035294117647059, 0.4, 0.52], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.951764705882353, 0.4, 0.45999999999999996`], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.5117647058823529, 0.46, 0.94], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.5058823529411764, 0.52, 0.88], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[
+        0.49999999999999994`, 0.5800000000000001, 0.8200000000000001], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.4941176470588235, 0.64, 0.76], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.488235294117647, 0.7, 0.7], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.48235294117647054`, 0.76, 0.64], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.4764705882352941, 0.8200000000000001, 0.5800000000000001], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.47058823529411764`, 0.88, 0.52], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[
+        0.46470588235294114`, 0.9400000000000001, 0.45999999999999996`], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.5658823529411764, 0.4, 0.996078431372549], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.6141176470588234, 0.4, 0.9921568627450981], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.6623529411764706, 0.4, 0.9882352941176471], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.7105882352941176, 0.4, 0.9843137254901961], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7588235294117647, 0.4, 0.9803921568627452], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.8070588235294117, 0.4, 0.9764705882352941], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.8552941176470588, 0.4, 0.9725490196078431], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.9035294117647059, 0.4, 0.9686274509803922], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.951764705882353, 0.4, 0.9647058823529412], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[
+        0.5658823529411764, 0.45803921568627454`, 0.9450980392156862], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.6141176470588234, 0.516078431372549, 0.8901960784313725], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.6623529411764706, 0.5741176470588235, 0.8352941176470589], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.7105882352941176, 0.6321568627450981, 0.7803921568627451], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7588235294117647, 0.6901960784313725, 0.7254901960784313], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.8070588235294117, 0.7482352941176471, 0.6705882352941177], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.8552941176470588, 0.8062745098039215, 0.615686274509804], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.9035294117647059, 0.864313725490196, 0.5607843137254902], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.951764705882353, 0.9223529411764706, 0.5058823529411764], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.951764705882353, 0.4, 0.46], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.9035294117647059, 0.4, 0.52], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.8552941176470588, 0.4, 0.5800000000000001], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.8070588235294117, 0.4, 0.64], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7588235294117647, 0.4, 0.7], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.7105882352941176, 0.4, 0.76], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.6623529411764706, 0.4, 0.8200000000000001], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.6141176470588234, 0.4, 0.88], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.5658823529411764, 0.4, 0.9400000000000001], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.9458823529411765, 0.46, 0.4], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.8917647058823529, 0.52, 0.4], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.8376470588235294, 0.5800000000000001, 0.4], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.7835294117647058, 0.64, 0.4], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7294117647058823, 0.7, 0.4], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.6752941176470588, 0.76, 0.4], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.6211764705882352, 0.8200000000000001, 0.4], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.5670588235294116, 0.88, 0.4], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.5129411764705882, 0.9400000000000001, 0.4], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.45607843137254905`], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.5121568627450981], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.5682352941176471], DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.6243137254901961], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.6803921568627451], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.7364705882352942], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.7925490196078431], DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.8486274509803922], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9047058823529412], DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[1., 0.45803921568627454`, 0.4050980392156863], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[1., 0.516078431372549, 0.41019607843137257`], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[1., 0.5741176470588235, 0.4152941176470588], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[1., 0.6321568627450981, 0.4203921568627451], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[1., 0.6901960784313725, 0.4254901960784314], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[1., 0.7482352941176471, 0.43058823529411766`], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[1., 0.8062745098039215, 0.4356862745098039], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[1., 0.864313725490196, 0.4407843137254902], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[1., 0.9223529411764706, 0.4458823529411765], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.46470588235294114`, 0.94, 0.46], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.47058823529411764`, 0.88, 0.52], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.4764705882352941, 0.8200000000000001, 0.5800000000000001], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.48235294117647054`, 0.76, 0.64], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.488235294117647, 0.7, 0.7], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.4941176470588235, 0.64, 0.76], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[
+        0.49999999999999994`, 0.5800000000000001, 0.8200000000000001], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.5058823529411764, 0.52, 0.88], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[
+        0.5117647058823529, 0.45999999999999996`, 0.9400000000000001], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.5129411764705882, 0.94, 0.4], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.5670588235294117, 0.88, 0.4], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.6211764705882353, 0.8200000000000001, 0.4], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.6752941176470588, 0.76, 0.4], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7294117647058824, 0.7, 0.4], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.7835294117647059, 0.64, 0.4], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.8376470588235294, 0.5800000000000001, 0.4], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.891764705882353, 0.52, 0.4], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.9458823529411765, 0.45999999999999996`, 0.4], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.5129411764705882, 0.94, 0.45607843137254905`], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.5670588235294117, 0.88, 0.5121568627450981], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.6211764705882353, 0.8200000000000001, 0.5682352941176471], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.6752941176470588, 0.76, 0.6243137254901961], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7294117647058824, 0.7, 0.6803921568627451], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.7835294117647059, 0.64, 0.7364705882352942], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.8376470588235294, 0.5800000000000001, 0.7925490196078431], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.891764705882353, 0.52, 0.8486274509803922], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[
+        0.9458823529411765, 0.45999999999999996`, 0.9047058823529412], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.5129411764705882, 0.9980392156862745, 0.4050980392156863], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.5670588235294117, 0.996078431372549, 0.41019607843137257`],
+         DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.6211764705882353, 0.9941176470588236, 0.4152941176470588], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.6752941176470588, 0.9921568627450981, 0.4203921568627451], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7294117647058824, 0.9901960784313726, 0.4254901960784314], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.7835294117647059, 0.988235294117647, 0.43058823529411766`],
+         DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.8376470588235294, 0.9862745098039215, 0.4356862745098039], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.891764705882353, 0.984313725490196, 0.4407843137254902], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.9458823529411765, 0.9823529411764705, 0.4458823529411765], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.951764705882353, 0.4, 0.9647058823529412], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.9035294117647059, 0.4, 0.9686274509803922], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.8552941176470588, 0.4, 0.9725490196078431], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.8070588235294117, 0.4, 0.9764705882352941], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7588235294117647, 0.4, 0.9803921568627452], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.7105882352941176, 0.4, 0.9843137254901961], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.6623529411764706, 0.4, 0.9882352941176471], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.6141176470588234, 0.4, 0.9921568627450981], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.5658823529411764, 0.4, 0.996078431372549], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9047058823529412], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.8486274509803922], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.7925490196078432], DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.7364705882352941], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.6803921568627451], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.624313725490196], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.5682352941176472], DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.5121568627450981], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.456078431372549], DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.9458823529411765, 0.46, 0.9047058823529412], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.8917647058823529, 0.52, 0.8486274509803922], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.8376470588235294, 0.5800000000000001, 0.7925490196078432], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.7835294117647058, 0.64, 0.7364705882352941], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7294117647058823, 0.7, 0.6803921568627451], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.6752941176470588, 0.76, 0.624313725490196], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.6211764705882352, 0.8200000000000001, 0.5682352941176472], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.5670588235294116, 0.88, 0.5121568627450981], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.5129411764705882, 0.9400000000000001, 0.456078431372549], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[1., 0.45803921568627454`, 0.9098039215686274], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[1., 0.516078431372549, 0.8588235294117648], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[1., 0.5741176470588235, 0.807843137254902], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[1., 0.6321568627450981, 0.7568627450980392], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[1., 0.6901960784313725, 0.7058823529411765], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[1., 0.7482352941176471, 0.6549019607843138], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[1., 0.8062745098039215, 0.603921568627451], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[1., 0.864313725490196, 0.5529411764705883], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[1., 0.9223529411764706, 0.5019607843137255], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.951764705882353, 0.9223529411764706, 0.5058823529411764], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.9035294117647059, 0.864313725490196, 0.5607843137254902], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.8552941176470588, 0.8062745098039216, 0.615686274509804], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.8070588235294117, 0.748235294117647, 0.6705882352941177], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7588235294117647, 0.6901960784313725, 0.7254901960784315], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.7105882352941176, 0.632156862745098, 0.7803921568627451], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.6623529411764706, 0.5741176470588236, 0.8352941176470589], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.6141176470588234, 0.516078431372549, 0.8901960784313726], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.5658823529411764, 0.4580392156862745, 0.9450980392156864], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[0.5176470588235293, 0.4, 1.], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[1., 0.9223529411764706, 0.4458823529411765], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[1., 0.864313725490196, 0.4407843137254902], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[1., 0.8062745098039216, 0.4356862745098039], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[1., 0.748235294117647, 0.43058823529411766`], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[1., 0.6901960784313725, 0.4254901960784314], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[1., 0.632156862745098, 0.4203921568627451], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[1., 0.5741176470588236, 0.4152941176470588], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[1., 0.516078431372549, 0.41019607843137257`], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[1., 0.4580392156862745, 0.4050980392156863], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.4], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[0.9458823529411765, 0.9823529411764705, 0.4458823529411765], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[0.8917647058823529, 0.984313725490196, 0.4407843137254902], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[0.8376470588235294, 0.9862745098039215, 0.4356862745098039], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[0.7835294117647058, 0.988235294117647, 0.43058823529411766`],
+         DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[0.7294117647058823, 0.9901960784313726, 0.4254901960784314], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[0.6752941176470588, 0.9921568627450981, 0.4203921568627451], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[0.6211764705882352, 0.9941176470588236, 0.4152941176470588], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[0.5670588235294116, 0.996078431372549, 0.41019607843137257`],
+         DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[0.5129411764705882, 0.9980392156862745, 0.4050980392156863], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[0.4588235294117647, 1., 0.4], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[1., 0.9223529411764706, 0.5019607843137255], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[1., 0.864313725490196, 0.5529411764705883], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[1., 0.8062745098039216, 0.6039215686274509], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[1., 0.748235294117647, 0.6549019607843137], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[1., 0.6901960784313725, 0.7058823529411764], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[1., 0.632156862745098, 0.7568627450980392], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[1., 0.5741176470588236, 0.807843137254902], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[1., 0.516078431372549, 0.8588235294117648], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[1., 0.4580392156862745, 0.9098039215686274], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.4, 0.9607843137254902], DiskBox[{0, 0.5}, 0.1]}}], 
+     GraphicsBox[{
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.05}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.1}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.15}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.2}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.25}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.3}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.35}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.4}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.45}, 0.1]}, 
+       {RGBColor[1., 0.9803921568627451, 0.45098039215686275`], 
+        DiskBox[{0, 0.5}, 0.1]}}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{{3.732902803666238*^9, 3.732902809907363*^9}, 
+   3.732903169531783*^9, 3.732903249875593*^9, {3.732903368710556*^9, 
+   3.732903384222039*^9}, {3.732903679743855*^9, 3.732903682318434*^9}, {
+   3.7329037679514933`*^9, 3.7329038362671757`*^9}, {3.732903980338747*^9, 
+   3.732904046314815*^9}, {3.73290408620332*^9, 3.732904088604074*^9}, {
+   3.732904156933426*^9, 3.732904238868651*^9}, {3.732904272147558*^9, 
+   3.732904312558778*^9}},ExpressionUUID->"e2f62d52-8bee-4974-8f7e-\
+ddb82433ab63"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.7329037417004757`*^9, 3.732903745764526*^9}, {
+  3.732903848346087*^9, 
+  3.732903883082217*^9}},ExpressionUUID->"76a1a176-6def-4357-a176-\
+6adde0bf5bd5"]
 },
-WindowSize->{752, 830},
+WindowSize->{1415, 789},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 Magnification:>0.75 Inherited,
 FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
@@ -165,11 +877,13 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 1716, 47, 137, "Input",ExpressionUUID->"bc1ea987-6d09-496c-96f3-76ddae639551"],
+Cell[558, 20, 2787, 74, 281, "Input",ExpressionUUID->"bc1ea987-6d09-496c-96f3-76ddae639551"],
 Cell[CellGroupData[{
-Cell[2299, 71, 1773, 46, 185, "Input",ExpressionUUID->"ccb96de3-ff68-4cec-af1f-8c560c3e6d58"],
-Cell[4075, 119, 1706, 27, 110, "Output",ExpressionUUID->"7ac63b8b-845d-4ffc-a343-3c9db4d589ba"]
-}, Open  ]]
+Cell[3370, 98, 2219, 56, 153, "Input",ExpressionUUID->"ccb96de3-ff68-4cec-af1f-8c560c3e6d58"],
+Cell[5592, 156, 8753, 228, 27, "Output",ExpressionUUID->"9f8d4bb9-85d5-4d57-9061-e9e8091c3fac"],
+Cell[14348, 386, 25576, 466, 178, "Output",ExpressionUUID->"e2f62d52-8bee-4974-8f7e-ddb82433ab63"]
+}, Open  ]],
+Cell[39939, 855, 203, 4, 24, "Input",ExpressionUUID->"76a1a176-6def-4357-a176-6adde0bf5bd5"]
 }
 ]
 *)
