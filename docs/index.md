@@ -32,7 +32,7 @@ Mosquito-flow in the landscape is defined by the biological needs of the insects
 <img src="./media/npartite.jpg" width="100%" align="middle">
 
 
-## [Targeted Interventions](./TargetedInterventions.html)
+## [Targeted Interventions](./TargetedInterventions.html) and [Regular Grid Markov Analysis](./TheWalkingDead.html)
 
 Identifying the most important points in landscapes in terms of mosquito-control interventions' effectiveness is far from a trivial task. These individuals move in probabilistic patterns according to their intrinsic biological needs, and environmental factors. To maximize the effect of the deployed measures to kill them, we need to take into account these variables, and this is what this workflow is all about.
 
