@@ -54,7 +54,7 @@ In a regular lattice, increasing the dimensionality of the network (in terms of 
 
 ## Future Work
 
-The interaction of insecticide spraying and spatial repellents/attractors could pose an interesting computational problem. This is because, as we introduce heterogeneity (both in terms of the dimensions of the partite network, and their distribution in the landscape), it becomes more difficult to predict the pathways mosquitos will follow in . If we imagine mosquitos as flowing in the environment to fulfill their biological needs, we can see that their movements might become more complex as we increase restrictions on the spots they are allowed to move into. This effect might have significant impact in the effectiveness of vector-control interventions.
+The interaction of insecticide spraying and spatial repellents/attractors could pose an interesting computational problem. This is because, as we introduce heterogeneity (both in terms of the dimensions of the partite network, and their distribution in the landscape), it becomes more difficult to predict the pathways mosquitos will follow. If we imagine mosquitos as flowing elements in the environment to fulfill their biological needs, we can see that their movements might become more complex as we increase restrictions on the spots they are allowed to move into. This effect might have significant impact in the effectiveness of vector-control interventions.
 
 <center>
 <img src="./media/03_MarkovStationary2.jpg" width="50%" align="middle">
