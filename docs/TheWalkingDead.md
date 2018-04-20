@@ -48,8 +48,9 @@ An example of these movement matrices is given in the following figure, in which
 
 In a regular lattice, increasing the dimensionality of the network (in terms of point types), adds heterogeneity in the relative importance of the nodes. The following figures show the process of adding point types in a 13x13 grid of nodes. In the figures, each color represents a type of point, the nodes are scaled according to their Markov steady-state distribution (as described in: [targeted interventions](./TargetedInterventions.html))
 
-<img src="./media/MS_01.jpg" width="30%"><img src="./media/MS_02.jpg" width="30%"><img src="./media/MS_03.jpg" width="27.5%">
-<img src="./media/MS_04.jpg" width="30%"><img src="./media/MS_05.jpg" width="30%"><img src="./media/MS_06.jpg" width="30%">
+<img src="./media/MS_01.jpg" width="50%"><img src="./media/MS_02.jpg" width="50%">
+<img src="./media/MS_03.jpg" width="50%"><img src="./media/MS_04.jpg" width="50%">
+<img src="./media/MS_05.jpg" width="50%"><img src="./media/MS_06.jpg" width="50%">
 
 ## Future Work
 
