@@ -60,7 +60,9 @@ The interaction of insecticide spraying and spatial repellents/attractors could 
 <img src="./media/03_MarkovStationary2.jpg" width="50%" align="middle">
 </center>
 
+## Files
 
+* [https://github.com/Chipdelmal/MoNeT/tree/master/Dev/HectorSanchez/WalkingDead](https://github.com/Chipdelmal/MoNeT/tree/master/Dev/HectorSanchez/WalkingDead)
 
 ## Authors
 
