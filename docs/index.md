@@ -52,7 +52,6 @@ The distance between households is thought to be an important metric in terms of
 
 This document contains some of the notes we have compiled on the networks metrics that could provide some insights of how mosquito movement shapes the transmission of both: diseases and gene drives. This is mainly a brainstorming space for ideas to be shared and discussed.
 
-
 ## [Clustering of Directed Networks with Geographical Constraints](./Community.html)
 
 Targeted vector control interventions are usually applied on the field without taking into account the movement of mosquitos across the landscape. This, however, might not be the most optimal way of trying to eradicate these insects. In this workflow, we try to create and test a clustering algorithm that takes into account both: mosquito movement, and geographical constraints; to understand the factors that would promote more efficient mosquito-control campaigns.
@@ -84,7 +83,8 @@ These routines were created as standalone functions to support the main research
 
 # Authors
 
-* Dev: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, Biyonka Liang, Sarafina Smith, Sabrina Wong, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Daniel Citron<br>
+* Lead: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a><br>
+* Dev: Biyonka Liang, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Sarafina Smith, Sabrina Wong, Daniel Citron<br>
 * PI's: [John M. Marshall](http://sph.berkeley.edu/john-marshall) and [David L. Smith](http://www.healthdata.org/about/david-smith)
 
 <br>
