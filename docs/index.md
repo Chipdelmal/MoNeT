@@ -75,8 +75,9 @@ These routines were created as standalone functions to support the main research
 * [Python Module](./PythonModule.html): A compilation of the functions created as part of the project.
 * [Conda Environment](./CondaEnvironment.html): The environment that contains all the packages required to run our routines.
 * [OSMnx Parser](./OSMnx.html): A script to parse and export SHP files from buildings roads polygons from [Open Street Map](https://www.openstreetmap.org/#map=14/-11.7114/43.2587) using [OSMnx](https://github.com/gboeing/osmnx).
+* [Fancy Maps Parser](./OSMnx.hml): A _Mathematica_ script that parses maps from _Wolfram Database_, exports the coordinates, populations, and a "fancy" map.
 
-<img src="./media/YorkeysKnob.jpg" width="50%" align="middle"><img src="./media/Berkeley.jpg" width="50%" align="middle">
+<img src="./media/YorkeysKnob.jpg" width="50%" align="middle"><img src="./media/Madagascar.jpg" width="50%" align="middle">
 
 
 <hr>
