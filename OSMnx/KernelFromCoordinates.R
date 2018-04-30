@@ -19,9 +19,10 @@ if(user == "sanchez.hmsc"){
   setwd("/Users/sanchez.hmsc/Documents/GitHub/MoNeT/")
   outputPath="./OSMnx/"
 }
+outputFolder="./DistancesAnalysis/"
 ###############################################################################################################
 ######################### SETUP LANDSCAPE AND BIOLOGY #########################################################
-placeLabel="YorkeysKnob"
+placeLabel="Madagascar"
 bioParameters=list(betaK=2*10,tEgg=5,tLarva=6,tPupa=4,popGrowth=1.175,muAd=.09)
 lifespanStayProbability=.90
 ###############################################################################################################
@@ -35,3 +36,11 @@ pulseHeight=lifespanStayProbability^(bioParameters$muAd)
 movementKernel=calc_HurdleExpKernel(distancesMatrix,MGDrivE::kernels$exp_rat,pulseHeight)
 write.table(movementKernel,file=paste0(outputPath,"KERNELS/",placeLabel,"_Kernel.csv"),row.names=FALSE,col.names=FALSE,sep=",")
 ###############################################################################################################
+######################### ANALYZE MINIMUM DISTANCES ###########################################################
+diag(distancesMatrix)=100000000
+minDistances=apply(distancesMatrix,1,min)
+minDistancesDF=as.data.frame(minDistances)
+meanDistance=median(minDistances)
+base=ggplot(data=minDistancesDF,aes(x=minDistances)) + xlab("Minimum Distance") + ylab("Density") + ggtitle(placeLabel,subtitle=paste0("Median: ",meanDistance))
+base + geom_density(alpha=.2, fill="#FF6666") + geom_vline(aes(xintercept=meanDistance),linetype="dashed",size=.5)
+ggsave(paste0(outputFolder,"images/",placeLabel,"_minDistances.pdf"),width=10,height=10)

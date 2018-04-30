@@ -17,7 +17,7 @@ library(rgdal)
 ################################################################################
 # Select the name tag of the location (same as the one used in the OSMnx parser)
 # Setup your MoNeT base directory
-placeNameTag="YorkeysKnob"
+placeNameTag="Madagascar"
 setwd("~/Documents/GitHub/MoNeT/")
 outputFolder="./Dev/HectorSanchez/DistancesAnalysis/"
 ################################################################################
@@ -44,3 +44,4 @@ meanDistance=median(minDistances)
 base=ggplot(data=minDistancesDF,aes(x=minDistances)) + xlab("Minimum Distance") + ylab("Density") + ggtitle(placeNameTag,subtitle=paste0("Median: ",meanDistance))
 base + geom_density(alpha=.2, fill="#FF6666") + geom_vline(aes(xintercept=meanDistance),linetype="dashed",size=.5)
 ggsave(paste0(outputFolder,"/images/",placeNameTag,"_minDistances.pdf"),width=10,height=10)
+
