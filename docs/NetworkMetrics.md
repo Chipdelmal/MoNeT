@@ -63,7 +63,6 @@ Assuming mosquito movement can be approximated by random walkers in a directed-p
 
 ### Other Metrics
 
-
 * Diameter: Longest shortest path in the network. This would be to the most extreme shortest case of mosquito migration between nodes.
 * Average Path Length: Mean of the minimum paths between all the nodes. Correlated to migration speed and, therefore, information flow in a network.
 * Connected Components: Clusters of nodes that are fully connected. In terms of mosquito movement we could ask ourselves the question: <i>How low does the migration rate between clusters have to be to consider two clusters connected/disconnected?</i>
