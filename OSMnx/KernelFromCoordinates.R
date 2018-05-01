@@ -31,7 +31,7 @@ lifespanStayProbability=.90
 rawGeoData=as.matrix(read.csv(paste0(outputFolderGeo,"POINTS/",placeLabel,"_Coordinates.csv"),sep=",",header=FALSE))
 latLongs=as.matrix(rawGeoData)
 distancesMatrix=calc_haversine(latLongs)
-#write.table(distancesMatrix,file=paste0(outputPath,"DISTANCES/",placeLabel,"_Distances.csv"),row.names=FALSE,col.names=FALSE,sep=",")
+write.table(distancesMatrix,file=paste0(outputPath,"DISTANCES/",placeLabel,"_Distances.csv"),row.names=FALSE,col.names=FALSE,sep=",")
 ###############################################################################################################
 pulseHeight=lifespanStayProbability^(bioParameters$muAd)
 movementKernel=calc_HurdleExpKernel(distancesMatrix,MGDrivE::kernels$exp_rat,pulseHeight)
@@ -68,7 +68,7 @@ distancesMatrix=calc_haversine(latLongs)
 ###############################################################################################################
 pulseHeight=lifespanStayProbability^(bioParameters$muAd)
 movementKernel=calc_HurdleExpKernel(distancesMatrix,MGDrivE::kernels$exp_rate/250,pulseHeight)
-write.table(movementKernel,file=paste0(outputFolderGeo,"KERNELS/",placeLabel,"_Kernel2.csv"),row.names=FALSE,col.names=FALSE,sep=",")
+write.table(movementKernel,file=paste0(outputFolderGeo,"KERNELS/",placeLabel,"_Kernel.csv"),row.names=FALSE,col.names=FALSE,sep=",")
 ###############################################################################################################
 ######################### ANALYZE MINIMUM DISTANCES ###########################################################
 diag(distancesMatrix)=100000000
