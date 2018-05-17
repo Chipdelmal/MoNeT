@@ -11,3 +11,5 @@ python exportRoadAndBuildings.py "PaloAlto" 37.4560 -122.1273 1500
 python exportRoadAndBuildings.py "FosterCity" 37.5557 -122.2634 1500
 python exportRoadAndBuildings.py "YorkeysMain" -16.8115 145.7218 1350
 python exportRoadAndBuildings.py "Moroni_Large" -11.70 43.26 4500
+python exportRoadAndBuildings.py "TrinityPark" -16.8109 145.7007 100
+python exportRoadAndBuildings.py "YorkeyTrinity" -16.8130 145.7168 2000

@@ -1,12 +1,3 @@
-################################################################################
-# exportRoadAndBuildings.py
-# Extracts the roads and buildings positions and exports them into
-#   SHP and graphml files
-# Data source: https://www.openstreetmap.org/
-# HMSC
-################################################################################
-
-#Load package ####################################################
 import osmnx as ox, geopandas as gpd
 import os, sys
 #os.chdir('./BRInE/')                           #Uncomment if running from Atom
@@ -28,10 +19,3 @@ distance=int(clArguments[3])
 size=1000
 # Buildings ######################################################
 buildings=ox.buildings_from_point(point=locCoord,distance=distance)
-ox.save_gdf_shapefile(buildings,filename=placeName,folder="SHP/Buildings")
-# Roads ##########################################################
-#roads=ox.graph_from_point(locCoord,distance=distance,network_type='drive')
-#ox.save_graphml(roads,filename=placeName,folder="NTW/Roads")
-#ox.save_graph_shapefile(roads, filename=placeName,folder="SHP/Roads")
-# Image ##########################################################
-make_plot(placeName,locCoord,dpi=500,dist=distance,default_width=1)
