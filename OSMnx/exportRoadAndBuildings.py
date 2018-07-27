@@ -21,7 +21,7 @@ def make_plot(place, point, network_type='drive', bldg_color='orange', dpi=250,d
 clArguments=sys.argv[1:]
 # Location #######################################################
 
-locCoord=(float(clArguments[1]),float(clArguments[2]))          #Comoros
+locCoord=(float(clArguments[1]),float(clArguments[2]))
 
 placeName=clArguments[0]
 distance=int(clArguments[3])
@@ -30,8 +30,8 @@ size=1000
 buildings=ox.buildings_from_point(point=locCoord,distance=distance)
 ox.save_gdf_shapefile(buildings,filename=placeName,folder="SHP/Buildings")
 # Roads ##########################################################
-roads=ox.graph_from_point(locCoord,distance=distance,network_type='drive')
-ox.save_graphml(roads,filename=placeName,folder="NTW/Roads")
-ox.save_graph_shapefile(roads, filename=placeName,folder="SHP/Roads")
+#roads=ox.graph_from_point(locCoord,distance=distance,network_type='drive')
+#ox.save_graphml(roads,filename=placeName,folder="NTW/Roads")
+#ox.save_graph_shapefile(roads, filename=placeName,folder="SHP/Roads")
 # Image ##########################################################
 make_plot(placeName,locCoord,dpi=500,dist=distance,default_width=1)

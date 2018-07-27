@@ -15,12 +15,12 @@ library(rgdal)
 library(MGDrivE)
 library(MGDrivEv2)
 ################################################################################
-placeNameTag="PasoRobles"
+placeNameTag="YorkeyTrinity"
 setwd("~/Documents/GitHub/MoNeT/")
-outputFolder="./OSMnx/RoadsAndBuildingsParser/POINTS/"
+outputFolder="./OSMnx/POINTS/"
 ################################################################################
 # Read shapefile
-shapeFile=read.shp(paste0("./OSMnx/RoadsAndBuildingsParser/SHP/Buildings/",placeNameTag,"/",placeNameTag,".shp"))
+shapeFile=read.shp(paste0("./OSMnx/SHP/Buildings/",placeNameTag,"/",placeNameTag,".shp"))
 ################################################################################
 # Calculate the centroids of the buildings polygons and store as matrix
 latLongsVoid=vector("list",length(shapeFile$shp))
@@ -30,8 +30,8 @@ latLongs=for(i in 1:length(shapeFile$shp)){
 }
 matrixLatLongs=unname(Reduce(rbind,latLongsVoid))
 colnames(matrixLatLongs)=c("Latitude","Longitude")
-write.table(matrixLatLongs,paste0(outputFolder,placeNameTag,"_LatLongs.csv"),sep=",",row.names=FALSE)
+write.table(matrixLatLongs,paste0(outputFolder,placeNameTag,"_LatLongs.csv"),sep=",",row.names=FALSE,col.names=FALSE)
 ################################################################################
 # Calculate the distances matrix and the movement kernel
 distancesMatrix=calc_haversine(matrixLatLongs)
-write.table(distancesMatrix,paste0(outputFolder,placeNameTag,"_distancesMatrix.csv"),sep=",",row.names=FALSE)
+write.table(distancesMatrix,paste0(outputFolder,placeNameTag,"_distancesMatrix.csv"),sep=",",row.names=FALSE,col.names=FALSE)

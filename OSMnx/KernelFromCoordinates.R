@@ -23,12 +23,12 @@ outputFolderDistances="./DistancesAnalysis/"
 outputFolderGeo="./OSMnx/"
 ###############################################################################################################
 ######################### SETUP LANDSCAPE AND BIOLOGY #########################################################
-placeLabel="Madagascar"
+placeLabel="YorkeyTrinity"
 bioParameters=list(betaK=2*10,tEgg=5,tLarva=6,tPupa=4,popGrowth=1.175,muAd=.09)
 lifespanStayProbability=.90
 ###############################################################################################################
 ###############################################################################################################
-rawGeoData=as.matrix(read.csv(paste0(outputFolderGeo,"POINTS/",placeLabel,"_Coordinates.csv"),sep=",",header=FALSE))
+rawGeoData=as.matrix(read.csv(paste0(outputFolderGeo,"POINTS/",placeLabel,"_LatLongs.csv"),sep=",",header=FALSE))
 latLongs=as.matrix(rawGeoData)
 distancesMatrix=calc_haversine(latLongs)
 write.table(distancesMatrix,file=paste0(outputPath,"DISTANCES/",placeLabel,"_Distances.csv"),row.names=FALSE,col.names=FALSE,sep=",")
