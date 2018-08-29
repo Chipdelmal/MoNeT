@@ -2,7 +2,9 @@
 
 The main idea for this workflow is to create an algorithm that combines the information of the geographical clustering of a pointset, along with the mosquito movement kernel. The advantage of doing this, would be that it would take into account the mosquito movement part of the dynamics of the disease transmission, while still making it aware that these dynamics are "anchored" to a geographic setting; giving us an informed way to aggregate geographic populations of mosquitos moving on the landscape.
 
-**IMPORTANT NOTE:** This work is being carried out by [Biyonka Liang](https://github.com/biyonka) as part of her undergraduate thesis, so a complete description of the algorithm will be published once this document is available.
+**IMPORTANT NOTE:** This work is being carried out by [Biyonka Liang](https://github.com/biyonka) as part of her undergraduate thesis, so a complete description of the algorithm will be published once this document is available. In the meantime, please take a look at its [github repository](https://github.com/biyonka/malarialnetworks)
+
+<img src="./media/headerImage.jpg" width="100%" align="middle">
 
 ## Why?
 
@@ -17,6 +19,7 @@ We calculate the clustering using the [InfoMap](http://www.mapequation.org/code.
 ## Status
 
 This is an ongoing project with its own [repository](https://github.com/biyonka/malarialnetworks), so we will be updating information as the code becomes more stable and tested.
+
 
 ## Authors
 

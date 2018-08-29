@@ -3,11 +3,7 @@ title: MoNeT (Mosquito Networks Taskforce)
 layout: default
 ---
 
-<i>This project was born to facilitate collaboration in network analysis routines useful for both [*MGDrivE*](https://chipdelmal.github.io/MGDrivE/) and [*MASH*](https://smitdave.github.io/MASH-Main/) projects. Its main objective is to create a set of tools that allow us to study landscapes in a way that is relevant in terms of mosquito-borne diseases.</i>
-
-<center>
-SITE UNDER CONSTRUCTION
-</center>
+<i>This idea was born to facilitate collaboration in network analysis routines useful for both [*MGDrivE*](https://chipdelmal.github.io/MGDrivE/) and [*MASH*](https://smitdave.github.io/MASH-Main/) projects. Its main objective is to create a set of tools that allow us to study landscapes in a way that is relevant in terms of mosquito-borne diseases.</i>
 
 <hr>
 
