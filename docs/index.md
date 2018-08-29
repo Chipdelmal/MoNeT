@@ -22,7 +22,8 @@ Mosquito movement across landscapes can be approximately modeled by transition p
 # Workflows
 
 The broad-scope of the project has been divided into several workflows that follow the over-arching theme of analyzing mosquito movement in geographic point sets.
-Click on the titles for more information.
+
+_Click on the titles for more information._
 
 
 ## [Mosquito Sinks and Sources Detection](./SinkSource.html)
