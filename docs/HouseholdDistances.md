@@ -14,4 +14,4 @@ The most basic metric to get this analysis started was to obtain the centroids o
 
 ### Authors
 
-Héctor M. Sánchez C., John M. Marshall
+Héctor M. Sánchez C.

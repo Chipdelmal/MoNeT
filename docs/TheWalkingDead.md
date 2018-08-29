@@ -66,4 +66,4 @@ The interaction of insecticide spraying and spatial repellents/attractors could 
 
 ## Authors
 
-Héctor M. Sánchez C., Biyonka Liang, Sean L. Wu, David L. Smith
+Héctor M. Sánchez C.

@@ -40,4 +40,4 @@ This analysis can be elevated to arbitrarily high dimensions of point types, and
 
 ### Authors
 
-Héctor M. Sánchez C.\*, Biyonka Liang\*, Sean L. Wu, Daniel Citron, Sarafina Smith, Sabrina Wong, David L. Smith
+Héctor M. Sánchez C., Biyonka Liang, Sean L. Wu, Daniel Citron, Sarafina Smith, Sabrina Wong, David L. Smith

@@ -24,4 +24,4 @@ Sinks correspond to the clusters which mosquitoes enter more often than the exit
 
 ### Authors
 
-Héctor M. Sánchez C., Biyonka Liang, Sean L. Wu, Daniel Citron, David L. Smith
+Héctor M. Sánchez C., Biyonka Liang, Sean L. Wu, David L. Smith

@@ -53,10 +53,13 @@ This document contains some of the notes we have compiled on the networks metric
 
 Targeted vector control interventions are usually applied on the field without taking into account the movement of mosquitos across the landscape. This, however, might not be the most optimal way of trying to eradicate these insects. In this workflow, we try to create and test a clustering algorithm that takes into account both: mosquito movement, and geographical constraints; to understand the factors that would promote more efficient mosquito-control campaigns.
 
+<img src="./media/headerImage.jpg" width="100%" align="middle">
 
+<!--
 ## [Pointsets Generation](./Pointsets.html)
 
 Even though we can parse real-world landscapes from OpenStreet Map, generating random points distributions is still useful in terms of theoretical questions about how these distributions affect the metrics and results of our analyses.
+-->
 
 ## Road-Flight Path Intersections
 
@@ -74,8 +77,9 @@ These routines were created as standalone functions to support the main research
 * [OSMnx Parser](./OSMnx.html): A script to parse and export SHP files from buildings roads polygons from [Open Street Map](https://www.openstreetmap.org/#map=14/-11.7114/43.2587) using [OSMnx](https://github.com/gboeing/osmnx).
 * [Fancy Maps Parser](./FancyMaps.html): A _Mathematica_ script that parses maps from _Wolfram Database_, exports the coordinates, populations, and a "fancy" map.
 
-<img src="./media/YorkeysKnob.jpg" width="50%" align="middle"><img src="./media/Madagascar.jpg" width="49.75%" align="middle">
-
+<center>
+<img src="./media/France.jpg" width="33%" align="middle"><img src="./media/Madagascar.jpg" width="33%" align="middle"><img src="./media/Italy.jpg" width="33%" align="middle">
+</center>
 
 <hr>
 

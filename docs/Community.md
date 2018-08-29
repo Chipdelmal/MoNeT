@@ -23,4 +23,4 @@ This is an ongoing project with its own [repository](https://github.com/biyonka/
 
 ## Authors
 
-Biyonka Liang, Héctor M. Sánchez C., Sean L. Wu, John M. Marshall, David L. Smith
+Biyonka Liang, Héctor M. Sánchez C., Sean L. Wu, David L. Smith
