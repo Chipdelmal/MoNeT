@@ -3,7 +3,9 @@ title: MoNeT (Mosquito Networks Taskforce)
 layout: default
 ---
 
-<i>This idea was born to facilitate collaboration in network analysis routines useful for both [*MGDrivE*](https://chipdelmal.github.io/MGDrivE/) and [*MASH*](https://smitdave.github.io/MASH-Main/) projects. Its main objective is to create a set of tools that allow us to study landscapes in a way that is relevant in terms of mosquito-borne diseases.</i>
+This idea was born to facilitate collaboration in network analysis routines useful for both [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) (__UC, Berkeley__) and [*MASH*](https://smitdave.github.io/MASH-Main/) (__IHME__) projects. Its main objective is to create a set of tools that allow us to study landscapes in a way that is relevant in terms of mosquito-borne diseases.
+
+Additionally, this project's reach has been extended to facilitate the collaboration between the core [*MGDrivE*](https://chipdelmal.github.io/MGDrivE/) development team (__UC, Berkeley__), and faculty at __Tecnológico de Monterrey__ with the objective of getting computer science undergraduate students in México involved in mosquito-borne diseases research projects.
 
 <hr>
 
@@ -19,7 +21,7 @@ Mosquito movement across landscapes can be approximately modeled by transition p
 
 The broad-scope of the project has been divided into several workflows that follow the over-arching theme of analyzing mosquito movement in geographic point sets.
 
-_Click on the titles for more information._
+__Click on the titles for more information.__
 
 
 ## [Mosquito Sinks and Sources Detection](./SinkSource.html)
@@ -55,18 +57,21 @@ Targeted vector control interventions are usually applied on the field without t
 
 <img src="./media/headerImage.jpg" width="100%" align="middle">
 
+## [Tools for Fighting Malaria and Other Mosquito Borne Diseases](./ToolsCollaboration.html)
+
+This workflow was created to facilitate the creation of tools to be used as part of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project. It represents the collaboration betwenn UC, Berkeley and Tecnológico de Monterrey in an effort to get undergraduate students involved in mosquito-borne diseases research projects.
+
 <!--
 ## [Pointsets Generation](./Pointsets.html)
 
 Even though we can parse real-world landscapes from OpenStreet Map, generating random points distributions is still useful in terms of theoretical questions about how these distributions affect the metrics and results of our analyses.
--->
 
 ## Road-Flight Path Intersections
 
 <i>Aedes aegypti</i>  mosquitos avoid flying over roads; which, in turn, modifies the expected movement flows on the landscape. We would like to study how this specific variable affects the broad-scale dynamics of mosquito movement to understand the effects this would have in diseases transmission; but for now this is still an open line to be tackled.
+-->
 
 <hr>
-
 
 # Auxiliary Scripts and Libraries
 
@@ -78,19 +83,22 @@ These routines were created as standalone functions to support the main research
 * [Fancy Maps Parser](./FancyMaps.html): A _Mathematica_ script that parses maps from _Wolfram Database_, exports the coordinates, populations, and a "fancy" map.
 
 <center>
-<img src="./media/France.jpg" width="33%" align="middle"><img src="./media/Madagascar.jpg" width="33%" align="middle"><img src="./media/Italy.jpg" width="33%" align="middle">
+<img src="./media/France.jpg" width="32%" align="middle">&nbsp<img src="./media/Madagascar.jpg" width="32%" align="middle">&nbsp<img src="./media/Italy.jpg" width="32%" align="middle">
 </center>
 
 <hr>
 
 # Authors
 
-* Lead: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a><br>
-* Dev: <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a>, <a href="https://slwu89.github.io/">Sean L. Wu</a>, Sarafina Smith, Sabrina Wong, Daniel Citron<br>
-* PI's: [John M. Marshall](http://sph.berkeley.edu/john-marshall) and [David L. Smith](http://www.healthdata.org/about/david-smith)
+<ul style="font-size:12.5px">
+  <li>Lead: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]</li>
+  <li>Dev: <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a>  [UCB], <a href="https://slwu89.github.io/">Sean L. Wu</a>  [UCB], Sarafina Smith  [UCB], Sabrina Wong  [UCB], Daniel Citron  [IHME]</li>
+  <li>Collaborators: <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]</li>
+  <li>PI's: <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [UCB]</li>
+</ul>
 
-<br>
+<hr>
 
 <center>
-<img src="./media/berkeleyLogo.jpg" height="60px" style="margin-right: 50px;"><img src="./media/ihmeLogo.jpg" height="60px" style="margin-right: 50px;">
+<img src="./media/berkeleyLogo.jpg" height="60px">&nbsp &nbsp<img src="./media/ihmeLogo.jpg" height="60px">&nbsp &nbsp<img src="./media/itesm.png" height="75px">
 </center>
