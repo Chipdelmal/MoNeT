@@ -83,7 +83,7 @@ These routines were created as standalone functions to support the main research
 * [Fancy Maps Parser](./FancyMaps.html): A _Mathematica_ script that parses maps from _Wolfram Database_, exports the coordinates, populations, and a "fancy" map.
 
 <center>
-<img src="./media/France.jpg" width="32%" align="middle">&nbsp<img src="./media/Madagascar.jpg" width="32%" align="middle">&nbsp<img src="./media/Italy.jpg" width="32%" align="middle">
+<img src="./media/France.jpg" width="33%" align="middle"><img src="./media/Madagascar.jpg" width="33%" align="middle"><img src="./media/Italy.jpg" width="33%" align="middle">
 </center>
 
 <hr>
