@@ -100,5 +100,5 @@ These routines were created as standalone functions to support the main research
 <hr>
 
 <center>
-<img src="./media/berkeleyLogo.jpg" height="60px">&nbsp &nbsp<img src="./media/ihmeLogo.jpg" height="60px">&nbsp &nbsp<img src="./media/itesm.png" height="75px">
+<img src="./media/berkeleyLogo.jpg" height="60px"><img src="./media/ihmeLogo.jpg" height="60px"><img src="./media/itesm.png" height="75px">
 </center>
