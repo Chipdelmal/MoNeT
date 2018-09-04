@@ -50,7 +50,6 @@ _Related areas of interest: App Integration, Web Development, Data Visualization
 _Related areas of interest: GIS, Machine Learning_
 
 * Moisés Montaño Copca	Water bodies detection with satellite image processing using TensorFlow
-Lino Ronaldo	App for visualisation
 
 <hr>
 
