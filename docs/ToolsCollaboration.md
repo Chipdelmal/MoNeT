@@ -8,6 +8,9 @@ Generate a tool that allows people (civilians or health services workers) to rep
 
 _Related areas of interest: Web Development, Data Science, Crowd Sourcing algorithms and architectures, among others._
 
+* Christian Ricardo Solís Cortés:	Herramienta de crowdsourcing para recopilar datos sobre la presencia de mosquitos
+* Martín Alejandro Molinero Morales:	Identificacion y prevención de epidemias a partir del registro de presencia de mosquitos por medio de una aplicacion web.
+
 ### 2) Markov Chain Models for mosquito migration
 
 From a mosquito migration matrix (which is given) calculate the distribution of mosquitoes across the given landscape, and compile metrics on the importance of the sites in terms of mosquito quantities and flows. The project should be built as a script in the R or Python language.
@@ -26,6 +29,9 @@ Currently the system generates several .csv files that contain the population of
 
 _Related areas of interest: Graphics, Animation, Data Visualization, Data Analysis._
 
+* Salomón Olivera Abud:	Software generador de representaciones graficas de datos obtenidos a traves de MGDrivE.
+* Esteban Quintana Cueto:	Herramienta para la visualizacion gráfica de reproducción y comportamiento de distintas especies de mosquitos
+
 ### 5) Random scenarios generator
 
 Create a random scenario generator (graph/network generator), where cities or graphs of populations are randomly generated. The scenario generator should be parametrized, i.e. (max and minimum distances between nodes, number of nodes, distribution or sparsity configuration, etc.). The Generated environments should contemplate several thousands of nodes, and decisions as to how to generate the random numbers should be backed up and validated for scale numbers.
@@ -34,12 +40,21 @@ _Related areas of interest: Random Number Theory, Data Generation, Network Theor
 ### 6) Road-flight path intersections
 
 Aedes aegypti mosquitoes avoid flying over roads; which, in turn, modifies the expected movement flows on the landscape. We would like to study how this specific variable affects the broad-scale dynamics of mosquito movement to understand the effects this would have in diseases transmission. It would be convenient to integrate the current simulation model with open street maps  <a href="https://www.openstreetmap.org">OpenStreetMap</a> or a similar mapping application, to detect the number of roads(or obstacles) crossed by the connection between 2 nodes(patches) in the graph.
-The graph is modeled with an adjacency matrix that models the probability of a mosquito moving between two nodes. This matrix is already provided and calculated elsewhere.  The project should be able to:
-* map the provided graph from the GNDrivE system to a geographical model (openstreetmaps).
-* register the number car roads that intersect with the line between two nodes(mosquito flight path). Generate a matrix where the number of intersections of humans roads per mosquito flight paths are stored.
+The graph is modeled with an adjacency matrix that models the probability of a mosquito moving between two nodes. This matrix is already provided and calculated elsewhere.  The project should be able to map the provided graph from the MGDrivE system to a geographical model (openstreetmaps) and register the number car roads that intersect with the line between two nodes(mosquito flight path); to generate a matrix where the number of intersections of humans roads per mosquito flight paths are stored.
 
 _Related areas of interest: App Integration, Web Development, Data Visualization._
 
+
+### 7) Water bodies detection
+
+_Related areas of interest: GIS, Machine Learning_
+
+* Moisés Montaño Copca	Water bodies detection with satellite image processing using TensorFlow
+Lino Ronaldo	App for visualisation
+* Ana Dueñas	Satellite image recognition and segmentation (state of the art review)
+* René Ojeda	Satellite image recognition and segmentation (state of the art review)
+* Melannie	Data set for satellite image segmentation
+
 ## Authors
 
-Benjamín Valdés, Héctor M. Sánchez C.
+Benjamín Valdés, András Tackacs, Héctor M. Sánchez C.
