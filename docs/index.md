@@ -43,14 +43,6 @@ The study of gene-drives' spread in realistic landscapes is of upmost importance
 
 <img src="./media/YorkeysKnob_centralityHex.jpg" width="50%" align="middle"><img src="./media/YorkeysKnob_centralityScatter.jpg" width="50%" align="middle">
 
-## [Households Distances Analysis](./HouseholdDistances.html)
-
-The distance between households is thought to be an important metric in terms of the analysis of mosquito populations mixing and gene-drive flow. This is particularly true in the case of the _Aedes aegypti_ species, which is know for being a weak flyer that lives in close vicinity to human houses. This auxiliary workflow is aimed towards calculating the distances between the centroids of the households so that we can characterize the impact of these distances in terms of gene-flows.
-
-## [Potentially Useful Network Metrics](./NetworkMetrics.html)
-
-This document contains some of the notes we have compiled on the networks metrics that could provide some insights of how mosquito movement shapes the transmission of both: diseases and gene drives. This is mainly a brainstorming space for ideas to be shared and discussed.
-
 ## [Clustering of Directed Networks with Geographical Constraints](./Community.html)
 
 Targeted vector control interventions are usually applied on the field without taking into account the movement of mosquitos across the landscape. This, however, might not be the most optimal way of trying to eradicate these insects. In this workflow, we try to create and test a clustering algorithm that takes into account both: mosquito movement, and geographical constraints; to understand the factors that would promote more efficient mosquito-control campaigns.
@@ -61,6 +53,8 @@ Targeted vector control interventions are usually applied on the field without t
 
 This workflow was created to facilitate the creation of tools to be used as part of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project. It represents the collaboration betwenn UC, Berkeley and Tecnológico de Monterrey in an effort to get undergraduate students involved in mosquito-borne diseases research projects.
 
+<img src="./media/stillFlow.png" width="100%" align="middle">
+
 <!--
 ## [Pointsets Generation](./Pointsets.html)
 
@@ -70,6 +64,14 @@ Even though we can parse real-world landscapes from OpenStreet Map, generating r
 
 <i>Aedes aegypti</i>  mosquitos avoid flying over roads; which, in turn, modifies the expected movement flows on the landscape. We would like to study how this specific variable affects the broad-scale dynamics of mosquito movement to understand the effects this would have in diseases transmission; but for now this is still an open line to be tackled.
 -->
+
+## [Potentially Useful Network Metrics](./NetworkMetrics.html)
+
+This document contains some of the notes we have compiled on the networks metrics that could provide some insights of how mosquito movement shapes the transmission of both: diseases and gene drives. This is mainly a brainstorming space for ideas to be shared and discussed.
+
+## [Households Distances Analysis](./HouseholdDistances.html)
+
+The distance between households is thought to be an important metric in terms of the analysis of mosquito populations mixing and gene-drive flow. This is particularly true in the case of the _Aedes aegypti_ species, which is know for being a weak flyer that lives in close vicinity to human houses. This auxiliary workflow is aimed towards calculating the distances between the centroids of the households so that we can characterize the impact of these distances in terms of gene-flows.
 
 <hr>
 
