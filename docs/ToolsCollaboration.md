@@ -56,7 +56,7 @@ Lino Ronaldo	App for visualisation
 
 ## Collaborators
 
-Benjamín Valdés (BV), András Tackacs (AT), Héctor M. Sánchez C. (HMSC)
+<a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> (BV), András Tackacs (AT), Héctor <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> (HMSC)
 
 
 <center>
