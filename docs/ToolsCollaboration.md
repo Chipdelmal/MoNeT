@@ -2,7 +2,7 @@
 
 As it was mentioned before, this workflow comprises a toolkit of independent projects that can be tackled one at a time. The current list of alternatives follows.
 
-### 1) Crowd sourcing tool for gathering data on mosquitoes
+### 1) Crowd sourcing tool for gathering data on mosquitoes _(AT, HMSC)_
 
 Generate a tool that allows people (civilians or health services workers) to report information of mosquito presence, species, pictures?
 
@@ -23,7 +23,7 @@ Currently the system generates several .csv files that contain the population of
 
 _Related areas of interest: Graphics, Data Visualization, Data Analysis, Statistical Programming, R language._
 
-### 4) Standalone animation generator
+### 4) Standalone animation generator _(AT, HMSC)_
 
 Currently the system generates several .csv files that contain the population of each node across the time steps of each node. Check the output ADM and AFs .csv files generated. Lab members are interested in animated visualizations of simulation, however current animations are created by hand and take several hours to make, an example of such animations can be found in the project's <a href="https://www.youtube.com/playlist?list=PLRzY6w7pvIWqFJi94ZfhPkSVnazlUylpN">youtube playlist</a>. A tool is needed to parse the .csv files and generate useful visualizations and animations of the simulation in an automatic and efficient way. The difference between the previous project and this ones is that this is expected to be a standalone a tool with more interesting visualizations.
 
@@ -45,16 +45,20 @@ The graph is modeled with an adjacency matrix that models the probability of a m
 _Related areas of interest: App Integration, Web Development, Data Visualization._
 
 
-### 7) Water bodies detection
+### 7) Water bodies detection _(BV, HMSC)_
 
 _Related areas of interest: GIS, Machine Learning_
 
 * Moisés Montaño Copca	Water bodies detection with satellite image processing using TensorFlow
 Lino Ronaldo	App for visualisation
-* Ana Dueñas	Satellite image recognition and segmentation (state of the art review)
-* René Ojeda	Satellite image recognition and segmentation (state of the art review)
-* Melannie	Data set for satellite image segmentation
 
-## Authors
+<hr>
 
-Benjamín Valdés, András Tackacs, Héctor M. Sánchez C.
+## Collaborators
+
+Benjamín Valdés (BV), András Tackacs (AT), Héctor M. Sánchez C. (HMSC)
+
+
+<center>
+<img src="./media/itesm.png" height="75px"><img src="./media/berkeleyLogo.jpg" height="60px">
+</center>
