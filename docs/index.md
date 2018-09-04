@@ -51,7 +51,7 @@ Targeted vector control interventions are usually applied on the field without t
 
 ## [Tools for Fighting Malaria and Other Mosquito Borne Diseases](./ToolsCollaboration.html)
 
-This workflow was created to facilitate the creation of tools to be used as part of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project. It represents the collaboration betwenn UC, Berkeley and Tecnológico de Monterrey in an effort to get undergraduate students involved in mosquito-borne diseases research projects.
+This workflow was created to facilitate the creation of tools to be used as part of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project. It represents the collaboration between UC, Berkeley and Tecnológico de Monterrey in an effort to get undergraduate students involved in mosquito-borne diseases research projects.
 
 <img src="./media/stillFlow.png" width="100%" align="middle">
 
@@ -59,11 +59,11 @@ This workflow was created to facilitate the creation of tools to be used as part
 ## [Pointsets Generation](./Pointsets.html)
 
 Even though we can parse real-world landscapes from OpenStreet Map, generating random points distributions is still useful in terms of theoretical questions about how these distributions affect the metrics and results of our analyses.
+-->
 
 ## Road-Flight Path Intersections
 
 <i>Aedes aegypti</i>  mosquitos avoid flying over roads; which, in turn, modifies the expected movement flows on the landscape. We would like to study how this specific variable affects the broad-scale dynamics of mosquito movement to understand the effects this would have in diseases transmission; but for now this is still an open line to be tackled.
--->
 
 ## [Potentially Useful Network Metrics](./NetworkMetrics.html)
 

@@ -8,6 +8,8 @@ Generate a tool that allows people (civilians or health services workers) to rep
 
 _Related areas of interest: Web Development, Data Science, Crowd Sourcing algorithms and architectures, among others._
 
+**Ongoing Projects**:
+
 * Christian Ricardo Solís Cortés:	Herramienta de crowdsourcing para recopilar datos sobre la presencia de mosquitos
 * Martín Alejandro Molinero Morales:	Identificacion y prevención de epidemias a partir del registro de presencia de mosquitos por medio de una aplicacion web.
 
@@ -29,12 +31,15 @@ Currently the system generates several .csv files that contain the population of
 
 _Related areas of interest: Graphics, Animation, Data Visualization, Data Analysis._
 
+**Ongoing Projects**:
+
 * Salomón Olivera Abud:	Software generador de representaciones graficas de datos obtenidos a traves de MGDrivE.
 * Esteban Quintana Cueto:	Herramienta para la visualizacion gráfica de reproducción y comportamiento de distintas especies de mosquitos
 
 ### 5) Random scenarios generator
 
 Create a random scenario generator (graph/network generator), where cities or graphs of populations are randomly generated. The scenario generator should be parametrized, i.e. (max and minimum distances between nodes, number of nodes, distribution or sparsity configuration, etc.). The Generated environments should contemplate several thousands of nodes, and decisions as to how to generate the random numbers should be backed up and validated for scale numbers.
+
 _Related areas of interest: Random Number Theory, Data Generation, Network Theory, Statistics._
 
 ### 6) Road-flight path intersections
@@ -47,9 +52,13 @@ _Related areas of interest: App Integration, Web Development, Data Visualization
 
 ### 7) Water bodies detection _(BV, HMSC)_
 
+Detecting water sources in the landscape is important because of the information it provides about mosquito distribution. Collecting data, however, is not easy. In this project, we aim to use available satellite information such as the one provided by Google Maps, to segment, and detect water bodies using machine learning algorithms.
+
 _Related areas of interest: GIS, Machine Learning_
 
-* Moisés Montaño Copca	Water bodies detection with satellite image processing using TensorFlow
+**Ongoing Projects**:
+
+* Moisés Montaño Copca:	Water bodies detection with satellite image processing using TensorFlow
 
 <hr>
 
