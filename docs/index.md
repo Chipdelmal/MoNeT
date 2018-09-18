@@ -30,7 +30,6 @@ Mosquito-flow in the landscape is defined by the biological needs of the insects
 
 <img src="./media/npartite.jpg" width="100%" align="middle">
 
-
 ## [Targeted Interventions](./TargetedInterventions.html) and [Regular Grid Markov Analysis](./TheWalkingDead.html)
 
 Identifying the most important points in landscapes in terms of mosquito-control interventions' effectiveness is far from a trivial task. These individuals move in probabilistic patterns according to their intrinsic biological needs, and environmental factors. To maximize the effect of the deployed measures to kill them, we need to take into account these variables, and this is what this workflow is all about.
@@ -49,11 +48,16 @@ Targeted vector control interventions are usually applied on the field without t
 
 <img src="./media/headerImage.jpg" width="100%" align="middle">
 
+## [Landscape Aggregation](./LandscapeAggregation.html)
+
+Simulating landscapes in extreme resolution requires a lot of computational resources, however, aggregating the spatial units in naive ways might lead us to lose crucial information about the spatio-temporal processes that we want to study. In this workflow we explore how different levels of clustering affect the information we obtain on the dynamics of gene flows in spatial settings (with the use of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) framework).
+
 ## [Tools for Fighting Malaria and Other Mosquito Borne Diseases](./ToolsCollaboration.html)
 
 This workflow was created to facilitate the creation of tools to be used as part of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project. It represents the collaboration between UC, Berkeley and Tecnológico de Monterrey in an effort to get undergraduate students involved in mosquito-borne diseases research projects.
 
 <img src="./media/stillFlow.png" width="100%" align="middle">
+
 
 <!--
 ## [Pointsets Generation](./Pointsets.html)
@@ -65,7 +69,7 @@ Even though we can parse real-world landscapes from OpenStreet Map, generating r
 
 <i>Aedes aegypti</i>  mosquitos avoid flying over roads; which, in turn, modifies the expected movement flows on the landscape. We would like to study how this specific variable affects the broad-scale dynamics of mosquito movement to understand the effects this would have in diseases transmission; but for now this is still an open line to be tackled.
 
-## [Potentially Useful Network Metrics](./NetworkMetrics.html)
+## [Useful Network Metrics](./NetworkMetrics.html)
 
 This document contains some of the notes we have compiled on the networks metrics that could provide some insights of how mosquito movement shapes the transmission of both: diseases and gene drives. This is mainly a brainstorming space for ideas to be shared and discussed.
 
