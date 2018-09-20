@@ -39,7 +39,7 @@ class LineGraph(object):
 			x_coord += self.__edges[(i, i-1)]
 
 		print("My x_coord is ", x_coord)
-		return (x_coord, 0)
+		return [x_coord, 0]
 
 	def allVerticesCoord(self):
 		"Returns a list of vertex coordinates."
@@ -85,20 +85,39 @@ dist = 1
 
 L = LineGraph(n, dist)
 L.createLineGraph()
-points = L.allVerticesCoord()
+points = np.array(L.allVerticesCoord())
+
+print(points)
+
+#EXPERIMENT
+# from sklearn.datasets.samples_generator import make_blobs
+# data = make_blobs(n_samples=10, centers=3, n_features=2, random_state=0)
+# points = data[0]
+# print("Their Data is ", data)
+# print("Their Points are ", points)
 
 #creates dendrogram
-dendrogram = sch.dendrogram(sch.linkage(points, method='ward'))
+# dendrogram = sch.dendrogram(sch.linkage(points, method='ward'))
 
 #creates clusters
-hc = AgglomerativeClustering(n_clusters = 5, affinity = 'euclidean', linkage = 'ward')
+hc = AgglomerativeClustering(n_clusters = 3, affinity = 'euclidean', linkage = 'ward')
+print(hc)
 
 #save clusters for chart
 y_hc = hc.fit_predict(points)
+print(y_hc)
+
+# create scatter plot
+plt.scatter(points[:,0], points[:,1], c=y_hc)
+
+plt.xlim(-2,15)
+plt.ylim(-2,15)
 
 plt.scatter(points[y_hc ==0,0], points[y_hc == 0,1], s=100, c='red')
 plt.scatter(points[y_hc==1,0], points[y_hc == 1,1], s=100, c='black')
 plt.scatter(points[y_hc ==2,0], points[y_hc == 2,1], s=100, c='blue')
 plt.scatter(points[y_hc ==3,0], points[y_hc == 3,1], s=100, c='cyan')
+
+plt.show()
 
 
