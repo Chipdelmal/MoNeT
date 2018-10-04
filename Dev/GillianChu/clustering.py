@@ -3,49 +3,133 @@
 import basics as b
 import scipy.cluster.hierarchy as sch
 from sklearn.cluster import AgglomerativeClustering
+from scipy.cluster.hierarchy import dendrogram
+from scipy.cluster.hierarchy import linkage 
+from sklearn.neighbors import kneighbors_graph
 import numpy as np
 import matplotlib.pyplot as plt
 import clustering
+from scipy.cluster.hierarchy import cophenet
+from scipy.spatial.distance import pdist
+from scipy.cluster.hierarchy import fcluster
 
-def AggloCluster(num_cluster, link):
-	"Want to return the coordinates of centroids after clustering once. Unclear if this should be a CSV file."
+def perform_clustering(X, title, num_clusters=3):
+	#https://joernhees.de/blog/2015/08/26/scipy-hierarchical-clustering-and-dendrogram-tutorial/#Perform-the-Hierarchical-Clustering HELPFUL!!
+	plt.figure()
+	print("Right before, this is what linkage is ", linkage)
+	Z = linkage(X, 'ward')
 
-	#creates clusters
-	hc = AgglomerativeClustering(n_clusters = num_cluster, affinity = 'euclidean', linkage = link)
+	c, coph_dists = cophenet(Z, pdist(X))
+	print('The closer c is to 1.0, the better the clustering preserves the original distances. ', c)
 
-	#save clusters for chart
-	y_hc = hc.fit_predict(points)
+	print('Remember, each index of Z tells me what was grouped on the ith iteration.')
+	print('Here is X ', X)
+	print(X[:, 0])
+	print(X[:, 1])
+	plt.scatter(X[:, 0], X[:, 1])
+	# dendrogram(Z)
+	# plt.show()
 
-	return hc, y_hc
+def fancy_dendrogram(*args, **kwargs):
+    max_d = kwargs.pop('max_d', None)
+    if max_d and 'color_threshold' not in kwargs:
+        kwargs['color_threshold'] = max_d
+    annotate_above = kwargs.pop('annotate_above', 0)
 
+    ddata = dendrogram(*args, **kwargs)
 
-def visualize(points, y_hc):
+    if not kwargs.get('no_plot', False):
+        plt.title('Hierarchical Clustering Dendrogram (truncated)')
+        plt.xlabel('sample index or (cluster size)')
+        plt.ylabel('distance')
+        for i, d, c in zip(ddata['icoord'], ddata['dcoord'], ddata['color_list']):
+            x = 0.5 * sum(i[1:3])
+            y = d[1]
+            if y > annotate_above:
+                plt.plot(x, y, 'o', c=c)
+                plt.annotate("%.3g" % y, (x, y), xytext=(0, -5),
+                             textcoords='offset points',
+                             va='top', ha='center')
+        if max_d:
+            plt.axhline(y=max_d, c='k')
+    return ddata
 
-	# create scatter plot
-	plt.scatter(points[:,0], points[:,1], c=y_hc)
+def calculateCentroids(points, Z, max_d, criterion='distance'):
+	#get the cluster id for each of our samples
+	grouped_points = fcluster(Z, max_d, criterion = criterion)
+	#trying to return the clusters averaged coordinates -> centroids
+	print("Here are clusters: ", grouped_points)
 
-	plt.xlim(-2,15)
-	plt.ylim(-2,15)
+	listOfClusters = dict()
 
-	#TODO: adjust this so that it's variable on the num_cluster
-	plt.scatter(points[y_hc ==0,0], points[y_hc == 0,1], s=100, c='red')
-	plt.scatter(points[y_hc==1,0], points[y_hc == 1,1], s=100, c='black')
-	plt.scatter(points[y_hc ==2,0], points[y_hc == 2,1], s=100, c='blue')
-	plt.scatter(points[y_hc ==3,0], points[y_hc == 3,1], s=100, c='cyan')
+	#averaging logic
+	for i in range(len(points)):
+		print("My point index: ", i)
+		c = grouped_points[i]
+		if c not in listOfClusters.keys():
+			listOfClusters[c] = points[i]
+		else:
+			listOfClusters[c][0] += points[i][0]
+			listOfClusters[c][1] += points[i][1]
+			print("My centroid for cluster ", c, " is now ", listOfClusters[c])
+
+	for i in listOfClusters.keys():
+		count = 0
+		listOfClusters[i] = [float(x) for x in listOfClusters[i]]
+		for j in grouped_points:
+			if j == i:
+				count += 1
+		print("Cluster ", i, " has been seen ", count, " times")
+		#so count is the number of times we've seen a given cluster
+		listOfClusters[i][0] = listOfClusters[i][0]/count
+		listOfClusters[i][1] = listOfClusters[i][1]/count
+
+	return listOfClusters
+
+sizesLists = []
+def hierarchialAggregation(nodes=points, resolution=3, populationSize=sizesLists):
+	print("Right before, this is what linkage is ", linkage)
+	Z = linkage(points, 'ward')
+
+	#plots the clustered points on a scatter plot
+	perform_clustering(points, 'My graph', num_clusters=4)
+
+	fancy_dendrogram(Z, truncate_mode='lastp', p=12, show_contracted=True, annotate_above=10, max_d=max_d)
+
+	clusteredCoordinatesCentroids = calculateCentroids(points, Z, max_d)
+	print("Here are my centroid coordinates: ", clusteredCoordinatesCentroids)
 
 	plt.show()
-
-
+	return clusteredCoordinatesCentroids
 
 n = 10 
 dist = 1
 
+#building line graph from basics.py
 L = b.LineGraph(n, dist)
 L.createLineGraph()
 points = np.array(L.allVerticesCoord())
 
-#TODO: Figure out if Ward or Single-Link or centroid??
-#TODO: Figure out how to find the centroid after clustering. 
+#Aha. The problem is because it's been defaulting to unstructured. 
+#So I need to build a connectivity matrix from the graph 
+# knn_graph = kneighbors_graph(X, 2, mode='connectivity')
 
-hc, y_hc = AggloCluster(5, 'ward')
-visualize(points, y_hc)
+max_d = 3 # max distance cut-off, meaning determing the number of clusters
+hierarchialAggregation(points, max_d, sizesLists)
+
+
+#TODO: Figure out if we should use Ward or Single-Link or centroid?? Different aggregation metrics. 
+#TODO: Figure out how to find the centroid after clustering. <- More Immediately Doable
+
+"""
+Ward minimizes the sum of squared differences within all clusters. It is a variance-minimizing approach 
+and in this sense is similar to the k-means objective function but tackled with an agglomerative hierarchical approach.
+Maximum or complete linkage minimizes the maximum distance between observations of pairs of clusters.
+Average linkage minimizes the average of the distances between all observations of pairs of clusters.
+
+Agglo Cluster is computationally expensive when no connectivity constraints are added between samples: 
+it considers at each step all the possible merges
+
+Features Agglo?
+"""
+

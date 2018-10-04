@@ -33,7 +33,7 @@ class LineGraph(object):
 		for i in range(1, n+1):
 			x_coord += self.__edges[(i, i-1)]
 
-		print("My x_coord is ", x_coord)
+		# print("My x_coord is ", x_coord)
 		return [x_coord, 0]
 
 	def allVerticesCoord(self):
