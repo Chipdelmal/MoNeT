@@ -22,7 +22,7 @@ class LineGraph(object):
 		else:
 			self.graph_dict[v1].append(v2)
 
-		print("An edge of length ", d, " has been added between ", v1, " and ", v2)
+		# print("An edge of length ", d, " has been added between ", v1, " and ", v2)
 
 	def generateCoord(self, n):
 		"Generate coordinates for a given node."
