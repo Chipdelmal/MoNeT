@@ -54,9 +54,9 @@ def fancy_dendrogram(*args, **kwargs):
             plt.axhline(y=max_d, c='k')
     return ddata
 
-def calculateCentroids(points, Z, max_d, criterion='distance'):
+def calculateCentroids(points, Z, max_d, criterion, populationSize):
 	#get the cluster id for each of our samples
-	grouped_points = fcluster(Z, max_d, criterion = criterion)
+	grouped_points = fcluster(Z, max_d, criterion)
 	#trying to return the clusters averaged coordinates -> centroids
 	print("Here are clusters: ", grouped_points)
 
@@ -67,48 +67,56 @@ def calculateCentroids(points, Z, max_d, criterion='distance'):
 		print("My point index: ", i)
 		c = grouped_points[i]
 		if c not in listOfClusters.keys():
-			listOfClusters[c] = points[i]
+			listOfClusters[c] = [points[i], stdpop]
 		else:
-			listOfClusters[c][0] += points[i][0]
-			listOfClusters[c][1] += points[i][1]
+			listOfClusters[c][0][0] += points[i][0]
+			listOfClusters[c][0][1] += points[i][1]
+			listOfClusters[c][1] += stdpop
 			print("My centroid for cluster ", c, " is now ", listOfClusters[c])
 
 	for i in listOfClusters.keys():
 		count = 0
-		listOfClusters[i] = [float(x) for x in listOfClusters[i]]
+		listOfClusters[i][0] = [float(x) for x in listOfClusters[i][0]]
+		# listOfClusters[i] = [float(x) for x in listOfClusters[i][0]]
 		for j in grouped_points:
 			if j == i:
 				count += 1
 		print("Cluster ", i, " has been seen ", count, " times")
 		#so count is the number of times we've seen a given cluster
-		listOfClusters[i][0] = listOfClusters[i][0]/count
-		listOfClusters[i][1] = listOfClusters[i][1]/count
+		listOfClusters[i][0][0] = listOfClusters[i][0][0]/count
+		listOfClusters[i][0][1] = listOfClusters[i][0][1]/count
 
 	return listOfClusters
 
-sizesLists = []
-def hierarchialAggregation(nodes=points, resolution=3, populationSize=sizesLists):
+
+def hierarchialAggregation(nodes, resolution, populationSize):
 	print("Right before, this is what linkage is ", linkage)
-	Z = linkage(points, 'ward')
+	Z = linkage(nodes, 'ward')
 
 	#plots the clustered points on a scatter plot
 	perform_clustering(points, 'My graph', num_clusters=4)
 
 	fancy_dendrogram(Z, truncate_mode='lastp', p=12, show_contracted=True, annotate_above=10, max_d=max_d)
 
-	clusteredCoordinatesCentroids = calculateCentroids(points, Z, max_d)
+	clusteredCoordinatesCentroids = calculateCentroids(points, Z, max_d, 'distance', sizesLists)
 	print("Here are my centroid coordinates: ", clusteredCoordinatesCentroids)
 
 	plt.show()
 	return clusteredCoordinatesCentroids
 
+# def runMCR(landscape=aggregatedLandscape, geneDrive=MCR):
+# 	return populationDynamics
+
 n = 10 
 dist = 1
+stdpop = 50
 
 #building line graph from basics.py
 L = b.LineGraph(n, dist)
 L.createLineGraph()
+L.allVertices
 points = np.array(L.allVerticesCoord())
+sizesLists = [stdpop for i in range(len(points))]
 
 #Aha. The problem is because it's been defaulting to unstructured. 
 #So I need to build a connectivity matrix from the graph 
@@ -131,5 +139,11 @@ Agglo Cluster is computationally expensive when no connectivity constraints are 
 it considers at each step all the possible merges
 
 Features Agglo?
+
+100 nodes
+15 distance
+no aggregation
+one with full aggregation
+one with fifty 
 """
 
