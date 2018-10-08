@@ -13,6 +13,7 @@ from scipy.cluster.hierarchy import cophenet
 from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import fcluster
 import csv
+from scipy.spatial import distance_matrix
 
 def perform_clustering(X, title, num_clusters=3):
 	#https://joernhees.de/blog/2015/08/26/scipy-hierarchical-clustering-and-dendrogram-tutorial/#Perform-the-Hierarchical-Clustering HELPFUL!!
@@ -101,26 +102,35 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 
 	clusteredCoordinatesCentroids = calculateCentroids(points, Z, max_d, 'distance', sizesLists)
 	# print("Here are my centroid coordinates: ", clusteredCoordinatesCentroids)
-	#fullaggregation max_d -> 1
-	#halfaggregation max_d -> 25
-	#quarteraggregation max_d -> 50
+	#fullaggregation max_d -> 1 *
+	#halfaggregation max_d -> 25 *
+	#quarteraggregation max_d -> 50 *
 	#noaggregation max_d -> float("inf")
 	print("I have ", len(clusteredCoordinatesCentroids), " clusters")
 	# for i in clusteredCoordinatesCentroids:
 	# 	print("Here it is ", clusteredCoordinatesCentroids[i][0])
 	# 	print("Here it is ", clusteredCoordinatesCentroids[i][1])
 
-	with open('fullAggregationCoord.csv', mode='w') as destination:
+	#build distance matrix
+	# print(clusteredCoordinatesCentroids)
+	coordinates = [clusteredCoordinatesCentroids[obj][0] for obj in clusteredCoordinatesCentroids]
+	# print(coordinates)
+	dist = distance_matrix(coordinates, coordinates)
+	# print("Here is dist ", dist)
+	dist = np.array(dist)
+	# print(dist.shape)
+
+	with open('noAggregationCoord.csv', mode='w') as destination:
 		writer = csv.writer(destination, delimiter= ',')
-		for i in clusteredCoordinatesCentroids:
-			writer.writerow(clusteredCoordinatesCentroids[i][0])
-	with open('fullAggregationPop.csv', mode='w') as destination:
+		for i in dist:
+			writer.writerow(i)
+	with open('noAggregationPop.csv', mode='w') as destination:
 		writer = csv.writer(destination, delimiter=',')
 		for i in clusteredCoordinatesCentroids:
 			destination.write('%i\n' % clusteredCoordinatesCentroids[i][1])
 
-	# plt.show()
-	return clusteredCoordinatesCentroids
+	# # plt.show()
+	# return clusteredCoordinatesCentroids
 
 # def runMCR(landscape=aggregatedLandscape, geneDrive=MCR):
 # 	return populationDynamics
@@ -140,7 +150,7 @@ sizesLists = [stdpop for i in range(len(points))]
 #So I need to build a connectivity matrix from the graph 
 # knn_graph = kneighbors_graph(X, 2, mode='connectivity')
 
-max_d = 1
+max_d = float("inf")
 # max_d = float("inf") # max distance cut-off, meaning determing the number of clusters
 hierarchialAggregation(points, max_d, sizesLists)
 
