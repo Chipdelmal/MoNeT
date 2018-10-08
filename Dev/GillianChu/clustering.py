@@ -106,10 +106,18 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 	#quarteraggregation max_d -> 50
 	#noaggregation max_d -> float("inf")
 	print("I have ", len(clusteredCoordinatesCentroids), " clusters")
-	with open('noaggregation.csv', mode='w') as fullaggregation:
-		writer = csv.writer(fullaggregation, delimiter= ',')
+	# for i in clusteredCoordinatesCentroids:
+	# 	print("Here it is ", clusteredCoordinatesCentroids[i][0])
+	# 	print("Here it is ", clusteredCoordinatesCentroids[i][1])
+
+	with open('fullAggregationCoord.csv', mode='w') as destination:
+		writer = csv.writer(destination, delimiter= ',')
 		for i in clusteredCoordinatesCentroids:
-			writer.writerow(clusteredCoordinatesCentroids[i])
+			writer.writerow(clusteredCoordinatesCentroids[i][0])
+	with open('fullAggregationPop.csv', mode='w') as destination:
+		writer = csv.writer(destination, delimiter=',')
+		for i in clusteredCoordinatesCentroids:
+			destination.write('%i\n' % clusteredCoordinatesCentroids[i][1])
 
 	# plt.show()
 	return clusteredCoordinatesCentroids
@@ -132,7 +140,8 @@ sizesLists = [stdpop for i in range(len(points))]
 #So I need to build a connectivity matrix from the graph 
 # knn_graph = kneighbors_graph(X, 2, mode='connectivity')
 
-max_d = float("inf") # max distance cut-off, meaning determing the number of clusters
+max_d = 1
+# max_d = float("inf") # max distance cut-off, meaning determing the number of clusters
 hierarchialAggregation(points, max_d, sizesLists)
 
 """
