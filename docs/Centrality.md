@@ -29,4 +29,4 @@ This idea of hierarchical clustering and iterative centrality calculations shoul
 
 ### Authors
 
-Héctor M. Sánchez C., Sabrina Wong, Sarafina Smith, John M. Marshall, David L. Smith
+Héctor M. Sánchez C., Sarafina Smith, Sabrina Wong, John M. Marshall, David L. Smith

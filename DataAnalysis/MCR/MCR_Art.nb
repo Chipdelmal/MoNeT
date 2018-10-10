@@ -1,0 +1,333 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     11825,        325]
+NotebookOptionsPosition[     10095,        286]
+NotebookOutlinePosition[     10450,        302]
+CellTagsIndexPosition[     10407,        299]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Style 1", "Chapter",
+ CellChangeTimes->{{3.746360698964119*^9, 
+  3.746360701499827*^9}},ExpressionUUID->"3b795eaa-62cd-40ef-953b-\
+054d81eaed11"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"folder", "=", 
+  RowBox[{
+   RowBox[{"Directory", "[", "]"}], "<>", 
+   "\"\</images/Autosomal/\>\""}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"fileNames", "=", 
+   RowBox[{"FileNames", "[", 
+    RowBox[{"\"\<*A.png\>\"", ",", "folder"}], "]"}]}], ";"}]}], "Input",
+ CellLabel->
+  "In[1037]:=",ExpressionUUID->"46df4b72-6d5e-41f2-8869-812e6a13d6c4"],
+
+Cell[BoxData["\<\"/Users/sanchez.hmsc/odrive/MGDrivE_Experiments/MCR/images/\
+Autosomal/\"\>"], "Output",
+ CellChangeTimes->{3.746361444657069*^9},
+ CellLabel->
+  "Out[1038]=",ExpressionUUID->"fe75ce0d-f337-4518-bf87-483e071080a1"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"images", "=", 
+   RowBox[{"ParallelMap", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ImageRotate", "[", 
+       RowBox[{
+        RowBox[{"ImageResize", "[", 
+         RowBox[{
+          RowBox[{"ImageTake", "[", 
+           RowBox[{
+            RowBox[{"Import", "[", "#", "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"45", ",", "377"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"45", ",", "2480"}], "}"}]}], "]"}], ",", "500"}], "]"}],
+         ",", 
+        RowBox[{
+         RowBox[{"-", "90"}], "Degree"}]}], "]"}], "&"}], ",", 
+     "\[IndentingNewLine]", "fileNames"}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"randomNumbers", "=", 
+   RowBox[{"RandomInteger", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "100"}], "}"}], ",", 
+     RowBox[{"Length", "[", "images", "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"imagesPairs", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"#", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "\[Rule]", 
+       RowBox[{"#", "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}], ")"}], "&"}], "/@", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{"randomNumbers", ",", "images"}], "}"}], "]"}]}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.746359134724945*^9, 3.746359248519967*^9}, {
+   3.746359313425694*^9, 3.746359656848089*^9}, {3.746359892566231*^9, 
+   3.7463599413129807`*^9}, {3.7463601158027*^9, 3.746360210141897*^9}, 
+   3.746360951435563*^9},
+ CellLabel->
+  "In[1040]:=",ExpressionUUID->"24de8bec-a7ff-485e-9b9f-61eca95536db"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"collage", "=", 
+   RowBox[{"ImageCollage", "[", 
+    RowBox[{"imagesPairs", ",", "\"\<Fill\>\"", ",", 
+     RowBox[{"{", 
+      RowBox[{"3840", ",", "2160"}], "}"}], ",", 
+     RowBox[{"Background", "\[Rule]", "White"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<collage01.png\>\"", ",", "collage", ",", 
+   RowBox[{"ImageSize", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"2", "*", "3840"}], ",", 
+      RowBox[{"2", "*", "2160"}]}], "}"}]}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.746359780593512*^9, 3.7463598311231327`*^9}, {
+  3.74635987797009*^9, 3.7463598791360273`*^9}, {3.746360013630781*^9, 
+  3.746360017685109*^9}, {3.746360058807807*^9, 3.746360094725822*^9}, {
+  3.7463602744135103`*^9, 3.74636027545612*^9}, {3.746360386909041*^9, 
+  3.746360387201021*^9}, {3.7463614275830927`*^9, 3.746361440853201*^9}},
+ CellLabel->
+  "In[1043]:=",ExpressionUUID->"03fdabb6-937e-4b15-a460-f36922abb484"],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{
+  3.746359792015554*^9, 3.746359832118362*^9, 3.746359884094552*^9, 
+   3.74635993341568*^9, 3.746359964363577*^9, 3.746360042335559*^9, {
+   3.746360082103249*^9, 3.746360102480184*^9}, 3.7463602689837503`*^9, 
+   3.746360362493042*^9, 3.7463606953934393`*^9, 3.7463615658477163`*^9},
+ CellLabel->
+  "Out[1043]=",ExpressionUUID->"17f4b9ae-743f-4179-a5fd-a41a1e178f00"],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{
+  3.746359792015554*^9, 3.746359832118362*^9, 3.746359884094552*^9, 
+   3.74635993341568*^9, 3.746359964363577*^9, 3.746360042335559*^9, {
+   3.746360082103249*^9, 3.746360102480184*^9}, 3.7463602689837503`*^9, 
+   3.746360362493042*^9, 3.7463606953934393`*^9, 3.7463615662255383`*^9},
+ CellLabel->
+  "Out[1044]=",ExpressionUUID->"bd9047ce-c5db-4f34-9fc7-02539b3b19cd"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Style 2", "Chapter",
+ CellChangeTimes->{{3.746360698964119*^9, 
+  3.746360718905016*^9}},ExpressionUUID->"ee7b6d95-ae68-4f7a-9e30-\
+8eedccfc58d5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"folder", "=", 
+  RowBox[{
+   RowBox[{"Directory", "[", "]"}], "<>", 
+   "\"\</images/Autosomal/\>\""}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"fileNames", "=", 
+   RowBox[{"FileNames", "[", 
+    RowBox[{"\"\<*C.png\>\"", ",", "folder"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.746360763301235*^9, 3.746360764350107*^9}},
+ CellLabel->
+  "In[797]:=",ExpressionUUID->"c5aec8b6-4f6e-451c-8d40-bb4f4f0e0bc1"],
+
+Cell[BoxData["\<\"/Users/sanchez.hmsc/odrive/MGDrivE_Experiments/MCR/images/\
+Autosomal/\"\>"], "Output",
+ CellChangeTimes->{3.7463607801300573`*^9, 3.746361580759532*^9, 
+  3.7463618325201817`*^9, 3.746364644390242*^9, 3.746365662849853*^9, 
+  3.74644570288074*^9},
+ CellLabel->
+  "Out[798]=",ExpressionUUID->"715937bd-c299-4c86-8e65-b2ced7d2fc9e"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"images", "=", 
+   RowBox[{"ParallelMap", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ImageRotate", "[", 
+       RowBox[{
+        RowBox[{"ImageResize", "[", 
+         RowBox[{
+          RowBox[{"ImagePad", "[", 
+           RowBox[{
+            RowBox[{"ImageTake", "[", 
+             RowBox[{
+              RowBox[{"Import", "[", "#", "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"260", ",", "1000"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"130", ",", "2350"}], "}"}]}], "]"}], ",", "40", ",", 
+            "White"}], "]"}], ",", "500"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"-", "90"}], "Degree"}]}], "]"}], "&"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"fileNames", "[", 
+      RowBox[{"[", 
+       RowBox[{"1", ";;", "All"}], "]"}], "]"}]}], "\[IndentingNewLine]", 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.746359134724945*^9, 3.746359248519967*^9}, {
+   3.746359313425694*^9, 3.746359656848089*^9}, {3.746359892566231*^9, 
+   3.7463599413129807`*^9}, {3.7463601158027*^9, 3.746360210141897*^9}, {
+   3.746360769737295*^9, 3.7463608876261597`*^9}, {3.746360947130143*^9, 
+   3.746361027056923*^9}, {3.746361085258045*^9, 3.7463611348498163`*^9}, 
+   3.7463611918888683`*^9, {3.746361569956987*^9, 3.74636160881406*^9}, {
+   3.7463618376245604`*^9, 3.746361840841416*^9}},
+ CellLabel->
+  "In[800]:=",ExpressionUUID->"1b07a655-2ac5-461b-a630-a175cedaaca3"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"randomNumbers", "=", 
+   RowBox[{"RandomInteger", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "25"}], "}"}], ",", 
+     RowBox[{"Length", "[", "images", "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"imagesPairs", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"#", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "\[Rule]", 
+       RowBox[{"#", "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}], ")"}], "&"}], "/@", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{"randomNumbers", ",", "images"}], "}"}], "]"}]}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.746364998727538*^9, 3.746365000800684*^9}},
+ CellLabel->
+  "In[801]:=",ExpressionUUID->"4f1dc9e0-c9e0-4e4b-a4e1-51964fd1e832"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"collage", "=", 
+   RowBox[{"ImageCollage", "[", 
+    RowBox[{"imagesPairs", ",", "\"\<Fill\>\"", ",", 
+     RowBox[{"{", 
+      RowBox[{"3840", ",", "2160"}], "}"}], ",", 
+     RowBox[{"Background", "\[Rule]", "White"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<collage02.png\>\"", ",", 
+   RowBox[{"collage", "//", "ImageAdjust"}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"2", "*", "3840"}], ",", 
+      RowBox[{"2", "*", "2160"}]}], "}"}]}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.746359780593512*^9, 3.7463598311231327`*^9}, {
+   3.74635987797009*^9, 3.7463598791360273`*^9}, {3.746360013630781*^9, 
+   3.746360017685109*^9}, {3.746360058807807*^9, 3.746360094725822*^9}, {
+   3.7463602744135103`*^9, 3.74636027545612*^9}, {3.746360386909041*^9, 
+   3.746360387201021*^9}, {3.746361208862224*^9, 3.7463612140192003`*^9}, {
+   3.7463613159571037`*^9, 3.746361358065793*^9}, {3.746361437105801*^9, 
+   3.746361437168049*^9}, 3.7463620979455757`*^9, {3.746364626985661*^9, 
+   3.7463646418565702`*^9}, 3.7463649961976833`*^9},
+ CellLabel->
+  "In[803]:=",ExpressionUUID->"86af2e0d-88eb-4578-a862-85f9401e29c3"],
+
+Cell[BoxData["\<\"collage02.png\"\>"], "Output",
+ CellChangeTimes->{3.746365649327181*^9, 3.746366431092327*^9, 
+  3.746446949365036*^9},
+ CellLabel->
+  "Out[804]=",ExpressionUUID->"378db1f1-59e6-4072-b368-394bc939bbd1"]
+}, Open  ]]
+}, Closed]]
+},
+WindowSize->{920, 1369},
+WindowMargins->{{Automatic, 614}, {Automatic, 0}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 152, 3, 69, "Chapter",ExpressionUUID->"3b795eaa-62cd-40ef-953b-054d81eaed11"],
+Cell[CellGroupData[{
+Cell[757, 29, 508, 14, 73, "Input",ExpressionUUID->"46df4b72-6d5e-41f2-8869-812e6a13d6c4"],
+Cell[1268, 45, 231, 4, 34, "Output",ExpressionUUID->"fe75ce0d-f337-4518-bf87-483e071080a1"]
+}, Open  ]],
+Cell[1514, 52, 1709, 49, 136, "Input",ExpressionUUID->"24de8bec-a7ff-485e-9b9f-61eca95536db"],
+Cell[CellGroupData[{
+Cell[3248, 105, 1000, 22, 52, "Input",ExpressionUUID->"03fdabb6-937e-4b15-a460-f36922abb484"],
+Cell[4251, 129, 425, 7, 34, "Output",ExpressionUUID->"17f4b9ae-743f-4179-a5fd-a41a1e178f00"],
+Cell[4679, 138, 425, 7, 34, "Output",ExpressionUUID->"bd9047ce-c5db-4f34-9fc7-02539b3b19cd"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5153, 151, 152, 3, 58, "Chapter",ExpressionUUID->"ee7b6d95-ae68-4f7a-9e30-8eedccfc58d5"],
+Cell[CellGroupData[{
+Cell[5330, 158, 573, 15, 73, "Input",ExpressionUUID->"c5aec8b6-4f6e-451c-8d40-bb4f4f0e0bc1"],
+Cell[5906, 175, 349, 6, 34, "Output",ExpressionUUID->"715937bd-c299-4c86-8e65-b2ced7d2fc9e"]
+}, Open  ]],
+Cell[6270, 184, 1495, 35, 115, "Input",ExpressionUUID->"1b07a655-2ac5-461b-a630-a175cedaaca3"],
+Cell[7768, 221, 811, 25, 52, "Input",ExpressionUUID->"4f1dc9e0-c9e0-4e4b-a4e1-51964fd1e832"],
+Cell[CellGroupData[{
+Cell[8604, 250, 1240, 26, 52, "Input",ExpressionUUID->"86af2e0d-88eb-4578-a862-85f9401e29c3"],
+Cell[9847, 278, 220, 4, 34, "Output",ExpressionUUID->"378db1f1-59e6-4072-b368-394bc939bbd1"]
+}, Open  ]]
+}, Closed]]
+}
+]
+*)
+
