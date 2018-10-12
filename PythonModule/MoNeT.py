@@ -154,8 +154,52 @@ def maxDistBetweenClusters(points):
                 distances[i].append(None)
     return distances
 
+def alleleCounts(csvFileName, columns, alleleNames, startCol = 3):
+	"""
+	In: columns is a list of lists describing the number of times each one indexed column should be counted for this allele
+		eg [[1, 1, 2], [2, 3, 3]] if the given genotypes are WW, WR, and RR
+		alleleNames is a list of the allele names for use as column titles eg ["W", "R"]
+		startCol is the first column in the csv which lists genotypes, one indexed (column 1 in the columns argument)
+	Out: A pandas dataframe with 1 column for each allele, containing the specified sum: eg  col 1 + col 1 + col 2 for "W"
+    """
+    data = np.genfromtxt(csvFileName, dtype=int, skip_header=1, delimiter=",")
+    res = df[['Time', 'Patch']]
+    for i in range(len(columns)):
+        # summed_col contains sum of counts for one allele, such as W
+        summed_col = np.zeros_like(data[:,0])
+        for index in columns[i]:
+            # subtract 2 because index and start col are 1 indexed
+            summed_col += data[:,index+startCol - 2]
+        allele = alleleNames[i]
+        res.insert(i + startCol - 1, alleleNames[i], summed_col)
+    return res
 
+def allCounts(csvPath, columns, alleleName, female=True):
+	"""
+	In: csvPath is a folder of CSV files, such as "CRISPR_SIT/"
+		columns is a list of lists describing the number of times each one indexed column should be counted for this allele
+		eg [[1, 1, 2], [2, 3, 3]] if the given genotypes are WW, WR, and RR
+		alleleName is the alleleName for use as a column title
+		female specifies whether to count male or female mosquitoes
+	Out: Data frame with one allele count column for each run of that gender
+		 eg  W1W2...WnW1W2...Wn  representing the count of W over n experiments on female mosquitoes
+	"""
+    if female:
+        files = glob.glob(csvPath + 'AF1*.csv')
+    else:
+        files = glob.glob(csvPath + 'ADM*.csv')
+    res = df[['Time', 'Patch']]
+    for i in range(len(files)):
+        count_df = alleleCounts(files[i], [columns], [alleleName])
+        res.insert(i + 2, alleleName + str(i+1), (count_df[alleleName]).copy())
+    res = res.drop('Patch', axis=1)
+    return res
 
+def makePlot(alleleCounts, title, linewidth, opacity, color):
+	# alleleCounts is table outputted by allCounts
+    alleleCounts.plot(x="Time", figsize=(15, 5), linewidth = linewidth, legend=False, title = title, color = color, alpha = opacity)
+    plt.ylabel("Allele Count")
+    plt.show()
 
 ################################################################################
 ############################### Biyonka Liang ##################################
