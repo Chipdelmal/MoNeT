@@ -25,3 +25,9 @@ zip(seqA,seqB,seqC)
 for i,(a,b) in enumerate(zip(seqA,seqB)):
     formatString="{0}:{1},{2}"
     print(formatString.format(i,a,b))
+
+pitchers=[("Nolan","Ryan"),("Roger","Clemens"),("Schilling","Curt")]
+firstNames,lastNames=zip(*pitchers)
+firstNames
+
+list(reversed(range(10)))
