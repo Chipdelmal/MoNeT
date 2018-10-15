@@ -52,6 +52,14 @@ Targeted vector control interventions are usually applied on the field without t
 
 Simulating landscapes in extreme resolution requires a lot of computational resources, however, aggregating the spatial units in naive ways might lead us to lose crucial information about the spatio-temporal processes that we want to study. In this workflow we explore how different levels of clustering affect the information we obtain on the dynamics of gene flows in spatial settings (with the use of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) framework).
 
+<img src="./media/E_080_000_000_000-04.png" width="100%" align="middle">
+
+## [Gene Drives Visualizations Tools](./DataVisualization.html)
+
+The [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project has presented interesting challenges in terms of data analysis and visualization. By using _Mathematica_ and _Python_ we have been compiling a toolkit of plots and routines that allow us to analyse and describe the way genes disperse in the enviornment as a consequence of mosquito movement.
+
+<img src="./media/SpheresPlots_H.jpg" width="100%" align="middle">
+
 ## [Tools for Fighting Malaria and Other Mosquito Borne Diseases](./ToolsCollaboration.html)
 
 This workflow was created to facilitate the creation of tools to be used as part of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project. It represents the collaboration between UC, Berkeley and Tecnológico de Monterrey in an effort to get undergraduate students involved in mosquito-borne diseases research projects.
@@ -88,9 +96,9 @@ These routines were created as standalone functions to support the main research
 * [OSMnx Parser](./OSMnx.html): A script to parse and export SHP files from buildings roads polygons from [Open Street Map](https://www.openstreetmap.org/#map=14/-11.7114/43.2587) using [OSMnx](https://github.com/gboeing/osmnx).
 * [Fancy Maps Parser](./FancyMaps.html): A _Mathematica_ script that parses maps from _Wolfram Database_, exports the coordinates, populations, and a "fancy" map.
 
-<center>
+<!--<center>
 <img src="./media/France.jpg" width="33%" align="middle"><img src="./media/Madagascar.jpg" width="33%" align="middle"><img src="./media/Italy.jpg" width="33%" align="middle">
-</center>
+</center>-->
 
 <hr>
 
@@ -98,9 +106,11 @@ These routines were created as standalone functions to support the main research
 
 <ul style="font-size:12.5px">
   <li>Lead: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]</li>
-  <li>Dev: <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a>  [UCB], <a href="https://slwu89.github.io/">Sean L. Wu</a>  [UCB], Sarafina Smith  [UCB], Gillian Chu [UCB], Sabrina Wong  [UCB], Daniel Citron  [IHME]</li>
+  <li>Dev: Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], <a href="https://slwu89.github.io/">Sean L. Wu</a> [UCB]
   <li>Collaborators: <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]</li>
-  <li>PI's: <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [UCB]</li>
+  <li>PI's: <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]</li><br>
+
+  <li>Former dev: Sabrina Wong [UCB]</li>
 </ul>
 
 <hr>

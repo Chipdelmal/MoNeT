@@ -37,7 +37,12 @@ runMCR(landscape=aggregatedLandscape,geneDrive=MCR){
 
 5. Compare the system in terms of population dynamics differences.
 
+a. Fully aggregated
+
 <img src="./media/E_080_000_000_000-04 (1).png" width="100%" align="middle">
+
+b. No aggregation
+
 <img src="./media/E_080_000_000_000-04.png" width="100%" align="middle">
 
 #### Next Steps
