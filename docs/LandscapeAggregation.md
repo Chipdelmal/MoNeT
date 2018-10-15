@@ -34,8 +34,11 @@ runMCR(landscape=aggregatedLandscape,geneDrive=MCR){
 ```
 
 4. Run an experiment at the lowest, and highest resolutions. The experiment should be a low-release size with a large number of nodes.
+
 5. Compare the system in terms of population dynamics differences.
 
+<img src="./media/E_080_000_000_000-04 (1).png" width="100%" align="middle">
+<img src="./media/E_080_000_000_000-04.png" width="100%" align="middle">
 
 #### Next Steps
 
@@ -50,4 +53,4 @@ Provided that there are noticeable differences between the predictions on the in
 
 ### Authors
 
-Gillian Chu, Sean L. Wu, Héctor M. Sánchez C.
+Gillian Chu, Héctor M. Sánchez C.
