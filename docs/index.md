@@ -52,7 +52,7 @@ Targeted vector control interventions are usually applied on the field without t
 
 Simulating landscapes in extreme resolution requires a lot of computational resources, however, aggregating the spatial units in naive ways might lead us to lose crucial information about the spatio-temporal processes that we want to study. In this workflow we explore how different levels of clustering affect the information we obtain on the dynamics of gene flows in spatial settings (with the use of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) framework).
 
-<img src="./media/E_080_000_000_000-04.png" width="100%" align="middle">
+<img src="./media/E_080_000_000_000-04 (1).png" width="100%" align="middle">
 
 ## [Gene Drives Visualizations Tools](./DataVisualization.html)
 
