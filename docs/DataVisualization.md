@@ -8,12 +8,13 @@ In a single population environment, the main challenge comes from presenting the
 
 In the following examples we show the dynamics of a CRISPR system, and a "split-drive":
 
-<img src="./media/trace02.png" width="100%" align="middle"><img src="./media/trace01.png" width="100%" align="middle">
+<img src="./media/Trace02.png" width="100%" align="middle"><img src="./media/Trace01.png" width="100%" align="middle">
 
 We provide both: _Mathematica_ and _Python_ implementations. In the following examples we show two versions generated through the _Python_ version being developed as a user-friendly way to analyze the datasets created in [*MGDrivE*](https://marshalllab.github.io/MGDrivE/):
 
 <img src="./media/tracePython01.png" width="50%" align="middle"><img src="./media/tracePython02.png" width="50%" align="middle">
 
+https://chipdelmal.github.io/MoNeT/media/trace02.png
 
 ### Gene Spatial Flows
 
@@ -37,6 +38,7 @@ Once again, we provide the _Python_ version of the routines:
 
 ### Factorial Experiments Heatmaps
 
+### 4D Response Surfaces
 
 ### Authors
 
