@@ -14,6 +14,7 @@ For this experiment, we are defining equally-sized mosquito populations to lie i
 
 <center>
   <img src="./media/dendrogram01.png" width="30%" align="middle"><img src="./media/dendrogram02.png" width="30%" align="middle">
+  <figcaption style="font-size:10px">Two different levels of aggregation in the clustering.</figcaption>
 </center>
 <br>
 

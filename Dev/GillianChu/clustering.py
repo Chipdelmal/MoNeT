@@ -4,7 +4,7 @@ import basics as b
 import scipy.cluster.hierarchy as sch
 from sklearn.cluster import AgglomerativeClustering
 from scipy.cluster.hierarchy import dendrogram
-from scipy.cluster.hierarchy import linkage 
+from scipy.cluster.hierarchy import linkage
 from sklearn.neighbors import kneighbors_graph
 import numpy as np
 import matplotlib.pyplot as plt
@@ -69,11 +69,11 @@ def calculateCentroids(points, Z, max_d, criterion, populationSize):
 		# print("My point index: ", i)
 		c = grouped_points[i]
 		if c not in listOfClusters.keys():
-			listOfClusters[c] = [points[i], stdpop]
+			listOfClusters[c] = [points[i], populationSize[i]]
 		else:
 			listOfClusters[c][0][0] += points[i][0]
 			listOfClusters[c][0][1] += points[i][1]
-			listOfClusters[c][1] += stdpop
+			listOfClusters[c][1] += populationSize[i]
 			# print("My centroid for cluster ", c, " is now ", listOfClusters[c])
 
 	for i in listOfClusters.keys():
@@ -90,23 +90,22 @@ def calculateCentroids(points, Z, max_d, criterion, populationSize):
 
 	return listOfClusters
 
-
 def hierarchialAggregation(nodes, resolution, populationSize):
 	# print("Right before, this is what linkage is ", linkage)
 	Z = linkage(nodes, 'ward')
 
 	#plots the clustered points on a scatter plot
-	perform_clustering(points, 'My graph', num_clusters=4)
+	perform_clustering(nodes, 'My graph', num_clusters=4)
 
-	fancy_dendrogram(Z, truncate_mode='lastp', p=12, show_contracted=True, annotate_above=10, max_d=max_d)
+	fancy_dendrogram(Z, truncate_mode='lastp', p=12, show_contracted=True, annotate_above=10, max_d=resolution)
 
-	clusteredCoordinatesCentroids = calculateCentroids(points, Z, max_d, 'distance', sizesLists)
+	clusteredCoordinatesCentroids = calculateCentroids(nodes, Z, resolution, 'distance', populationSize)
 	# print("Here are my centroid coordinates: ", clusteredCoordinatesCentroids)
 	#fullaggregation max_d -> 1 *
 	#halfaggregation max_d -> 25 *
-	#quarteraggregation max_d -> 50 *
+	#quarteraggregation max_d -> 50
 	#noaggregation max_d -> float("inf")
-	print("I have ", len(clusteredCoordinatesCentroids), " clusters")
+	print("I have " + str(len(clusteredCoordinatesCentroids)) + " clusters")
 	# for i in clusteredCoordinatesCentroids:
 	# 	print("Here it is ", clusteredCoordinatesCentroids[i][0])
 	# 	print("Here it is ", clusteredCoordinatesCentroids[i][1])
@@ -132,46 +131,43 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 	# # plt.show()
 	# return clusteredCoordinatesCentroids
 
-# def runMCR(landscape=aggregatedLandscape, geneDrive=MCR):
-# 	return populationDynamics
+# n = 100
+# dist = 15
+# stdpop = 50
+#
+# #building line graph from basics.py
+# L = b.LineGraph(n, dist)
+# L.createLineGraph()
+# L.allVertices
+# points = np.array(L.allVerticesCoord())
+# sizesLists = [stdpop for i in range(len(points))]
+#
+# #Aha. The problem is because it's been defaulting to unstructured.
+# #So I need to build a connectivity matrix from the graph
+# # knn_graph = kneighbors_graph(X, 2, mode='connectivity')
+#
+# max_d = float("inf")
+# # max_d = float("inf") # max distance cut-off, meaning determing the number of clusters
+# hierarchialAggregation(points, max_d, sizesLists)
 
-n = 100
-dist = 15
-stdpop = 50
 
-#building line graph from basics.py
-L = b.LineGraph(n, dist)
-L.createLineGraph()
-L.allVertices
-points = np.array(L.allVerticesCoord())
-sizesLists = [stdpop for i in range(len(points))]
-
-#Aha. The problem is because it's been defaulting to unstructured. 
-#So I need to build a connectivity matrix from the graph 
-# knn_graph = kneighbors_graph(X, 2, mode='connectivity')
-
-max_d = float("inf")
-# max_d = float("inf") # max distance cut-off, meaning determing the number of clusters
-hierarchialAggregation(points, max_d, sizesLists)
-
-"""
-Notes: 
-
-Ward minimizes the sum of squared differences within all clusters. It is a variance-minimizing approach 
-and in this sense is similar to the k-means objective function but tackled with an agglomerative hierarchical approach.
-Maximum or complete linkage minimizes the maximum distance between observations of pairs of clusters.
-Average linkage minimizes the average of the distances between all observations of pairs of clusters.
-
-Agglo Cluster is computationally expensive when no connectivity constraints are added between samples: 
-it considers at each step all the possible merges
-
-Features Agglo?
-
-Write function to generate 3 CSV Files.
-100 nodes
-15 distance
-no aggregation
-one with full aggregation
-one with fifty 
-"""
-
+# """
+# Notes:
+#
+# Ward minimizes the sum of squared differences within all clusters. It is a variance-minimizing approach
+# and in this sense is similar to the k-means objective function but tackled with an agglomerative hierarchical approach.
+# Maximum or complete linkage minimizes the maximum distance between observations of pairs of clusters.
+# Average linkage minimizes the average of the distances between all observations of pairs of clusters.
+#
+# Agglo Cluster is computationally expensive when no connectivity constraints are added between samples:
+# it considers at each step all the possible merges
+#
+# Features Agglo?
+#
+# Write function to generate 3 CSV Files.
+# 100 nodes
+# 15 distance
+# no aggregation
+# one with full aggregation
+# one with fifty
+# """
