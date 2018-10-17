@@ -4,6 +4,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 colors = ['red','blue','green','yellow','magenta','purple', 'black', 'cyan', 'teal']
 def draw_pie(ax,ratios, X=0, Y=0, radius=300):
@@ -52,36 +53,61 @@ def getRatios(populations, groups, weights):
     return ratios
 
 def main():
-    coordinateFileLocation = raw_input("Coordinate file location?\n")
-    #"/Users/vferman/Downloads/Madagascar/Madagascar_Coordinates.csv"
-    patchesX,patchesY = getCoordinates(coordinateFileLocation)
-    #"/Users/vferman/Downloads/Madagascar/Madagascar_Populations.csv"
-    popFileLocation = raw_input("Population file location?\n")
-    radiuses = getSizes(popFileLocation)
+    coordinateFileLocation = ""
+    popFileLocation = ""
+    dataFileLocation = ""
+    clases = 0
+    groups = 0
+    columsToGroup=[]
+    columnsWeight=[]
+    if(len(sys.argv)<6):
+        print("usage: python program coord_file, pop_file, data_path, populations groups [p1,p3,p5 p2,p4...] [w1,w3,w5 w2,w4...]")
+        coordinateFileLocation = raw_input("Coordinate file location?\n")
+        popFileLocation = raw_input("Population file location?\n")
+        dataFileLocation=raw_input("Where are the files located?\n")
+        clases=int(raw_input("Number of different populations?\n"))
+        groups=int(raw_input("How many groups would you like?\n"))
+        if(groups>1):
+            for i in groups:
+                groupN = raw_input("Which populations should we group in group"+ str(i+1) +"(i.e. 1,3,5)?\n")
+                cols = groupN.split(',')
+                columsToGroup.append([int(elem) for elem in cols])
+                weights = [0]*len(cols)
+                for j,col in enumerate(cols):
+                    colW =raw_input("How should we weight the contents of colum"+ col +"(0 means it should be ignored)?\n")
+                    weights[j]=colW
+                columnsWeight.append(weights)
+    else:
+        coordinateFileLocation = sys.argv[1]
+        popFileLocation = sys.argv[2]
+        dataFileLocation = sys.argv[3]
+        clases = int(sys.argv[4])
+        groups = int(sys.argv[5])
+        if(groups >1):
+            for i in range(6,len(sys.argv)):
+                if(i<6+groups):
+                    cols = sys.argv[i].split(',')
+                    columsToGroup.append([int(elem) for elem in cols])
+                else:
+                    cols = sys.argv[i].split(',')
+                    columnsWeight.append([int(elem) for elem in cols])
+        if len(columnsWeight)!=len(columsToGroup):
+            groups = 0
+            columsToGroup=[]
+            columnsWeight=[]
 
-    clases=int(raw_input("Number of different populations?\n"))
-    groups=int(raw_input("How many groups would you like?\n"))
-    if(groups==0 or groups==1):
+    if(groups<=1):
         groups=clases
-        columsToGroup=[]
-        columnsWeight=[]
         for i in range(0,clases):
             columsToGroup.append([i])
             columnsWeight.append([1])
-    else:
-        columsToGroup=[]
-        columnsWeight=[]
-        for i in groups:
-            groupN = raw_input("Which populations should we group in group"+ str(i+1) +"(i.e. 1,3,5)?\n")
-            cols = groupN.split(',')
-            columsToGroup.append([int(elem) for elem in cols])
-            weights = [0]*len(cols)
-            for j,col in enumerate(cols):
-                colW =raw_input("How should we weight the contents of colum"+ col +"(0 means it should be ignored)?\n")
-                weights[j]=colW
-            columnsWeight.append(weights)
 
-    dataFileLocation=raw_input("Where are the files located?\n")
+    #"/Users/vferman/Downloads/Madagascar/Madagascar_Coordinates.csv"
+
+    patchesX,patchesY = getCoordinates(coordinateFileLocation)
+    #"/Users/vferman/Downloads/Madagascar/Madagascar_Populations.csv"
+    radiuses = getSizes(popFileLocation)
+
     #"/Users/vferman/Downloads/Madagascar/Replacement_D/0001/AF1_Aggregate_Run1_*.csv"
     fileNames = sorted(glob.glob(dataFileLocation))
     files =[]
