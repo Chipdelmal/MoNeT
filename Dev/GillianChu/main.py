@@ -1,7 +1,14 @@
+################################################################################
+# ╔╦╗┌─┐╔╗╔┌─┐╔╦╗
+# ║║║│ │║║║├┤  ║
+# ╩ ╩└─┘╝╚╝└─┘ ╩
+# Main routine for hierarchical aggregation tests
+################################################################################
+
 import warnings
 warnings.filterwarnings('ignore')
 
-import basics as b
+import lineGraph as lg
 import clustering as cl
 import numpy as np
 
@@ -10,7 +17,7 @@ dist = 15
 stdpop = 50
 
 #building line graph from basics.py
-L = b.LineGraph(n, dist)
+L = lg.LineGraph(n, dist)
 L.createLineGraph()
 L.allVertices
 points = np.array(L.allVerticesCoord())

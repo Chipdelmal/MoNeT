@@ -1,3 +1,10 @@
+################################################################################
+# ╔╦╗┌─┐╔╗╔┌─┐╔╦╗
+# ║║║│ │║║║├┤  ║
+# ╩ ╩└─┘╝╚╝└─┘ ╩
+# Definition of the LineGraph class
+################################################################################
+
 class LineGraph(object):
 	def __init__(self, numNodes, dist):
 		"Keep a dictionary of key = node index; value = node object "
@@ -13,7 +20,7 @@ class LineGraph(object):
 	def addEdge(self, v1, v2, d):
 		"Note: v1 and v2 are indices."
 		"Edges should be (x1, x2, dist). Keep edge list. Edges are undirected."
-		
+
 		self.__edges[(v1, v2)] = d
 		self.__edges[(v2, v1)] = d
 

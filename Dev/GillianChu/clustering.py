@@ -1,5 +1,10 @@
-#creates dendrogram
-# dendrogram = sch.dendrogram(sch.linkage(points, method='ward'))
+################################################################################
+# ╔╦╗┌─┐╔╗╔┌─┐╔╦╗
+# ║║║│ │║║║├┤  ║
+# ╩ ╩└─┘╝╚╝└─┘ ╩
+# Definition of clustering functions
+################################################################################
+
 import basics as b
 import scipy.cluster.hierarchy as sch
 from sklearn.cluster import AgglomerativeClustering
