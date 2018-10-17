@@ -35,51 +35,85 @@ def getSizes(fileLocation):
     populationFile = open(fileLocation,"r")
     radiuses = []
     for line in populationFile:
-        radiuses.append(math.log(float(line))**2)
+        radiuses.append((math.log(float(line))**2)*0.8)
     populationFile.close()
+    return radiuses
+
+def getRatios(populations, groups, weights):
+    groupPopulation= []
+    total = 0
+    for i in range(len(groups)):
+        population = 0
+        for j in range(len(groups[i])):
+            population+= (populations[(groups[i][j])-1]*weights[i][j])
+        total+= population
+        groupPopulation.append(population)
+    ratios = [float(pop)/total for pop in groupPopulation]
+    return ratios
 
 def main():
-    coordinateFileLocation = input("Coordinate file location?\n")
+    coordinateFileLocation = raw_input("Coordinate file location?\n")
     #"/Users/vferman/Downloads/Madagascar/Madagascar_Coordinates.csv"
-    x,y = getCoordinates(coordinateFileLocation)
+    patchesX,patchesY = getCoordinates(coordinateFileLocation)
     #"/Users/vferman/Downloads/Madagascar/Madagascar_Populations.csv"
-    popFileLocation = input("Population file location?\n")
-    sizes = getSizes(popFileLocation)
+    popFileLocation = raw_input("Population file location?\n")
+    radiuses = getSizes(popFileLocation)
 
-    clases=input("Number of different populations?")
-    groups=input("How many groups would you like?")
+    clases=int(raw_input("Number of different populations?\n"))
+    groups=int(raw_input("How many groups would you like?\n"))
     if(groups==0 or groups==1):
         groups=clases
-        columsToGroup=range(0,clases)
+        columsToGroup=[]
+        columnsWeight=[]
+        for i in range(0,clases):
+            columsToGroup.append([i])
+            columnsWeight.append([1])
     else:
         columsToGroup=[]
+        columnsWeight=[]
         for i in groups:
-            groupN = input("Which populations should we group in group?")
+            groupN = raw_input("Which populations should we group in group"+ str(i+1) +"(i.e. 1,3,5)?\n")
+            cols = groupN.split(',')
+            columsToGroup.append([int(elem) for elem in cols])
+            weights = [0]*len(cols)
+            for j,col in enumerate(cols):
+                colW =raw_input("How should we weight the contents of colum"+ col +"(0 means it should be ignored)?\n")
+                weights[j]=colW
+            columnsWeight.append(weights)
 
-    fileNames = sorted(glob.glob("/Users/vferman/Downloads/Madagascar/Replacement_D/0001/AF1_Aggregate_Run1_*.csv"))
+    dataFileLocation=raw_input("Where are the files located?\n")
+    #"/Users/vferman/Downloads/Madagascar/Replacement_D/0001/AF1_Aggregate_Run1_*.csv"
+    fileNames = sorted(glob.glob(dataFileLocation))
     files =[]
+    lineCount = len(open(fileNames[0]).readlines())-1
     for fileName in fileNames:
         files.append(open(fileName,'r'))
 
     #pieMatrix =[]
-    fig, ax = plt.subplots()
     patches=len(files)
-    for patch in range(0,patches):
-        for i in range(0,1300):
-            next(files[patch])
-        line = next(files[patch]).split(',')
-        sizes = [float(elem) for elem in line]
-        sizes = sizes[1:]
-        ratios = map(lambda x: x/math.fsum(sizes),sizes)
-        draw_pie(ax,ratios,patchesX[patch],patchesY[patch],radiuses[patch])
+    for f in files:
+        next(f)
+
+    for i in range(lineCount):
+        fig, ax = plt.subplots()
+
+        for patch in range(0,patches):
+            line = next(files[patch]).split(',')
+            sizes = [float(elem) for elem in line]
+            sizes = sizes[1:]
+            ratios = getRatios(sizes, columsToGroup, columnsWeight)
+            draw_pie(ax,ratios,patchesY[patch],patchesX[patch],radiuses[patch])
+
+        plt.show()
+        plt.savefig(str(i)+"-"+str(groups)+".png", dpi=461,
+                facecolor='w', edgecolor='w', orientation='portrait', papertype=None,
+                format="png", transparent=False, bbox_inches=None, pad_inches=0.05,
+                frameon=None)
+        plt.close(fig)
+        plt.close('all')
 
     for f in files:
         f.close()
 
-    plt.show()
-    plt.savefig("corr.png", dpi=461,
-            facecolor='w', edgecolor='w', orientation='portrait', papertype=None,
-            format="png", transparent=False, bbox_inches=None, pad_inches=0.05,
-            frameon=None)
-    plt.close(fig)
-    plt.close('all')
+
+main()
