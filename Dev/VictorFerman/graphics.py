@@ -46,7 +46,7 @@ def getRatios(populations, groups, weights):
     for i in range(len(groups)):
         population = 0
         for j in range(len(groups[i])):
-            population+= (populations[(groups[i][j])-1]*weights[i][j])
+            population+= (populations[(groups[i][j])-1])*(weights[i][j])
         total+= population
         groupPopulation.append(population)
     ratios = [float(pop)/total for pop in groupPopulation]
@@ -68,14 +68,14 @@ def main():
         clases=int(raw_input("Number of different populations?\n"))
         groups=int(raw_input("How many groups would you like?\n"))
         if(groups>1):
-            for i in groups:
+            for i in range(groups):
                 groupN = raw_input("Which populations should we group in group"+ str(i+1) +"(i.e. 1,3,5)?\n")
                 cols = groupN.split(',')
                 columsToGroup.append([int(elem) for elem in cols])
                 weights = [0]*len(cols)
                 for j,col in enumerate(cols):
                     colW =raw_input("How should we weight the contents of colum"+ col +"(0 means it should be ignored)?\n")
-                    weights[j]=colW
+                    weights[j]=int(colW)
                 columnsWeight.append(weights)
     else:
         coordinateFileLocation = sys.argv[1]
