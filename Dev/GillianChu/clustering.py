@@ -159,6 +159,12 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 # """
 # Notes:
 #
+#Oct 18, 2018: Need to run new CSV files on parameters Hector will set. Then I want to plot that
+#all in one graph for a particular genotype with standard parameters across. 
+# remember to talk to ramchandran about the information loss. The problem with looking at it w/ entropy
+# is that they're not iid rv, and they're sequences, so I'll have to run them hundreds of times to
+# approximate the density, in order to calculate the information loss (also they have diff nodes).
+#
 # Ward minimizes the sum of squared differences within all clusters. It is a variance-minimizing approach
 # and in this sense is similar to the k-means objective function but tackled with an agglomerative hierarchical approach.
 # Maximum or complete linkage minimizes the maximum distance between observations of pairs of clusters.
