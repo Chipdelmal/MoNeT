@@ -1,5 +1,7 @@
 ################################################################################
-# exportRoadAndBuildings.py
+# ╔╦╗┌─┐╔╗╔┌─┐╔╦╗
+# ║║║│ │║║║├┤  ║
+# ╩ ╩└─┘╝╚╝└─┘ ╩
 # Extracts the roads and buildings positions and exports them into
 #   SHP and graphml files
 # Data source: https://www.openstreetmap.org/
