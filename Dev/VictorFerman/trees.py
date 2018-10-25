@@ -1,4 +1,5 @@
 import graphviz
+import pydotplus
 from sklearn import tree
 import sys
 
@@ -28,8 +29,48 @@ def main():
 
     clf = tree.DecisionTreeClassifier()
     clf.fit(dataset,datasetClasses)
-    dotdata = tree.export_graphviz(clf, out_file=None, feature_names=["Homming", "Deposition","H Fitness", "B Fistness"], class_names=["H", "W", "R", "B"], filled=True)
-    graph = graphviz.Source(dotdata)
-    graph.render()
+    dotdata = tree.export_graphviz(clf, out_file=None, feature_names=["Homing", "Deposition","H Fitness", "B Fitness"], class_names=["H", "W", "R", "B"], filled=True)
+    graph = pydotplus.graph_from_dot_data(dotdata)#graphviz.Source(dotdataH)
+    nodes = graph.get_node_list()
+    for node in nodes:
+        if node.get_name() not in ('node', 'edge'):
+            values = clf.tree_.value[int(node.get_name())][0]
+            ratioH = float(values[0])/sum(values)
+            ratioW = float(values[1])/sum(values)
+            ratioB = float(values[2])/sum(values)
+            #ratioR
+            if(ratioH>ratioW and ratioH>ratioB):
+                if(ratioH<=.2):
+                    node.set_fillcolor('white')
+                elif(ratioH<=0.5):
+                    node.set_fillcolor('#f1d5fa')
+                elif(ratioH<=0.75):
+                    node.set_fillcolor('#ff65a0')
+                else:
+                    node.set_fillcolor('#ff004d')
+            elif (ratioW>ratioH and ratioW>ratioB):
+                if(ratioW<=.2):
+                    node.set_fillcolor('white')
+                elif(ratioW<=0.5):
+                    node.set_fillcolor('#dfdcff')
+                elif(ratioW<=0.75):
+                    node.set_fillcolor('#8f9cff')
+                else:
+                    node.set_fillcolor('#4d80ff')
+            elif (ratioB>ratioW and ratioB>ratioH):
+                if(ratioB<=.25):
+                    node.set_fillcolor('white')
+                elif(ratioB<=0.5):
+                    node.set_fillcolor('#eddaff')
+                elif(ratioB<=0.75):
+                    node.set_fillcolor('#f07bff')
+                else:
+                    node.set_fillcolor('#ff00ff')
+            else:
+                node.set_fillcolor('white')
+
+    graph.write_png('full.png')
+    # graph = graphviz.Source(dotdata)
+    # graph.render()
 
 main()
