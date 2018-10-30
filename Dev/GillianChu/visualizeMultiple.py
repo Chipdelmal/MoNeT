@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import glob
+import matplotlib.patches as mpatches
 
 # Columns is a list of lists describing the number of times each one indexed column should be counted for this allele
 # eg [[1, 1, 2], [2, 3, 3]] if the given genotypes are WW, WR, and RR
@@ -16,32 +17,46 @@ import glob
 # df = np.genfromtxt(csvFileName, dtype=float, skip_header=1, delimiter=",")
 def alleleCounts(csvFileName, alleles):
 	df = pd.read_csv(csvFileName)
+	# print(df)
 	numEntries = len(df['WW'])
 	allele_count = np.zeros(len(alleles))
 	result = np.zeros((numEntries, len(allele_count)))
-	print(result)
+	# print(result)
 
-	for i in range(1, len(df['WW'])):
+	for i in range(1, numEntries):
 		#adding H's
-		allele_count[0] = float(allele_count[0]) + (2 * df['HH'][i]) + df['HB'][i] + df['WH'][i] + df['HR'][i]
+		allele_count[0] = (2 * df['HH'][i]) + df['HB'][i] + df['WH'][i] + df['HR'][i]
 
 		#adding W's
-		allele_count[1] += (2 * df['WW'][i]) + df['WH'][i] + df['WR'][i] + df['WB'][i]
+		allele_count[1] = (2 * df['WW'][i]) + df['WH'][i] + df['WR'][i] + df['WB'][i]
 
 		#adding B's
-		allele_count[2] += (2 * df['BB'][i]) + df['WB'][i] + df['RB'][i] + df['HB'][i]
+		allele_count[2] = (2 * df['BB'][i]) + df['WB'][i] + df['RB'][i] + df['HB'][i]
 
 		#adding R's
-		allele_count[3] += (2 * df['RR'][i]) + df['RB'][i] + df['WR'][i] + df['HR'][i]
+		allele_count[3] = (2 * df['RR'][i]) + df['RB'][i] + df['WR'][i] + df['HR'][i]
 
-		print(allele_count)
+		# print(allele_count)
 		np.copyto(result[i], allele_count)
 
-	return result
+	numAlleles = len(alleles)
+	returnThis = [[] for i in range(numAlleles)]
+	# print(returnThis)
+	timeSteps = len(result)
+	#convert matrix to series of columns
 
-csvFileName = "/Users/gillianchu/Desktop/MGDrive-Experiments/Experiments/noagg/2018_10_15_ANALYZED/E_080_000_000_000/ADM_Mean_Patch0004.csv"
-df = pd.read_csv(csvFileName)
-plt.plot(df)
-counts = alleleCounts(csvFileName, ['H', 'W', 'B', 'R'])
-plt.plot(counts)
-plt.show()
+	for i in range(timeSteps): 
+		# print(result[i])
+		for j in range(numAlleles): #number of alleles
+			returnThis[j].append(result[i][j])
+	return returnThis
+
+
+# csvFileName = "/Users/gillianchu/Desktop/MGDrive-Experiments/Experiments/noagg/2018_10_15_ANALYZED/E_080_000_000_000/ADM_Mean_Patch0004.csv"
+# counts = alleleCounts(csvFileName, ['H', 'W', 'B', 'R'])
+# plt.plot(counts[0], label="H")
+# plt.plot(counts[1], label="W")
+# plt.plot(counts[2], label="B")
+# plt.plot(counts[3], label="R")
+# plt.legend()
+# plt.show()
