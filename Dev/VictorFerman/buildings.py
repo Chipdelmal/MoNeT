@@ -20,6 +20,7 @@ ox.config(log_file=True,log_console=True,use_cache=True)
 
 
 # usage: python buildings.py KM-G 3000
+# usage: python buildings.py ST-S 3000
 
 def main():
     #Arguments
