@@ -106,13 +106,13 @@ These routines were created as standalone functions to support the main research
 
 <ul style="font-size:12.5px">
   <li>Lead: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]</li>
-  <li>Dev: Sarafina Smith  [UCB], Gillian Chu [UCB], Victor Ferman [UCB], <a href="https://slwu89.github.io/">Sean L. Wu</a> [UCB]
+  <li>Dev: Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a>, Gillian Chu [UCB], Victor Ferman [UCB], <a href="https://slwu89.github.io/">Sean L. Wu</a> [UCB]
   <li>Collaborators: <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]</li>
   <li>PI's: <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]</li>
 </ul>
 
 <ul style="font-size:12.5px">
-  <li>Former dev: <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Sabrina Wong [UCB]</li>
+  <li>Former dev: [UCB], Sabrina Wong [UCB]</li>
 </ul>
 
 <hr>
