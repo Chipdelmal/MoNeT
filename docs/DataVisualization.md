@@ -21,7 +21,7 @@ https://chipdelmal.github.io/MoNeT/media/trace02.png
 Single populations are still reasonably described by a trace plot, but when we move towards visualizing the spatial spread of genes across different populations in a "network", this is no longer a viable option. The most natural way to show these results is in videos such as the following one:
 
 <div style="width:50%; margin-left:auto; margin-right:auto;">
-  <video data-autoplay width=100% controls><source src="https://marshalllab.github.io/MGDrivE/images/MGDrivE_Reduced4000.mp4" type="video/mp4"></video>
+  <video data-autoplay width=100% controls source src="https://marshalllab.github.io/MGDrivE/images/MGDrivE_Reduced4000.mp4" type="video/mp4"></video>
 </div>
 
 Although this makes for a nice way to present the idea in live demonstrations, for publications we need to show the dynamics in a "static" image. For this purpose, we have created the "flow plots". In these representations, each plot shows the spread of one of the alleles in the populations (y-axes), through time (x-axes):
