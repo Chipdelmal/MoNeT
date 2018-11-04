@@ -60,11 +60,17 @@ The [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project has presented in
 
 <img src="./media/SpheresPlots_H.jpg" width="100%" align="middle">
 
-## [Tools for Fighting Malaria and Other Mosquito Borne Diseases](./ToolsCollaboration.html)
+## [Mosquito App](./MosquitoApp.html)
+
+This project was developed at "Tecnológico de Monterrey" as part of a collaboration with UC, Berkeley. The aim of the project was to develop a mobile application that was able to capture mosquito sightings with the following information: mosquito photograph, geo-location of the sighting, temperature, and humidity. This information is to be used by research teams to build databases of mosquito presence across different landscapes.
+
+<img src="./media/appDemo.png" width="100%" align="middle">
+
+<!-- ## [Tools for Fighting Malaria and Other Mosquito Borne Diseases](./ToolsCollaboration.html)
 
 This workflow was created to facilitate the creation of tools to be used as part of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project. It represents the collaboration between UC, Berkeley and Tecnológico de Monterrey in an effort to get undergraduate students involved in mosquito-borne diseases research projects.
 
-<img src="./media/stillFlow.png" width="100%" align="middle">
+<img src="./media/stillFlow.png" width="100%" align="middle"> -->
 
 
 <!--
@@ -73,9 +79,9 @@ This workflow was created to facilitate the creation of tools to be used as part
 Even though we can parse real-world landscapes from OpenStreet Map, generating random points distributions is still useful in terms of theoretical questions about how these distributions affect the metrics and results of our analyses.
 -->
 
-## Road-Flight Path Intersections
+<!-- ## Road-Flight Path Intersections
 
-<i>Aedes aegypti</i>  mosquitos avoid flying over roads; which, in turn, modifies the expected movement flows on the landscape. We would like to study how this specific variable affects the broad-scale dynamics of mosquito movement to understand the effects this would have in diseases transmission; but for now this is still an open line to be tackled.
+<i>Aedes aegypti</i>  mosquitos avoid flying over roads; which, in turn, modifies the expected movement flows on the landscape. We would like to study how this specific variable affects the broad-scale dynamics of mosquito movement to understand the effects this would have in diseases transmission; but for now this is still an open line to be tackled. -->
 
 ## [Useful Network Metrics](./NetworkMetrics.html)
 
@@ -106,13 +112,14 @@ These routines were created as standalone functions to support the main research
 
 <ul style="font-size:12.5px">
   <li>Lead: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]</li>
-  <li>Dev: Sarafina Smith  [UCB], Gillian Chu [UCB], Victor Ferman [UCB], <a href="https://slwu89.github.io/">Sean L. Wu</a> [UCB]
+  <li>Dev: Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Victor Ferman [UCB], Martín Molinero [ITESM], <a href="https://slwu89.github.io/">Sean L. Wu</a> [UCB]</li>
   <li>Collaborators: <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]</li>
   <li>PI's: <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]</li>
 </ul>
 
+
 <ul style="font-size:12.5px">
-  <li>Former dev: <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Sabrina Wong [UCB]</li>
+  <li>Former dev: Sabrina Wong [UCB]</li>
 </ul>
 
 <hr>
