@@ -20,7 +20,7 @@ ox.config(log_file=True,log_console=True,use_cache=True)
 
 
 # usage: python buildings.py KM-G 3000
-# usage: python buildings.py ST-S 3000
+# usage: python buildings.py ST-S 1000
 
 def main():
     #Arguments
@@ -30,12 +30,11 @@ def main():
     countryCode = clArguments[0]
     distance=int(clArguments[1])
     # Cities and villages ##################################################
+    overpassQuery  = 'area["ISO3166-2"="'+countryCode+'"];\n'
+    overpassQuery += 'node["place"~"^city$|^village$"](area);\n'
+    overpassQuery += 'out meta;'
     api = overpy.Overpass()
-    r = api.query("""
-area["ISO3166-2"="KM-G"];
-node["place"~"^city$|^village$"](area);
-out meta;
-""")
+    r = api.query(overpassQuery);
 
     # Buildings ######################################################
     unnamed = 1
@@ -50,7 +49,6 @@ out meta;
         else:
             placeName+=str(unnamed)
             unnamed+=1
-        size=1000
         try:
             buildings=ox.buildings_from_point(point=locCoord,distance=distance)
             ox.save_gdf_shapefile(buildings,filename=placeName,folder="SHP/Buildings")
