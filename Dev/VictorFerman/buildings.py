@@ -13,8 +13,6 @@
 
 #Load package ####################################################
 import fiona
-#import matplotlib
-#matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 import numpy as np
@@ -26,26 +24,20 @@ ox.config(log_file=True,log_console=True,use_cache=True)
 
 
 # usage: python buildings.py KM-G 3000
-# usage: python buildings.py ST-S 1000
+# usage: python buildings.py ST-S 4000
 
-def main():
-    #Arguments
-    # 0: ISO 3166-2 for the island (e.g. KM-G for grande comore)
-    # 1: dintance from lat-long to search for buildings
-    clArguments=sys.argv[1:]
-    countryCode = clArguments[0]
-    distance=int(clArguments[1])
-    # Cities and villages ##################################################
+def querySettlements(countryCode):
     overpassQuery  = 'area["ISO3166-2"="'+countryCode+'"];\n'
     overpassQuery += 'node["place"~"^city$|^village$"](area);\n'
     overpassQuery += 'out meta;'
     api = overpy.Overpass()
     r = api.query(overpassQuery);
+    return r
 
-    # Buildings ######################################################
+def exportBuildings(settlements,distance):
     unnamed = 1
     places = []
-    for node in r.nodes:
+    for node in settlements.nodes:
         locCoord=(float(node.lat),float(node.lon))
         placeName="unnamed"
         if "name:en" in node.tags:
@@ -63,6 +55,9 @@ def main():
             print ('error on '+placeName)
         except:
             print ('I got another exception')
+    return places
+
+def exportBuildingCoordinates(places):
     fullLats = []
     fullLongs = []
     for place in places:
@@ -74,7 +69,7 @@ def main():
             lats = []
             longs = []
             for coordinateList in building:
-                for (lat,long) in coordinateList:
+                for (long,lat) in coordinateList:
                     lats.append(float(lat))
                     longs.append(float(long))
             meanLat = np.mean(lats)
@@ -84,25 +79,38 @@ def main():
             placeCoordCSV.write(str(meanLat)+","+str(meanLong)+"\n")
         placeCoordCSV.close()
         placeShapes.close()
+    return (fullLats,fullLongs)
 
+def createGraph(countryCode,fullLats,fullLongs):
     minLat = min(fullLats)
     minLong = min(fullLongs)
     maxLat = max(fullLats)
     maxLong = max(fullLongs)
 
-    #fig, ax = plt.subplots()
-    m = Basemap(projection='merc',llcrnrlat=minLong-0.03,urcrnrlat=maxLong+0.02,
-            llcrnrlon=minLat-0.02,urcrnrlon=maxLat+0.02,lat_ts=20,resolution='h')
+    m = Basemap(projection='merc',llcrnrlat=minLat-0.03,urcrnrlat=maxLat+0.02,
+        llcrnrlon=minLong-0.02,urcrnrlon=maxLong+0.02,lat_ts=20,resolution='h')
     m.drawcoastlines(color="black")
-
-    m.scatter(fullLats,fullLongs,latlon=True,s=9)
-    #plt.xlim([minLat+0.02,maxLat+0.02])
-    #plt.ylim([minLong+0.02,maxLong+0.02])
+    m.scatter(fullLongs,fullLats,latlon=True,s=9)
     plt.savefig("./"+countryCode+".png", dpi=1024, facecolor='w',
                 edgecolor='w', orientation='portrait', papertype=None,
                 format="png", transparent=False, bbox_inches='tight',
                 pad_inches=0.05, frameon=None)
     plt.show()
-    #plt.close('all')
+
+def main():
+    #Arguments
+    # 0: ISO 3166-2 for the island (e.g. KM-G for grande comore)
+    # 1: dintance from lat-long to search for buildings
+    clArguments=sys.argv[1:]
+    countryCode = clArguments[0]
+    distance=int(clArguments[1])
+    # Cities and villages ##################################################
+    settlements = querySettlements(countryCode)
+
+    # Buildings ######################################################
+    places = exportBuildings(settlements,distance)
+    (fullLats,fullLongs) = exportBuildingCoordinates(places)
+
+    createGraph(countryCode,fullLats,fullLongs)
 
 main()
