@@ -3,6 +3,10 @@ import glob
 import numpy as np
 import warnings as warnings
 
+########################################################################################################################################################
+# Data Handling
+########################################################################################################################################################
+
 def readExperimentFilenames(experimentPath,sexFilenameIdentifiers={"male":"ADM","female":"AF1"}):
     """
     Description:
@@ -50,8 +54,6 @@ def loadNodeData(maleFilename=None,femaleFilename=None,dataType=float):
     else:
         warnings.warn("No data was loaded because both male and female filenames are 'None'", Warning)
         return None
-
-# def aggregateNodesData(filenames,male=True,female=True,dataType=float):
 
 def aggregateNodesDataFromFiles(filenames,male=True,female=True,dataType=float):
     """
@@ -112,3 +114,21 @@ def aggregateGenotypesData(populationDynamicsArray,columnsToAggregateList):
         cols=columnsToAggregateList[i]
         fillArray[:,i]=np.sum(populationDynamicsArray[:,cols],axis=1)
     return fillArray
+
+########################################################################################################################################################
+# Plotting
+########################################################################################################################################################
+
+def cymkToRGB(C,Y,M,K):
+    """
+    Description:
+    In:
+        *
+    Out:
+    Notes:
+        * CYMK must be fractional values ranging from 0 to 1
+    """
+    r=255*(1-C)*(1-K)
+    g=255*(1-M)*(1-K)
+    b=255*(1-Y)*(1-K)
+    return "rgb("+str(r)+","+str(g)+","+str(b)+")"
