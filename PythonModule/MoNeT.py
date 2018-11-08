@@ -4,7 +4,7 @@
 # ╩ ╩└─┘╝╚╝└─┘ ╩
 # Mosquito Networks Taskforce
 # Python module with network analysis routines
-# Authors: Biyonka Liang, Sarafina Smith, Sabrina Wong, Héctor M. Sánchez C.
+# Authors: Sarafina Smith, Biyonka Liang, Sabrina Wong, Héctor M. Sánchez C.
 ################################################################################
 
 
