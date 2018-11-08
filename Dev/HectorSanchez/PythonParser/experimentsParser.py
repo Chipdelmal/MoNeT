@@ -1,4 +1,5 @@
 import os
+import csv
 import glob
 import numpy as np
 import warnings as warnings
@@ -24,7 +25,7 @@ def readExperimentFilenames(experimentPath,sexFilenameIdentifiers={"male":"ADM",
     filenames=os.listdir(experimentPath)
     maleFiles=sorted(glob.glob(experimentPath + "/" + sexFilenameIdentifiers.get("male") + "*.csv"));
     femaleFiles=sorted(glob.glob(experimentPath + "/" + sexFilenameIdentifiers.get("female") + "*.csv"));
-    return {"Male":maleFiles,"Female":femaleFiles}
+    return {"male":maleFiles,"female":femaleFiles}
 
 def loadNodeData(maleFilename=None,femaleFilename=None,dataType=float):
     """
@@ -55,6 +56,39 @@ def loadNodeData(maleFilename=None,femaleFilename=None,dataType=float):
         warnings.warn("No data was loaded because both male and female filenames are 'None'", Warning)
         return None
 
+def loadNodesData(filenames,male=True,female=True,dataType=float):
+    """
+    Description:
+        *
+    In:
+        *
+    Out:
+        *
+    Notes:
+        *
+    """
+    maleFilesNumber=len(filenames.get("male"))
+    femaleFilesNumber=len(filenames.get("female"))
+    # Select the appropriate aggregation scheme: male+female, male, female
+    if (male and female) and (maleFilesNumber >= 1) and (femaleFilesNumber >= 1) and (maleFilesNumber == femaleFilesNumber):
+        nodesDataList=[None]*maleFilesNumber
+        for i in range(0,maleFilesNumber):
+            nodesDataList[i]=loadNodeData(filenames.get("male")[i],filenames.get("female")[i],dataType=dataType)
+        return nodesDataList
+    elif female and (len(filenames.get("female")) >= 1):
+        nodesDataList=[None]*femaleFilesNumber
+        for i in range(1,femaleFilesNumber):
+            nodesDataList[i]=loadNodeData(None,filenames.get("female")[i],dataType=dataType)
+        return nodesDataList
+    elif male and (len(filenames.get("male")) >= 1):
+        nodesDataList=[None]*maleFilesNumber
+        for i in range(1,maleFilesNumber):
+            nodesDataList[i]=loadNodeData(filenames.get("male")[i],None,dataType=dataType)
+        return nodesDataList
+    else:
+        warnings.warn("No data was loaded. Check that at least one of the sexes is selected, and that the filenames list is not empty.", Warning)
+        return None
+
 def aggregateNodesDataFromFiles(filenames,male=True,female=True,dataType=float):
     """
     Description:
@@ -72,28 +106,27 @@ def aggregateNodesDataFromFiles(filenames,male=True,female=True,dataType=float):
             has been analyzed.
     """
     # Store the lengths of the filenames lists for error checking
-    maleFilesNumber=len(filenames.get("Male"))
-    femaleFilesNumber=len(filenames.get("Female"))
+    maleFilesNumber=len(filenames.get("male"))
+    femaleFilesNumber=len(filenames.get("female"))
     # Select the appropriate aggregation scheme: male+female, male, female
     if (male and female) and (maleFilesNumber >= 1) and (femaleFilesNumber >= 1) and (maleFilesNumber == femaleFilesNumber):
-        tempAggregation=loadNodeData(filenames.get("Male")[0],filenames.get("Female")[0],dataType=dataType)
+        tempAggregation=loadNodeData(filenames.get("male")[0],filenames.get("female")[0],dataType=dataType)
         for i in range(1,maleFilesNumber):
-            tempAggregation=tempAggregation+loadNodeData(filenames.get("Male")[i],filenames.get("Female")[i],dataType=dataType)
+            tempAggregation=tempAggregation+loadNodeData(filenames.get("male")[i],filenames.get("female")[i],dataType=dataType)
         return tempAggregation
-    elif female and (len(filenames.get("Female")) >= 1):
-        tempAggregation=loadNodeData(None,filenames.get("Female")[0],dataType=dataType)
+    elif female and (len(filenames.get("female")) >= 1):
+        tempAggregation=loadNodeData(None,filenames.get("female")[0],dataType=dataType)
         for i in range(1,femaleFilesNumber):
-            tempAggregation=tempAggregation+loadNodeData(None,filenames.get("Female")[i],dataType=dataType)
+            tempAggregation=tempAggregation+loadNodeData(None,filenames.get("female")[i],dataType=dataType)
         return tempAggregation
-    elif male and (len(filenames.get("Male")) >= 1):
-        tempAggregation=loadNodeData(filenames.get("Male")[0],None,dataType=dataType)
+    elif male and (len(filenames.get("male")) >= 1):
+        tempAggregation=loadNodeData(filenames.get("male")[0],None,dataType=dataType)
         for i in range(1,maleFilesNumber):
-            tempAggregation=tempAggregation+loadNodeData(filenames.get("Male")[i],None,dataType=dataType)
+            tempAggregation=tempAggregation+loadNodeData(filenames.get("male")[i],None,dataType=dataType)
         return tempAggregation
     else:
         warnings.warn("No data was loaded. Check that at least one of the sexes is selected, and that the filenames list is not empty.", Warning)
         return None
-
 
 def aggregateGenotypesData(populationDynamicsArray,columnsToAggregateList):
     """
@@ -115,6 +148,14 @@ def aggregateGenotypesData(populationDynamicsArray,columnsToAggregateList):
         fillArray[:,i]=np.sum(populationDynamicsArray[:,cols],axis=1)
     return fillArray
 
+def aggregateGenotypesDataAcrossNodes(nodesPopulationDynamicsArrays,columnsToAggregateList):
+    """
+    """
+    length=len(nodesPopulationDynamicsArrays)
+    for i in range(0,length):
+        nodesPopulationDynamicsArrays[i]=aggregateGenotypesData(nodesPopulationDynamicsArrays[i],columnsToAggregateList)
+    return nodesPopulationDynamicsArrays
+
 ########################################################################################################################################################
 # Plotting
 ########################################################################################################################################################
@@ -122,9 +163,11 @@ def aggregateGenotypesData(populationDynamicsArray,columnsToAggregateList):
 def cymkToRGB(C,Y,M,K):
     """
     Description:
+        *
     In:
         *
     Out:
+        *
     Notes:
         * CYMK must be fractional values ranging from 0 to 1
     """

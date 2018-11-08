@@ -1,5 +1,6 @@
 %matplotlib inline
 
+import csv
 import os
 import glob
 import numpy as np
@@ -22,12 +23,12 @@ filenames=exPar.readExperimentFilenames(path)
 
 # Load a single node
 nodeIndex=0
-nodeData=exPar.loadNodeData(filenames.get("Male")[nodeIndex],filenames.get("Female")[nodeIndex],dataType=float)
+nodeData=exPar.loadNodeData(filenames.get("male")[nodeIndex],filenames.get("female")[nodeIndex],dataType=float)
 
-# Aggregate the whole landscape
+# Aggregate the whole landscape into one array
 landscapeData=exPar.aggregateNodesDataFromFiles(filenames,male=True,female=False,dataType=float)
 
-# Aggregate the genotypes
+# Aggregate the genotypes of all the population
 columnsList=[
     [0,0,1,2,3],
     [1,4,4,5,6],
@@ -36,21 +37,26 @@ columnsList=[
 ]
 aggData=exPar.aggregateGenotypesData(landscapeData,columnsList)
 
+# Load the population dynamics data of the whole landscape
+nodesData=exPar.loadNodesData(filenames,dataType=float)
+
+#
+aggregatedNodesData=exPar.aggregateGenotypesDataAcrossNodes(nodeData,columnsList)
+
+filenames.get("male")[0]
 
 
 
 
+temp=[None]*10
+temp[0]=1
+temp
 
-
-
-
-
-
-
-
-
-
-
+tempFile=filenames.get("Male")[0]
+with open(tempFile) as f:
+    reader = csv.reader(f)
+    row1 = next(reader)
+row1[2:]
 
 
 
