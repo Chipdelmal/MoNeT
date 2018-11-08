@@ -4,3 +4,5 @@
 # ╩ ╩└─┘╝╚╝└─┘ ╩
 # Mosquito Networks Taskforce
 ################################################################################
+
+from .experimentsParser import *
