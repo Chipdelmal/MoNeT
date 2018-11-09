@@ -9,6 +9,7 @@ import factorialExperiments as fac
 from joblib import Parallel, delayed
 import multiprocessing
 import time
+import fnmatch
 
 ########################################################################################################
 # Factorial Experiment Example
@@ -23,6 +24,10 @@ aggregationDictionary=exPar.generateAggregationDictionary(
 )
 ratiosDictionary={"numerator":[1],"denominator":[0,1]}
 
+########################################################################################################
+# Export Individual CSVs for Factorial Slots
+########################################################################################################
+
 # experimentFolders=fac.listDirectoriesInPath(path)
 # for folder in experimentFolders:
 #     fac.loadFolderAndWriteFactorialCSV(folder,path,aggregationDictionary,ratiosDictionary)
@@ -30,8 +35,19 @@ ratiosDictionary={"numerator":[1],"denominator":[0,1]}
 start=time.time()
 experimentFolders=fac.listDirectoriesInPath(path)
 Parallel(n_jobs=4)(delayed(
-    fac.loadFolderAndWriteFactorialCSV)(experimentString=folder,path=path,aggregationDictionary=aggregationDictionary,ratiosDictionary=ratiosDictionary)
+    fac.loadFolderAndWriteFactorialCSV)(
+        experimentString=folder,
+        path=path,
+        aggregationDictionary=aggregationDictionary,
+        ratiosDictionary=ratiosDictionary
+    )
     for folder in experimentFolders
 )
 end=time.time()
 print(end - start)
+
+########################################################################################################
+# Load and Compile CSVs into one
+########################################################################################################
+outFilename="A_FlattenedFactorial.csv"
+fac.compileFactorialCSVFromFiles(path,outFilename)
