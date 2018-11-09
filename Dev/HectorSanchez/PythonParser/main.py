@@ -15,70 +15,29 @@ plotly.tools.set_credentials_file(username='chipdelmal',api_key='wB4pF2t8VYoNC7i
 offline.init_notebook_mode(connected=True)
 
 # Define the experiment's path
-path="/Users/sanchez.hmsc/Desktop/ParserDataset/E_099_000_000_000";
 dtype=float;
+path="/Users/sanchez.hmsc/Desktop/ParserDataset/E_099_050_020_025";
+aggregationDictionary=exPar.generateAggregationDictionary(["W","H","R","B"],[[0,0,1,2,3],[1,4,4,5,6],[2,5,7,7,8],[3,6,8,9,9]])
 
 # Get the filenames lists
 filenames=exPar.readExperimentFilenames(path)
 
-# Load a single node
+# Load a single node (Auxiliary function)
 nodeIndex=0
 nodeData=exPar.loadNodeData(filenames.get("male")[nodeIndex],filenames.get("female")[nodeIndex],dataType=float)
 
 # Aggregate the whole landscape into one array
-landscapeData=exPar.aggregateNodesDataFromFiles(filenames,male=True,female=False,dataType=float)
+landscapeSumData=exPar.sumLandscapePopulationsFromFiles(filenames,male=True,female=True,dataType=float)
 
-# Aggregate the genotypes of all the population
-columnsList=[
-    [0,0,1,2,3],
-    [1,4,4,5,6],
-    [2,5,7,7,8],
-    [3,6,8,9,9]
-]
-aggData=exPar.aggregateGenotypesData(landscapeData,columnsList)
+# Aggregate the genotypes of a population (works for a node, or for all the population)
+aggData=exPar.aggregateGenotypesInNode(landscapeSumData,aggregationDictionary)
 
 # Load the population dynamics data of the whole landscape
-nodesData=exPar.loadNodesData(filenames,dataType=float)
+landscapeData=exPar.loadLandscapeData(filenames,dataType=float)
 
-#
-aggregatedNodesData=exPar.aggregateGenotypesDataAcrossNodes(nodeData,columnsList)
-
-filenames.get("male")[0]
-
-
-
-
-temp=[None]*10
-temp[0]=1
-temp
-
-tempFile=filenames.get("Male")[0]
-with open(tempFile) as f:
-    reader = csv.reader(f)
-    row1 = next(reader)
-row1[2:]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Aggregate node genotypes across all nodes
+aggregationDictionary=exPar.generateAggregationDictionary(["W","H","R","B"],[[0,0,1,2,3],[1,4,4,5,6],[2,5,7,7,8],[3,6,8,9,9]])
+aggregatedNodesData=exPar.aggregateGenotypesInLandscape(landscapeData,aggregationDictionary)
 
 
 # plt.plot(aggData);
@@ -90,13 +49,14 @@ row1[2:]
 #     tracesList.append(trace)
 # offline.iplot(tracesList, filename='basic-line')
 
-labels=["W","H","R","B"]
+labels=aggData["genotypes"]
 colors=["rgb(25,128,255)","rgb(255,25,128)","rgb(128,0,255)","rgb(255,0,255)"]
+inData=aggData["population"]
 tracesList=[]
-for i in range(0,len(columnsList)):
+for i in range(0,len(labels)):
     trace=dict(
-        x=range(0,len(aggData)),
-        y=aggData[:,i],
+        x=range(0,len(inData)),
+        y=inData[:,i],
         stackgroup='one',
         mode='lines',
         line=dict(width=3,color=colors[i]),
@@ -107,17 +67,11 @@ layout=go.Layout(
     title='Genotypes Breakdown',
     xaxis=dict(
         title='Time [days]',
-        titlefont=dict(
-            size=20,
-            color='#7f7f7f'
-        )
+        titlefont=dict(size=20,color='#7f7f7f')
     ),
     yaxis=dict(
         title='Allele Frequency',
-        titlefont=dict(
-            size=20,
-            color='#7f7f7f'
-        )
+        titlefont=dict(size=20,color='#7f7f7f')
     ),
     width=1000,
     height=350
