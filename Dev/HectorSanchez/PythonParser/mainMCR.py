@@ -1,7 +1,7 @@
 %matplotlib inline
 
 import csv
-import os
+import os,sys
 import glob
 import numpy as np
 import matplotlib
@@ -11,16 +11,22 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import plotly.offline as offline
 import experimentsParser as exPar
+import factorialExperiments as fac
 plotly.tools.set_credentials_file(username='chipdelmal',api_key='wB4pF2t8VYoNC7iUrXSs')
 offline.init_notebook_mode(connected=True)
 
+########################################################################################################
+# MCR Experiment Example
+########################################################################################################
+
 # Define the experiment's path
 dtype=float;
-path="/Users/sanchez.hmsc/Desktop/ParserDataset/E_090_050_010_025";
+experimentString="E_090_050_010_025"
+path="/Users/sanchez.hmsc/Desktop/ParserDataset/";
 aggregationDictionary=exPar.generateAggregationDictionary(["W","H","R","B"],[[0,0,1,2,3],[1,4,4,5,6],[2,5,7,7,8],[3,6,8,9,9]])
 
 # Get the filenames lists
-filenames=exPar.readExperimentFilenames(path)
+filenames=exPar.readExperimentFilenames(path+experimentString)
 
 # Load a single node (Auxiliary function)
 nodeIndex=0
@@ -39,11 +45,9 @@ landscapeData=exPar.loadLandscapeData(filenames,dataType=float)
 aggregationDictionary=exPar.generateAggregationDictionary(["W","H","R","B"],[[0,0,1,2,3],[1,4,4,5,6],[2,5,7,7,8],[3,6,8,9,9]])
 aggregatedNodesData=exPar.aggregateGenotypesInLandscape(landscapeData,aggregationDictionary)
 
-
-
-
-# plt.plot(aggData);
-
+#######################################################################################################
+#
+########################################################################################################
 # Plot dynamics in a static plotly set
 # tracesList=[]
 # for i in range(0,len(columnsList)):
