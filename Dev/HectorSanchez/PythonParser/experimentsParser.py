@@ -28,7 +28,7 @@ def readExperimentFilenames(experimentPath,sexFilenameIdentifiers={"male":"ADM",
     maleFiles=sorted(glob.glob(experimentPath + "/" + sexFilenameIdentifiers.get("male") + "*.csv"));
     femaleFiles=sorted(glob.glob(experimentPath + "/" + sexFilenameIdentifiers.get("female") + "*.csv"));
     return {"male":maleFiles,"female":femaleFiles}
-def loadNodeData(maleFilename=None,femaleFilename=None,dataType=float):
+def loadNodeData(maleFilename=None,femaleFilename=None,dataType=float,skipHeader=1,skipColumns=1):
     """
     Description:
         * Loads the data for a single node in the files. If male and female and male filenames
@@ -46,27 +46,27 @@ def loadNodeData(maleFilename=None,femaleFilename=None,dataType=float):
     """
     if (maleFilename != None) and (femaleFilename != None):
         genotypes=readGenotypes(maleFilename)
-        dataM=np.genfromtxt(maleFilename,dtype=dataType,skip_header=1,delimiter=",")
-        dataF=np.genfromtxt(femaleFilename,dtype=dataType,skip_header=1,delimiter=",")
+        dataM=np.genfromtxt(maleFilename,dtype=dataType,skip_header=skipHeader,delimiter=",")
+        dataF=np.genfromtxt(femaleFilename,dtype=dataType,skip_header=skipHeader,delimiter=",")
         returnDictionary={
             "genotypes": genotypes,
-            "population": (dataM + dataF)[:,1:]
+            "population": (dataM + dataF)[:,skipColumns:]
         }
         return returnDictionary
     elif femaleFilename != None:
         genotypes=readGenotypes(femaleFilename)
-        dataF=np.genfromtxt(femaleFilename,dtype=dataType,skip_header=1,delimiter=",")
+        dataF=np.genfromtxt(femaleFilename,dtype=dataType,skip_header=skipHeader,delimiter=",")
         returnDictionary= {
             "genotypes": genotypes,
-            "population": dataF[:,1:]
+            "population": dataF[:,skipColumns:]
         }
         return returnDictionary
     elif maleFilename != None:
         genotypes=readGenotypes(maleFilename)
-        dataM=np.genfromtxt(maleFilename,dtype=dataType,skip_header=1,delimiter=",")
+        dataM=np.genfromtxt(maleFilename,dtype=dataType,skip_header=skipHeader,delimiter=",")
         returnDictionary= {
             "genotypes": genotypes,
-            "population": dataM[:,1:]
+            "population": dataM[:,skipColumns:]
         }
         return returnDictionary
     else:
@@ -144,7 +144,7 @@ def aggregateGenotypesInNode(nodeData,aggregationDictionary):
     Notes:
         * A wrapper function should be created to select the columns automatically.
     """
-    nodeData=populationDynamics["population"]
+    nodeData=nodeData["population"]
     shape=nodeData.shape
     finalGenotypesNumber=len(aggregationDictionary["genotypes"])
     genotypesIndices=aggregationDictionary["indices"]
