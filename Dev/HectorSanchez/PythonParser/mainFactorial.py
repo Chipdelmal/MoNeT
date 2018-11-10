@@ -14,7 +14,7 @@ import fnmatch
 ########################################################################################################
 # Factorial Experiment Example
 ########################################################################################################
-path="/Users/sanchez.hmsc/Desktop/FactorialTestData/";
+path="/Users/sanchez.hmsc/Desktop/2018_11_03_ANALYZED/";
 aggregationDictionary=exPar.generateAggregationDictionary(
     ["W","H"],
     [
@@ -44,10 +44,9 @@ Parallel(n_jobs=4)(delayed(
     for folder in experimentFolders
 )
 end=time.time()
-print(end - start)
-
 ########################################################################################################
 # Load and Compile CSVs into one
 ########################################################################################################
 outFilename="A_FlattenedFactorial.csv"
 fac.compileFactorialCSVFromFiles(path,outFilename)
+print(end - start)
