@@ -4,7 +4,7 @@
 # ╩ ╩└─┘╝╚╝└─┘ ╩
 # Mosquito Networks Taskforce
 # Python module with network analysis routines
-# Authors: Biyonka Liang, Sarafina Smith, Sabrina Wong, Héctor M. Sánchez C.
+# Authors: Sarafina Smith, Biyonka Liang, Sabrina Wong, Héctor M. Sánchez C.
 ################################################################################
 
 
@@ -27,7 +27,7 @@ cdict1 = {'red':   ((0.0, 1.0, 1.0),
 
          'blue':  ((0.0, 0.0, 0.0),
                    (1.0, 0.3, 0.3)),
-                    
+
          'alpha':((0.0, 0.0, 0.0),
                    (1.0, 1.0, 1.0)),
         }
@@ -42,7 +42,7 @@ cdict2 = {'red':   ((0.0, 0.3, 0.3),
 
          'blue':  ((0.0, 1.0, 1.0),
                    (1.0, 1.0, 1.0)),
-                    
+
          'alpha':((0.0, 0.0, 0.0),
                    (1.0, 1.0, 1.0)),
         }
@@ -58,7 +58,7 @@ cdict3 = {'red':   ((0.0, 0.5, 0.5),
 
          'blue':  ((0.0, 1.0, 1.0),
                    (1.0, 1.0, 1.0)),
-                    
+
          'alpha':((0.0, 0.0, 0.0),
                    (1.0, 1.0, 1.0)),
         }
@@ -74,7 +74,7 @@ cdict4 = {'red':   ((0.0, 1.0, 1.0),
 
          'blue':  ((0.0, 1.0, 1.0),
                    (1.0, 1.0, 1.0)),
-                    
+
          'alpha':((0.0, 0.0, 0.0),
                    (1.0, 1.0, 1.0)),
         }
@@ -89,7 +89,7 @@ cdict5 = {'red':   ((0.0, 0.0, 0.0),
 
          'blue':  ((0.0, 0.75, 0.75),
                    (1.0, 0.75, 0.75)),
-                    
+
          'alpha':((0.0, 0.0, 0.0),
                    (1.0, 1.0, 1.0)),
         }
@@ -247,6 +247,8 @@ def alleleCounts(csvFileName, columns, alleleNames, startCol = 3):
 		startCol is the first column in the csv which lists genotypes, one indexed (column 1 in the columns argument)
 	Out: A pandas dataframe with 1 column for each allele, containing the specified sum: eg  col 1 + col 1 + col 2 for "W"
     """
+    # Love the idea of using the data type here to reduce memory use. We just need to have the option to make it float because
+    #   the continuous time version of the model does allow "fractional" amounts of mosquitos.
     data = np.genfromtxt(csvFileName, dtype=int, skip_header=1, delimiter=",")
     res = df[['Time']]
     for i in range(len(columns)):
@@ -293,7 +295,7 @@ def plotIndividualAlleles(csvPath, columns, alleleNames, female=True):
 	In:  csvPath is a folder of CSV files, such as "CRISPR_SIT/"
 		columns is a list of lists describing the number of times each one indexed column should be counted for this allele
 		eg [[1, 1, 2], [2, 3, 3]] if the given genotypes are WW, WR, and RR
-		alleleNames is a list of the alleleNames. 
+		alleleNames is a list of the alleleNames.
 		female specifies whether to count male or female mosquitoes
 	Out: Plot a heatmap of each allele over time. One horizontal line in the heatmap represents one patch's alleles
 		 over time with the opacity of the line defined by the allele count.
@@ -305,13 +307,13 @@ def plotIndividualAlleles(csvPath, columns, alleleNames, female=True):
 	    fig, ax = plt.subplots(figsize=(20, 5))
 	    ax.set_ylabel(alleleNames[i])
 	    im = ax.imshow(counts[i], cmap=cmaps[i])
-        
+
 def plotAllAlleles(csvPath, columns, alleleNames, female=True):
 	# overlay all allele heatmaps such as those produced by plotIndividualAlleles
     cmaps = [light_blue1, red1, purple1, pink1]
     counts = allCounts(csvPath, columns, alleleNames, female)
     fig = plt.figure(figsize=(20, 5))
-    for i in range(len(alleleNames)):        
+    for i in range(len(alleleNames)):
         plt.imshow(counts[i], cmap=cmaps[i])
 
 def stackedAreaPlot(csvPath, columns, alleleNames, female=True):
@@ -330,9 +332,9 @@ def exportStackedAreaPlots(csvPath, columns, alleleNames, female=True):
 	     Each plot stacks the total count of each allele over time, summed over all nodes in the folder.
 	"""
     folders = glob.glob(csvPath + '*/')
-        
+
     for f in folders:
-        plot = stackedAreaPlot(f, columns, alleleNames, female) 
+        plot = stackedAreaPlot(f, columns, alleleNames, female)
         fig = plot.get_figure()
         fig.savefig(csvPath + '/images/' + f.split(csvPath)[1][:-1])
         plt.close(fig)
