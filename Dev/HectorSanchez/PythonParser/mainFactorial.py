@@ -14,7 +14,7 @@ import fnmatch
 ########################################################################################################
 # Factorial Experiment Example
 ########################################################################################################
-path="/Users/sanchez.hmsc/Desktop/2018_11_03_ANALYZED/";
+path="/Users/sanchez.hmsc/Desktop/2018_11_06_ANALYZED/";
 aggregationDictionary=exPar.generateAggregationDictionary(
     ["W","H"],
     [
@@ -27,11 +27,9 @@ ratiosDictionary={"numerator":[1],"denominator":[0,1]}
 ########################################################################################################
 # Export Individual CSVs for Factorial Slots
 ########################################################################################################
-
 # experimentFolders=fac.listDirectoriesInPath(path)
 # for folder in experimentFolders:
 #     fac.loadFolderAndWriteFactorialCSV(folder,path,aggregationDictionary,ratiosDictionary)
-
 start=time.time()
 experimentFolders=fac.listDirectoriesInPath(path)
 Parallel(n_jobs=4)(delayed(
@@ -44,9 +42,9 @@ Parallel(n_jobs=4)(delayed(
     for folder in experimentFolders
 )
 end=time.time()
+print(end - start)
 ########################################################################################################
 # Load and Compile CSVs into one
 ########################################################################################################
 outFilename="A_FlattenedFactorial.csv"
 fac.compileFactorialCSVFromFiles(path,outFilename)
-print(end - start)
