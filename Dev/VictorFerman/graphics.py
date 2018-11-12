@@ -1,12 +1,12 @@
 import glob
 import math
 import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
 import numpy as np
 import sys
 
-colors = ['red','blue','green','yellow','magenta','purple', 'black', 'cyan', 'teal']
+colors = ['#ff004d','#4d80ff', '#ff00ff', 'red', 'blue', 'green', 'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal']
 def draw_pie(ax,ratios, X=0, Y=0, radius=300):
     N = len(ratios)
     xy = []
@@ -14,12 +14,12 @@ def draw_pie(ax,ratios, X=0, Y=0, radius=300):
     for ratio in ratios:
         x = [0] + np.cos(np.linspace(2*math.pi*start,2*math.pi*(start+ratio), 30)).tolist()
         y = [0] + np.sin(np.linspace(2*math.pi*start,2*math.pi*(start+ratio), 30)).tolist()
-        xy1 = zip(x,y)
+        xy1 = list(zip(x,y))
         xy.append(xy1)
         start += ratio
 
     for i, xyi in enumerate(xy):
-        ax.scatter([X],[Y] , marker=(xyi,0), s=radius)
+        ax.scatter([X],[Y] , marker=(xyi,0), s=radius, facecolor=colors[i])
 
 def getCoordinates(fileLocation):
     patchFile = open(fileLocation,"r")
@@ -36,13 +36,13 @@ def getSizes(fileLocation):
     populationFile = open(fileLocation,"r")
     radiuses = []
     for line in populationFile:
-        radiuses.append((math.log(float(line))**2)*0.8)
+        radiuses.append((math.log(float(line))**2)*0.7)
     populationFile.close()
     return radiuses
 
 def getRatios(populations, groups, weights):
     groupPopulation= []
-    total = 0
+    total = 1
     for i in range(len(groups)):
         population = 0
         for j in range(len(groups[i])):
@@ -62,19 +62,19 @@ def main():
     columnsWeight=[]
     if(len(sys.argv)<6):
         print("usage: python program coord_file, pop_file, data_path, populations groups [p1,p3,p5 p2,p4...] [w1,w3,w5 w2,w4...]")
-        coordinateFileLocation = raw_input("Coordinate file location?\n")
-        popFileLocation = raw_input("Population file location?\n")
-        dataFileLocation=raw_input("Where are the files located?\n")
-        clases=int(raw_input("Number of different populations?\n"))
-        groups=int(raw_input("How many groups would you like?\n"))
+        coordinateFileLocation = input("Coordinate file location?\n")
+        popFileLocation = input("Population file location?\n")
+        dataFileLocation=input("Where are the files located?\n")
+        clases=int(input("Number of different populations?\n"))
+        groups=int(input("How many groups would you like?\n"))
         if(groups>1):
             for i in range(groups):
-                groupN = raw_input("Which populations should we group in group"+ str(i+1) +"(i.e. 1,3,5)?\n")
+                groupN = input("Which populations should we group in group"+ str(i+1) +"(i.e. 1,3,5)?\n")
                 cols = groupN.split(',')
                 columsToGroup.append([int(elem) for elem in cols])
                 weights = [0]*len(cols)
                 for j,col in enumerate(cols):
-                    colW =raw_input("How should we weight the contents of colum"+ col +"(0 means it should be ignored)?\n")
+                    colW =input("How should we weight the contents of colum"+ col +"(0 means it should be ignored)?\n")
                     weights[j]=int(colW)
                 columnsWeight.append(weights)
     else:
@@ -105,6 +105,10 @@ def main():
     #"/Users/vferman/Downloads/Madagascar/Madagascar_Coordinates.csv"
 
     patchesX,patchesY = getCoordinates(coordinateFileLocation)
+    minLat = min(patchesY)
+    minLong = min(patchesX)
+    maxLat = max(patchesY)
+    maxLong = max(patchesX)
     #"/Users/vferman/Downloads/Madagascar/Madagascar_Populations.csv"
     radiuses = getSizes(popFileLocation)
 
@@ -120,18 +124,23 @@ def main():
     for f in files:
         next(f)
 
+    #m = Basemap(projection='merc',llcrnrlat=minLat-0.03,urcrnrlat=maxLat+0.02,llcrnrlon=minLong-0.02,urcrnrlon=maxLong+0.02,lat_ts=20,resolution='h')
+    #m.drawcoastlines(color="black")
+
     for i in range(lineCount):
         fig, ax = plt.subplots()
-
+        m = Basemap(projection='merc',llcrnrlat=minLat-1,urcrnrlat=maxLat+1,llcrnrlon=minLong-1,urcrnrlon=maxLong+1,lat_ts=20,resolution='h')
+        m.drawcoastlines(color="black")
         for patch in range(0,patches):
             line = next(files[patch]).split(',')
             sizes = [float(elem) for elem in line]
-            sizes = sizes[1:]
+            sizes = sizes[2:]
             ratios = getRatios(sizes, columsToGroup, columnsWeight)
-            draw_pie(ax,ratios,patchesY[patch],patchesX[patch],radiuses[patch])
+            px,py = m(patchesX[patch],patchesY[patch])
+            draw_pie(ax,ratios,px,py,radiuses[patch])
 
         plt.show()
-        plt.savefig(str(i)+"-"+str(groups)+".png", dpi=461,
+        plt.savefig(str(i)+"-"+str(groups)+".png", dpi=1000,
                 facecolor='w', edgecolor='w', orientation='portrait', papertype=None,
                 format="png", transparent=False, bbox_inches=None, pad_inches=0.05,
                 frameon=None)
