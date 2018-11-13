@@ -1,7 +1,7 @@
 import plotly
 import plotly.graph_objs as go
 import plotly.offline as offline
-import experimentsParser as exPar
+import MoNeT_MGDrivE as monet
 plotly.tools.set_credentials_file(
     username='chipdelmal',
     api_key='wB4pF2t8VYoNC7iUrXSs'
@@ -16,7 +16,7 @@ offline.init_notebook_mode(connected=True)
 type = float
 experimentString = "E_090_050_010_025"
 path = "/Users/sanchez.hmsc/Desktop/ParserDataset/"
-aggregationDictionary = exPar.generateAggregationDictionary(
+aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [
         [0, 0, 1, 2, 3],
@@ -26,16 +26,16 @@ aggregationDictionary = exPar.generateAggregationDictionary(
     ]
 )
 # Get the filenames lists
-filenames = exPar.readExperimentFilenames(path + experimentString)
+filenames = monet.readExperimentFilenames(path + experimentString)
 # Load a single node (Auxiliary function)
 nodeIndex = 0
-nodeData = exPar.loadNodeData(
+nodeData = monet.loadNodeData(
     filenames.get("male")[nodeIndex],
     filenames.get("female")[nodeIndex],
     dataType=float
 )
 # Aggregate the whole landscape into one array
-landscapeSumData = exPar.sumLandscapePopulationsFromFiles(
+landscapeSumData = monet.sumLandscapePopulationsFromFiles(
     filenames,
     male=True,
     female=True,
@@ -43,13 +43,13 @@ landscapeSumData = exPar.sumLandscapePopulationsFromFiles(
 )
 # Aggregate the genotypes of a population
 #   (works for a node, or for all the population)
-aggData = exPar.aggregateGenotypesInNode(
+aggData = monet.aggregateGenotypesInNode(
     landscapeSumData,
     aggregationDictionary
 )
 # Load the population dynamics data of the whole landscape
-landscapeData = exPar.loadLandscapeData(filenames, dataType=float)
-aggregatedNodesData = exPar.aggregateGenotypesInLandscape(
+landscapeData = monet.loadLandscapeData(filenames, dataType=float)
+aggregatedNodesData = monet.aggregateGenotypesInLandscape(
     landscapeData,
     aggregationDictionary
 )

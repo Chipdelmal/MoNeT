@@ -4,9 +4,15 @@ import fnmatch
 import numpy as np
 import experimentsParser as exPar
 
-import MoNeT_MGDrivE
 
-def writeFactorialAnalysisCSV(releasesNumber,coverage,path,experimentString,aggregateData,ratiosDictionary):
+def writeFactorialAnalysisCSV(
+    releasesNumber,
+    coverage,
+    path,
+    experimentString,
+    aggregateData,
+    ratiosDictionary
+):
     """
     Description:
         * Intermediate-level function to write the factorial analysis of the factorial experiments to drive.
@@ -23,19 +29,21 @@ def writeFactorialAnalysisCSV(releasesNumber,coverage,path,experimentString,aggr
         * NA
     """
     # Getting common data for easier readability
-    pop=aggregateData["population"]
-    simDays=len(pop)
-    numeratorList=ratiosDictionary["numerator"]
-    denominatorList=ratiosDictionary["denominator"]
+    pop = aggregateData["population"]
+    simDays = len(pop)
+    numeratorList = ratiosDictionary["numerator"]
+    denominatorList = ratiosDictionary["denominator"]
     with open(path+experimentString+".csv", 'wb') as csvfile:
-        writer=csv.writer(csvfile,delimiter=',')
-        writer.writerow(["ReleasesNumber","Coverage","Day","Ratio"])
-        for i in range(0,simDays):
-            num=np.sum(pop[i,[numeratorList]])
-            denom=np.sum(pop[i,[denominatorList]])
-            ratio=num/denom
-            writer.writerow([releasesNumber,coverage,i,ratio])
-def loadFolderAndWriteFactorialCSV(experimentString,path,aggregationDictionary,ratiosDictionary,male=True,female=True,dataType=float):
+        writer = csv.writer(csvfile, delimiter=',')
+        writer.writerow(["ReleasesNumber", "Coverage", "Day", "Ratio"])
+        for i in range(0, simDays):
+            num = np.sum(pop[i, [numeratorList]])
+            denom = np.sum(pop[i, [denominatorList]])
+            ratio = num/denom
+            writer.writerow([releasesNumber, coverage, i, ratio])
+
+
+def loadFolderAndWriteFactorialCSV(experimentString, path, aggregationDictionary, ratiosDictionary, male=True, female=True, dataType=float):
     """
     Description:
         * Wrapper function to perform the whole factorial parsing analysis on a folder and write the resulting CSV to drive.

@@ -54,6 +54,7 @@ source activate MoNeT
 python -m ipykernel install --user --name MoNeT --display-name "Python (MoNeT)"
 ```
 
+
 <hr>
 
 ## Authors
