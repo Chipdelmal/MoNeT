@@ -19,6 +19,13 @@ To close the environment:
 source deactivate
 ```
 
+Adding the environment to Hydrogen (in atom):
+
+```
+source activate MoNeT
+python -m ipykernel install --user --name MoNeT
+```
+
 ## Other Notes
 
 To install *Miniconda*:
