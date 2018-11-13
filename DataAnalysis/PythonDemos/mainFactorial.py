@@ -1,5 +1,6 @@
 import warnings
-warnings.filterwarnings("always")
+warnings.filterwarnings("ignore", message="numpy.dtype size changed")
+warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 from sklearn.externals.joblib import Parallel, delayed
 import time
 import MoNeT_MGDrivE as monet
