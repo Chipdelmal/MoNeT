@@ -20,7 +20,7 @@ offline.init_notebook_mode(connected=True)
 ########################################################################################################
 
 # Define the experiment's path
-dtype=float;
+type=float;
 experimentString="E_090_050_010_025"
 path="/Users/sanchez.hmsc/Desktop/ParserDataset/";
 aggregationDictionary=exPar.generateAggregationDictionary(["W","H","R","B"],[[0,0,1,2,3],[1,4,4,5,6],[2,5,7,7,8],[3,6,8,9,9]])
