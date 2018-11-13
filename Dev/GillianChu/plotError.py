@@ -59,8 +59,16 @@ counts3 = plotHAllele(pathlist, counts3, "Half Aggregation")
 # rmse_half = rmse(np.array(counts3), np.array(counts1))
 # print('RMSE of No Aggregation against Half Aggregation: ', rmse_half)
 
-# plt.legend()
-# plt.show()
+def errorOverTime(counts1, counts2, name):
+	""" Count No Aggregation as the truth"""
+	counts = np.subtract(counts2, counts1)
+	plt.plot(counts, label=name + "Error")
+
+errorOverTime(counts1, counts2, "Full Aggregation")
+errorOverTime(counts1, counts3, "Half Aggregation")
+
+plt.legend()
+plt.show()
 
 def entropy(predictions, targets):
 	"""
@@ -71,3 +79,23 @@ def entropy(predictions, targets):
 	"""
 
 	return
+
+def approximateEntropy(U, m, r):
+	""" https://gist.github.com/f00-/a835909ffd15b9927820d175a48dee41 """
+	def maxdist(x_i, x_j):
+		return max([abs(ua - va) for ua, va in zip(x_i, x_j)])
+
+	def phi(m):
+		x = [[U[j] for j in range(i, i + m - 1 + 1)] for i in range(N - m + 1)]
+		C = [len([1 for x_j in x if maxdist(x_i, x_j) <= r]) / (N - m + 1.0) for x_i in x]
+		return (N - m + 1.0) ** (-1) * sum(np.log(C))
+	N = len(U)
+	return abs(phi(m+1) - phi(m))
+
+# U = np.array(counts1)
+# print(approximateEntropy(U, 2, 3))
+# U = np.array(counts2)
+# print(approximateEntropy(U, 2, 3))
+# U = np.array(counts3)
+# print(approximateEntropy(U, 2, 3))
+
