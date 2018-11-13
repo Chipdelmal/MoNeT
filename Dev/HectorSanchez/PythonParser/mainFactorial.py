@@ -3,6 +3,8 @@ import factorialExperiments as fac
 from sklearn.externals.joblib import Parallel, delayed
 import time
 
+import MoNeT_MGDrivE
+
 ###############################################################################
 # Factorial Experiment Example
 ###############################################################################

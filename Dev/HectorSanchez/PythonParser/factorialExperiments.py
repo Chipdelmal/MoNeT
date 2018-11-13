@@ -4,6 +4,8 @@ import fnmatch
 import numpy as np
 import experimentsParser as exPar
 
+import MoNeT_MGDrivE
+
 def writeFactorialAnalysisCSV(releasesNumber,coverage,path,experimentString,aggregateData,ratiosDictionary):
     """
     Description:

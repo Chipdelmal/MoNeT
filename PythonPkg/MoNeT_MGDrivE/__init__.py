@@ -5,4 +5,5 @@
 # Mosquito Networks Taskforce
 ################################################################################
 
-from .experimentsParser import *
+from .experimentsHandler import *
+from .auxiliaryFunctions import *
