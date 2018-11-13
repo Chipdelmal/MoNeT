@@ -19,6 +19,13 @@ To close the environment:
 source deactivate
 ```
 
+Adding the environment to Hydrogen (in atom):
+
+```
+source activate MoNeT
+python -m ipykernel install --user --name MoNeT
+```
+
 ## Other Notes
 
 To install *Miniconda*:
@@ -33,7 +40,14 @@ To export environment to *YML* (after activating):
 conda env export > MoNeT.yml
 ```
 
-To load MoNeT as a kernel in jupyter:
+To install ipykernel in hydrogen (to run notebooks in "Jupyter" style from atom):
+
+```
+python -m pip install ipykernel
+python -m ipykernel install --user
+```
+
+To load MoNeT as a kernel in jupyter kernel in Hydrogen:
 
 ```
 source activate MoNeT
@@ -44,4 +58,4 @@ python -m ipykernel install --user --name MoNeT --display-name "Python (MoNeT)"
 
 ## Authors
 
-Sarafina Smith, Sabrina Wong, Biyonka Liang, Héctor M. Sánchez C.
+Héctor M. Sánchez C.
