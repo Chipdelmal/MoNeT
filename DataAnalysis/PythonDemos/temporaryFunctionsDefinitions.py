@@ -14,14 +14,22 @@ def calculateFactorialHashError(probeData, centralData, errorFunction):
     return resultsHash
 
 
-def loadAndHashFactorialCSV(path, floatMultiplier=1000, skipHeader=0):
+def loadAndHashFactorialCSV(
+    path,
+    probedDay=None,
+    floatMultiplier=1000,
+    skipHeader=0
+):
     factorialData = np.genfromtxt(
         path,
         dtype=float,
         skip_header=skipHeader,
         delimiter=","
     )
-    dayProbe = max(factorialData[:, 2])
+    if(probedDay is not None and probedDay >= 1):
+        dayProbe = probedDay
+    else:
+        dayProbe = max(factorialData[:, 2])
     probedHash = prepareFactorialArrayForComparison(
         factorialData,
         dayProbe

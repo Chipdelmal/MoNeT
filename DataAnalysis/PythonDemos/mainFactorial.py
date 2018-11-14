@@ -69,15 +69,25 @@ monet.compileFactorialCSVFromFiles(path, outFilename)
 ###############################################################################
 path = "/Users/sanchez.hmsc/Desktop/FactorialSensitivity/"
 centralFile = "50TX_1x_2018_09_01.csv"
-testFileA = "TSA_001.csv"
-testFileB = "TSA_002.csv"
-
-# 001 larval life decrease
-# 002 larval life increase
-# 010 adult life increase
-# 020 adult life decrease
-# 100 fitness cost 10% reduction
-# 200 fitness cost 20% reduction
+sensitivitySelector = 1
+if(sensitivitySelector == 1):
+    # 001 larval life decrease
+    # 002 larval life increase
+    title = "Larval Lifespan"
+    testFileA = "TSA_001.csv"
+    testFileB = "TSA_002.csv"
+if(sensitivitySelector == 2):
+    # 010 adult life increase
+    # 020 adult life decrease
+    title = "Adult Mortality"
+    testFileA = "TSA_010.csv"
+    testFileB = "TSA_020.csv"
+if(sensitivitySelector == 3):
+    # 100 fitness cost 10% reduction
+    # 200 fitness cost 20% reduction
+    title = "Fitness Cost"
+    testFileA = "TSA_001.csv"
+    testFileB = "TSA_002.csv"
 
 centralData = tempFun.loadAndHashFactorialCSV(path + centralFile)
 probeDataA = tempFun.loadAndHashFactorialCSV(path + testFileA)
