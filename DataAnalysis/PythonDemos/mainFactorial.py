@@ -5,7 +5,7 @@ from sklearn.externals.joblib import Parallel, delayed
 import time, csv, os, fnmatch
 import MoNeT_MGDrivE as monet
 import numpy as np
-import temporaryFunctionsDefinitions as tempFun
+#import temporaryFunctionsDefinitions as tempFun
 import plotly
 import plotly.graph_objs as go
 import plotly.offline as offline
@@ -89,18 +89,18 @@ if(sensitivitySelector == 3):
     testFileA = "TSA_001.csv"
     testFileB = "TSA_002.csv"
 
-centralData = tempFun.loadAndHashFactorialCSV(path + centralFile)
-probeDataA = tempFun.loadAndHashFactorialCSV(path + testFileA)
-probeDataB = tempFun.loadAndHashFactorialCSV(path + testFileB)
-differencesHashA = tempFun.calculateFactorialHashError(
+centralData = monet.loadAndHashFactorialCSV(path + centralFile)
+probeDataA = monet.loadAndHashFactorialCSV(path + testFileA)
+probeDataB = monet.loadAndHashFactorialCSV(path + testFileB)
+differencesHashA = monet.calculateFactorialHashError(
     probeDataA,
     centralData,
-    tempFun.sampleDifference
+    monet.sampleDifference
 )
-differencesHashB = tempFun.calculateFactorialHashError(
+differencesHashB = monet.calculateFactorialHashError(
     probeDataB,
     centralData,
-    tempFun.sampleDifference
+    monet.sampleDifference
 )
 errorsA = differencesHashA.values()
 errorsB = differencesHashB.values()
@@ -124,7 +124,7 @@ trace2 = go.Histogram(
 )
 layout = go.Layout(
     title='Larval Lifespan',
-    xaxis=dict(title='Value'),
+    xaxis=dict(title='Difference'),
     yaxis=dict(title='Count'),
     bargap=0.125,
     bargroupgap=0.05
