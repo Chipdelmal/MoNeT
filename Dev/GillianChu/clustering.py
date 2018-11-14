@@ -5,7 +5,7 @@
 # Definition of clustering functions
 ################################################################################
 
-import basics as b
+import lineGraph as b
 import scipy.cluster.hierarchy as sch
 from sklearn.cluster import AgglomerativeClustering
 from scipy.cluster.hierarchy import dendrogram
@@ -124,11 +124,11 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 	dist = np.array(dist)
 	# print(dist.shape)
 
-	with open('noAggregationCoord.csv', mode='w') as destination:
+	with open(str(max_d)+'AggregationCoord.csv', mode='w') as destination:
 		writer = csv.writer(destination, delimiter= ',')
 		for i in dist:
 			writer.writerow(i)
-	with open('noAggregationPop.csv', mode='w') as destination:
+	with open(str(max_d)+'AggregationPop.csv', mode='w') as destination:
 		writer = csv.writer(destination, delimiter=',')
 		for i in clusteredCoordinatesCentroids:
 			destination.write('%i\n' % clusteredCoordinatesCentroids[i][1])
@@ -136,25 +136,25 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 	# # plt.show()
 	# return clusteredCoordinatesCentroids
 
-# n = 100
-# dist = 15
-# stdpop = 50
-#
-# #building line graph from basics.py
-# L = b.LineGraph(n, dist)
-# L.createLineGraph()
-# L.allVertices
-# points = np.array(L.allVerticesCoord())
-# sizesLists = [stdpop for i in range(len(points))]
-#
-# #Aha. The problem is because it's been defaulting to unstructured.
-# #So I need to build a connectivity matrix from the graph
-# # knn_graph = kneighbors_graph(X, 2, mode='connectivity')
-#
-# max_d = float("inf")
-# # max_d = float("inf") # max distance cut-off, meaning determing the number of clusters
-# hierarchialAggregation(points, max_d, sizesLists)
+n = 100
+dist = 15
+stdpop = 50
 
+#building line graph from basics.py
+L = b.LineGraph(n, dist)
+L.createLineGraph()
+L.allVertices
+points = np.array(L.allVerticesCoord())
+sizesLists = [stdpop for i in range(len(points))]
+
+#Aha. The problem is because it's been defaulting to unstructured.
+#So I need to build a connectivity matrix from the graph
+# knn_graph = kneighbors_graph(X, 2, mode='connectivity')
+
+for i in range(25):
+	max_d = i
+	# max_d = float("inf") # max distance cut-off, meaning determing the number of clusters
+	hierarchialAggregation(points, max_d, sizesLists)
 
 # """
 # Notes:
