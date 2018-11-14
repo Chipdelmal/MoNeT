@@ -190,7 +190,7 @@ def parseMosquitoCounts(traps,filename):
             if(i==47):
                 weeklyCount.append(0)
             else:
-                weeklyCount.append(data[i].zfill(1))
+                weeklyCount.append(int(float(data[i].strip().zfill(1))))
         else:
             weeklyCount.append(0)
         trapCount[data[0]]=weeklyCount
@@ -205,9 +205,6 @@ def exportDataSet(traps,filename):
     for elem in traps:
         elem.writeToFile(outFile)
     outFile.close()
-
-def getMosquitoCount(x,z,trapList=[]):
-    return trapList[int(z)].mosquitoCounts[int(x)]
 
 def main():
     #Arguments
@@ -226,17 +223,22 @@ def main():
     parseMosquitoCounts(traps,mosquitoFile)
     exportDataSet(traps,exportFile)
 
-    # fig = plt.figure()
-    # ax = fig.gca(projection='3d')
-    # x = np.linspace(0, 52, 52)
-    # z = np.linspace(0, len(traps), len(traps))
-    #
-    # X, Z = np.meshgrid(x, z)
-    # Y= getMosquitoCount(X,Z,traps)
-    # ax.plot_trisurf(X, Y, Z, linewidth=0.2, antialiased=True)
-    # ax.set_xlabel('week')
-    # ax.set_ylabel('trap')
-    # ax.set_zlabel('mosquitos')
-    # plt.show()
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    label = 0
+    for elem in traps:
+        z = elem.mosquitoCounts
+        if len(z) == 52:
+            x = np.arange(0,52,1)
+            y = np.asarray([label]*52)
+            z = np.asarray(z)
+            ax.scatter(x, y, z, marker='o')
+            label+=1
+    ax.set_xlim(0,52)
+    ax.set_ylim(0,label)
+    ax.set_xlabel('week')
+    ax.set_ylabel('trap')
+    ax.set_zlabel('mosquitos')
+    plt.show()
 
 main()
