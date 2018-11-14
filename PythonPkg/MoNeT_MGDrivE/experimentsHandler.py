@@ -287,7 +287,7 @@ def loadLandscapeData(filenames, male=True, female=True, dataType=float):
     elif female and (len(filenames.get("female")) >= 1):
         femaleFilenames = filenames.get("female")
         genotypes = auxFun.readGenotypes(femaleFilenames[0])
-        nodesDataList = [None]*femaleFilesNumber
+        nodesDataList = [None] * femaleFilesNumber
         for i in range(0, femaleFilesNumber):
             nodesDataList[i] = loadNodeData(
                 None,
@@ -302,7 +302,7 @@ def loadLandscapeData(filenames, male=True, female=True, dataType=float):
     elif male and (len(filenames.get("male")) >= 1):
         maleFilenames = filenames.get("male")
         genotypes = auxFun.readGenotypes(maleFilenames[0])
-        nodesDataList = [None]*maleFilesNumber
+        nodesDataList = [None] * maleFilesNumber
         for i in range(0, maleFilesNumber):
             nodesDataList[i] = loadNodeData(
                 filenames.get("male")[i],

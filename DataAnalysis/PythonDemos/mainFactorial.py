@@ -6,6 +6,10 @@ import time, csv, os, fnmatch
 import MoNeT_MGDrivE as monet
 import numpy as np
 import temporaryFunctionsDefinitions as tempFun
+import plotly
+import plotly.graph_objs as go
+import plotly.offline as offline
+offline.init_notebook_mode(connected=True)
 
 ###############################################################################
 # Factorial Experiment Example
@@ -65,7 +69,56 @@ monet.compileFactorialCSVFromFiles(path, outFilename)
 ###############################################################################
 path = "/Users/sanchez.hmsc/Desktop/FactorialSensitivity/"
 centralFile = "50TX_1x_2018_09_01.csv"
-testFile = "TSA_001.csv"
+testFileA = "TSA_001.csv"
+testFileB = "TSA_002.csv"
+
+# 001 larval life decrease
+# 002 larval life increase
+# 010 adult life increase
+# 020 adult life decrease
+# 100 fitness cost 10% reduction
+# 200 fitness cost 20% reduction
 
 centralData = tempFun.loadAndHashFactorialCSV(path + centralFile)
-probeData = tempFun.loadAndHashFactorialCSV(path + testFile)
+probeDataA = tempFun.loadAndHashFactorialCSV(path + testFileA)
+probeDataB = tempFun.loadAndHashFactorialCSV(path + testFileB)
+differencesHashA = tempFun.calculateFactorialHashError(
+    probeDataA,
+    centralData,
+    tempFun.sampleDifference
+)
+differencesHashB = tempFun.calculateFactorialHashError(
+    probeDataB,
+    centralData,
+    tempFun.sampleDifference
+)
+errorsA = differencesHashA.values()
+errorsB = differencesHashB.values()
+
+binsDict = dict(start=0, end=1, size=0.05)
+trace1 = go.Histogram(
+    x=errorsA,
+    histnorm='percent',
+    name='Increase',
+    xbins=binsDict,
+    marker=dict(color='#B9C1DB'),
+    opacity=0.75
+)
+trace2 = go.Histogram(
+    x=errorsB,
+    histnorm='percent',
+    name='Decrease',
+    xbins=binsDict,
+    marker=dict(color='#FF7373'),
+    opacity=0.75
+)
+layout = go.Layout(
+    title='Larval Lifespan',
+    xaxis=dict(title='Value'),
+    yaxis=dict(title='Count'),
+    bargap=0.125,
+    bargroupgap=0.05
+)
+data = [trace1, trace2]
+fig = go.Figure(data=data, layout=layout)
+plotly.offline.iplot(fig,filename='normalized histogram')
