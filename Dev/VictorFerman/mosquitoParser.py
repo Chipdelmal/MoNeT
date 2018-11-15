@@ -227,19 +227,22 @@ def main():
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     label = 0
+    lines = []
     for elem in traps:
         z = elem.mosquitoCounts
         if len(z) == 52:
             x = np.arange(0,52,1)
             y = np.asarray([label]*52)
             z = np.asarray(z)
-            ax.scatter(x, y, z, marker='o')
+            line=ax.scatter(x, y, z, marker='o', c=elem.weeklyMinTemp)
             label+=1
+            lines.append(line)
     ax.set_xlim(0,52)
     ax.set_ylim(0,label)
     ax.set_xlabel('week')
     ax.set_ylabel('trap')
     ax.set_zlabel('mosquitos')
+    fig.colorbar(lines[0])
     plt.show()
 
 main()
