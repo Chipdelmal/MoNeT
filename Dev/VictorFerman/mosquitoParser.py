@@ -186,9 +186,10 @@ def parseMosquitoCounts(traps,filename):
         weeklyCount = []
         if("Total" in data[0]):
             break
-        for i in range(1,52):
+        for i in range(1,51):
             if(i==47):
                 weeklyCount.append(0)
+                weeklyCount.append(int(float(data[i].strip().zfill(1))))
             else:
                 weeklyCount.append(int(float(data[i].strip().zfill(1))))
         else:
