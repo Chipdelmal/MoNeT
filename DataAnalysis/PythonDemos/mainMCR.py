@@ -53,6 +53,7 @@ aggregatedNodesData = monet.aggregateGenotypesInLandscape(
     landscapeData,
     aggregationDictionary
 )
+aggregatedNodesData["landscape"]
 ###############################################################################
 #
 ###############################################################################
