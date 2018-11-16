@@ -47,7 +47,7 @@ python -m pip install ipykernel
 python -m ipykernel install --user
 ```
 
-To load MoNeT as a kernel in jupyter kernel in Hydrogen:
+To load MoNeT as a kernel in Jupyter and Hydrogen:
 
 ```bash
 source activate MoNeT
