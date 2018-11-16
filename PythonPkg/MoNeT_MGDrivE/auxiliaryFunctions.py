@@ -2,9 +2,9 @@ import os
 import csv
 
 
-def readGenotypes(filename):
+def readGenotypes(filename, skipColumns=1):
     reader = csv.reader(open(filename))
-    return next(reader)[2:]
+    return next(reader)[skipColumns:]
 
 
 def generateAggregationDictionary(genotypesList, indicesList):
@@ -52,3 +52,32 @@ def splitExperimentString(experimentString):
     releasesNumber = int(split[3])
     coverage = int(split[4])
     return {"releasesNumber": releasesNumber, "coverage": coverage}
+
+
+def findGeneInGenotypesList(gene, genotypes):
+    repsList = []
+    for i in range(0, len(genotypes)):
+        count = genotypes[i].count(gene)
+        if count > 0:
+            repsList.append([i] * count)
+    return flatten(repsList)
+
+
+def flatten(lst):
+    return sum(([x] if not isinstance(x, list) else flatten(x)
+                for x in lst), [])
+
+
+def getUniqueGenesFromGenotypes(genotypes):
+    return list({l for word in genotypes for l in word})
+
+
+def autoGenerateGenotypesDictionary(genes, genotypes):
+    tempList = []
+    for gene in genes:
+        tempList.append(findGeneInGenotypesList(gene, genotypes))
+    returnDict = {
+        "genotypes": genes,
+        "indices": tempList
+    }
+    return returnDict

@@ -1,6 +1,15 @@
 import numpy as np
 
 
+def deHashFactorial(hashedResults):
+    hashLength = len(hashedResults)
+    returnArray = np.empty([hashLength, 3])
+    for (i, key) in enumerate(hashedResults.keys()):
+        splits = key.split("-")
+        returnArray[i] = [int(splits[0]), float(splits[1]), hashedResults[key]]
+    return returnArray
+
+
 def calculateFactorialHashError(probeData, centralData, errorFunction):
     centralKeys = centralData.keys()
     probeKeys = probeData.keys()
@@ -17,7 +26,7 @@ def calculateFactorialHashError(probeData, centralData, errorFunction):
 def loadAndHashFactorialCSV(
     path,
     probedDay=None,
-    floatMultiplier=1000,
+    floatMultiplier=1,
     skipHeader=0
 ):
     factorialData = np.genfromtxt(
@@ -40,20 +49,20 @@ def loadAndHashFactorialCSV(
 def prepareFactorialArrayForComparison(
     factorialData,
     probeDay,
-    floatMultiplier=1000
+    floatMultiplier=1
 ):
     probedData = getReleasesCoverageRatioArray(factorialData, probeDay)
     probedHashMap = convertFactorialArrayToHash(probedData)
     return probedHashMap
 
 
-def convertFactorialArrayToHash(factorialArray, floatMultiplier=1000):
+def convertFactorialArrayToHash(factorialArray, floatMultiplier=1):
     returnDictionary = {}
     for i in range(0, len(factorialArray)):
         releases = str(int(factorialArray[i, 0])).rjust(3, "0")
         coverage = str(
-            int(factorialArray[i, 1] * floatMultiplier)
-        ).rjust(5, "0")
+            float(factorialArray[i, 1] * floatMultiplier)
+        ).ljust(5, "0")
         key = releases + "-" + coverage
         returnDictionary.update({key: factorialArray[i, 2]})
     return returnDictionary

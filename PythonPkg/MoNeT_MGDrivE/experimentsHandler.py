@@ -123,7 +123,9 @@ def sumLandscapePopulationsFromFiles(
     filenames,
     male=True,
     female=True,
-    dataType=float
+    dataType=float,
+    skipHeader=1,
+    skipColumns=1
 ):
     """
     Description:
@@ -153,7 +155,9 @@ def sumLandscapePopulationsFromFiles(
         placeholder = loadNodeData(
             filenames.get("male")[0],
             filenames.get("female")[0],
-            dataType=dataType
+            dataType=dataType,
+            skipHeader=skipHeader,
+            skipColumns=skipColumns
         )
         genotypes = placeholder["genotypes"]
         tempAggregation = placeholder["population"]
@@ -161,7 +165,9 @@ def sumLandscapePopulationsFromFiles(
             tempAggregation = tempAggregation + loadNodeData(
                 filenames.get("male")[i],
                 filenames.get("female")[i],
-                dataType=dataType
+                dataType=dataType,
+                skipHeader=skipHeader,
+                skipColumns=skipColumns
             )["population"]
         returnDictionary = {
             "genotypes": genotypes,
@@ -172,7 +178,9 @@ def sumLandscapePopulationsFromFiles(
         placeholder = loadNodeData(
             None,
             filenames.get("female")[0],
-            dataType=dataType
+            dataType=dataType,
+            skipHeader=skipHeader,
+            skipColumns=skipColumns
         )
         genotypes = placeholder["genotypes"]
         tempAggregation = placeholder["population"]
@@ -180,7 +188,9 @@ def sumLandscapePopulationsFromFiles(
             tempAggregation = tempAggregation + loadNodeData(
                 None,
                 filenames.get("female")[i],
-                dataType=dataType
+                dataType=dataType,
+                skipHeader=skipHeader,
+                skipColumns=skipColumns
             )
         returnDictionary = {
             "genotypes": genotypes,
@@ -191,7 +201,9 @@ def sumLandscapePopulationsFromFiles(
         placeholder = loadNodeData(
             filenames.get("male")[0],
             None,
-            dataType=dataType
+            dataType=dataType,
+            skipHeader=skipHeader,
+            skipColumns=skipColumns
         )
         genotypes = placeholder["genotypes"]
         tempAggregation = placeholder["population"]
@@ -199,7 +211,9 @@ def sumLandscapePopulationsFromFiles(
             tempAggregation = tempAggregation + loadNodeData(
                 filenames.get("male")[i],
                 None,
-                dataType=dataType
+                dataType=dataType,
+                skipHeader=skipHeader,
+                skipColumns=skipColumns
             )
         returnDictionary = {
             "genotypes": genotypes,
