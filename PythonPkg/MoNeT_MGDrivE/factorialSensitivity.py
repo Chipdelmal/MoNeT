@@ -2,6 +2,12 @@ import numpy as np
 
 
 def deHashFactorial(hashedResults):
+    '''
+    Description:
+    In:
+    Out:
+    Notes:
+    '''
     hashLength = len(hashedResults)
     returnArray = np.empty([hashLength, 3])
     for (i, key) in enumerate(hashedResults.keys()):
@@ -11,6 +17,12 @@ def deHashFactorial(hashedResults):
 
 
 def calculateFactorialHashError(probeData, centralData, errorFunction):
+    '''
+    Description:
+    In:
+    Out:
+    Notes:
+    '''
     centralKeys = centralData.keys()
     probeKeys = probeData.keys()
     resultsHash = {}
@@ -29,6 +41,12 @@ def loadAndHashFactorialCSV(
     floatMultiplier=1,
     skipHeader=0
 ):
+    '''
+    Description:
+    In:
+    Out:
+    Notes:
+    '''
     factorialData = np.genfromtxt(
         path,
         dtype=float,
@@ -51,12 +69,24 @@ def prepareFactorialArrayForComparison(
     probeDay,
     floatMultiplier=1
 ):
+    '''
+    Description:
+    In:
+    Out:
+    Notes:
+    '''
     probedData = getReleasesCoverageRatioArray(factorialData, probeDay)
     probedHashMap = convertFactorialArrayToHash(probedData)
     return probedHashMap
 
 
 def convertFactorialArrayToHash(factorialArray, floatMultiplier=1):
+    '''
+    Description:
+    In:
+    Out:
+    Notes:
+    '''
     returnDictionary = {}
     for i in range(0, len(factorialArray)):
         releases = str(int(factorialArray[i, 0])).rjust(3, "0")
@@ -69,6 +99,12 @@ def convertFactorialArrayToHash(factorialArray, floatMultiplier=1):
 
 
 def getReleasesCoverageRatioArray(factorialArray, probeDay):
+    '''
+    Description:
+    In:
+    Out:
+    Notes:
+    '''
     probedData = factorialArray[factorialArray[:, 2] == probeDay]
     factorialPoints = probedData[:, [0, 1, 3]]
     return factorialPoints
