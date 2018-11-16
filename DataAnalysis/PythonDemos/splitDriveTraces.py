@@ -32,33 +32,8 @@ genes = monet.getUniqueGenesFromGenotypes(genotypes)
 aggregationDictionary = monet.autoGenerateGenotypesDictionary(genes, genotypes)
 ###############################################################################
 # Calculate the aggregations of the iterations ################################
-# Read the folders
-folders = monet.listDirectoriesInPath(pathFilename)
-for i, folder in enumerate(folders):
-    folders[i] = pathFilename + folder
-# Calculate the aggregation of the runs of the experiment
-popsList = [None] * len(folders)
-for i in range(len(folders)):
-    filenames = monet.readExperimentFilenames(folders[i])
-    landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-        filenames, male=True, female=True, dataType=float
-    )
-    aggData = monet.aggregateGenotypesInNode(
-        landscapeSumData, aggregationDictionary
-    )
-    popsList[i] = aggData["population"]
-# Generate the return dictionary
-{
-    "genotypes": aggregationDictionary["genotypes"],
-    "popsList": popsList
-}
-###############################################################################
-#           ################################
-
-
-
-
-folders = listDirectoriesWithPathWithinAPath(pathFilename)
-dictionaryOutput = aggregateGenotypesOverTracesFolders(folders, aggregationDictionary)
-
+folders = monet.listDirectoriesWithPathWithinAPath(pathFilename)
+dictionaryOutput = monet.aggregateGenotypesOverTracesFolders(
+    folders, aggregationDictionary
+)
 dictionaryOutput
