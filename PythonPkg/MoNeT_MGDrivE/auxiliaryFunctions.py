@@ -145,3 +145,20 @@ def autoGenerateGenotypesDictionary(genes, genotypes):
         "indices": tempList
     }
     return returnDict
+
+
+def listDirectoriesWithPathWithinAPath(pathFilename):
+    '''
+    Description:
+        *
+    In:
+        *
+    Out:
+        *
+    Notes:
+        *
+    '''
+    folders = listDirectoriesInPath(pathFilename)
+    for i, folder in enumerate(folders):
+        folders[i] = pathFilename + folder
+    return folders
