@@ -1,36 +1,38 @@
+# import fnmatch
+# import os
+# import csv
+# import time
+import plotly.offline as offline
+import plotly.graph_objs as go
+import plotly.plotly as py
+import plotly
+# import numpy as np
+import MoNeT_MGDrivE as monet
+# from sklearn.externals.joblib import Parallel, delayed
 import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
-from sklearn.externals.joblib import Parallel, delayed
-import time, csv, os, fnmatch
-import MoNeT_MGDrivE as monet
-import numpy as np
-#import temporaryFunctionsDefinitions as tempFun
-import plotly
-import plotly.plotly as py
-import plotly.graph_objs as go
-import plotly.offline as offline
+# import temporaryFunctionsDefinitions as tempFun
 plotly.tools.set_credentials_file(
     username='chipdelmal',
     api_key='wB4pF2t8VYoNC7iUrXSs'
 )
 offline.init_notebook_mode(connected=True)
-
-
-releasesStart=20
-releasesEnd=200
-
+###############################################################################
+# Setting parameters and paths ################################################
+releasesStart, releasesEnd = 20, 200
 dataType = float
 experimentString = "E_01_05_079_076_25_10000"
 path = "/Users/sanchez.hmsc/Desktop/SplitDrive03/SplitDrive/2018_11_09_ANALYZED/"
-pathFilename= path + experimentString + "/"
-
+pathFilename = path + experimentString + "/"
+filenames = monet.readExperimentFilenames(path + experimentString)
+###############################################################################
+# Generating genotypes dictionary #############################################
 genotypes = monet.readGenotypes(pathFilename + "ADM_Mean_Patch0000.csv")
 genes = monet.getUniqueGenesFromGenotypes(genotypes)
 aggregationDictionary = monet.autoGenerateGenotypesDictionary(genes, genotypes)
-
-filenames = monet.readExperimentFilenames(path + experimentString)
-
+###############################################################################
+# Aggregating data from nodes #################################################
 landscapeSumData = monet.sumLandscapePopulationsFromFiles(
     filenames,
     male=True,
@@ -41,12 +43,8 @@ aggregatedNodesData = monet.aggregateGenotypesInNode(
     landscapeSumData,
     aggregationDictionary
 )
-
-genotypes
-aggregationDictionary["genotypes"]
-aggregationDictionary["indices"][0]
-
-
+###############################################################################
+# Plotting the data ###########################################################
 labels = aggregatedNodesData["genotypes"]
 colors = ["rgb(25,128,255)", "rgb(255,25,128)",
           "rgb(128,0,255)", "rgb(255,0,255)", "rgb(128,128,255)"]
@@ -78,4 +76,4 @@ layout = go.Layout(
 )
 fig = go.Figure(data=tracesList, layout=layout)
 # plotly.offline.plot(fig, filename='alleleFrequency.html')
-py.plot(fig,filename='splitDrive.html',validate=False)
+py.plot(fig, filename='splitDrive.html', validate=False)
