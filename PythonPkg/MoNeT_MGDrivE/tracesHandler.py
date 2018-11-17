@@ -16,6 +16,6 @@ def aggregateGenotypesOverTracesFolders(folders, aggregationDictionary):
     # Generate the return dictionary
     returnDictionary = {
         "genotypes": aggregationDictionary["genotypes"],
-        "popsList": popsList
+        "populations": popsList
     }
     return returnDictionary

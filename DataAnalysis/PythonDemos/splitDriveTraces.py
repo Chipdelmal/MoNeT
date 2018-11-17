@@ -2,6 +2,7 @@
 # import os
 # import csv
 # import time
+import matplotlib
 import plotly.offline as offline
 import plotly.graph_objs as go
 import plotly.plotly as py
@@ -22,8 +23,8 @@ offline.init_notebook_mode(connected=True)
 # Setting parameters and paths ################################################
 releasesStart, releasesEnd = 20, 200
 dataType = float
-experimentString = "E_01_05_079_076_25_10000"
-path = "/Users/sanchez.hmsc/Desktop/SplitDrive03/SplitDrive/2018_11_09_GARBAGE/"
+experimentString = "E_01_05_079_079_25_10000"
+path = "/Users/sanchez.hmsc/Desktop/EqualHoming/SplitDrive/2018_11_16_GARBAGE/"
 pathFilename = path + experimentString + "/"
 ###############################################################################
 # Generate genotypes dictionary  ##############################################
@@ -36,4 +37,4 @@ folders = monet.listDirectoriesWithPathWithinAPath(pathFilename)
 dictionaryOutput = monet.aggregateGenotypesOverTracesFolders(
     folders, aggregationDictionary
 )
-dictionaryOutput
+dictionaryOutput["populations"]
