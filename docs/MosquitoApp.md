@@ -12,11 +12,15 @@ Another feature of the app is that it allows researchers with access to the data
 
 Two videos were recorded with the demonstrations of how the mobile app works. The initial one shows the early stages of development:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/V0J026A8DIE" allowfullscreen></iframe>
+<center>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/V0J026A8DIE" allowfullscreen></iframe>
+</center>
 
 whilst the second one shows the app in the state closest to its release:
 
+<center>
 <iframe width="560" height="315" src="https://www.youtube.com/watch?v=fajQVGXrmIo&t=36s" allowfullscreen></iframe>
+</center>
 
 ## Authors
 
