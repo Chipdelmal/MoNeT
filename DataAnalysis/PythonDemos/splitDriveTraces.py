@@ -2,7 +2,7 @@
 # import os
 # import csv
 # import time
-import matplotlib
+import matplotlib.pyplot as plt
 import plotly.offline as offline
 import plotly.graph_objs as go
 import plotly.plotly as py
@@ -38,3 +38,5 @@ dictionaryOutput = monet.aggregateGenotypesOverTracesFolders(
     folders, aggregationDictionary
 )
 dictionaryOutput["populations"]
+
+plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
