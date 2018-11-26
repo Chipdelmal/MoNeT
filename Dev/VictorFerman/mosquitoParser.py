@@ -207,6 +207,34 @@ def exportDataSet(traps,filename):
         elem.writeToFile(outFile)
     outFile.close()
 
+def mosquitosPerVar(characteristic, traps):
+    counts = []
+    values = []
+    if 'rain' in characteristic:
+        for elem in traps:
+            if len(elem.mosquitoCounts)>1:
+                counts += elem.mosquitoCounts
+                values += elem.weeklyRain
+    elif 'min' in characteristic:
+        for elem in traps:
+            if len(elem.mosquitoCounts)>1:
+                counts += elem.mosquitoCounts
+                values += elem.weeklyMinTemp
+    else:
+        for elem in traps:
+            if len(elem.mosquitoCounts)>1:
+                counts += elem.mosquitoCounts
+                values += elem.weeklyMaxTemp
+
+    aggregated = {}
+    for i in range(len(counts)):
+        if values[i] in aggregated:
+            aggregated[values[i]].append(counts[i])
+        else:
+            aggregated[values[i]] = [counts[i]]
+
+    return (aggregated.keys(), aggregated.values())
+
 def main():
     #Arguments
     # 0: path to weather file location
@@ -224,25 +252,46 @@ def main():
     parseMosquitoCounts(traps,mosquitoFile)
     exportDataSet(traps,exportFile)
 
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    label = 0
-    lines = []
-    for elem in traps:
-        z = elem.mosquitoCounts
-        if len(z) == 52:
-            x = np.arange(0,52,1)
-            y = np.asarray([label]*52)
-            z = np.asarray(z)
-            line=ax.scatter(x, y, z, marker='o', c=elem.weeklyMinTemp)
-            label+=1
-            lines.append(line)
-    ax.set_xlim(0,52)
-    ax.set_ylim(0,label)
-    ax.set_xlabel('week')
-    ax.set_ylabel('trap')
-    ax.set_zlabel('mosquitos')
-    fig.colorbar(lines[0])
+    characteristic = "rain"
+    (x,ys) = mosquitosPerVar(characteristic, traps)
+    minY = [min(val) for val in ys]
+    maxY = [max(val) for val in ys]
+    meanY = [np.mean(val) for val in ys]
+    fig, ax = plt.subplots()
+    ax.scatter(x, maxY, marker='o', c='red')
+    ax.scatter(x, meanY, marker='o', c='orange')
+    ax.scatter(x, minY, marker='o', c='blue')
+    ax.set_xlabel(characteristic)
+    ax.set_ylabel('mosquitos')
+    plt.savefig("./agg "+characteristic+" vs Mosquitos.png", dpi=1024, facecolor='w',
+                edgecolor='w', orientation='portrait', papertype=None,
+                format="png", transparent=False, bbox_inches='tight',
+                pad_inches=0.05, frameon=None)
     plt.show()
+    plt.close(fig)
+    plt.close('all')
+
+
+
+    #fig = plt.figure()
+    # ax = fig.add_subplot(111, projection='3d')
+    # label = 0
+    # lines = []
+    # for elem in traps:
+    #     z = elem.mosquitoCounts
+    #     if len(z) == 52:
+    #         x = np.arange(0,52,1)
+    #         y = np.asarray([label]*52)
+    #         z = np.asarray(z)
+    #         line=ax.scatter(x, y, z, marker='o', c=elem.weeklyMinTemp)
+    #         label+=1
+    #         lines.append(line)
+    # ax.set_xlim(0,52)
+    # ax.set_ylim(0,label)
+    # ax.set_xlabel('week')
+    # ax.set_ylabel('trap')
+    # ax.set_zlabel('mosquitos')
+    # fig.colorbar(lines[0])
+    #plt.show()
 
 main()
