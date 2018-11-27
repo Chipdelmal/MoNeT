@@ -38,27 +38,13 @@ _Related areas of interest: Graphics, Animation, Data Visualization, Data Analys
 
 **Ongoing Projects**:
 
-<<<<<<< HEAD
-* Salomón Olivera Abud:	Software generador de representaciones graficas de datos obtenidos a traves de
-MGDrivE.
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_Ex5RUrOaxw" frameborder="0"
- allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-=======
 * Salomón Olivera Abud:	Software generador de representaciones graficas de datos obtenidos a traves de MGDrivE
   <button>[Github Repository](https://github.com/Salomon21/MGDrivE_Graph_Tool)</button> <button>[YouTube Video](https://www.youtube.com/watch?v=_Ex5RUrOaxw)</button>
 <br>
->>>>>>> 2e5ad4f49d2c01a89550bada54f52f39da7fe70a
 * Esteban Quintana Cueto:	Herramienta para la visualizacion gráfica de reproducción y comportamiento de distintas especies de mosquitos
 <button>[Github repository](https://github.com/estebanquintana6/Tesina_MGraph)</button> <button>[YouTube Video](https://www.youtube.com/watch?v=f0VMLtwOxmk&feature=youtu.be)</button>
 
-<<<<<<< HEAD
-
-
-### 5) Random scenarios generator
-=======
 ## 5) Random scenarios generator
->>>>>>> 2e5ad4f49d2c01a89550bada54f52f39da7fe70a
 
 Create a random scenario generator (graph/network generator), where cities or graphs of populations are randomly generated. The scenario generator should be parametrized, i.e. (max and minimum distances between nodes, number of nodes, distribution or sparsity configuration, etc.). The Generated environments should contemplate several thousands of nodes, and decisions as to how to generate the random numbers should be backed up and validated for scale numbers.
 
