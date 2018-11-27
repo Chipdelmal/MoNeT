@@ -33,8 +33,14 @@ _Related areas of interest: Graphics, Animation, Data Visualization, Data Analys
 
 **Ongoing Projects**:
 
-* Salomón Olivera Abud:	Software generador de representaciones graficas de datos obtenidos a traves de MGDrivE.
+* Salomón Olivera Abud:	Software generador de representaciones graficas de datos obtenidos a traves de
+MGDrivE.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_Ex5RUrOaxw" frameborder="0"
+ allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 * Esteban Quintana Cueto:	Herramienta para la visualizacion gráfica de reproducción y comportamiento de distintas especies de mosquitos
+
+
 
 ### 5) Random scenarios generator
 
