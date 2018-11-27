@@ -66,11 +66,12 @@ This project was developed at "Tecnológico de Monterrey" as part of a collabora
 
 <img src="./media/appDemo.png" width="100%" align="middle">
 
-<!-- ## [Tools for Fighting Malaria and Other Mosquito Borne Diseases](./ToolsCollaboration.html)
+
+## [Tools for Fighting Malaria and Other Mosquito Borne Diseases](./ToolsCollaboration.html)
 
 This workflow was created to facilitate the creation of tools to be used as part of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project. It represents the collaboration between UC, Berkeley and Tecnológico de Monterrey in an effort to get undergraduate students involved in mosquito-borne diseases research projects.
 
-<img src="./media/stillFlow.png" width="100%" align="middle"> -->
+<img src="./media/stillFlow.png" width="100%" align="middle">
 
 
 <!--
@@ -112,7 +113,7 @@ These routines were created as standalone functions to support the main research
 
 <ul style="font-size:12.5px">
   <li>Lead: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]</li>
-  <li>Dev: Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Victor Ferman [UCB], Martín Molinero [ITESM], <a href="https://slwu89.github.io/">Sean L. Wu</a> [UCB]</li>
+  <li>Dev: Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Victor Ferman [UCB], <a href="https://slwu89.github.io/">Sean L. Wu</a> [UCB]</li>
   <li>Collaborators: <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]</li>
   <li>PI's: <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]</li>
 </ul>
