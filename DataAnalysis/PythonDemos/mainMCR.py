@@ -1,4 +1,5 @@
 import plotly
+#NOTE: needs dev version of plotly to work because we use 'stackgroup'
 import plotly.graph_objs as go
 import plotly.offline as offline
 import MoNeT_MGDrivE as monet
@@ -92,7 +93,8 @@ layout = go.Layout(
     width=1500,
     height=400
 )
-fig = go.Figure(data=tracesList, layout=layout)
+#NOTE: needs dev version of plotly to work because of 'stackgroup'
+fig = go.Figure(data=go.Data(tracesList), layout=layout)
 # py.iplot(fig,filename='stacked-area-plot-hover',validate=False)
 plotly.offline.plot(fig, filename='alleleFrequency.html')
 
