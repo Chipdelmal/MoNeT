@@ -191,7 +191,7 @@ def sumLandscapePopulationsFromFiles(
                 dataType=dataType,
                 skipHeader=skipHeader,
                 skipColumns=skipColumns
-            )
+            )["population"]
         returnDictionary = {
             "genotypes": genotypes,
             "population": tempAggregation
@@ -214,7 +214,7 @@ def sumLandscapePopulationsFromFiles(
                 dataType=dataType,
                 skipHeader=skipHeader,
                 skipColumns=skipColumns
-            )
+            )["population"]
         returnDictionary = {
             "genotypes": genotypes,
             "population": tempAggregation
