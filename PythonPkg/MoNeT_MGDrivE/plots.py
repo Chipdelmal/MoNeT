@@ -99,8 +99,8 @@ def alleleCounts(csvFileName, columns, alleleNames, startCol=3):
             the specified sum: eg  col 1 + col 1 + col 2 for "W"
     """
     data = np.genfromtxt(csvFileName, dtype=int, skip_header=1, delimiter=",")
-    df = pd.read_csv(csvFileName)
-    res = df[['Time']]
+    time = range(1, len(data[:,0]) + 1)
+    res = pd.DataFrame(time,columns=['Time'])
     for i in range(len(columns)):
         # summed_col contains sum of counts for one allele, such as W
         summed_col = np.zeros_like(data[:, 0])
@@ -125,7 +125,8 @@ def alleleCounts(csvFileName, columns, alleleNames, startCol=3):
 #         files = glob.glob(csvPath + 'AF1*.csv')
 #     else:
 #         files = glob.glob(csvPath + 'ADM*.csv')
-#     res = [df[['Time']] for _ in range(len(alleleNames))]
+#     time = range(1, len(files) + 1)
+#     res = [pd.DataFrame(time,columns=['Time']) for _ in range(len(alleleNames))]
 #     for i in range(len(files)):
 #         count_df = alleleCounts(files[i], columns, alleleNames, 2)
 #         for j in range(len(alleleNames)):
