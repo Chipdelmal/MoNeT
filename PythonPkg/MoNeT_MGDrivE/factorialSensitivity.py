@@ -111,7 +111,7 @@ def prepareFactorialArrayForComparison(
 def convertFactorialArrayToHash(factorialArray, floatMultiplier=1):
     '''
     Description:
-        * Low level fuction to convert an array into a
+        * Low level fuction to convert an array into a factorial experiment dictionary
     In:
         * factorialArray: Array containing the factorial slots.
         * floatMultiplier: Multiple of 10 to transform the float into an
