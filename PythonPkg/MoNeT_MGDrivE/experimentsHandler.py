@@ -151,14 +151,14 @@ def sumLandscapePopulationsFromFiles(
     """
     # Store the lengths of the filenames lists for error checking
     maleFilesNumber = len(filenames["male"]) #if "male" in filenames else 0
-    femaleFilesNumber = len(filenames.["female"]) # if "female" in filenames else 0
+    femaleFilesNumber = len(filenames["female"]) # if "female" in filenames else 0
     maleFilesEqualFemales = (maleFilesNumber == femaleFilesNumber)
     filesExist = (maleFilesNumber >= 1 and femaleFilesNumber >= 1)
     # Select the appropriate aggregation scheme: male+female, male, female
     if (male and female) and filesExist and maleFilesEqualFemales:
         placeholder = loadNodeData(
-            filenames.["male"][0],
-            filenames.["female"][0],
+            filenames["male"][0],
+            filenames["female"][0],
             dataType=dataType,
             skipHeader=skipHeader,
             skipColumns=skipColumns
@@ -167,8 +167,8 @@ def sumLandscapePopulationsFromFiles(
         tempAggregation = placeholder["population"]
         for i in range(1, maleFilesNumber):
             tempAggregation = tempAggregation + loadNodeData(
-                filenames.["male"][i],
-                filenames.["female"][i],
+                filenames["male"][i],
+                filenames["female"][i],
                 dataType=dataType,
                 skipHeader=skipHeader,
                 skipColumns=skipColumns
@@ -178,10 +178,10 @@ def sumLandscapePopulationsFromFiles(
             "population": tempAggregation
         }
         return returnDictionary
-    elif female and femaleFilesNumber >= 1):
+    elif female and femaleFilesNumber >= 1:
         placeholder = loadNodeData(
             None,
-            filenames.["female"][0],
+            filenames["female"][0],
             dataType=dataType,
             skipHeader=skipHeader,
             skipColumns=skipColumns
@@ -191,7 +191,7 @@ def sumLandscapePopulationsFromFiles(
         for i in range(1, femaleFilesNumber):
             tempAggregation = tempAggregation + loadNodeData(
                 None,
-                filenames.["female"][i],
+                filenames["female"][i],
                 dataType=dataType,
                 skipHeader=skipHeader,
                 skipColumns=skipColumns
@@ -201,9 +201,9 @@ def sumLandscapePopulationsFromFiles(
             "population": tempAggregation
         }
         return returnDictionary
-    elif male and maleFilesNumber >= 1):
+    elif male and maleFilesNumber >= 1:
         placeholder = loadNodeData(
-            filenames.["male"][0],
+            filenames["male"][0],
             None,
             dataType=dataType,
             skipHeader=skipHeader,
@@ -213,7 +213,7 @@ def sumLandscapePopulationsFromFiles(
         tempAggregation = placeholder["population"]
         for i in range(1, maleFilesNumber):
             tempAggregation = tempAggregation + loadNodeData(
-                filenames.["male"][i],
+                filenames["male"][i],
                 None,
                 dataType=dataType,
                 skipHeader=skipHeader,
@@ -302,7 +302,7 @@ def loadLandscapeData(filenames, male=True, female=True, dataType=float):
             "landscape": nodesDataList
         }
         return returnDictionary
-    elif female and femaleFilesNumber >= 1):
+    elif female and femaleFilesNumber >= 1:
         femaleFilenames = filenames["female"]
         genotypes = auxFun.readGenotypes(femaleFilenames[0])
         nodesDataList = [None] * femaleFilesNumber
@@ -317,7 +317,7 @@ def loadLandscapeData(filenames, male=True, female=True, dataType=float):
             "landscape": nodesDataList
         }
         return returnDictionary
-    elif male and maleFilesNumber >= 1):
+    elif male and maleFilesNumber >= 1:
         maleFilenames = filenames["male"]
         genotypes = auxFun.readGenotypes(maleFilenames[0])
         nodesDataList = [None] * maleFilesNumber
