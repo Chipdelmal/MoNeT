@@ -1,5 +1,6 @@
 import os
 import csv
+import glob
 import fnmatch
 import numpy as np
 import experimentsHandler as exPar
@@ -75,7 +76,7 @@ def loadFolderAndWriteFactorialCSV(
         filenames,
         male=True,
         female=True,
-        dataType=float
+        dataType=dataType
         )
     aggregateData = exPar.aggregateGenotypesInNode(
         landscapeSumData,
@@ -107,10 +108,11 @@ def compileFactorialCSVFromFiles(path, outFilename):
     Notes:
         * This function writes to HDD.
     """
-    files = os.listdir(path)
-    filenames = [
-        path + name for name in files if fnmatch.fnmatch(name, 'E_*.csv')
-    ]
+    #files = os.listdir(path)
+    #filenames = [
+    #    path + name for name in files if fnmatch.fnmatch(name, 'E_*.csv')
+    #]
+    filenames = glob.glob(path+'E_*.csv')
     f = open(path+outFilename, 'wb')
     for file in filenames:
         fileData = np.genfromtxt(file, skip_header=1, delimiter=",")

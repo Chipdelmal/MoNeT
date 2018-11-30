@@ -86,7 +86,7 @@ rgba_colors = [(1, 0, 0.3, 0.7), (1, 0, 1, 0.7),
                (0.5, 0, 1, 0.7), (0, 0.325, 0.75, 0.7)]
 
 
-def alleleCounts(csvFileName, columns, alleleNames, startCol=3):
+def alleleCounts(csvFileName, columns, alleleNames, timeSteps, startCol=3):
     """
        In: columns is a list of lists describing the number of times each one
             indexed column should be counted for this allele eg
@@ -98,15 +98,15 @@ def alleleCounts(csvFileName, columns, alleleNames, startCol=3):
         Out: A pandas dataframe with 1 column for each allele, containing
             the specified sum: eg  col 1 + col 1 + col 2 for "W"
     """
-    data = np.genfromtxt(csvFileName, dtype=int, skip_header=1, delimiter=",")
-    df = pd.read_csv(csvFileName)
-    res = df[['Time']]
+    data = np.genfromtxt(csvFileName, skip_header=1, delimiter=",")
+    time = range(1, timeSteps + 1)
+    res = pd.DataFrame(time,columns=['Time'])
     for i in range(len(columns)):
         # summed_col contains sum of counts for one allele, such as W
-        summed_col = np.zeros_like(data[:, 0])
+        summed_col = np.zeros_like(data[:,0])
         for index in columns[i]:
             # subtract 2 because index and start col are 1 indexed
-            summed_col += data[:, index+startCol - 2]
+            summed_col += data[:,index+startCol - 2]
         allele = alleleNames[i]
         res.insert(i + startCol - 1, alleleNames[i], summed_col)
     return res
@@ -125,9 +125,11 @@ def alleleCounts(csvFileName, columns, alleleNames, startCol=3):
 #         files = glob.glob(csvPath + 'AF1*.csv')
 #     else:
 #         files = glob.glob(csvPath + 'ADM*.csv')
+#     df = pd.read_csv(files[0])
 #     res = [df[['Time']] for _ in range(len(alleleNames))]
+#     timesteps = len(d["Time"])
 #     for i in range(len(files)):
-#         count_df = alleleCounts(files[i], columns, alleleNames, 2)
+#         count_df = alleleCounts(files[i], columns, alleleNames, timesteps, 2)
 #         for j in range(len(alleleNames)):
 #             res[j].insert(i + 1, alleleNames[j] + str(i), (count_df[alleleNames[j]]).copy())
 #     for j in range(len(alleleNames)):
