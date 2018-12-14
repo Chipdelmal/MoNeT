@@ -92,7 +92,7 @@ def calculateCentroids(points, Z, max_d, criterion, populationSize):
 		#so count is the number of times we've seen a given cluster
 		listOfClusters[i][0][0] = listOfClusters[i][0][0]/count
 		listOfClusters[i][0][1] = listOfClusters[i][0][1]/count
-	print("Here are the listofclusters ", listOfClusters, " there are ", len(listOfClusters))
+	# print("Here are the listofclusters ", listOfClusters, " there are ", len(listOfClusters))
 	return listOfClusters
 
 def hierarchialAggregation(nodes, resolution, populationSize):
@@ -105,7 +105,7 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 	# fancy_dendrogram(Z, truncate_mode='lastp', p=12, show_contracted=True, annotate_above=10, max_d=resolution)
 
 	clusteredCoordinatesCentroids = calculateCentroids(nodes, Z, resolution, 'distance', populationSize)
-	print("Here are my centroid coordinates: ", clusteredCoordinatesCentroids)
+	# print("Here are my centroid coordinates: ", clusteredCoordinatesCentroids)
 	#fullaggregation max_d -> 1 *
 	#halfaggregation max_d -> 25 *
 	#quarteraggregation max_d -> 50
