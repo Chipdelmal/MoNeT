@@ -1,15 +1,20 @@
 from functools import partial
 from math import sin, cos, sqrt, atan2, radians
 from mpl_toolkits.mplot3d import Axes3D
+from scipy.stats.stats import pearsonr
+import fiona
+import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+import osmnx as ox
 import sys
 
 class weatherStation:
     def __init__(self, name, lat, long, elevation, rainList, minTempList, avgTempList, maxTempList):
         self.name=name
-        self.lat=lat
-        self.long=long
+        self.lat=float(lat)
+        self.long=float(long)
         self.elevation=elevation
         self.weeklyRain=rainList
         self.weeklyMinTemp=minTempList
@@ -21,18 +26,29 @@ class weatherStation:
 
 class trap:
     def __init__(self,name,lat,long):
-        self.name=name
-        self.lat=lat
-        self.long=long
-        self.elevation=0
-        self.weeklyRain=[]
-        self.weeklyMinTemp=[]
-        self.weeklyAvgTemp=[]
-        self.weeklyMaxTemp=[]
-        self.mosquitoCounts=[]
+        self.name = name
+        self.lat = float(lat)
+        self.long = float(long)
+        self.elevation = 0
+        self.buildings = 0
+        self.weeklyRain = []
+        self.weeklyMinTemp = []
+        self.weeklyAvgTemp = []
+        self.weeklyMaxTemp = []
+        self.mosquitoCounts = []
 
     def getLocation(self):
         return (self.lat,self.long)
+
+    def setBuildings(self):
+        locCoord = (float(self.lat), float(self.long))
+        buildingLoc = ox.buildings_from_point(point=locCoord, distance=1000, retain_invalid=True)
+        if not buildingLoc.empty:
+            # ox.save_gdf_shapefile(buildingLoc,filename="temp",folder="SHP")
+            # filepath = os.path.join(os.getcwd(),"SHP")
+            # placeShapes = fiona.open(str(filepath)+"/temp/temp.shp")
+            self.buildings = buildingLoc.size
+            #placeShapes.close()
 
     def setWeather(self,elevation,rain,minTemp,avgTemp,maxTemp):
         self.elevation=elevation
@@ -46,8 +62,18 @@ class trap:
 
     def writeToFile(self, file):
         if len(self.mosquitoCounts)==52:
-            for i in range(52):
-                file.write(str(i) + ',' + self.elevation + ',' + str(self.weeklyRain[i]) + ',' + str(self.weeklyMinTemp[i]) + ',' + str(self.weeklyAvgTemp[i]) + ',' + str(self.weeklyMaxTemp[i]) +','+str(self.mosquitoCounts[i])+'\n')
+            for i in range(4,52):
+                file.write(str(i) + ',' + self.elevation + ',' + str(self.buildings) + ',')
+                file.write(str(self.weeklyRain[i]) + ',' + str(self.weeklyRain[i] - self.weeklyRain[i-1]) + ',' + str(self.weeklyRain[i] - self.weeklyRain[i-2]) + ',' +
+                str(self.weeklyRain[i] - self.weeklyRain[i-3]) + ',' +
+                str(self.weeklyRain[i] - self.weeklyRain[i-4]) + ',')
+                file.write(str(self.weeklyMinTemp[i]) + ',' + str(self.weeklyMinTemp[i] - self.weeklyMinTemp[i-1]) + ',' + str(self.weeklyMinTemp[i] - self.weeklyMinTemp[i-2]) + ',' + str(self.weeklyMinTemp[i] - self.weeklyMinTemp[i-3]) + ',' + str(self.weeklyMinTemp[i] - self.weeklyMinTemp[i-4]) + ',')
+                file.write(str(self.weeklyAvgTemp[i]) + ',')
+                file.write(str(self.weeklyMaxTemp[i]) + ',' + str(self.weeklyMaxTemp[i] - self.weeklyMaxTemp[i-1] ) + ',' + str(self.weeklyMaxTemp[i] - self.weeklyMaxTemp[i-2] ) + ',' + str(self.weeklyMaxTemp[i] - self.weeklyMaxTemp[i-3] ) + ',' + str(self.weeklyMaxTemp[i] - self.weeklyMaxTemp[i-4] ) + ',')
+                file.write(str(self.mosquitoCounts[i - 1])+ ',' +
+                str(self.mosquitoCounts[i - 2])+ ',' + str(self.mosquitoCounts[i - 3])+ ',' + str(self.mosquitoCounts[i - 4])+ ',')
+                val = 'Some\n' if self.mosquitoCounts[i]>=1 else 'None\n'
+                file.write(val)
 
 def getWeatherFromFile(filename):
     weatherFile = open(filename,'r')
@@ -139,14 +165,14 @@ def parseTrapInfo(filename):
 
     return traps
 
-def haversineDistance(lat1,long1,lat2,long2):
+def haversineDistance(lati1,long1,lati2,long2):
     # approximate radius of earth in km
     R = 6373.0
 
-    lat1 = radians(52.2296756)
-    lon1 = radians(21.0122287)
-    lat2 = radians(52.406374)
-    lon2 = radians(16.9251681)
+    lat1 = radians(float(lati1))
+    lon1 = radians(float(long1))
+    lat2 = radians(float(lati2))
+    lon2 = radians(float(long2))
 
     dlon = lon2 - lon1
     dlat = lat2 - lat1
@@ -174,6 +200,7 @@ def getClosestStation(elem, stationList):
 
 def caclculateTrapWeather(traps,weatherStations):
     for elem in traps:
+        elem.setBuildings()
         closestStation=getClosestStation(elem,weatherStations)
         elem.setWeather(closestStation.elevation, closestStation.weeklyRain, closestStation.weeklyMinTemp, closestStation.weeklyAvgTemp, closestStation.weeklyMaxTemp)
 
@@ -186,11 +213,12 @@ def parseMosquitoCounts(traps,filename):
         weeklyCount = []
         if("Total" in data[0]):
             break
-        for i in range(1,52):
+        for i in range(1,51):
             if(i==47):
                 weeklyCount.append(0)
+                weeklyCount.append(int(float(data[i].strip().zfill(1))))
             else:
-                weeklyCount.append(data[i].zfill(1))
+                weeklyCount.append(int(float(data[i].strip().zfill(1))))
         else:
             weeklyCount.append(0)
         trapCount[data[0]]=weeklyCount
@@ -200,14 +228,101 @@ def parseMosquitoCounts(traps,filename):
         if(elem.name in trapCount):
             elem.setMosquitoCounts(trapCount[elem.name])
 
-def exportDataSet(traps,filename):
+def exportDataSet(species,traps,filename):
     outFile=open(filename,'w')
+    outFile.write("@RELATION "+ species +"\n\n")
+    outFile.write("@ATTRIBUTE week  NUMERIC\n")
+    outFile.write("@ATTRIBUTE elevation   NUMERIC\n")
+    outFile.write("@ATTRIBUTE buildings   NUMERIC\n")
+    outFile.write("@ATTRIBUTE rain  NUMERIC\n")
+    outFile.write("@ATTRIBUTE d1rain  NUMERIC\n")
+    outFile.write("@ATTRIBUTE d2rain  NUMERIC\n")
+    outFile.write("@ATTRIBUTE d3rain  NUMERIC\n")
+    outFile.write("@ATTRIBUTE d4rain  NUMERIC\n")
+    outFile.write("@ATTRIBUTE minTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d1minTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d2minTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d3minTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d4minTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE measuredTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE maxTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d1maxTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d2maxTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d3maxTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d4maxTemp   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d1count   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d2count   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d3count   NUMERIC\n")
+    outFile.write("@ATTRIBUTE d4count   NUMERIC\n")
+    outFile.write("@ATTRIBUTE class        {None,Some}\n\n")
+    outFile.write("@data\n")
     for elem in traps:
         elem.writeToFile(outFile)
     outFile.close()
 
-def getMosquitoCount(x,z,trapList=[]):
-    return trapList[int(z)].mosquitoCounts[int(x)]
+def mosquitosPerVar(characteristic, traps):
+    counts = []
+    values = []
+    if 'rain' in characteristic:
+        for elem in traps:
+            if len(elem.mosquitoCounts)>1:
+                counts += elem.mosquitoCounts
+                values += elem.weeklyRain
+    elif 'min' in characteristic:
+        for elem in traps:
+            if len(elem.mosquitoCounts)>1:
+                counts += elem.mosquitoCounts
+                values += elem.weeklyMinTemp
+    elif 'max':
+        for elem in traps:
+            if len(elem.mosquitoCounts)>1:
+                counts += elem.mosquitoCounts
+                values += elem.weeklyMaxTemp
+    else:
+        for elem in traps:
+            if len(elem.mosquitoCounts)>1:
+                counts += elem.mosquitoCounts
+                values += [elem.buildings]*52
+
+    aggregated = {}
+    for i in range(len(counts)):
+        if values[i] in aggregated:
+            aggregated[values[i]].append(counts[i])
+        else:
+            aggregated[values[i]] = [counts[i]]
+
+    return (aggregated.keys(), aggregated.values())
+
+def printPearson(traps):
+    mosquitoCount = []
+    buildingCount = []
+    rains = []
+    minTemp = []
+    maxTemp = []
+    sightings = 0
+    for elem in traps:
+        if len(elem.mosquitoCounts)==52:
+            mosquitoCount += elem.mosquitoCounts
+            tempBuilding = [elem.buildings]*52
+            buildingCount += tempBuilding
+            rains += elem.weeklyRain
+            minTemp += elem.weeklyMinTemp
+            maxTemp += elem.weeklyMaxTemp
+
+    resultB = pearsonr(mosquitoCount,buildingCount)
+    print('pearson correlation of mosquitos and buildings is: ' + str(resultB))
+    resultR = pearsonr(mosquitoCount,rains)
+    print('pearson correlation of mosquitos and rain is: ' + str(resultR))
+    resultMin = pearsonr(mosquitoCount,minTemp)
+    print('pearson correlation of mosquitos and minTemp is: ' + str(resultMin))
+    resultMax = pearsonr(mosquitoCount,maxTemp)
+    print('pearson correlation of mosquitos and maxTemp is: ' + str(resultMax))
+
+    for m in mosquitoCount:
+        if m > 0:
+            sightings +=1
+
+    print('sightings: '+ str(sightings))
 
 def main():
     #Arguments
@@ -215,28 +330,69 @@ def main():
     # 1: path to trap info file location
     # 2: path to mosquito count file location
     # 3: name of the file to export
+    # 4: mosquito species
+    # 5: characteristic to group by
     clArguments=sys.argv[1:]
     weatherFile = clArguments[0]
     trapFile = clArguments[1]
     mosquitoFile = clArguments[2]
     exportFile = clArguments[3]
+    species = clArguments[4]
+    characteristic = clArguments[5]
     weatherStations = getWeatherFromFile(weatherFile)
     traps = parseTrapInfo(trapFile)
     caclculateTrapWeather(traps,weatherStations)
     parseMosquitoCounts(traps,mosquitoFile)
-    exportDataSet(traps,exportFile)
+    exportDataSet(species,traps,exportFile)
+    #printPearson(traps)
 
-    # fig = plt.figure()
-    # ax = fig.gca(projection='3d')
-    # x = np.linspace(0, 52, 52)
-    # z = np.linspace(0, len(traps), len(traps))
+    #characteristic = "min Temp"
+    # (x,ys) = mosquitosPerVar(characteristic, traps)
+    # minY = [min(val) for val in ys]
+    # maxY = [max(val) for val in ys]
+    # meanY = [np.mean(val) for val in ys]
+    # fig, ax = plt.subplots()
+    # ax.scatter(x, maxY, marker='o', c='red')
+    # ax.scatter(x, meanY, marker='o', c='orange')
+    # ax.scatter(x, minY, marker='o', c='blue')
+    # ax.set_xlabel(characteristic)
+    # ax.set_ylabel('mosquitos')
+    # plt.savefig("./"+characteristic+" vs number of "+species+".png",
+    #             dpi=1024, facecolor='w', edgecolor='w', orientation='portrait',
+    #             papertype=None, format="png", transparent=False,
+    #             bbox_inches='tight', pad_inches=0.05, frameon=None)
+    # #plt.show()
+    # plt.close(fig)
+    # plt.close('all')
     #
-    # X, Z = np.meshgrid(x, z)
-    # Y= getMosquitoCount(X,Z,traps)
-    # ax.plot_trisurf(X, Y, Z, linewidth=0.2, antialiased=True)
+    # fig = plt.figure()
+    # ax = fig.add_subplot(111, projection='3d')
+    # label = 0
+    # lines = []
+    # for elem in traps:
+    #     z = elem.mosquitoCounts
+    #     if len(z) == 52:
+    #         x = np.arange(0,52,1)
+    #         y = np.asarray([label]*52)
+    #         z = np.asarray(z)
+    #         area = [10]*52
+    #         if (elem.buildings>50):
+    #             area = [(elem.buildings/3)]*52
+    #         elif elem.buildings>0:
+    #             area = [elem.buildings]*52
+    #         else:
+    #             pass
+    #         line=ax.scatter(x, y, z, marker='o', c=elem.weeklyMaxTemp)#, s=area)
+    #         label+=1
+    #         lines.append(line)
+    # ax.set_xlim(0,52)
+    # ax.set_ylim(0,label)
     # ax.set_xlabel('week')
     # ax.set_ylabel('trap')
     # ax.set_zlabel('mosquitos')
+    # fig.colorbar(lines[0])
     # plt.show()
+    # plt.close(fig)
+    # plt.close('all')
 
 main()
