@@ -92,7 +92,7 @@ def calculateCentroids(points, Z, max_d, criterion, populationSize):
 		#so count is the number of times we've seen a given cluster
 		listOfClusters[i][0][0] = listOfClusters[i][0][0]/count
 		listOfClusters[i][0][1] = listOfClusters[i][0][1]/count
-
+	print("Here are the listofclusters ", listOfClusters, " there are ", len(listOfClusters))
 	return listOfClusters
 
 def hierarchialAggregation(nodes, resolution, populationSize):
@@ -100,12 +100,12 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 	Z = linkage(nodes, 'ward')
 
 	#plots the clustered points on a scatter plot
-	perform_clustering(nodes, 'My graph', num_clusters=4)
+	# perform_clustering(nodes, 'My graph', num_clusters=4)
 
-	fancy_dendrogram(Z, truncate_mode='lastp', p=12, show_contracted=True, annotate_above=10, max_d=resolution)
+	# fancy_dendrogram(Z, truncate_mode='lastp', p=12, show_contracted=True, annotate_above=10, max_d=resolution)
 
 	clusteredCoordinatesCentroids = calculateCentroids(nodes, Z, resolution, 'distance', populationSize)
-	# print("Here are my centroid coordinates: ", clusteredCoordinatesCentroids)
+	print("Here are my centroid coordinates: ", clusteredCoordinatesCentroids)
 	#fullaggregation max_d -> 1 *
 	#halfaggregation max_d -> 25 *
 	#quarteraggregation max_d -> 50
@@ -151,10 +151,13 @@ sizesLists = [stdpop for i in range(len(points))]
 #So I need to build a connectivity matrix from the graph
 # knn_graph = kneighbors_graph(X, 2, mode='connectivity')
 
-for i in range(25):
+for i in range(0, 105, 15):
 	max_d = i
 	# max_d = float("inf") # max distance cut-off, meaning determing the number of clusters
 	hierarchialAggregation(points, max_d, sizesLists)
+# max_d = 17
+# hierarchialAggregation(points, max_d, sizesLists)
+
 
 # """
 # Notes:
