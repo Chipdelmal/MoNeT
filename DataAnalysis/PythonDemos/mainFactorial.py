@@ -15,7 +15,7 @@ offline.init_notebook_mode(connected=True)
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "2018_09_04_ANALYZED"
+filename = "2018_10_10_ANALYZED"
 path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
@@ -67,7 +67,7 @@ monet.compileFactorialCSVFromFiles(path, outFilename)
 ###############################################################################
 # Load compiled CSV and analyze the output
 ###############################################################################
-path = "/Users/sanchez.hmsc/Desktop/FactorialSensitivity/"
+path = "/Users/sanchez.hmsc/Desktop/ThresholdDependent/"
 centralFile = "50TX_1x_2018_09_01.csv"
 sensitivitySelector = 3
 if(sensitivitySelector == 1):
