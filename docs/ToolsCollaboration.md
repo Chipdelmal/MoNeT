@@ -1,6 +1,6 @@
 # Computational Tools for Fighting Malaria and Other Mosquito Borne Diseases
 
-As it was mentioned before, this workflow comprises a toolkit of independent projects that can be tackled one at a time. The current list of alternatives follows.
+As it was mentioned before, this idea comprises a toolkit of independent projects that can be tackled one at a time. The current list of alternatives follows.
 
 ## 1) Crowd sourcing tool for gathering data on mosquitoes _(AT, HMSC)_
 
@@ -17,6 +17,7 @@ _Related areas of interest: Web Development, Data Science, Crowd Sourcing algori
   <br>
 * Christian Ricardo Solís Cortés:	Herramienta de crowdsourcing para recopilar datos sobre la presencia de mosquitos.
 
+  <button>[Github Repository](https://github.com/crsc26/Crowd-sourcing-mosquito-tool)</button>
 
 ## 2) Markov Chain Models for mosquito migration
 
