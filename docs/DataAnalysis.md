@@ -1,5 +1,10 @@
 # Data Analysis Tools
 
+## [MoNeT-MGDrivE Python Module and Conda Environment](./PythonModule.md)
+
+As our [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project continued to generate experiments datasets, it became apparent that we needed to create a cohesive framework to perform the analysis of the vast amounts of data we were creating. To accomplish this, we have been translating all of our scattered routines (created in _Mathematica_ for specific experiments), and creating a _python module_ with it's accompanying _conda environment_ so that members of our research group (and potentially, of other research groups) can perform analyses in a standardized way.
+
+<img src="./media/E_065_000_010_005_02D.png" width="100%" align="middle">
 
 ## [Gene Drives Visualizations Tools](./DataVisualization.html)
 
