@@ -1,5 +1,6 @@
 # Landscape Analysis
 
+This was once _MoNeT_'s raison d'être. The objective of these tasks and workflows is to further our understanding of the impact of the spatial distribution of resources upon the dynamics of the spread of genes and diseases transmitted by mosquitos.
 
 ## [Landscape Aggregation](./LandscapeAggregation.html)
 
