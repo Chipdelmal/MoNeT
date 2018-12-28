@@ -26,13 +26,7 @@ After running [*MGDrivE*](https://marshalllab.github.io/MGDrivE/), we display de
 
 
 <figure>
-  <img src="./media/E_080_000_000_000-04 (1).png" width="100%" align="middle">
-  <figcaption style="font-size:10px">Fully aggregated landscape.</figcaption>
-</figure>
-
-
-<figure>
-  <img src="./media/E_080_000_000_000-04.png" width="100%" align="middle">
+  <img src="./media/aggregation01.png" width="100%" align="middle">
   <figcaption style="font-size:10px">No aggregation landscape.</figcaption>
 </figure>
 
