@@ -154,7 +154,7 @@ def getReleasesCoverageRatioArray(factorialArray, probeDay):
     return factorialPoints
 
 
-def sampleDifference(x, y): return abs(x - y)
+def sampleDifference(x, y): return (x - y)
 
 
 def sampleError(test, real): return (real - test) / real
