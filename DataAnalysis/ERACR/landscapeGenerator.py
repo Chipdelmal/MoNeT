@@ -23,11 +23,6 @@ generateCartesianLinearCoordinates(5, 10, xStart=0, yConstant=10)
 
 ##############################################################################
 # Rectangle
-width = 30
-
-nx, ny = (width, width)
-x = np.linspace(0, 300, nx)
-y = np.linspace(0, 300, ny)
-l=np.transpose(np.meshgrid(x, y))
-
-list(itertools.chain(*l))
+nodesNumberHalf, nodesDistance = 5,10
+for i in range(0,9):
+    tmpLine = generateCartesianLinearCoordinates()
