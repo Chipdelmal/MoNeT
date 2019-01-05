@@ -191,7 +191,7 @@ class Page3(QtWidgets.QWizardPage):
         #button.clicked.connect(self.plots)
         vbox = QtWidgets.QVBoxLayout()
         #vbox.addWidget(self.toolbar)
-        self._timer = self.canvas.new_timer(300, [(self.plots, (), {})])
+        self._timer = self.canvas.new_timer(500, [(self.plots, (), {})])
         vbox.addWidget(self.canvas)
         #vbox.addWidget(button)
         self.setLayout(vbox)
@@ -214,7 +214,7 @@ class Page3(QtWidgets.QWizardPage):
         if self.currentLine < self.lineCount:
             ax = self.ax
             ax.clear()
-            m = Basemap(projection='merc',llcrnrlat=self.minLat-1,urcrnrlat=self.maxLat+1,llcrnrlon=self.minLong-1,urcrnrlon=self.maxLong+1,lat_ts=20,resolution='h', ax=ax)
+            m = Basemap(projection='merc',llcrnrlat=self.minLat-1,urcrnrlat=self.maxLat+1,llcrnrlon=self.minLong-1,urcrnrlon=self.maxLong+1,lat_ts=20,resolution='l', ax=ax)
             m.drawcoastlines(color="black")
             for patch in range(0,self.patches):
                 line = next(self.files[patch]).split(',')
