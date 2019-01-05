@@ -23,6 +23,37 @@ generateCartesianLinearCoordinates(5, 10, xStart=0, yConstant=10)
 
 ##############################################################################
 # Rectangle
-nodesNumberHalf, nodesDistance = 5,10
-for i in range(0,9):
+nodesNumberHalf, nodesDistance = 5, 10
+for i in range(0, 9):
     tmpLine = generateCartesianLinearCoordinates()
+
+##############################################################################
+# Moore
+##############################################################################
+m = 4
+l = 3
+
+for b in range(1, l + 1):
+    for a in range(1, l + 1):
+        tagged = (m - a) + ((m - b) * m) + 1
+        print(tagged)
+
+# m = 3
+# l = 2
+# for b in range(1, l + 1):
+#     for a in range(1, l + 1):
+#         tagA = (m - a) + ((m - b) * m) + 1
+#         tagB = (m + a) + ((m - b) * m) + 0
+#         tagC = (m - a) + ((m - b) * m) + 1
+#         tagD = (m - a) + ((m - b) * m) + 1
+#         print([tagA, tagB])
+
+##############################################################################
+# Von Newmann
+##############################################################################
+m = 4
+l = 3
+for b in range(1, l + 1):
+    for a in range(1, l - b + 2):
+        tagged = (m - a) + ((m - b) * m) + 1
+        print(tagged)
