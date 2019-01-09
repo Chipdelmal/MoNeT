@@ -38,15 +38,15 @@ for b in range(1, l + 1):
         tagged = (m - a) + ((m - b) * m) + 1
         print(tagged)
 
-# m = 3
-# l = 2
-# for b in range(1, l + 1):
-#     for a in range(1, l + 1):
-#         tagA = (m - a) + ((m - b) * m) + 1
-#         tagB = (m + a) + ((m - b) * m) + 0
-#         tagC = (m - a) + ((m - b) * m) + 1
-#         tagD = (m - a) + ((m - b) * m) + 1
-#         print([tagA, tagB])
+m = 3
+l = 2
+for b in range(1, l + 1):
+    for a in range(1, l + 1):
+        tagA = (m - a) + ((m - b) * m) + 1
+        tagB = (b * m) + (m + a)
+        tagC = (m - a) + ((m - b) * m) + 1
+        tagD = (m - a) + ((m - b) * m) + 1
+        print([tagA, tagB])
 
 ##############################################################################
 # Von Newmann
