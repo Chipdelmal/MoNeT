@@ -1,3 +1,5 @@
+#Author: vferman
+#Creates a dataset from the Polk County Data
 from functools import partial
 from math import sin, cos, sqrt, atan2, radians
 from mpl_toolkits.mplot3d import Axes3D
@@ -11,6 +13,7 @@ import osmnx as ox
 import sys
 
 class weatherStation:
+    #Class to represent the different weather stations and their data
     def __init__(self, name, lat, long, elevation, rainList, minTempList, avgTempList, maxTempList):
         self.name=name
         self.lat=float(lat)
@@ -25,6 +28,7 @@ class weatherStation:
         return (self.lat,self.long)
 
 class trap:
+    #class that represents mosquito traps and holds all of the trap information to be put on the dataset, the data comes from all the different sources
     def __init__(self,name,lat,long):
         self.name = name
         self.lat = float(lat)
@@ -41,14 +45,12 @@ class trap:
         return (self.lat,self.long)
 
     def setBuildings(self):
+        #gets the number of buildings on a 1km radius from the trap location
         locCoord = (float(self.lat), float(self.long))
         buildingLoc = ox.buildings_from_point(point=locCoord, distance=1000, retain_invalid=True)
         if not buildingLoc.empty:
-            # ox.save_gdf_shapefile(buildingLoc,filename="temp",folder="SHP")
-            # filepath = os.path.join(os.getcwd(),"SHP")
-            # placeShapes = fiona.open(str(filepath)+"/temp/temp.shp")
             self.buildings = buildingLoc.size
-            #placeShapes.close()
+
 
     def setWeather(self,elevation,rain,minTemp,avgTemp,maxTemp):
         self.elevation=elevation
@@ -116,10 +118,6 @@ def getWeatherFromFile(filename):
         else:
             pass
 
-        #rain on 11
-        #temp max 15
-        #temp min 16
-        #measured temp 17
         if(dayCounter==7):
             weeklyRain.append(rain)
             weeklyMinTemp.append(minTemp/7)
