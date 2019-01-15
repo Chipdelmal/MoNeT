@@ -4,7 +4,6 @@ from functools import partial
 from math import sin, cos, sqrt, atan2, radians
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.stats.stats import pearsonr
-import fiona
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
