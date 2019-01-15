@@ -32,13 +32,7 @@ With the top plot being the aggregate of all the alleles in the landscape. The s
 
 <img src="./media/E_065_000_010_005_02D.png" width="100%" align="middle">
 
-Once again, we provide the _Python_ version of the routines:
 
-<img src="./media/pythonFlow01.png" width="50%" align="middle"><img src="./media/pythonFlow02.png" width="50%" align="middle">
-
-### Factorial Experiments Heatmaps
-
-### 4D Response Surfaces
 
 ### Authors
 

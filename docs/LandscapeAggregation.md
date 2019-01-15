@@ -27,7 +27,6 @@ After running [*MGDrivE*](https://marshalllab.github.io/MGDrivE/), we display de
 
 <figure>
   <img src="./media/aggregation01.png" width="100%" align="middle">
-  <figcaption style="font-size:10px">No aggregation landscape.</figcaption>
 </figure>
 
 
@@ -35,8 +34,6 @@ After running [*MGDrivE*](https://marshalllab.github.io/MGDrivE/), we display de
 
 Provided that there are noticeable differences between the predictions on the initial exploratory experiment, we can start looking at the following tasks:
 
-- Sweeping through the aggregation levels and simulating homing drives upon them
-- Finding/coding a more efficient clustering algorithm
 - Looking for an information metric that provides useful information
 - Extending to grids
 - Extending to irregular landscapes
