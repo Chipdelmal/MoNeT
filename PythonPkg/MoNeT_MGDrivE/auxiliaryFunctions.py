@@ -150,13 +150,13 @@ def autoGenerateGenotypesDictionary(genes, genotypes):
 def listDirectoriesWithPathWithinAPath(pathFilename):
     '''
     Description:
-        *
+        * Returns a list of folder paths within a given path.
     In:
-        *
+        * pathFilename: Path to search directories in
     Out:
-        *
+        * List of folder paths
     Notes:
-        *
+        * NA
     '''
     folders = listDirectoriesInPath(pathFilename)
     for i, folder in enumerate(folders):
