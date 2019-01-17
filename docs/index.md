@@ -23,7 +23,7 @@ Click on each on the corresponding images to learn more about our projects:
 <p style="font-size:12px">
   <b>Lead:</b> <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]<br>
   <b>Dev:</b> Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Victor Ferman [UCB], <a href="https://slwu89.github.io/">Sean L. Wu</a> [UCB]<br>
-  <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]<br>
+  <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM], <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a>, Camilo Duque<br>
   <b>Former dev:</b> Sabrina Wong [UCB]<br>
   <b>PI's:</b> <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]
 </p>
