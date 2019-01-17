@@ -8,12 +8,12 @@ This project was born to facilitate collaboration in network analysis routines u
 We are doing this by separating our tasks into three categories:
 * __Landscape Analysis:__ These activities revolve around studying the landscape as a part of genes and diseases transmission. Namely, how does the spatial distribution and movement of humands and mosquitoes affect the patterns of genes and bites flows.
 * __Data Analysis:__ This is a "support" set of tasks aimed at providing the toolkits necessary to analyse outputs from [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) and [*MASH*](https://smitdave.github.io/MASH-Main/). As such, it involves the development of computationally intensive data analysis and data visualization techniques.
-* __Student Projects:__ These projects are aimed at CS and engineering students (in collaboration with faculty at the "Tecnológico de Monterrey" Institute in México) who want to participate in semester-long development of applications to help bring further our understanding of mosquito-borne diseases transmission.
+* __Undergraduate Student Projects:__ These projects are aimed at CS and engineering students (in collaboration with faculty at the "Tecnológico de Monterrey" Institute in México) who want to participate in semester-long development of applications to help bring further our understanding of mosquito-borne diseases transmission.
 
 Click on each on the corresponding images to learn more about our projects:
 
 <center>
-  <a href="./Networks.html"><img src="./media/btn_Landscape.png" width="33%"></a><a href="./DataAnalysis.html"><img src="./media/btn_Data.png" width="33%"></a><a href="./Campus.html"><img src="./media/btn_Students.png" width="33%"></a>
+  <a href="./Networks.html"><img src="./media/btn_Landscape.png" height="175px"></a><a href="./DataAnalysis.html"><img src="./media/btn_Data.png" height="175px"></a><a href="./Campus.html"><img src="./media/btn_Students.png" height="175px"></a>
 </center>
 
 <hr>
@@ -22,9 +22,11 @@ Click on each on the corresponding images to learn more about our projects:
 
 <p style="font-size:12px">
   <b>Lead:</b> <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]<br>
-  <b>Dev:</b> Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Victor Ferman [UCB], <a href="https://slwu89.github.io/">Sean L. Wu</a> [UCB]<br>
-  <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM], <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a> [ITESM], Camilo Duque [ITESM]<br>
+  <b>Dev:</b> Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Victor Ferman [UCB]<br>
   <b>Former dev:</b> Sabrina Wong [UCB]<br>
+  <b>Participant Students:</b> Moisés Montaño Copca [ITESM]<br>
+  <b>Former participant students:</b> Martín Alejandro Molinero Morales [ITESM], Christian Ricardo Solís Cortés [ITESM], Salomón Olivera Abud [ITESM], Esteban Quintana Cueto [ITESM]<br>
+  <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM], <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a> [ITESM], Camilo Duque [ITESM]<br>
   <b>PI's:</b> <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]
 </p>
 
