@@ -13,7 +13,7 @@ We are doing this by separating our tasks into three categories:
 Click on each on the corresponding images to learn more about our projects:
 
 <center>
-  <a href="./Networks.html"><img src="./media/btn_Landscape.png" width="33%"></a><a href="./DataAnalysis.html"><img src="./media/btn_Data.png" width="33%"></a><a href="./ITESM.html"><img src="./media/btn_Students.png" width="33%"></a>
+  <a href="./Networks.html"><img src="./media/btn_Landscape.png" width="33%"></a><a href="./DataAnalysis.html"><img src="./media/btn_Data.png" width="33%"></a><a href="./Campus.html"><img src="./media/btn_Students.png" width="33%"></a>
 </center>
 
 <hr>
