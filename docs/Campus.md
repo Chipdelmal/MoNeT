@@ -16,3 +16,7 @@ For the **machine learning** we are collaborating with Edgar Vallejo (CS faculty
 _Plese click on the images for more information about each project._
 
 <br>
+
+<hr>
+
+<a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a>, András Tackacs, <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a>, Camilo Duque, <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a>, <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>
