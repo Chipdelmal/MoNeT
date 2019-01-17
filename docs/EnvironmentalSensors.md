@@ -1,6 +1,6 @@
 # Environmental Sensors
 
-
+This project was generated upon the need of the accurate logging of environmental field information for the creation of datasets that could feed into our [machine learning](./MachineLearning.html) project to predict mosquito population sizes in explicit landscapes. The general idea is to create a low-energy and low-cost device that is able to track weather factors that are known to correlate with the amount of mosquitos. Ideally, these devices could be attached to existing mosquito-counts setups (ovitraps, [sentinels](https://www.bg-sentinel.com/), etcetera).
 
 ## Requirements
 
