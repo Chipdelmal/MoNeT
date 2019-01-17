@@ -5,17 +5,17 @@ This project was generated upon the need of the accurate logging of environmenta
 ## Requirements
 
 * Low energy consumption
-* Sensors:
-  * Humidity
-  * Temperature
-  * Atmosferic Pressure
-  * Rainfall?
 * Small size
+* Robust to physical abuse
 
 ## Technical Specifications
 
-* __Sampling Rate__:
+* __Sampling Rate__: 2 (1/hour)
 * __Resolution__:
+  * __Humidity__:
+  * __Temperature__: ± 0.5 Centigrade
+  * __Atmosferic Pressure__:
+  * __Wind Direction & Speed__:
 * __Environmental Variables__:
 * __Other__: Offline data dump to a flash drive
 
