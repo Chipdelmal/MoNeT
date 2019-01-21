@@ -1,4 +1,4 @@
-ffmpeg -start_number 1 -r 24 -f image2 -s 720x540 -i YorkeysKnob_%03d.jpeg -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -vcodec libx264 -preset veryslow -crf 15 -pix_fmt yuv420p YorkeysKnob.mp4
+ffmpeg -start_number 1 -r 24 -f image2 -s 1920x1080 -i Comoros_%03d.jpeg -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -vcodec libx264 -preset veryslow -crf 15 -pix_fmt yuv420p 00_Trailer.mp4
 
 
 ffmpeg -i ArtStyleML.mp4 -i palette.png -r 15 -lavfi paletteuse image.gif
