@@ -71,26 +71,26 @@ monet.compileFactorialCSVFromFiles(path, outFilename)
 # Load compiled CSV and analyze the output
 ###############################################################################
 path = "/Volumes/Pusheen/xjego-khuq3/ThresholdDependent/Datasets/"
-centralFile = "50UR_1xy_2018_10_09.csv"
+centralFile = "50UX_1x_2018_09_04.csv"
 sensitivitySelector = 3
 if(sensitivitySelector == 1):
     # 001 larval life decrease
     # 002 larval life increase
     title = "Larval Lifespan"
-    testFileA = "URSA_001.csv"
-    testFileB = "URSA_002.csv"
+    testFileA = "UXSA_001.csv"
+    testFileB = "UXSA_002.csv"
 if(sensitivitySelector == 2):
     # 010 adult life increase
     # 020 adult life decrease
     title = "Adult Mortality"
-    testFileA = "URSA_010.csv"
-    testFileB = "URSA_020.csv"
+    testFileA = "UXSA_010.csv"
+    testFileB = "UXSA_020.csv"
 if(sensitivitySelector == 3):
     # 100 fitness cost 10% reduction
     # 200 fitness cost 20% reduction
     title = "Fitness Cost"
-    testFileA = "URSA_100.csv"
-    testFileB = "URSA_200.csv"
+    testFileA = "UXSA_100.csv"
+    testFileB = "UXSA_200.csv"
 centralData = monet.loadAndHashFactorialCSV(path + centralFile)
 probeDataA = monet.loadAndHashFactorialCSV(path + testFileA)
 probeDataB = monet.loadAndHashFactorialCSV(path + testFileB)
