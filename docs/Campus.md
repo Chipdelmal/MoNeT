@@ -3,7 +3,7 @@ We are currently collaborating with faculty, and students from the "Tecnológico
 <br>
 <center>
   <a href="./MachineLearning.html"><img src="./media/btn_Mex.png" height="175px"></a><a href="./Berkeley.html"><img src="./media/btn_Ber.png" height="175px"></a>
-  <a href="./ITESM.html"><img src="./media/btn_Qro.png" height="175px"></a><a href="./EnvironmentalSensors.html"><!--<img src="./media/btn_Leo.png" height="175px"></a>-->
+  <a href="./ITESM.html"><img src="./media/btn_Qro.png" height="175px"></a><!--<a href="./EnvironmentalSensors.html"><img src="./media/btn_Leo.png" height="175px"></a>-->
 </center>
 
 <br>
