@@ -18,7 +18,7 @@ In this thesis work, we explored the usefulness of the combination of agent-base
 
 **Zika Predictions Through Machine Learning** *Kevin Islas Abud, Héctor M. Sánchez C., Edgar E. Vallejo*
 
-This project is being developed in the following [github repository](https://github.com/elapuestojoe/ziknet-trends-backend/invitations).
+This project is being developed in the following [github repository](https://github.com/elapuestojoe/ziknet-trends-backend/).
 
 <br>This project is funded by *CITRIS* and *Google Research Awards: Latin America*.
 
