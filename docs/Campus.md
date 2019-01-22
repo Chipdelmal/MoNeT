@@ -2,8 +2,8 @@ We are currently collaborating with faculty, and students from the "Tecnológico
 
 <br>
 <center>
-  <a href="./Berkeley.html"><img src="./media/btn_Ber.png" height="175px"></a>
-  <a href="./ITESM.html"><img src="./media/btn_Qro.png" height="175px"></a><a href="./MachineLearning.html"><img src="./media/btn_Mex.png" height="175px"></a><a href="./EnvironmentalSensors.html"><img src="./media/btn_Leo.png" height="175px"></a>
+  <a href="./MachineLearning.html"><img src="./media/btn_Mex.png" height="175px"></a><a href="./Berkeley.html"><img src="./media/btn_Ber.png" height="175px"></a>
+  <a href="./ITESM.html"><img src="./media/btn_Qro.png" height="175px"></a><a href="./EnvironmentalSensors.html"><img src="./media/btn_Leo.png" height="175px"></a>
 </center>
 
 <br>
@@ -19,4 +19,4 @@ _Plese click on the images for more information about each project._
 
 <hr>
 
-<a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a>, András Tackacs, <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a>, Camilo Duque, <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a>, <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>
+<a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a>, András Tackacs, <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a>, <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a>, <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>
