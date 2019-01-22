@@ -8,8 +8,9 @@ We are currently collaborating with faculty, and students from the "Tecnológico
 
 <br>
 
+We welcome Berkeley undergrads who want to learn [CS/Stats/Data Analysis](./Berkeley.html) skills applied to mosquito gene-drive projects
 
-In terms of [software development](./ITESM.html), we are working with Benjamín Valdés and András Takacs in the development of computer programs that help us gather, analyse and visualize data for our models. This collaboration is underway and has already resulted in projects being delivered (click on the image for more information).
+In terms of [software development](./ITESM.html), we are working with Benjamín Valdés and András Takacs in the development of computer programs that help us gather, analyze and visualize data for our models. This collaboration is underway and has already resulted in projects being delivered (click on the image for more information).
 
 The [remote sensing](./EnvironmentalSensors.html) project is in the techincal specification stage. We are starting a collaboration with Camilo Duque ("Mechatronics Engineering" program director in campus León) in determining the technical requirements for an autonomous sensing device to capture environmental data information relevant in the mosquito-borne diseases context.
 
