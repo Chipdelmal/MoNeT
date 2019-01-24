@@ -94,6 +94,7 @@ def calculateCentroids(points, Z, max_d, criterion, populationSize):
 	# print("Here are the listofclusters ", listOfClusters, " there are ", len(listOfClusters))
 	return listOfClusters
 
+seen = set()
 def hierarchialAggregation(nodes, resolution, populationSize):
 	# print("Right before, this is what linkage is ", linkage)
 	Z = linkage(nodes, 'ward')
@@ -111,31 +112,33 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 	#noaggregation max_d -> float("inf")
 	numClusters = len(clusteredCoordinatesCentroids)
 	print("I have " + str(numClusters) + " clusters at max distance of ", resolution)
-	# for i in clusteredCoordinatesCentroids:
-	# 	print("Here it is ", clusteredCoordinatesCentroids[i][0])
-	# 	print("Here it is ", clusteredCoordinatesCentroids[i][1])
+	if not numClusters in seen: 
+		# for i in clusteredCoordinatesCentroids:
+		# 	print("Here it is ", clusteredCoordinatesCentroids[i][0])
+		# 	print("Here it is ", clusteredCoordinatesCentroids[i][1])
 
-	#build distance matrix
-	# print(clusteredCoordinatesCentroids)
-	coordinates = [clusteredCoordinatesCentroids[obj][0] for obj in clusteredCoordinatesCentroids]
-	# print(coordinates)
-	dist = distance_matrix(coordinates, coordinates)
-	# print(dist)
-	print("My greatest distance is ", max([max(x) for x in dist]))
+		#build distance matrix
+		# print(clusteredCoordinatesCentroids)
+		coordinates = [clusteredCoordinatesCentroids[obj][0] for obj in clusteredCoordinatesCentroids]
+		# print(coordinates)
+		dist = distance_matrix(coordinates, coordinates)
+		# print(dist)
+		print("My greatest distance is ", max([max(x) for x in dist]))
 
-	dist = np.array(dist)
+		dist = np.array(dist)
 
-	with open(str(numClusters)+'AggregationCoord.csv', mode='w') as destination:
-		writer = csv.writer(destination, delimiter= ',')
-		for i in dist:
-			writer.writerow(i)
-	with open(str(numClusters)+'AggregationPop.csv', mode='w') as destination:
-		writer = csv.writer(destination, delimiter=',')
-		for i in clusteredCoordinatesCentroids:
-			destination.write('%i\n' % clusteredCoordinatesCentroids[i][1])
+		with open('Results/Rand/Results'+str(numClusters)+'AggregationCoord.csv', mode='w') as destination:
+			writer = csv.writer(destination, delimiter= ',')
+			for i in dist:
+				writer.writerow(i)
+		with open('Results/Rand/Results'+str(numClusters)+'AggregationPop.csv', mode='w') as destination:
+			writer = csv.writer(destination, delimiter=',')
+			for i in clusteredCoordinatesCentroids:
+				destination.write('%i\n' % clusteredCoordinatesCentroids[i][1])
 
-	# plt.show()
-	return clusteredCoordinatesCentroids
+		# plt.show()
+		seen.add(numClusters)
+		return clusteredCoordinatesCentroids
 
 # n = 100
 # dist = 15

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from clustering import hierarchialAggregation 
 import numpy as np
 from scipy.spatial import distance_matrix
+import csv
 
 stdpop = 50
 radius = 5
@@ -44,10 +45,17 @@ randCoord = np.array(randPoints)
 #generate a coordinate matrix
 #generate five in between steps as well as full agg and zero agg 
 
-
-for i in range(1, 573085, 15000):
+for i in range(1, 100000000, 15000):
 	hierarchialAggregation(randCoord, i, sizesLists)
 
+with open('Results/Rand/RandCoord.csv', mode='w') as destination:
+	writer = csv.writer(destination, delimiter= ',')
+	for i in randCoord:
+		writer.writerow(i)
+with open('Results/Rand/RandPop.csv', mode='w') as destination:
+	writer = csv.writer(destination, delimiter=',')
+	for i in sizesLists:
+		destination.write('%i\n' % i)
 
 # the distance between two clusters to be the maximum distance between any two points in the cluster.
 # so it makes sense that the bigger the max_d is, the bigger the cluster is supposed to be
