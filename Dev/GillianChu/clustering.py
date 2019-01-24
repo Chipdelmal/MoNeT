@@ -13,7 +13,6 @@ from scipy.cluster.hierarchy import linkage
 from sklearn.neighbors import kneighbors_graph
 import numpy as np
 import matplotlib.pyplot as plt
-import clustering
 from scipy.cluster.hierarchy import cophenet
 from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import fcluster
@@ -110,7 +109,8 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 	#halfaggregation max_d -> 25 *
 	#quarteraggregation max_d -> 50
 	#noaggregation max_d -> float("inf")
-	print("I have " + str(len(clusteredCoordinatesCentroids)) + " clusters")
+	numClusters = len(clusteredCoordinatesCentroids)
+	print("I have " + str(numClusters) + " clusters at max distance of ", resolution)
 	# for i in clusteredCoordinatesCentroids:
 	# 	print("Here it is ", clusteredCoordinatesCentroids[i][0])
 	# 	print("Here it is ", clusteredCoordinatesCentroids[i][1])
@@ -120,41 +120,42 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 	coordinates = [clusteredCoordinatesCentroids[obj][0] for obj in clusteredCoordinatesCentroids]
 	# print(coordinates)
 	dist = distance_matrix(coordinates, coordinates)
-	# print("Here is dist ", dist)
-	dist = np.array(dist)
-	# print(dist.shape)
+	# print(dist)
+	print("My greatest distance is ", max([max(x) for x in dist]))
 
-	with open(str(max_d)+'AggregationCoord.csv', mode='w') as destination:
+	dist = np.array(dist)
+
+	with open(str(numClusters)+'AggregationCoord.csv', mode='w') as destination:
 		writer = csv.writer(destination, delimiter= ',')
 		for i in dist:
 			writer.writerow(i)
-	with open(str(max_d)+'AggregationPop.csv', mode='w') as destination:
+	with open(str(numClusters)+'AggregationPop.csv', mode='w') as destination:
 		writer = csv.writer(destination, delimiter=',')
 		for i in clusteredCoordinatesCentroids:
 			destination.write('%i\n' % clusteredCoordinatesCentroids[i][1])
 
-	# # plt.show()
-	# return clusteredCoordinatesCentroids
+	# plt.show()
+	return clusteredCoordinatesCentroids
 
-n = 100
-dist = 15
-stdpop = 50
+# n = 100
+# dist = 15
+# stdpop = 50
 
-#building line graph from basics.py
-L = b.LineGraph(n, dist)
-L.createLineGraph()
-L.allVertices
-points = np.array(L.allVerticesCoord())
-sizesLists = [stdpop for i in range(len(points))]
+# #building line graph from basics.py
+# L = b.LineGraph(n, dist)
+# L.createLineGraph()
+# L.allVertices 
+# points = np.array(L.allVerticesCoord())
+# sizesLists = [stdpop for i in range(len(points))]
 
-#Aha. The problem is because it's been defaulting to unstructured.
-#So I need to build a connectivity matrix from the graph
-# knn_graph = kneighbors_graph(X, 2, mode='connectivity')
+# #Aha. The problem is because it's been defaulting to unstructured.
+# #So I need to build a connectivity matrix from the graph
+# # knn_graph = kneighbors_graph(X, 2, mode='connectivity')
 
-for i in range(0, 105, 15):
-	max_d = i
-	# max_d = float("inf") # max distance cut-off, meaning determing the number of clusters
-	hierarchialAggregation(points, max_d, sizesLists)
+# for i in range(0, 105, 15):
+# 	max_d = i
+# 	# max_d = float("inf") # max distance cut-off, meaning determing the number of clusters
+# 	hierarchialAggregation(points, max_d, sizesLists)
 # max_d = 17
 # hierarchialAggregation(points, max_d, sizesLists)
 
