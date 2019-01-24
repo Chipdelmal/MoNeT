@@ -309,7 +309,7 @@ def loadLandscapeData(filenames, male=True, female=True, dataType=float):
         for i in range(0, femaleFilesNumber):
             nodesDataList[i] = loadNodeData(
                 None,
-                ffemaleFilenames[i],
+                femaleFilenames[i],
                 dataType=dataType
             )["population"]
         returnDictionary = {
