@@ -45,7 +45,7 @@ randCoord = np.array(randPoints)
 #generate a coordinate matrix
 #generate five in between steps as well as full agg and zero agg 
 
-for i in range(1, 100000000, 15000):
+for i in range(1, 1000000, 1000):
 	hierarchialAggregation(randCoord, i, sizesLists)
 
 with open('Results/Rand/RandCoord.csv', mode='w') as destination:
