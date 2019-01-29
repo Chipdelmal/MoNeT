@@ -15,7 +15,7 @@ offline.init_notebook_mode(connected=True)
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "2018_09_04_ANALYZED"
+filename = "2018_10_10_ANALYZED"
 path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
@@ -67,9 +67,9 @@ monet.compileFactorialCSVFromFiles(path, outFilename)
 ###############################################################################
 # Load compiled CSV and analyze the output
 ###############################################################################
-path = "/Users/sanchez.hmsc/Desktop/FactorialSensitivity/"
+path = "/Users/sanchez.hmsc/Desktop/ThresholdDependent/"
 centralFile = "50TX_1x_2018_09_01.csv"
-sensitivitySelector = 3
+sensitivitySelector = 1
 if(sensitivitySelector == 1):
     # 001 larval life decrease
     # 002 larval life increase
@@ -125,7 +125,7 @@ trace2 = go.Histogram(
     marker=dict(color='#FF7373'), opacity=0.75
 )
 layout = go.Layout(
-    title='Larval Lifespan', xaxis=dict(title='Difference'),
+    title=title, xaxis=dict(title='Difference'),
     yaxis=dict(title='Count'), bargap=0.125, bargroupgap=0.05
 )
 data = [trace1, trace2]

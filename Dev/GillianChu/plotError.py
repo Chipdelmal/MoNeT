@@ -40,7 +40,7 @@ def plotHAllele(pathlist, counts, name):
 	plt.plot(counts, label=name)
 	return counts
 
-
+print("before uploading")
 pathlist = Path("/Users/gillianchu/Desktop/MGDrive-Experiments/Experiments/Oct25/noagg/2018_10_15_ANALYZED/E_080_000_000_000/").glob('**/*.csv')
 counts1 = plotHAllele(pathlist, counts1, "No Aggregation")
 
@@ -50,6 +50,7 @@ counts2 = plotHAllele(pathlist, counts2, "Full Aggregation")
 pathlist = Path("/Users/gillianchu/Desktop/MGDrive-Experiments/Experiments/Oct25/halfagg/2018_10_15_ANALYZED/E_080_000_000_000/").glob('**/*.csv')
 counts3 = plotHAllele(pathlist, counts3, "Half Aggregation")
 
+print("after uploading")
 # rms0 = rmse(np.array(counts1), np.array(counts1))
 # print('RMSE of No Aggregation against No Aggregation: ', rms0)
 
@@ -77,7 +78,7 @@ def entropy(predictions, targets):
 		vs. 
 		I(X1, X2, X3, X4, ... ; Y) = H(X1, X2, X3, X4, ... ; Y))
 	"""
-
+	
 	return
 
 def approximateEntropy(U, m, r):
@@ -92,10 +93,11 @@ def approximateEntropy(U, m, r):
 	N = len(U)
 	return abs(phi(m+1) - phi(m))
 
-# U = np.array(counts1)
-# print(approximateEntropy(U, 2, 3))
-# U = np.array(counts2)
-# print(approximateEntropy(U, 2, 3))
-# U = np.array(counts3)
-# print(approximateEntropy(U, 2, 3))
+print("we're here!")
+U = np.array(counts1)
+print(approximateEntropy(U, 2, 3))
+U = np.array(counts2)
+print(approximateEntropy(U, 2, 3))
+U = np.array(counts3)
+print(approximateEntropy(U, 2, 3))
 

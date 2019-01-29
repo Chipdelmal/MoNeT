@@ -1,8 +1,8 @@
-## Gene Drives Data Visualization
+# Gene Drives Data Visualization
 
 Presenting the results of the data analysis routines in gene flows presents some interesting challenges. In particular, whilst developing and performing analyses for the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/), we realized the need to come up with a toolbox to provide consistent and meaningful ways to visualize the results of our experiments.
 
-### Gene Proportion Traces
+## Gene Proportion Traces
 
 In a single population environment, the main challenge comes from presenting the results of stochastic iterations of experiments. For this purpose, we are creating "Traces Plots" in which we present alleles counts in different colors.
 
@@ -16,7 +16,7 @@ We provide both: _Mathematica_ and _Python_ implementations. In the following ex
 
 https://chipdelmal.github.io/MoNeT/media/trace02.png
 
-### Gene Spatial Flows
+## Gene Spatial Flows
 
 Single populations are still reasonably described by a trace plot, but when we move towards visualizing the spatial spread of genes across different populations in a "network", this is no longer a viable option. The most natural way to show these results is in videos such as the following one:
 
@@ -32,14 +32,10 @@ With the top plot being the aggregate of all the alleles in the landscape. The s
 
 <img src="./media/E_065_000_010_005_02D.png" width="100%" align="middle">
 
-Once again, we provide the _Python_ version of the routines:
+## Grafical User Interface
 
-<img src="./media/pythonFlow01.png" width="50%" align="middle"><img src="./media/pythonFlow02.png" width="50%" align="middle">
+We are coding a GUI for the easy exploration of our datasets and analysis of our results both within and outside our research group...
 
-### Factorial Experiments Heatmaps
+## Authors
 
-### 4D Response Surfaces
-
-### Authors
-
-Sarafina Smith, Héctor M. Sánchez C.
+Sarafina Smith, Víctor Ferman, Héctor M. Sánchez C.

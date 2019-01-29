@@ -5,7 +5,7 @@ ffmpeg -i Partiteness.mp4 -i palette.png -filter_complex "fps=40,scale=500:500:f
 
 
 ## Lossy 8k
-ffmpeg -start_number 1 -r 24 -f image2 -s 7680x4320 -i graph%05d.png -vcodec libx264 -preset veryslow -crf 15 -pix_fmt yuv420p MGDrivE8kLossy.mp4
+ffmpeg -start_number 11520 -r 24 -f image2 -s 7680x4320 -i G%07d.jpg -vcodec libx264 -preset veryslow -crf 15 -pix_fmt yuv420p MGDrivE8kLossy.mp4
 
 ## Lossless 4K (use rescale)
 ffmpeg -start_number 1 -r 24 -f image2 -s 3840x2160 -i graph%05d.png -vcodec libx264 -preset veryslow -crf 0 -pix_fmt yuv420p MGDrivE4k.mp4
