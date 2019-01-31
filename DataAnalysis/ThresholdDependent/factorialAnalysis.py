@@ -18,7 +18,7 @@ offline.init_notebook_mode(connected=True)
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "URSA_200"
+filename = "TB"
 path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
@@ -71,26 +71,26 @@ monet.compileFactorialCSVFromFiles(path, outFilename)
 # Load compiled CSV and analyze the output
 ###############################################################################
 path = "/Volumes/Pusheen/xjego-khuq3/ThresholdDependent/Datasets/"
-centralFile = "50UR_1xy_2018_10_09.csv"
+centralFile = "50TR_1x_2018_09_11.csv"
 sensitivitySelector = 3
 if(sensitivitySelector == 1):
     # 001 larval life decrease
     # 002 larval life increase
     title = "Larval Lifespan"
-    testFileA = "URSA_001.csv"
-    testFileB = "URSA_002.csv"
+    testFileA = "TRSA_001.csv"
+    testFileB = "TRSA_002.csv"
 if(sensitivitySelector == 2):
     # 010 adult life increase
     # 020 adult life decrease
     title = "Adult Mortality"
-    testFileA = "URSA_010.csv"
-    testFileB = "URSA_020.csv"
+    testFileA = "TRSA_010.csv"
+    testFileB = "TRSA_020.csv"
 if(sensitivitySelector == 3):
     # 100 fitness cost 10% reduction
     # 200 fitness cost 20% reduction
     title = "Fitness Cost"
-    testFileA = "URSA_100.csv"
-    testFileB = "URSA_200.csv"
+    testFileA = "TRSA_100.csv"
+    testFileB = "TRSA_200.csv"
 centralData = monet.loadAndHashFactorialCSV(path + centralFile)
 probeDataA = monet.loadAndHashFactorialCSV(path + testFileA)
 probeDataB = monet.loadAndHashFactorialCSV(path + testFileB)

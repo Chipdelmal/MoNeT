@@ -1,6 +1,6 @@
-# Students Projects (UC, Berkeley - Tecnológico de Monterrey Collaborations)
+# Undergraduate Students Projects (UC, Berkeley - Tecnológico de Monterrey Collaborations)
 
-This workflow was created to facilitate the creation of tools to be used as part of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project. It represents the collaboration between UC, Berkeley and Tecnológico de Monterrey in an effort to get undergraduate students involved in mosquito-borne diseases research projects. One of such projects is the  [Mosquito App](./MosquitoApp.html) (follow the link for more information).
+This project was created to facilitate the creation of tools to be used as part of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) toolkit. It represents the collaboration between UC, Berkeley and Tecnológico de Monterrey in an effort to get undergraduate students involved in mosquito-borne diseases research projects. One of such projects is the [Mosquito App](./MosquitoApp.html) (follow the link for more information), which shows much promise in the much needed area of field data collection.
 
 <img src="./media/appDemo.png" width="100%" align="middle">
 
@@ -77,7 +77,7 @@ _Related areas of interest: GIS, Machine Learning_
 
 ## Collaborators
 
-<a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> (BV), András Tackacs (AT), Héctor <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> (HMSC)
+<a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> (BV), András Tackacs (AT), <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> (HMSC)
 
 
 <center>
