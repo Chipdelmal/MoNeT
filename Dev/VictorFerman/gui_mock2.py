@@ -26,6 +26,7 @@ class GraphicsWizard(QtWidgets.QWizard):
         self.setPage(3,Page3(self))
         self.setPage(4,Page4(self))
         self.setWindowTitle('Visualization Wizard')
+        self.resize(1280,800)
 
 class StartP(QtWidgets.QWizardPage):
     #First page of the wizard, asks for common data to all data analysis (graphing) options
@@ -146,12 +147,15 @@ class Page2(QtWidgets.QWizardPage):
     def __init__(self,parent=None):
         super(Page2,self).__init__(parent)
         self.setTitle('Graph')
-        self.figure = Figure(figsize=(20,5))
+        self.figure = Figure(figsize=(12,7), tight_layout=True)
         self.canvas = FigureCanvas(self.figure)
         self.ax = None
         self.setFinalPage(True)
         vbox = QtWidgets.QVBoxLayout()
         vbox.addWidget(self.canvas)
+        saveBtn = QtWidgets.QPushButton('Save Graph', self)
+        saveBtn.clicked.connect(self.savefile)
+        vbox.addWidget(saveBtn)
         self.setLayout(vbox)
         self.columnsWeight = []
         self.groupNames = []
@@ -224,6 +228,16 @@ class Page2(QtWidgets.QWizardPage):
     def nextId(self):
         return -1
 
+    def savefile(self):
+        dlg = QtWidgets.QFileDialog(self, "Save File")
+        dlg.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        fname,_ = dlg.getSaveFileName(self, "Save File", "", "Images (*.png)")
+        fname = fname if ".png" in fname else fname+".png"
+        self.canvas.print_figure(fname, dpi=2048,
+                    facecolor='w', edgecolor='w', orientation='portrait',
+                    papertype=None, format="png", transparent=False,
+                    bbox_inches='tight', pad_inches=0.05, frameon=None)
+
 class Page3(QtWidgets.QWizardPage):
     #page required to ask for extra data regarding the map to be used and the populations on said map
     def __init__(self,parent=None):
@@ -272,12 +286,12 @@ class Page4(QtWidgets.QWizardPage):
     def __init__(self,parent=None):
         super(Page4,self).__init__(parent)
         self.setTitle('Graph')
-        self.figure = Figure()
+        self.figure = Figure(figsize=(12,7),tight_layout=True)
         self.canvas = FigureCanvas(self.figure)
         self.ax = self.figure.add_subplot(111)
         self.setFinalPage(True)
         vbox = QtWidgets.QVBoxLayout()
-        self._timer = self.canvas.new_timer(35, [(self.plots, (), {})])
+        self._timer = None
         vbox.addWidget(self.canvas)
         self.setLayout(vbox)
         self.patchesX = []
@@ -314,12 +328,15 @@ class Page4(QtWidgets.QWizardPage):
             self.currentLine +=1
         else:
             #cleanup stops the callback and closes all of the files
-            self._timer.stop()
+            if self._timer:
+                self._timer.stop()
+                self._timer = None
             for f in self.files:
                  f.close()
 
     def initializePage(self):
         #setup of the information required for the graphs
+        self._timer= self.canvas.new_timer(35, [(self.plots, (), {})])
         coordFile = str(self.field('coordFile'))
         popFile = str(self.field('popFile'))
         dataFile = str(self.field('dataDir'))+"/AF1_Aggregate_Run1_*.csv"
@@ -346,6 +363,33 @@ class Page4(QtWidgets.QWizardPage):
         for f in self.files:
             next(f)
         self._timer.start()
+
+    def clearLayout(self, layout):
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+                else:
+                    self.clearLayout(item.layout())
+
+    def cleanupPage(self):
+        if self._timer:
+            self._timer.stop()
+            self._timer = None
+        for f in self.files:
+             f.close()
+        self.clearLayout(self.layout())
+
+    def closeEvent(self, event):
+        if self._timer:
+            self._timer.stop()
+            self._timer = None
+        for f in self.files:
+             f.close()
+        self.clearLayout(self.layout())
+        event.accept()
 
 if __name__ == '__main__':
     import sys
