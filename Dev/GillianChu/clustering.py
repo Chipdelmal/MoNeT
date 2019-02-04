@@ -12,7 +12,8 @@ from scipy.cluster.hierarchy import dendrogram
 from scipy.cluster.hierarchy import linkage
 from sklearn.neighbors import kneighbors_graph
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib
+# import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import cophenet
 from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import fcluster
@@ -164,10 +165,8 @@ rebuild the centroids at each level from the dendrogram
 """
 from sklearn.cluster import KMeans 
 import operator
-
-randPoints = 
-
-from np import genfromtxt
+import numpy as np
+from numpy import genfromtxt
 
 #create function that imports csv file -> nparray x, y, Population
 def csv_datarray(filename_pos, filename_pop):
@@ -187,15 +186,15 @@ def centroid(*points):
     return [centroid_x, centroid_y]
 
 
-def agglom_clustering(dat):
+def agglom_clustering(points, pop):
 	# dat_pos, dat_pop = dat[0:1], dat[2]
 
 	list_of_centroids = []
 	for i in range(1, 100, 10):
-		clustering = AgglomerativeClustering(n_clusters=i).fit(dat)
-
+		clustering = AgglomerativeClustering(n_clusters=i).fit(points)
 		#calculate
 		grouping = dict()
+		clustering = clustering.labels_
 		for j in range(len(clustering)):
 			group = clustering[j]
 			if group in grouping.keys():
@@ -206,12 +205,30 @@ def agglom_clustering(dat):
 		#calculate centroids from the points returned in clustering
 		centroids = []
 		for g in grouping:
-			centroids.append(centroid(g))
+			nodes_in_centroid = []
+			for k in range(len(clustering)):
+				if clustering[k] == g:
+					nodes_in_centroid.append(points[k])
+			centroids.append(nodes_in_centroid)
 
 		list_of_centroids.append(centroids)
-
 	return list_of_centroids
 
+n = 100
+dist = 15
+stdpop = 50
+
+L = b.LineGraph(n, dist)
+L.createLineGraph()
+L.allVertices 
+points = np.array(L.allVerticesCoord())
+sizesLists = np.array([stdpop for i in range(len(points))])
+print(points)
+print("done with points here is sizesLists")
+print(sizesLists)
+k = agglom_clustering(points, sizesLists)
+for c in k:
+	print(len(c))
 
 # def kmeans_stage_aggregation(dat, num_iter):
 # 	"""
