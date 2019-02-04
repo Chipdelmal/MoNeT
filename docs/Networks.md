@@ -26,11 +26,19 @@ The study of gene-drives' spread in realistic landscapes is of upmost importance
 
 <img src="./media/YorkeysKnob_centralityHex.jpg" width="50%" align="middle"><img src="./media/YorkeysKnob_centralityScatter.jpg" width="50%" align="middle">
 
+
+##  [Mosquito Population Size Heterogeneity](https://chipdelmal.github.io/MoNeT/PopSizeHeterogeneity.html)
+
+Although widely thought as being important for gene-flow dynamics, the effects of heterogeneity in population sizes have rarely been studied in detail. In this work, we intend to go tackle this problem systematically so that we can understand how it might be of relevance in the study of new disease-control interventions such as gene-drives.
+
+<center><img src="./media/flow.jpg" width="100%" align="middle"></center>
+
 ## [Clustering of Directed Networks with Geographical Constraints](./Community.html)
 
 Targeted vector control interventions are usually applied on the field without taking into account the movement of mosquitos across the landscape. This, however, might not be the most optimal way of trying to eradicate these insects. In this workflow, we try to create and test a clustering algorithm that takes into account both: mosquito movement, and geographical constraints; to understand the factors that would promote more efficient mosquito-control campaigns.
 
 <img src="./media/headerImage.jpg" width="100%" align="middle">
+
 
 ## [Households Distances Analysis](./HouseholdDistances.html)
 

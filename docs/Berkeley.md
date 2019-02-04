@@ -35,3 +35,10 @@ Presenting the results of the data analysis routines in gene flows presents some
 The main idea for this workflow is to create an algorithm that combines the information of the geographical clustering of a pointset, along with the mosquito movement kernel. The advantage of doing this, would be that it would take into account the mosquito movement part of the dynamics of the disease transmission, while still making it aware that these dynamics are "anchored" to a geographic setting; giving us an informed way to aggregate geographic populations of mosquitos moving on the landscape.
 
 <center><img src="./media/headerImage.jpg" width="100%" align="middle"></center>
+
+
+##  [Mosquito Population Size Heterogeneity (Maya Shen)](https://chipdelmal.github.io/MoNeT/PopSizeHeterogeneity.html)
+
+Although widely thought as being important for gene-flow dynamics, the effects of heterogeneity in population sizes have rarely been studied in detail. In this work, we intend to go tackle this problem systematically so that we can understand how it might be of relevance in the study of new disease-control interventions such as gene-drives.
+
+<center><img src="./media/flow.jpg" width="100%" align="middle"></center>
