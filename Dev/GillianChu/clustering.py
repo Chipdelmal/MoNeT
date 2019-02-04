@@ -188,11 +188,11 @@ def centroid(*points):
 
 
 def agglom_clustering(dat):
-	dat_pos, dat_pop = dat[0:1], dat[2]
+	# dat_pos, dat_pop = dat[0:1], dat[2]
 
 	list_of_centroids = []
 	for i in range(1, 100, 10):
-		clustering = AgglomerativeClustering(n_clusters=i).fit(dat_pos)
+		clustering = AgglomerativeClustering(n_clusters=i).fit(dat)
 
 		#calculate
 		grouping = dict()
