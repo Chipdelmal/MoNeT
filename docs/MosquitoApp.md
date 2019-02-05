@@ -19,7 +19,7 @@ Two videos were recorded with the demonstrations of how the mobile app works. Th
 whilst the second one shows the app in the state closest to its release:
 
 <center>
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=fajQVGXrmIo&t=36s" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fajQVGXrmIo" allowfullscreen></iframe>
 </center>
 
 ## Authors

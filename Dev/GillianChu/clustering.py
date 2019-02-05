@@ -12,7 +12,8 @@ from scipy.cluster.hierarchy import dendrogram
 from scipy.cluster.hierarchy import linkage
 from sklearn.neighbors import kneighbors_graph
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib
+# import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import cophenet
 from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import fcluster
@@ -139,6 +140,153 @@ def hierarchialAggregation(nodes, resolution, populationSize):
 		# plt.show()
 		seen.add(numClusters)
 		return clusteredCoordinatesCentroids
+
+"""
+Feb 4, 2019: Write a function that outputs results of calling k-means with multiple
+different parameters, takes in the line (regular first), randomized next. 
+"""
+"""
+Current worries:
+- Not sure that the most common centroids cover all of the nodes, and that this way of
+generating common centroids might be changed if I change the way we generate centroids
+- how to keep track of the nodes that a particular centroid covers
+
+After talking to Sean & Jared:
+- Ask Hector if we should instead run hiearchial clustering, and calculate the centroids from 
+the dendrogram results at particular levels
+- Currently: check how sklearn's implementation of k-means aggregates things together:
+if it's by distance to closest centroid then nothing changes, which makes sense, so I can 
+delete all nodes associated with the most common centroid, and then run k-means another 100 times
+- should i pick that they randomly 
+
+After talking to Hector:
+- Run agglomerative hiearchial clustering, 
+rebuild the centroids at each level from the dendrogram
+"""
+from sklearn.cluster import KMeans 
+import operator
+import numpy as np
+from numpy import genfromtxt
+
+#create function that imports csv file -> nparray x, y, Population
+def csv_datarray(filename_pos, filename_pop):
+	#make sure that dat_pos is of form [x_pos_array, y_pos_array]
+	dat_pos = genfromtxt(filename_pos, delimiter=',')
+	dat_pop = genfromtxt(filename_pop, delimiter=',')
+	dat_pos.concatenate(dat_pop)
+	return dat_pos
+
+def centroid(*points):
+	#https://stackoverflow.com/questions/23020659/fastest-way-to-calculate-the-centroid-of-a-set-of-coordinate-tuples-in-python-wi
+    x_coords = [p[0] for p in points]
+    y_coords = [p[1] for p in points]
+    _len = len(points)
+    centroid_x = sum(x_coords)/_len
+    centroid_y = sum(y_coords)/_len
+    return [centroid_x, centroid_y]
+
+
+def agglom_clustering(points, pop):
+	# dat_pos, dat_pop = dat[0:1], dat[2]
+
+	list_of_centroids = []
+	for i in range(1, 100, 10):
+		clustering = AgglomerativeClustering(n_clusters=i).fit(points)
+		#calculate
+		grouping = dict()
+		clustering = clustering.labels_
+		for j in range(len(clustering)):
+			group = clustering[j]
+			if group in grouping.keys():
+				grouping[group].append(clustering[j])
+			else:
+				grouping[group] = [clustering[j]]
+		
+		#calculate centroids from the points returned in clustering
+		centroids = []
+		for g in grouping:
+			nodes_in_centroid = []
+			for k in range(len(clustering)):
+				if clustering[k] == g:
+					nodes_in_centroid.append(points[k])
+			centroids.append(nodes_in_centroid)
+
+		list_of_centroids.append(centroids)
+	return list_of_centroids
+
+n = 100
+dist = 15
+stdpop = 50
+
+L = b.LineGraph(n, dist)
+L.createLineGraph()
+L.allVertices 
+points = np.array(L.allVerticesCoord())
+sizesLists = np.array([stdpop for i in range(len(points))])
+print(points)
+print("done with points here is sizesLists")
+print(sizesLists)
+k = agglom_clustering(points, sizesLists)
+for c in k:
+	print(len(c))
+
+# def kmeans_stage_aggregation(dat, num_iter):
+# 	"""
+# 	Takes data:
+# 	assumes dat is of form [x, y, Population]
+# 	num_iter is the number of iterations of k-means for a particular k parameter
+# 		to be averaged over
+
+# 	Returns:
+# 	list of common_centroids, each of which has their information (x_pos, y_pos, pop)
+# 	that is: [(x_pos, y_pos, pop), (x_pos, y_pos, pop), ...]
+
+# 	"""
+# 	dat_pos, dat_pop = dat[0:1], dat[2]
+# 	randPoints = dat_pos
+
+# 	for numclusters in range(1, 100, 10):
+# 		k = numclusters
+
+# 		centroids_directory = dict()
+# 		all_centroids = []
+
+# 		#run k-means num_iter times
+# 		for i in range(num_iter):
+# 			#Number of clusters
+# 			kmeans = KMeans(init='random', n_clusters=k)
+# 			#Fitting the input data
+# 			kmeans = kmeans.fit(randPoints)
+# 			#Getting the cluster labels
+# 			labels = kmeans.predict(randPoints)
+# 			#Centroid values
+# 			centroids = kmeans.cluster_centers_
+# 			centroids = tuple(map(tuple, centroids))
+# 			for centroid in centroids:
+# 				if centroid in centroids_directory.keys():
+# 					centroids_directory[centroid] += 1
+# 				else:
+# 					centroids_directory[centroid] = 1
+# 		common_centroids = []
+# 		for i in range(k):
+# 			m = max(centroids_directory.items(), key=operator.itemgetter(1))[0]
+# 			common_centroids.append(m)
+# 			del centroids_directory[m]
+
+# 		return common_centroids
+
+		#display the most common centroids
+		# for x, y in randPoints:
+		# 	plt.scatter(x, y)
+		# for centroid in common_centroids:
+		# 	x_c, y_c = centroid
+		# 	plt.scatter(x_c, y_c, marker='*', c='#050505', s=100)
+		#plt.show()
+
+#also remember to resolve the population in a node!!
+
+#prepare thoughts to talk to Biyonka about the information theory stuff
+
 
 # n = 100
 # dist = 15

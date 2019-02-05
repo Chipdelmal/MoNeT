@@ -1,7 +1,9 @@
 #Author: vferman
 #Creates a dataset from the Polk County Data
+import matplotlib.lines as mlines
 from functools import partial
 from math import sin, cos, sqrt, atan2, radians
+from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.stats.stats import pearsonr
 import geopandas as gpd
@@ -10,6 +12,8 @@ import numpy as np
 import os
 import osmnx as ox
 import sys
+
+MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 class weatherStation:
     #Class to represent the different weather stations and their data
@@ -321,6 +325,117 @@ def printPearson(traps):
 
     print('sightings: '+ str(sightings))
 
+
+def getBuildingLocations(lat,long):
+    locCoord = (float(lat), float(long))
+    fullLats = []
+    fullLongs = []
+    buildingLoc = ox.buildings_from_point(point=locCoord, distance=1000, retain_invalid=True)
+    if not buildingLoc.empty:
+        locs = buildingLoc.centroid
+        fullLongs = locs.x.tolist()
+        fullLats = locs.y.tolist()
+
+    return (fullLats,fullLongs)
+
+def exportGraphics(trapList, stationList,species):
+    longs = []
+    lats = []
+    buildingLats = []
+    buildingLongs = []
+    stLongs = []
+    stLats = []
+    rains = []
+    temps = []
+    pops = []
+    for elem in trapList:
+        if len(elem.mosquitoCounts) ==52:
+            lats.append(elem.lat)
+            longs.append(elem.long)
+            rains.append(elem.weeklyRain)
+            temps.append(elem.weeklyMinTemp)
+            pops.append(elem.mosquitoCounts)
+            (bdLats,bdLongs) = getBuildingLocations(elem.lat,elem.long)
+            buildingLats.extend(bdLats)
+            buildingLongs.extend(bdLongs)
+
+    for station in stationList:
+        stLongs.append(station.long)
+        stLats.append(station.lat)
+
+    minLat = min(lats)
+    minLong = min(longs)
+    maxLat = max(lats)
+    maxLong = max(longs)
+    for i in range(52):
+        gpop = [z[i] for z in pops]
+        flats = []
+        flongs = []
+        fpops = []
+        for j in range(len(gpop)):
+            if gpop[j] > 0:
+                if gpop[j]<10:
+                    fpops.append(10)
+                else:
+                    fpops.append(gpop[j])
+                flongs.append(longs[j])
+                flats.append(lats[j])
+        fig = plt.figure(figsize=(4, 4))
+        ax=fig.add_subplot(111, label="1")
+        ax2=fig.add_subplot(111, label="2", frame_on=False)
+        ax3=fig.add_subplot(111, label="3", frame_on=False)
+        if(len(buildingLats)>len(buildingLongs)):
+            buildingLats=buildingLats[:len(buildingLongs)]
+        else:
+            buildingLongs=buildingLongs[:len(buildingLats)]
+        m = Basemap(projection='merc',llcrnrlat=minLat-0.2,urcrnrlat=maxLat+0.2,llcrnrlon=minLong-0.2,urcrnrlon=maxLong+0.2,lat_ts=20,resolution='i', ax=ax)
+        m.drawcounties(linewidth=0.3)
+        m.scatter(longs, lats, latlon=True, marker='o', s=10, facecolors='none', edgecolors='k')
+        m.scatter(flongs, flats, latlon=True, marker='o', s=fpops, c='cornflowerblue')
+        m.scatter(stLongs, stLats, latlon=True, marker='1', c = 'red', s=9)
+
+        trapMarker = mlines.Line2D([], [], color='cornflowerblue', marker='o', linestyle='None', markersize=5, label='Traps')
+        trapMarker = mlines.Line2D([], [], color='cornflowerblue', marker='o', linestyle='None', markersize=5, label='Traps')
+
+        stationMarker = mlines.Line2D([], [], color='red', marker='1', linestyle='None', markersize=5, label='Weather Stations')
+        ax.legend(handles=[trapMarker,stationMarker],loc=1, fontsize='small')
+        ax.text(500,2000, '2017 '+MONTHS[int((i+1)/4.34)])
+        ax2.plot(range(i+1), temps[0][:i+1], c='orange', alpha=0.2 )
+        ax2.set_ylim(0, 80)
+        ax2.set_xlim(0, 52)
+        ax2.set_aspect(0.2)
+        ax3.plot(range(i+1), rains[0][:i+1], c='green', alpha=0.2 )
+        ax3.set_ylim(0, 6)
+        ax3.set_xlim(0, 52)
+        ax3.set_aspect(0.2)
+        ax2.tick_params(
+        axis='both',          # changes apply to the both
+        which='both',      # both major and minor ticks are affected
+        bottom=False,      # ticks along the bottom edge are off
+        top=False,         # ticks along the top edge are off
+        left=False,
+        right=False,
+        labelbottom=False, # labels along the bottom edge are off
+        labelleft=False)
+        ax3.tick_params(
+        axis='both',          # changes apply to the both
+        which='both',      # both major and minor ticks are affected
+        bottom=False,      # ticks along the bottom edge are off
+        top=False,         # ticks along the top edge are off
+        left=False,
+        right=False,
+        labelbottom=False, # labels along the bottom edge are off
+        labelleft=False)
+        #fig.colorbar(l)
+        plt.savefig("./polk_"+species+"_"+str(i).zfill(2)+".png", dpi=2048,
+                    facecolor='w', edgecolor='w', orientation='portrait',
+                    papertype=None, format="png", transparent=False,
+                    bbox_inches='tight', pad_inches=0.05, frameon=None)
+        plt.close(fig)
+        plt.close('all')
+
+
+
 def main():
     #Arguments
     # 0: path to weather file location
@@ -340,7 +455,8 @@ def main():
     traps = parseTrapInfo(trapFile)
     caclculateTrapWeather(traps,weatherStations)
     parseMosquitoCounts(traps,mosquitoFile)
-    exportDataSet(species,traps,exportFile)
+    exportGraphics(traps,weatherStations,species)
+    #exportDataSet(species,traps,exportFile)
     #printPearson(traps)
 
     #characteristic = "min Temp"

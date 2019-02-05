@@ -18,7 +18,7 @@ offline.init_notebook_mode(connected=True)
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "UB"
+filename = "TB"
 path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
