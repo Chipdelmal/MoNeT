@@ -112,3 +112,32 @@ def sumLandscapePopulationsEpi(
         "population": fillArray
     }
     return returnDictionary
+
+def sumAlleleCounts(sumLandscapeData, alleleNames, columns):
+    """
+    Description:
+        * This function sums the total count of each allele given by sumLandscapeData["population"]
+    In:
+        * sumLandscapeData: Dict loaded with the "sumLandscapePopulationsEpi" function.
+        * alleleNames: list of individual alleles, eg ["W", "R"]
+        * columns: List of lists describing number of times each one
+            indexed column should be counted for this allele 
+            ex. [[1, 1, 2], [2, 3, 3]] if the given genotypes are WW, WR, and RR
+    Out:
+        * Dictionary containing:
+            "genotypes" [list -> strings]
+            "population" [numpyArray]
+    """
+    landscapeData = sumLandscapeData["population"]
+    fillArray = np.zeros((len(landscapeData), len(alleleNames)))    
+    
+    for i in range(len(alleleNames)):
+        for index in columns[i]:
+            # subtract 1 because index is 1 indexed
+            fillArray[:,i] += landscapeData[:,index-1]
+        
+    returnDictionary = {
+        "alleles": alleleNames,
+        "totalCounts": fillArray
+    }
+    return returnDictionary
