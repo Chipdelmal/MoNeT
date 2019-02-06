@@ -20,9 +20,13 @@ def centroid(*points):
 
 def agglom_clustering(points, pop):
 	# dat_pos, dat_pop = dat[0:1], dat[2]
+	std_pop = pop[0]
+	std_distance = points[0] - points[1]
+	# printyes = 1
 
 	list_of_centroids = []
 	for i in range(1, 100, 10):
+		# print('creating ', i, ' clusters')
 		clustering = AgglomerativeClustering(n_clusters=i).fit(points)
 		#calculate
 		grouping = dict()
@@ -36,7 +40,9 @@ def agglom_clustering(points, pop):
 		
 		#calculate centroids from the points returned in clustering
 		centroids = []
+		# print("i have ", len(grouping), " different clusters")
 		for g in grouping:
+			# print("i am in grouping ", g)
 			nodes_in_centroid = []
 			centroid_pop = 0
 			for k in range(len(clustering)):
@@ -46,6 +52,16 @@ def agglom_clustering(points, pop):
 
 			#before I append the centroids, add beginning and ending 
 			centroids.append([nodes_in_centroid, centroid_pop])
+			
+			# if printyes:
+			# 	print(centroids)
+			# 	printyes = 0
+
+		# print(centroids)
+		# print('num nodes in centroid: ', len(centroids))
+		centroids.insert(0, [std_distance, centroid_pop])
+		centroids.append([centroids[-1][0][-1]+abs(std_distance), centroid_pop])
+		# print("len of centroids is ", len(centroids))
 
 		list_of_centroids.append(centroids)
 	return list_of_centroids
@@ -63,8 +79,8 @@ sizesLists = np.array([stdpop for i in range(len(points))])
 # print("done with points here is sizesLists")
 # print(sizesLists)
 k = agglom_clustering(points, sizesLists)
-for c in k:
-	print(len(c))
+# for c in k:
+	# print(len(c))
 
 """
 Feb 6, 2019: 
