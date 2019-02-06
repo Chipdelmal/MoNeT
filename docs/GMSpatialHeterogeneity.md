@@ -24,7 +24,10 @@ To do so, we plan to take the following steps:
 
 <img src="./media/habitat03.png" width="100%" align="middle">
 
+### 4) Factorial Combinations
+
+<center><img src="./media/habitat04.png" width="60%" align="middle"></center>
 
 ### Authors
 
-Sarafina Smith, Gillian Chu, Biyonka Liang, Maya Shen, Héctor M. Sánchez C.
+Gillian Chu, Biyonka Liang, Maya Shen, Sarafina Smith, Héctor M. Sánchez C.
