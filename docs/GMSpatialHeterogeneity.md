@@ -10,6 +10,8 @@ To do so, we plan to take the following steps:
 
 ### 0) Baseline landscape
 
+We will start our analysis in a one-dimensional landscape. Across our experiments, we will use a line with **n** nodes in which each habitat will have a population size of: **p/n**. Where **p** is the total amount of male and female mosquitos in the environment.
+
 <img src="./media/habitat00.png" width="100%" align="middle">
 
 ### 1) [Spatial Distribution](./SpatialDistribution.html)
