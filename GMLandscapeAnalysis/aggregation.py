@@ -20,49 +20,49 @@ def csv_datarray(filename_pos, filename_pop):
 	return dat_pos
 
 def centroid(points):
-	"""
-    Description:
-        * Given a list of points, computes and outputs the coordinates of the centroid.
-    In:
-        * points: a list of [(x, y), pop] coordinates
-    Out:
-        * (x, y) coordinates of the centroid
-    """
 	#https://stackoverflow.com/questions/23020659/fastest-way-to-calculate-the-centroid-of-a-set-of-coordinate-tuples-in-python-wi
-    x_coords = [p[0] for p in points]
-    y_coords = [p[1] for p in points]
-    _len = len(points)
-    centroid_x = sum(x_coords)/_len
-    centroid_y = sum(y_coords)/_len
-    return [centroid_x, centroid_y]
+	"""
+	Description:
+		* Given a list of points, computes and outputs the coordinates of the centroid.
+	In:
+		* points: a list of [(x, y), pop] coordinates
+	Out:
+		* (x, y) coordinates of the centroid
+	"""
+	x_coords = [p[0] for p in points]
+	y_coords = [p[1] for p in points]
+	_len = len(points)
+	centroid_x = sum(x_coords)/_len
+	centroid_y = sum(y_coords)/_len
+	return [centroid_x, centroid_y]
 
 def agglom_clustering(points, pop, total_num_nodes, levels_of_agg, filename_string): 
 	"""
-    Description:
-        * Performs AgglomerativeClustering on given (x, y) points, maintaining 
-        	population sizes, and outputs csv files of centroid (x, y) coordinates
-        	and corresponding populations at different levels of clustering 
-        	hierarchy. 
-    In:
-        * points: Is an nparray of coordinates.
-        * pop: Is a 1D nparray of population sizes, corresponding to the points 
-        	in order.
-        * total_num_nodes: The total number of nodes in the input points.
-        * levels_of_agg: The number of levels of aggregation at which to output 
-        	centroid information.
-        * filename_string: Exported files will be saved under 
-        	filename_string_[num_clusters].csv.
-    Out:
-        * List_of_centroids: Outputs a list of the different clustering levels:
-        	each level's CSV will have a list of centroids' coordinates and 
-        	their corresponding populations.
-    Notes:
-        * Assumes population and distance is regularized.
-        * Assumes 1D points for post-processing (adding 2 dummy nodes).
-        * AgglomerativeClustering returns an assignment for each of the nodes;
-        	this function alls the centroid() to calculate the centroids given 
-        	these assignments.
-    """
+	Description:
+		* Performs AgglomerativeClustering on given (x, y) points, maintaining 
+			population sizes, and outputs csv files of centroid (x, y) coordinates
+			and corresponding populations at different levels of clustering 
+			hierarchy. 
+	In:
+		* points: Is an nparray of coordinates.
+		* pop: Is a 1D nparray of population sizes, corresponding to the points 
+			in order.
+		* total_num_nodes: The total number of nodes in the input points.
+		* levels_of_agg: The number of levels of aggregation at which to output 
+			centroid information.
+		* filename_string: Exported files will be saved under 
+			filename_string_[num_clusters].csv.
+	Out:
+		* List_of_centroids: Outputs a list of the different clustering levels:
+			each level's CSV will have a list of centroids' coordinates and 
+			their corresponding populations.
+	Notes:
+		* Assumes population and distance is regularized.
+		* Assumes 1D points for post-processing (adding 2 dummy nodes).
+		* AgglomerativeClustering returns an assignment for each of the nodes;
+			this function alls the centroid() to calculate the centroids given 
+			these assignments.
+	"""
 	std_pop = pop[0]
 	std_distance = points[0] - points[1]
 
@@ -118,13 +118,3 @@ Tasks:
 - Integrate with Biyonka's LineGraph
 
 """
-# n = 100
-# dist = 15
-# stdpop = 50
-
-# L = b.LineGraph(n, dist)
-# L.createLineGraph(random=True)
-# L.allVertices 
-# points = np.array(L.allVerticesCoord())
-# sizesLists = np.array([stdpop for i in range(len(points))])
-# k = agglom_clustering(points, sizesLists, 100, 10, "Outputs/pusheen")
