@@ -118,18 +118,13 @@ Tasks:
 - Integrate with Biyonka's LineGraph
 
 """
-n = 100
-dist = 15
-stdpop = 50
+# n = 100
+# dist = 15
+# stdpop = 50
 
-L = b.LineGraph(n, dist)
-L.createLineGraph(random=True)
-L.allVertices 
-points = np.array(L.allVerticesCoord())
-sizesLists = np.array([stdpop for i in range(len(points))])
-# print(points)
-# print("done with points here is sizesLists")
-# print(sizesLists)
-k = agglom_clustering(points, sizesLists, 100, 10, "Outputs/pusheen")
-# for c in k:
-	# print(len(c))
+# L = b.LineGraph(n, dist)
+# L.createLineGraph(random=True)
+# L.allVertices 
+# points = np.array(L.allVerticesCoord())
+# sizesLists = np.array([stdpop for i in range(len(points))])
+# k = agglom_clustering(points, sizesLists, 100, 10, "Outputs/pusheen")
