@@ -4,6 +4,7 @@
 # ╩ ╩└─┘╝╚╝└─┘ ╩
 # Definition of the LineGraph class
 ################################################################################
+import numpy as np
 
 class LineGraph(object):
 	def __init__(self, numNodes, dist):
@@ -29,6 +30,17 @@ class LineGraph(object):
 		else:
 			self.graph_dict[v1].append(v2)
 
+	def addRandEdge(self, v1, v2):
+		"Note: v1 and v2 are indices."
+		"Edges should be (x1, x2, dist). Keep edge list. Edges are undirected."
+		d = np.random.randint(0, self.__d)
+		self.__edges[(v1, v2)] = d
+		self.__edges[(v2, v1)] = d
+
+		if v1 in self.__graph_dict:
+			self.__graph_dict[v1].append(v2)
+		else:
+			self.graph_dict[v1].append(v2)
 		# print("An edge of length ", d, " has been added between ", v1, " and ", v2)
 
 	def generateCoord(self, n):
@@ -71,12 +83,15 @@ class LineGraph(object):
 			rest += str(e) + " "
 		return res
 
-	def createLineGraph(self):
+	def createLineGraph(self, random):
 		"Creates numNodes nodes with dist d between each of the nodes."
 		if len(self.__graph_dict) == self.__num:
 			print("I have the right number of nodes.")
 		else:
 			print("ERROR: I have ", len(self.__graph_dict), " number of nodes.")
-
-		for i in range(1, self.__num):
-			self.addEdge(i-1, i, self.__d)
+		if random:
+			for i in range(1, self.__num):
+				self.addRandEdge(i-1, i)
+		else: 
+			for i in range(1, self.__num):
+				self.addEdge(i-1, i, self.__d)
