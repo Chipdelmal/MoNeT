@@ -29,7 +29,6 @@ def gaussian_cluster(n, p, v, x1=0, x2=1):
     new_points[index] = perturbed
     return new_points
 
-#plotting
 test_base = gaussian_cluster(50, 25, 0)
 plt.scatter(test_base, np.zeros((len(test_base))),alpha=0.5)
 
