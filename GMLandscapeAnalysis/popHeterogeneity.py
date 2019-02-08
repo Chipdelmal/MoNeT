@@ -5,15 +5,39 @@ import pandas as pd
 
 
 def population_split(pop_size, n, C=0.0):
-    # Hyperparameter C can range from 0.0: uniform to 1.0: random
+    """ Function to split population size into n groups.
+        pop_size: int, total population size
+        n: int, number of groups to split pop_size
+        C: int or float, can take on range of values from 0 (uniform) to 1 (random).
+    """
     uniform_pop_size = ((pop_size * (1.0 - C)) // n) * n
     random_pop_size = pop_size - uniform_pop_size
     populations = [uniform_pop_size/n] * n
     random_pop = np.random.choice(range(n), int(random_pop_size))
     for i in random_pop:
         populations[i] += 1
+    base = pop_size / n
+    populations.insert(0, base)
+    populations.append(base)
     return populations
 
+
+def array_creation(dist, pop_size, n, C=0.0):
+    pop = np.array(population_split(pop_size, n, C))
+    x_coords = np.linspace(0, dist * (n + 1), n + 2)
+    y_coords = np.zeros(n + 2)
+    return np.array([x_coords, y_coords, pop])
+
+
+def csv_creation(arr, file_name, VERT=True):
+    if VERT:
+        pd.DataFrame({0: arr[0], 1: arr[1], 2: arr[2]}).to_csv("popHeterog_csv/"+file_name+".csv", header=None, index=None)
+    else:
+        pd.DataFrame(arr).to_csv("popHeterog_csv/"+file_name+".csv"".csv", header=None, index=None)
+
+
+for c in np.arange(0, 1.1, 0.1):
+    csv_creation(array_creation(10, 2000, 20, c), str(int(c * 100)))
 
 # Script to test function: ROUND 1
 ACROSS_C = True
