@@ -6,6 +6,7 @@ import pandas as pd
 from functions import array_creation
 from sklearn.metrics.pairwise import euclidean_distances
 import networkx as nx
+import itertools
 
 
 def gaussian_cluster(n, p, v):
@@ -30,24 +31,31 @@ def gaussian_cluster(n, p, v):
     new_points[index] = perturbed
     return [new_points, y]
 
-# array_creation(1, 10, 10-1)[1]
-# nodes = gaussian_cluster(10, 5,  3)
+# array_creation(1, 10, 1)[1]
+# nodes = gaussian_cluster(5, 5,  0)
 # xy_points = zip(nodes[0], nodes[1])
 # adj_matrix = euclidean_distances(xy_points)
 # inv = 1/(np.matrix(adj_matrix) + 0.00001)
-# G=nx.from_numpy_matrix(adj_matrix)
+# adj_matrix.reshape(-1,)
+# #G=nx.from_numpy_matrix(adj_matrix)
+# #nx.average_clustering(G)
+# combos = list(itertools.product(nodes[0], nodes[0]))
+# col1, col2 = list(zip(*combos))
+# df = pd.DataFrame(
+# {'n1': col1,
+#  'n2': col2,
+#  'weight': adj_matrix.reshape(-1,)
+# })
+# df
+# G = nx.from_pandas_edgelist(df, 'n1', 'n2', ['weight'])
 # nx.average_clustering(G)
-
+# nx.draw(G)
 def clustering_coefficient(n, p, v):
     nodes = gaussian_cluster(n, p, v)
     xy_points = zip(nodes[0], nodes[1])
     distances = euclidean_distances(xy_points)
     adj_matrix = np.matrix(distances)
     inv_distances = 1/(np.matrix(adj_matrix) + 0.00001)
-    # pd.DataFrame(
-    # {'lst1Title': nodes[0],
-    #  'lst2Title': nodes[1],
-    # })
     G=nx.from_numpy_matrix(inv_distances)
     return average_clustering(G)
 
