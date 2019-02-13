@@ -3,10 +3,6 @@ import plotly
 import plotly.graph_objs as go
 import plotly.offline as offline
 import MoNeT_MGDrivE as monet
-plotly.tools.set_credentials_file(
-    username='chipdelmal',
-    api_key='wB4pF2t8VYoNC7iUrXSs'
-)
 offline.init_notebook_mode(connected=True)
 
 ###############################################################################
