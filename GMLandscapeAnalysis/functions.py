@@ -22,10 +22,14 @@ def population_split(pop_size, n, C=0.0):
 
 def array_creation(dist, pop_size, n, C=0.0):
     """
+    Inputs:
     dist: int or float, step size in x-coordinate
     pop_size: int, total population size
     n: int, number of groups to split pop_size
     C: int or float, can take on range of values from 0 (uniform) to 1 (random).
+
+    Returns
+    Array of arrays containing the coordinates and population count
     """
     pop = np.array(population_split(pop_size, n, C))
     x_coords = np.linspace(0, dist * (n + 1), n + 2)
