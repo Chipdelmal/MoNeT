@@ -6,7 +6,7 @@ Our research group at University of California, Berkeley has developed a model t
 
 <!--(starting with the [MCR](http://science.sciencemag.org/content/348/6233/442))-->
 
-To do so, we plan to take the following steps:
+To do so, we plan to take the following steps (click on the titles for more information):
 
 ### 0) Baseline landscape
 

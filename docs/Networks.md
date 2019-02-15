@@ -2,11 +2,20 @@
 
 This was once _MoNeT_'s raison d'être. The objective of these tasks and workflows is to further our understanding of the impact of the spatial distribution of resources upon the dynamics of the spread of genes and diseases transmitted by mosquitos.
 
-## [Landscape Aggregation](./LandscapeAggregation.html)
+## [Gene-Drives Landscape Heterogeneity](https://chipdelmal.github.io/MoNeT/GMSpatialHeterogeneity.html)
 
-Simulating landscapes in extreme resolution requires a lot of computational resources, however, aggregating the spatial units in naive ways might lead us to lose crucial information about the spatio-temporal processes that we want to study. In this workflow we explore how different levels of clustering affect the information we obtain on the dynamics of gene flows in spatial settings (with the use of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) framework).
+Spatial heterogeneity is widely known to be important for the study of mosquito-borne diseases. However, it has rarely been studied in a systematic way. With the advent of gene-drive systems, the need for understanding of heterogeneity has become important due to the impact it could have in the prediction and confinability of these constructs in the field.
 
-<img src="./media/E_080_000_000_000-04 (1).png" width="100%" align="middle">
+Our research group at University of California, Berkeley has developed a model to simulate spatiotemporal releases of mosquito gene-drives in arbitrary landscapes: MGDrivE. With this framework we plan to run controlled experiments of realistic spread of genetic constructs so it makes sense for us to make use of it to simulate and analyze how the genetic modifications spread in landscapes with varying degrees of heterogeneity.
+
+<img src="./media/habitat00.png" width="100%" align="middle">
+<img src="./media/habitat02.png" width="100%" align="middle">
+<img src="./media/habitat01.png" width="100%" align="middle">
+<img src="./media/habitat03.png" width="100%" align="middle">
+
+<!--Simulating landscapes in extreme resolution requires a lot of computational resources, however, aggregating the spatial units in naive ways might lead us to lose crucial information about the spatio-temporal processes that we want to study. In this workflow we explore how different levels of clustering affect the information we obtain on the dynamics of gene flows in spatial settings (with the use of the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) framework).
+
+<img src="./media/E_080_000_000_000-04 (1).png" width="100%" align="middle">-->
 
 ## [Mosquito Sinks and Sources Detection](./SinkSource.html)
 
@@ -26,12 +35,12 @@ The study of gene-drives' spread in realistic landscapes is of upmost importance
 
 <img src="./media/YorkeysKnob_centralityHex.jpg" width="50%" align="middle"><img src="./media/YorkeysKnob_centralityScatter.jpg" width="50%" align="middle">
 
-
+<!--
 ##  [Mosquito Population Size Heterogeneity](https://chipdelmal.github.io/MoNeT/PopSizeHeterogeneity.html)
 
 Although widely thought as being important for gene-flow dynamics, the effects of heterogeneity in population sizes have rarely been studied in detail. In this work, we intend to go tackle this problem systematically so that we can understand how it might be of relevance in the study of new disease-control interventions such as gene-drives.
 
-<center><img src="./media/flow.jpg" width="100%" align="middle"></center>
+<center><img src="./media/flow.jpg" width="100%" align="middle"></center>-->
 
 ## [Clustering of Directed Networks with Geographical Constraints](./Community.html)
 
