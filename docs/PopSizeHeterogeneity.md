@@ -1,6 +1,11 @@
 # Mosquito Population Size Heterogeneity Analysis
 
-Just getting the project started. Please come back in a couple of weeks!
+
+<img src="./media/habitat01.png" width="100%" align="middle">
+
+<br>
+
+<img src="./media/popHeterog_1.png" width="50%" align="middle"><img src="./media/popHeterog_2.png" width="50%" align="middle">
 
 ### Authors
 
