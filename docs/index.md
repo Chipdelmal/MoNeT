@@ -22,14 +22,17 @@ Click on each on the corresponding images to learn more about our projects:
 
 <p style="font-size:12px">
   <b>Lead:</b> <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]<br>
-  <b>Dev:</b> Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Victor Ferman [UCB]<br>
+  <b>Dev:</b> Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Maya Shen [UCB], Victor Ferman [UCB]<br>
   <b>Former dev:</b> Sabrina Wong [UCB]<br>
   <b>Participant Students:</b> Moisés Montaño Copca [ITESM]<br>
-  <b>Former participant students:</b> Martín Alejandro Molinero Morales [ITESM], Christian Ricardo Solís Cortés [ITESM], Salomón Olivera Abud [ITESM], Esteban Quintana Cueto [ITESM]<br>
-  <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM], <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a> [ITESM]<br>
+  <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]<!--, <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a> [ITESM]--><br>
   <b>PI's:</b> <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]
-</p>
+</p><br>
 
 <center>
 <img src="./media/berkeleyLogo.jpg" height="60px"><img src="./media/ihmeLogo.jpg" height="60px"><img src="./media/itesm.png" height="75px">
-</center>
+</center><br><br>
+
+<p style="font-size:12px">
+  <b>Former participant students:</b> Martín Alejandro Molinero Morales [ITESM], Christian Ricardo Solís Cortés [ITESM], Salomón Olivera Abud [ITESM], Esteban Quintana Cueto [ITESM]<br>
+</p>
