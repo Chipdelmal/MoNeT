@@ -18,7 +18,7 @@ offline.init_notebook_mode(connected=True)
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "TB"
+filename = "TBSA"
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
 path = "/Volumes/marshallShare/Batch_SA/Translocations_Batch_001/2019_02_07_ANALYZED/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
