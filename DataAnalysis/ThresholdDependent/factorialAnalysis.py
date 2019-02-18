@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore", message="numpy.dtype size changed")
+warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 import fnmatch
 import os
 import csv
@@ -8,9 +11,6 @@ import plotly
 import numpy as np
 import MoNeT_MGDrivE as monet
 from sklearn.externals.joblib import Parallel, delayed
-import warnings
-warnings.filterwarnings("ignore", message="numpy.dtype size changed")
-warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 #import temporaryFunctionsDefinitions as tempFun
 offline.init_notebook_mode(connected=True)
 
@@ -19,7 +19,8 @@ offline.init_notebook_mode(connected=True)
 ###############################################################################
 dataType = float
 filename = "TB"
-path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
+#path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
+path = "/Volumes/marshallShare/Batch_SA/Translocations_Batch_001/2019_02_07_ANALYZED/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
 aggregationDictionary = monet.generateAggregationDictionary(
