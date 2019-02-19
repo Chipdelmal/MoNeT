@@ -7,4 +7,6 @@ Although it is widely regarded as important, the thorough study of spatial heter
 
 ### Authors
 
-Biyonka Liang, Chris Paciorek, Héctor M. Sánchez C.
+* **Student:** Biyonka Liang,
+* **Co-Advisor:** Héctor M. Sánchez C.
+* **Thesis Advisor:** Chris Paciorek
