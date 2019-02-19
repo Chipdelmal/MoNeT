@@ -10,26 +10,33 @@ To do so, we plan to take the following steps (click on the titles for more info
 
 ### 0) Baseline landscape
 
-We will start our analysis in a one-dimensional landscape. Across our experiments, we will use a line with **n** nodes in which each habitat will have a population size of: **p/n**. Where **p** is the total amount of male and female mosquitos in the environment.
+We will start our analysis in a one-dimensional landscape. Across our experiments, we will use a line with **n** nodes in which each habitat will have a population size of: **p/n**. Where **p** is the total amount of male and female mosquitos in the environment. These nodes will be separated by a distance **d**, which needs to be calibrated according to the mosquito species under study (in this case, the *Aedes aegypti* mosquito).
 
 <img src="./media/habitat00.png" width="100%" align="middle">
 
-### 1) [Spatial Distribution](./SpatialDistribution.html)
+### 1) [Spatial Distribution](./SpatialDistribution.html) <!--(Biyonka Liang)-->
+
+The first dimension of heterogeneity we will look into is the spatial distribution of mosquito breeding sites. To do this, we will randomly select **m** nodes in our baseline landscape, and shift them
 
 <img src="./media/habitat02.png" width="100%" align="middle">
 
-### 2) [Population Distribution](./PopSizeHeterogeneity.html)
+### 2) [Population Distribution](./PopSizeHeterogeneity.html) <!--(Maya Shen)-->
 
 <img src="./media/habitat01.png" width="100%" align="middle">
 
-### 3) [Levels of Aggregation](./LandscapeAggregation.html)
+### 3) [Levels of Aggregation](./LandscapeAggregation.html) <!--(Gillian Chu)-->
 
 <img src="./media/habitat03.png" width="100%" align="middle">
 
-### 4) Factorial Combinations
+### 4) Factorial Combinations <!-- (Sarafina Smith)-->
+
+Finally, once our routines have been tested independently, we will perform factorial combination experiments and data analysis to look for non-linear interactions of the heterogeneity components in an effort to understand and simplify our
 
 <center><img src="./media/habitat04.png" width="60%" align="middle"></center>
 
+
 ### Authors
 
-Gillian Chu, Biyonka Liang, Maya Shen, Sarafina Smith, Héctor M. Sánchez C.
+**Lead:** Héctor M. Sánchez C.
+**Dev/Research:** Gillian Chu, Biyonka Liang, Maya Shen, Sarafina Smith, Héctor M. Sánchez C.
+**PI:** John M. Marshall
