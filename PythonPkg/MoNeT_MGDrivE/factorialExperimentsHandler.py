@@ -3,8 +3,8 @@ import csv
 import glob
 import fnmatch
 import numpy as np
-import experimentsHandler as exPar
-import auxiliaryFunctions as auxFun
+import MoNeT_MGDrivE.experimentsHandler as exPar
+import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
 
 
 def writeFactorialAnalysisCSV(

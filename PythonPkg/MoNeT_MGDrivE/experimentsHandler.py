@@ -1,7 +1,7 @@
 import glob
 import numpy as np
 import warnings as warnings
-import auxiliaryFunctions as auxFun
+import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
 
 
 def readExperimentFilenames(

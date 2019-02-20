@@ -1,4 +1,4 @@
-import experimentsHandler as exHand
+import MoNeT_MGDrivE.experimentsHandler as exHand
 
 
 def aggregateGenotypesOverTracesFolders(folders, aggregationDictionary):
