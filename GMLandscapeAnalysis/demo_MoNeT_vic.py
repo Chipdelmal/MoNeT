@@ -29,11 +29,11 @@ def vicGraphs(aggData):
 
     for i in range(len(final)):
         final[i].plot(ax = ax, linewidth = 0.3, legend=False, color = colors[i], alpha = 0.5)
-    W_patch = mpatches.Patch(color='#6e44ff', label='W')
-    H_patch = mpatches.Patch(color='#e56399', label='H')
-    R_patch = mpatches.Patch(color='#ee6c4d', label='R')
-    B_patch = mpatches.Patch(color='#861657', label='B')
-    plt.legend(handles=[W_patch, H_patch,R_patch,B_patch])
+    patchList = []
+    for i in range(len(groups)):
+        patchList.append(mpatches.Patch(color=colors[i], label=groups[i]))
+
+    plt.legend(handles=patchList)
     plt.ylabel("Allele Count")
     plt.savefig("demotraces.png",
                 dpi=1024, facecolor='w',
