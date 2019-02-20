@@ -2,6 +2,7 @@
 # import plotly.graph_objs as go
 # import plotly.offline as offline
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import MoNeT_MGDrivE as monet
@@ -16,19 +17,25 @@ import MoNeT_MGDrivE as monet
 def vicGraphs(aggData):
     groups = aggData['genotypes']
     pops = aggData['population']
-    pd.DataFrame(pops, columns=groups)
+    time = np.arange(len(pops))
+    df=pd.DataFrame(time , columns=['Time'])
+    final = [df[['Time']] for _ in range(len(groups))]
+    local=pd.DataFrame(pops, columns=groups)
     colors = ['#6e44ff','#e56399','#ee6c4d', '#861657', '#5cf64a', 'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal']
     fig, ax = plt.subplots()
+    for j in range(len(groups)):
+        final[j].insert(1, groups[j] + str(1), (local[groups[j]]).copy())
+        final[j] = final[j].set_index('Time')
+
     for i in range(len(final)):
         final[i].plot(ax = ax, linewidth = 0.3, legend=False, color = colors[i], alpha = 0.5)
     W_patch = mpatches.Patch(color='#6e44ff', label='W')
     H_patch = mpatches.Patch(color='#e56399', label='H')
     R_patch = mpatches.Patch(color='#ee6c4d', label='R')
     B_patch = mpatches.Patch(color='#861657', label='B')
-    E_patch = mpatches.Patch(color='#5cf64a', label='E')
-    plt.legend(handles=[W_patch, H_patch,R_patch,B_patch,E_patch])
+    plt.legend(handles=[W_patch, H_patch,R_patch,B_patch])
     plt.ylabel("Allele Count")
-    plt.savefig("traces.png",
+    plt.savefig("demotraces.png",
                 dpi=1024, facecolor='w',
                 edgecolor='w', orientation='portrait', papertype=None,
                 format="png", transparent=False, bbox_inches='tight',
@@ -42,7 +49,7 @@ def vicGraphs(aggData):
         allele_dict[groups[i]] = final[i].T.sum()
     res = pd.DataFrame(allele_dict)
     res.plot(kind = 'area', ax =ax2, color=colors)
-    plt.savefig("stack.png",
+    plt.savefig("demostack.png",
                 dpi=1024, facecolor='w',
                 edgecolor='w', orientation='portrait', papertype=None,
                 format="png", transparent=False, bbox_inches='tight',
@@ -58,14 +65,14 @@ def vicGraphs(aggData):
 # Define the experiment's path, aggregation dictionary, and read filenames
 type = float
 experimentString = "E_095_075_006_015"
-path = "/Users/sanchez.hmsc/odrive/sanchez.hmsc@berkeley.edu/GMLandscape/ParserDataset/"
+path = "/Users/vferman/Downloads/"
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [
-        [0, 0, 1, 2, 3],    # Wild
-        [1, 4, 4, 5, 6],    # Homing
-        [2, 5, 7, 7, 8],    # Resistant
-        [3, 6, 8, 9, 9]     # Broken
+        [0, 0, 1, 2, 3],# Wild
+        [1, 4, 4, 5, 6],# Homing
+        [2, 5, 7, 7, 8],# Resistant
+        [3, 6, 8, 9, 9]# Broken
     ]
 )
 filenames = monet.readExperimentFilenames(path + experimentString)
