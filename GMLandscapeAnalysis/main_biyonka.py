@@ -5,8 +5,8 @@ import copy
 import pandas as pd
 from functions import array_creation
 from sklearn.metrics.pairwise import euclidean_distances
-import networkx as nx
-from networkx import average_clustering
+# import networkx as nx
+# from networkx import average_clustering
 import itertools
 from sklearn.cluster import KMeans
 
@@ -41,15 +41,15 @@ def gaussian_cluster(array, p, v):
     return np.array([new_points, y])
 
 
-def clustering_coefficient(nodes):
-    """
-    Inputs
-    nodes: array containing array of x-points and y-points.
-           e.g. the output of gaussian_cluster(n, p, v)
-
-    Returns
-    clustering_coefficient: float
-    """
+# def clustering_coefficient(nodes):
+#     """
+#     Inputs
+#     nodes: array containing array of x-points and y-points.
+#            e.g. the output of gaussian_cluster(n, p, v)
+#
+#     Returns
+#     clustering_coefficient: float
+#     """
     #xy_points = zip(nodes[0], nodes[1])
     #distances = euclidean_distances(xy_points)
     # adj_matrix = np.matrix(distances)
@@ -104,9 +104,8 @@ def write_csv(nodes, path, num_clusters, v=1, cluster = False):
         "x": x_points,
         "y": y_points,
         "n": len(x_points),
-        "clustering_coeff": clustering
     })
-    df = df[['x', 'y', 'n', 'clustering_coeff']]
+    df = df[['x', 'y', 'n']]
     df.to_csv(path_or_buf  = path + r'output.csv', index = False)
     return df
 
