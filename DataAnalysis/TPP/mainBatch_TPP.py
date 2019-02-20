@@ -16,20 +16,22 @@ type = float
 path = "/Volumes/marshallShare/TPP/CRISPR/ANALYZED/"
 directories=monet.listDirectoriesWithPathWithinAPath(path)
 
+aggData
+
 #------------------------------------------------------------------------------
 # Data Handling
 #------------------------------------------------------------------------------
 for i in range(0,len(directories)):
     experimentString=directories[i].split("/")[-1]
-    aggregationDictionary = monet.generateAggregationDictionary(
-        ["W", "H", "R", "B"],
-        [
-            [0, 0, 1, 2, 3],
-            [1, 4, 4, 5, 6],
-            [2, 5, 7, 7, 8],
-            [3, 6, 8, 9, 9]
-        ]
-    )
+    # aggregationDictionary = monet.generateAggregationDictionary(
+    #     ["W", "H", "R", "B"],
+    #     [
+    #         [0, 0, 1, 2, 3],
+    #         [1, 4, 4, 5, 6],
+    #         [2, 5, 7, 7, 8],
+    #         [3, 6, 8, 9, 9]
+    #     ]
+    # )
     filenames = monet.readExperimentFilenames(path + experimentString)
 
     # To analyze a single node ...................................................
@@ -47,6 +49,10 @@ for i in range(0,len(directories)):
         male=True,
         female=True,
         dataType=float
+    )
+    aggregationDictionary=monet.autoGenerateGenotypesDictionary(
+        ["W","H","R","B"],
+        landscapeSumData["genotypes"]
     )
     # Aggregate genotypes (node or landscape) ....................................
     aggData = monet.aggregateGenotypesInNode(
