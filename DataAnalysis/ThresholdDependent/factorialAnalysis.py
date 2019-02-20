@@ -18,9 +18,9 @@ offline.init_notebook_mode(connected=True)
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "TBSA"
+filename = "UDSA"
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
-path = "/Volumes/marshallShare/Batch_SA/Translocations_Batch_002/2019_02_09_ANALYZED/"
+path = "/Volumes/marshallShare/Batch_SA/UDMel_Batch_010/2019_02_12_ANALYZED/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
 aggregationDictionary = monet.generateAggregationDictionary(
@@ -71,27 +71,27 @@ monet.compileFactorialCSVFromFiles(path, outFilename)
 ###############################################################################
 # Load compiled CSV and analyze the output
 ###############################################################################
-path = "/Volumes/Pusheen/xjego-khuq3/ThresholdDependent/Datasets/"
-centralFile = "50TR_1x_2018_09_11.csv"
+path = "/Volumes/marshallShare/MGDrivE_Datasets/ThresholdDependent/Datasets/"
+centralFile = "TB.csv"
 sensitivitySelector = 3
 if(sensitivitySelector == 1):
     # 001 larval life decrease
     # 002 larval life increase
     title = "Larval Lifespan"
-    testFileA = "TRSA_001.csv"
-    testFileB = "TRSA_002.csv"
+    testFileA = "TBSA_001.csv"
+    testFileB = "TBSA_002.csv"
 if(sensitivitySelector == 2):
     # 010 adult life increase
     # 020 adult life decrease
     title = "Adult Mortality"
-    testFileA = "TRSA_010.csv"
-    testFileB = "TRSA_020.csv"
+    testFileA = "TBSA_010.csv"
+    testFileB = "TBSA_020.csv"
 if(sensitivitySelector == 3):
     # 100 fitness cost 10% reduction
     # 200 fitness cost 20% reduction
     title = "Fitness Cost"
-    testFileA = "TRSA_100.csv"
-    testFileB = "TRSA_200.csv"
+    testFileA = "TBSA_100.csv"
+    testFileB = "TBSA_200.csv"
 centralData = monet.loadAndHashFactorialCSV(path + centralFile)
 probeDataA = monet.loadAndHashFactorialCSV(path + testFileA)
 probeDataB = monet.loadAndHashFactorialCSV(path + testFileB)

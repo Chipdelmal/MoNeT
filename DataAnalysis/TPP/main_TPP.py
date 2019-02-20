@@ -1,6 +1,7 @@
 import plotly #NOTE: needs dev version of plotly (because of 'stackgroup')
 import plotly.graph_objs as go
 import plotly.offline as offline
+import plotly.io as pio
 import MoNeT_MGDrivE as monet
 import plotly.plotly as py
 offline.init_notebook_mode(connected=True)
@@ -15,8 +16,9 @@ offline.init_notebook_mode(connected=True)
 
 # Define the experiment's path, aggregation dictionary, and read filenames
 type = float
-experimentString = "E_095_075_006_015"
-path = "/Users/sanchez.hmsc/Desktop/ParserDataset/"
+experimentString = "E_95_90_03_03_42_05_10"
+path = "/Volumes/marshallShare/TPP/CRISPR/ANALYZED/"
+
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [
@@ -93,8 +95,8 @@ layout = go.Layout(
     height=400
 )
 fig = go.Figure(data=go.Data(tracesList), layout=layout)
-py.iplot(fig,filename='stacked-area-plot-hover',validate=False)
-plotly.offline.plot(fig, filename='alleleFrequency.html')
+#py.iplot(fig,filename='stacked-area-plot-hover',validate=False)
+plotly.offline.plot(fig, filename=("./images/"+experimentString+'_frequency.html'))
 
 
 # Plot allele ratio dynamics ..................................................
@@ -124,4 +126,4 @@ layout = go.Layout(
     height=400
 )
 fig = dict(data=tracesList, layout=layout)
-plotly.offline.plot(fig, filename='allelePercentage.html')
+plotly.offline.plot(fig, filename=("./images/"+experimentString+'_ratio.html'))
