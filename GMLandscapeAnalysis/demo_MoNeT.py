@@ -1,4 +1,4 @@
-import plotly #NOTE: needs dev version of plotly (because of 'stackgroup')
+import plotly  # NOTE: needs dev version of plotly (because of 'stackgroup')
 import plotly.graph_objs as go
 import plotly.offline as offline
 import MoNeT_MGDrivE as monet
@@ -9,9 +9,9 @@ offline.init_notebook_mode(connected=True)
 # MCR Construct
 ###############################################################################
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Data Handling
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 # Define the experiment's path, aggregation dictionary, and read filenames
 type = float
@@ -20,9 +20,9 @@ path = "/Users/sanchez.hmsc/odrive/sanchez.hmsc@berkeley.edu/GMLandscape/ParserD
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [
-        [0, 0, 1, 2, 3],    # Wild
-        [1, 4, 4, 5, 6],    # Homing
-        [2, 5, 7, 7, 8],    # Resistant
+        [0, 0, 1, 2, 3],  #  Wild
+        [1, 4, 4, 5, 6],  #  Homing
+        [2, 5, 7, 7, 8],  # Resistant
         [3, 6, 8, 9, 9]     # Broken
     ]
 )
@@ -61,9 +61,9 @@ aggData = monet.aggregateGenotypesInNode(
 # )
 # aggregatedNodesData["landscape"]
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Plotting
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 labels = aggData["genotypes"]
 colors = ["rgb(25,128,255)", "rgb(255,25,128)",
