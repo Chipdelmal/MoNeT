@@ -1,6 +1,6 @@
 import glob
 import numpy as np
-import auxiliaryFunctions as auxFun
+import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
 
 def readExperimentFilenamesEpi(
     experimentPath,
@@ -10,7 +10,7 @@ def readExperimentFilenamesEpi(
     Description:
         * This auxiliary function searches within a given path, and returns all
             the CSV files that match the head provided by the dictionary keys
-            for human, male, and infected state of female 
+            for human, male, and infected state of female
     In:
         * experimentPath: Path to the directory that contains the experiments'
             CSV files (quantiles over patches).
@@ -19,14 +19,14 @@ def readExperimentFilenamesEpi(
     Out:
         * Dictionary with the sorted lists of filenames associated with each file head given in stateIdentifiers
            ex.  "human" [list -> strings], "male" [list -> strings], etc
-     
+
     """
-    
+
     stateIdToFiles = {}
     for stateId in stateIdentifiers:
         files = sorted(
             glob.glob(experimentPath + "/" + stateIdentifiers[stateId] + "*.csv")
-        ) 
+        )
         stateIdToFiles[stateId] = files
 
     return stateIdToFiles
@@ -79,7 +79,7 @@ def loadLandscapeDataEpi(filenames, male=True, female=True, dataType=float):
     for f in filenames:
         data = loadNodeDataEpi(f, dataType)["population"]
         nodesDataList.append(data)
-        
+
     returnDictionary = {
         "genotypes": genotypes,
         "landscape": nodesDataList
@@ -102,11 +102,11 @@ def sumLandscapePopulationsEpi(
     dataList = landscapeData["landscape"]
     if len(dataList) == 0:
         return
-    
-    fillArray = np.zeros_like(dataList[0])    
+
+    fillArray = np.zeros_like(dataList[0])
     for i in range(len(dataList)):
         fillArray += dataList[i]
-        
+
     returnDictionary = {
         "genotypes": landscapeData["genotypes"],
         "population": fillArray
@@ -121,7 +121,7 @@ def sumAlleleCounts(sumLandscapeData, alleleNames, columns):
         * sumLandscapeData: Dict loaded with the "sumLandscapePopulationsEpi" function.
         * alleleNames: list of individual alleles, eg ["W", "R"]
         * columns: List of lists describing number of times each one
-            indexed column should be counted for this allele 
+            indexed column should be counted for this allele
             ex. [[1, 1, 2], [2, 3, 3]] if the given genotypes are WW, WR, and RR
     Out:
         * Dictionary containing:
@@ -129,13 +129,13 @@ def sumAlleleCounts(sumLandscapeData, alleleNames, columns):
             "population" [numpyArray]
     """
     landscapeData = sumLandscapeData["population"]
-    fillArray = np.zeros((len(landscapeData), len(alleleNames)))    
-    
+    fillArray = np.zeros((len(landscapeData), len(alleleNames)))
+
     for i in range(len(alleleNames)):
         for index in columns[i]:
             # subtract 1 because index is 1 indexed
             fillArray[:,i] += landscapeData[:,index-1]
-        
+
     returnDictionary = {
         "alleles": alleleNames,
         "totalCounts": fillArray

@@ -13,7 +13,7 @@ offline.init_notebook_mode(connected=True)
 
 # Define the experiment's path, aggregation dictionary, and read filenames
 type = float
-path = "/Volumes/marshallShare/TPP/CRISPR/ANALYZED/"
+path = "/Volumes/marshallShare/TPP/SplitDrive/ANALYZED/"
 directories=monet.listDirectoriesWithPathWithinAPath(path)
 
 aggData
@@ -34,14 +34,6 @@ for i in range(0,len(directories)):
     # )
     filenames = monet.readExperimentFilenames(path + experimentString)
 
-    # To analyze a single node ...................................................
-    # Load a single node (auxiliary function just for demonstration)
-    # nodeIndex = 0
-    # nodeData = monet.loadNodeData(
-    #     filenames.get("male")[nodeIndex],
-    #     filenames.get("female")[nodeIndex],
-    #     dataType=float
-    # )
     # To analyze the sum of the whole landscape ..................................
     # Sum landscape into one array ("in place" memory-wise)
     landscapeSumData = monet.sumLandscapePopulationsFromFiles(
@@ -59,14 +51,6 @@ for i in range(0,len(directories)):
         landscapeSumData,
         aggregationDictionary
     )
-    # To analyze the landscape without sum .......................................
-    # Load the population dynamics data of the whole landscape
-    # landscapeData = monet.loadLandscapeData(filenames, dataType=float)
-    # aggregatedNodesData = monet.aggregateGenotypesInLandscape(
-    #     landscapeData,
-    #     aggregationDictionary
-    # )
-    # aggregatedNodesData["landscape"]
 
     #------------------------------------------------------------------------------
     # Plotting
