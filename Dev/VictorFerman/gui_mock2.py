@@ -32,7 +32,7 @@ class StartP(QtWidgets.QWizardPage):
     #First page of the wizard, asks for common data to all data analysis (graphing) options
     def __init__(self,parent=None):
         super(StartP,self).__init__(parent)
-        integerValidator = QtGui.QIntValidator(0,10, self)
+        integerValidator = QtGui.QIntValidator(0,300, self)
 
         dataLabel = QtWidgets.QLabel('Data Directory:')
         self.dataLine = QtWidgets.QLineEdit()
@@ -310,7 +310,7 @@ class Page4(QtWidgets.QWizardPage):
 
     def plots(self):
         #timed callback that graphs the evolution of the allele counts, stops when we reach to the last line of the experiment (last allele count)
-        if self.currentLine < self.lineCount:
+        if self.currentLine < (self.lineCount-2):
             ax = self.ax
             ax.clear()
             #generates the map
@@ -324,8 +324,15 @@ class Page4(QtWidgets.QWizardPage):
                 ratios = aux.getRatios(sizes, self.columnsWeight)
                 px,py = m(self.patchesX[patch],self.patchesY[patch])
                 aux.draw_pie(ax,ratios,px,py,self.radiuses[patch])
+                next(self.files[patch])
+                next(self.files[patch])
             self.canvas.draw()
-            self.currentLine +=1
+            fname="./video/"+str(currentLine).zfill(10)+".png"
+            self.canvas.print_figure(fname, dpi=1024,
+                        facecolor='w', edgecolor='w', orientation='portrait',
+                        papertype=None, format="png", transparent=False,
+                        bbox_inches='tight', pad_inches=0.05, frameon=None)
+            self.currentLine +=3
         else:
             #cleanup stops the callback and closes all of the files
             if self._timer:
@@ -336,7 +343,7 @@ class Page4(QtWidgets.QWizardPage):
 
     def initializePage(self):
         #setup of the information required for the graphs
-        self._timer= self.canvas.new_timer(35, [(self.plots, (), {})])
+        self._timer= self.canvas.new_timer(40, [(self.plots, (), {})])
         coordFile = str(self.field('coordFile'))
         popFile = str(self.field('popFile'))
         dataFile = str(self.field('dataDir'))+"/AF1_Aggregate_Run1_*.csv"
