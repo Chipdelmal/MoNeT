@@ -10,11 +10,11 @@ import MoNeT_MGDrivE as monet
 
 # Define the experiment's path, aggregation dictionary, and read filenames
 type = float
-path = "/Volumes/marshallShare/TPP/CRISPR/ANALYZED/"
+path = "/Volumes/marshallShare/TPP/SplitDrive/ANALYZED/"
 directories=monet.listDirectoriesWithPathWithinAPath(path)
 
 style={
-    "width":.5, "alpha":1,
+    "width":.1, "alpha":1,
     "dpi":1024, "legend":True,
     "aspect":.000005,#'auto',
     "colors": [
@@ -22,11 +22,12 @@ style={
         'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal'
     ]
 }
+
 #------------------------------------------------------------------------------
 # Data Handling
 #------------------------------------------------------------------------------
 #for i in range(0,len(directories)):
-i=1
+i=0
 experimentString=directories[i].split("/")[-1]
 # aggregationDictionary = monet.generateAggregationDictionary(
 #     ["W", "H", "R", "B"],
@@ -71,7 +72,7 @@ aggData = monet.aggregateGenotypesInNode(
 
 fig=monet.plotMeanGenotypeStack(aggData, style)
 plt.xlim(500,1500)
-plt.ylim(0,30000000)
+plt.ylim(0,25000000)
 fig
 plt.savefig("./images/"+experimentString+".png",
             dpi=1024, facecolor='w',

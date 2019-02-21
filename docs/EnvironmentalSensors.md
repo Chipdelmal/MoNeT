@@ -30,7 +30,8 @@ This project was created upon the need of the accurate logging of environmental 
 
 ## Collaborators
 
- Tomás León, Camilo Duque, <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>
+* UC, Berkeley: <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, <a href="https://tomasleon.com/Tomás">Tomás León</a>, <a href="https://www.marshalllab.com/">John M. Marshall</a>
+* ITESM: Camilo Duque
 
 <!--
 La idea que traemos el desarrollo de micro estaciones basadas en IoT de bajo costo para medición de variables ambientales (tales como humedad, temperatura, presión atmosférica, entre otras), las cuales tengan conectividad vía wifi para el almacenamiento de datos en la nube. Los usos potenciales de estas estaciones son variados y creo que pueden adecuarse al trabajo que ustedes desarrollan, ya que al ser de bajo costo y reducido tamaño, pueden instalarse en lugares urbanos que pueden ir cambiando en el tiempo según el interés del estudio que se este realizando, siendo la única limitante que haya acceso a internet wifi, lo cual, según me comentaste, es coincidente con algunos de los estudios que ustedes desarrollan.
