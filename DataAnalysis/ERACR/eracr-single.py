@@ -8,16 +8,15 @@ import matplotlib.patches as mpatches
 groups = ['W', 'H', 'R', 'B', 'E']
 weights = [[],[],[],[],[]]
 
-maleFile = open('/Volumes/marshallShare/vic/eRACR21/_ANALYZED/E_01_02_01000/ADM_Mean_Patch0000.csv', 'r')
+maleFile = open('/Volumes/marshallShare/vic/eRACR17/2019_02_14_ANALYZED/E_01_02_01000/ADM_Mean_Patch0000.csv', 'r')
 #maleFile = open('/Users/vferman/Desktop/HOLD/MGDrivE2/ADM_Run001.csv', 'r')
 first = next(maleFile)
 header = first.split(',')
 
 
-for genotype in header:
+for genotype in header[1:]:
     for i in range(len(groups)):
         weights[i].append(genotype.count(groups[i]))
-
 cleanFile = open('clean.csv', 'w')
 cleanFile.write(first)
 for line in maleFile:
@@ -44,7 +43,7 @@ for i in range(len(groups)):
         #ignores columns with weight equal to 0
         if weight > 0:
             #adds 2 to the column because column 0 is time and column 1 is usually patch number, and everything else is 0 indexed
-            summed_col += weight * data[:,column]
+            summed_col += weight * data[:,column+1]
     local.insert(i + 1, groups[i], summed_col)
 
 for j in range(len(groups)):

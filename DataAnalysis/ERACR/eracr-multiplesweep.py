@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
 basepath ='/Volumes/marshallShare/vic/eRACR24/'
-for hcost in range(25,105,5) :
+for hcost in range(0,105,5) :
     for ecost in range(0,105,5):
         subfolder = str(hcost).zfill(4)+'_'+str(ecost).zfill(4)+'_ANALYZED/'
         releases='_02_'
@@ -18,7 +18,7 @@ for hcost in range(25,105,5) :
             first = next(maleFile)
             header = first.split(',')
 
-            for genotype in header:
+            for genotype in header[1:]:
                 for i in range(len(groups)):
                     weights[i].append(genotype.count(groups[i]))
 
@@ -54,7 +54,7 @@ for hcost in range(25,105,5) :
                     #ignores columns with weight equal to 0
                     if weight > 0:
                         #adds 2 to the column because column 0 is time and column 1 is usually patch number, and everything else is 0 indexed
-                        summed_col += weight * data[:,column]
+                        summed_col += weight * data[:,column+1]
                 local.insert(i + 1, groups[i], summed_col)
 
             for j in range(len(groups)):
