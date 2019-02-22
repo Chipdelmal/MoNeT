@@ -43,19 +43,11 @@ styleStack={
 if BATCH == False:
     experimentString=PROBED
     aggData=aux.aggregateDataFromPath(path+experimentString,aggregationDictionary)
-    fig=monet.plotMeanGenotypeTrace(aggData, style)
     aux.exportMeanPlotToDirectory(output+experimentString,aggData,styleTrace)
-    aux.exportStackedPlotToDirectory(output+experimentString,aggData,styleTrace)
+    aux.exportStackedPlotToDirectory(output+experimentString,aggData,styleStack)
 else:
     for i in range(0,len(directories)):
         experimentString=directories[i].split("/")[-1]
-        aggData = aux.aggregateDataFromPath(path+experimentString,aggregationDictionary)
-        fig=monet.plotMeanGenotypeTrace(aggData, style)
-        plt.xlim(0,3600)
-        plt.ylim(0,yrange)
-        plt.savefig(output + experimentString + "_T.png",
-                    dpi=500, facecolor='w',
-                    edgecolor='w', orientation='portrait', papertype=None,
-                    format="png", transparent=True, bbox_inches='tight',
-                    pad_inches=0, frameon=None)
-        plt.close(fig)
+        aggData=aux.aggregateDataFromPath(path+experimentString,aggregationDictionary)
+        aux.exportMeanPlotToDirectory(output+experimentString,aggData,styleTrace)
+        aux.exportStackedPlotToDirectory(output+experimentString,aggData,styleStack)

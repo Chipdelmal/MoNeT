@@ -54,8 +54,10 @@ def plotMeanGenotypeStack(aggData, style):
         allele_dict[groups[i]] = final[i].T.sum()
     res = pd.DataFrame(allele_dict)
     res.plot(
-        kind='area', ax=ax2, legend=False, color=style["colors"],
+        kind='area', ax=ax2, legend=style["legend"], color=style["colors"],
         linewidth=style["width"], alpha=style["alpha"]
     )
     plt.ylabel("Allele Count")
+    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+               ncol=2, mode="expand", borderaxespad=0.)
     return fig
