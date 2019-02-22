@@ -18,8 +18,6 @@ def plotMeanGenotypeTrace(aggData, style):
     local = pd.DataFrame(pops, columns=groups)
     fig, ax = plt.subplots()
     ax.set_aspect(aspect=style["aspect"])
-    # plt.xticks([])
-    # plt.yticks([])
     for j in range(len(groups)):
         final[j].insert(1, groups[j] + str(1), (local[groups[j]]).copy())
         final[j] = final[j].set_index('Time')
@@ -35,8 +33,6 @@ def plotMeanGenotypeTrace(aggData, style):
         )
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
            ncol=2, mode="expand", borderaxespad=0.)
-    ax.xaxis.set_label_text("")
-    ax.yaxis.set_label_text("")
     plt.ylabel("Allele Count")
     return fig
 
