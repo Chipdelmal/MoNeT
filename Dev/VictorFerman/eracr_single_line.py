@@ -27,11 +27,11 @@ video = None
 for interval in range(50, 275, 25):
     for releases in range (10,32,2):
         experiment='E_'+str(interval).zfill(4)+'_02_'+str(releases).zfill(5)
+        print(experiment)
         maleFile = open(folder+experiment+'/ADM_Run001.csv', 'r')
         #maleFile = open('/Users/vferman/Desktop/HOLD/MGDrivE2/ADM_Run001.csv', 'r')
         first = next(maleFile)
         header = first.split(',')
-
 
         for genotype in header[2:]:
             for i in range(len(groups)):
@@ -62,6 +62,7 @@ for interval in range(50, 275, 25):
                 time+=1
                 fig, axList = plt.subplots(nrows=1, ncols=patches, figsize=(11, 1))
         maleFile.close()
-        video = subprocess.popen(['ffmpeg', '-r', '24', '-f', 'image2', '-s', '1920x1080', '-i', '%05d.png', '-vcodec', 'libx264', '-crf', '25','-vf', '"pad=ceil(iw/2)*2:ceil(ih/2)*2"', '-pix_fmt', 'yuv420p',folder+'videos/'+experiment+'.mp4'])
+        video = subprocess.Popen(['ffmpeg', '-r', '24', '-f', 'image2', '-s', '1920x1080', '-i', folder+experiment+'/%05d.png', '-vcodec', 'libx264', '-crf', '25','-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2', '-pix_fmt', 'yuv420p',folder+'videos/'+experiment+'.mp4'])
+        print(video.pid())
 
 video.wait()
