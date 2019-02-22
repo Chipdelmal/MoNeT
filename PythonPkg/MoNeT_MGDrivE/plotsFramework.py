@@ -50,10 +50,6 @@ def plotMeanGenotypeStack(aggData, style):
     for j in range(len(groups)):
         final[j].insert(1, groups[j] + str(1), (local[groups[j]]).copy())
         final[j] = final[j].set_index('Time')
-    patchList = []
-    for i in range(len(groups)):
-        patchList.append(mpatches.Patch(
-            color=style["colors"][i], label=groups[i]))
     for i in range(len(groups)):
         allele_dict[groups[i]] = final[i].T.sum()
     res = pd.DataFrame(allele_dict)
