@@ -29,7 +29,8 @@ def plotMeanGenotypeTrace(aggData, style):
         legends.append(
             mpatches.Patch(color=style["colors"][i], label=groups[i])
         )
-    plt.legend(handles=legends,loc=1)
+    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+           ncol=2, mode="expand", borderaxespad=0.)
     ax.xaxis.set_label_text("")
     ax.yaxis.set_label_text("")
     plt.ylabel("Allele Count")

@@ -1,9 +1,7 @@
-import plotly  # NOTE: needs dev version of plotly (because of 'stackgroup')
-import plotly.graph_objs as go
-import plotly.offline as offline
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import MoNeT_MGDrivE as monet
-import plotly.plotly as py
-offline.init_notebook_mode(connected=True)
 
 ###############################################################################
 # MCR Construct
@@ -64,67 +62,13 @@ aggData = monet.aggregateGenotypesInNode(
 # -----------------------------------------------------------------------------
 # Plotting
 # -----------------------------------------------------------------------------
-
-labels = aggData["genotypes"]
-colors = ["rgb(25,128,255)", "rgb(255,25,128)",
-          "rgb(128,0,255)", "rgb(255,0,255)"]
-inData = aggData["population"]
-
-# Plot allele frequency dynamics .............................................
-tracesList = []
-for i in range(0, len(labels)):
-    trace = dict(
-        x=range(0, len(inData)),
-        y=inData[:, i],
-        stackgroup='one',
-        mode='lines',
-        line=dict(width=3, color=colors[i]),
-        name=labels[i]
-    )
-    tracesList.append(trace)
-layout = go.Layout(
-    title='Genotypes Breakdown',
-    xaxis=dict(
-        title='Time [days]',
-        titlefont=dict(size=20, color='#7f7f7f')
-    ),
-    yaxis=dict(
-        title='Allele Frequency',
-        titlefont=dict(size=20, color='#7f7f7f')
-    ),
-    width=1500,
-    height=400
-)
-fig = go.Figure(data=go.Data(tracesList), layout=layout)
-py.iplot(fig,filename='stacked-area-plot-hover',validate=False)
-plotly.offline.plot(fig, filename='alleleFrequency.html')
-
-
-# Plot allele ratio dynamics ..................................................
-tracesList = []
-for i in range(0, len(labels)):
-    trace = dict(
-        x=range(0, len(inData)),
-        y=inData[:, i],
-        stackgroup='one',
-        groupnorm='fraction',
-        mode='lines',
-        line=dict(width=3, color=colors[i]),
-        name=labels[i]
-    )
-    tracesList.append(trace)
-layout = go.Layout(
-    title='Genotypes Breakdown',
-    xaxis=dict(
-        title='Time [days]',
-        titlefont=dict(size=20, color='#7f7f7f')
-    ),
-    yaxis=dict(
-        title='Allele Ratio',
-        titlefont=dict(size=20, color='#7f7f7f')
-    ),
-    width=1500,
-    height=400
-)
-fig = dict(data=tracesList, layout=layout)
-plotly.offline.plot(fig, filename='allelePercentage.html')
+style={
+    "width":2, "alpha":1, "dpi":1024, "legend":True,
+    "aspect":.5,
+    "colors": [
+        '#9f00cc', '#ec0b43','#ff009d','#94d4ff', '#232ed1',
+        'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal'
+    ]
+}
+fig=monet.plotMeanGenotypeTrace(aggData, style)
+fig
