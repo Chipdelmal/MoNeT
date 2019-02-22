@@ -51,3 +51,24 @@ def driveSelector(DRIVE):
             ]
         )
     return [id,aggregationDictionary]
+
+
+def aggregateDataFromPath(path, aggregationDictionary):
+    filenames = monet.readExperimentFilenames(path)
+    landscapeSumData = monet.sumLandscapePopulationsFromFiles(
+        filenames, male=True, female=True, dataType=float
+    )
+    aggData = monet.aggregateGenotypesInNode(landscapeSumData, aggregationDictionary)
+    return aggData
+
+def exportMeanPlotToDirectory(directory,aggData,style):
+    fig=monet.plotMeanGenotypeTrace(aggData, style)
+    plt.xlim(0,3600)
+    plt.ylim(0,yrange)
+    plt.savefig(output + experimentString + "_T.png",
+                dpi=1024, facecolor='w',
+                edgecolor='w', orientation='portrait', papertype=None,
+                format="png", transparent=True, bbox_inches='tight',
+                pad_inches=0, frameon=None)
+    plt.close(fig)
+    return None

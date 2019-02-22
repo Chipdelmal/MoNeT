@@ -3,7 +3,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import MoNeT_MGDrivE as monet
-import driveSetupSelector as dSelect
+import auxiliaryFunctions as aux
 
 ###############################################################################
 # Select experiment & output setup
@@ -16,25 +16,21 @@ PROBED="E_100_00_10_50"
 ###############################################################################
 # Setup variables
 ###############################################################################
-id, aggregationDictionary = dSelect.driveSelector(DRIVE)
-type = float
-path = "/Volumes/marshallShare/CLEAVR/" + id + "/ANALYZED/"
+id, aggregationDictionary = aux.driveSelector(DRIVE)
+path = "/Volumes/marshallShare/CLEAVR/"+id+"/ANALYZED/"
 if EXPORT_TO_DRIVE:
-    output = "/Volumes/marshallShare/CLEAVR/" + id + "/images/"
+    output = "/Volumes/marshallShare/CLEAVR/"+id+"/images/"
 else:
-    output = "./images/" +  id + "/"
+    output = "./images/"+id+"/"
 directories=monet.listDirectoriesWithPathWithinAPath(path)
 # Style .......................................................................
 if (DRIVE == 1) or (DRIVE == 2):
-    aspect = .25
-    yrange = 2*25000
+    aspect, yrange = [.25, 2*25000]
 elif (DRIVE == 3) or (DRIVE == 4):
-    aspect = .5
-    yrange = 25000
+    aspect, yrange = [.5, 25000]
 style={
     "width":2, "alpha":1, "dpi":1024, "legend":True,
-    "aspect":.025,
-    "colors": [
+    "aspect":.025, "colors": [
         '#9f00cc', '#ec0b43','#ff009d','#94d4ff', '#232ed1',
         'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal'
     ]
@@ -44,11 +40,7 @@ style={
 ###############################################################################
 if BATCH == False:
     experimentString=PROBED
-    filenames = monet.readExperimentFilenames(path + experimentString)
-    landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-        filenames, male=True, female=True, dataType=type
-    )
-    aggData = monet.aggregateGenotypesInNode(landscapeSumData, aggregationDictionary)
+    aggData=aux.aggregateDataFromPath(path+experimentString,aggregationDictionary)
     fig=monet.plotMeanGenotypeTrace(aggData, style)
     plt.xlim(0,3600)
     plt.ylim(0,yrange)
@@ -70,11 +62,7 @@ if BATCH == False:
 else:
     for i in range(0,len(directories)):
         experimentString=directories[i].split("/")[-1]
-        filenames = monet.readExperimentFilenames(path + experimentString)
-        landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-            filenames, male=True, female=True, dataType=type
-        )
-        aggData = monet.aggregateGenotypesInNode(landscapeSumData, aggregationDictionary)
+        aggData = aux.aggregateDataFromPath(path+experimentString,aggregationDictionary)
         fig=monet.plotMeanGenotypeTrace(aggData, style)
         plt.xlim(0,3600)
         plt.ylim(0,yrange)
