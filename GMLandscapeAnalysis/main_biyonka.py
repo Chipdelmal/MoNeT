@@ -116,7 +116,7 @@ def write_csv(nodes, path, num_clusters, v=1, cluster = False):
 path_to_output = r'~/Desktop/Output/spaHet/'
 
 #base case
-nodes = array_creation(1, 9, 9-1)
+nodes = array_creation(1, 99, 99-1)
 w = write_csv(nodes, num_clusters = 1, v=0, path = path_to_output)
 
 #two uneven clusters

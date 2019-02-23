@@ -25,10 +25,11 @@ library(parallel)
 # TBD: {}
 ######################################################################################################
 USER=8
+ITERATIONS=10
 #repetitions is number of times to run MGDRive on eeach patch
-REPETITIONS=5
-SIM_TIME=5*365
-NUM_CORES=4
+REPETITIONS=10
+SIM_TIME=365
+NUM_CORES=1
 GEOGRAPHY=2
 HDR_STEP= c(0.99) #c(0.65, 0.86, 0.99)
 B_FITNESS= c(0.00) #c(0.4, 0.05)
@@ -85,7 +86,7 @@ startTime=Sys.time()
 # Experimental Setup #################################################################################
 ######################################################################################################
 RELEASE_INTERVAL=7
-RELEASES_START=150
+RELEASES_START=50
 RELEASES_NUMBER=1
 RELEASES_RATIO=10
 bioParameters=list(betaK=20,tEgg=5,tLarva=6,tPupa=4,popGrowth=1.175,muAd=0.09)
@@ -93,7 +94,7 @@ stayProbability=.72
 ######################################################################################################
 ### Landscape ########################################################################################
 ######################################################################################################
-heterogFile=read.csv(paste0("/Users/Biyonka/Desktop/Output/spaHet/","output.csv"),sep=",",header=TRUE)
+heterogFile=read.csv(paste0("/Users/Biyonka/Desktop/Output/spaHet/","output_base.csv"),sep=",",header=TRUE)
   #read.csv(paste0("/Users/Biyonka/Downloads/","0.csv"),sep=",",header=FALSE)
 #geoFile=paste0(BASE_GEO_PATH,"halfAggregationCoord.csv")
 #number of x coordinates manages number of patches
@@ -144,6 +145,7 @@ for(folder in 1:3){
 ######################################################################################################
 ### Factorial setup ##################################################################################
 ######################################################################################################
+for (i in seq(1, ITERATIONS, by=1)) {
 Rep_names <- formatC(x = 1:REPETITIONS, width = 4, format = "d", flag = "0")
 ExperimentList <- vector(mode = "list", length = length(HDR_STEP)*length(DEPOSITION)*length(H_FITNESS)*length(B_FITNESS))
 
@@ -158,7 +160,7 @@ for(HDR_S in HDR_STEP){
                                                                                     formatC(x = HDR_S*100, width = 3, format = "d", flag = "0"),
                                                                                     formatC(x = DEP*100, width = 3, format = "d", flag = "0"),
                                                                                     formatC(x = H_F*100, width = 3, format = "d", flag = "0"),
-                                                                                    formatC(x = B_F*100, width = 3, format = "d", flag = "0"),
+                                                                                    formatC(x = i, width = 3, format = "d", flag = "0"),
                                                                                     fsep = "_"))
 
         # random seed for each
@@ -213,7 +215,7 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
     for(folder in repFolders){ dir.create(path = folder) }
   }
 
-  driveCube <- MGDrivE::Cube_HomingDrive()#eM = x$e, eF = x$e, rM = x$r, bM = x$b,
+  driveCube <-MGDrivE::Cube_HomingDrive(cM=1,cF=1,chM=.95,chF=.95,crM=.05,crF=.05)#eM = x$e, eF = x$e, rM = x$r, bM = x$b,
                                          #rF = x$r, bF = x$b, eD = x$eD, rD = x$rD, bD = x$bD,
                                          #eta = c("WH"=x$H,"WB"=x$B,"HH"=x$H*x$H,"HR"=x$H,"HB"=x$H*x$B,"RB"=x$B,"BB"=x$B*x$B),
                                          #s = c("WH"=x$H,"WB"=x$B,"HH"=x$H*x$H,"HR"=x$H,"HB"=x$H*x$B,"RB"=x$B,"BB"=x$B*x$B))
@@ -233,7 +235,7 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
 
   # split and aggregate, save originals
   MGDrivEv2::SplitAggregateCpp(readDir = x$folders[1], writeDir = x$folders[3],
-                               simTime = netPar$simTime, numPatch = netPar$nPatch,
+                               simTime = 365, numPatch = netPar$nPatch,
                                genotypes = driveCube$genotypesID, remFiles = FALSE)
 
   # mean and quantiles, remove split/agg files
@@ -247,7 +249,7 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
   gc()
 
 })
-
+}
 # stop cluster
 parallel::stopCluster(cl)
 
@@ -263,3 +265,4 @@ detach("package:MGDrivEv2", unload=TRUE)
 
 #output is a file for each habitat/patch, that tracks the number of mosquitos in each habitat 
 #that have each genotype for each time in the gene drive
+

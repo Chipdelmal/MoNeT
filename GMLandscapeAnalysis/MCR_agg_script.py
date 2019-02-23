@@ -1,63 +1,80 @@
-import plotly
-#NOTE: needs dev version of plotly to work because we use 'stackgroup'
+import plotly #NOTE: needs dev version of plotly (because of 'stackgroup')
 import plotly.graph_objs as go
 import plotly.offline as offline
 import MoNeT_MGDrivE as monet
-import glob
 import plotly.plotly as py
 offline.init_notebook_mode(connected=True)
 
 
-# Define the experiment's path
-type = float
-experimentString = "E_099_000_000_000"
-path = "/Users/Biyonka/Desktop/Output/2019_02_20_ANALYZED/"
+###############################################################################
+# MCR Construct
+###############################################################################
 
-#experimentString = "E_095_075_006_015"
-#path = "/Users/Biyonka/Downloads/ParserDataset/"
-aggregationDictionary = monet.generateAggregationDictionary(
-    ["W", "H", "R", "B"],
-    [
-        [0, 0, 1, 2, 3],
-        [1, 4, 4, 5, 6],
-        [2, 5, 7, 7, 8],
-        [3, 6, 8, 9, 9]
-    ]
-)
+#------------------------------------------------------------------------------
+# Data Handling
+#------------------------------------------------------------------------------
+ITERATIONS = 10
+time_to_thres = []
+for i in range(1, ITERATIONS+1):
+    #print(i)
+    # Define the experiment's path, aggregation dictionary, and read filenames
+    type = float
+    formatted_num = '%03d' % 10
+    #experimentString = "E_095_075_006_015"
+    #path = "/Users/sanchez.hmsc/odrive/sanchez.hmsc@berkeley.edu/GMLandscape/ParserDataset/"
+    experimentString = "E_099_000_000_"+formatted_num
 
-# Get the filenames lists
-filenames = monet.readExperimentFilenames(path + experimentString)
-# Load a single node (Auxiliary function)
-nodeIndex = 0
-nodeData = monet.loadNodeData(
-    filenames.get("male")[nodeIndex],
-    filenames.get("female")[nodeIndex],
-    dataType=float
-)
+    path = "/Users/Biyonka/Desktop/Output/2019_02_22_ANALYZED/"
+    aggregationDictionary = monet.generateAggregationDictionary(
+        ["W", "H", "R", "B"],
+        [
+            [0, 0, 1, 2, 3],    # Wild
+            [1, 4, 4, 5, 6],    # Homing
+            [2, 5, 7, 7, 8],    # Resistant
+            [3, 6, 8, 9, 9]     # Broken
+        ]
+    )
+    filenames = monet.readExperimentFilenames(path + experimentString)
+    # To analyze a single node ...................................................
+    # Load a single node (auxiliary function just for demonstration)
+    # nodeIndex = 0
+    # nodeData = monet.loadNodeData(
+    #     filenames.get("male")[nodeIndex],
+    #     filenames.get("female")[nodeIndex],
+    #     dataType=float
+    # )
 
-# Aggregate the whole landscape into one array
-landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-    filenames,
-    male=True,
-    female=True,
-    dataType=float
-)
-# Aggregate genotypes (node or landscape) ....................................
-aggData = monet.aggregateGenotypesInNode(
-    landscapeSumData,
-    aggregationDictionary
-)
+    # To analyze the sum of the whole landscape ..................................
+    # Sum landscape into one array ("in place" memory-wise)
+    landscapeSumData = monet.sumLandscapePopulationsFromFiles(
+        filenames,
+        male=True,
+        female=True,
+        dataType=float
+    )
 
+    # Aggregate genotypes (node or landscape) ....................................
+    aggData = monet.aggregateGenotypesInNode(
+        landscapeSumData,
+        aggregationDictionary
+    )
 
-# To analyze the landscape without sum .......................................
-# Load the population dynamics data of the whole landscape
-# landscapeData = monet.loadLandscapeData(filenames, dataType=float)
-# aggregatedNodesData = monet.aggregateGenotypesInLandscape(
-#     landscapeData,
-#     aggregationDictionary
-# )
-# aggregatedNodesData["landscape"]
+    # To analyze the landscape without sum .......................................
+    # Load the population dynamics data of the whole landscape
+    # landscapeData = monet.loadLandscapeData(filenames, dataType=float)
+    # aggregatedNodesData = monet.aggregateGenotypesInLandscape(
+    #     landscapeData,
+    #     aggregationDictionary
+    # )
+    # aggregatedNodesData["landscape"]
 
+    #get wild type proportion at end
+    wbh = aggData['population'][:, 0] + aggData['population'][:, 1] + aggData['population'][:, 3]
+    ratio_homing = aggData['population'][:, 1]/(wbh)
+    #get time at which homing ratio exceeds threshold
+    time = (list(ratio_homing>0.9)).index(True)
+    time_to_thres.append(time)
+{'iteration': range(1, ITERATIONS+1, 1), 'time_to_thres': time_to_thres}
 #------------------------------------------------------------------------------
 # Plotting
 #------------------------------------------------------------------------------
