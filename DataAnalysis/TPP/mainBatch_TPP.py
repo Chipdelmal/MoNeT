@@ -1,11 +1,8 @@
-import plotly #NOTE: needs dev version of plotly (because of 'stackgroup')
-import plotly.graph_objs as go
-import plotly.offline as offline
-import plotly.io as pio
-import MoNeT_MGDrivE as monet
-import plotly.plotly as py
 import os
-offline.init_notebook_mode(connected=True)
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import MoNeT_MGDrivE as monet
 
 ###############################################################################
 # MCR Construct
@@ -16,7 +13,15 @@ type = float
 path = "/Volumes/marshallShare/TPP/SplitDrive/ANALYZED/"
 directories=monet.listDirectoriesWithPathWithinAPath(path)
 
-aggData
+style={
+    "width":.1, "alpha":1,
+    "dpi":1024, "legend":True,
+    "aspect":.00001,#'auto',
+    "colors": [
+        '#fc6237', '#ec0b43','#9f00cc','#94d4ff', '#232ed1',
+        'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal'
+    ]
+}
 
 #------------------------------------------------------------------------------
 # Data Handling
@@ -43,7 +48,7 @@ for i in range(0,len(directories)):
         dataType=float
     )
     aggregationDictionary=monet.autoGenerateGenotypesDictionary(
-        ["W","H","R","B"],
+        ["W","H","R","B","C"],
         landscapeSumData["genotypes"]
     )
     # Aggregate genotypes (node or landscape) ....................................
@@ -55,75 +60,25 @@ for i in range(0,len(directories)):
     #------------------------------------------------------------------------------
     # Plotting
     #------------------------------------------------------------------------------
-
-    labels = aggData["genotypes"]
-    colors = ["rgb(25,128,255)", "rgb(255,25,128)",
-              "rgb(128,0,255)", "rgb(255,0,255)"]
-    inData = aggData["population"]
-
-    # Plot allele frequency dynamics .............................................
-    tracesList = []
-    for i in range(0, len(labels)):
-        trace = dict(
-            x=range(0, len(inData)),
-            y=inData[:, i],
-            stackgroup='one',
-            mode='lines',
-            line=dict(width=3, color=colors[i]),
-            name=labels[i]
-        )
-        tracesList.append(trace)
-    layout = go.Layout(
-        title='Genotypes Breakdown',
-        xaxis=dict(
-            title='Time [days]',
-            titlefont=dict(size=20, color='#7f7f7f')
-        ),
-        yaxis=dict(
-            title='Allele Frequency',
-            titlefont=dict(size=20, color='#7f7f7f')
-        ),
-        width=1500,
-        height=400
-    )
-    fig = go.Figure(data=go.Data(tracesList), layout=layout)
-    #py.iplot(fig,filename='stacked-area-plot-hover',validate=False)
-    plotly.offline.plot(
-        fig,
-        filename=("./images/"+experimentString+'_frequency.html'),
-        auto_open=False
-    )
+    # fig=monet.plotMeanGenotypeTrace(aggData,style)
+    # plt.savefig("./images/"+experimentString+".png",
+    #             dpi=1024, facecolor='w',
+    #             edgecolor='w', orientation='portrait', papertype=None,
+    #             format="png", transparent=True, bbox_inches='tight',
+    #             pad_inches=0, frameon=None)
+    # plt.close(fig)
 
 
-    # Plot allele ratio dynamics ..................................................
-    tracesList = []
-    for i in range(0, len(labels)):
-        trace = dict(
-            x=range(0, len(inData)),
-            y=inData[:, i],
-            stackgroup='one',
-            groupnorm='fraction',
-            mode='lines',
-            line=dict(width=3, color=colors[i]),
-            name=labels[i]
-        )
-        tracesList.append(trace)
-    layout = go.Layout(
-        title='Genotypes Breakdown',
-        xaxis=dict(
-            title='Time [days]',
-            titlefont=dict(size=20, color='#7f7f7f')
-        ),
-        yaxis=dict(
-            title='Allele Ratio',
-            titlefont=dict(size=20, color='#7f7f7f')
-        ),
-        width=1500,
-        height=400
-    )
-    fig = dict(data=tracesList, layout=layout)
-    plotly.offline.plot(
-        fig,
-        filename=("./images/"+experimentString+'_ratio.html'),
-        auto_open=False
-    )
+    fig=monet.plotMeanGenotypeStack(aggData, style)
+    plt.xlim(0,3500)
+    plt.ylim(0,50000000)
+    fig
+    plt.savefig("./images/"+experimentString+".png",
+                dpi=1024, facecolor='w',
+                edgecolor='w', orientation='portrait', papertype=None,
+                format="png", transparent=True, bbox_inches='tight',
+                pad_inches=0, frameon=None)
+    plt.close(fig)
+
+
+aggregationDictionary

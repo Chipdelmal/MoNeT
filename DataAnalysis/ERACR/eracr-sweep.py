@@ -19,11 +19,11 @@ for hcost in range(90,99,1) :
         first = next(maleFile)
         header = first.split(',')
 
-        for genotype in header:
+        for genotype in header[1]:
             for i in range(len(groups)):
                 weights[i].append(genotype.count(groups[i]))
 
-        cleanFile = open('clean.csv', 'w')
+        cleanFile = open('clean3.csv', 'w')
         cleanFile.write(first)
         for line in maleFile:
             data = line.split(',')
@@ -36,11 +36,11 @@ for hcost in range(90,99,1) :
         cleanFile.close()
 
         maleFile.close()
-        df = pd.read_csv('clean.csv')
+        df = pd.read_csv('clean3.csv')
         final = [df[['Time']] for _ in range(len(groups))]
         timesteps = len(df["Time"])
 
-        data = np.genfromtxt('clean.csv', skip_header=1, delimiter=",", filling_values=0)
+        data = np.genfromtxt('clean3.csv', skip_header=1, delimiter=",", filling_values=0)
         time = np.arange(timesteps)
         local = pd.DataFrame(time , columns=['Time'])
         for i in range(len(groups)):
@@ -51,7 +51,7 @@ for hcost in range(90,99,1) :
                 #ignores columns with weight equal to 0
                 if weight > 0:
                     #adds 2 to the column because column 0 is time and column 1 is usually patch number, and everything else is 0 indexed
-                    summed_col += weight * data[:,column]
+                    summed_col += weight * data[:,column+1]
             local.insert(i + 1, groups[i], summed_col)
 
         for j in range(len(groups)):
