@@ -232,6 +232,7 @@ def sumLandscapePopulationsFromFiles(
         )
         return None
 
+
 # TODO: check if this needs dataType param
 def aggregateGenotypesInNode(
     nodeData,

@@ -30,7 +30,7 @@ def plotMeanGenotypeTrace(aggData, style):
             mpatches.Patch(color=style["colors"][i], label=groups[i])
         )
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
-           ncol=2, mode="expand", borderaxespad=0.)
+               ncol=2, mode="expand", borderaxespad=0.)
     ax.xaxis.set_label_text("")
     ax.yaxis.set_label_text("")
     plt.ylabel("Allele Count")
@@ -53,6 +53,7 @@ def plotMeanGenotypeStack(aggData, style):
     for i in range(len(groups)):
         allele_dict[groups[i]] = final[i].T.sum()
     res = pd.DataFrame(allele_dict)
+    res = res.reindex(columns=groups)
     res.plot(
         kind='area', ax=ax2, legend=style["legend"], color=style["colors"],
         linewidth=style["width"], alpha=style["alpha"]
