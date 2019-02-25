@@ -9,7 +9,6 @@ offline.init_notebook_mode(connected=True)
 ###############################################################################
 # MCR Construct
 ###############################################################################
-
 #------------------------------------------------------------------------------
 # Data Handling
 #------------------------------------------------------------------------------
@@ -19,12 +18,12 @@ for i in range(1, ITERATIONS+1):
     #print(i)
     # Define the experiment's path, aggregation dictionary, and read filenames
     type = float
-    formatted_num = '%03d' % 10
+    formatted_num = '%03d' % i
     #experimentString = "E_095_075_006_015"
     #path = "/Users/sanchez.hmsc/odrive/sanchez.hmsc@berkeley.edu/GMLandscape/ParserDataset/"
     experimentString = "E_099_000_000_"+formatted_num
 
-    path = "/Users/Biyonka/Desktop/Output/2019_02_22_ANALYZED/"
+    path = "/Users/Biyonka/Desktop/Output/2019_02_25_ANALYZED/"
     aggregationDictionary = monet.generateAggregationDictionary(
         ["W", "H", "R", "B"],
         [
@@ -72,7 +71,7 @@ for i in range(1, ITERATIONS+1):
     wbh = aggData['population'][:, 0] + aggData['population'][:, 1] + aggData['population'][:, 3]
     ratio_homing = aggData['population'][:, 1]/(wbh)
     #get time at which homing ratio exceeds threshold
-    time = (list(ratio_homing>0.9)).index(True)
+    time = (list(ratio_homing>0.1)).index(True)
     time_to_thres.append(time)
 {'iteration': range(1, ITERATIONS+1, 1), 'time_to_thres': time_to_thres}
 #------------------------------------------------------------------------------

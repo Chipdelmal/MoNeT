@@ -25,6 +25,7 @@ library(parallel)
 # TBD: {}
 ######################################################################################################
 USER=8
+#number of times to run each repetition
 ITERATIONS=10
 #repetitions is number of times to run MGDRive on eeach patch
 REPETITIONS=10
@@ -94,7 +95,7 @@ stayProbability=.72
 ######################################################################################################
 ### Landscape ########################################################################################
 ######################################################################################################
-heterogFile=read.csv(paste0("/Users/Biyonka/Desktop/Output/spaHet/","output_base.csv"),sep=",",header=TRUE)
+heterogFile=read.csv(paste0("/Users/Biyonka/Desktop/Output/spaHet/","output_base_far_10.csv"),sep=",",header=TRUE)
   #read.csv(paste0("/Users/Biyonka/Downloads/","0.csv"),sep=",",header=FALSE)
 #geoFile=paste0(BASE_GEO_PATH,"halfAggregationCoord.csv")
 #number of x coordinates manages number of patches
