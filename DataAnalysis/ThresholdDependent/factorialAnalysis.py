@@ -14,7 +14,7 @@ from sklearn.externals.joblib import Parallel, delayed
 #import temporaryFunctionsDefinitions as tempFun
 offline.init_notebook_mode(connected=True)
 import inspect
-print inspect.getsource(monet.convertFactorialArrayToHash)
+print inspect.getsource(monet.loadAndHashFactorialCSV)
 
 ###############################################################################
 # Factorial Experiment Example
@@ -74,8 +74,9 @@ monet.compileFactorialCSVFromFiles(path, outFilename)
 # Load compiled CSV and analyze the output
 ###############################################################################
 path = "/Volumes/marshallShare/MGDrivE_Datasets/ThresholdDependent/Datasets/"
-centralFile = "UB.csv"
-sensitivitySelector = 2
+centralFile = "TB.csv"
+coverageRescale = 10
+sensitivitySelector = 1
 if(sensitivitySelector == 1):
     # 001 larval life decrease
     # 002 larval life increase
@@ -94,9 +95,15 @@ if(sensitivitySelector == 3):
     title = "Fitness Cost"
     testFileA = "TBSA_100.csv"
     testFileB = "TBSA_200.csv"
-centralData = monet.loadAndHashFactorialCSV(path + centralFile)
-probeDataA = monet.loadAndHashFactorialCSV(path + testFileA)
-probeDataB = monet.loadAndHashFactorialCSV(path + testFileB)
+centralData = monet.loadAndHashFactorialCSV(
+    path + centralFile, floatMultiplier=coverageRescale
+)
+probeDataA = monet.loadAndHashFactorialCSV(
+    path + testFileA, floatMultiplier=coverageRescale
+)
+probeDataB = monet.loadAndHashFactorialCSV(
+    path + testFileB, floatMultiplier=coverageRescale
+)
 differencesHashA = monet.calculateFactorialHashError(
     probeDataA,
     centralData,

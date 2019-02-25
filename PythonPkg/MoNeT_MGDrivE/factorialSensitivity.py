@@ -80,7 +80,8 @@ def loadAndHashFactorialCSV(
         dayProbe = max(factorialData[:, 2])
     probedHash = prepareFactorialArrayForComparison(
         factorialData,
-        dayProbe
+        dayProbe,
+        floatMultiplier
     )
     return probedHash
 
@@ -97,14 +98,15 @@ def prepareFactorialArrayForComparison(
     In:
         * factorialData: Loaded data to convert into a dictionary.
         * probeDay: Day at which the data will be filtered.
-        * floatMultiplier: DEPRECATED
+        * floatMultiplier: Re-scales the coverage level to make
+            integer instead of float (important for hashing differences).
     Out:
         * Dictionary containing the hashed factorial experiment.
     Notes:
         *
     '''
     probedData = getReleasesCoverageRatioArray(factorialData, probeDay)
-    probedHashMap = convertFactorialArrayToHash(probedData)
+    probedHashMap = convertFactorialArrayToHash(probedData, floatMultiplier)
     return probedHashMap
 
 

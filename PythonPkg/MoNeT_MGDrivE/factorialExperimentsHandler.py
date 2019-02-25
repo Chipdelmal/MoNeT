@@ -108,10 +108,10 @@ def compileFactorialCSVFromFiles(path, outFilename):
     Notes:
         * This function writes to HDD.
     """
-    #files = os.listdir(path)
-    #filenames = [
-    #    path + name for name in files if fnmatch.fnmatch(name, 'E_*.csv')
-    #]
+    # files = os.listdir(path)
+    # filenames = [
+    #     path + name for name in files if fnmatch.fnmatch(name, 'E_*.csv')
+    # ]
     filenames = glob.glob(path+'E_*.csv')
     f = open(path+outFilename, 'wb')
     for file in filenames:
