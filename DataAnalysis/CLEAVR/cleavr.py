@@ -6,7 +6,7 @@ import auxiliaryFunctions as aux
 # Select experiment & output setup
 ###############################################################################
 BATCH = True
-DRIVE = 4
+DRIVE = 1
 EXPORT_TO_DRIVE = True
 PROBED = "E_100_00_10_50"
 # Key: E_(Cutting rate)_(H allele cost)_(releases)_(mosquitoes per release)
@@ -21,7 +21,7 @@ else:
     output = "./images/"+id+"/"
 directories = monet.listDirectoriesWithPathWithinAPath(path)
 # Style .......................................................................
-colors = ['#9f00cc', '#ec0b43', '#ff009d', '#94d4ff', '#232ed1']
+colors = ['#232ed1', '#ff009d', '#9f00cc', '#ec0b43', '#94d4ff']
 if (DRIVE == 1) or (DRIVE == 2):
     aspect, yrange = [.025, 2*25000]
 elif (DRIVE == 3) or (DRIVE == 4):
@@ -31,7 +31,7 @@ styleTrace = {
     "aspect": aspect, "colors": colors, "xrange": 3600, "yrange": yrange
 }
 styleStack = {
-    "width": 0, "alpha": 1, "dpi": 1024, "legend": True,
+    "width": 0, "alpha": .95, "dpi": 1024, "legend": True,
     "aspect": aspect, "colors": colors, "xrange": 3600, "yrange": yrange
 }
 ###############################################################################

@@ -6,6 +6,9 @@ import matplotlib.patches as mpatches
 import MoNeT_MGDrivE as monet
 import auxPlot as aux
 
+import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+
 ###############################################################################
 # MCR Construct
 ###############################################################################
@@ -55,23 +58,24 @@ aggData = monet.aggregateGenotypesInNode(
 
 # To analyze the landscape without sum .......................................
 # Load the population dynamics data of the whole landscape
-# landscapeData = monet.loadLandscapeData(filenames, dataType=float)
-# aggregatedNodesData = monet.aggregateGenotypesInLandscape(
-#     landscapeData,
-#     aggregationDictionary
-# )
-# aggregatedNodesData["landscape"]
+landscapeData = monet.loadLandscapeData(filenames, dataType=float)
+aggregatedNodesData = monet.aggregateGenotypesInLandscape(
+    landscapeData,
+    aggregationDictionary
+)
+aggregatedNodesData["landscape"]
 
 # -----------------------------------------------------------------------------
 # Plotting
 # -----------------------------------------------------------------------------
 style={
-    "width":2, "alpha":1, "dpi":1024, "legend":True,
+    "width":1, "alpha":1, "dpi":1024, "legend":True,
     "aspect":.5,
     "colors": [
         '#9f00cc', '#ec0b43','#ff009d','#94d4ff', '#232ed1',
         'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal'
     ]
 }
-fig=aux.plotMeanGenotypeTrace(aggData, style)
-fig
+figA=aux.plotMeanGenotypeTrace(aggData, style)
+figB=aux.plotMeanGenotypeStack(aggData, style)
+figB
