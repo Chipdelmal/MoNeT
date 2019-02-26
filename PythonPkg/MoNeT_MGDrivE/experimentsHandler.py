@@ -401,9 +401,10 @@ def getGenotypeArraysFromLandscape(landscapeData):
         * Returns the spatiotemporal arrays of all the genotypes present in the
             landscape
     In:
-        * landscapeData:
+        * landscapeData: population dynamics data
     Out:
-        *
+        * geospatialDict: contains the genotypes and spatiotemporal
+            gene landscape
     Notes:
         * NA
     """
@@ -411,4 +412,8 @@ def getGenotypeArraysFromLandscape(landscapeData):
     genesSpatialList = [None] * len(genotypes)
     for i in range(0, len(genotypes)):
         genesSpatialList[i] = getGenotypeFromLandscape(landscapeData, i)
-    return {"genotypes": genotypes, "geneLandscape": genesSpatialList}
+    geospatialDict = {
+        "genotypes": genotypes,
+        "geneLandscape": genesSpatialList
+    }
+    return geospatialDict

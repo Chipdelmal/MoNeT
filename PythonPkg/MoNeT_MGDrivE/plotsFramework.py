@@ -93,9 +93,10 @@ def plotGenotypeFromLandscape(
 ):
     """
     Description:
-
+        * Creates the heatmap plot of a gene array
     In:
-        *
+        * landscapeGene: spatiotemporal array for the gene to plot
+        * style: styling options for the plot
     Out:
         * fig: matplotlib figure
     Notes:
@@ -112,9 +113,10 @@ def plotGenotypeArrayFromLandscape(
 ):
     """
     Description:
-
+        * Creates the heatmap plot of all the genotypes in the landscape
     In:
-        *
+        * landscapeData: population dynamics data
+        * style: styling options for the plot
     Out:
         * fig: matplotlib figure
     Notes:
@@ -128,4 +130,5 @@ def plotGenotypeArrayFromLandscape(
             geneProbe["geneLandscape"][i],
             style={"aspect": style["aspect"], "cmap": style["cmap"][i]}
         )
-    return {"genotypes": landscapeData["genotypes"], "plots": plotsList}
+    plotsDict = {"genotypes": landscapeData["genotypes"], "plots": plotsList}
+    return plotsDict
