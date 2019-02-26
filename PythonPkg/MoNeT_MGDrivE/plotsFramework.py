@@ -123,9 +123,9 @@ def plotGenotypeArrayFromLandscape(
         * NA
     """
     genesNumber = len(landscapeData["genotypes"])
+    geneProbe = getGenotypeArraysFromLandscape(landscapeData)
     plotsList = [None] * genesNumber
     for i in range(0, genesNumber):
-        geneProbe = getGenotypeArraysFromLandscape(landscapeData)
         plotsList[i] = plotGenotypeFromLandscape(
             geneProbe["geneLandscape"][i],
             style={"aspect": style["aspect"], "cmap": style["cmap"][i]}

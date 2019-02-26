@@ -17,7 +17,7 @@ import inspect
 dataType = float
 filename = "UDSA"
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
-path = "/Volumes/marshallShare/Batch_SA/UDMel_Batch_002/2019_02_20_ANALYZED/"
+path = "/Volumes/marshallShare/Batch_SA/UDMel_Batch_100/2019_02_21_ANALYZED/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
 aggregationDictionary = monet.generateAggregationDictionary(

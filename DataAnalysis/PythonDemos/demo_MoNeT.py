@@ -91,6 +91,12 @@ figB.savefig("./images/MStack.png",
     pad_inches=0, frameon=None
 )
 
+
+# fig = plt.figure(figsize=(20, 5))
+# for i in range(len(alleleNames)):
+#     plt.imshow(counts[i], cmap=cmaps[i])
+
+
 genes = geneSpatiotemporals["genotypes"]
 for i in range(0, len(genes)):
     geneIndex = i
