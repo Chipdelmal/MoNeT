@@ -8,6 +8,7 @@ import matplotlib.patches as mpatches
 # Temporary function definition (will move to a separate file when time allows it)
 ###############################################################################
 
+
 def plotMeanGenotypeTrace(aggData, style):
     groups = aggData['genotypes']
     pops = aggData['population']
@@ -31,9 +32,10 @@ def plotMeanGenotypeTrace(aggData, style):
             mpatches.Patch(color=style["colors"][i], label=groups[i])
         )
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
-           ncol=2, mode="expand", borderaxespad=0.)
+               ncol=2, mode="expand", borderaxespad=0.)
     plt.ylabel("Allele Count")
     return fig
+
 
 def plotMeanGenotypeStack(aggData, style):
     groups = aggData['genotypes']

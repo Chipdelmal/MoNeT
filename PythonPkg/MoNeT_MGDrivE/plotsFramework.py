@@ -1,11 +1,23 @@
 import numpy as np
 import pandas as pd
-import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-
+from matplotlib.colors import LinearSegmentedColormap
+import MoNeT_MGDrivE.plots as monetPlots
+from MoNeT_MGDrivE.experimentsHandler import getGenotypeArraysFromLandscape
 
 def plotMeanGenotypeTrace(aggData, style):
+    """
+    Description:
+        * Plots the mean response of an aggregate dataset.
+    In:
+        * aggData: dictionary containing "genotype" and "populations" pairs
+        * style: dictionary containing width, colors, aspect, alpha
+    Out:
+        * fig: matplotlib figure
+    Notes:
+        * NA
+    """
     groups = aggData['genotypes']
     pops = aggData['population']
     time = np.arange(len(pops))
@@ -38,6 +50,17 @@ def plotMeanGenotypeTrace(aggData, style):
 
 
 def plotMeanGenotypeStack(aggData, style):
+    """
+    Description:
+        * Plots the mean response of an aggregate dataset.
+    In:
+        * aggData: dictionary containing "genotype" and "populations" pairs
+        * style: dictionary containing width, colors, aspect, alpha
+    Out:
+        * fig: matplotlib figure
+    Notes:
+        * NA
+    """
     groups = aggData['genotypes']
     pops = aggData['population']
     time = np.arange(len(pops))
@@ -62,3 +85,37 @@ def plotMeanGenotypeStack(aggData, style):
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
                ncol=2, mode="expand", borderaxespad=0.)
     return fig
+
+
+def plotGenotypeFromLandscape(
+    landscapeGene,
+    style={"aspect": 12, "cmap": monetPlots.cmaps[0]}
+):
+    """
+    Description:
+
+    In:
+        *
+    Out:
+        * fig: matplotlib figure
+    Notes:
+        * NA
+    """
+    fig, ax = plt.subplots(nrows=1, figsize=(20, 5))
+    ax.imshow(landscapeGene, cmap=style["cmap"], aspect=style["aspect"])
+    return fig
+
+
+def plotGenotypeArrayFromLandscape(
+    landscapeData,
+    style={"aspect": 12, "cmap": monetPlots.cmaps}
+):
+    genesNumber = len(landscapeData["genotypes"])
+    plotsList = [None] * genesNumber
+    for i in range(0, genesNumber):
+        geneProbe = getGenotypeArraysFromLandscape(landscapeData)
+        plotsList[i] = plotGenotypeFromLandscape(
+            geneProbe["geneLandscape"][i],
+            style={"aspect": style["aspect"], "cmap": style["cmap"][i]}
+        )
+    return {"genotypes": landscapeData["genotypes"], "plots": plotsList}

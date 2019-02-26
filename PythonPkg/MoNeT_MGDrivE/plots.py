@@ -84,7 +84,7 @@ cdict5 = {'red':   ((0.0, 0.0, 0.0),
 dark_blue1 = LinearSegmentedColormap('DarkBlue1', cdict5)
 rgba_colors = [(1, 0, 0.3, 0.7), (1, 0, 1, 0.7),
                (0.5, 0, 1, 0.7), (0, 0.325, 0.75, 0.7)]
-
+cmaps = [light_blue1, red1, purple1, pink1, dark_blue1]
 
 def alleleCounts(csvFileName, columns, alleleNames, timeSteps, startCol=3):
     """

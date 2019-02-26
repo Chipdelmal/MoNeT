@@ -36,7 +36,6 @@ def readExperimentFilenames(
         )
     ) if "male" in sexFilenameIdentifiers else []
 
-
     femaleFiles = sorted(
         glob.glob(
             experimentPath + "/" +
@@ -150,8 +149,8 @@ def sumLandscapePopulationsFromFiles(
         * NA
     """
     # Store the lengths of the filenames lists for error checking
-    maleFilesNumber = len(filenames["male"]) #if "male" in filenames else 0
-    femaleFilesNumber = len(filenames["female"]) # if "female" in filenames else 0
+    maleFilesNumber = len(filenames["male"])
+    femaleFilesNumber = len(filenames["female"])
     maleFilesEqualFemales = (maleFilesNumber == femaleFilesNumber)
     filesExist = (maleFilesNumber >= 1 and femaleFilesNumber >= 1)
     # Select the appropriate aggregation scheme: male+female, male, female
@@ -372,3 +371,44 @@ def aggregateGenotypesInLandscape(landscapeData, aggregationDictionary):
         "landscape": tempList
     }
     return returnDictionary
+
+
+def getGenotypeFromLandscape(landscapeData, genotypeIndex):
+    """
+    Description:
+        * Returns the spatiotemporal array of the genotype queried
+            (through index)
+    In:
+        * landscapeData:
+        * genotypeIndex:
+    Out:
+        *
+    Notes:
+        * NA
+    """
+    nodesNumb = len(landscapeData["landscape"])
+    time = len(landscapeData["landscape"][0])
+    geneArray = np.empty([nodesNumb, time])
+    for i in range(0, nodesNumb):
+        probe = landscapeData["landscape"][i]
+        geneArray[i] = [row[genotypeIndex] for row in probe]
+    return geneArray
+
+
+def getGenotypeArraysFromLandscape(landscapeData):
+    """
+    Description:
+        * Returns the spatiotemporal arrays of all the genotypes present in the
+            landscape
+    In:
+        * landscapeData:
+    Out:
+        *
+    Notes:
+        * NA
+    """
+    genotypes = landscapeData["genotypes"]
+    genesSpatialList = [None] * len(genotypes)
+    for i in range(0, len(genotypes)):
+        genesSpatialList[i] = getGenotypeFromLandscape(landscapeData, i)
+    return {"genotypes": genotypes, "geneLandscape": genesSpatialList}
