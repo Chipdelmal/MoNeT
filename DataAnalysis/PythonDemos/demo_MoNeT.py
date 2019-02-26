@@ -4,7 +4,7 @@
 # import matplotlib.pyplot as plt
 # import matplotlib.patches as mpatches
 import MoNeT_MGDrivE as monet
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 # from matplotlib.colors import LinearSegmentedColormap
 
 ###############################################################################
@@ -32,12 +32,12 @@ filenames = monet.readExperimentFilenames(path + experimentString)
 
 # To analyze a single node ...................................................
 # Load a single node (auxiliary function just for demonstration)
-# nodeIndex = 0
-# nodeData = monet.loadNodeData(
-#     filenames.get("male")[nodeIndex],
-#     filenames.get("female")[nodeIndex],
-#     dataType=float
-# )
+nodeIndex = 0
+nodeData = monet.loadNodeData(
+    filenames.get("male")[nodeIndex],
+    filenames.get("female")[nodeIndex],
+    dataType=float
+)
 
 # To analyze the sum of the whole landscape ..................................
 # Sum landscape into one array ("in place" memory-wise)
@@ -65,18 +65,39 @@ geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 # -----------------------------------------------------------------------------
 # Plotting
 # -----------------------------------------------------------------------------
-style = {
+colors = [
+    '#9f00cc', '#ec0b43', '#ff009d', '#94d4ff', '#232ed1'
+]
+styleA = {
     "width": 1, "alpha": 1, "dpi": 1024, "legend": True,
-    "aspect": .5,
-    "colors": [
-        '#9f00cc', '#ec0b43', '#ff009d', '#94d4ff', '#232ed1',
-        'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal'
-    ]
+    "aspect": .5, "colors": colors
 }
-figA = monet.plotMeanGenotypeTrace(aggData, style)
-figB = monet.plotMeanGenotypeStack(aggData, style)
-figB
+styleB = {
+    "width": 0, "alpha": .9, "dpi": 1024, "legend": True,
+    "aspect": .5, "colors": colors
+}
+figA = monet.plotMeanGenotypeTrace(aggData, styleA)
+figB = monet.plotMeanGenotypeStack(aggData, styleB)
+figA.savefig("./images/MTrace.png",
+    dpi=1024, facecolor='w',
+    edgecolor='w', orientation='portrait', papertype=None,
+    format="png", transparent=True, bbox_inches='tight',
+    pad_inches=0, frameon=None
+)
+figB.savefig("./images/MStack.png",
+    dpi=1024, facecolor='w',
+    edgecolor='w', orientation='portrait', papertype=None,
+    format="png", transparent=True, bbox_inches='tight',
+    pad_inches=0, frameon=None
+)
 
-geneIndex = 1
-plotsArray = monet.plotGenotypeArrayFromLandscape(aggregatedNodesData)
-plotsArray["plots"][geneIndex]
+genes = geneSpatiotemporals["genotypes"]
+for i in range(0, len(genes)):
+    geneIndex = i
+    plotsArray = monet.plotGenotypeArrayFromLandscape(aggregatedNodesData)
+    fig = plotsArray["plots"][geneIndex]
+    fig.savefig("./images/Heat_" + genes[i] + ".png",
+                dpi=1024, facecolor='w',
+                edgecolor='w', orientation='portrait', papertype=None,
+                format="png", transparent=True, bbox_inches='tight',
+                pad_inches=0, frameon=None)

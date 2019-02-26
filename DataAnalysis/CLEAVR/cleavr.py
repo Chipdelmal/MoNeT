@@ -40,7 +40,8 @@ styleStack = {
 if BATCH is False:
     experimentString = PROBED
     aggData = aux.aggregateDataFromPath(
-        path+experimentString, aggregationDictionary)
+        path+experimentString, aggregationDictionary
+    )
     aux.exportMeanPlotToDirectory(
         output+experimentString, aggData, styleTrace
     )
