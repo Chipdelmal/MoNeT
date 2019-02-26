@@ -4,7 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import MoNeT_MGDrivE as monet
-import auxPlot as aux
 
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
@@ -63,8 +62,7 @@ aggregatedNodesData = monet.aggregateGenotypesInLandscape(
     landscapeData,
     aggregationDictionary
 )
-aggregatedNodesData["landscape"]
-
+geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 # -----------------------------------------------------------------------------
 # Plotting
 # -----------------------------------------------------------------------------
@@ -76,35 +74,10 @@ style = {
         'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal'
     ]
 }
-figA = aux.plotMeanGenotypeTrace(aggData, style)
-figB = aux.plotMeanGenotypeStack(aggData, style)
+figA = monet.plotMeanGenotypeTrace(aggData, style)
+figB = monet.plotMeanGenotypeStack(aggData, style)
 figB
 
-
 geneIndex = 1
-geneProbe = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
-monet.plotGenotypeFromLandscape(
-    geneProbe["geneLandscape"][geneIndex],
-    style={"aspect": 12, "cmap": monet.cmaps[geneIndex]}
-)
 plotsArray = monet.plotGenotypeArrayFromLandscape(aggregatedNodesData)
 plotsArray["plots"][geneIndex]
-
-
-# genesNumber = len(aggregatedNodesData["genotypes"])
-# plotsList = [None] * genesNumber
-# for i in range(0,genesNumber):
-#     geneProbe = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
-#     plotsList[i] = monet.plotGenotypeFromLandscape(
-#         geneProbe["geneLandscape"][i],
-#         style={"aspect": 12, "cmap": monet.cmaps[i]}
-#     )
-# {"genotypes":aggregatedNodesData["genotypes"],"plots":plotsList}
-
-# def plotGenotypeArrayFromLandscape(landscapeData, style={"aspect": 12, "cmap": monet.cmaps[geneIndex]}):
-#     genesNumber = len(landscapeData["genotypes"])
-#     landscape = landscapeData["landscape"]
-#     plots = [None] * genesNumber
-#     for i in range(0, genesNumber):
-#         plots[0] = plotGenotypeFromLandscape(landscape[0], style = )
-#     return {"genotypes": landscapeData["genotypes"], "plots": plots}

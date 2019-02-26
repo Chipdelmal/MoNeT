@@ -110,6 +110,16 @@ def plotGenotypeArrayFromLandscape(
     landscapeData,
     style={"aspect": 12, "cmap": monetPlots.cmaps}
 ):
+    """
+    Description:
+
+    In:
+        *
+    Out:
+        * fig: matplotlib figure
+    Notes:
+        * NA
+    """
     genesNumber = len(landscapeData["genotypes"])
     plotsList = [None] * genesNumber
     for i in range(0, genesNumber):
