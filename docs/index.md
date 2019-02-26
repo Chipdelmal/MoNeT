@@ -32,4 +32,4 @@ Click on each on the corresponding images to learn more about our projects:
 
 <center>
 <img src="./media/berkeleyLogo.jpg" height="60px"><img src="./media/ihmeLogo.jpg" height="60px"><img src="./media/itesm.png" height="75px">
-</center><br><br>
+</center>

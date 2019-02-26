@@ -92,18 +92,20 @@ figB.savefig("./images/MStack.png",
 )
 
 
-# fig = plt.figure(figsize=(20, 5))
-# for i in range(len(alleleNames)):
-#     plt.imshow(counts[i], cmap=cmaps[i])
-
-
 genes = geneSpatiotemporals["genotypes"]
 for i in range(0, len(genes)):
     geneIndex = i
-    plotsArray = monet.plotGenotypeArrayFromLandscape(aggregatedNodesData)
+    plotsArray = monet.plotGenotypeArrayFromLandscape(geneSpatiotemporals)
     fig = plotsArray["plots"][geneIndex]
     fig.savefig("./images/Heat_" + genes[i] + ".png",
                 dpi=1024, facecolor='w',
                 edgecolor='w', orientation='portrait', papertype=None,
                 format="png", transparent=True, bbox_inches='tight',
                 pad_inches=0, frameon=None)
+
+overlay = monet.plotGenotypeOverlayFromLandscape(geneSpatiotemporals)
+overlay.savefig("./images/Heat_Full.png",
+            dpi=1024, facecolor='w',
+            edgecolor='w', orientation='portrait', papertype=None,
+            format="png", transparent=True, bbox_inches='tight',
+            pad_inches=0, frameon=None)

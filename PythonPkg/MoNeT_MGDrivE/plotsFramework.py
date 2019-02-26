@@ -108,7 +108,7 @@ def plotGenotypeFromLandscape(
 
 
 def plotGenotypeArrayFromLandscape(
-    landscapeData,
+    geneSpatiotemporals,
     style={"aspect": 12, "cmap": monetPlots.cmaps}
 ):
     """
@@ -122,13 +122,27 @@ def plotGenotypeArrayFromLandscape(
     Notes:
         * NA
     """
-    genesNumber = len(landscapeData["genotypes"])
-    geneProbe = getGenotypeArraysFromLandscape(landscapeData)
+    genesNumber = len(geneSpatiotemporals["genotypes"])
     plotsList = [None] * genesNumber
     for i in range(0, genesNumber):
         plotsList[i] = plotGenotypeFromLandscape(
-            geneProbe["geneLandscape"][i],
+            geneSpatiotemporals["geneLandscape"][i],
             style={"aspect": style["aspect"], "cmap": style["cmap"][i]}
         )
-    plotsDict = {"genotypes": landscapeData["genotypes"], "plots": plotsList}
+    plotsDict = {
+        "genotypes": geneSpatiotemporals["genotypes"],
+        "plots": plotsList
+    }
     return plotsDict
+
+
+def plotGenotypeOverlayFromLandscape(
+    geneSpatiotemporals,
+    style={"aspect": 12, "cmap": monetPlots.cmaps}
+):
+    alleleNames = geneSpatiotemporals["genotypes"]
+    counts = geneSpatiotemporals["geneLandscape"]
+    fig = plt.figure(figsize=(20, 5))
+    for i in range(len(alleleNames)):
+        plt.imshow(counts[i], cmap=style["cmap"][i], aspect=style["aspect"])
+    return fig
