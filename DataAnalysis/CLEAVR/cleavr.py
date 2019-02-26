@@ -6,9 +6,9 @@ import auxiliaryFunctions as aux
 # Select experiment & output setup
 ###############################################################################
 BATCH = True
-DRIVE = 1
+DRIVE = 3
 EXPORT_TO_DRIVE = True
-PROBED = "E_100_00_10_50"
+PROBED = "E_85_50_20_50"
 # Key: E_(Cutting rate)_(H allele cost)_(releases)_(mosquitoes per release)
 ###############################################################################
 # Setup variables
@@ -23,15 +23,15 @@ directories = monet.listDirectoriesWithPathWithinAPath(path)
 # Style .......................................................................
 colors = ['#232ed1', '#ff009d', '#9f00cc', '#ec0b43', '#94d4ff']
 if (DRIVE == 1) or (DRIVE == 2):
-    aspect, yrange = [.025, 2*25000]
+    aspect, yrange = [.05, 25000]
 elif (DRIVE == 3) or (DRIVE == 4):
     aspect, yrange = [.05, 25000]
 styleTrace = {
-    "width": 2, "alpha": 1, "dpi": 1024, "legend": True,
+    "width": 2, "alpha": 1, "dpi": 512, "legend": True,
     "aspect": aspect, "colors": colors, "xrange": 3600, "yrange": yrange
 }
 styleStack = {
-    "width": 0, "alpha": .95, "dpi": 1024, "legend": True,
+    "width": 0, "alpha": .95, "dpi": 512, "legend": True,
     "aspect": aspect, "colors": colors, "xrange": 3600, "yrange": yrange
 }
 ###############################################################################
@@ -42,9 +42,9 @@ if BATCH is False:
     aggData = aux.aggregateDataFromPath(
         path+experimentString, aggregationDictionary
     )
-    aux.exportMeanPlotToDirectory(
-        output+experimentString, aggData, styleTrace
-    )
+    # aux.exportMeanPlotToDirectory(
+    #     output+experimentString, aggData, styleTrace
+    # )
     aux.exportStackedPlotToDirectory(
         output+experimentString, aggData, styleStack
     )
@@ -54,9 +54,9 @@ else:
         aggData = aux.aggregateDataFromPath(
             path+experimentString, aggregationDictionary
         )
-        aux.exportMeanPlotToDirectory(
-            output+experimentString, aggData, styleTrace
-        )
+        # aux.exportMeanPlotToDirectory(
+        #     output+experimentString, aggData, styleTrace
+        # )
         aux.exportStackedPlotToDirectory(
             output+experimentString, aggData, styleStack
         )

@@ -104,7 +104,7 @@ for i in range(0, len(genes)):
                 pad_inches=0, frameon=None)
 
 overlay = monet.plotGenotypeOverlayFromLandscape(geneSpatiotemporals)
-overlay.savefig("./images/Heat_Full.png",
+overlay.savefig("./images/Heat_F.png",
             dpi=1024, facecolor='w',
             edgecolor='w', orientation='portrait', papertype=None,
             format="png", transparent=True, bbox_inches='tight',

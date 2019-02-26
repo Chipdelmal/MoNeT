@@ -232,7 +232,6 @@ def sumLandscapePopulationsFromFiles(
         return None
 
 
-# TODO: check if this needs dataType param
 def aggregateGenotypesInNode(
     nodeData,
     aggregationDictionary
@@ -371,6 +370,46 @@ def aggregateGenotypesInLandscape(landscapeData, aggregationDictionary):
         "landscape": tempList
     }
     return returnDictionary
+
+
+def loadAndAggregateLandscapeData(
+    filenames,
+    aggregationDictionary,
+    male=True,
+    female=True,
+    dataType=float
+):
+    rawLandscape = loadLandscapeData(
+        filenames, male=male, female=female, dataType=dataType
+    )
+    aggLandscape = aggregateGenotypesInLandscape(
+        rawLandscape,
+        aggregationDictionary
+    )
+    return aggLandscape
+
+
+def loadAndAggregateLandscapeDataRepetitions(
+    paths,
+    aggregationDictionary,
+    male=True,
+    female=True,
+    dataType=float
+):
+    pathsNumber = len(paths)
+    landscapes = [None] * pathsNumber
+    for i in range(0, pathsNumber):
+        filenames = readExperimentFilenames(paths[i])
+        loadedLandscape = loadAndAggregateLandscapeData(
+            filenames, aggregationDictionary,
+            male=male, female=female, dataType=dataType
+        )
+        landscapes[i] = loadedLandscape["landscape"]
+    returnDict = {
+        "genotypes": aggregationDictionary["genotypes"],
+        "landscapes": landscapes
+    }
+    return returnDict
 
 
 def getGenotypeFromLandscape(landscapeData, genotypeIndex):
