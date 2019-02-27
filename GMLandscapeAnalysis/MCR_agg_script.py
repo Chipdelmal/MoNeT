@@ -12,6 +12,8 @@ offline.init_notebook_mode(connected=True)
 #------------------------------------------------------------------------------
 # Data Handling
 #------------------------------------------------------------------------------
+
+
 ITERATIONS = 10
 time_to_thres = []
 for i in range(1, ITERATIONS+1):
@@ -23,7 +25,7 @@ for i in range(1, ITERATIONS+1):
     #path = "/Users/sanchez.hmsc/odrive/sanchez.hmsc@berkeley.edu/GMLandscape/ParserDataset/"
     experimentString = "E_099_000_000_"+formatted_num
 
-    path = "/Users/Biyonka/Desktop/Output/2019_02_25_ANALYZED/"
+    path = "/Users/Biyonka/Desktop/Output/2019_02_27_ANALYZED/"
     aggregationDictionary = monet.generateAggregationDictionary(
         ["W", "H", "R", "B"],
         [
@@ -71,7 +73,7 @@ for i in range(1, ITERATIONS+1):
     wbh = aggData['population'][:, 0] + aggData['population'][:, 1] + aggData['population'][:, 3]
     ratio_homing = aggData['population'][:, 1]/(wbh)
     #get time at which homing ratio exceeds threshold
-    time = (list(ratio_homing>0.1)).index(True)
+    time = (list(ratio_homing>0.5)).index(True)
     time_to_thres.append(time)
 {'iteration': range(1, ITERATIONS+1, 1), 'time_to_thres': time_to_thres}
 #------------------------------------------------------------------------------

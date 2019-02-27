@@ -116,18 +116,17 @@ def write_csv(nodes, path, num_clusters, v=1, cluster = False):
 path_to_output = r'~/Desktop/Output/spaHet/'
 
 #base case
-nodes = array_creation(1, 99, 99-1)
+nodes = array_creation(20, 49, 49-1)
 w = write_csv(nodes, num_clusters = 1, v=0, path = path_to_output)
-
 #two uneven clusters
-x = np.concatenate((np.arange(0, 4, 0.5), np.arange(9, 10, 0.5)))
+x = np.concatenate((np.linspace(0, 10*15, 15), np.linspace(1000-35*15, 1000, 35)))
 y = np.zeros(len(x))
 nodes = np.array((x, y))
 w = write_csv(nodes, num_clusters = 2, v=0, path = path_to_output)
 plt.scatter(x, y, alpha=0.5)
 
 #two tighter clusters
-x = np.concatenate((np.linspace(0, 1, 5), np.linspace(9, 10, 5)))
+x = np.concatenate((np.linspace(0, 200, 25), np.linspace(800, 1000, 25)))
 y = np.zeros(len(x))
 nodes = np.array((x, y))
 kmeans_clustering_coefficient(nodes, 2)
@@ -135,7 +134,7 @@ w = write_csv(nodes, num_clusters = 2, v=0, path = path_to_output)
 plt.scatter(x, y, alpha=0.5)
 
 #two looser clusters
-x = np.concatenate((np.linspace(0, 3, 5), np.linspace(7, 10, 5)))
+x = np.concatenate((np.linspace(0, 25*15, 25), np.linspace(1000-25*15, 1000, 25)))
 y = np.zeros(len(x))
 nodes = np.array((x, y))
 w = write_csv(nodes, num_clusters = 2, v=0, path = path_to_output)

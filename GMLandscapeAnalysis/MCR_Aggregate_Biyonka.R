@@ -26,10 +26,10 @@ library(parallel)
 ######################################################################################################
 USER=8
 #number of times to run each repetition
-ITERATIONS=10
+ITERATIONS=1
 #repetitions is number of times to run MGDRive on eeach patch
 REPETITIONS=10
-SIM_TIME=365
+SIM_TIME=365*2
 NUM_CORES=1
 GEOGRAPHY=2
 HDR_STEP= c(0.99) #c(0.65, 0.86, 0.99)
@@ -95,7 +95,7 @@ stayProbability=.72
 ######################################################################################################
 ### Landscape ########################################################################################
 ######################################################################################################
-heterogFile=read.csv(paste0("/Users/Biyonka/Desktop/Output/spaHet/","output_base_far_10.csv"),sep=",",header=TRUE)
+heterogFile=read.csv(paste0("/Users/Biyonka/Desktop/Output/spaHet/spahet_files/","tight_50n.csv"),sep=",",header=TRUE)
   #read.csv(paste0("/Users/Biyonka/Downloads/","0.csv"),sep=",",header=FALSE)
 #geoFile=paste0(BASE_GEO_PATH,"halfAggregationCoord.csv")
 #number of x coordinates manages number of patches
@@ -236,7 +236,7 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
 
   # split and aggregate, save originals
   MGDrivEv2::SplitAggregateCpp(readDir = x$folders[1], writeDir = x$folders[3],
-                               simTime = 365, numPatch = netPar$nPatch,
+                               simTime = netPar$simTime, numPatch = netPar$nPatch,
                                genotypes = driveCube$genotypesID, remFiles = FALSE)
 
   # mean and quantiles, remove split/agg files
