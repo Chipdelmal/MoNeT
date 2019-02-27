@@ -1,24 +1,4 @@
 import MoNeT_MGDrivE as monet
-# import matplotlib.pyplot as plt
-import matplotlib.colors as clr
-from matplotlib.colors import LinearSegmentedColormap
-
-
-def generateAlphaColorMapFromColor(color):
-    alphaMap = LinearSegmentedColormap.from_list(
-        'tempMap',
-        [(0.0, 0.0, 0.0, 0.0), color],
-        gamma=0
-    )
-    return alphaMap
-
-
-def generateAlphaColorMapFromColorArray(colorArray):
-    elementsNumb = len(colorArray)
-    cmapsList = [None] * elementsNumb
-    for i in range(0, elementsNumb):
-        cmapsList[i] = generateAlphaColorMapFromColor(colorArray[i])
-    return cmapsList
 
 # -----------------------------------------------------------------------------
 # Loading Data
@@ -70,9 +50,9 @@ geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 # Plotting
 # -----------------------------------------------------------------------------
 colors = [
-    '#9f00cc', '#ec0b43', '#ff009d', '#94d4ff', '#232ed1'
+    '#9f00cc', '#ec0b43', '#232ed1', '#ff009d'
 ]
-cmaps = generateAlphaColorMapFromColorArray(colors)
+cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleA = {
     "width": 1, "alpha": 1, "dpi": 1024, "legend": True,
     "aspect": .5, "colors": colors
@@ -88,49 +68,16 @@ monet.quickSaveFigure(figA, "./images/MTrace.png")
 monet.quickSaveFigure(figB, "./images/MStack.png")
 # Heatmaps --------------------------------------------------------------------
 genes = geneSpatiotemporals["genotypes"]
+plotsArray = monet.plotGenotypeArrayFromLandscape(
+    geneSpatiotemporals,
+    style={"aspect": 12, "cmap": cmaps}
+)
 for i in range(0, len(genes)):
     geneIndex = i
-    plotsArray = monet.plotGenotypeArrayFromLandscape(geneSpatiotemporals)
     fig = plotsArray["plots"][geneIndex]
     monet.quickSaveFigure(fig, "./images/Heat_" + genes[i] + ".png")
 overlay = monet.plotGenotypeOverlayFromLandscape(
     geneSpatiotemporals,
-    style={"aspect": 12, "cmap": monet.cmaps}
-)
-monet.quickSaveFigure(overlay, "./images/Heat_F.png")
-
-
-def generateAlphaColorMapFromColor(color):
-    alphaMap = LinearSegmentedColormap.from_list(
-        'tempMap',
-        [(0.0, 0.0, 0.0, 0.0), color],
-        gamma=0
-    )
-    return alphaMap
-red2 = generateAlphaColorMapFromColor(colors[1])
-overlay = monet.plotGenotypeOverlayFromLandscape(
-    geneSpatiotemporals,
     style={"aspect": 12, "cmap": cmaps}
 )
-
-def hex_to_rgb(hex):
-     hex = hex.lstrip('#')
-     hlen = len(hex)
-     rgb = tuple((int(hex[i:i+hlen//3], 16)/255.0)
-                 for i in range(0, hlen, hlen//3))
-     return rgb
-
-
-mapA = hex_to_rgb(colors[1])
-mapB = hex_to_rgb(colors[1])
-(mapA, mapB)
-
-
-monet.cmaps
-
-
-cmap = clr.LinearSegmentedColormap.from_list('custom blue',
-                                             [(0,    '#ffff00'),
-                                              (0.25, '#002266'),
-                                              (1,    '#002266')], N=256)
-cmap
+monet.quickSaveFigure(overlay, "./images/Heat_F.png")
