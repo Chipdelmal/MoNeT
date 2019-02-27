@@ -391,7 +391,10 @@ def loadAndAggregateLandscapeData(
         * female: Boolean to select female files for the aggregation.
         * dataType: Data type to save memory/processing time if possible.
     Out:
+        * aggLandscape: Aggregated landscape by genotypes.
     Notes:
+        * This does not sum the nodes, so the return structure is still an
+            array of arrays with the nodes' information (within a dictionary).
     """
     rawLandscape = loadLandscapeData(
         filenames, male=male, female=female, dataType=dataType
@@ -421,8 +424,12 @@ def loadAndAggregateLandscapeDataRepetitions(
         * female: Boolean to select female files for the aggregation.
         * dataType: Data type to save memory/processing time if possible.
     Out:
-        *
+        * returnDict: Dictionary with genotypes and the loaded landscapes
+            for each one of the repetitions.
     Notes:
+        * This function is meant to work with the traces plot, so it has a
+            higher dimension (repetitions) than regular spatial analysis
+            versions.
     """
     pathsNumber = len(paths)
     landscapes = [None] * pathsNumber
