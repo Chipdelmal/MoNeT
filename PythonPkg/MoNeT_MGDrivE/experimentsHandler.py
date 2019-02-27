@@ -242,7 +242,7 @@ def aggregateGenotypesInNode(
             list, so that we can analyze alleles counts in the populations.
     In:
         * nodeData: Data loaded with the "loadNodeData" function.
-        * aggregationDictionary:
+        * aggregationDictionary: Genotypes and indices counts dictionary.
     Out:
         * Dictionary containing:
             "genotypes" [list -> strings]
@@ -347,7 +347,7 @@ def aggregateGenotypesInLandscape(landscapeData, aggregationDictionary):
             indices described in the aggregation dictionary.
     In:
         * landscapeData: Data loaded with the "loadLandscapeData" function.
-        * aggregationDictionary:
+        * aggregationDictionary: Genotypes and indices counts dictionary.
     Out:
         * Dictionary containing:
             "genotypes" [list -> strings]
@@ -381,7 +381,15 @@ def loadAndAggregateLandscapeData(
 ):
     """
     Description:
+        * Loads and aggregates the data from a landscape given an aggregation
+            dictionary (atomic version of separate operations in previous
+            versions)
     In:
+        * filenames:
+        * aggregationDictionary:
+        * male: Boolean to select male files for the aggregation.
+        * female: Boolean to select female files for the aggregation.
+        * dataType: Data type to save memory/processing time if possible.
     Out:
     Notes:
     """
@@ -404,8 +412,16 @@ def loadAndAggregateLandscapeDataRepetitions(
 ):
     """
     Description:
+        * Loads and aggregates the genotypes of the landscape accross
+            repetitions of the same experiment.
     In:
+        * paths: Repetitions folders locations.
+        * aggregationDictionary: Genotypes and indices counts dictionary.
+        * male: Boolean to select male files for the aggregation.
+        * female: Boolean to select female files for the aggregation.
+        * dataType: Data type to save memory/processing time if possible.
     Out:
+        *
     Notes:
     """
     pathsNumber = len(paths)
@@ -433,10 +449,10 @@ def getGenotypeFromLandscape(
         * Returns the spatiotemporal array of the genotype queried
             (through index)
     In:
-        * landscapeData:
-        * genotypeIndex:
+        * landscapeData: Aggregated landscape dictionary.
+        * genotypeIndex: Integer location of the genotype needed.
     Out:
-        *
+        * geneArray: Array with the gene amounts per node (through time).
     Notes:
         * NA
     """

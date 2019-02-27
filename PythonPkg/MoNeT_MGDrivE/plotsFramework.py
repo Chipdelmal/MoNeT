@@ -115,6 +115,7 @@ def plotGenotypeArrayFromLandscape(
     """
     Description:
         * Creates the heatmap plot of all the genotypes in the landscape
+            separately.
     In:
         * landscapeData: population dynamics data
         * style: styling options for the plot
@@ -141,6 +142,13 @@ def plotGenotypeOverlayFromLandscape(
     geneSpatiotemporals,
     style={"aspect": 12, "cmap": monetPlots.cmaps}
 ):
+    """
+    Description:
+        * Plots the combined "landscape-heatmap" plots in one.
+    In:
+    Out:
+    Notes:
+    """
     alleleNames = geneSpatiotemporals["genotypes"]
     counts = geneSpatiotemporals["geneLandscape"]
     fig = plt.figure(figsize=(20, 5))
@@ -153,6 +161,13 @@ def plotNodeDataRepetitions(
     nodeRepetitionsArray,
     style
 ):
+    """
+    Description:
+        * Generates the "traces" plot for one node.
+    In:
+    Out:
+    Notes:
+    """
     probeNode = nodeRepetitionsArray
     repsNumber = len(probeNode)
     genesNumber = len(probeNode[0][0])
@@ -174,6 +189,13 @@ def plotLandscapeDataRepetitions(
     landscapeReps,
     style
 ):
+    """
+    Description:
+        * Generates the individual "traces" plots for a whole landscape.
+    In:
+    Out:
+    Notes:
+    """
     landscapes = landscapeReps["landscapes"]
     landscapesNumb = len(landscapeReps["landscapes"][0])
     figs = [None] * landscapesNumb
