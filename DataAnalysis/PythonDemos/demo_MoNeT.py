@@ -3,6 +3,23 @@ import MoNeT_MGDrivE as monet
 import matplotlib.colors as clr
 from matplotlib.colors import LinearSegmentedColormap
 
+
+def generateAlphaColorMapFromColor(color):
+    alphaMap = LinearSegmentedColormap.from_list(
+        'tempMap',
+        [(0.0, 0.0, 0.0, 0.0), color],
+        gamma=0
+    )
+    return alphaMap
+
+
+def generateAlphaColorMapFromColorArray(colorArray):
+    elementsNumb = len(colorArray)
+    cmapsList = [None] * elementsNumb
+    for i in range(0, elementsNumb):
+        cmapsList[i] = generateAlphaColorMapFromColor(colorArray[i])
+    return cmapsList
+
 # -----------------------------------------------------------------------------
 # Loading Data
 # -----------------------------------------------------------------------------
@@ -55,6 +72,7 @@ geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 colors = [
     '#9f00cc', '#ec0b43', '#ff009d', '#94d4ff', '#232ed1'
 ]
+cmaps = generateAlphaColorMapFromColorArray(colors)
 styleA = {
     "width": 1, "alpha": 1, "dpi": 1024, "legend": True,
     "aspect": .5, "colors": colors
@@ -82,17 +100,17 @@ overlay = monet.plotGenotypeOverlayFromLandscape(
 monet.quickSaveFigure(overlay, "./images/Heat_F.png")
 
 
-red2 = LinearSegmentedColormap.from_list('mycmap1', [(0.0, 0.0, 0.0, 0.0), colors[0]], gamma=0)
-
-cdict1 = {'red':   ((0.0, 1.0, 1.0), (1.0, 1.0, 1.0)),
-          'green': ((0.0, 0.0, 0.0), (1.0, 0.0, 0.0)),
-          'blue':  ((0.0, 0.0, 0.0), (1.0, 0.0, 0.0)),
-          'alpha': ((0.0, 0.0, 0.0), (1.0, 1.0, 1.0))
-          }
-red1 = LinearSegmentedColormap('Red1', cdict1)
+def generateAlphaColorMapFromColor(color):
+    alphaMap = LinearSegmentedColormap.from_list(
+        'tempMap',
+        [(0.0, 0.0, 0.0, 0.0), color],
+        gamma=0
+    )
+    return alphaMap
+red2 = generateAlphaColorMapFromColor(colors[1])
 overlay = monet.plotGenotypeOverlayFromLandscape(
     geneSpatiotemporals,
-    style={"aspect": 12, "cmap":[red2, monet.cmaps[0],monet.cmaps[3],monet.cmaps[4]]}
+    style={"aspect": 12, "cmap": cmaps}
 )
 
 def hex_to_rgb(hex):
