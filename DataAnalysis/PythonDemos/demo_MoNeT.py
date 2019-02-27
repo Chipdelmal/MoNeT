@@ -1,20 +1,11 @@
-# import matplotlib
-# import numpy as np
-# import pandas as pd
-# import matplotlib.pyplot as plt
-# import matplotlib.patches as mpatches
 import MoNeT_MGDrivE as monet
-import matplotlib.pyplot as plt
-# from matplotlib.colors import LinearSegmentedColormap
-
-###############################################################################
-# MCR Construct
-###############################################################################
+# import matplotlib.pyplot as plt
+import matplotlib.colors as clr
+from matplotlib.colors import LinearSegmentedColormap
 
 # -----------------------------------------------------------------------------
-# Data Handling
+# Loading Data
 # -----------------------------------------------------------------------------
-
 # Define the experiment's path, aggregation dictionary, and read filenames
 type = float
 experimentString = "E_095_075_006_015"
@@ -22,10 +13,10 @@ path = "/Users/sanchez.hmsc/odrive/sanchez.hmsc@berkeley.edu/GMLandscape/ParserD
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [
-        [0, 0, 1, 2, 3],  #  Wild
-        [1, 4, 4, 5, 6],  #  Homing
-        [2, 5, 7, 7, 8],  # Resistant
-        [3, 6, 8, 9, 9]     # Broken
+        [0, 0, 1, 2, 3],
+        [1, 4, 4, 5, 6],
+        [2, 5, 7, 7, 8],
+        [3, 6, 8, 9, 9]
     ]
 )
 filenames = monet.readExperimentFilenames(path + experimentString)
@@ -34,18 +25,14 @@ filenames = monet.readExperimentFilenames(path + experimentString)
 # Load a single node (auxiliary function just for demonstration)
 nodeIndex = 0
 nodeData = monet.loadNodeData(
-    filenames.get("male")[nodeIndex],
-    filenames.get("female")[nodeIndex],
+    filenames.get("male")[nodeIndex], filenames.get("female")[nodeIndex],
     dataType=float
 )
 
 # To analyze the sum of the whole landscape ..................................
 # Sum landscape into one array ("in place" memory-wise)
 landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-    filenames,
-    male=True,
-    female=True,
-    dataType=float
+    filenames, male=True, female=True, dataType=float
 )
 
 # Aggregate genotypes (node or landscape) ....................................
@@ -76,36 +63,56 @@ styleB = {
     "width": 0, "alpha": .9, "dpi": 1024, "legend": True,
     "aspect": .5, "colors": colors
 }
+# Traces and Stack ------------------------------------------------------------
 figA = monet.plotMeanGenotypeTrace(aggData, styleA)
 figB = monet.plotMeanGenotypeStack(aggData, styleB)
-figA.savefig("./images/MTrace.png",
-    dpi=1024, facecolor='w',
-    edgecolor='w', orientation='portrait', papertype=None,
-    format="png", transparent=True, bbox_inches='tight',
-    pad_inches=0, frameon=None
-)
-figB.savefig("./images/MStack.png",
-    dpi=1024, facecolor='w',
-    edgecolor='w', orientation='portrait', papertype=None,
-    format="png", transparent=True, bbox_inches='tight',
-    pad_inches=0, frameon=None
-)
-
-
+monet.quickSaveFigure(figA, "./images/MTrace.png")
+monet.quickSaveFigure(figB, "./images/MStack.png")
+# Heatmaps --------------------------------------------------------------------
 genes = geneSpatiotemporals["genotypes"]
 for i in range(0, len(genes)):
     geneIndex = i
     plotsArray = monet.plotGenotypeArrayFromLandscape(geneSpatiotemporals)
     fig = plotsArray["plots"][geneIndex]
-    fig.savefig("./images/Heat_" + genes[i] + ".png",
-                dpi=1024, facecolor='w',
-                edgecolor='w', orientation='portrait', papertype=None,
-                format="png", transparent=True, bbox_inches='tight',
-                pad_inches=0, frameon=None)
+    monet.quickSaveFigure(fig, "./images/Heat_" + genes[i] + ".png")
+overlay = monet.plotGenotypeOverlayFromLandscape(
+    geneSpatiotemporals,
+    style={"aspect": 12, "cmap": monet.cmaps}
+)
+monet.quickSaveFigure(overlay, "./images/Heat_F.png")
 
-overlay = monet.plotGenotypeOverlayFromLandscape(geneSpatiotemporals)
-overlay.savefig("./images/Heat_F.png",
-            dpi=1024, facecolor='w',
-            edgecolor='w', orientation='portrait', papertype=None,
-            format="png", transparent=True, bbox_inches='tight',
-            pad_inches=0, frameon=None)
+
+red2 = LinearSegmentedColormap.from_list('mycmap1', [(0.0, 0.0, 0.0, 0.0), colors[0]], gamma=0)
+
+cdict1 = {'red':   ((0.0, 1.0, 1.0), (1.0, 1.0, 1.0)),
+          'green': ((0.0, 0.0, 0.0), (1.0, 0.0, 0.0)),
+          'blue':  ((0.0, 0.0, 0.0), (1.0, 0.0, 0.0)),
+          'alpha': ((0.0, 0.0, 0.0), (1.0, 1.0, 1.0))
+          }
+red1 = LinearSegmentedColormap('Red1', cdict1)
+overlay = monet.plotGenotypeOverlayFromLandscape(
+    geneSpatiotemporals,
+    style={"aspect": 12, "cmap":[red2, monet.cmaps[0],monet.cmaps[3],monet.cmaps[4]]}
+)
+
+def hex_to_rgb(hex):
+     hex = hex.lstrip('#')
+     hlen = len(hex)
+     rgb = tuple((int(hex[i:i+hlen//3], 16)/255.0)
+                 for i in range(0, hlen, hlen//3))
+     return rgb
+
+
+mapA = hex_to_rgb(colors[1])
+mapB = hex_to_rgb(colors[1])
+(mapA, mapB)
+
+
+monet.cmaps
+
+
+cmap = clr.LinearSegmentedColormap.from_list('custom blue',
+                                             [(0,    '#ffff00'),
+                                              (0.25, '#002266'),
+                                              (1,    '#002266')], N=256)
+cmap

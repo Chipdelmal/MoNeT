@@ -219,3 +219,11 @@ def plotLandscapeDataRepetitions(
         probeNode = zip(*landscapes)[i]
         figs[i] = plotNodeDataRepetitions(probeNode, style)
     return figs
+
+
+def quickSaveFigure(fig, path):
+    fig.savefig(path,
+                dpi=1024, facecolor='w',
+                edgecolor='w', orientation='portrait', papertype=None,
+                format="png", transparent=True, bbox_inches='tight',
+                pad_inches=0, frameon=None)
