@@ -63,6 +63,6 @@ for interval in range(50, 275, 25):
                 fig, axList = plt.subplots(nrows=1, ncols=patches, figsize=(11, 1))
         maleFile.close()
         video = subprocess.Popen(['ffmpeg', '-r', '24', '-f', 'image2', '-s', '1920x1080', '-i', folder+experiment+'/%05d.png', '-vcodec', 'libx264', '-crf', '25','-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2', '-pix_fmt', 'yuv420p',folder+'videos/'+experiment+'.mp4'])
-        print(video.pid())
+        print(video.pid)
 
 video.wait()
