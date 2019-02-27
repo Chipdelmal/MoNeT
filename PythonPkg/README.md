@@ -1,1 +1,3 @@
-This module was created to accompany the [MGDrivE](https://marshalllab.github.io/MGDrivE/) project, although its codebase is totally independent to allow as much modularity as possible. This is not only convenient in terms of the code, but it also provides a clear-cut separation between designing and running experiments, and analyzing the results.
+This module was created to accompany the [MGDrivE](https://marshalllab.github.io/MGDrivE/) project to make the analysis of the spatiotemporal simulations of gene-drive spreads as seamless as possible.
+
+PACKAGE DOCUMENTATION AND EXAMPLES UNDER DEVELOPMENT
