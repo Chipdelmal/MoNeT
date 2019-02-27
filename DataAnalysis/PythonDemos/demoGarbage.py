@@ -22,6 +22,14 @@ pathRoot = "/Volumes/marshallShare/MGDrivE_Datasets/SplitDrive/Datasets/"
 pathExt = "SD_BioParams/CRISPR/2018_11_30_GARBAGE/E_03_05_079_076_01_10000/"
 pathFull = pathRoot + pathExt
 
+colors = [
+    '#9f00cc', '#ec0b43', '#ff009d', '#94d4ff', '#232ed1'
+]
+style = {
+    "width": .05, "alpha": .1, "dpi": 1024, "legend": True,
+    "aspect": .2, "colors": colors
+}
+
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [
@@ -33,65 +41,45 @@ aggregationDictionary = monet.generateAggregationDictionary(
 )
 
 paths = monet.listDirectoriesWithPathWithinAPath(pathFull)
-monet.loadAndAggregateLandscapeDataRepetitions(
+landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
     paths, aggregationDictionary,
-    male=True, female=True, dataType=float
+    male=False, female=True, dataType=float
 )
 
 
-# pathsNumber = len(paths)
-# landscapes = [None] * pathsNumber
-# for i in range(0, pathsNumber):
-#     filenames = monet.readExperimentFilenames(paths[i])
-#     loadedLandscape = monet.loadAndAggregateLandscapeData(
-#         filenames, aggregationDictionary,
-#         male=male, female=female, dataType=dataType
-#     )
-#     landscapes[i] = loadedLandscape["landscape"]
-# returnDict = {
-#     "genotypes": aggregationDictionary["genotypes"],
-#     "landscapes": landscapes
-# }
-
-
-# def loadAndAggregateLandscapeDataRepetitions(
-#     paths,
-#     aggregationDictionary,
-#     male=True,
-#     female=True,
-#     dataType=float
-# ):
-#     pathsNumber = len(paths)
-#     landscapes = [None] * pathsNumber
-#     for i in range(0, pathsNumber):
-#         filenames = monet.readExperimentFilenames(paths[i])
-#         loadedLandscape = monet.loadAndAggregateLandscapeData(
-#             filenames, aggregationDictionary,
-#             male=male, female=female, dataType=dataType
-#         )
-#         landscapes[i] = loadedLandscape["landscape"]
-#     returnDict = {
-#         "genotypes": aggregationDictionary["genotypes"],
-#         "landscapes": landscapes
-#     }
-#     return returnDict
-
-# femaleFilenames = filenames["female"]
-# maleFilenames = filenames["male"]
+i = 0
+genes = landscapeReps["genotypes"]
+landscapes = landscapeReps["landscapes"]
+repsNumber = len(landscapes)
+genesNumber = len(genes)
+probeNode = zip(*landscapes)[i]
 #
-# for i in range(0, len(femaleFilenames)):
-#     monet.loadNodeData(
-#         maleFilename=maleFilenames[i],
-#         femaleFilename=femaleFilenames[i]
-#     )
-# rawLandscape = monet.loadLandscapeData(
-#     filenames,
-#     male=male,
-#     female=female,
-#     dataType=dataType
+fig, ax = plt.subplots()
+ax.set_aspect(aspect=style["aspect"])
+for j in range(0,repsNumber):
+    transposed = probeNode[j].T
+    for gene in range(0,genesNumber):
+        ax.plot(
+            transposed[gene],
+            linewidth=style["width"],
+            color=style["colors"][gene],
+            alpha=style["alpha"]
+        )
+
+
+fig.savefig("./images/TracesDemo.png",
+    dpi=1024, facecolor='w',
+    edgecolor='w', orientation='portrait', papertype=None,
+    format="png", transparent=True, bbox_inches='tight',
+    pad_inches=0, frameon=None
+)
+
+
+
+# monet.plotMeanGenotypeTrace(
+#     {
+#       "genotypes": landscapeReps["genotypes"],
+#       "population": landscapeReps["landscapes"][0][1]
+#     },
+#     style
 # )
-# aggLandscape = monet.aggregateGenotypesInLandscape(
-#     rawLandscape,
-#     aggregationDictionary
-# )
-# aggLandscape

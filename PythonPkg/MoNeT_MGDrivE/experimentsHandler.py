@@ -379,6 +379,12 @@ def loadAndAggregateLandscapeData(
     female=True,
     dataType=float
 ):
+    """
+    Description:
+    In:
+    Out:
+    Notes:
+    """
     rawLandscape = loadLandscapeData(
         filenames, male=male, female=female, dataType=dataType
     )
@@ -396,6 +402,12 @@ def loadAndAggregateLandscapeDataRepetitions(
     female=True,
     dataType=float
 ):
+    """
+    Description:
+    In:
+    Out:
+    Notes:
+    """
     pathsNumber = len(paths)
     landscapes = [None] * pathsNumber
     for i in range(0, pathsNumber):
@@ -412,7 +424,10 @@ def loadAndAggregateLandscapeDataRepetitions(
     return returnDict
 
 
-def getGenotypeFromLandscape(landscapeData, genotypeIndex):
+def getGenotypeFromLandscape(
+    landscapeData,
+    genotypeIndex
+):
     """
     Description:
         * Returns the spatiotemporal array of the genotype queried
@@ -434,7 +449,9 @@ def getGenotypeFromLandscape(landscapeData, genotypeIndex):
     return geneArray
 
 
-def getGenotypeArraysFromLandscape(landscapeData):
+def getGenotypeArraysFromLandscape(
+    landscapeData
+):
     """
     Description:
         * Returns the spatiotemporal arrays of all the genotypes present in the
