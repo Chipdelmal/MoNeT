@@ -11,7 +11,7 @@ offline.init_notebook_mode(connected=True)
 path = "/Volumes/marshallShare/MGDrivE_Datasets/ThresholdDependent/Datasets/"
 centralFile = "UB.csv"
 coverageRescale = 10
-sensitivitySelector = 2
+sensitivitySelector = 3
 if(sensitivitySelector == 1):
     # 001 larval life decrease
     # 002 larval life increase

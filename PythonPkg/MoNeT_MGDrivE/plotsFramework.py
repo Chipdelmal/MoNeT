@@ -6,6 +6,7 @@ from matplotlib.colors import LinearSegmentedColormap
 import MoNeT_MGDrivE.plots as monetPlots
 from MoNeT_MGDrivE.experimentsHandler import getGenotypeArraysFromLandscape
 
+
 def plotMeanGenotypeTrace(aggData, style):
     """
     Description:
