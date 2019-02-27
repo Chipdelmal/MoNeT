@@ -45,34 +45,80 @@ landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
     paths, aggregationDictionary,
     male=False, female=True, dataType=float
 )
+figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
 
-
-i = 0
-genes = landscapeReps["genotypes"]
-landscapes = landscapeReps["landscapes"]
-repsNumber = len(landscapes)
-genesNumber = len(genes)
-probeNode = zip(*landscapes)[i]
+# def plotNodeDataRepetitions(
+#     nodeRepetitionsArray,
+#     style
+# ):
+#     probeNode = nodeRepetitionsArray
+#     repsNumber = len(probeNode)
+#     genesNumber = len(probeNode[0][0])
+#     fig, ax = plt.subplots()
+#     ax.set_aspect(aspect=style["aspect"])
+#     for j in range(0, repsNumber):
+#         transposed = probeNode[j].T
+#         for gene in range(0, genesNumber):
+#             ax.plot(
+#                 transposed[gene],
+#                 linewidth=style["width"],
+#                 color=style["colors"][gene],
+#                 alpha=style["alpha"]
+#             )
+#     return fig
 #
-fig, ax = plt.subplots()
-ax.set_aspect(aspect=style["aspect"])
-for j in range(0,repsNumber):
-    transposed = probeNode[j].T
-    for gene in range(0,genesNumber):
-        ax.plot(
-            transposed[gene],
-            linewidth=style["width"],
-            color=style["colors"][gene],
-            alpha=style["alpha"]
-        )
+#
+# def plotLandscapeDataRepetitions(
+#     landscapeReps,
+#     style
+# ):
+#     landscapes = landscapeReps["landscapes"]
+#     landscapesNumb = len(landscapeReps["landscapes"][0])
+#     figs = [None] * landscapesNumb
+#     for i in range(0, landscapesNumb):
+#         probeNode = zip(*landscapes)[i]
+#         figs[i] = plotNodeDataRepetitions(probeNode, style)
+#     return figs
 
 
-fig.savefig("./images/TracesDemo.png",
+
+# genes = landscapeReps["genotypes"]
+# landscapes = landscapeReps["landscapes"]
+# landscapesNumb = len(landscapeReps["landscapes"][0])
+# figs = [None] * landscapesNumb
+# for i in range(0,landscapesNumb):
+#     probeNode = zip(*landscapes)[i]
+#     figs[i]=plotNodeDataRepetitions(probeNode,style)
+
+
+fig.savefig("./images/TracesDemo"+str(i)+".png",
     dpi=1024, facecolor='w',
     edgecolor='w', orientation='portrait', papertype=None,
     format="png", transparent=True, bbox_inches='tight',
     pad_inches=0, frameon=None
 )
+
+# i = 0
+# genes = landscapeReps["genotypes"]
+# landscapes = landscapeReps["landscapes"]
+# probeNode = zip(*landscapes)[i]
+# #
+# genesNumber = len(probeNode[0][0])
+# repsNumber = len(probeNode)
+# fig, ax = plt.subplots()
+# ax.set_aspect(aspect=style["aspect"])
+# for j in range(0,repsNumber):
+#     transposed = probeNode[j].T
+#     for gene in range(0,genesNumber):
+#         ax.plot(
+#             transposed[gene],
+#             linewidth=style["width"],
+#             color=style["colors"][gene],
+#             alpha=style["alpha"]
+#         )
+# fig
+
+
 
 
 

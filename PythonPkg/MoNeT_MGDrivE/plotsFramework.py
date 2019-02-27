@@ -146,3 +146,37 @@ def plotGenotypeOverlayFromLandscape(
     for i in range(len(alleleNames)):
         plt.imshow(counts[i], cmap=style["cmap"][i], aspect=style["aspect"])
     return fig
+
+
+def plotNodeDataRepetitions(
+    nodeRepetitionsArray,
+    style
+):
+    probeNode = nodeRepetitionsArray
+    repsNumber = len(probeNode)
+    genesNumber = len(probeNode[0][0])
+    fig, ax = plt.subplots()
+    ax.set_aspect(aspect=style["aspect"])
+    for j in range(0, repsNumber):
+        transposed = probeNode[j].T
+        for gene in range(0, genesNumber):
+            ax.plot(
+                transposed[gene],
+                linewidth=style["width"],
+                color=style["colors"][gene],
+                alpha=style["alpha"]
+            )
+    return fig
+
+
+def plotLandscapeDataRepetitions(
+    landscapeReps,
+    style
+):
+    landscapes = landscapeReps["landscapes"]
+    landscapesNumb = len(landscapeReps["landscapes"][0])
+    figs = [None] * landscapesNumb
+    for i in range(0, landscapesNumb):
+        probeNode = zip(*landscapes)[i]
+        figs[i] = plotNodeDataRepetitions(probeNode, style)
+    return figs
