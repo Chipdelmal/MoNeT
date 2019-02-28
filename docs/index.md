@@ -16,13 +16,19 @@ Click on each on the corresponding images to learn more about our projects:
   <a href="./Networks.html"><img src="./media/btn_Landscape.png" height="175px"></a><a href="./DataAnalysis.html"><img src="./media/btn_Data.png" height="175px"></a><a href="./Campus.html"><img src="./media/btn_Students.png" height="175px"></a>
 </center>
 
+Or take a look at our [Python package](https://pypi.org/project/MoNeT-MGDrivE/)! This code works as a companion to the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project in terms of data and experiments analyses.
+
+<center>
+<a href="https://pypi.org/project/MoNeT-MGDrivE/"><img src="./media/btn_Python.png" width=100%></a><a href="./DataAnalysis.html">
+</center>
+
 <hr>
 
 # Authors
 
 <p style="font-size:12px">
   <b>Lead:</b> <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]<br>
-  <b>Dev:</b> Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Maya Shen [UCB]<!--, Victor Ferman [UCB]--><br>
+  <b>Dev:</b> Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Maya Shen [UCB], Victor Ferman [UCB]<br>
   <b>Former dev:</b> Sabrina Wong [UCB]<br>
   <b>Participant Students:</b> Moisés Montaño Copca [ITESM]<br>
   <b>Former participant students:</b> Martín Alejandro Molinero Morales [ITESM], Christian Ricardo Solís Cortés [ITESM], Salomón Olivera Abud [ITESM], Esteban Quintana Cueto [ITESM]<br>
