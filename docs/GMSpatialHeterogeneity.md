@@ -42,5 +42,5 @@ Finally, once our routines have been tested independently, we will perform facto
 ### Authors
 
 * **Lead:** Héctor M. Sánchez C.
-* **Dev/Research:** Gillian Chu, Biyonka Liang, Maya Shen, Sarafina Smith
+* **Dev/Research:** Gillian Chu, Biyonka Liang, Maya Shen, Sarafina Smith, Jared Bennett
 * **PI:** John M. Marshall

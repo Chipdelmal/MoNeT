@@ -32,6 +32,7 @@ for i in range(0,3):
         )
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
         for i in range(0, len(figsArray)):
+            figsArray[i].get_axes()[0].set_xlim(0,4000)
             monet.quickSaveFigure(
                 figsArray[i],
                 "./images/" + prepend + experimentString + "_N" + str(i) + ".png"
