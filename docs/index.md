@@ -19,7 +19,7 @@ Click on each on the corresponding images to learn more about our projects:
 Or take a look at our [Python package](https://pypi.org/project/MoNeT-MGDrivE/)! This code works as a companion to the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project in terms of data and experiments analyses.
 
 <center>
-<a href="https://pypi.org/project/MoNeT-MGDrivE/"><img src="./media/btn_Python.png" width=100%></a>
+  <a href="https://pypi.org/project/MoNeT-MGDrivE/"><img src="./media/btn_Python.png" height="175px"></a>
 </center>
 
 <hr>
