@@ -12,9 +12,9 @@ In the following examples we show the dynamics of a CRISPR system, and a "split-
 
 We provide both: _Mathematica_ and _Python_ implementations. In the following examples we show two versions generated through the _Python_ version being developed as a user-friendly way to analyze the datasets created in [*MGDrivE*](https://marshalllab.github.io/MGDrivE/):
 
-<img src="./media/tracePython01.png" width="50%" align="middle"><img src="./media/tracePython02.png" width="50%" align="middle">
-
-https://chipdelmal.github.io/MoNeT/media/trace02.png
+<center>
+  <img src="./media/python02.jpg" width="100%" align="middle"><br>
+</center>
 
 ## Gene Spatial Flows
 
@@ -32,9 +32,9 @@ With the top plot being the aggregate of all the alleles in the landscape. The s
 
 <img src="./media/E_065_000_010_005_02D.png" width="100%" align="middle">
 
-## Grafical User Interface
+## More Information
 
-We are coding a GUI for the easy exploration of our datasets and analysis of our results both within and outside our research group...
+For more information, take look at our [MoNeT python module](https://chipdelmal.github.io/MoNeT/PythonModule.html) and our [MGDrivE project](https://marshalllab.github.io/MGDrivE/)!
 
 ## Authors
 
