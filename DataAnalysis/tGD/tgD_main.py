@@ -13,7 +13,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   4: tGDX
 ##############################################################################
 DRIVE = 3
-TRACES = False
+TRACES = True
 STACK = True
 ##############################################################################
 ##############################################################################
@@ -21,16 +21,16 @@ pathRoot = "/Volumes/marshallShare/tGD/"
 pathExt, aggregationDictionary = aux.driveSelector(
     DRIVE, pathRoot
 )
-colors = ["#9f00cc", "#ec0b43", "#0263e2", "#94d4ff", "#ff47da", "#7fff3a"]
+colors = ["#8500ff", "#ff2b35", "#0263e2", "#94d4ff", "#ed0091", "#7fff3a"]
 genes = aggregationDictionary["genotypes"]
 ##############################################################################
 ##############################################################################
 style = {
-    "width": .075, "alpha": .2, "dpi": 1024, "legend": True, "aspect": .1,
+    "width": .125, "alpha": .15, "dpi": 1024, "legend": False, "aspect": .1,
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 styleT = {
-    "width": 2, "alpha": .85, "dpi": 1024, "legend": True, "aspect": .04,
+    "width": 2, "alpha": .7, "dpi": 1024, "legend": False, "aspect": .04,
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 styleS = {
@@ -57,7 +57,7 @@ if TRACES is True:
             monet.quickSaveFigure(
                 figsArray[i],
                 "./images/" + str(DRIVE).rjust(2, "0") + "R_" +
-                experimentString + "_N" + str(i) + ".png"
+                experimentString + ".png"
             )
 ##############################################################################
 ##############################################################################
@@ -81,10 +81,10 @@ if STACK is True:
         monet.quickSaveFigure(
             figA,
             "./images/" + str(DRIVE).rjust(2, "0") + "T_" +
-            experimentString + "_N" + ".png"
+            experimentString + ".png"
         )
         monet.quickSaveFigure(
             figB,
             "./images/" + str(DRIVE).rjust(2, "0") + "S_" +
-            experimentString + "_N" + ".png"
+            experimentString + ".png"
         )
