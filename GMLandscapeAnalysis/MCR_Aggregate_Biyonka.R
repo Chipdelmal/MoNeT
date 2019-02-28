@@ -185,16 +185,16 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
   # split and aggregate, save originals
   MGDrivEv2::SplitAggregateCpp(readDir = x$folders[1], writeDir = x$folders[3],
                                simTime = x$netPar$simTime, numPatch = x$netPar$nPatch,
-                               genotypes = driveCube$genotypesID, remFiles = TRUE)
+                               genotypes = driveCube$genotypesID, remFiles = FALSE)
 
   # mean and quantiles, remove split/agg files
   MGDrivEv2::AnalyzeQuantilesCpp(readDirectory = x$folders[3], writeDirectory = x$folders[2],
                                  doMean=TRUE, quantiles=NULL,
                                  simTime = x$netPar$simTime, numPatch = x$netPar$nPatch,
-                                 genotypes = driveCube$genotypesID, remFiles = TRUE)
+                                 genotypes = driveCube$genotypesID, remFiles = FALSE)
 
   # remove raw/garbage folders
-  unlink(x = x$folders[c(1,3)], recursive = TRUE, force = TRUE)
+  #unlink(x = x$folders[c(1,3)], recursive = TRUE, force = TRUE)
   gc()
 
 })
