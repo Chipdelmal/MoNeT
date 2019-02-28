@@ -5,10 +5,10 @@
 # Mosquito Networks Taskforce
 ###############################################################################
 
-from .experimentsHandler import *
 from .auxiliaryFunctions import *
+from .colors import *
+from .experimentsHandler import *
 from .factorialExperimentsHandler import *
 from .factorialSensitivity import *
-from .colors import *
-from .tracesHandler import *
 from .plots import *
+from .tracesHandler import *

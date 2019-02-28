@@ -25,5 +25,5 @@ To upgrade the package, change the version number in setup.py and run the follow
 
 ```bash
 python3 setup.py sdist bdist_wheel
-python -m twine upload dist/*
+python -m twine upload dist/* --skip-existing
 ```
