@@ -13,7 +13,7 @@ points = []
 angles = (2*np.pi)/sides
 xList = []
 yList = []
-cords = open(str(sides)+'_'+str(radius)+'_ring_cords.csv', 'w')
+cords = open(str(sides)+'_'+str(radius)+'_ring_coords.csv', 'w')
 for i in range(sides):
     x = radius*np.sin(i*angles)
     y = radius*np.cos(i*angles)
