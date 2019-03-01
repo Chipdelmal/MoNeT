@@ -13,12 +13,14 @@ points = []
 angles = (2*np.pi)/sides
 xList = []
 yList = []
+cords = open(str(sides)+'_'+str(radius)+'_ring_cords.csv', 'w')
 for i in range(sides):
     x = radius*np.sin(i*angles)
     y = radius*np.cos(i*angles)
     xList.append(x)
     yList.append(y)
     points.append((x,y))
+    cords.write(str(x)+','+str(y)+'\n')
 
 outFile = open(str(sides)+'_'+str(radius)+'_ring.csv', 'w')
 for i in range(sides):

@@ -20,12 +20,12 @@ colors = ['#6e44ff','#e56399','#ee6c4d', '#861657', '#5cf64a', 'yellow', 'magent
 
 groups = ['W', 'H', 'R', 'B', 'E']
 weights = [[],[],[],[],[]]
-patches = 10
+patches = 20
 
-folder = '/Volumes/marshallShare/vic/eRACRfact13/'
+folder = '/Volumes/marshallShare/vic/eRACRfact14/'
 video = None
-for interval in range(50, 275, 25):
-    for releases in range (10,32,2):
+for interval in range(100, 275, 25):
+    for releases in range (20,32,2):
         experiment='E_'+str(interval).zfill(4)+'_02_'+str(releases).zfill(5)
         print(experiment)
         maleFile = open(folder+experiment+'/ADM_Run001.csv', 'r')
@@ -37,7 +37,7 @@ for interval in range(50, 275, 25):
             for i in range(len(groups)):
                 weights[i].append(genotype.count(groups[i]))
         time= 0
-        fig, axList = plt.subplots(nrows=1, ncols=patches, figsize=(11, 1))
+        fig, axList = plt.subplots(nrows=1, ncols=patches, figsize=(patches+2, 1))
         for line in maleFile:
             data = line.split(',')
             currentPatch = int(data[1])
@@ -60,7 +60,7 @@ for interval in range(50, 275, 25):
                 plt.close(fig)
                 plt.close('all')
                 time+=1
-                fig, axList = plt.subplots(nrows=1, ncols=patches, figsize=(11, 1))
+                fig, axList = plt.subplots(nrows=1, ncols=patches, figsize=(patches+2, 1))
         maleFile.close()
         video = subprocess.Popen(['ffmpeg', '-r', '24', '-f', 'image2', '-s', '1920x1080', '-i', folder+experiment+'/%05d.png', '-vcodec', 'libx264', '-crf', '25','-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2', '-pix_fmt', 'yuv420p',folder+'videos/'+experiment+'.mp4'])
         print(video.pid)
