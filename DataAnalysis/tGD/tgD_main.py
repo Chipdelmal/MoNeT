@@ -12,7 +12,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   3: tGD
 #   4: tGDX
 ##############################################################################
-DRIVE = 1
+DRIVE = 4
 TRACES = True
 STACK = True
 ##############################################################################
@@ -34,7 +34,7 @@ styleT = {
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 styleS = {
-    "width": .001, "alpha": .85, "dpi": 1024, "legend": True, "aspect": .02,
+    "width": .001, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .02,
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 ##############################################################################

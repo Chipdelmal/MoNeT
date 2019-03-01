@@ -54,11 +54,11 @@ colors = [
 ]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleA = {
-    "width": 1, "alpha": 1, "dpi": 1024, "legend": True,
+    "width": 1, "alpha": 1, "dpi": 1024, "legend": False,
     "aspect": .5, "colors": colors
 }
 styleB = {
-    "width": 0, "alpha": .9, "dpi": 1024, "legend": True,
+    "width": 0, "alpha": .9, "dpi": 1024, "legend": False,
     "aspect": .5, "colors": colors
 }
 # Traces and Stack ------------------------------------------------------------

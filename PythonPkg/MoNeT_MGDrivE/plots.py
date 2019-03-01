@@ -40,11 +40,12 @@ def plotMeanGenotypeTrace(aggData, style):
         legends.append(
             mpatches.Patch(color=style["colors"][i], label=groups[i])
         )
-    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
-               ncol=2, mode="expand", borderaxespad=0.)
+    if style["legend"] is True:
+        plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+                   ncol=2, mode="expand", borderaxespad=0.)
     ax.xaxis.set_label_text("")
     ax.yaxis.set_label_text("")
-    plt.ylabel("Allele Count")
+    # plt.ylabel("Allele Count")
     return fig
 
 
@@ -80,9 +81,10 @@ def plotMeanGenotypeStack(aggData, style):
         kind='area', ax=ax2, legend=style["legend"], color=style["colors"],
         linewidth=style["width"], alpha=style["alpha"]
     )
-    plt.ylabel("Allele Count")
-    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
-               ncol=2, mode="expand", borderaxespad=0.)
+    # plt.ylabel("Allele Count")
+    if style["legend"] is True:
+        plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+                   ncol=2, mode="expand", borderaxespad=0.)
     return fig
 
 
