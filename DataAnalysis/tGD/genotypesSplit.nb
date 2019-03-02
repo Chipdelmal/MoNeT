@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     37773,        892]
-NotebookOptionsPosition[     36336,        858]
-NotebookOutlinePosition[     36689,        874]
-CellTagsIndexPosition[     36646,        871]
+NotebookDataLength[     40514,        943]
+NotebookOptionsPosition[     39075,        909]
+NotebookOutlinePosition[     39430,        925]
+CellTagsIndexPosition[     39387,        922]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -371,8 +371,8 @@ Cell[BoxData[{
  RowBox[{"hex", "=", 
   RowBox[{"{", 
    RowBox[{
-   "\"\<#8500ff\>\"", ",", "\"\<#ff2b35\>\"", ",", "\"\<#0263e2\>\"", ",", 
-    "\"\<#94d4ff\>\"", ",", "\"\<#ff00cb\>\"", ",", "\"\<#7fff3a\>\""}], 
+   "\"\<#090446\>\"", ",", "\"\<#ed0091\>\"", ",", "\"\<#c6d8ff\>\"", ",", 
+    "\"\<#7692ff\>\"", ",", "\"\<#29339b\>\"", ",", "\"\<#7fff3a\>\""}], 
    "}"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Transpose", "[", 
@@ -386,21 +386,29 @@ Cell[BoxData[{
   "Grid"}]}], "Input",
  CellChangeTimes->{{3.760370542397263*^9, 3.760370606996601*^9}, {
    3.760370669582334*^9, 3.760370704148057*^9}, {3.760370816093191*^9, 
-   3.760370841678236*^9}, 3.76037872656818*^9},
+   3.760370841678236*^9}, 3.76037872656818*^9, {3.7604706824774027`*^9, 
+   3.760470683689389*^9}, {3.760470743719338*^9, 3.76047074745301*^9}, {
+   3.760470834074993*^9, 3.760470839526059*^9}, {3.760470963418149*^9, 
+   3.7604709701356916`*^9}, {3.760472632638217*^9, 3.760472655141325*^9}, {
+   3.760472704416123*^9, 3.760472710221237*^9}, {3.7604731173636208`*^9, 
+   3.7604731229884157`*^9}},
  CellLabel->
-  "In[199]:=",ExpressionUUID->"5f754113-5b30-4a74-9a9e-bf834220fc8b"],
+  "In[150]:=",ExpressionUUID->"5f754113-5b30-4a74-9a9e-bf834220fc8b"],
 
 Cell[BoxData[
  RowBox[{"{", 
-  RowBox[{"\<\"#8500ff\"\>", ",", "\<\"#ff2b35\"\>", ",", "\<\"#0263e2\"\>", 
-   ",", "\<\"#94d4ff\"\>", ",", "\<\"#ff00cb\"\>", ",", "\<\"#7fff3a\"\>"}], 
+  RowBox[{"\<\"#090446\"\>", ",", "\<\"#ed0091\"\>", ",", "\<\"#c6d8ff\"\>", 
+   ",", "\<\"#7692ff\"\>", ",", "\<\"#29339b\"\>", ",", "\<\"#7fff3a\"\>"}], 
   "}"}]], "Output",
  CellChangeTimes->{
   3.760370564107617*^9, {3.760370602490896*^9, 3.760370607144356*^9}, {
    3.760370699490155*^9, 3.7603707044549313`*^9}, {3.760370816665967*^9, 
-   3.760370842402019*^9}, 3.7603787274805527`*^9},
+   3.760370842402019*^9}, 3.7603787274805527`*^9, 3.760470684747457*^9, 
+   3.760470748099791*^9, 3.760470840377944*^9, 3.76047097085149*^9, {
+   3.7604726332922773`*^9, 3.760472656016899*^9}, 3.760472711035515*^9, 
+   3.760473123726452*^9},
  CellLabel->
-  "Out[200]=",ExpressionUUID->"215737a8-682a-45c8-b716-8d50eba9f8a4"],
+  "Out[151]=",ExpressionUUID->"fa3d1eee-0ae4-48e9-b1c7-ab3799f57802"],
 
 Cell[BoxData[
  TagBox[GridBox[{
@@ -411,121 +419,32 @@ Cell[BoxData[
         GraphicsBox[{
           {GrayLevel[0], RectangleBox[{0, 0}]}, 
           {GrayLevel[0], RectangleBox[{1, -1}]}, 
-          {RGBColor[0.5215686274509804, 0., 1.], 
-           RectangleBox[{0, -1}, {2, 1}]}},
-         AspectRatio->1,
-         DefaultBaseStyle->"ColorSwatchGraphics",
-         Frame->True,
-         FrameStyle->RGBColor[0.34771241830065364`, 0., 0.6666666666666667],
-         FrameTicks->None,
-         ImageSize->
-          Dynamic[{
-           Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
-            Magnification]}],
-         PlotRangePadding->None],
-        StyleBox[
-         RowBox[{"RGBColor", "[", 
-           RowBox[{"0.5215686274509804`", ",", "0.`", ",", "1.`"}], "]"}], 
-         NumberMarks -> False]],
-       Appearance->None,
-       BaseStyle->{},
-       BaselinePosition->Baseline,
-       ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
-         If[
-          Not[
-           AbsoluteCurrentValue["Deployed"]], 
-          SelectionMove[Typeset`box$, All, Expression]; 
-          FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
-          FrontEnd`Private`$ColorSelectorInitialColor = 
-           RGBColor[0.5215686274509804, 0., 1.]; 
-          FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
-          MathLink`CallFrontEnd[
-            FrontEnd`AttachCell[Typeset`box$, 
-             FrontEndResource["RGBColorValueSelector"], {0, {Left, Bottom}}, {
-             Left, Top}, 
-             "ClosingActions" -> {
-              "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
-       DefaultBaseStyle->{},
-       Evaluator->Automatic,
-       Method->"Preemptive"],
-      RGBColor[0.5215686274509804, 0., 1.],
-      Editable->False,
-      Selectable->False]},
-    {"\<\"WB\"\>", 
-     InterpretationBox[
-      ButtonBox[
-       TooltipBox[
-        GraphicsBox[{
-          {GrayLevel[0], RectangleBox[{0, 0}]}, 
-          {GrayLevel[0], RectangleBox[{1, -1}]}, 
-          {RGBColor[1., 0.16862745098039217`, 0.20784313725490194`], 
-           RectangleBox[{0, -1}, {2, 1}]}},
-         AspectRatio->1,
-         DefaultBaseStyle->"ColorSwatchGraphics",
-         Frame->True,
-         FrameStyle->RGBColor[
-          0.6666666666666667, 0.11241830065359479`, 0.13856209150326798`],
-         FrameTicks->None,
-         ImageSize->
-          Dynamic[{
-           Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
-            Magnification]}],
-         PlotRangePadding->None],
-        StyleBox[
-         RowBox[{"RGBColor", "[", 
-           
-           RowBox[{"1.`", ",", "0.16862745098039217`", ",", 
-             "0.20784313725490194`"}], "]"}], NumberMarks -> False]],
-       Appearance->None,
-       BaseStyle->{},
-       BaselinePosition->Baseline,
-       ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
-         If[
-          Not[
-           AbsoluteCurrentValue["Deployed"]], 
-          SelectionMove[Typeset`box$, All, Expression]; 
-          FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
-          FrontEnd`Private`$ColorSelectorInitialColor = 
-           RGBColor[1., 0.16862745098039217`, 0.20784313725490194`]; 
-          FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
-          MathLink`CallFrontEnd[
-            FrontEnd`AttachCell[Typeset`box$, 
-             FrontEndResource["RGBColorValueSelector"], {0, {Left, Bottom}}, {
-             Left, Top}, 
-             "ClosingActions" -> {
-              "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
-       DefaultBaseStyle->{},
-       Evaluator->Automatic,
-       Method->"Preemptive"],
-      RGBColor[1., 0.16862745098039217`, 0.20784313725490194`],
-      Editable->False,
-      Selectable->False]},
-    {"\<\"H\"\>", 
-     InterpretationBox[
-      ButtonBox[
-       TooltipBox[
-        GraphicsBox[{
-          {GrayLevel[0], RectangleBox[{0, 0}]}, 
-          {GrayLevel[0], RectangleBox[{1, -1}]}, 
           {RGBColor[
-           0.00784313725490196, 0.38823529411764707`, 0.8862745098039215], 
+           0.03529411764705882, 0.01568627450980392, 0.27450980392156865`], 
            RectangleBox[{0, -1}, {2, 1}]}},
          AspectRatio->1,
          DefaultBaseStyle->"ColorSwatchGraphics",
          Frame->True,
          FrameStyle->RGBColor[
-          0.005228758169934641, 0.25882352941176473`, 0.5908496732026144],
+          0.023529411764705882`, 0.010457516339869282`, 0.18300653594771243`],
+         
          FrameTicks->None,
          ImageSize->
           Dynamic[{
            Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
             Magnification]}],
-         PlotRangePadding->None],
+         PlotRangePadding->None,
+         ImageCache->GraphicsData["CompressedBitmap", "\<\
+eJzzTSzJSM1NLMlMTlRwL0osyMhMLlZwyy8CCjEzMjAwcAMxjwIDiP0fyIQS
+3P+BAMhg/m9nEwfEsSDMwAoiGf9bWkYy/s9Mb2SEK2Jg0PzPyGABxLYMLEDS
+BigGZAPFjf5bmEUwIFSyMev/52Bx/M/J4gFUycniDhQDsv8zMdj8t7WOxarS
+HazSDazSfRCrJOQj4kOJcKDDIogRAJttoBY=\
+\>"]],
         StyleBox[
          RowBox[{"RGBColor", "[", 
            
-           RowBox[{"0.00784313725490196`", ",", "0.38823529411764707`", ",", 
-             "0.8862745098039215`"}], "]"}], NumberMarks -> False]],
+           RowBox[{"0.03529411764705882`", ",", "0.01568627450980392`", ",", 
+             "0.27450980392156865`"}], "]"}], NumberMarks -> False]],
        Appearance->None,
        BaseStyle->{},
        BaselinePosition->Baseline,
@@ -537,7 +456,7 @@ Cell[BoxData[
           FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
           FrontEnd`Private`$ColorSelectorInitialColor = 
            RGBColor[
-            0.00784313725490196, 0.38823529411764707`, 0.8862745098039215]; 
+            0.03529411764705882, 0.01568627450980392, 0.27450980392156865`]; 
           FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
           MathLink`CallFrontEnd[
             FrontEnd`AttachCell[Typeset`box$, 
@@ -548,34 +467,93 @@ Cell[BoxData[
        DefaultBaseStyle->{},
        Evaluator->Automatic,
        Method->"Preemptive"],
-      RGBColor[0.00784313725490196, 0.38823529411764707`, 0.8862745098039215],
-      
+      RGBColor[0.03529411764705882, 0.01568627450980392, 0.27450980392156865`],
       Editable->False,
       Selectable->False]},
-    {"\<\"RA\"\>", 
+    {"\<\"WB\"\>", 
      InterpretationBox[
       ButtonBox[
        TooltipBox[
         GraphicsBox[{
           {GrayLevel[0], RectangleBox[{0, 0}]}, 
           {GrayLevel[0], RectangleBox[{1, -1}]}, 
-          {RGBColor[0.580392156862745, 0.8313725490196078, 1.], 
+          {RGBColor[0.9294117647058824, 0., 0.5686274509803921], 
            RectangleBox[{0, -1}, {2, 1}]}},
          AspectRatio->1,
          DefaultBaseStyle->"ColorSwatchGraphics",
          Frame->True,
-         FrameStyle->RGBColor[
-          0.38692810457516336`, 0.5542483660130719, 0.6666666666666667],
+         FrameStyle->RGBColor[0.6196078431372549, 0., 0.3790849673202614],
          FrameTicks->None,
          ImageSize->
           Dynamic[{
            Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
             Magnification]}],
-         PlotRangePadding->None],
+         PlotRangePadding->None,
+         ImageCache->GraphicsData["CompressedBitmap", "\<\
+eJzzTSzJSM1NLMlMTlRwL0osyMhMLlZwyy8CCjEzMjAwcAMxjwIDiP0fyIQS
+3P+BAMhg/r/FsuX/ZghmYAWRjP83WjYy/j+auoARrmgWQ8z/swzV/+8ytDCw
+/L8DJJlBbKBYxf+Nxo0MCJVzGBKA8u3/PzJMBqp8zzAJKAZk/7/H0Aq2AlXl
+bYY2sBqW/28ZJgLFgGyQ6YNOJXE+Ij6UCAc6LIIYAboe37A=\
+\>"]],
         StyleBox[
          RowBox[{"RGBColor", "[", 
            
-           RowBox[{"0.580392156862745`", ",", "0.8313725490196078`", ",", 
+           RowBox[{"0.9294117647058824`", ",", "0.`", ",", 
+             "0.5686274509803921`"}], "]"}], NumberMarks -> False]],
+       Appearance->None,
+       BaseStyle->{},
+       BaselinePosition->Baseline,
+       ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
+         If[
+          Not[
+           AbsoluteCurrentValue["Deployed"]], 
+          SelectionMove[Typeset`box$, All, Expression]; 
+          FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
+          FrontEnd`Private`$ColorSelectorInitialColor = 
+           RGBColor[0.9294117647058824, 0., 0.5686274509803921]; 
+          FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
+          MathLink`CallFrontEnd[
+            FrontEnd`AttachCell[Typeset`box$, 
+             FrontEndResource["RGBColorValueSelector"], {0, {Left, Bottom}}, {
+             Left, Top}, 
+             "ClosingActions" -> {
+              "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
+       DefaultBaseStyle->{},
+       Evaluator->Automatic,
+       Method->"Preemptive"],
+      RGBColor[0.9294117647058824, 0., 0.5686274509803921],
+      Editable->False,
+      Selectable->False]},
+    {"\<\"H\"\>", 
+     InterpretationBox[
+      ButtonBox[
+       TooltipBox[
+        GraphicsBox[{
+          {GrayLevel[0], RectangleBox[{0, 0}]}, 
+          {GrayLevel[0], RectangleBox[{1, -1}]}, 
+          {RGBColor[0.7764705882352941, 0.8470588235294118, 1.], 
+           RectangleBox[{0, -1}, {2, 1}]}},
+         AspectRatio->1,
+         DefaultBaseStyle->"ColorSwatchGraphics",
+         Frame->True,
+         FrameStyle->RGBColor[
+          0.5176470588235295, 0.5647058823529412, 0.6666666666666667],
+         FrameTicks->None,
+         ImageSize->
+          Dynamic[{
+           Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+            Magnification]}],
+         PlotRangePadding->None,
+         ImageCache->GraphicsData["CompressedBitmap", "\<\
+eJzzTSzJSM1NLMlMTlRwL0osyMhMLlZwyy8CCjEzMjAwcAMxjwIDiP0fyIQS
+3P+BAMhg/r9g5d7/81fsAWEGVhDJ+H/ust2M/7fuOcMIV9TQvez/ql13/+84
++ZaB5f+242+BYkD2/5W77v2fs2wXA0Jlc98KoMy7/6fu/AeqPHHrP1AMyAaK
+vQdbgapy+4k3YDUs/4/dAKkEsoFibwedSuJ8RHwoEQ50WAQxAgCwDxvn\
+\>"]],
+        StyleBox[
+         RowBox[{"RGBColor", "[", 
+           
+           RowBox[{"0.7764705882352941`", ",", "0.8470588235294118`", ",", 
              "1.`"}], "]"}], NumberMarks -> False]],
        Appearance->None,
        BaseStyle->{},
@@ -587,7 +565,7 @@ Cell[BoxData[
           SelectionMove[Typeset`box$, All, Expression]; 
           FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
           FrontEnd`Private`$ColorSelectorInitialColor = 
-           RGBColor[0.580392156862745, 0.8313725490196078, 1.]; 
+           RGBColor[0.7764705882352941, 0.8470588235294118, 1.]; 
           FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
           MathLink`CallFrontEnd[
             FrontEnd`AttachCell[Typeset`box$, 
@@ -598,32 +576,40 @@ Cell[BoxData[
        DefaultBaseStyle->{},
        Evaluator->Automatic,
        Method->"Preemptive"],
-      RGBColor[0.580392156862745, 0.8313725490196078, 1.],
+      RGBColor[0.7764705882352941, 0.8470588235294118, 1.],
       Editable->False,
       Selectable->False]},
-    {"\<\"RB\"\>", 
+    {"\<\"RA\"\>", 
      InterpretationBox[
       ButtonBox[
        TooltipBox[
         GraphicsBox[{
           {GrayLevel[0], RectangleBox[{0, 0}]}, 
           {GrayLevel[0], RectangleBox[{1, -1}]}, 
-          {RGBColor[1., 0., 0.796078431372549], 
+          {RGBColor[0.4627450980392157, 0.5725490196078431, 1.], 
            RectangleBox[{0, -1}, {2, 1}]}},
          AspectRatio->1,
          DefaultBaseStyle->"ColorSwatchGraphics",
          Frame->True,
-         FrameStyle->RGBColor[0.6666666666666667, 0., 0.530718954248366],
+         FrameStyle->RGBColor[
+          0.3084967320261438, 0.38169934640522873`, 0.6666666666666667],
          FrameTicks->None,
          ImageSize->
           Dynamic[{
            Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
             Magnification]}],
-         PlotRangePadding->None],
+         PlotRangePadding->None,
+         ImageCache->GraphicsData["CompressedBitmap", "\<\
+eJzzTSzJSM1NLMlMTlRwL0osyMhMLlZwyy8CCjEzMjAwcAMxjwIDiP0fyIQS
+3P+BAMhg/l/WsheI94AwAyuIZPxf1Lib8f/UBWcY4Yo8Y5b9T6q++z+79S0D
+y/+slrdAMSD7f3zlPaDqXQwIlX4JK/7ndbz7XzHlP1Bl+eT/QDEg+39223uw
+Fagqc9vfgNWw/C+bBFIJZP/PApo72FQS5yPiQ4lwoMMiiBEAiZj78g==\
+\>"]],
         StyleBox[
          RowBox[{"RGBColor", "[", 
-           RowBox[{"1.`", ",", "0.`", ",", "0.796078431372549`"}], "]"}], 
-         NumberMarks -> False]],
+           
+           RowBox[{"0.4627450980392157`", ",", "0.5725490196078431`", ",", 
+             "1.`"}], "]"}], NumberMarks -> False]],
        Appearance->None,
        BaseStyle->{},
        BaselinePosition->Baseline,
@@ -634,7 +620,7 @@ Cell[BoxData[
           SelectionMove[Typeset`box$, All, Expression]; 
           FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
           FrontEnd`Private`$ColorSelectorInitialColor = 
-           RGBColor[1., 0., 0.796078431372549]; 
+           RGBColor[0.4627450980392157, 0.5725490196078431, 1.]; 
           FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
           MathLink`CallFrontEnd[
             FrontEnd`AttachCell[Typeset`box$, 
@@ -645,7 +631,62 @@ Cell[BoxData[
        DefaultBaseStyle->{},
        Evaluator->Automatic,
        Method->"Preemptive"],
-      RGBColor[1., 0., 0.796078431372549],
+      RGBColor[0.4627450980392157, 0.5725490196078431, 1.],
+      Editable->False,
+      Selectable->False]},
+    {"\<\"RB\"\>", 
+     InterpretationBox[
+      ButtonBox[
+       TooltipBox[
+        GraphicsBox[{
+          {GrayLevel[0], RectangleBox[{0, 0}]}, 
+          {GrayLevel[0], RectangleBox[{1, -1}]}, 
+          {RGBColor[0.16078431372549018`, 0.2, 0.6078431372549019], 
+           RectangleBox[{0, -1}, {2, 1}]}},
+         AspectRatio->1,
+         DefaultBaseStyle->"ColorSwatchGraphics",
+         Frame->True,
+         FrameStyle->RGBColor[
+          0.10718954248366012`, 0.13333333333333336`, 0.40522875816993464`],
+         FrameTicks->None,
+         ImageSize->
+          Dynamic[{
+           Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+            Magnification]}],
+         PlotRangePadding->None,
+         ImageCache->GraphicsData["CompressedBitmap", "\<\
+eJzzTSzJSM1NLMlMTlRwL0osyMhMLlZwyy8CCjEzMjAwcAMxjwIDiP0fyIQS
+3P+BAMhg/u8X0vnfLxiMGVhBJON/T/82xv9lVYsZ4YpEZZL+y6k1/1fQ6mNg
+AZK9QDEg+7+4YuN/D79WBoRKaaW0/2r6E/5rGs8FqtQ0ngMUA7LBqn2DOzBU
+9oPVgFTOBqucAzJ9EKokxkfEhxLhQIdFECMAkAXCPA==\
+\>"]],
+        StyleBox[
+         RowBox[{"RGBColor", "[", 
+           
+           RowBox[{"0.16078431372549018`", ",", "0.2`", ",", 
+             "0.6078431372549019`"}], "]"}], NumberMarks -> False]],
+       Appearance->None,
+       BaseStyle->{},
+       BaselinePosition->Baseline,
+       ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
+         If[
+          Not[
+           AbsoluteCurrentValue["Deployed"]], 
+          SelectionMove[Typeset`box$, All, Expression]; 
+          FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
+          FrontEnd`Private`$ColorSelectorInitialColor = 
+           RGBColor[0.16078431372549018`, 0.2, 0.6078431372549019]; 
+          FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
+          MathLink`CallFrontEnd[
+            FrontEnd`AttachCell[Typeset`box$, 
+             FrontEndResource["RGBColorValueSelector"], {0, {Left, Bottom}}, {
+             Left, Top}, 
+             "ClosingActions" -> {
+              "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
+       DefaultBaseStyle->{},
+       Evaluator->Automatic,
+       Method->"Preemptive"],
+      RGBColor[0.16078431372549018`, 0.2, 0.6078431372549019],
       Editable->False,
       Selectable->False]},
     {"\<\"G\"\>", 
@@ -667,12 +708,19 @@ Cell[BoxData[
           Dynamic[{
            Automatic, 1.35 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
             Magnification]}],
-         PlotRangePadding->None],
+         PlotRangePadding->None,
+         ImageCache->GraphicsData["CompressedBitmap", "\<\
+eJzzTSzJSM1NLMlMTlRwL0osyMhMLlZwyy8CCjEzMjAwcAMxjwIDiP0fyIQS
+3P+BAMhg/l+9N/x/9R4wZmAFkYz/y3cHM/6feaaWEa7If5ni/+y7uv+L3xoy
+sPwvemsAFCt+a/A/457G/7JdQQwIlSEr1P+XvzP73/jfGqiy4b8VUKzxv9X/
+kveG/6uAVqCqLHtjBlQDUlkPVglUD7Jj0KkkzkfEhxLhQIdFECMAjmrrRg==
+\
+\>"]],
         StyleBox[
          RowBox[{"RGBColor", "[", 
-           RowBox[{
-            "0.4980392156862745`", ",", "1.`", ",", "0.22745098039215686`"}], 
-           "]"}], NumberMarks -> False]],
+           
+           RowBox[{"0.4980392156862745`", ",", "1.`", ",", 
+             "0.22745098039215686`"}], "]"}], NumberMarks -> False]],
        Appearance->None,
        BaseStyle->{},
        BaselinePosition->Baseline,
@@ -704,9 +752,12 @@ Cell[BoxData[
  CellChangeTimes->{
   3.760370564107617*^9, {3.760370602490896*^9, 3.760370607144356*^9}, {
    3.760370699490155*^9, 3.7603707044549313`*^9}, {3.760370816665967*^9, 
-   3.760370842402019*^9}, 3.760378727506836*^9},
+   3.760370842402019*^9}, 3.7603787274805527`*^9, 3.760470684747457*^9, 
+   3.760470748099791*^9, 3.760470840377944*^9, 3.76047097085149*^9, {
+   3.7604726332922773`*^9, 3.760472656016899*^9}, 3.760472711035515*^9, 
+   3.760473123750166*^9},
  CellLabel->
-  "Out[201]=",ExpressionUUID->"a2eb6827-473d-48ef-94ec-0b6221290650"]
+  "Out[152]=",ExpressionUUID->"3810080c-044b-49ba-ace8-ddf248a169bf"]
 }, Open  ]]
 }, Open  ]],
 
@@ -857,7 +908,7 @@ Cell[BoxData[
 }, Open  ]]
 },
 WindowSize->{844, 1369},
-WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+WindowMargins->{{Automatic, 780}, {Automatic, 0}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->"Default.nb"
@@ -881,17 +932,17 @@ Cell[5831, 108, 7381, 217, 976, "Input",ExpressionUUID->"7170a1d3-496b-41da-876d
 Cell[13215, 327, 1465, 23, 119, "Output",ExpressionUUID->"52bd69a0-24d8-486f-9655-b36ddf62244f"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[14717, 355, 1306, 35, 94, "Input",ExpressionUUID->"5f754113-5b30-4a74-9a9e-bf834220fc8b"],
-Cell[16026, 392, 504, 10, 34, "Output",ExpressionUUID->"215737a8-682a-45c8-b716-8d50eba9f8a4"],
-Cell[16533, 404, 11954, 304, 123, "Output",ExpressionUUID->"a2eb6827-473d-48ef-94ec-0b6221290650"]
+Cell[14717, 355, 1655, 40, 94, "Input",ExpressionUUID->"5f754113-5b30-4a74-9a9e-bf834220fc8b"],
+Cell[16375, 397, 695, 13, 34, "Output",ExpressionUUID->"fa3d1eee-0ae4-48e9-b1c7-ab3799f57802"],
+Cell[17073, 412, 14153, 347, 123, "Output",ExpressionUUID->"3810080c-044b-49ba-ace8-ddf248a169bf"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[28536, 714, 149, 3, 69, "Chapter",ExpressionUUID->"2cffb42f-672f-4ef8-96d0-234eadb2462b"],
-Cell[28688, 719, 5538, 83, 493, "Input",ExpressionUUID->"1c90d739-f9ee-4059-9eb4-c737ae8f0581"],
+Cell[31275, 765, 149, 3, 69, "Chapter",ExpressionUUID->"2cffb42f-672f-4ef8-96d0-234eadb2462b"],
+Cell[31427, 770, 5538, 83, 493, "Input",ExpressionUUID->"1c90d739-f9ee-4059-9eb4-c737ae8f0581"],
 Cell[CellGroupData[{
-Cell[34251, 806, 1243, 33, 157, "Input",ExpressionUUID->"ca16bceb-4fb1-499f-8ff6-04708b39a800"],
-Cell[35497, 841, 811, 13, 56, "Output",ExpressionUUID->"a86e2db3-e0ca-4fb4-9b81-fee5806c59b8"]
+Cell[36990, 857, 1243, 33, 157, "Input",ExpressionUUID->"ca16bceb-4fb1-499f-8ff6-04708b39a800"],
+Cell[38236, 892, 811, 13, 56, "Output",ExpressionUUID->"a86e2db3-e0ca-4fb4-9b81-fee5806c59b8"]
 }, Open  ]]
 }, Open  ]]
 }

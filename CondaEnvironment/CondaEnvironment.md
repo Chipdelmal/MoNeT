@@ -54,6 +54,12 @@ source activate MoNeT
 python -m ipykernel install --user --name MoNeT --display-name "Python (MoNeT)"
 ```
 
+To remove MoNeT from the Jupyter kernel list:
+
+```bash
+jupyter kernelspec list
+jupyter kernelspec uninstall MoNeT
+```
 
 <hr>
 

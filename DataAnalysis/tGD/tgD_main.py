@@ -12,7 +12,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   3: tGD
 #   4: tGDX
 ##############################################################################
-DRIVE = 4
+DRIVE = 3
 TRACES = True
 STACK = True
 ##############################################################################
@@ -21,7 +21,7 @@ pathRoot = "/Volumes/marshallShare/tGD/"
 pathExt, aggregationDictionary = aux.driveSelector(
     DRIVE, pathRoot
 )
-colors = ["#8500ff", "#ff2b35", "#0263e2", "#94d4ff", "#ed0091", "#7fff3a"]
+colors = ["#090446", "#ed0091", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
 genes = aggregationDictionary["genotypes"]
 ##############################################################################
 ##############################################################################
