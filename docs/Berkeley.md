@@ -12,6 +12,11 @@ The idea in these sets of experiments is to understand the differences in dynami
 
 ## [Mosquito Habitats Spatial Heterogeneity (Biyonka Liang)](https://chipdelmal.github.io/MoNeT/SpatialDistribution.html)
 
+The thorough study of spatial heterogeneity in mosquito habitats is still a missing piece in our understanding of the spread of gene drives for disease control applications. To tackle this problem, we will look into how an MCR construct spreads in landscapes with varying degrees of heterogeneity in their spatial distribution.
+
+<center><img src="./media/habitat02.png" width="100%" align="middle"></center>
+
+
 ##  [Mosquito Population Size Heterogeneity (Maya Shen)](https://chipdelmal.github.io/MoNeT/PopSizeHeterogeneity.html)
 
 Although widely thought as being important for gene-flow dynamics, the effects of heterogeneity in population sizes have rarely been studied in detail. In this work, we intend to go tackle this problem systematically so that we can understand how it might be of relevance in the study of new disease-control interventions such as gene-drives.
