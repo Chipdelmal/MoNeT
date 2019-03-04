@@ -30,11 +30,11 @@ style = {
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 styleT = {
-    "width": 2, "alpha": .7, "dpi": 1024, "legend": False, "aspect": .04,
+    "width": 2, "alpha": .7, "dpi": 1024, "legend": True, "aspect": .04,
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 styleS = {
-    "width": .001, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .02,
+    "width": .001, "alpha": .85, "dpi": 1024, "legend": True, "aspect": .02,
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 ##############################################################################
