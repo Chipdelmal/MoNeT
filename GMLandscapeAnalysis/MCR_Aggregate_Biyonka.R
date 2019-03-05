@@ -21,13 +21,13 @@ library(parallel)
 USER=1
 REPETITIONS=10 # number of repetitions of each experiment
 REPITER=1 # number of groups of repetitions to perform, for analysis purposes ONLY BIYONKA SHOULD NEED THIS, 
-SIM_TIME=365*2
+SIM_TIME=365*3
 NUM_CORES=4
 
 ###############################################################################
 if(USER==1){
-  LANDSCAPE_PATH='~/Desktop/LANDSCAPES'
-  BASE_OUTPUT_PATH="~/Desktop/OUTPUT/MGDrivE"
+  LANDSCAPE_PATH='~/Desktop/Output/spaHet/distance_analysis'
+  BASE_OUTPUT_PATH="~/Desktop/Output"
 }else if(USER==2){
   LANDSCAPE_PATH=''
   BASE_OUTPUT_PATH=""
