@@ -20,14 +20,15 @@ library(parallel)
 # NUM_CORES: Cores for the parallel threads
 USER=1
 REPETITIONS=10 # number of repetitions of each experiment
+REPITER=1 # number of groups of repetitions to perform, for analysis purposes ONLY BIYONKA SHOULD NEED THIS, 
 SIM_TIME=365*2
-NUM_CORES=1
+NUM_CORES=4
 
 
 ###############################################################################
 if(USER==1){
   LANDSCAPE_PATH='~/Desktop/LANDSCAPES'
-  BASE_OUTPUT_PATH="~/Desktop/HOLD/MGDrivE"
+  BASE_OUTPUT_PATH="~/Desktop/OUTPUT/MGDrivE"
 }else if(USER==2){
   LANDSCAPE_PATH=''
   BASE_OUTPUT_PATH=""
@@ -70,11 +71,12 @@ releasesParameters=list(releasesStart=50, releasesNumber=1,
 landscapes <- list.files(path = LANDSCAPE_PATH, pattern = "*.csv", full.names = TRUE)
 
 Rep_names <- formatC(x = 1:REPETITIONS, width = 4, format = "d", flag = "0")
-ExperimentList <- vector(mode = "list", length = length(landscapes))
+Iter_names <- formatC(x = 1:REPITER, width = 4, format = "d", flag = "0")
+ExperimentList <- vector(mode = "list", length = length(landscapes)*REPITER)
 listmarker=1
 
 for(lscape in landscapes){
-
+  
   ####################
   # setup output folders
   ####################
@@ -82,66 +84,79 @@ for(lscape in landscapes){
   lscapeName <- tail(x = strsplit(x = lscape, split = "[/,.]")[[1]], n = 2)[1]
   OUTPUT_DIRECTORY=file.path(BASE_OUTPUT_PATH, lscapeName)
   if(!dir.exists(OUTPUT_DIRECTORY)){ dir.create(OUTPUT_DIRECTORY) }
-
+  
   # create holding/deleting directories
   SUB_DIRECTORES <- file.path(OUTPUT_DIRECTORY,c("RAW","ANALYZED","GARBAGE"))
-
+  
   # build output directories
   for(folder in SUB_DIRECTORES){if(!dir.exists(folder)){ dir.create(folder) }}
-
-
-  ####################
-  # Experiment Paths
-  ####################
-  ExperimentList[[listmarker]]$folders <- SUB_DIRECTORES
-
-
-  ####################
-  # Seed for each experiment
-  ####################
-  ExperimentList[[listmarker]]$randomSeed <- as.integer(sample(x = .Random.seed, size = 1, replace = FALSE) %% 2^31)
-
-
+  
+  # create iteration folders
+  SUB_DIRECTORES <- outer(X = SUB_DIRECTORES, Y = Iter_names, FUN = "file.path")
+  
+  # build output directories
+  for(folder in SUB_DIRECTORES){if(!dir.exists(folder)){ dir.create(folder) }}
+  
   ####################
   # setup landscape
   ####################
   # read in and setup landscape
   lFile <- read.csv(file = lscape, header = TRUE, sep = ",")
   # population from each patch
-  ExperimentList[[listmarker]]$patchPops <- lFile$n
+  patchPops <- lFile$n
   # movement, calculate distances, weight with an exponential kernal, pulse of pi
-  ExperimentList[[listmarker]]$movementKernel <- calc_HurdleExpKernel(distMat = outer(X = lFile$x, Y = lFile$x,
-                                                                                      FUN = function(x,y){abs(x-y)}),
-                                                         r = MGDrivE::kernels$exp_rate,
-                                                         pi = stayProbability^(bioParameters$muAd))
+  movementKernel <- calc_HurdleExpKernel(distMat = outer(X = lFile$x, Y = lFile$x,
+                                         FUN = function(x,y){abs(x-y)}),
+                                         r = MGDrivE::kernels$exp_rate,
+                                         pi = stayProbability^(bioParameters$muAd))
   # batch migration, just zero
-  ExperimentList[[listmarker]]$batchMigration=basicBatchMigration(batchProbs=0,sexProbs=c(.5,.5),
-                                                                  numPatches=NROW(ExperimentList[[listmarker]]$movementKernel))
-
-
+  batchMigration <- basicBatchMigration(batchProbs=0,sexProbs=c(.5,.5),
+                                        numPatches=NROW(movementKernel))
+  
+  
   ####################
   # things that depend on landscape info
   ####################
   # all netPars the same
-  ExperimentList[[listmarker]]$netPar=Network.Parameters(runID=1,simTime=SIM_TIME,
-                                                         nPatch=NROW(ExperimentList[[listmarker]]$movementKernel),
-                                           beta=bioParameters$betaK, muAd=bioParameters$muAd,
-                                           popGrowth=bioParameters$popGrowth,tEgg=bioParameters$tEgg,
-                                           tLarva=bioParameters$tLarva, tPupa=bioParameters$tPupa,
-                                           AdPopEQ=ExperimentList[[listmarker]]$patchPops)
-
+  netPar <- Network.Parameters(runID=1,simTime=SIM_TIME,
+                                                         nPatch=NROW(movementKernel),
+                                                         beta=bioParameters$betaK, muAd=bioParameters$muAd,
+                                                         popGrowth=bioParameters$popGrowth,tEgg=bioParameters$tEgg,
+                                                         tLarva=bioParameters$tLarva, tPupa=bioParameters$tPupa,
+                                                         AdPopEQ=patchPops)
+  
   # all releases the same
-  ExperimentList[[listmarker]]$patchReleases=replicate(n=NROW(ExperimentList[[listmarker]]$movementKernel),
-                                                       expr={list(maleReleases=NULL,femaleReleases=NULL,eggReleases=NULL)},
-                                                       simplify=FALSE)
-  ExperimentList[[listmarker]]$patchReleases[[1]]$maleReleases=generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="M")
-  ExperimentList[[listmarker]]$patchReleases[[1]]$femaleReleases=generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="F")
+  patchReleases <- replicate(n=NROW(movementKernel),
+                             expr={list(maleReleases=NULL,femaleReleases=NULL,eggReleases=NULL)},
+                             simplify=FALSE)
+  patchReleases[[1]]$maleReleases <- generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="M")
+  patchReleases[[1]]$femaleReleases <- generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="F")
 
-
-
-  # increment list counter
-  listmarker = listmarker + 1
-
+  
+  ####################
+  # loop over repetition groups
+  ####################
+  for(iter in 1:REPITER){
+    
+    # Experiment Paths
+    ExperimentList[[listmarker]]$folders <- SUB_DIRECTORES[ ,iter]
+    
+    # Seed for each experiment
+    ExperimentList[[listmarker]]$randomSeed <- as.integer(sample(x = .Random.seed, size = 1, replace = FALSE) %% 2^31)
+    
+    # landscape
+    ExperimentList[[listmarker]]$patchPops <- patchPops
+    ExperimentList[[listmarker]]$movementKernel <- movementKernel
+    ExperimentList[[listmarker]]$batchMigration <- batchMigration
+    
+    # things that depend on landscape info
+    ExperimentList[[listmarker]]$netPar <- netPar
+    ExperimentList[[listmarker]]$patchReleases <- patchReleases
+    
+    # increment list counter
+    listmarker = listmarker + 1
+    
+  } # end loop over RepIterations
 } # end loop over landscapes
 
 
@@ -162,13 +177,13 @@ parallel::clusterEvalQ(cl=cl,expr={
 
 # Change ExperimentList_A to ExperimentList_B for second set of runs, comment out the subsetting stuff (Sept 29, 2018)
 parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
-
+  
   # make folders
   for(i in c(3,1)){
     repFolders <- file.path(x$folders[i], Rep_names)
     for(folder in repFolders){ dir.create(path = folder) }
   }
-
+  
   # run experiments
   MGDrivEv2::stochastic_multiple(
     seed=x$randomSeed,
@@ -181,22 +196,22 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
     output=repFolders,
     verbose=FALSE
   )
-
+  
   # split and aggregate, save originals
   MGDrivEv2::SplitAggregateCpp(readDir = x$folders[1], writeDir = x$folders[3],
                                simTime = x$netPar$simTime, numPatch = x$netPar$nPatch,
                                genotypes = driveCube$genotypesID, remFiles = FALSE)
-
+  
   # mean and quantiles, remove split/agg files
   MGDrivEv2::AnalyzeQuantilesCpp(readDirectory = x$folders[3], writeDirectory = x$folders[2],
                                  doMean=TRUE, quantiles=NULL,
                                  simTime = x$netPar$simTime, numPatch = x$netPar$nPatch,
                                  genotypes = driveCube$genotypesID, remFiles = FALSE)
-
+  
   # remove raw/garbage folders
   #unlink(x = x$folders[c(1,3)], recursive = TRUE, force = TRUE)
   gc()
-
+  
 })
 
 # stop cluster
