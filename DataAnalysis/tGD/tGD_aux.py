@@ -1,60 +1,14 @@
-import MoNeT_MGDrivE as monet
-import tgD_select as aux
-import matplotlib as plt
-import matplotlib.patches as mpatches
-import matplotlib.pyplot as pltt
-plt.rcParams.update({'figure.max_open_warning': 0})
-
-##############################################################################
-# Drive:
-#   1: CRISPR
-#   2: CRISPRX
-#   3: tGD
-#   4: tGDX
-##############################################################################
-DRIVE = 3
-TRACES = True
-STACK = True
-##############################################################################
-##############################################################################
-pathRoot = "/Volumes/marshallShare/tGD/"
-pathExt, aggregationDictionary = aux.driveSelector(
-    DRIVE, pathRoot
-)
-colors = ["#090446", "#ed0091", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
-genes = aggregationDictionary["genotypes"]
-##############################################################################
-##############################################################################
-style = {
-    "width": .125, "alpha": .15, "dpi": 1024, "legend": False, "aspect": .1,
-    "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
-}
-styleT = {
-    "width": 2, "alpha": .7, "dpi": 1024, "legend": True, "aspect": .04,
-    "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
-}
-styleS = {
-    "width": .001, "alpha": .85, "dpi": 1024, "legend": True, "aspect": .02,
-    "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
-}
-pathsRoot = monet.listDirectoriesWithPathWithinAPath(
-    pathRoot + pathExt + "ANALYZED/"
-)
-i = 0
-pathSample = pathsRoot[i] + "/"
-experimentString = pathSample.split("/")[-2]
-filenames = monet.readExperimentFilenames(pathSample)
-landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-    filenames, male=True, female=True, dataType=float
-)
-aggData = monet.aggregateGenotypesInNode(
-    landscapeSumData,
-    aggregationDictionary
-)
+import numpy as np
+import os as os
+import csv as csv
 
 
-def reachedSteadtStateAtDay(aggData, safety):
-    finalFrame = aggData["population"][-1]
+def reachedSteadtStateAtDay(
+    aggData,
+    safety,
+    finalFrame=-1
+):
+    finalFrame = aggData["population"][finalFrame]
     toleranceUp = finalFrame + safety
     toleranceDown = finalFrame - safety
 
@@ -73,4 +27,56 @@ def reachedSteadtStateAtDay(aggData, safety):
 
     return steadyStateReach
 
-reachedSteadtStateAtDay(aggData, 10)
+
+def quickSaveTraceAggData(
+    aggData,
+    filename,
+    fmt="%.10d"
+):
+    np.savetxt(
+        filename,
+        aggData["population"],
+        header=(",".join(aggData["genotypes"])),
+        delimiter=",",
+        fmt='%.10f',
+        comments=''
+    )
+
+
+def quickSaveRepsAggData(
+    landscapeReps,
+    foldername,
+    fmt="%.10d",
+    padNumb=5
+):
+    if not os.path.exists(foldername):
+        try:
+            os.mkdir(foldername)
+        except:
+            raise OSError("Can't create destination directory (%s)!" %
+                          (foldername))
+
+    repsNumber = len(landscapeReps["landscapes"])
+    for i in range(0, repsNumber):
+        nodesNumber = len(landscapeReps["landscapes"][0])
+        for j in range(0, nodesNumber):
+            aggData = {
+                "genotypes": landscapeReps["genotypes"],
+                "population": (landscapeReps["landscapes"][i][j])
+            }
+            quickSaveTraceAggData(
+                aggData,
+                foldername + "/N" + str(j).rjust(5, "0") +
+                "_R" + str(i).rjust(5, "0") + ".csv",
+                fmt=fmt
+            )
+
+
+def writeSummary(
+    path,
+    summaryDict
+):
+    with open(path, "w") as csvfile:
+        w = csv.writer(csvfile)
+        for key, val in summaryDict.items():
+            w.writerow([key, val])

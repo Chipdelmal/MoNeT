@@ -1,8 +1,7 @@
 import MoNeT_MGDrivE as monet
-import tgD_select as aux
+import tgD_select as sel
 import matplotlib as plt
-import matplotlib.patches as mpatches
-import matplotlib.pyplot as pltt
+import tGD_aux as aux
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 ##############################################################################
@@ -12,13 +11,15 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   3: tGD
 #   4: tGDX
 ##############################################################################
-DRIVE = 1
-TRACES = True
-STACK = True
+DRIVE = 4
+TRACES = False
+STACK = False
+SUMMARIES_DATA = True
+TRACES_DATA = False
 ##############################################################################
 ##############################################################################
 pathRoot = "/Volumes/marshallShare/tGD/"
-pathExt, aggregationDictionary = aux.driveSelector(
+pathExt, aggregationDictionary = sel.driveSelector(
     DRIVE, pathRoot
 )
 colors = ["#090446", "#ed0091", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
@@ -65,10 +66,15 @@ if STACK is True:
     pathsRoot = monet.listDirectoriesWithPathWithinAPath(
         pathRoot + pathExt + "ANALYZED/"
     )
+    summariesDict = {}
     for i in range(0, len(pathsRoot)):
+        #####################################################################
+        # Paths
         pathSample = pathsRoot[i] + "/"
         experimentString = pathSample.split("/")[-2]
         filenames = monet.readExperimentFilenames(pathSample)
+        #####################################################################
+        # Aggregate
         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
             filenames, male=True, female=True, dataType=float
         )
@@ -76,6 +82,10 @@ if STACK is True:
             landscapeSumData,
             aggregationDictionary
         )
+        steadyStateReached = aux.reachedSteadtStateAtDay(aggData, 200)
+        summariesDict[experimentString] = steadyStateReached
+        #####################################################################
+        # Plots
         figA = monet.plotMeanGenotypeTrace(aggData, styleT)
         figB = monet.plotMeanGenotypeStack(aggData, styleS)
         monet.quickSaveFigure(
@@ -87,4 +97,57 @@ if STACK is True:
             figB,
             "./images/" + str(DRIVE).rjust(2, "0") + "S_" +
             experimentString + ".png"
+        )
+##############################################################################
+##############################################################################
+if SUMMARIES_DATA is True:
+    pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+        pathRoot + pathExt + "ANALYZED/"
+    )
+    summariesDict = {}
+    for i in range(0, len(pathsRoot)):
+        #####################################################################
+        # Paths
+        pathSample = pathsRoot[i] + "/"
+        experimentString = pathSample.split("/")[-2]
+        filenames = monet.readExperimentFilenames(pathSample)
+        #####################################################################
+        # Aggregate
+        landscapeSumData = monet.sumLandscapePopulationsFromFiles(
+            filenames, male=True, female=True, dataType=float
+        )
+        aggData = monet.aggregateGenotypesInNode(
+            landscapeSumData,
+            aggregationDictionary
+        )
+        aux.quickSaveTraceAggData(
+            aggData,
+            "./data/mean/" + str(DRIVE).rjust(2, "0") +
+            "_" + experimentString + ".csv"
+        )
+        #####################################################################
+        # Summaries
+        steadyStateReached = aux.reachedSteadtStateAtDay(aggData, 500, 1500)
+        summariesDict[experimentString] = steadyStateReached
+    aux.writeSummary(
+        "./data/" + str(DRIVE).rjust(2, "0")+"_SteadyState.csv",
+        summariesDict
+    )
+##############################################################################
+##############################################################################
+if TRACES_DATA is True:
+    pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+        pathRoot + pathExt + "GARBAGE/"
+    )
+    for i in range(0, len(pathsRoot)):
+        pathSample = pathsRoot[i]
+        experimentString = pathSample.split("/")[-1]
+        paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
+        landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+            paths, aggregationDictionary,
+            male=False, female=True, dataType=float
+        )
+        aux.quickSaveRepsAggData(
+            landscapeReps,
+            "./data/reps/" + str(DRIVE).rjust(2, "0") + experimentString
         )
