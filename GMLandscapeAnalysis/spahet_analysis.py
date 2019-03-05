@@ -5,8 +5,8 @@ import numpy as np
 # -----------------------------------------------------------------------------
 # Define the experiment's path, aggregation dictionary, and read filenames
 type = float
-experimentString = "E_099_000_000_001"
-path = "/Users/Biyonka/Desktop/Output/2019_02_27_ANALYZED/"
+experimentString = "ANALYZED"
+path = "/Users/Biyonka/Desktop/Output/400distance/"
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [
@@ -17,6 +17,7 @@ aggregationDictionary = monet.generateAggregationDictionary(
     ]
 )
 filenames = monet.readExperimentFilenames(path + experimentString)
+
 # To analyze a single node ...................................................
 # Load a single node (auxiliary function just for demonstration)
 nodeIndex = 0
@@ -50,7 +51,7 @@ geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 wbh = np.sum(aggData['population'], axis =1)
 ratio_homing = aggData['population'][:, 1]/(wbh)
 #get time at which homing ratio exceeds threshold
-time = (list(ratio_homing>0.5)).index(True)
+time = (list(ratio_homing>0.03)).index(True)
 # -----------------------------------------------------------------------------
 # Plotting
 # -----------------------------------------------------------------------------
@@ -60,7 +61,7 @@ colors = [
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleA = {
     "width": 1, "alpha": 1, "dpi": 1024, "legend": True,
-    "aspect": .1, "colors": colors
+    "aspect": .05, "colors": colors
 }
 styleB = {
     "width": 0, "alpha": .9, "dpi": 1024, "legend": True,
@@ -69,8 +70,8 @@ styleB = {
 # Traces and Stack ------------------------------------------------------------
 figA = monet.plotMeanGenotypeTrace(aggData, styleA)
 figB = monet.plotMeanGenotypeStack(aggData, styleB)
-monet.quickSaveFigure(figA, "./images/MTrace.png")
-monet.quickSaveFigure(figB, "./images/MStack.png")
+monet.quickSaveFigure(figA, "./Images/MTrace.png")
+monet.quickSaveFigure(figB, "./Images/MStack.png")
 # Heatmaps --------------------------------------------------------------------
 genes = geneSpatiotemporals["genotypes"]
 plotsArray = monet.plotGenotypeArrayFromLandscape(
