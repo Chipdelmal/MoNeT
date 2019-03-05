@@ -20,14 +20,14 @@ library(parallel)
 # NUM_CORES: Cores for the parallel threads
 USER=1
 REPETITIONS=10 # number of repetitions of each experiment
-SIM_TIME=365*2
+SIM_TIME=365*5
 NUM_CORES=1
 
 
 ###############################################################################
 if(USER==1){
-  LANDSCAPE_PATH='~/Desktop/LANDSCAPES'
-  BASE_OUTPUT_PATH="~/Desktop/HOLD/MGDrivE"
+  LANDSCAPE_PATH='~/Desktop/Output/spaHet/distance_analysis'
+  BASE_OUTPUT_PATH="~/Desktop/Output/"
 }else if(USER==2){
   LANDSCAPE_PATH=''
   BASE_OUTPUT_PATH=""
