@@ -23,6 +23,8 @@ def draw_pie(ax,ratios, X=0, Y=0):
     xy = []
     start = 0.
     for ratio in ratios:
+        if ratio == 0:
+            continue
         x = [0] + np.cos(np.linspace(2*math.pi*start,2*math.pi*(start+ratio), 30)).tolist()
         y = [0] + np.sin(np.linspace(2*math.pi*start,2*math.pi*(start+ratio), 30)).tolist()
         xy1 = list(zip(x,y))
@@ -63,7 +65,7 @@ for interval in range(100, 275, 25):
             for i in range(len(groups)):
                 weights[i].append(genotype.count(groups[i]))
         time= 0
-        fig, ax = plt.subplots(figsize=(10, 10))
+        fig, ax = plt.subplots(figsize=(4, 4))
         for line in maleFile:
             data = line.split(',')
             currentPatch = int(data[1])
@@ -78,6 +80,8 @@ for interval in range(100, 275, 25):
                 else:
                     sizes = getSizes(data[2:],weights)
                     draw_pie(ax, sizes, xList[currentPatch], yList[currentPatch])
+                    ax.set_ylim((-radius-5), (radius+5))
+                    ax.set_xlim((-radius-5), (radius+5))
                 plt.savefig(folder+experiment+'/'+str(time).zfill(5)+".png",
                             dpi=1024, facecolor='w',
                             edgecolor='w', orientation='portrait', papertype=None,
@@ -86,7 +90,7 @@ for interval in range(100, 275, 25):
                 plt.close(fig)
                 plt.close('all')
                 time+=1
-                fig, ax= plt.subplots(figsize=(10, 10))
+                fig, ax= plt.subplots(figsize=(3, 3))
         maleFile.close()
         video = subprocess.Popen(['ffmpeg', '-r', '24', '-f', 'image2', '-s', '1920x1080', '-i', folder+experiment+'/%05d.png', '-vcodec', 'libx264', '-crf', '25','-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2', '-pix_fmt', 'yuv420p',folder+'videos/'+experiment+'.mp4'])
         print(video.pid)

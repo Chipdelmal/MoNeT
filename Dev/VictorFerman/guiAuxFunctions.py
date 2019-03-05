@@ -129,6 +129,8 @@ def draw_pie(ax,ratios, X=0, Y=0, radius=300):
     xy = []
     start = 0.
     for ratio in ratios:
+        if ratio == 0:
+            continue
         x = [0] + np.cos(np.linspace(2*math.pi*start,2*math.pi*(start+ratio), 30)).tolist()
         y = [0] + np.sin(np.linspace(2*math.pi*start,2*math.pi*(start+ratio), 30)).tolist()
         xy1 = list(zip(x,y))
