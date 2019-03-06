@@ -12,7 +12,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   3: tGD
 #   4: tGDX
 ##############################################################################
-DRIVE = 3
+DRIVE = 4
 TRACES = False
 STACK = True
 SUMMARIES_DATA = False
@@ -175,3 +175,7 @@ if TRACES_DATA is True:
             landscapeReps,
             pathRoot + "/data/reps/" + str(DRIVE).rjust(2, "0") + experimentString
         )
+
+
+# finalRatios = aggData["population"][-1]
+# (finalRatios[0]+finalRatios[1])/sum(finalRatios)
