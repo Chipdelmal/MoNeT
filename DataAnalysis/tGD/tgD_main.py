@@ -12,9 +12,9 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   3: tGD
 #   4: tGDX
 ##############################################################################
-DRIVE = 4
-TRACES = True
-STACK = False
+DRIVE = 3
+TRACES = False
+STACK = True
 SUMMARIES_DATA = False
 TRACES_DATA = False
 ##############################################################################
@@ -83,7 +83,7 @@ if TRACES is True:
             figsArray[i].get_axes()[0].set_ylim(0, yRange)
             monet.quickSaveFigure(
                 figsArray[i],
-                "./images/" + str(DRIVE).rjust(2, "0") + "R_" +
+                pathRoot + "images/" + str(DRIVE).rjust(2, "0") + "R_" +
                 experimentString + ".png"
             )
 ##############################################################################
@@ -122,7 +122,7 @@ if STACK is True:
         # )
         monet.quickSaveFigure(
             figB,
-            "./images/" + str(DRIVE).rjust(2, "0") + "S_" +
+            pathRoot + "/images/" + str(DRIVE).rjust(2, "0") + "S_" +
             experimentString + ".png"
         )
 ##############################################################################
@@ -147,14 +147,14 @@ if SUMMARIES_DATA is True:
         )
         aux.quickSaveTraceAggData(
             aggData,
-            "./data/mean/" + str(DRIVE).rjust(2, "0") +
+            pathRoot + "/data/mean/" + str(DRIVE).rjust(2, "0") +
             "_" + experimentString + ".csv"
         )
         #####################################################################
         ssReach = aux.reachedSteadtStateAtDay(aggData, .01)
         summariesDict[experimentString] = ssReach
     aux.writeSummary(
-        "./data/" + str(DRIVE).rjust(2, "0")+"_SteadyState.csv",
+        pathRoot + "/data/" + str(DRIVE).rjust(2, "0")+"_SteadyState.csv",
         summariesDict
     )
 ##############################################################################
@@ -173,5 +173,5 @@ if TRACES_DATA is True:
         )
         aux.quickSaveRepsAggData(
             landscapeReps,
-            "./data/reps/" + str(DRIVE).rjust(2, "0") + experimentString
+            pathRoot + "/data/reps/" + str(DRIVE).rjust(2, "0") + experimentString
         )
