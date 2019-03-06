@@ -20,20 +20,14 @@ def getSizes(line, weights):
 
 def draw_pie(ax,ratios, X=0, Y=0):
     N = len(ratios)
-    xy = []
-    start = 0.
-    for ratio in ratios:
-        if ratio == 0:
-            continue
-        x = [0] + np.cos(np.linspace(2*math.pi*start,2*math.pi*(start+ratio), 30)).tolist()
-        y = [0] + np.sin(np.linspace(2*math.pi*start,2*math.pi*(start+ratio), 30)).tolist()
-        xy1 = list(zip(x,y))
-        xy.append(xy1)
-        start += ratio
-
-    for i, xyi in enumerate(xy):
-        ax.scatter([X],[Y] , marker=(xyi,0), s=600, facecolor=colors[i])
-
+    start = 0.0
+    for i in range(N):
+        ratio = ratios[i]
+        if ratio >= 0.005:
+            x = [0] + np.cos( np.linspace(2*math.pi*start, 2*math.pi*(start+ratio)) ).tolist()
+            y = [0] + np.sin( np.linspace(2*math.pi*start, 2*math.pi*(start+ratio)) ).tolist()
+            ax.scatter([X],[Y] , marker=(list(zip(x,y))), s=500, facecolor=colors[i])
+            start += ratio
 
 
 colors = ['#6e44ff','#e56399','#ee6c4d', '#861657', '#5cf64a', 'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal']
@@ -65,7 +59,7 @@ for interval in range(100, 275, 25):
             for i in range(len(groups)):
                 weights[i].append(genotype.count(groups[i]))
         time= 0
-        fig, ax = plt.subplots(figsize=(4, 4))
+        fig, ax = plt.subplots(figsize=(3, 3))
         for line in maleFile:
             data = line.split(',')
             currentPatch = int(data[1])
