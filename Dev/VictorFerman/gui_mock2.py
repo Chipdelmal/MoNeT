@@ -147,7 +147,7 @@ class Page2(QtWidgets.QWizardPage):
     def __init__(self,parent=None):
         super(Page2,self).__init__(parent)
         self.setTitle('Graph')
-        self.figure = Figure(figsize=(12,7), tight_layout=True)
+        self.figure = Figure(figsize=(6,3), tight_layout=True)
         self.canvas = FigureCanvas(self.figure)
         self.ax = None
         self.setFinalPage(True)
@@ -286,7 +286,7 @@ class Page4(QtWidgets.QWizardPage):
     def __init__(self,parent=None):
         super(Page4,self).__init__(parent)
         self.setTitle('Graph')
-        self.figure = Figure(figsize=(12,7),tight_layout=True)
+        self.figure = Figure(figsize=(6,3),tight_layout=True)
         self.canvas = FigureCanvas(self.figure)
         self.ax = self.figure.add_subplot(111)
         self.setFinalPage(True)
@@ -327,7 +327,7 @@ class Page4(QtWidgets.QWizardPage):
                 next(self.files[patch])
                 next(self.files[patch])
             self.canvas.draw()
-            fname="./video/"+str(currentLine).zfill(10)+".png"
+            fname="./video/"+str(currentLine).zfill(5)+".png"
             self.canvas.print_figure(fname, dpi=1024,
                         facecolor='w', edgecolor='w', orientation='portrait',
                         papertype=None, format="png", transparent=False,
