@@ -13,6 +13,7 @@ def driveSelector(DRIVE, pathRoot):
                 [3, 6, 8, 9, 9]
             ]
         )
+        yRange = 11000
     if DRIVE == 2:
         pathExt = "CRISPRX/"
         aggregationDictionary = monet.generateAggregationDictionary(
@@ -25,6 +26,7 @@ def driveSelector(DRIVE, pathRoot):
                 []
             ]
         )
+        yRange = 11000
     if DRIVE == 3:
         pathExt = "tGD/"
         aggregationDictionary = monet.generateAggregationDictionary(
@@ -100,6 +102,7 @@ def driveSelector(DRIVE, pathRoot):
                 ]
             ]
         )
+        yRange = 2 * 11000
     if DRIVE == 4:
         pathExt = "tGDX/"
         aggregationDictionary = monet.generateAggregationDictionary(
@@ -179,4 +182,5 @@ def driveSelector(DRIVE, pathRoot):
                 ]
             ]
         )
-    return [pathExt, aggregationDictionary]
+        yRange = 1.5 * 11000
+    return [pathExt, aggregationDictionary, yRange]

@@ -1,10 +1,6 @@
 # Authors
 
-Héctor Manuel Sánchez Castellanos
-Sarafina Smith
-Biyonka Liang
-Víctor Ferman
-Sabrina Wong
+Héctor Manuel Sánchez Castellanos,  Sarafina Smith, Biyonka Liang, Víctor Ferman, Sabrina Wong
 
 # Description
 

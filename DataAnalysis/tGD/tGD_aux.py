@@ -5,12 +5,13 @@ import csv as csv
 
 def reachedSteadtStateAtDay(
     aggData,
-    safety,
+    safety=.01,
     finalFrame=-1
 ):
     finalFrame = aggData["population"][finalFrame]
-    toleranceUp = finalFrame + safety
-    toleranceDown = finalFrame - safety
+    tolerance = round(sum(finalFrame) * safety)
+    toleranceUp = finalFrame + tolerance
+    toleranceDown = finalFrame - tolerance
 
     daysMax = len(aggData["population"])
 

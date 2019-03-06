@@ -12,15 +12,15 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   3: tGD
 #   4: tGDX
 ##############################################################################
-DRIVE = 4
-TRACES = True
-STACK = False
+DRIVE = 1
+TRACES = False
+STACK = True
 SUMMARIES_DATA = True
 TRACES_DATA = False
 ##############################################################################
 ##############################################################################
 pathRoot = "/Volumes/marshallShare/tGD/"
-pathExt, aggregationDictionary = sel.driveSelector(
+pathExt, aggregationDictionary, yRange = sel.driveSelector(
     DRIVE, pathRoot
 )
 colors = ["#090446", "#ed0091", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
@@ -36,9 +36,10 @@ styleT = {
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 styleS = {
-    "width": .001, "alpha": .85, "dpi": 1024, "legend": True, "aspect": .02,
+    "width": .001, "alpha": .85, "dpi": 1024, "legend": True, "aspect": .01,
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
+xRange = 4 * 365
 ##############################################################################
 ##############################################################################
 if TRACES is True:
@@ -59,7 +60,7 @@ if TRACES is True:
             landscapeSumData,
             aggregationDictionary
         )
-        steadyStateReached = aux.reachedSteadtStateAtDay(aggData, 250, 1400)
+        ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
         #######################################################################
         pathsRoot = monet.listDirectoriesWithPathWithinAPath(
             pathRoot + pathExt + "GARBAGE/"
@@ -74,12 +75,12 @@ if TRACES is True:
         figsArray = plots.plotLandscapeDataRepetitions(
             landscapeReps,
             style,
-            steadyStateReached,
-            11000
+            ssDay,
+            yRange
         )
         for i in range(0, len(figsArray)):
-            figsArray[i].get_axes()[0].set_xlim(0, 4*365)
-            figsArray[i].get_axes()[0].set_ylim(0, 11000)
+            figsArray[i].get_axes()[0].set_xlim(0, xRange)
+            figsArray[i].get_axes()[0].set_ylim(0, yRange)
             monet.quickSaveFigure(
                 figsArray[i],
                 "./images/" + str(DRIVE).rjust(2, "0") + "R_" +
@@ -94,12 +95,10 @@ if STACK is True:
     summariesDict = {}
     for i in range(0, len(pathsRoot)):
         #####################################################################
-        # Paths
         pathSample = pathsRoot[i] + "/"
         experimentString = pathSample.split("/")[-2]
         filenames = monet.readExperimentFilenames(pathSample)
         #####################################################################
-        # Aggregate
         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
             filenames, male=True, female=True, dataType=float
         )
@@ -107,17 +106,20 @@ if STACK is True:
             landscapeSumData,
             aggregationDictionary
         )
-        steadyStateReached = aux.reachedSteadtStateAtDay(aggData, 200)
-        summariesDict[experimentString] = steadyStateReached
+        ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
+        summariesDict[experimentString] = ssDay
         #####################################################################
-        # Plots
-        figA = monet.plotMeanGenotypeTrace(aggData, styleT)
-        figB = monet.plotMeanGenotypeStack(aggData, styleS)
-        monet.quickSaveFigure(
-            figA,
-            "./images/" + str(DRIVE).rjust(2, "0") + "T_" +
-            experimentString + ".png"
-        )
+        # figA = plots.plotMeanGenotypeTrace(aggData, styleT, ssDay, 2 * yRange)
+        # figA.get_axes()[0].set_xlim(0, xRange)
+        # figA.get_axes()[0].set_ylim(0, 2 * yRange)
+        figB = plots.plotMeanGenotypeStack(aggData, styleS, ssDay, 2 * yRange)
+        figB.get_axes()[0].set_xlim(0, xRange)
+        figB.get_axes()[0].set_ylim(0, 2 * yRange)
+        # monet.quickSaveFigure(
+        #     figA,
+        #     "./images/" + str(DRIVE).rjust(2, "0") + "T_" +
+        #     experimentString + ".png"
+        # )
         monet.quickSaveFigure(
             figB,
             "./images/" + str(DRIVE).rjust(2, "0") + "S_" +
@@ -132,12 +134,10 @@ if SUMMARIES_DATA is True:
     summariesDict = {}
     for i in range(0, len(pathsRoot)):
         #####################################################################
-        # Paths
         pathSample = pathsRoot[i] + "/"
         experimentString = pathSample.split("/")[-2]
         filenames = monet.readExperimentFilenames(pathSample)
         #####################################################################
-        # Aggregate
         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
             filenames, male=True, female=True, dataType=float
         )
@@ -151,9 +151,8 @@ if SUMMARIES_DATA is True:
             "_" + experimentString + ".csv"
         )
         #####################################################################
-        # Summaries
-        steadyStateReached = aux.reachedSteadtStateAtDay(aggData, 250, 1250)
-        summariesDict[experimentString] = steadyStateReached
+        ssReach = aux.reachedSteadtStateAtDay(aggData, .01)
+        summariesDict[experimentString] = ssReach
     aux.writeSummary(
         "./data/" + str(DRIVE).rjust(2, "0")+"_SteadyState.csv",
         summariesDict

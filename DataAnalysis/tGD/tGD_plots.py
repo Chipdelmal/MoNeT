@@ -1,4 +1,8 @@
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import matplotlib.patches as mpatches
+
 
 def plotNodeDataRepetitions(
     nodeRepetitionsArray,
@@ -62,3 +66,99 @@ def plotLandscapeDataRepetitions(
         probeNode = zip(*landscapes)[i]
         figs[i] = plotNodeDataRepetitions(probeNode, style, xCord, yRange)
     return figs
+
+
+def plotMeanGenotypeStack(
+    aggData,
+    style,
+    xCord,
+    yRange
+):
+    """
+    Description:
+        * Plots the mean response of an aggregate dataset.
+    In:
+        * aggData: dictionary containing "genotype" and "populations" pairs
+        * style: dictionary containing width, colors, aspect, alpha
+    Out:
+        * fig: matplotlib figure
+    Notes:
+        * NA
+    """
+    groups = aggData['genotypes']
+    pops = aggData['population']
+    time = np.arange(len(pops))
+    df = pd.DataFrame(time, columns=['Time'])
+    final = [df[['Time']] for _ in range(len(groups))]
+    local = pd.DataFrame(pops, columns=groups)
+    fig, ax2 = plt.subplots()
+    ax2.set_aspect(aspect=style["aspect"])
+    allele_dict = {}
+    for j in range(len(groups)):
+        final[j].insert(1, groups[j] + str(1), (local[groups[j]]).copy())
+        final[j] = final[j].set_index('Time')
+    for i in range(len(groups)):
+        allele_dict[groups[i]] = final[i].T.sum()
+    res = pd.DataFrame(allele_dict)
+    res = res.reindex(columns=groups)
+    res.plot(
+        kind='area', ax=ax2, legend=style["legend"], color=style["colors"],
+        linewidth=style["width"], alpha=style["alpha"]
+    )
+    ax2.plot([xCord, xCord], [0, yRange], 'k--', lw=.5)
+    # plt.ylabel("Allele Count")
+    plt.xlabel("")
+    if style["legend"] is True:
+        plt.legend(bbox_to_anchor=(1.05, 1), loc=2,
+                   ncol=2,  borderaxespad=0.)
+    return fig
+
+
+def plotMeanGenotypeTrace(
+    aggData,
+    style,
+    xCord,
+    yRange
+):
+    """
+    Description:
+        * Plots the mean response of an aggregate dataset.
+    In:
+        * aggData: dictionary containing "genotype" and "populations" pairs
+        * style: dictionary containing width, colors, aspect, alpha
+    Out:
+        * fig: matplotlib figure
+    Notes:
+        * NA
+    """
+    groups = aggData['genotypes']
+    pops = aggData['population']
+    time = np.arange(len(pops))
+    df = pd.DataFrame(time, columns=['Time'])
+    final = [df[['Time']] for _ in range(len(groups))]
+    local = pd.DataFrame(pops, columns=groups)
+    fig, ax = plt.subplots()
+    ax.set_aspect(aspect=style["aspect"])
+    # plt.xticks([])
+    # plt.yticks([])
+    for j in range(len(groups)):
+        final[j].insert(1, groups[j] + str(1), (local[groups[j]]).copy())
+        final[j] = final[j].set_index('Time')
+    for i in range(len(final)):
+        final[i].plot(
+            ax=ax, linewidth=style["width"], legend=False,
+            color=style["colors"][i], alpha=style["alpha"]
+        )
+    legends = []
+    for i in range(len(groups)):
+        legends.append(
+            mpatches.Patch(color=style["colors"][i], label=groups[i])
+        )
+    if style["legend"] is True:
+        plt.legend(bbox_to_anchor=(1.05, 1), loc=2,
+                   ncol=2, borderaxespad=0.)
+    ax.plot([xCord, xCord], [0, yRange], 'k--', lw=.25)
+    ax.xaxis.set_label_text("")
+    ax.yaxis.set_label_text("")
+    # plt.ylabel("Allele Count")
+    return fig
