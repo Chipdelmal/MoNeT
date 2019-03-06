@@ -12,10 +12,10 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   3: tGD
 #   4: tGDX
 ##############################################################################
-DRIVE = 1
-TRACES = False
-STACK = True
-SUMMARIES_DATA = True
+DRIVE = 4
+TRACES = True
+STACK = False
+SUMMARIES_DATA = False
 TRACES_DATA = False
 ##############################################################################
 ##############################################################################
