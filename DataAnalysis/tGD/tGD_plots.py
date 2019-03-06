@@ -33,7 +33,7 @@ def plotNodeDataRepetitions(
                 color=style["colors"][gene],
                 alpha=style["alpha"]
             )
-    ax.plot([xCord, xCord], [0, yRange], 'k-', lw=.5)
+    ax.plot([xCord, xCord], [0, yRange], 'k--', lw=.25)
     return fig
 
 

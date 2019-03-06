@@ -1,7 +1,7 @@
 import MoNeT_MGDrivE as monet
-import tgD_select as aux
+import tgD_select as sel
 import tGD_plots as plots
-
+import tGD_aux as aux
 
 ###########################################################################
 # Drive:
@@ -10,13 +10,13 @@ import tGD_plots as plots
 #   3: tGD
 #   4: tGDX
 ###########################################################################
-DRIVE = 1
+DRIVE = 3
 TRACES = True
 STACK = True
 ###########################################################################
 ###########################################################################
 pathRoot = "/Volumes/marshallShare/tGD/"
-pathExt, aggregationDictionary = aux.driveSelector(
+pathExt, aggregationDictionary = sel.driveSelector(
     DRIVE, pathRoot
 )
 colors = ["#090446", "#ed0091", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
