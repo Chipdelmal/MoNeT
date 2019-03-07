@@ -81,7 +81,8 @@ def plotMeanGenotypeStack(aggData, style):
         kind='area', ax=ax2, legend=style["legend"], color=style["colors"],
         linewidth=style["width"], alpha=style["alpha"]
     )
-    # plt.ylabel("Allele Count")
+    plt.ylabel("")
+    plt.xlabel("")
     if style["legend"] is True:
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2,
                    ncol=2,  borderaxespad=0.)

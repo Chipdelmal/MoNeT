@@ -74,6 +74,16 @@ Iter_names <- formatC(x = 1:REPITER, width = 4, format = "d", flag = "0")
 ExperimentList <- vector(mode = "list", length = length(landscapes)*REPITER)
 listmarker=1
 
+# read in and setup landscape
+lFile <- read.csv(file = lscape, header = TRUE, sep = ",")
+# population from each patch
+patchPops <- lFile$n
+# movement, calculate distances, weight with an exponential kernal, pulse of pi
+movementKernel <- calc_HurdleExpKernel(distMat = outer(X = lFile$x, Y = lFile$x,
+FUN = function(x,y){abs(x-y)}),
+r = MGDrivE::kernels$exp_rate,
+pi = stayProbability^(bioParameters$muAd))
+
 for(lscape in landscapes){
   
   ####################
