@@ -108,6 +108,10 @@ if STACK is True:
         )
         ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
         summariesDict[experimentString] = ssDay
+        aggData = {
+            "genotypes":aggData["genotypes"],
+            "population":aggData["population"]/2
+        }
         #####################################################################
         # figA = plots.plotMeanGenotypeTrace(aggData, styleT, ssDay, 2 * yRange)
         # figA.get_axes()[0].set_xlim(0, xRange)
