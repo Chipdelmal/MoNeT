@@ -13,9 +13,9 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   4: tGDX
 ##############################################################################
 DRIVE = 4
-TRACES = False
+TRACES = True
 STACK = True
-SUMMARIES_DATA = False
+SUMMARIES_DATA = True
 TRACES_DATA = False
 ##############################################################################
 ##############################################################################
@@ -40,6 +40,7 @@ styleS = {
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 xRange = 4 * 365
+yRangeFixed = 11000
 ##############################################################################
 ##############################################################################
 if TRACES is True:
@@ -76,14 +77,14 @@ if TRACES is True:
             landscapeReps,
             style,
             ssDay,
-            yRange
+            yRangeFixed
         )
         for i in range(0, len(figsArray)):
             figsArray[i].get_axes()[0].set_xlim(0, xRange)
-            figsArray[i].get_axes()[0].set_ylim(0, yRange)
+            figsArray[i].get_axes()[0].set_ylim(0, yRangeFixed)
             monet.quickSaveFigure(
                 figsArray[i],
-                pathRoot + "images/" + str(DRIVE).rjust(2, "0") + "R_" +
+                pathRoot + "images/traces/" + str(DRIVE).rjust(2, "0") + "R_" +
                 experimentString + ".png"
             )
 ##############################################################################
@@ -122,7 +123,7 @@ if STACK is True:
         # )
         monet.quickSaveFigure(
             figB,
-            pathRoot + "/images/" + str(DRIVE).rjust(2, "0") + "S_" +
+            pathRoot + "/images/stacks/" + str(DRIVE).rjust(2, "0") + "S_" +
             experimentString + ".png"
         )
 ##############################################################################
@@ -175,7 +176,3 @@ if TRACES_DATA is True:
             landscapeReps,
             pathRoot + "/data/reps/" + str(DRIVE).rjust(2, "0") + experimentString
         )
-
-
-# finalRatios = aggData["population"][-1]
-# (finalRatios[0]+finalRatios[1])/sum(finalRatios)
