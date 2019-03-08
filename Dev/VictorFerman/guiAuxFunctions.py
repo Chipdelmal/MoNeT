@@ -132,7 +132,9 @@ def draw_pie(ax,ratios, X=0, Y=0):
         if ratio >= 0.005:
             x = [0] + np.cos( np.linspace(2*math.pi*start, 2*math.pi*(start+ratio)) ).tolist()
             y = [0] + np.sin( np.linspace(2*math.pi*start, 2*math.pi*(start+ratio)) ).tolist()
-            ax.scatter([X],[Y] , marker=(list(zip(x,y))), s=500, facecolor=colors[i])
+            xy1 = np.column_stack([x, y])
+            s1 = np.abs(xy1).max()
+            ax.scatter([X],[Y] , marker=(xy1), s=500*s1**2, facecolor=colors[i])
             start += ratio
 
 #parses coordinates out of a csv file
