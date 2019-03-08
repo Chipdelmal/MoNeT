@@ -1,11 +1,5 @@
 patches = 10
-radius = 50
 folder = '/Volumes/marshallShare/vic/eRACRfact17/'
-video = None
-coordFile = open(str(patches)+'_'+str(radius)+'_ring_coords.csv')
-patches = 0
-for line in coordFile:
-    patches+=1
 for interval in range(100, 275, 25):
     for releases in range (20,32,2):
         experiment='E_'+str(interval).zfill(4)+'_02_'+str(releases).zfill(5)
