@@ -102,7 +102,7 @@ def driveSelector(DRIVE, pathRoot):
                 ]
             ]
         )
-        yRange = 2 * 11000
+        yRange = 11000
     if DRIVE == 4:
         pathExt = "tGDX/"
         aggregationDictionary = monet.generateAggregationDictionary(
@@ -185,5 +185,5 @@ def driveSelector(DRIVE, pathRoot):
                 ]
             ]
         )
-        yRange = 2 * 11000
+        yRange = 11000
     return [pathExt, aggregationDictionary, yRange]

@@ -13,8 +13,8 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   4: tGDX
 ##############################################################################
 DRIVE = 4
-TRACES = True
-STACK = True
+TRACES = False
+STACK = False
 SUMMARIES_DATA = True
 TRACES_DATA = False
 ##############################################################################
@@ -32,11 +32,11 @@ style = {
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 styleT = {
-    "width": 2, "alpha": .7, "dpi": 1024, "legend": True, "aspect": .04,
+    "width": 2, "alpha": .7, "dpi": 1024, "legend": False, "aspect": .04,
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 styleS = {
-    "width": .001, "alpha": .85, "dpi": 1024, "legend": True, "aspect": .01,
+    "width": .001, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .01,
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 xRange = 4 * 365
@@ -109,6 +109,11 @@ if STACK is True:
         )
         ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
         summariesDict[experimentString] = ssDay
+        if (DRIVE == 3 or DRIVE == 4):
+            aggData = {
+                "genotypes": aggData["genotypes"],
+                "population": aggData["population"]/2
+            }
         #####################################################################
         # figA = plots.plotMeanGenotypeTrace(aggData, styleT, ssDay, 2 * yRange)
         # figA.get_axes()[0].set_xlim(0, xRange)
@@ -133,6 +138,7 @@ if SUMMARIES_DATA is True:
         pathRoot + pathExt + "ANALYZED/"
     )
     summariesDict = {}
+    ratiosDict = {}
     for i in range(0, len(pathsRoot)):
         #####################################################################
         pathSample = pathsRoot[i] + "/"
@@ -151,12 +157,22 @@ if SUMMARIES_DATA is True:
             pathRoot + "/data/mean/" + str(DRIVE).rjust(2, "0") +
             "_" + experimentString + ".csv"
         )
+        if (DRIVE == 1 or DRIVE == 2):
+            groupingsList = [[2]]
+        else:
+            groupingsList = [[3],[4],[3,4]]
+        ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
         #####################################################################
         ssReach = aux.reachedSteadtStateAtDay(aggData, .01)
         summariesDict[experimentString] = ssReach
+        ratiosDict[experimentString] = ratiosAtEnd
     aux.writeSummary(
         pathRoot + "/data/" + str(DRIVE).rjust(2, "0")+"_SteadyState.csv",
         summariesDict
+    )
+    aux.writeSummary(
+        pathRoot + "/data/" + str(DRIVE).rjust(2, "0")+"_Ratios.csv",
+        ratiosDict
     )
 ##############################################################################
 ##############################################################################

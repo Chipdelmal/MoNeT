@@ -16,7 +16,7 @@ STACK = True
 ###########################################################################
 ###########################################################################
 pathRoot = "/Volumes/marshallShare/tGD/"
-pathExt, aggregationDictionary = sel.driveSelector(
+pathExt, aggregationDictionary, yRange = sel.driveSelector(
     DRIVE, pathRoot
 )
 colors = ["#090446", "#ed0091", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
@@ -78,6 +78,32 @@ genes = aggregationDictionary["genotypes"]
 #     10000
 # )
 
+
+def reachedSteadtStateAtDay(
+    aggData,
+    safety=.01,
+    finalFrame=-1
+):
+    finalFrame = aggData["population"][finalFrame]
+    tolerance = round(sum(finalFrame) * safety)
+    toleranceUp = finalFrame + tolerance
+    toleranceDown = finalFrame - tolerance
+
+    daysMax = len(aggData["population"])
+
+    for i in range(0, daysMax):
+        steadyStateReach = daysMax
+        testFrame = aggData["population"][i]
+
+        boolsUp = testFrame < toleranceUp
+        boolsDown = testFrame > toleranceDown
+
+        if all(boolsUp) and all(boolsDown):
+            steadyStateReach = i
+            break
+
+    return steadyStateReach
+
 styleT = {
     "width": 2, "alpha": .7, "dpi": 1024, "legend": True, "aspect": .04,
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
@@ -90,7 +116,7 @@ pathsRoot = monet.listDirectoriesWithPathWithinAPath(
     pathRoot + pathExt + "ANALYZED/"
 )
 summariesDict = {}
-i = 0
+i = 1
 #####################################################################
 # Paths
 pathSample = pathsRoot[i] + "/"
@@ -105,12 +131,36 @@ aggData = monet.aggregateGenotypesInNode(
     landscapeSumData,
     aggregationDictionary
 )
-steadyStateReached = aux.reachedSteadtStateAtDay(aggData, 200)
-summariesDict[experimentString] = steadyStateReached
+
+
+finalFrame = -1
+groupingsList = [[4],[5],[4,5]]
+
+
+
+experimentString
+
+
+# flatten = lambda l: [item for sublist in l for item in sublist]
+#
+# def getRatiosAtEnd(aggData, groupingsList, finalFrame):
+#     finalFramePop = aggData["population"][finalFrame]
+#     outList = [None] * len(groupingsList)
+#     for i, grouping in enumerate(groupingsList):
+#         total = sum(finalFramePop[grouping])
+#         ratios = total / sum(finalFramePop)
+#         outList[i] = ratios#[total,ratios]
+#     return flatten(outList)
+
+
+getRatiosAtEnd(aggData, groupingsList, finalFrame)
+
+#steadyStateReached = aux.reachedSteadtStateAtDay(aggData, 200)
+#summariesDict[experimentString] = steadyStateReached
 #####################################################################
 # Plots
-figA = plots.plotMeanGenotypeTrace(aggData, styleT, 500, 10000)
-figB = plots.plotMeanGenotypeStack(aggData, styleS, 500, 10000)
+# figA = plots.plotMeanGenotypeTrace(aggData, styleT, 500, 10000)
+# figB = plots.plotMeanGenotypeStack(aggData, styleS, 500, 10000)
 # monet.quickSaveFigure(
 #     figA,
 #     "./images/" + str(DRIVE).rjust(2, "0") + "T_" +
@@ -121,5 +171,3 @@ figB = plots.plotMeanGenotypeStack(aggData, styleS, 500, 10000)
 #     "./images/" + str(DRIVE).rjust(2, "0") + "S_" +
 #     experimentString + ".png"
 # )
-
-figA

@@ -81,3 +81,17 @@ def writeSummary(
         w = csv.writer(csvfile)
         for key, val in summaryDict.items():
             w.writerow([key, val])
+
+
+
+flatten = lambda l: [item for sublist in l for item in sublist]
+
+
+def getRatiosAtEnd(aggData, groupingsList, finalFrame):
+    finalFramePop = aggData["population"][finalFrame]
+    outList = [None] * len(groupingsList)
+    for i, grouping in enumerate(groupingsList):
+        total = sum(finalFramePop[grouping])
+        ratios = total / sum(finalFramePop)
+        outList[i] = [ratios]#[total, ratios]
+    return flatten(outList)
