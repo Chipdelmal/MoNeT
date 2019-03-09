@@ -12,10 +12,10 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   3: tGD
 #   4: tGDX
 ##############################################################################
-DRIVE = 4
+DRIVE = 2
 TRACES = False
-STACK = False
-SUMMARIES_DATA = True
+STACK = True
+SUMMARIES_DATA = False
 TRACES_DATA = False
 ##############################################################################
 ##############################################################################
@@ -23,7 +23,10 @@ pathRoot = "/Volumes/marshallShare/tGD/"
 pathExt, aggregationDictionary, yRange = sel.driveSelector(
     DRIVE, pathRoot
 )
-colors = ["#090446", "#ed0091", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
+if (DRIVE == 1) or (DRIVE ==2):
+    colors = ["#090446", "#f20060", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
+else:
+    colors = ["#090446", "#f20060", "#c6d8ff", "#ff28d4", "#7fff3a", "#7692ff"]
 genes = aggregationDictionary["genotypes"]
 ##############################################################################
 ##############################################################################
@@ -36,7 +39,7 @@ styleT = {
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 styleS = {
-    "width": .001, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .01,
+    "width": 0, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .01,
     "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
 }
 xRange = 4 * 365
@@ -160,7 +163,7 @@ if SUMMARIES_DATA is True:
         if (DRIVE == 1 or DRIVE == 2):
             groupingsList = [[2]]
         else:
-            groupingsList = [[3],[4],[3,4]]
+            groupingsList = [[3,3],[4,4],[3,4]]
         ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
         #####################################################################
         ssReach = aux.reachedSteadtStateAtDay(aggData, .01)
