@@ -6,7 +6,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 ##############################################################################
 # Setup
 ##############################################################################
-nameExp = "E_0100_02_00030"
+nameExp = "E_0250_02_00030"
 pathRoot = "/Volumes/marshallShare/vic/"
 pathExp = "eRACRfact17/" + nameExp + "/split/"
 pathFull = pathRoot + pathExp
