@@ -69,7 +69,7 @@ aggregatedNodesData["landscape"]
 # Plotting
 # -----------------------------------------------------------------------------
 style={
-    "width":1, "alpha":1, "dpi":1024, "legend":True,
+    "width":1, "alpha":1, "dpi":1024, "legend":False,
     "aspect":.5,
     "colors": [
         '#9f00cc', '#ec0b43','#ff009d','#94d4ff', '#232ed1',
