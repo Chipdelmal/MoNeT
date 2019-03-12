@@ -5,6 +5,23 @@ This module was created to accompany the [MGDrivE](https://marshalllab.github.io
 
 PACKAGE DOCUMENTATION AND EXAMPLES UNDER DEVELOPMENT
 
+# Quick Operations
+
+##  Installation
+
+To install from pypi with pip:
+
+```bash
+pip install MoNeT_MGDrivE
+```
+
+Alternatively, the package can be downloaded, and installed with:
+
+```bash
+pip install .
+```
+
+##  Dependencies
 
 ##  Authors
 
