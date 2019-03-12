@@ -11,11 +11,13 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   2: CRISPRX
 #   3: tGD
 #   4: tGDX
+#   5: tGDCross
+#   6: tGDXCross
 ##############################################################################
-DRIVE = 2
+DRIVE = 4
 TRACES = False
 STACK = True
-SUMMARIES_DATA = False
+SUMMARIES_DATA = True
 TRACES_DATA = False
 ##############################################################################
 ##############################################################################
@@ -23,7 +25,7 @@ pathRoot = "/Volumes/marshallShare/tGD/"
 pathExt, aggregationDictionary, yRange = sel.driveSelector(
     DRIVE, pathRoot
 )
-if (DRIVE == 1) or (DRIVE ==2):
+if (DRIVE == 1) or (DRIVE == 2):
     colors = ["#090446", "#f20060", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
 else:
     colors = ["#090446", "#f20060", "#c6d8ff", "#ff28d4", "#7fff3a", "#7692ff"]
@@ -90,6 +92,7 @@ if TRACES is True:
                 pathRoot + "images/traces/" + str(DRIVE).rjust(2, "0") + "R_" +
                 experimentString + ".png"
             )
+            plt.close()
 ##############################################################################
 ##############################################################################
 if STACK is True:
@@ -110,9 +113,18 @@ if STACK is True:
             landscapeSumData,
             aggregationDictionary
         )
+        #####################################################################
+        if (DRIVE == 1 or DRIVE == 2):
+            groupingsList = [[2]]
+            ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
+            ffString = "R: " + format(ratiosAtEnd[0], '.3f')
+        else:
+            groupingsList = [[3], [4], [3, 4]]
+            ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
+            ffString = "RA: " + format(ratiosAtEnd[0], '.3f') + ", RB: " + format(ratiosAtEnd[1], '.3f') + ", (RA + RB): " + format(ratiosAtEnd[2], '.3f')
         ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
         summariesDict[experimentString] = ssDay
-        if (DRIVE == 3 or DRIVE == 4):
+        if not (DRIVE == 1 or DRIVE == 2):
             aggData = {
                 "genotypes": aggData["genotypes"],
                 "population": aggData["population"]/2
@@ -124,6 +136,10 @@ if STACK is True:
         figB = plots.plotMeanGenotypeStack(aggData, styleS, ssDay, 2 * yRange)
         figB.get_axes()[0].set_xlim(0, xRange)
         figB.get_axes()[0].set_ylim(0, 2 * yRange)
+        figB.get_axes()[0].set_title(
+            "[tSS: " + str(ssDay) + ", " + ffString + "]",
+            fontsize=6
+        )
         # monet.quickSaveFigure(
         #     figA,
         #     "./images/" + str(DRIVE).rjust(2, "0") + "T_" +
@@ -134,6 +150,7 @@ if STACK is True:
             pathRoot + "/images/stacks/" + str(DRIVE).rjust(2, "0") + "S_" +
             experimentString + ".png"
         )
+        plt.close()
 ##############################################################################
 ##############################################################################
 if SUMMARIES_DATA is True:
@@ -163,7 +180,7 @@ if SUMMARIES_DATA is True:
         if (DRIVE == 1 or DRIVE == 2):
             groupingsList = [[2]]
         else:
-            groupingsList = [[3,3],[4,4],[3,4]]
+            groupingsList = [[3], [4], [3, 4]]
         ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
         #####################################################################
         ssReach = aux.reachedSteadtStateAtDay(aggData, .01)
@@ -193,5 +210,7 @@ if TRACES_DATA is True:
         )
         aux.quickSaveRepsAggData(
             landscapeReps,
-            pathRoot + "/data/reps/" + str(DRIVE).rjust(2, "0") + experimentString
+            pathRoot + "/data/reps/" +
+            str(DRIVE).rjust(2, "0") + experimentString
         )
+        plt.close()

@@ -1,6 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
-import eracr_plots as plots
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 ##############################################################################
@@ -52,6 +54,7 @@ for nameExp in experimentsFolders:
             figB,
             pathSet + "images/stack/" + nameExp + "_S.png"
         )
+        plt.close()
         #######################################################################
         # Spatial analysis
         #######################################################################
@@ -82,4 +85,5 @@ for nameExp in experimentsFolders:
         monet.quickSaveFigure(
             overlay, pathSet + "images/heat/" + nameExp + "F_L.png"
         )
+        plt.close()
         print(nameExp)

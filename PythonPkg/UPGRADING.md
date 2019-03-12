@@ -25,12 +25,14 @@ To upgrade the package, change the version number in setup.py and run the follow
 
 ```bash
 python3 setup.py sdist bdist_wheel
-python -m twine upload dist/MoNeT_MGDrivE-0.4.4.tar.gz --skip-existing
+twine check dist/*
+python -m twine upload dist/MoNeT_MGDrivE-0.4.4.7.tar.gz --skip-existing
 ```
 
 Updating the package in TestPypi
 
 ```bash
 python3 setup.py sdist bdist_wheel
-python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/MoNeT_MGDrivE-0.4.4.1.tar.gz  --skip-existing
+twine check dist/*
+python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/MoNeT_MGDrivE-0.4.4.7.tar.gz  --skip-existing
 ```
