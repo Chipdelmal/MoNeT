@@ -51,7 +51,7 @@ To load MoNeT as a kernel in Jupyter and Hydrogen:
 
 ```bash
 source activate MoNeT
-python -m ipykernel install --user --name MoNeT --display-name "Python (MoNeT)"
+python -m ipykernel install --user --name MoNeT --display-name "MoNeT"
 ```
 
 To remove MoNeT from the Jupyter kernel list:
@@ -59,6 +59,26 @@ To remove MoNeT from the Jupyter kernel list:
 ```bash
 jupyter kernelspec list
 jupyter kernelspec uninstall MoNeT
+```
+
+## Troubleshooting
+
+If platformio or Atom are not detecting the environment, change the _.bashrc_ to point towards the environment path listed with:
+
+```bash
+conda env list
+```
+
+For example:
+
+```bash
+export PATH="/anaconda3/bin:$PATH"
+```
+
+And add the following line in platformio's settings:
+
+```bash
+source ~/.bashrc
 ```
 
 <hr>
