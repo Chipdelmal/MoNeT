@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 import aggregation_auxiliary as aux
@@ -14,9 +17,9 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 # Setup
 ##############################################################################
 STACK = False
-SPREAD = False
-TRACES = True
-nameExp = "pusheen" + str(96)
+SPREAD = True
+TRACES = False
+nameExp = "pusheen" + str(41)
 pathRoot = "/Volumes/marshallShare/Heterogeneity/Gillian/20190306/"
 pathExperiments = "MGDrive-Experiments/"
 pathPlots = pathRoot + "images/"
@@ -63,6 +66,7 @@ if STACK is True:
     monet.quickSaveFigure(
         figB, pathPlots + "S_" + nameExp + ".png"
     )
+    plt.close()
 ##########################################################################
 # Spread Plot (Heatmaps)
 ##########################################################################
@@ -81,6 +85,7 @@ if SPREAD is True:
     monet.quickSaveFigure(
         overlay, pathPlots + "O_" + nameExp + ".png"
     )
+    plt.close()
 ##########################################################################
 # Garbage (Traces)
 ##########################################################################
@@ -107,3 +112,4 @@ if TRACES is True:
             pathRoot + "images/Garbage/" + nameExp + "_" +
             str(i).rjust(3, "0") + ".png"
         )
+        plt.close()
