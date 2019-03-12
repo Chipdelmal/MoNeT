@@ -6,11 +6,14 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 ##############################################################################
 # Setup
 ##############################################################################
-nameExp = "E_0250_02_00030"
+nameExp = "E_0100_02_00020"
 pathRoot = "/Volumes/marshallShare/vic/"
 pathExp = "eRACRfact17/" + nameExp + "/split/"
 pathFull = pathRoot + pathExp
-filenames = monet.readExperimentFilenames(pathFull)
+filenames = monet.readExperimentFilenames(
+    pathFull,
+    sexFilenameIdentifiers={"male": "ADM_Run1", "female": "AF1"}
+)
 ##############################################################################
 colors = ["#090446", "#f20060", "#c6d8ff", "#ff28d4", "#7fff3a", "#7692ff"]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
@@ -18,6 +21,7 @@ styleS = {
     "width": 0, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .25,
     "colors": colors, "xRange": [0, 5400], "yRange": [0, 2500]
 }
+filenames
 ##############################################################################
 # Population breakdown analysis
 ##############################################################################
