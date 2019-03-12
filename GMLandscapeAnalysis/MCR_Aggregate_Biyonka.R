@@ -19,14 +19,14 @@ library(parallel)
 # USER: {1: JB}
 # NUM_CORES: Cores for the parallel threads
 USER=1
-REPETITIONS=10 # number of repetitions of each experiment
+REPETITIONS=100 # number of repetitions of each experiment
 REPITER=1 # number of groups of repetitions to perform, for analysis purposes ONLY BIYONKA SHOULD NEED THIS, 
 SIM_TIME=365*3
 NUM_CORES=4
 
 ###############################################################################
 if(USER==1){
-  LANDSCAPE_PATH='~/Desktop/Output/spaHet/distance_analysis'
+  LANDSCAPE_PATH='~/Desktop/Output/spaHet/spahet_files'
   BASE_OUTPUT_PATH="~/Desktop/Output"
 }else if(USER==2){
   LANDSCAPE_PATH=''
