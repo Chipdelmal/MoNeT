@@ -93,5 +93,5 @@ def getRatiosAtEnd(aggData, groupingsList, finalFrame):
     for i, grouping in enumerate(groupingsList):
         total = sum(finalFramePop[grouping])
         ratios = total / sum(finalFramePop)
-        outList[i] = [ratios]#[total, ratios]
+        outList[i] = [ratios] # [total, ratios]
     return flatten(outList)
