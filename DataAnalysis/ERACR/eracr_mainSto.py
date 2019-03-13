@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import MoNeT_MGDrivE as monet
+import re
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
@@ -10,8 +11,13 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 ##############################################################################
 # nameExp = "E_0125_02_00028"
 pathRoot = "/Volumes/marshallShare/vic/"
-pathSet = pathRoot + "eRACRfact17/"
+pathSet = pathRoot + "eRACR29/"
 foldersList = monet.listDirectoriesInPath(pathSet)
+foldersList
+
+p = re.compile('*ANALYZED')
+
+
 experimentsFolders = [word for word in foldersList if word.startswith("E_")]
 for nameExp in experimentsFolders:
     pathFull = pathSet + nameExp + "/split/"

@@ -222,9 +222,9 @@ def plotLandscapeDataRepetitions(
     return figs
 
 
-def quickSaveFigure(fig, path):
+def quickSaveFigure(fig, path, dpi=1024):
     fig.savefig(path,
-                dpi=1024, facecolor='w',
+                dpi=dpi, facecolor='w',
                 edgecolor='w', orientation='portrait', papertype=None,
                 format="png", transparent=True, bbox_inches='tight',
                 pad_inches=0, frameon=None)

@@ -17,7 +17,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 1
+DRIVE = 6
 TRACES = False
 STACK = True
 SUMMARIES_DATA = True
@@ -93,7 +93,8 @@ if TRACES is True:
             monet.quickSaveFigure(
                 figsArray[i],
                 pathRoot + "images/traces/" + str(DRIVE).rjust(2, "0") + "R_" +
-                experimentString + ".png"
+                experimentString + ".png",
+                dpi=500
             )
             plt.close()
 ##############################################################################
@@ -149,7 +150,8 @@ if STACK is True:
         monet.quickSaveFigure(
             figB,
             pathRoot + "/images/stacks/" + str(DRIVE).rjust(2, "0") + "S_" +
-            experimentString + ".png"
+            experimentString + ".png",
+            dpi=500
         )
         plt.close()
 ##############################################################################

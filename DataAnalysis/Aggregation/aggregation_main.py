@@ -26,7 +26,7 @@ pathRoot = "/Volumes/marshallShare/Heterogeneity/Gillian/20190306/"
 pathExperiments = "MGDrive-Experiments/"
 pathPlots = pathRoot + "images/"
 ##############################################################################
-colors = ["#090446", "#f20060", "#c6d8ff", "#ff28d4", "#7fff3a", "#7692ff"]
+colors = ["#f20060", "#29339b", "#c6d8ff", "#7fff3a", "#7692ff", "#29339b"]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
