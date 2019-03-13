@@ -1,0 +1,3 @@
+ffmpeg -start_number 0 -r 24 -f image2 -s 1920x1080 -i image%03d.png -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -vcodec libx264 -preset veryslow -crf 15 -pix_fmt yuv420p 00_Trailer.mp4
+ffmpeg -y -threads 8 -r 24 -f image2 -start_number 1 -i "image%03d.png" -filter_complex "fps=24,scale=150:-1:flags=fast_bilinear,split=2 [a][b]; [a] palettegen [pal] fifo [b]; [b] [pal] paletteuse" output.gif
+ffmpeg -i "image%03d.png" -vf "fps=fps=30,scale=800:-1" output.gif

@@ -6,7 +6,6 @@ import tgD_select as sel
 import tGD_plots as plots
 import tGD_aux as aux
 import matplotlib.pyplot as plt
-from joblib import Parallel, delayed
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 ##############################################################################
@@ -18,7 +17,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 2
+DRIVE = 6
 TRACES = False
 STACK = True
 SUMMARIES_DATA = True
@@ -216,18 +215,3 @@ if TRACES_DATA is True:
             str(DRIVE).rjust(2, "0") + experimentString
         )
         plt.close()
-
-
-# pathsRoot = monet.listDirectoriesWithPathWithinAPath(
-#     pathRoot + pathExt + "ANALYZED/"
-# )
-# aux.exportStackPlotFromPath(
-#     pathsRoot[0], pathRoot, DRIVE, aggregationDictionary,
-#     styleS, xRange, yRange
-# )
-# Parallel(n_jobs=4, prefer="threads")(
-#     delayed(aux.exportStackPlotFromPath)(
-#         pathSample=i, pathRoot=pathRoot, DRIVE=DRIVE,
-#         aggregationDictionary=aggregationDictionary,
-#         styleS=styleS, xRange=xRange, yRange=yRange
-#         ) for i in pathsRoot[0:])
