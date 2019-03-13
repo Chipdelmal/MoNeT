@@ -124,19 +124,18 @@ def allCounts(files, weights, names):
     return res
 
 #Draws a piechart out of points since there is no scatter of piecharts on matplotlib
-def draw_pie(ax,ratios, X=0, Y=0, radius=300):
+def draw_pie(ax,ratios, X=0, Y=0):
     N = len(ratios)
-    xy = []
-    start = 0.
-    for ratio in ratios:
-        x = [0] + np.cos(np.linspace(2*math.pi*start,2*math.pi*(start+ratio), 30)).tolist()
-        y = [0] + np.sin(np.linspace(2*math.pi*start,2*math.pi*(start+ratio), 30)).tolist()
-        xy1 = list(zip(x,y))
-        xy.append(xy1)
-        start += ratio
-
-    for i, xyi in enumerate(xy):
-        ax.scatter([X],[Y] , marker=(xyi,0), s=radius, facecolor=colors[i])
+    start = 0.0
+    for i in range(N):
+        ratio = ratios[i]
+        if ratio >= 0.005:
+            x = [0] + np.cos( np.linspace(2*math.pi*start, 2*math.pi*(start+ratio)) ).tolist()
+            y = [0] + np.sin( np.linspace(2*math.pi*start, 2*math.pi*(start+ratio)) ).tolist()
+            xy1 = np.column_stack([x, y])
+            s1 = np.abs(xy1).max()
+            ax.scatter([X],[Y] , marker=(xy1), s=500*s1**2, facecolor=colors[i])
+            start += ratio
 
 #parses coordinates out of a csv file
 def getCoordinates(fileLocation):

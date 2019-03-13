@@ -6,7 +6,7 @@ import numpy as np
 # Define the experiment's path, aggregation dictionary, and read filenames
 type = float
 experimentString = "E_099_000_000_001"
-path = "/Users/Biyonka/Desktop/Output/2019_02_27_ANALYZED/"
+path = "/Users/Biyonka/Desktop/Output/contrived_landscapes/UNEVEN_2019_02_27_ANALYZED/"
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [
@@ -17,6 +17,7 @@ aggregationDictionary = monet.generateAggregationDictionary(
     ]
 )
 filenames = monet.readExperimentFilenames(path + experimentString)
+
 # To analyze a single node ...................................................
 # Load a single node (auxiliary function just for demonstration)
 nodeIndex = 0
@@ -36,8 +37,6 @@ aggData = monet.aggregateGenotypesInNode(
     landscapeSumData,
     aggregationDictionary
 )
-
-
 # To analyze the landscape without sum .......................................
 # Load the population dynamics data of the whole landscape
 landscapeData = monet.loadLandscapeData(filenames, dataType=float)
@@ -47,30 +46,28 @@ aggregatedNodesData = monet.aggregateGenotypesInLandscape(
 )
 geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 
-wbh = np.sum(aggData['population'], axis =1)
-ratio_homing = aggData['population'][:, 1]/(wbh)
-#get time at which homing ratio exceeds threshold
-time = (list(ratio_homing>0.5)).index(True)
 # -----------------------------------------------------------------------------
 # Plotting
 # -----------------------------------------------------------------------------
-colors = [
-    '#9f00cc', '#ec0b43', '#232ed1', '#ff009d'
-]
+colors = ["#090446", "#f20060", "#c6d8ff", "#7fff3a", "#ff28d4", "#7692ff"]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleA = {
     "width": 1, "alpha": 1, "dpi": 1024, "legend": True,
-    "aspect": .1, "colors": colors
+    "aspect": .05, "colors": colors, "xRange": [0, 1095], "yRange": [0, 6000]
 }
 styleB = {
     "width": 0, "alpha": .9, "dpi": 1024, "legend": True,
-    "aspect": .1, "colors": colors
+    "aspect": .05, "colors": colors, "xRange": [0, 1095], "yRange": [0, 6000]
 }
 # Traces and Stack ------------------------------------------------------------
 figA = monet.plotMeanGenotypeTrace(aggData, styleA)
+figA.get_axes()[0].set_xlim(styleA["xRange"][0], styleA["xRange"][1])
+figA.get_axes()[0].set_ylim(styleA["yRange"][0], styleA["yRange"][1])
 figB = monet.plotMeanGenotypeStack(aggData, styleB)
-monet.quickSaveFigure(figA, "./images/MTrace.png")
-monet.quickSaveFigure(figB, "./images/MStack.png")
+figB.get_axes()[0].set_xlim(styleB["xRange"][0], styleB["xRange"][1])
+figB.get_axes()[0].set_ylim(styleB["yRange"][0], styleB["yRange"][1])
+monet.quickSaveFigure(figA, "./GMLandscapeAnalysis/Images/New_Images/MTrace_uneven.png")
+monet.quickSaveFigure(figB, "./GMLandscapeAnalysis/Images/New_Images/MStack_uneven.png")
 # Heatmaps --------------------------------------------------------------------
 genes = geneSpatiotemporals["genotypes"]
 plotsArray = monet.plotGenotypeArrayFromLandscape(

@@ -53,7 +53,7 @@ for interval in range(100, 275, 25):
                     sizes = getSizes(data[2:],weights)
                     axList[currentPatch].pie(sizes, colors=colors[:len(groups)])
                 plt.savefig(folder+experiment+'/'+str(time).zfill(5)+".png",
-                            dpi=1024, facecolor='w',
+                            dpi=(1024/(patches/10)), facecolor='w',
                             edgecolor='w', orientation='portrait', papertype=None,
                             format="png", transparent=False, bbox_inches='tight',
                             pad_inches=0.05, frameon=None)

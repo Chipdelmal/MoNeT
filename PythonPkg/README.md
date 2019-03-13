@@ -1,3 +1,29 @@
-This module was created to accompany the [MGDrivE](https://marshalllab.github.io/MGDrivE/) project to make the analysis of the spatiotemporal simulations of gene-drive spreads as seamless as possible.
+##  Description
+
+This module was created to accompany the [MGDrivE](https://marshalllab.github.io/MGDrivE/) and [MoNeT](https://chipdelmal.github.io/MoNeT/) projects to make the analysis of the spatiotemporal simulations of gene-drive spreads as seamless as possible.
+
 
 PACKAGE DOCUMENTATION AND EXAMPLES UNDER DEVELOPMENT
+
+# Quick Operations
+
+##  Installation
+
+To install from pypi with pip:
+
+```bash
+pip install MoNeT_MGDrivE
+```
+
+Alternatively, the package can be downloaded, and installed with:
+
+```bash
+pip install .
+```
+
+##  Dependencies
+
+##  Authors
+
+* Current: Sarafina Smith, Biyonka Liang, Víctor Ferman, Héctor Manuel Sánchez Castellanos
+* Former: Sabrina Wong

@@ -8,7 +8,7 @@ def distance(p1,p2):
 
 
 sides = 10
-radius = 20
+radius = 50
 points = []
 angles = (2*np.pi)/sides
 xList = []
