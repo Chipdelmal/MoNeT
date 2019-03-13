@@ -22,19 +22,70 @@ def population_split(pop_size, n, C=0.0):
     return populations
 
 
-def array_creation(dist, pop_size, n, C=0.0):
+step_up = list(range(10, 211, 10))
+step_down = step_up.copy()
+step_down.reverse()
+plt.plot(range(21), step_down)
+plt.plot(range(21), step_up)
+
+up = list(range(10, 211, 21))
+down = up.copy()
+down.reverse()
+up_down = up.copy()
+up_down.append(199+21)
+up_down.extend(down)
+sum(up_down)
+plt.plot(range(21), up_down)
+
+up = list(range(21+17, 205, 17))
+down = up.copy()
+down.reverse()
+down_up = down.copy()
+down_up.append(21)
+down_up.extend(up.copy())
+sum(down_up)
+plt.plot(range(21), down_up)
+
+sporadic = [50]*21
+sum(sporadic)
+sporadic[3] = sporadic[5]+55
+sporadic[5] = sporadic[5]+100
+sporadic[7] = sporadic[5]+150
+sporadic[11] = sporadic[5]+180
+sporadic[14] = sporadic[15]+100
+sporadic[15] = sporadic[15]+142
+sporadic[18] = sporadic[15]+200-9
+sum(sporadic)
+plt.plot(range(21), sporadic)
+plt.savefig("sporadic.png")
+
+def array_creation(dist_apart, pop_size, n, C=0.0):
     pop = np.array(population_split(pop_size, n, C))
-    x_coords = np.linspace(0, dist * (n + 1), n + 2)
+    x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
+    y_coords = np.zeros(n + 2)
+    return np.array([x_coords, y_coords, pop])
+
+
+def manual_array_creation(dist_apart, pop, n):
+    pop.insert(0, pop[0])
+    pop.append(pop[-1])
+    x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
     y_coords = np.zeros(n + 2)
     return np.array([x_coords, y_coords, pop])
 
 
 def csv_creation(arr, file_name, VERT=True):
     if VERT:
-        pd.DataFrame({0: arr[0], 1: arr[1], 2: arr[2]}).to_csv("popHeterog_csv/"+file_name+".csv", header=None, index=None)
+        pd.DataFrame({0: arr[0], 1: arr[1], 2: arr[2]}).to_csv("~/Desktop/popHeterog_csv/"+file_name+".csv", header=["x", "y", "n"], index=None)
     else:
-        pd.DataFrame(arr).to_csv("popHeterog_csv/"+file_name+".csv"".csv", header=None, index=None)
+        pd.DataFrame(arr).to_csv("~/Desktop/popHeterog_csv/"+file_name+".csv"".csv", header=None, index=None)
 
+
+csv_creation(manual_array_creation(10, step_up, 21), "step_up")
+csv_creation(manual_array_creation(10, step_down, 21), "step_down")
+csv_creation(manual_array_creation(10, up_down, 21), "up_down")
+csv_creation(manual_array_creation(10, down_up, 21), "down_up")
+csv_creation(manual_array_creation(10, sporadic, 21), "sporadic")
 
 for c in np.arange(0, 1.1, 0.1):
     csv_creation(array_creation(10, 2000, 20, c), str(int(c * 100)))
