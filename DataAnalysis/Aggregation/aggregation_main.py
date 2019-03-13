@@ -15,8 +15,10 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 # 3. Sort nodes according to x coordinate before exporting to CSV
 ##############################################################################
 # Setup
+# Example: ‎⁨marshallShare/⁨Heterogeneity⁩/⁨Gillian⁩/⁨20190306⁩/⁨MGDrive-Experiments/⁨pusheen1⁩
+# Requires: image folder on the pathRoot
 ##############################################################################
-STACK = False
+STACK = True
 SPREAD = True
 TRACES = False
 nameExp = "pusheen" + str(41)
