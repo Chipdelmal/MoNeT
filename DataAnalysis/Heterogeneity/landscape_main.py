@@ -21,13 +21,14 @@ STACK = True
 SPREAD = False
 TRACES = False
 nameExp = "up_down"
-pathRoot = "/Volumes/marshallShare/Heterogeneity/Maya/20190313/"
-pathExperiments = "MCR_Agg/"
+pathRoot = "/Volumes/marshallShare/Heterogeneity/Biyonka/20190314/"
+pathExperiments = "experiments/"
 pathPlots = pathRoot + "images/"
 ##############################################################################
 RELEASE_DAY = 50
 colors = ["#f20060", "#29339b", "#c6d8ff", "#7fff3a", "#7692ff", "#29339b"]
-cmaps = monet.generateAlphaColorMapFromColorArray(colors)
+colorsOverlay = ["#29339b", "#c6d8ff", "#7fff3a", "#7692ff", "#29339b", "#f20060"]
+cmaps = monet.generateAlphaColorMapFromColorArray(colorsOverlay)
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [
@@ -37,13 +38,17 @@ aggregationDictionary = monet.generateAggregationDictionary(
         [3, 6, 8, 9, 9]
     ]
 )
+aggregationDictionaryOverlay = monet.generateAggregationDictionary(
+    ["H"],[[1, 4, 4, 5, 6]]
+)
+aggregationDictionaryOverlay
 styleS = {
-    "width": 0, "alpha": .9, "dpi": 1024, "legend": False,
-    "aspect": .015, "colors": colors, "xRange": [0, 2*365], "yRange": [0, 6500]
+    "width": 0, "alpha": .9, "dpi": 1024, "legend": True,
+    "aspect": .025, "colors": colors, "xRange": [0, 3*365], "yRange": [0, 6500]
 }
 styleT = {
-    "width": .1, "alpha": .25, "dpi": 1024, "legend": True,
-    "aspect": 2, "colors": colors, "xRange": [0, 2*365], "yRange": [0, 6500]
+    "width": .1, "alpha": .25, "dpi": 1024, "legend": False,
+    "aspect": .02, "colors": colors, "xRange": [0, 3*365], "yRange": [0, 6500]
 }
 ##############################################################################
 # Paths
@@ -55,7 +60,9 @@ for nameExp in folderNames[0:]:
     # Stack
     ##########################################################################
     if STACK is True:
-        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/")
+        filenames = monet.readExperimentFilenames(
+            pathFull + "/ANALYZED/" + "0001/"
+        )
         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
             filenames, male=True, female=True, dataType=float
         )
@@ -75,23 +82,26 @@ for nameExp in folderNames[0:]:
             fontsize=4
         )
         monet.quickSaveFigure(
-            figB, pathPlots + "S_" + nameExp + ".png"
+            figB,
+            pathPlots + "S_" + nameExp + ".png"
         )
         plt.close()
     ##########################################################################
     # Spread Plot (Heatmaps)
     ##########################################################################
     if SPREAD is True:
-        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/")
+        filenames = monet.readExperimentFilenames(
+            pathFull + "/ANALYZED/" + "0001/"
+        )
         landscapeData = monet.loadLandscapeData(filenames, dataType=float)
         aggregatedNodesData = monet.aggregateGenotypesInLandscape(
-            landscapeData, aggregationDictionary
+            landscapeData, aggregationDictionaryOverlay
         )
         geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
             aggregatedNodesData
         )
         overlay = monet.plotGenotypeOverlayFromLandscape(
-            geneSpatiotemporals, style={"aspect": 12, "cmap": cmaps}
+            geneSpatiotemporals, style={"aspect": 2.5, "cmap": cmaps}
         )
         monet.quickSaveFigure(
             overlay, pathPlots + "O_" + nameExp + ".png"
