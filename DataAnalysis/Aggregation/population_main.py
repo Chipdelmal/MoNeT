@@ -25,6 +25,7 @@ pathRoot = "/Volumes/marshallShare/Heterogeneity/Maya/20190313/"
 pathExperiments = "MCR_Agg/"
 pathPlots = pathRoot + "images/"
 ##############################################################################
+RELEASE_DAY = 50
 colors = ["#f20060", "#29339b", "#c6d8ff", "#7fff3a", "#7692ff", "#29339b"]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 aggregationDictionary = monet.generateAggregationDictionary(
@@ -61,9 +62,18 @@ for nameExp in folderNames[0:]:
         aggData = monet.aggregateGenotypesInNode(
             landscapeSumData, aggregationDictionary
         )
-        figB = monet.plotMeanGenotypeStack(aggData, styleS)
+        ssDay = monet.reachedSteadtStateAtDay(aggData, .01)
+        figB = monet.plotMeanGenotypeStack(
+            aggData,
+            styleS,
+            vLinesCoords=[RELEASE_DAY, ssDay]
+        )
         figB.get_axes()[0].set_xlim(styleS["xRange"][0], styleS["xRange"][1])
         figB.get_axes()[0].set_ylim(styleS["yRange"][0], styleS["yRange"][1])
+        figB.get_axes()[0].set_title(
+            "[tSS: " + str(ssDay-RELEASE_DAY) + "]",
+            fontsize=4
+        )
         monet.quickSaveFigure(
             figB, pathPlots + "S_" + nameExp + ".png"
         )

@@ -49,7 +49,11 @@ def plotMeanGenotypeTrace(aggData, style):
     return fig
 
 
-def plotMeanGenotypeStack(aggData, style):
+def plotMeanGenotypeStack(
+    aggData,
+    style,
+    vLinesCoords=[]
+):
     """
     Description:
         * Plots the mean response of an aggregate dataset.
@@ -81,6 +85,13 @@ def plotMeanGenotypeStack(aggData, style):
         kind='area', ax=ax2, legend=style["legend"], color=style["colors"],
         linewidth=style["width"], alpha=style["alpha"]
     )
+    for i in range(len(vLinesCoords)):
+        ax2.plot(
+            [vLinesCoords[i], vLinesCoords[i]],
+            [style["yRange"][0], style["yRange"][1]],
+            'k--',
+            lw=.5
+        )
     plt.ylabel("")
     plt.xlabel("")
     if style["legend"] is True:

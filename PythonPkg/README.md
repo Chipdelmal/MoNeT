@@ -20,7 +20,7 @@ conda env create -f MoNeT.yml -n MoNeT
 To install from pypi with pip:
 
 ```bash
-pip install MoNeT_MGDrivE
+pip install MoNeT-MGDrivE
 ```
 
 Alternatively, the package can be downloaded, and installed with:

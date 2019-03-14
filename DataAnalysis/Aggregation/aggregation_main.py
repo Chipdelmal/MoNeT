@@ -15,17 +15,20 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 # 3. Sort nodes according to x coordinate before exporting to CSV
 ##############################################################################
 # Setup
-# Example: ‎⁨marshallShare/⁨Heterogeneity⁩/⁨Gillian⁩/⁨20190306⁩/⁨MGDrive-Experiments/⁨pusheen1⁩
-# Requires: image folder on the pathRoot
+# Example: ‎⁨
+#   marshallShare/⁨Heterogeneity⁩/⁨Gillian⁩/⁨20190306⁩/⁨MGDrive-Experiments/⁨pusheen1⁩
+# Requires:
+#   image folder on the pathRoot
 ##############################################################################
 STACK = True
-SPREAD = True
+SPREAD = False
 TRACES = False
-nameExp = "pusheen" + str(31)
+nameExp = "pusheen" + str(6)
 pathRoot = "/Volumes/marshallShare/Heterogeneity/Gillian/20190306/"
 pathExperiments = "MGDrive-Experiments/"
 pathPlots = pathRoot + "images/"
 ##############################################################################
+RELEASE_DAY = 50
 colors = ["#f20060", "#29339b", "#c6d8ff", "#7fff3a", "#7692ff", "#29339b"]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 aggregationDictionary = monet.generateAggregationDictionary(
@@ -39,11 +42,13 @@ aggregationDictionary = monet.generateAggregationDictionary(
 )
 styleS = {
     "width": 0, "alpha": .9, "dpi": 1024, "legend": False,
-    "aspect": .025, "colors": colors, "xRange": [0, 1800], "yRange": [0, 11000]
+    "aspect": .025, "colors": colors, "xRange": [0, 1800], "yRange": [0, 11000],
+    "vLinesWidth": .5
 }
 styleT = {
     "width": .1, "alpha": .25, "dpi": 1024, "legend": True,
-    "aspect": 2, "colors": colors, "xRange": [0, 1800], "yRange": [0, 11000]
+    "aspect": 2, "colors": colors, "xRange": [0, 1800], "yRange": [0, 11000],
+    "vLinesWidth": .5
 }
 ##############################################################################
 # Paths
@@ -62,9 +67,18 @@ if STACK is True:
     aggData = monet.aggregateGenotypesInNode(
         landscapeSumData, aggregationDictionary
     )
-    figB = monet.plotMeanGenotypeStack(aggData, styleS)
+    ssDay = monet.reachedSteadtStateAtDay(aggData, .01)
+    figB = monet.plotMeanGenotypeStack(
+        aggData,
+        styleS,
+        vLinesCoords=[RELEASE_DAY, ssDay]
+    )
     figB.get_axes()[0].set_xlim(styleS["xRange"][0], styleS["xRange"][1])
     figB.get_axes()[0].set_ylim(styleS["yRange"][0], styleS["yRange"][1])
+    figB.get_axes()[0].set_title(
+        "[tSS: " + str(ssDay-RELEASE_DAY) + "]",
+        fontsize=4
+    )
     monet.quickSaveFigure(
         figB, pathPlots + "S_" + nameExp + ".png"
     )
