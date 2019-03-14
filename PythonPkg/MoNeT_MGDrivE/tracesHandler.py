@@ -1,8 +1,23 @@
 import MoNeT_MGDrivE.experimentsHandler as exHand
 
 
-def aggregateGenotypesOverTracesFolders(folders, aggregationDictionary):
-    # Calculate the aggregation of the runs of the experiment
+def aggregateGenotypesOverTracesFolders(
+    folders,
+    aggregationDictionary
+):
+    """
+    Description:
+        * Gets the traces data from the GARBAGE folders, and aggregates
+            the information for further analysis.
+    In:
+        * folders: List of folders with the traces information (GARBAGE)
+        * aggregationDictionary: Dictionary containing the keys to aggregate
+            the genotypes (created with "generateAggregationDictionary")
+    Out:
+        * returnDictionary: genotypes and aggregations lists
+    Notes:
+        * NA
+    """
     popsList = [None] * len(folders)
     for i in range(len(folders)):
         filenames = exHand.readExperimentFilenames(folders[i])

@@ -21,7 +21,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 STACK = True
 SPREAD = True
 TRACES = False
-nameExp = "pusheen" + str(41)
+nameExp = "pusheen" + str(31)
 pathRoot = "/Volumes/marshallShare/Heterogeneity/Gillian/20190306/"
 pathExperiments = "MGDrive-Experiments/"
 pathPlots = pathRoot + "images/"

@@ -123,8 +123,21 @@ def listDirectoriesWithPathWithinAPath(pathFilename):
     return folders
 
 
-def getUniqueGenesFromGenotypes(genotypes):
-    return list({l for word in genotypes for l in word})
+def getUniqueGenesFromGenotypes(
+    genotypes
+):
+    """
+    Description:
+        * From a list of genotypes, returns the list of unique genes.
+    In:
+        * genotypes: List of genotypes present in the experiment.
+    Out:
+        * genesList: List of unique genes present.
+    Notes:
+        * Use in tandem with: readGenotypes
+    """
+    genesList = list({l for word in genotypes for l in word})
+    return genesList
 
 
 def readGenotypes(filename, skipColumns=1):

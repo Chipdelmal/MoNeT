@@ -48,7 +48,19 @@ rgba_colors = [
 cmaps = [light_blue1, red1, purple1, pink1, dark_blue1]
 
 
-def generateAlphaColorMapFromColor(color):
+def generateAlphaColorMapFromColor(
+    color
+):
+    """
+    Description:
+        * Generates the cmap necessary to do the landscape heatmaps.
+    In:
+        * color: hex color to alpha cmap
+    Out:
+        * cmap: Color map changing in alpha
+    Notes:
+        * NA
+    """
     alphaMap = LinearSegmentedColormap.from_list(
         'tempMap',
         [(0.0, 0.0, 0.0, 0.0), color],
@@ -57,7 +69,19 @@ def generateAlphaColorMapFromColor(color):
     return alphaMap
 
 
-def generateAlphaColorMapFromColorArray(colorArray):
+def generateAlphaColorMapFromColorArray(
+    colorArray
+):
+    """
+    Description:
+        * Generates a list of cmaps from a colors list.
+    In:
+        * colorArray: Array containing the colors to cmap.
+    Out:
+        * cmapsList: List of cmaps
+    Notes:
+        * NA
+    """
     elementsNumb = len(colorArray)
     cmapsList = [None] * elementsNumb
     for i in range(0, elementsNumb):

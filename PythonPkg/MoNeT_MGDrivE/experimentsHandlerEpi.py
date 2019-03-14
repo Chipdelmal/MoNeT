@@ -2,9 +2,15 @@ import glob
 import numpy as np
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
 
+
 def readExperimentFilenamesEpi(
     experimentPath,
-    stateIdentifiers={"human": "HUM", "male": "ADM", "e_female": "E_AF1", "i_female": "I_AF1", "s_female": "S_AF1"}
+    stateIdentifiers={
+        "human": "HUM",
+        "male": "ADM",
+        "e_female": "E_AF1",
+        "i_female": "I_AF1", "s_female": "S_AF1"
+    }
 ):
     """
     Description:
@@ -17,19 +23,22 @@ def readExperimentFilenamesEpi(
         * stateIdentifiers: Dictionary containing the head identifier for
             the human, male, and state of female CSV files.
     Out:
-        * Dictionary with the sorted lists of filenames associated with each file head given in stateIdentifiers
-           ex.  "human" [list -> strings], "male" [list -> strings], etc
+        * Dictionary with the sorted lists of filenames associated with each
+            file head given in stateIdentifiers
+            ex.  "human" [list -> strings], "male" [list -> strings], etc
 
     """
-
     stateIdToFiles = {}
     for stateId in stateIdentifiers:
         files = sorted(
-            glob.glob(experimentPath + "/" + stateIdentifiers[stateId] + "*.csv")
+            glob.glob(
+                experimentPath + "/" + stateIdentifiers[stateId] + "*.csv"
+            )
         )
         stateIdToFiles[stateId] = files
 
     return stateIdToFiles
+
 
 def loadNodeDataEpi(
     filename,
@@ -49,7 +58,7 @@ def loadNodeDataEpi(
             "population" [numpyArray]
 
     """
-    genotypes = readGenotypes(filename)
+    genotypes = auxFun.readGenotypes(filename)
     data = np.genfromtxt(
             filename,
             dtype=dataType,
@@ -61,7 +70,13 @@ def loadNodeDataEpi(
         }
     return returnDictionary
 
-def loadLandscapeDataEpi(filenames, male=True, female=True, dataType=float):
+
+def loadLandscapeDataEpi(
+    filenames,
+    male=True,
+    female=True,
+    dataType=float
+):
     """
     Description:
         * Imports the information of all the nodes in filenames
@@ -74,7 +89,7 @@ def loadLandscapeDataEpi(filenames, male=True, female=True, dataType=float):
     """
     if len(filenames) == 0:
         return
-    genotypes = readGenotypes(filenames[0])
+    genotypes = auxFun.readGenotypes(filenames[0])
     nodesDataList = []
     for f in filenames:
         data = loadNodeDataEpi(f, dataType)["population"]
@@ -86,12 +101,14 @@ def loadLandscapeDataEpi(filenames, male=True, female=True, dataType=float):
     }
     return returnDictionary
 
+
 def sumLandscapePopulationsEpi(
     landscapeData
 ):
     """
     Description:
-        * This function sums the data in each np array given by landscapeData["landscape"]
+        * This function sums the data in each np array given by
+            landscapeData["landscape"]
     In:
         * landscapeData: Data loaded with the "loadLandscapeDataEpi" function.
     Out:
@@ -113,16 +130,20 @@ def sumLandscapePopulationsEpi(
     }
     return returnDictionary
 
+
 def sumAlleleCounts(sumLandscapeData, alleleNames, columns):
     """
     Description:
-        * This function sums the total count of each allele given by sumLandscapeData["population"]
+        * This function sums the total count of each allele given by
+            sumLandscapeData["population"]
     In:
-        * sumLandscapeData: Dict loaded with the "sumLandscapePopulationsEpi" function.
+        * sumLandscapeData: Dict loaded with the "sumLandscapePopulationsEpi"
+            function.
         * alleleNames: list of individual alleles, eg ["W", "R"]
         * columns: List of lists describing number of times each one
             indexed column should be counted for this allele
-            ex. [[1, 1, 2], [2, 3, 3]] if the given genotypes are WW, WR, and RR
+            ex. [[1, 1, 2], [2, 3, 3]] if the given genotypes are WW, WR,
+            and RR
     Out:
         * Dictionary containing:
             "genotypes" [list -> strings]
@@ -134,7 +155,7 @@ def sumAlleleCounts(sumLandscapeData, alleleNames, columns):
     for i in range(len(alleleNames)):
         for index in columns[i]:
             # subtract 1 because index is 1 indexed
-            fillArray[:,i] += landscapeData[:,index-1]
+            fillArray[:, i] += landscapeData[:, index-1]
 
     returnDictionary = {
         "alleles": alleleNames,
