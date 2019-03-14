@@ -1,7 +1,5 @@
-import os
 import csv
 import glob
-import fnmatch
 import numpy as np
 import MoNeT_MGDrivE.experimentsHandler as exPar
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun

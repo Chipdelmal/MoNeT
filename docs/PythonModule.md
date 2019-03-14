@@ -2,7 +2,7 @@
 
 This module was created to accompany the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project, although its codebase is totally independent to allow as much modularity as possible. This is not only convenient in terms of the code, but it also provides a clear-cut separation between designing and running experiments, and analyzing the results.
 
-```Python
+```python
 import MoNeT_MGDrivE as monet
 # Define the experiment's path
 type = float
@@ -28,15 +28,19 @@ nodeData = monet.loadNodeData(
 )
 ```
 
-The creation of this package is ongoing, and is currently being thoroughly tested against previous scattered scripts developed in _Mathematica_. It can be installed through pip:
+The creation of this package is ongoing, and is currently being thoroughly tested against previous scattered scripts developed in _Mathematica_. It can be installed through pip with the following command:
+
+```bash
+pip install MoNeT_MGDrivE
+```
+
+For more information and releases please take a look at our [pypi website](https://pypi.org/project/MoNeT-MGDrivE/).
 
 <a href="https://pypi.org/project/MoNeT-MGDrivE/#description"><img src="./media/pip.png" width="100%" align="middle"></a>
-
-<br>
 
 <hr>
 
 
 ## Authors
 
-Sarafina Smith, Sabrina Wong, Víctor Ferman, Héctor M. Sánchez C.
+Sarafina Smith, Víctor Ferman, Sabrina Wong, Héctor M. Sánchez C.
