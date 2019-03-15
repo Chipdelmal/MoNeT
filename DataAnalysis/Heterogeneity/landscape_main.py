@@ -34,8 +34,7 @@ pathPlots = pathRoot + "images/"
 ##############################################################################
 RELEASE_DAY = 50
 colors = ["#f20060", "#29339b", "#c6d8ff", "#7fff3a", "#7692ff", "#29339b"]
-colorsOverlay = ["#f20060", "#29339b", "#c6d8ff", "#7fff3a", "#7692ff", "#29339b"]
-cmaps = monet.generateAlphaColorMapFromColorArray(colorsOverlay)
+cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [
@@ -45,10 +44,6 @@ aggregationDictionary = monet.generateAggregationDictionary(
         [3, 6, 8, 9, 9]
     ]
 )
-aggregationDictionaryOverlay = monet.generateAggregationDictionary(
-    ["W", "H"],[[0, 0, 1, 2, 3], [1, 4, 4, 5, 6]]
-)
-aggregationDictionaryOverlay
 styleS = {
     "width": 0, "alpha": .9, "dpi": 1024, "legend": True,
     "aspect": .025, "colors": colors, "xRange": [0, 3*365], "yRange": [0, 6500]
@@ -61,7 +56,7 @@ styleT = {
 # Paths
 ##############################################################################
 folderNames = monet.listDirectoriesInPath(pathRoot + pathExperiments)
-for nameExp in folderNames[2:3]:
+for nameExp in folderNames[0:3]:
     pathFull = pathRoot + pathExperiments + nameExp
     ##########################################################################
     # Stack
@@ -102,7 +97,7 @@ for nameExp in folderNames[2:3]:
         )
         landscapeData = monet.loadLandscapeData(filenames, dataType=float)
         aggregatedNodesData = monet.aggregateGenotypesInLandscape(
-            landscapeData, aggregationDictionaryOverlay
+            landscapeData, aggregationDictionary
         )
         geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
             aggregatedNodesData
