@@ -4,13 +4,7 @@
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 import aggregation_auxiliary as aux
-import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
-
-def maxAlleleInLandscape(geneLandscape):
-    genesMaxes = map(np.amax, geneLandscape)
-    landscapeMax = max(genesMaxes)
-    return landscapeMax
 
 
 ##############################################################################
@@ -56,7 +50,7 @@ styleT = {
 # Paths
 ##############################################################################
 folderNames = monet.listDirectoriesInPath(pathRoot + pathExperiments)
-for nameExp in folderNames[0:3]:
+for nameExp in folderNames[0:]:
     pathFull = pathRoot + pathExperiments + nameExp
     ##########################################################################
     # Stack
@@ -102,10 +96,12 @@ for nameExp in folderNames[0:3]:
         geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
             aggregatedNodesData
         )
-        overlay = aux.plotGenotypeOverlayFromLandscape(
+        overlay = monet.plotGenotypeOverlayFromLandscape(
             geneSpatiotemporals,
             style={"aspect": 2.5, "cmap": cmaps},
-            vmax = maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
+            vmax=monet.maxAlleleInLandscape(
+                geneSpatiotemporals["geneLandscape"]
+            )
         )
         monet.quickSaveFigure(
             overlay, pathPlots + "O_" + nameExp + ".png"

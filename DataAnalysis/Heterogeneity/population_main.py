@@ -91,7 +91,11 @@ for nameExp in folderNames[0:]:
             aggregatedNodesData
         )
         overlay = monet.plotGenotypeOverlayFromLandscape(
-            geneSpatiotemporals, style={"aspect": 12, "cmap": cmaps}
+            geneSpatiotemporals,
+            style={"aspect": 4, "cmap": cmaps},
+            vmax=monet.maxAlleleInLandscape(
+                geneSpatiotemporals["geneLandscape"]
+            )
         )
         monet.quickSaveFigure(
             overlay, pathPlots + "O_" + nameExp + ".png"

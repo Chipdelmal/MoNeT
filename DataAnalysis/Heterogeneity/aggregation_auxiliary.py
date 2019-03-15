@@ -63,36 +63,3 @@ def plotMeanGenotypeStack(
             ncol=2,  borderaxespad=0.
         )
     return fig
-
-
-def plotGenotypeOverlayFromLandscape(
-    geneSpatiotemporals,
-    style={"aspect": 12, "cmap": monetPlots.cmaps},
-    vmin=None,
-    vmax=None
-):
-    """
-    Description:
-        * Plots the combined "landscape-heatmap" plots in one.
-    In:
-        * geneSpatiotemporals: Array of the spatiotemporal genotypes
-            information (gene counts across nodes through time).
-        * style: styling options for the plot
-        * vmin:
-        * vmax:
-    Out:
-        * fig: matplot fig of combined heatmaps
-    Notes:
-        * NA
-    """
-    alleleNames = geneSpatiotemporals["genotypes"]
-    counts = geneSpatiotemporals["geneLandscape"]
-    fig = plt.figure(figsize=(20, 5))
-    for i in range(len(alleleNames)):
-        plt.imshow(
-            counts[i],
-            cmap=style["cmap"][i],
-            aspect=style["aspect"],
-            vmin=vmin, vmax=vmax
-        )
-    return fig
