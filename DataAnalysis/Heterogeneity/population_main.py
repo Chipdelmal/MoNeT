@@ -17,8 +17,8 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 # Example: ‎⁨marshallShare/⁨Heterogeneity⁩/⁨Gillian⁩/⁨20190306⁩/⁨MGDrive-Experiments/⁨pusheen1⁩
 # Requires: image folder on the pathRoot
 ##############################################################################
-STACK = True
-SPREAD = False
+STACK = False
+SPREAD = True
 TRACES = False
 nameExp = "up_down"
 pathRoot = "/Volumes/marshallShare/Heterogeneity/Maya/20190313/"

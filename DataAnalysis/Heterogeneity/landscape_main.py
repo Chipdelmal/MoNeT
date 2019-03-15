@@ -4,7 +4,14 @@
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 import aggregation_auxiliary as aux
+import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
+
+def maxAlleleInLandscape(geneLandscape):
+    genesMaxes = map(np.amax, geneLandscape)
+    landscapeMax = max(genesMaxes)
+    return landscapeMax
+
 
 ##############################################################################
 # Notes
@@ -17,8 +24,8 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 # Example: ‎⁨marshallShare/⁨Heterogeneity⁩/⁨Gillian⁩/⁨20190306⁩/⁨MGDrive-Experiments/⁨pusheen1⁩
 # Requires: image folder on the pathRoot
 ##############################################################################
-STACK = True
-SPREAD = False
+STACK = False
+SPREAD = True
 TRACES = False
 nameExp = "up_down"
 pathRoot = "/Volumes/marshallShare/Heterogeneity/Biyonka/20190314/"
@@ -27,7 +34,7 @@ pathPlots = pathRoot + "images/"
 ##############################################################################
 RELEASE_DAY = 50
 colors = ["#f20060", "#29339b", "#c6d8ff", "#7fff3a", "#7692ff", "#29339b"]
-colorsOverlay = ["#29339b", "#c6d8ff", "#7fff3a", "#7692ff", "#29339b", "#f20060"]
+colorsOverlay = ["#f20060", "#29339b", "#c6d8ff", "#7fff3a", "#7692ff", "#29339b"]
 cmaps = monet.generateAlphaColorMapFromColorArray(colorsOverlay)
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
@@ -39,7 +46,7 @@ aggregationDictionary = monet.generateAggregationDictionary(
     ]
 )
 aggregationDictionaryOverlay = monet.generateAggregationDictionary(
-    ["H"],[[1, 4, 4, 5, 6]]
+    ["W", "H"],[[0, 0, 1, 2, 3], [1, 4, 4, 5, 6]]
 )
 aggregationDictionaryOverlay
 styleS = {
@@ -54,7 +61,7 @@ styleT = {
 # Paths
 ##############################################################################
 folderNames = monet.listDirectoriesInPath(pathRoot + pathExperiments)
-for nameExp in folderNames[0:]:
+for nameExp in folderNames[2:3]:
     pathFull = pathRoot + pathExperiments + nameExp
     ##########################################################################
     # Stack
@@ -100,8 +107,10 @@ for nameExp in folderNames[0:]:
         geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
             aggregatedNodesData
         )
-        overlay = monet.plotGenotypeOverlayFromLandscape(
-            geneSpatiotemporals, style={"aspect": 2.5, "cmap": cmaps}
+        overlay = aux.plotGenotypeOverlayFromLandscape(
+            geneSpatiotemporals,
+            style={"aspect": 2.5, "cmap": cmaps},
+            vmax = maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
         )
         monet.quickSaveFigure(
             overlay, pathPlots + "O_" + nameExp + ".png"
