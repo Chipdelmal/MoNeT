@@ -1,5 +1,12 @@
 import os
 import csv
+import numpy as np
+
+
+def maxAlleleInLandscape(geneLandscape):
+    genesMaxes = map(np.amax, geneLandscape)
+    landscapeMax = max(genesMaxes)
+    return landscapeMax
 
 
 def autoGenerateGenotypesDictionary(genes, genotypes):
