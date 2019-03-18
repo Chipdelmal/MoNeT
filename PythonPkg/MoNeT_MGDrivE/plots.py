@@ -237,7 +237,7 @@ def plotLandscapeDataRepetitions(
     landscapesNumb = len(landscapeReps["landscapes"][0])
     figs = [None] * landscapesNumb
     for i in range(0, landscapesNumb):
-        probeNode = zip(*landscapes)[i]
+        probeNode = list(zip(*landscapes))[i]
         figs[i] = plotNodeDataRepetitions(probeNode, style)
     return figs
 

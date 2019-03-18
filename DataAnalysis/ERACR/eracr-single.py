@@ -8,7 +8,7 @@ import matplotlib.patches as mpatches
 groups = ['W', 'H', 'R', 'B', 'E']
 weights = [[],[],[],[],[]]
 
-maleFile = open('/Volumes/marshallShare/vic/eRACR17/2019_02_14_ANALYZED/E_01_02_01000/ADM_Mean_Patch0000.csv', 'r')
+maleFile = open('/Volumes/marshallShare/vic/eRACR24/0060_0075_ANALYZED/E_02_01000/ADM_Mean_Patch0000.csv', 'r')
 #maleFile = open('/Users/vferman/Desktop/HOLD/MGDrivE2/ADM_Run001.csv', 'r')
 first = next(maleFile)
 header = first.split(',')

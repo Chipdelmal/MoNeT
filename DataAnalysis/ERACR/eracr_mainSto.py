@@ -4,6 +4,7 @@
 import MoNeT_MGDrivE as monet
 import glob
 import matplotlib.pyplot as plt
+import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 ##############################################################################
@@ -11,9 +12,10 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 ##############################################################################
 # nameExp = "E_0125_02_00028"
 pathRoot = "/Volumes/marshallShare/vic/"
-pathSet = pathRoot + "eRACR24/" # + "eRACR29"
+pathSet = pathRoot + "eRACR34/" # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
+garbage = True
 
 for j in range(len(foldersList)):
     id = foldersList[j].split("/")[-1].split("_")[0]
@@ -65,6 +67,39 @@ for j in range(len(foldersList)):
                 dpi=500
             )
             plt.close()
+
+            # Garbage (Traces)
+            #########################################################################
+            if garbage:
+                garbargePath = nameExp.replace('ANALYZED','GARBAGE')+'/'
+                paths = monet.listDirectoriesWithPathWithinAPath(garbargePath)
+                landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+                    paths, aggregationDictionary,
+                    male=False, female=True, dataType=float
+                )
+                for landRepetition in landscapeReps['landscapes']:
+                    nodeAggregation = np.sum(landRepetition)
+                    landRepetition = nodeAggregation
+
+                yRange = styleT["yRange"][1]
+                aspect = styleT["xRange"][1] / yRange
+                styleT["aspect"] = .15 * aspect
+                figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, styleT)
+                for i in range(0, len(figsArray)):
+                    figsArray[i].get_axes()[0].set_xlim(
+                        styleT["xRange"][0], styleT["xRange"][1]
+                    )
+                    figsArray[i].get_axes()[0].set_ylim(
+                        styleT["yRange"][0],
+                        1.5 * aux.calculateMaxPopulationInLandscape(landscapeReps)
+                    )
+                    monet.quickSaveFigure(
+                        figsArray[i],
+                        pathRoot + "images/Garbage/" + nameExp + "_" +
+                        str(i).rjust(3, "0") + ".png"
+                    )
+                    plt.close()
+
             #######################################################################
             # Spatial analysis
             #######################################################################
@@ -88,28 +123,3 @@ for j in range(len(foldersList)):
             # )
             # plt.close()
             ##########################################################################
-            # Garbage (Traces)
-            ##########################################################################
-            # paths = monet.listDirectoriesWithPathWithinAPath(pathFull + "/GARBAGE/")
-            # landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-            #     paths, aggregationDictionary,
-            #     male=False, female=True, dataType=float
-            # )
-            # yRange = styleT["yRange"][1]
-            # aspect = styleT["xRange"][1] / yRange
-            # styleT["aspect"] = .15 * aspect
-            # figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, styleT)
-            # for i in range(0, len(figsArray)):
-            #     figsArray[i].get_axes()[0].set_xlim(
-            #         styleT["xRange"][0], styleT["xRange"][1]
-            #     )
-            #     figsArray[i].get_axes()[0].set_ylim(
-            #         styleT["yRange"][0],
-            #         1.5 * aux.calculateMaxPopulationInLandscape(landscapeReps)
-            #     )
-            #     monet.quickSaveFigure(
-            #         figsArray[i],
-            #         pathRoot + "images/Garbage/" + nameExp + "_" +
-            #         str(i).rjust(3, "0") + ".png"
-            #     )
-            #     plt.close()
