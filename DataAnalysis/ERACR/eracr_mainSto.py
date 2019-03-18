@@ -7,6 +7,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
+def calculateMaxPopulationInLandscape(landscapeReps):
+    landscapes = landscapeReps["landscapes"]
+    list = [None] * len(landscapeReps["landscapes"][0])
+    for i in range(len(landscapeReps["landscapes"][0])):
+            list[i] = sum(landscapes[0][i][0])
+    return max(list)
+
 ##############################################################################
 # Setup
 ##############################################################################
@@ -82,8 +89,8 @@ for j in range(len(foldersList)):
                     landRepetition = nodeAggregation
 
                 yRange = styleT["yRange"][1]
-                aspect = styleT["xRange"][1] / yRange
-                styleT["aspect"] = .15 * aspect
+                aspect =  yRange/styleT["xRange"][1]
+                styleT["aspect"] = aspect
                 figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, styleT)
                 for i in range(0, len(figsArray)):
                     figsArray[i].get_axes()[0].set_xlim(
@@ -91,11 +98,11 @@ for j in range(len(foldersList)):
                     )
                     figsArray[i].get_axes()[0].set_ylim(
                         styleT["yRange"][0],
-                        1.5 * aux.calculateMaxPopulationInLandscape(landscapeReps)
+                        1.5 * calculateMaxPopulationInLandscape(landscapeReps)
                     )
                     monet.quickSaveFigure(
                         figsArray[i],
-                        pathRoot + "images/Garbage/" + nameExp + "_" +
+                        pathOut+ "/Garbage/" + nameExp.split("/")[-1] + "_" +
                         str(i).rjust(3, "0") + ".png"
                     )
                     plt.close()
