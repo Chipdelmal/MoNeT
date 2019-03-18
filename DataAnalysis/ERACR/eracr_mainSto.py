@@ -11,7 +11,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 ##############################################################################
 # nameExp = "E_0125_02_00028"
 pathRoot = "/Volumes/marshallShare/vic/"
-pathSet = pathRoot + "eRACR29/"
+pathSet = pathRoot + "eRACR24/" # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
@@ -30,8 +30,15 @@ for j in range(len(foldersList)):
             cmaps = monet.generateAlphaColorMapFromColorArray(colors)
             styleS = {
                 "width": 0, "alpha": .85, "dpi": 1024, "legend": True,
-                "aspect": .25, "colors": colors,
-                "xRange": [0, 5400], "yRange": [0, 2500]
+                "aspect": .075,#.25,
+                "colors": colors,
+                "xRange": [0, 5400], "yRange": [0, 12000]#2500]
+            }
+            styleT = {
+                "width": 0.1, "alpha": .25, "dpi": 1024, "legend": True,
+                "aspect": .075,#.25,
+                "colors": colors,
+                "xRange": [0, 5400], "yRange": [0, 12000]#2500]
             }
             #######################################################################
             # Population breakdown analysis
@@ -55,28 +62,54 @@ for j in range(len(foldersList)):
             monet.quickSaveFigure(
                 figB,
                 pathOut + "/stack/" + id + "-" + nameExp.split("/")[-1] + "_S.png",
-                dpi=1024
+                dpi=500
             )
             plt.close()
             #######################################################################
             # Spatial analysis
             #######################################################################
-            landscapeData = monet.loadLandscapeData(filenames, dataType=float)
-            aggregatedNodesData = monet.aggregateGenotypesInLandscape(
-                landscapeData,
-                aggregationDictionary
-            )
-            geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
-                aggregatedNodesData
-            )
-            #######################################################################
-            overlay = monet.plotGenotypeOverlayFromLandscape(
-                geneSpatiotemporals,
-                style={"aspect": 75, "cmap": cmaps}
-            )
-            monet.quickSaveFigure(
-                overlay,
-                pathOut + "/heat/" + id + "-" + nameExp.split("/")[-1] + "F_L.png",
-                dpi=1024
-            )
-            plt.close()
+            # landscapeData = monet.loadLandscapeData(filenames, dataType=float)
+            # aggregatedNodesData = monet.aggregateGenotypesInLandscape(
+            #     landscapeData,
+            #     aggregationDictionary
+            # )
+            # geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
+            #     aggregatedNodesData
+            # )
+            # #######################################################################
+            # overlay = monet.plotGenotypeOverlayFromLandscape(
+            #     geneSpatiotemporals,
+            #     style={"aspect": 75, "cmap": cmaps}
+            # )
+            # monet.quickSaveFigure(
+            #     overlay,
+            #     pathOut + "/heat/" + id + "-" + nameExp.split("/")[-1] + "F_L.png",
+            #     dpi=500
+            # )
+            # plt.close()
+            ##########################################################################
+            # Garbage (Traces)
+            ##########################################################################
+            # paths = monet.listDirectoriesWithPathWithinAPath(pathFull + "/GARBAGE/")
+            # landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+            #     paths, aggregationDictionary,
+            #     male=False, female=True, dataType=float
+            # )
+            # yRange = styleT["yRange"][1]
+            # aspect = styleT["xRange"][1] / yRange
+            # styleT["aspect"] = .15 * aspect
+            # figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, styleT)
+            # for i in range(0, len(figsArray)):
+            #     figsArray[i].get_axes()[0].set_xlim(
+            #         styleT["xRange"][0], styleT["xRange"][1]
+            #     )
+            #     figsArray[i].get_axes()[0].set_ylim(
+            #         styleT["yRange"][0],
+            #         1.5 * aux.calculateMaxPopulationInLandscape(landscapeReps)
+            #     )
+            #     monet.quickSaveFigure(
+            #         figsArray[i],
+            #         pathRoot + "images/Garbage/" + nameExp + "_" +
+            #         str(i).rjust(3, "0") + ".png"
+            #     )
+            #     plt.close()
