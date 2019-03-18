@@ -102,7 +102,7 @@ for j in range(len(foldersList)):
                     )
                     monet.quickSaveFigure(
                         figsArray[i],
-                        pathOut+ "/Garbage/" + nameExp.split("/")[-1] + "_" +
+                        pathOut+ "/Garbage/"+ id + "-" + nameExp.split("/")[-1] + "_" +
                         str(i).rjust(3, "0") + ".png"
                     )
                     plt.close()
