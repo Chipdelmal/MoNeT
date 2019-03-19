@@ -87,42 +87,46 @@ for j in range(len(foldersList)):
             # Garbage (Traces)
             ###################################################################
             if GARBAGE:
-                landscapeData = monet.loadLandscapeData(
-                    filenames,
-                    dataType=float
-                )
-                genotypes = landscapeData["genotypes"]
-                aggregationDictionary = monet.autoGenerateGenotypesDictionary(
-                    ["W", "H", "E", "R", "B"],
-                    genotypes
-                )
                 garbargePath = nameExp.replace('ANALYZED', 'GARBAGE')+'/'
                 paths = monet.listDirectoriesWithPathWithinAPath(garbargePath)
-                landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-                    paths, aggregationDictionary,
-                    male=False, female=True, dataType=float
+                alleles = ["W", "H", "E", "R", "B"]
+                reps = []
+                for dir in paths:
+                    fileList = monet.readExperimentFilenames(dir)
+                    landscapeData = monet.sumLandscapePopulationsFromFiles(
+                        fileList, male=True, female=False, dataType=float
+                    )
+                    genotypes = landscapeData["genotypes"]
+                    aggregationDictionary = monet.autoGenerateGenotypesDictionary(
+                        alleles,
+                        genotypes
+                    )
+
+                    aggData = monet.aggregateGenotypesInNode(
+                        landscapeSumData,
+                        aggregationDictionary
+                    )
+                    reps.append(aggData['population'])
+
+
+                fig = monet.plotNodeDataRepetitions(
+                    reps, styleT
                 )
-                for landRepetition in landscapeReps['landscapes']:
-                    nodeAggregation = np.sum(landRepetition)
-                    landRepetition = nodeAggregation
-                figsArray = monet.plotLandscapeDataRepetitions(
-                    landscapeReps, styleT
+
+                fig.get_axes()[0].set_xlim(
+                    styleT["xRange"][0], styleT["xRange"][1]
                 )
-                for i in range(0, len(figsArray)):
-                    figsArray[i].get_axes()[0].set_xlim(
-                        styleT["xRange"][0], styleT["xRange"][1]
-                    )
-                    figsArray[i].get_axes()[0].set_ylim(
-                        styleT["yRange"][0], styleT["yRange"][1]
-                    )
-                    monet.quickSaveFigure(
-                        figsArray[i],
-                        pathOut + "/garbage/" + id + "-" +
-                        nameExp.split("/")[-1] + "_" +
-                        str(i).rjust(3, "0") + ".png",
-                        dpi=500
-                    )
-                    plt.close()
+                fig.get_axes()[0].set_ylim(
+                    styleT["yRange"][0], styleT["yRange"][1]
+                )
+                monet.quickSaveFigure(
+                    fig,
+                    pathOut + "/garbage/" + id + "-" +
+                    nameExp.split("/")[-1] + "_" +
+                    str(1).rjust(3, "0") + ".png",
+                    dpi=500
+                )
+                plt.close()
             if HEAT:
                 ###############################################################
                 # Spatial analysis
