@@ -7,6 +7,40 @@ import matplotlib.pyplot as plt
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
+def plotAllTraces(
+landscapeReps,
+style
+):
+    """
+    Description:
+        * Generates the individual "traces" plots for a whole landscape.
+    In:
+        * landscapeReps: landscape repetitions data generated with
+            loadAndAggregateLandscapeDataRepetitions.
+        * style: styling options for the plot.
+    Out:
+        * figs: array of matplotlib traces figures.
+    Notes:
+        * NA
+    """
+    repetitions = len(landscapeReps["landscapes"])
+    nodesNumb = len(landscapeReps["landscapes"][0])
+    genesNumber = len(landscapeReps["landscapes"][0][0][0])
+    fig, ax = plt.subplots()
+    ax.set_aspect(aspect=style["aspect"])
+    for rep in landscapeReps["landscapes"]:
+        for node in rep:
+            transposed = node.T
+            for gene in range(0, genesNumber):
+                ax.plot(
+                    transposed[gene],
+                    linewidth=style["width"],
+                    color=style["colors"][gene],
+                    alpha=style["alpha"]
+                )
+
+    return fig
+
 
 def calculateMaxPopulationInLandscape(landscapeReps):
     landscapes = landscapeReps["landscapes"]
@@ -86,42 +120,31 @@ for j in range(len(foldersList)):
             # Garbage (Traces)
             ###################################################################
             if GARBAGE:
-                landscapeData = monet.loadLandscapeData(
-                    filenames,
-                    dataType=float
-                )
-                genotypes = landscapeData["genotypes"]
-                aggregationDictionary = monet.autoGenerateGenotypesDictionary(
-                    ["W", "H", "E", "R", "B"],
-                    genotypes
-                )
                 garbargePath = nameExp.replace('ANALYZED', 'GARBAGE')+'/'
                 paths = monet.listDirectoriesWithPathWithinAPath(garbargePath)
-                landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-                    paths, aggregationDictionary,
-                    male=False, female=True, dataType=float
+                reps = monet.loadAndAggregateLandscapeDataRepetitions(
+                    paths,
+                    aggregationDictionary,
+                    male=True,
+                    female=False,
                 )
-                for landRepetition in landscapeReps['landscapes']:
-                    nodeAggregation = np.sum(landRepetition)
-                    landRepetition = nodeAggregation
-                figsArray = monet.plotLandscapeDataRepetitions(
-                    landscapeReps, styleT
+
+                fig = plotAllTraces(reps, styleT)
+
+                fig.get_axes()[0].set_xlim(
+                    styleT["xRange"][0], styleT["xRange"][1]
                 )
-                for i in range(0, len(figsArray)):
-                    figsArray[i].get_axes()[0].set_xlim(
-                        styleT["xRange"][0], styleT["xRange"][1]
-                    )
-                    figsArray[i].get_axes()[0].set_ylim(
-                        styleT["yRange"][0], styleT["yRange"][1]
-                    )
-                    monet.quickSaveFigure(
-                        figsArray[i],
-                        pathOut + "/garbage/" + id + "-" +
-                        nameExp.split("/")[-1] + "_" +
-                        str(i).rjust(3, "0") + ".png",
-                        dpi=500
-                    )
-                    plt.close()
+                fig.get_axes()[0].set_ylim(
+                    styleT["yRange"][0], styleT["yRange"][1]
+                )
+                monet.quickSaveFigure(
+                    fig,
+                    pathOut + "/garbage/" + id + "-" +
+                    nameExp.split("/")[-1] + "_" +
+                    str(1).rjust(3, "0") + ".png",
+                    dpi=500
+                )
+                plt.close()
             if HEAT:
                 ###############################################################
                 # Spatial analysis
