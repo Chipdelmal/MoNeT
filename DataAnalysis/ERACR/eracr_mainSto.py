@@ -16,8 +16,8 @@ def calculateMaxPopulationInLandscape(landscapeReps):
     return max(list)
 
 
-STACK = True
-GARBAGE = True
+STACK = False
+GARBAGE = False
 HEAT = True
 ##############################################################################
 # Setup
@@ -34,7 +34,6 @@ for j in range(len(foldersList)):
     for nameExp in experimentsFolders:
         pathFull = nameExp
         filenames = monet.readExperimentFilenames(pathFull)
-        filenames
         if (len(filenames["male"]) > 0) or (len(filenames["female"]) > 0):
             ###################################################################
             colors = [
@@ -43,13 +42,13 @@ for j in range(len(foldersList)):
             ]
             cmaps = monet.generateAlphaColorMapFromColorArray(colors)
             styleS = {
-                "width": 0, "alpha": .85, "dpi": 1024, "legend": True,
-                "aspect": .075,  # .25,
+                "width": 0, "alpha": .85, "dpi": 1024, "legend": False,
+                "aspect": .175,  # .25,
                 "colors": colors,
-                "xRange": [0, 5400], "yRange": [0, 3000]  # 2500]
+                "xRange": [0, 5400], "yRange": [0, 5000]  # 2500]
             }
             styleT = {
-                "width": 0.1, "alpha": .175, "dpi": 1024, "legend": True,
+                "width": 0.1, "alpha": .175, "dpi": 1024, "legend": False,
                 "aspect": 1.75,  # .25,
                 "colors": colors,
                 "xRange": [0, 2500], "yRange": [0, 300]  # 2500]
