@@ -26,7 +26,7 @@ for nameExp in experimentsFolders:
         ]
         cmaps = monet.generateAlphaColorMapFromColorArray(colors)
         styleS = {
-            "width": 0, "alpha": .85, "dpi": 1024, "legend": False,
+            "width": 0, "alpha": .85, "dpi": 1024, "legend": True,
             "aspect": .25, "colors": colors,
             "xRange": [0, 5400], "yRange": [0, 2500]
         }
@@ -80,10 +80,15 @@ for nameExp in experimentsFolders:
         #     )
         overlay = monet.plotGenotypeOverlayFromLandscape(
             geneSpatiotemporals,
-            style={"aspect": 75, "cmap": cmaps}
+            style={"aspect": 75, "cmap": cmaps},
+            vmax=monet.maxAlleleInLandscape(
+                geneSpatiotemporals["geneLandscape"]
+            )
         )
         monet.quickSaveFigure(
             overlay, pathSet + "images/heat/" + nameExp + "F_L.png"
         )
         plt.close()
         print(nameExp)
+
+experimentsFolders

@@ -17,7 +17,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 6
+DRIVE = 1
 TRACES = False
 STACK = True
 SUMMARIES_DATA = True
@@ -94,7 +94,7 @@ if TRACES is True:
                 figsArray[i],
                 pathRoot + "images/traces/" + str(DRIVE).rjust(2, "0") + "R_" +
                 experimentString + ".png",
-                dpi=500
+                dpi=750
             )
             plt.close()
 ##############################################################################
@@ -124,7 +124,16 @@ if STACK is True:
         else:
             groupingsList = [[2], [3], [2, 3]]
             ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
-            ffString = "r(R1): " + format(ratiosAtEnd[0], '.3f') + ", r(R2): " + format(ratiosAtEnd[1], '.3f') + ", r(R1+R2): " + format(ratiosAtEnd[2], '.3f')
+            # aggDataInt = monet.aggregateGenotypesInNode(
+            #     landscapeSumData,
+            #     sel.INT_DICTIONARY
+            # )
+            #ratiosAtEndInt = aux.getRatiosAtEnd(aggDataInt, [[0]], -1)
+            intersection = (ratiosAtEnd[0] * ratiosAtEnd[1])
+            union = ratiosAtEnd[0] + ratiosAtEnd[1] - (ratiosAtEnd[0] * ratiosAtEnd[1])
+            ffString = "r(R1): " + format(ratiosAtEnd[0], '.3f') + ", r(R2): " + format(
+                ratiosAtEnd[1], '.3f') + ", r(R1&R2): " + format(intersection,
+                '.3f') + ", r(R1|R2): " + format(union, '.3f')
         ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
         if not (DRIVE == 1 or DRIVE == 2):
             aggData = {
@@ -151,7 +160,7 @@ if STACK is True:
             figB,
             pathRoot + "/images/stacks/" + str(DRIVE).rjust(2, "0") + "S_" +
             experimentString + ".png",
-            dpi=500
+            dpi=1024
         )
         plt.close()
 ##############################################################################
