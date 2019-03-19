@@ -13,19 +13,19 @@ def plotAllTraces(
 ):
     """
     Description:
-        * Generates the individual "traces" plots for a whole landscape.
+        * Generates the individual "traces" plot for a whole landscape.
     In:
         * landscapeReps: landscape repetitions data generated with
             loadAndAggregateLandscapeDataRepetitions.
         * style: styling options for the plot.
     Out:
-        * figs: array of matplotlib traces figures.
+        * fig: a matplotlib traces figure.
     Notes:
         * NA
     """
-    repetitions = len(landscapeReps["landscapes"])
-    nodesNumb = len(landscapeReps["landscapes"][0])
-    genesNumber = len(landscapeReps["landscapes"][0][0][0])
+    repetitions = len(landscapeReps["landscapes"]) #one for each folder
+    nodesNumb = len(landscapeReps["landscapes"][0]) #seen how many nodes there are on the first repetition
+    genesNumber = len(landscapeReps["landscapes"][0][0][0]) #takes the first line of the first node of the first repetition (that's why it is the third instead of just two lookups)
     fig, ax = plt.subplots()
     ax.set_aspect(aspect=style["aspect"])
     for rep in landscapeReps["landscapes"]:
