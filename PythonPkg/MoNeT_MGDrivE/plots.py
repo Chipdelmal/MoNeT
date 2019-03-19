@@ -242,9 +242,63 @@ def plotLandscapeDataRepetitions(
     return figs
 
 
-def quickSaveFigure(fig, path, dpi=1024):
-    fig.savefig(path,
-                dpi=dpi, facecolor='w',
-                edgecolor='w', orientation='portrait', papertype=None,
-                format="png", transparent=True, bbox_inches='tight',
-                pad_inches=0, frameon=None)
+def plotAllTraces(
+    landscapeReps,
+    style
+):
+    """
+    Description:
+        * Generates the individual "traces" plots for a whole landscape.
+    In:
+        * landscapeReps: landscape repetitions data generated with
+            loadAndAggregateLandscapeDataRepetitions.
+        * style: styling options for the plot.
+    Out:
+        * figs: array of matplotlib traces figures.
+    Notes:
+        * NA
+    """
+    repetitions = len(landscapeReps["landscapes"])
+    nodesNumb = len(landscapeReps["landscapes"][0])
+    genesNumber = len(landscapeReps["landscapes"][0][0][0])
+    fig, ax = plt.subplots()
+    ax.set_aspect(aspect=style["aspect"])
+    for rep in landscapeReps["landscapes"]:
+        for node in rep:
+            transposed = node.T
+            for gene in range(0, genesNumber):
+                ax.plot(
+                    transposed[gene],
+                    linewidth=style["width"],
+                    color=style["colors"][gene],
+                    alpha=style["alpha"]
+                )
+
+    return fig
+
+
+def quickSaveFigure(
+    fig,
+    path,
+    dpi=1024,
+    format="png"
+):
+    """
+    Description:
+        * Standardized method to save experiments figures.
+    In:
+        * fig: figure to save
+        * path: directory to save to
+        * dpi: resolution
+        * format: image format
+    Out:
+        * NA: (saves to disk)
+    Notes:
+        * NA
+    """
+    fig.savefig(
+        path, dpi=dpi, facecolor='w',
+        edgecolor='w', orientation='portrait', papertype=None,
+        format=format, transparent=True, bbox_inches='tight',
+        pad_inches=0, frameon=None
+    )

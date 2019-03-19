@@ -8,8 +8,8 @@ import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 def plotAllTraces(
-landscapeReps,
-style
+    landscapeReps,
+    style
 ):
     """
     Description:
@@ -42,7 +42,7 @@ style
     return fig
 
 
-def calculateMaxPopulationInLandscape(landscapeReps):
+def calculateMaxPopInLandscapeReps(landscapeReps):
     landscapes = landscapeReps["landscapes"]
     list = [None] * len(landscapeReps["landscapes"][0])
     for i in range(len(landscapeReps["landscapes"][0])):
@@ -51,8 +51,8 @@ def calculateMaxPopulationInLandscape(landscapeReps):
 
 
 STACK = False
-GARBAGE = False
-HEAT = True
+TRACE= True
+HEAT = False
 ##############################################################################
 # Setup
 ##############################################################################
@@ -65,6 +65,7 @@ foldersList = glob.glob(pathSet + "*ANALYZED")
 for j in range(len(foldersList)):
     id = foldersList[j].split("/")[-1].split("_")[0]
     experimentsFolders = glob.glob(foldersList[0] + "/E_*")
+
     for nameExp in experimentsFolders:
         pathFull = nameExp
         filenames = monet.readExperimentFilenames(pathFull)
@@ -77,15 +78,15 @@ for j in range(len(foldersList)):
             cmaps = monet.generateAlphaColorMapFromColorArray(colors)
             styleS = {
                 "width": 0, "alpha": .85, "dpi": 1024, "legend": False,
-                "aspect": .175,  # .25,
-                "colors": colors,
+                "aspect": .175, "dpi": 750,
+                "colors": colors, "format": "pdf",
                 "xRange": [0, 5400], "yRange": [0, 5000]  # 2500]
             }
             styleT = {
-                "width": 0.1, "alpha": .175, "dpi": 1024, "legend": False,
-                "aspect": 1.75,  # .25,
-                "colors": colors,
-                "xRange": [0, 2500], "yRange": [0, 300]  # 2500]
+                "width": 0.03, "alpha": .15, "dpi": 1024, "legend": False,
+                "aspect": 2,  "dpi": 1024,
+                "colors": colors, "format": "pdf",
+                "xRange": [0, 3000], "yRange": [0, 300]  # 2500]
             }
             ###################################################################
             # Population breakdown analysis
@@ -112,25 +113,31 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     figB,
                     pathOut + "/stack/" + id + "-" +
-                    nameExp.split("/")[-1] + "_S.png",
-                    dpi=500
+                    nameExp.split("/")[-1] + "_S." + styleS["format"],
+                    dpi = styleS["dpi"],
+                    format = styleS["format"]
                 )
                 plt.close()
             ###################################################################
             # Garbage (Traces)
             ###################################################################
-            if GARBAGE:
+            if TRACE:
                 garbargePath = nameExp.replace('ANALYZED', 'GARBAGE')+'/'
                 paths = monet.listDirectoriesWithPathWithinAPath(garbargePath)
+                aggregationDictionary = monet.autoGenerateGenotypesDictionary(
+                    ["W", "H", "E", "R", "B"],
+                    [
+                        'WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
+                        'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB'
+                    ]
+                )
                 reps = monet.loadAndAggregateLandscapeDataRepetitions(
                     paths,
                     aggregationDictionary,
                     male=True,
                     female=False,
                 )
-
                 fig = plotAllTraces(reps, styleT)
-
                 fig.get_axes()[0].set_xlim(
                     styleT["xRange"][0], styleT["xRange"][1]
                 )
@@ -141,8 +148,9 @@ for j in range(len(foldersList)):
                     fig,
                     pathOut + "/garbage/" + id + "-" +
                     nameExp.split("/")[-1] + "_" +
-                    str(1).rjust(3, "0") + ".png",
-                    dpi=500
+                    str(1).rjust(3, "0") + "." + styleT["format"],
+                    dpi=styleS["dpi"],
+                    format = styleT["format"]
                 )
                 plt.close()
             if HEAT:
@@ -167,14 +175,15 @@ for j in range(len(foldersList)):
                 )
                 ###############################################################
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                 geneSpatiotemporals,
-                 style={"aspect": 50, "cmap": cmaps}
+                    geneSpatiotemporals,
+                    style={"aspect": 50, "cmap": cmaps}
                 )
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" + id + "-" +
-                        nameExp.split("/")[-1] + "F_L.png",
-                    dpi=500
+                        nameExp.split("/")[-1] + "F_L." + styleS["format"],
+                    dpi=styleS["dpi"],
+                    format = styleS["format"]
                 )
                 plt.close()
                 ###############################################################

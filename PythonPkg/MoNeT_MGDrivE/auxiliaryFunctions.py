@@ -182,3 +182,22 @@ def splitExperimentString(experimentString):
     releasesNumber = int(split[3])
     coverage = int(split[4])
     return {"releasesNumber": releasesNumber, "coverage": coverage}
+
+
+def calculateMaxPopInLandscapeReps(landscapeReps):
+    """
+    Description:
+        * Returns the max population from a set of experiments in garbage
+            folder.
+    In:
+        * landscapeReps: Dictionary with the info for the traces (garbage)
+    Out:
+        * maxPop: Maximum population found in the experiments.
+    Notes:
+        * Mainly developed to set the "y" axis range in traces plots.
+    """
+    landscapes = landscapeReps["landscapes"]
+    list = [None] * len(landscapeReps["landscapes"][0])
+    for i in range(len(landscapeReps["landscapes"][0])):
+            list[i] = sum(landscapes[0][i][0])
+    return max(list)
