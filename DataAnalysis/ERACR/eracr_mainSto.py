@@ -7,41 +7,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-def plotAllTraces(
-    landscapeReps,
-    style
-):
-    """
-    Description:
-        * Generates the individual "traces" plot for a whole landscape.
-    In:
-        * landscapeReps: landscape repetitions data generated with
-            loadAndAggregateLandscapeDataRepetitions.
-        * style: styling options for the plot.
-    Out:
-        * fig: a matplotlib traces figure.
-    Notes:
-        * NA
-    """
-    repetitions = len(landscapeReps["landscapes"]) #one for each folder
-    nodesNumb = len(landscapeReps["landscapes"][0]) #seen how many nodes there are on the first repetition
-    genesNumber = len(landscapeReps["landscapes"][0][0][0]) #takes the first line of the first node of the first repetition (that's why it is the third instead of just two lookups)
-    fig, ax = plt.subplots()
-    ax.set_aspect(aspect=style["aspect"])
-    for rep in landscapeReps["landscapes"]:
-        for node in rep:
-            transposed = node.T
-            for gene in range(0, genesNumber):
-                ax.plot(
-                    transposed[gene],
-                    linewidth=style["width"],
-                    color=style["colors"][gene],
-                    alpha=style["alpha"]
-                )
-
-    return fig
-
-
 def calculateMaxPopInLandscapeReps(landscapeReps):
     landscapes = landscapeReps["landscapes"]
     list = [None] * len(landscapeReps["landscapes"][0])
@@ -137,7 +102,7 @@ for j in range(len(foldersList)):
                     male=True,
                     female=False,
                 )
-                fig = plotAllTraces(reps, styleT)
+                fig = monet.plotAllTraces(reps, styleT)
                 fig.get_axes()[0].set_xlim(
                     styleT["xRange"][0], styleT["xRange"][1]
                 )
