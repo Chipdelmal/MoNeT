@@ -248,13 +248,13 @@ def plotAllTraces(
 ):
     """
     Description:
-        * Generates the individual "traces" plots for a whole landscape.
+        * Generates the individual "traces" plot for a whole landscape.
     In:
         * landscapeReps: landscape repetitions data generated with
             loadAndAggregateLandscapeDataRepetitions.
         * style: styling options for the plot.
     Out:
-        * figs: array of matplotlib traces figures.
+        * fig: a matplotlib traces figure with all of the information on the landscapeReps.
     Notes:
         * NA
     """
