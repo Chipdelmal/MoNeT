@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='MoNeT_MGDrivE',
-    version='0.4.5.3',
+    version='0.4.5.4',
     url='https://chipdelmal.github.io/MoNeT/',
     author='Hector M. Sanchez C.',
     author_email='sanchez.hmsc@berkeley.edu',

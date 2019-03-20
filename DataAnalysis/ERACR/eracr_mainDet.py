@@ -90,5 +90,3 @@ for nameExp in experimentsFolders:
         )
         plt.close()
         print(nameExp)
-
-experimentsFolders

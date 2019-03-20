@@ -17,9 +17,9 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 1
+DRIVE = 6
 TRACES = False
-STACK = True
+STACK = False
 SUMMARIES_DATA = True
 TRACES_DATA = False
 ##############################################################################

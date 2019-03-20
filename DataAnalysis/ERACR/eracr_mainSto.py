@@ -85,7 +85,7 @@ for j in range(len(foldersList)):
             styleT = {
                 "width": 0.03, "alpha": .15, "dpi": 1024, "legend": False,
                 "aspect": 2,  "dpi": 1024,
-                "colors": colors, "format": "pdf",
+                "colors": colors, "format": "png",
                 "xRange": [0, 3000], "yRange": [0, 300]  # 2500]
             }
             ###################################################################
