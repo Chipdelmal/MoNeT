@@ -74,13 +74,15 @@ def loadNodeData(
             maleFilename,
             dtype=dataType,
             skip_header=skipHeader,
-            delimiter=","
+            delimiter=",",
+            invalid_raise=False
         )
         dataF = np.genfromtxt(
             femaleFilename,
             dtype=dataType,
             skip_header=skipHeader,
-            delimiter=","
+            delimiter=",",
+            invalid_raise=False
         )
         returnDictionary = {
             "genotypes": genotypes,
@@ -93,7 +95,8 @@ def loadNodeData(
             femaleFilename,
             dtype=dataType,
             skip_header=skipHeader,
-            delimiter=","
+            delimiter=",",
+            invalid_raise=False
         )
         returnDictionary = {
             "genotypes": genotypes,
@@ -106,7 +109,8 @@ def loadNodeData(
             maleFilename,
             dtype=dataType,
             skip_header=skipHeader,
-            delimiter=","
+            delimiter=",",
+            invalid_raise=False
         )
         returnDictionary = {
             "genotypes": genotypes,
