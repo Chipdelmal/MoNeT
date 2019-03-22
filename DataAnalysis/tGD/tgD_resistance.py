@@ -56,7 +56,6 @@ for i in range(0,6):
             ratiosAtEnd.append(ratiosAtEnd[0] + ratiosAtEnd[1] - (ratiosAtEnd[0] * ratiosAtEnd[1]))
         #######################################################################
         ssReach = aux.reachedSteadtStateAtDay(aggData, .01)
-        summariesDict[experimentString] = ssReach
         id = map(int,experimentString.split("_")[1:])
         resultsList.append([DRIVE] + id + ratiosAtEnd + [ssReach])
 
