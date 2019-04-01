@@ -10,12 +10,12 @@ import pandas as pd
 #------------------------------------------------------------------------------
 # Analyzing different metrics on drive behavior
 #------------------------------------------------------------------------------
-experiments = ['base_20m_50n', 'looser_50n', 'tight_50n', 'uneven_50n']
+experiments = ['base_20m_50n', 'looser_50n', 'tight_50n', 'uneven_test']
 iteration = 100
 d = {}
 for experiment in experiments:
     type = float
-    path = "/Users/Biyonka/Desktop/Output/contrivedlandscapes/" + experiment + "/GARBAGE/0001/"
+    path = "/Users/Biyonka/Desktop/Output/contrived_landscapes_test/" + experiment + "/GARBAGE/0001/"
     time_to_thres, intersection, prop_homing_end = [], [], []
     for i in range(1, iteration+1, 1):
         # Define the experiment's path, aggregation dictionary, and read filenames
@@ -96,15 +96,15 @@ def set_axis_style(ax, labels):
     ax.set_xticklabels(labels)
     ax.set_xlim(0.25, len(labels) + 0.75)
     ax.set_xlabel('Landscape Type (2 Clusters)')
-    ax.set_ylim(0, 1500)
+    ax.set_ylim(0, 1)
 
-data = [d['base_20m_50n']['thres'],
- d['looser_50n']['thres'],
- d['tight_50n']['thres'],
-  d['uneven_50n']['thres']]
+data = [d['base_20m_50n']['end'],
+ d['looser_50n']['end'],
+ d['tight_50n']['end'],
+  d['uneven_test']['end']]
 
 fig,  ax2 = plt.subplots(nrows=1, ncols=1, figsize=(9, 6), sharey=True)
-ax2.set_title('Time that Homing Allele Proportion Exceeds 0.5 for 50-Node Landscape')
+ax2.set_title('Homing Allele Proportion at End of 3 Years For 50-Node Landscape')
 parts = ax2.violinplot(
         data, showmeans=False, showmedians=False,
         showextrema=False)
@@ -130,4 +130,4 @@ set_axis_style(ax2, labels)
 plt.show()
 
 
-fig.savefig("thres_violin.png", dpi=1024)
+fig.savefig("end_violin_1.png", dpi=1024)
