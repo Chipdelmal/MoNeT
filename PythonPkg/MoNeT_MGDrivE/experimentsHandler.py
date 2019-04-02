@@ -215,13 +215,14 @@ def sumLandscapePopulationsFromFiles(
         genotypes = placeholder["genotypes"]
         tempAggregation = placeholder["population"]
         for i in range(1, maleFilesNumber):
-            tempAggregation = tempAggregation + loadNodeData(
+            tempShape = tempAggregation.shape
+            tempAggregation = tempAggregation + np.resize(loadNodeData(
                 filenames["male"][i],
                 None,
                 dataType=dataType,
                 skipHeader=skipHeader,
                 skipColumns=skipColumns
-            )["population"]
+            )["population"],tempShape)
         returnDictionary = {
             "genotypes": genotypes,
             "population": tempAggregation
