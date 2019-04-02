@@ -84,10 +84,16 @@ def loadNodeData(
             delimiter=",",
             invalid_raise=False
         )
-        returnDictionary = {
-            "genotypes": genotypes,
-            "population": (dataM + dataF)[:, skipColumns:]
-        }
+        if dataM.shape[0]>dataF.shape[0]:
+            returnDictionary = {
+                "genotypes": genotypes,
+                "population": (np.resize(dataM,dataF.shape) + dataF)[:, skipColumns:]
+            }
+        else:
+            returnDictionary = {
+                "genotypes": genotypes,
+                "population": (dataM + np.resize(dataF,dataM.shape))[:, skipColumns:]
+            }
         return returnDictionary
     elif femaleFilename is not None:
         genotypes = auxFun.readGenotypes(femaleFilename)
@@ -215,14 +221,13 @@ def sumLandscapePopulationsFromFiles(
         genotypes = placeholder["genotypes"]
         tempAggregation = placeholder["population"]
         for i in range(1, maleFilesNumber):
-            tempShape = tempAggregation.shape
             tempAggregation = tempAggregation + np.resize(loadNodeData(
                 filenames["male"][i],
                 None,
                 dataType=dataType,
                 skipHeader=skipHeader,
                 skipColumns=skipColumns
-            )["population"],tempShape)
+            )["population"],tempAggregation.shape)
         returnDictionary = {
             "genotypes": genotypes,
             "population": tempAggregation
