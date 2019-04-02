@@ -10,16 +10,17 @@ import pandas as pd
 #------------------------------------------------------------------------------
 # Analyzing different metrics on drive behavior
 #------------------------------------------------------------------------------
-experiments = ['base_20m_50n', 'looser_50n', 'tight_50n', 'uneven_test']
-iteration = 100
-d = {}
+experiments = ['eta1e-04', 'eta1e-03', 'eta1e-02', 'eta1e-01', 'eta1', 'eta10','eta100','eta1000']
+iteration = 10
+d = []
 for experiment in experiments:
     type = float
-    path = "/Users/Biyonka/Desktop/Output/contrived_landscapes_test/" + experiment + "/GARBAGE/0001/"
-    time_to_thres, intersection, prop_homing_end = [], [], []
+    #path = #"/Users/Biyonka/Desktop/Output/1clustering_analysis/drive_output/" + experiment + "/ANALYZED/"
+    time_to_thres, prop_homing_end = [], []
     for i in range(1, iteration+1, 1):
+        path = ("/Users/Biyonka/Desktop/Output/1clustering_analysis/drive_output/%s_iter%s/ANALYZED/" % (experiment, i))
         # Define the experiment's path, aggregation dictionary, and read filenames
-        experimentString = '{0:04d}'.format(i)
+        experimentString = "0001"#'{0:04d}'.format(i)
         aggregationDictionary = monet.generateAggregationDictionary(
             ["W", "H", "R", "B"],
             [
@@ -50,6 +51,7 @@ for experiment in experiments:
             landscapeSumData,
             aggregationDictionary
         )
+
         wbh = np.sum(aggData['population'], axis =1)
         ratio_homing = aggData['population'][:, 1]/(wbh)
         #get time at which homing ratio exceeds threshold
@@ -60,23 +62,30 @@ for experiment in experiments:
             # if threshold of homing never eceeds 0.5, set time to
             #total length of experiment (i.e. 3 years)
             time = aggData['population'].shape[0]
-        time_to_thres.append(time)
+        e = float(experiment[3:])
+        time_to_thres.append((e, time))
+    d.extend(time_to_thres)
+        # #get proportion of homing at end of 3 years
+        # prop_homing = aggData['population'][:, 1][-1]/wbh[-1]
+        # prop_homing_end.append(prop_homing)
 
-        #get proportion of homing at end of 3 years
-        prop_homing = aggData['population'][:, 1][-1]/wbh[-1]
-        prop_homing_end.append(prop_homing)
+list1, list2 = zip(*d)
+df = pd.DataFrame({"eta":  np.log(list1), "thres": list2})
+ax1 = df.plot.scatter(x='eta',
+                      y='thres',
+                     c='DarkBlue')
+plt.ylim(300, 400)
+w = df.groupby('eta').mean().reset_index()
+w
+w.plot.scatter(x='eta', y = 'thres')
+    #d[experiment] = time_to_thres#{"thres": time_to_thres, "end": prop_homing_end}
+d
+# #df.rename(index=str, columns={'eta1e-04': 0.0001,
+#             'eta1e-03': 0.001, 'eta1e-02': 0.01,
+#              'eta1e-01': 0.1, 'eta1':1, 'eta10':10,
+#              'eta100':100,'eta1000':1000})
 
-        #get the time of intersection between wild and homing
-        diff = aggData['population'][:, 1] - aggData['population'][:, 0]
-        if i == "TIGHT":
-            #no intersection occurs in the tight experiment
-            inter = aggData['population'].shape[0]
-        else:
-            #get index where the wild and homing arrays are the closest
-            inter = list(np.abs(diff)).index(min(np.abs(diff)))
-        intersection.append(inter)
-    d[experiment] = {"thres": time_to_thres, "inter":intersection, "end": prop_homing_end}
-
+df
 #------------------------------------------------------------------------------
 # Plotting
 #------------------------------------------------------------------------------

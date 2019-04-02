@@ -4,6 +4,7 @@
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 import mating_auxiliary as aux
+import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
@@ -11,7 +12,8 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 # Notes
 ##############################################################################
 STACK = False
-TRACES = True
+TRACES = False
+FACTORIAL = True
 nameExp = ""
 pathRoot = "/Volumes/marshallShare/pgSIT/"
 pathExperiments = "CRISPR_SIT/"
@@ -38,13 +40,13 @@ styleT = {
 ##############################################################################
 # Stack
 ##############################################################################
-if STACK == True:
+if STACK is True:
     folderNames = monet.listDirectoriesInPath(pathRoot + pathExperiments + "/ANALYZED/")
     for nameExp in folderNames[0:]:
         pathFull = pathRoot + pathExperiments + "ANALYZED/" + nameExp
-        ##########################################################################
+        #####################################################################
         # Stack
-        ##########################################################################
+        #####################################################################
         filenames = monet.readExperimentFilenames(pathFull)
         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
             filenames, male=True, female=True, dataType=float
@@ -96,3 +98,34 @@ if TRACES is True:
                 dpi=1024
             )
             plt.close()
+##########################################################################
+# Factorial
+##########################################################################
+if FACTORIAL is True:
+    meanStats = []
+    folderNames = monet.listDirectoriesInPath(pathRoot + pathExperiments + "/GARBAGE/")
+    for nameExp in folderNames[0:]:
+        pathFull = pathRoot + pathExperiments + "GARBAGE/" + nameExp + "/"
+        paths = monet.listDirectoriesWithPathWithinAPath(pathFull)
+        landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+            paths, aggregationDictionary,
+            male=True, female=True, dataType=float
+        )
+        # Mean stat ######################################################
+        repsStat = []
+        for rep in range(0,len(landscapeReps["landscapes"])):
+            wild, drive = landscapeReps["landscapes"][rep][0][-1]
+            ratio = 0
+            if (wild + drive > 0):
+                ratio = wild / (wild + drive)
+            repsStat.append(ratio)
+        # Summary array #################################################
+        none, mating, releases, size = nameExp.split("_")
+        meanStats.append([int(mating),int(releases),int(size),np.mean(repsStat)])
+
+    np.savetxt(
+        pathRoot + pathExperiments + "factorial.csv",
+        meanStats,
+        delimiter=',',
+        fmt='%10.5f'
+    )
