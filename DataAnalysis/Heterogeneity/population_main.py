@@ -18,11 +18,11 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 # Requires: image folder on the pathRoot
 ##############################################################################
 STACK = False
-SPREAD = True
-TRACES = False
+SPREAD = False
+TRACES = True
 nameExp = "up_down"
-pathRoot = "/Volumes/marshallShare/Heterogeneity/Maya/20190313/"
-pathExperiments = "MCR_Agg/"
+pathRoot = "/Users/mayashen/Desktop/Marshall_Simulations/"
+pathExperiments = "test/"
 pathPlots = pathRoot + "images/"
 ##############################################################################
 RELEASE_DAY = 50
@@ -55,7 +55,7 @@ for nameExp in folderNames[0:]:
     # Stack
     ##########################################################################
     if STACK is True:
-        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/")
+        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/0001/")
         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
             filenames, male=True, female=True, dataType=float
         )
@@ -82,7 +82,7 @@ for nameExp in folderNames[0:]:
     # Spread Plot (Heatmaps)
     ##########################################################################
     if SPREAD is True:
-        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/")
+        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/0001")
         landscapeData = monet.loadLandscapeData(filenames, dataType=float)
         aggregatedNodesData = monet.aggregateGenotypesInLandscape(
             landscapeData, aggregationDictionary
@@ -105,7 +105,9 @@ for nameExp in folderNames[0:]:
     # Garbage (Traces)
     ##########################################################################
     if TRACES is True:
-        paths = monet.listDirectoriesWithPathWithinAPath(pathFull + "/GARBAGE/")
+        print(pathFull)
+        paths = monet.listDirectoriesWithPathWithinAPath(pathFull + "/GARBAGE/0001/")
+        print(paths)
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
             paths, aggregationDictionary,
             male=False, female=True, dataType=float
