@@ -31,11 +31,11 @@ aggregationDictionary = monet.generateAggregationDictionary(
 )
 styleS = {
     "width": 0, "alpha": .9, "dpi": 1024, "legend": False,
-    "aspect": .00175, "colors": colors, "xRange": [0, 750], "yRange": [0, 8*11000]
+    "aspect": .00175, "colors": colors, "xRange": [0, 600], "yRange": [0, 8*11000]
 }
 styleT = {
-    "width": .175, "alpha": .25, "dpi": 1024, "legend": False,
-    "aspect": .00125, "colors": colors, "xRange": [0, 750], "yRange": [0, 8*11000]
+    "width": .125, "alpha": .2, "dpi": 1024, "legend": False,
+    "aspect": .00075, "colors": colors, "xRange": [0, 600], "yRange": [0, 8*11000]
 }
 ##############################################################################
 # Stack

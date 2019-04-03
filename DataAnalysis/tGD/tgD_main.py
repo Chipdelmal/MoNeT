@@ -17,7 +17,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 6
+DRIVE = 1
 TRACES = False
 STACK = False
 SUMMARIES_DATA = True
@@ -119,21 +119,25 @@ if STACK is True:
         #####################################################################
         if (DRIVE == 1 or DRIVE == 2):
             groupingsList = [[2]]
+            groupingsListH = [[1]]
             ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
-            ffString = "r(R): " + format(ratiosAtEnd[0], '.3f')
+            ffString = "p(R): " + format(ratiosAtEnd[0], '.3f')
+            ffStringH = "p(H): " + format(ratiosAtEndH[0], '.3f')
         else:
             groupingsList = [[2], [3], [2, 3]]
+            groupingsListH = [[1], [4], [1, 4]]
             ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
-            # aggDataInt = monet.aggregateGenotypesInNode(
-            #     landscapeSumData,
-            #     sel.INT_DICTIONARY
-            # )
-            #ratiosAtEndInt = aux.getRatiosAtEnd(aggDataInt, [[0]], -1)
+            ratiosAtEndH = aux.getRatiosAtEnd(aggData, groupingsListH, -1)
             intersection = (ratiosAtEnd[0] * ratiosAtEnd[1])
+            intersectionH = (ratiosAtEndH[0] * ratiosAtEndH[1])
             union = ratiosAtEnd[0] + ratiosAtEnd[1] - (ratiosAtEnd[0] * ratiosAtEnd[1])
-            ffString = "r(R1): " + format(ratiosAtEnd[0], '.3f') + ", r(R2): " + format(
-                ratiosAtEnd[1], '.3f') + ", r(R1&R2): " + format(intersection,
-                '.3f') + ", r(R1|R2): " + format(union, '.3f')
+            unionH = ratiosAtEndH[0] + ratiosAtEndH[1] - (ratiosAtEndH[0] * ratiosAtEndH[1])
+            ffString = "p(R1): " + format(ratiosAtEnd[0], '.3f') + ", p(R2): " + format(
+                ratiosAtEnd[1], '.3f') + ", p(R1&R2): " + format(intersection,
+                '.3f') + ", p(R1|R2): " + format(union, '.3f')
+            ffStringH = "p(H): " + format(ratiosAtEndH[0], '.3f') + ", p(G): " + format(
+                ratiosAtEndH[1], '.3f') + ", p(H&G): " + format(intersectionH,
+                '.3f') + ", p(H|G): " + format(unionH, '.3f')
         ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
         if not (DRIVE == 1 or DRIVE == 2):
             aggData = {
@@ -148,8 +152,8 @@ if STACK is True:
         figB.get_axes()[0].set_xlim(0, xRange)
         figB.get_axes()[0].set_ylim(0, 2 * yRange)
         figB.get_axes()[0].set_title(
-            "[tSS: " + str(ssDay) + ", " + ffString + "]",
-            fontsize=6
+            "[tSS: " + str(ssDay) + "] :: [" + ffString + "] :: [" + ffStringH + "]",
+            fontsize=5
         )
         # monet.quickSaveFigure(
         #     figA,
@@ -171,6 +175,7 @@ if SUMMARIES_DATA is True:
     )
     summariesDict = {}
     ratiosDict = {}
+    ratiosDictH = {}
     for i in range(0, len(pathsRoot)):
         #####################################################################
         pathSample = pathsRoot[i] + "/"
@@ -191,19 +196,27 @@ if SUMMARIES_DATA is True:
         )
         if (DRIVE == 1 or DRIVE == 2):
             groupingsList = [[2]]
+            groupingsListH = [[1]]
         else:
             groupingsList = [[2], [3], [2, 3]]
+            groupingsListH = [[1], [4], [1, 4]]
         ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
+        ratiosAtEndH = aux.getRatiosAtEnd(aggData, groupingsListH, -1)
         #####################################################################
         ssReach = aux.reachedSteadtStateAtDay(aggData, .01)
         summariesDict[experimentString] = ssReach
         ratiosDict[experimentString] = ratiosAtEnd
+        ratiosDictH[experimentString] = ratiosAtEndH
     aux.writeSummary(
         pathRoot + "/data/" + str(DRIVE).rjust(2, "0")+"_SteadyState.csv",
         summariesDict
     )
     aux.writeSummary(
         pathRoot + "/data/" + str(DRIVE).rjust(2, "0")+"_Ratios.csv",
+        ratiosDict
+    )
+    aux.writeSummary(
+        pathRoot + "/data/" + str(DRIVE).rjust(2, "0")+"_RatiosH.csv",
         ratiosDict
     )
 ##############################################################################
