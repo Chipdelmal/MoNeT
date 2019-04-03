@@ -23,10 +23,20 @@ def population_split(pop_size, n, C=0.0):
 
 
 step_up = list(range(10, 211, 10))
+sum(step_up)
 step_down = step_up.copy()
 step_down.reverse()
+plt.figure()
 plt.plot(range(21), step_down)
+plt.xlabel('Node')
+plt.ylabel('Population')
+plt.savefig("step_down.png")
+
+plt.figure()
 plt.plot(range(21), step_up)
+plt.xlabel('Node')
+plt.ylabel('Population')
+plt.savefig("step_up.png")
 
 up = list(range(10, 211, 21))
 down = up.copy()
@@ -35,7 +45,12 @@ up_down = up.copy()
 up_down.append(199+21)
 up_down.extend(down)
 sum(up_down)
+plt.figure()
 plt.plot(range(21), up_down)
+sum(up_down)
+plt.xlabel('Node')
+plt.ylabel('Population')
+plt.savefig("up_down.png")
 
 up = list(range(21+17, 205, 17))
 down = up.copy()
@@ -44,7 +59,11 @@ down_up = down.copy()
 down_up.append(21)
 down_up.extend(up.copy())
 sum(down_up)
+plt.figure()
 plt.plot(range(21), down_up)
+plt.xlabel('Node')
+plt.ylabel('Population')
+plt.savefig("down_up.png")
 
 sporadic = [50]*21
 sum(sporadic)
@@ -56,8 +75,12 @@ sporadic[14] = sporadic[15]+100
 sporadic[15] = sporadic[15]+142
 sporadic[18] = sporadic[15]+200-9
 sum(sporadic)
+plt.figure()
 plt.plot(range(21), sporadic)
+plt.xlabel('Node')
+plt.ylabel('Population')
 plt.savefig("sporadic.png")
+
 
 def array_creation(dist_apart, pop_size, n, C=0.0):
     pop = np.array(population_split(pop_size, n, C))
@@ -67,10 +90,12 @@ def array_creation(dist_apart, pop_size, n, C=0.0):
 
 
 def manual_array_creation(dist_apart, pop, n):
-    pop.insert(0, pop[0])
-    pop.append(pop[-1])
-    x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
-    y_coords = np.zeros(n + 2)
+    # pop.insert(0, pop[0])
+    # pop.append(pop[-1])
+    # x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
+    # y_coords = np.zeros(n + 2)
+    x_coords = np.linspace(0, dist_apart * (n-1), n)
+    y_coords = np.zeros(n)
     return np.array([x_coords, y_coords, pop])
 
 
