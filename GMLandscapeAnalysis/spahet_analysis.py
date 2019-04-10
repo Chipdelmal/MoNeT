@@ -5,8 +5,8 @@ import numpy as np
 # -----------------------------------------------------------------------------
 # Define the experiment's path, aggregation dictionary, and read filenames
 type = float
-experimentString = "E_099_000_000_001"
-path = "/Users/Biyonka/Desktop/Output/contrived_landscapes/UNEVEN_2019_02_27_ANALYZED/"
+experimentString = "0001"
+path = "/Users/Biyonka/Desktop/Output/1clustering_analysis/drive_output/eta20001_iter1/ANALYZED/"
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H", "R", "B"],
     [

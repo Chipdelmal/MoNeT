@@ -19,10 +19,10 @@ library(parallel)
 # USER: {1: JB, 2: Maya}
 # NUM_CORES: Cores for the parallel threads
 USER=1
-REPETITIONS=4 # number of repetitions of each experiment
+REPETITIONS=8 # number of repetitions of each experiment
 REPITER=1 # number of groups of repetitions to perform, for analysis purposes ONLY BIYONKA SHOULD NEED THIS,
-SIM_TIME=365*3
-NUM_CORES=4
+SIM_TIME=365*4
+NUM_CORES=8
 
 ###############################################################################
 if(USER==1){
@@ -58,7 +58,7 @@ stayProbability=.72
 driveCube <-MGDrivE::Cube_HomingDrive(cM=1, cF=1, chM=.95, chF=.95, crM=.95, crF=.95)
 # release parameters
 releasesParameters=list(releasesStart=50, releasesNumber=1,
-                        eachreleasesInterval=7, releaseProportion=10)
+                        eachreleasesInterval=7, releaseProportion=5)
 
 
 ###############################################################################
