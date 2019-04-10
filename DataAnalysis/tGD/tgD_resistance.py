@@ -58,6 +58,8 @@ for i in range(0,6):
             groupingsListH = [[1], [4]]
             ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
             ratiosAtEndH = aux.getRatiosAtEnd(aggData, groupingsListH, -1)
+            ratiosAtEnd = [ratiosAtEnd[0] * 2, ratiosAtEnd[1] * 2]
+            ratiosAtEndH = [ratiosAtEndH[0] * 2, ratiosAtEndH[1] * 2]
             ratiosAtEnd.append(ratiosAtEnd[0] * ratiosAtEnd[1])
             ratiosAtEnd.append(ratiosAtEnd[0] + ratiosAtEnd[1] - (ratiosAtEnd[0] * ratiosAtEnd[1]))
             ratiosAtEndH.append(ratiosAtEndH[0] * ratiosAtEndH[1])

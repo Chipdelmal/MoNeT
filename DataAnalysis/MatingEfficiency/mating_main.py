@@ -12,8 +12,8 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 # Notes
 ##############################################################################
 STACK = False
-TRACES = False
-FACTORIAL = True
+TRACES = True
+FACTORIAL = False
 nameExp = ""
 pathRoot = "/Volumes/marshallShare/pgSIT/"
 pathExperiments = "CRISPR_SIT/"
@@ -34,7 +34,7 @@ styleS = {
     "aspect": .00175, "colors": colors, "xRange": [0, 600], "yRange": [0, 8*11000]
 }
 styleT = {
-    "width": .125, "alpha": .2, "dpi": 1024, "legend": False,
+    "width": .075, "alpha": .1, "dpi": 1024, "legend": False,
     "aspect": .00075, "colors": colors, "xRange": [0, 600], "yRange": [0, 8*11000]
 }
 ##############################################################################

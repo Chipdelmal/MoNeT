@@ -5,12 +5,13 @@ def driveSelector(DRIVE, pathRoot):
     if DRIVE == 1:
         pathExt = "CRISPR/"
         aggregationDictionary = monet.generateAggregationDictionary(
-            ["W", "H", "R", "B"],
+            ["W", "H", "R", "B", "G"],
             [
                 [0, 0, 1, 2, 3],
                 [1, 4, 4, 5, 6],
                 [2, 5, 7, 7, 8],
-                [3, 6, 8, 9, 9]
+                [3, 6, 8, 9, 9],
+                []
             ]
         )
         yRange = 11000
