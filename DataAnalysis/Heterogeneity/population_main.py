@@ -4,6 +4,7 @@
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 import aggregation_auxiliary as aux
+import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 ##############################################################################
@@ -21,8 +22,8 @@ STACK = False
 SPREAD = True
 TRACES = False
 nameExp = "up_down"
-pathRoot = "/Volumes/marshallShare/Heterogeneity/Maya/20190313/"
-pathExperiments = "MCR_Agg/"
+pathRoot = "/Users/mayashen/Desktop/Marshall_Simulations/"
+pathExperiments = "test/"
 pathPlots = pathRoot + "images/"
 ##############################################################################
 RELEASE_DAY = 50
@@ -45,6 +46,26 @@ styleT = {
     "width": .1, "alpha": .25, "dpi": 1024, "legend": True,
     "aspect": 2, "colors": colors, "xRange": [0, 2*365], "yRange": [0, 6500]
 }
+
+
+def normalize(data):
+    genotypes = data['geneLandscape']
+    node_maximums = [0]*len(genotypes[0])
+    for g in genotypes:
+        for i in range(len(g)):
+            node_max = max(g[i])
+            if node_max > node_maximums[i]:
+                node_maximums[i] = node_max
+    normalized = []
+    for g in genotypes:
+        genotype_matrix = []
+        for i in range(len(g)):
+            genotype_matrix.append(g[i]/node_maximums[i])
+        normalized.append(np.array(genotype_matrix))
+    data['geneLandscape'] = normalized
+    return data
+
+
 ##############################################################################
 # Paths
 ##############################################################################
@@ -55,7 +76,7 @@ for nameExp in folderNames[0:]:
     # Stack
     ##########################################################################
     if STACK is True:
-        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/")
+        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/0001/")
         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
             filenames, male=True, female=True, dataType=float
         )
@@ -82,7 +103,7 @@ for nameExp in folderNames[0:]:
     # Spread Plot (Heatmaps)
     ##########################################################################
     if SPREAD is True:
-        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/")
+        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/0001")
         landscapeData = monet.loadLandscapeData(filenames, dataType=float)
         aggregatedNodesData = monet.aggregateGenotypesInLandscape(
             landscapeData, aggregationDictionary
@@ -90,8 +111,9 @@ for nameExp in folderNames[0:]:
         geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
             aggregatedNodesData
         )
+        geneSpatiotemporals_normalized = normalize(geneSpatiotemporals)
         overlay = monet.plotGenotypeOverlayFromLandscape(
-            geneSpatiotemporals,
+            geneSpatiotemporals_normalized,
             style={"aspect": 4, "cmap": cmaps},
             vmax=monet.maxAlleleInLandscape(
                 geneSpatiotemporals["geneLandscape"]
@@ -105,7 +127,7 @@ for nameExp in folderNames[0:]:
     # Garbage (Traces)
     ##########################################################################
     if TRACES is True:
-        paths = monet.listDirectoriesWithPathWithinAPath(pathFull + "/GARBAGE/")
+        paths = monet.listDirectoriesWithPathWithinAPath(pathFull + "/GARBAGE/0001/")
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
             paths, aggregationDictionary,
             male=False, female=True, dataType=float
