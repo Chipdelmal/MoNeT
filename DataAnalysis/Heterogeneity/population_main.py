@@ -4,6 +4,8 @@
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 import aggregation_auxiliary as aux
+import itertools
+import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 ##############################################################################
@@ -18,8 +20,8 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 # Requires: image folder on the pathRoot
 ##############################################################################
 STACK = False
-SPREAD = False
-TRACES = True
+SPREAD = True
+TRACES = False
 nameExp = "up_down"
 pathRoot = "/Users/mayashen/Desktop/Marshall_Simulations/"
 pathExperiments = "test/"
@@ -45,6 +47,26 @@ styleT = {
     "width": .1, "alpha": .25, "dpi": 1024, "legend": True,
     "aspect": 2, "colors": colors, "xRange": [0, 2*365], "yRange": [0, 6500]
 }
+
+
+def normalize(data):
+    genotypes = data['geneLandscape']
+    node_maximums = [0]*len(genotypes[0])
+    for g in genotypes:
+        for i in range(len(g)):
+            node_max = max(g[i])
+            if node_max > node_maximums[i]:
+                node_maximums[i] = node_max
+    normalized = []
+    for g in genotypes:
+        genotype_matrix = []
+        for i in range(len(g)):
+            genotype_matrix.append(g[i]/node_maximums[i])
+        normalized.append(np.array(genotype_matrix))
+    data['geneLandscape'] = normalized
+    return data
+
+
 ##############################################################################
 # Paths
 ##############################################################################
@@ -90,8 +112,9 @@ for nameExp in folderNames[0:]:
         geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
             aggregatedNodesData
         )
+        geneSpatiotemporals_normalized = normalize(geneSpatiotemporals)
         overlay = monet.plotGenotypeOverlayFromLandscape(
-            geneSpatiotemporals,
+            geneSpatiotemporals_normalized,
             style={"aspect": 4, "cmap": cmaps},
             vmax=monet.maxAlleleInLandscape(
                 geneSpatiotemporals["geneLandscape"]
@@ -105,9 +128,7 @@ for nameExp in folderNames[0:]:
     # Garbage (Traces)
     ##########################################################################
     if TRACES is True:
-        print(pathFull)
         paths = monet.listDirectoriesWithPathWithinAPath(pathFull + "/GARBAGE/0001/")
-        print(paths)
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
             paths, aggregationDictionary,
             male=False, female=True, dataType=float
