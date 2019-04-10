@@ -17,10 +17,10 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 1
+DRIVE = 6
 TRACES = False
-STACK = False
-SUMMARIES_DATA = True
+STACK = True
+SUMMARIES_DATA = False
 TRACES_DATA = False
 ##############################################################################
 ##############################################################################
@@ -37,17 +37,17 @@ genes = aggregationDictionary["genotypes"]
 ##############################################################################
 style = {
     "width": .125, "alpha": .15, "dpi": 1024, "legend": False, "aspect": .03,
-    "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
+    "colors": colors, "xRange": [0, 600], "yRange": [0, 5000]
 }
 styleT = {
-    "width": 2, "alpha": .7, "dpi": 1024, "legend": False, "aspect": .04,
-    "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
+    "width": 2, "alpha": .7, "dpi": 1024, "legend": False, "aspect": .02,
+    "colors": colors, "xRange": [0, 600], "yRange": [0, 5000]
 }
 styleS = {
-    "width": 0, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .01,
-    "colors": colors, "xRange": [0, 1000], "yRange": [0, 5000]
+    "width": 0, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .0075,
+    "colors": colors, "xRange": [0, 600], "yRange": [0, 5000]
 }
-xRange = 4 * 365
+xRange = 1000
 yRangeFixed = 11000
 ##############################################################################
 ##############################################################################
@@ -121,6 +121,7 @@ if STACK is True:
             groupingsList = [[2]]
             groupingsListH = [[1]]
             ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
+            ratiosAtEndH = aux.getRatiosAtEnd(aggData, groupingsListH, -1)
             ffString = "p(R): " + format(ratiosAtEnd[0], '.3f')
             ffStringH = "p(H): " + format(ratiosAtEndH[0], '.3f')
         else:
@@ -128,15 +129,15 @@ if STACK is True:
             groupingsListH = [[1], [4], [1, 4]]
             ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
             ratiosAtEndH = aux.getRatiosAtEnd(aggData, groupingsListH, -1)
-            intersection = (ratiosAtEnd[0] * ratiosAtEnd[1])
-            intersectionH = (ratiosAtEndH[0] * ratiosAtEndH[1])
-            union = ratiosAtEnd[0] + ratiosAtEnd[1] - (ratiosAtEnd[0] * ratiosAtEnd[1])
-            unionH = ratiosAtEndH[0] + ratiosAtEndH[1] - (ratiosAtEndH[0] * ratiosAtEndH[1])
-            ffString = "p(R1): " + format(ratiosAtEnd[0], '.3f') + ", p(R2): " + format(
-                ratiosAtEnd[1], '.3f') + ", p(R1&R2): " + format(intersection,
+            intersection = 4 * (ratiosAtEnd[0] * ratiosAtEnd[1])
+            intersectionH = 4 * (ratiosAtEndH[0] * ratiosAtEndH[1])
+            union = 2*ratiosAtEnd[0] + 2*ratiosAtEnd[1] - 4*(ratiosAtEnd[0] * ratiosAtEnd[1])
+            unionH = 2*ratiosAtEndH[0] + 2*ratiosAtEndH[1] - 4*(ratiosAtEndH[0] * ratiosAtEndH[1])
+            ffString = "p(R1): " + format(ratiosAtEnd[0]*2, '.3f') + ", p(R2): " + format(
+                ratiosAtEnd[1]*2, '.3f') + ", p(R1&R2): " + format(intersection,
                 '.3f') + ", p(R1|R2): " + format(union, '.3f')
-            ffStringH = "p(H): " + format(ratiosAtEndH[0], '.3f') + ", p(G): " + format(
-                ratiosAtEndH[1], '.3f') + ", p(H&G): " + format(intersectionH,
+            ffStringH = "p(H): " + format(ratiosAtEndH[0]*2, '.3f') + ", p(G): " + format(
+                ratiosAtEndH[1]*2, '.3f') + ", p(H&G): " + format(intersectionH,
                 '.3f') + ", p(H|G): " + format(unionH, '.3f')
         ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
         if not (DRIVE == 1 or DRIVE == 2):
