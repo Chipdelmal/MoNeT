@@ -4,7 +4,6 @@
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 import aggregation_auxiliary as aux
-import itertools
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
