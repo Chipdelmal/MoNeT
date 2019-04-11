@@ -74,7 +74,7 @@ def agglom_clustering(points, pop, total_num_nodes, levels_of_agg, filename_stri
 	# print("levels of agg ", levels_of_agg)
 
 	for i in range(1, total_num_nodes, int(total_num_nodes/levels_of_agg)):
-		print("here is i ", i)
+		# print("here is i ", i)
 		# print("num of points", len(points))
 		clustering = AgglomerativeClustering(n_clusters=i).fit(points)
 		grouping = dict()
@@ -87,32 +87,45 @@ def agglom_clustering(points, pop, total_num_nodes, levels_of_agg, filename_stri
 			else:
 				grouping[group] = [clustering[j]]
 		
-		print("here is grouping", grouping)
-		# print("num groups is", len(grouping.keys()))
-		#calculate centroids from the points returned in clustering
-		centroids = []
-		for g in grouping:
-			nodes_in_centroid = []
-			centroid_pop = 0
-			for k in range(len(clustering)):
-				if clustering[k] == g:
-					nodes_in_centroid.append(points[k])
-					centroid_pop += pop[k] 
-			#before I append the centroids, add beginning and ending 
-			centroids.append([centroid(nodes_in_centroid), centroid_pop])
-		# centroids.insert(0, [std_distance, std_pop])
-		# centroids.append([centroids[-1][0][-1]+(abs(std_distance[0]), std_distance[1]), std_pop])
-
-		print("here are centroids", centroids)
-		centroids = sorted(centroids, key=lambda x: x[0])
+		# print("here is clustering", clustering)
+		#save csv file with grouping label
+		new_points = []
+		for k in range(len(clustering)):
+			new_points.append([points[k], clustering[k]])
+		new_points = sorted(new_points, key=lambda x: x[0][0])
 
 		with open(filename_string + str(i) + '.csv', mode='w') as destination:
 			writer = csv.writer(destination, delimiter=',')
-			writer.writerow(('x', 'y', 'n'))
-			for c in centroids:
-				writer.writerow((c[0][0], c[0][1], c[1]))
-		#EXPORT in different csv's
-		list_of_centroids.append(centroids)
+			writer.writerow(('x', 'y', 'n', 'label'))
+			for c in new_points:
+				writer.writerow((c[0][0], c[0][1], c[0][2], c[1]))
+
+
+		# print("num groups is", len(grouping.keys()))
+		#calculate centroids from the points returned in clustering
+		# centroids = []
+		# for g in grouping:
+		# 	nodes_in_centroid = []
+		# 	centroid_pop = 0
+		# 	for k in range(len(clustering)):
+		# 		if clustering[k] == g:
+		# 			nodes_in_centroid.append(points[k])
+		# 			centroid_pop += pop[k] 
+		# 	#before I append the centroids, add beginning and ending 
+		# 	centroids.append([centroid(nodes_in_centroid), centroid_pop])
+		# centroids.insert(0, [std_distance, std_pop])
+		# centroids.append([centroids[-1][0][-1]+(abs(std_distance[0]), std_distance[1]), std_pop])
+
+		# print("here are centroids", centroids)
+		# centroids = sorted(centroids, key=lambda x: x[0])
+
+		# with open(filename_string + str(i) + '.csv', mode='w') as destination:
+		# 	writer = csv.writer(destination, delimiter=',')
+		# 	writer.writerow(('x', 'y', 'n'))
+		# 	for c in centroids:
+		# 		writer.writerow((c[0][0], c[0][1], c[1]))
+		# #EXPORT in different csv's
+		# list_of_centroids.append(centroids)
 
 	return list_of_centroids
 
