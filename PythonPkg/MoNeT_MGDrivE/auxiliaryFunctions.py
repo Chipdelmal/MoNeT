@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import os
 import csv
 import numpy as np
@@ -199,12 +202,12 @@ def calculateMaxPopInLandscapeReps(landscapeReps):
     landscapes = landscapeReps["landscapes"]
     list = [None] * len(landscapeReps["landscapes"][0])
     for i in range(len(landscapeReps["landscapes"][0])):
-            list[i] = sum(landscapes[0][i][0])
+        list[i] = sum(landscapes[0][i][0])
     return max(list)
 
 
 def getGenotypesWithPositions(genotypes, allelePositions):
-     """
+    """
     Description:
         * Returns a list of indices corresponding to genotypes with a 
             desired allelePosition
