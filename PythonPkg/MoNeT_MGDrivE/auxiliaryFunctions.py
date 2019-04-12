@@ -201,3 +201,25 @@ def calculateMaxPopInLandscapeReps(landscapeReps):
     for i in range(len(landscapeReps["landscapes"][0])):
             list[i] = sum(landscapes[0][i][0])
     return max(list)
+
+
+def getGenotypesWithPositions(genotypes, allelePositions):
+     """
+    Description:
+        * Returns a list of indices corresponding to genotypes with a 
+            desired allelePosition
+    In:
+        * genotypes: List of genotype strings 
+        * allelePositions: List of (char, int) tuples (allele, index in genotype string)
+    Out:
+        * indices: Indices of strings in genotypes that have an allele in a specified position
+    Notes:
+        * Indices are repeated if they have multiple alleles in specified positions
+    """
+    indices = []
+    for i in range(len(genotypes)):
+        s = genotypes[i]
+        for allele, index in allelePositions:
+            if s[index] == allele:
+                indices.append(i)
+    return indices
