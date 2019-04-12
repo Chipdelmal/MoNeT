@@ -209,15 +209,18 @@ def calculateMaxPopInLandscapeReps(landscapeReps):
 def getGenotypesWithPositions(genotypes, allelePositions):
     """
     Description:
-        * Returns a list of indices corresponding to genotypes with a 
+        * Returns a list of indices corresponding to genotypes with a
             desired allelePosition
     In:
-        * genotypes: List of genotype strings 
-        * allelePositions: List of (char, int) tuples (allele, index in genotype string)
+        * genotypes: List of genotype strings
+        * allelePositions: List of (char, int) tuples (allele, index in
+            genotype string)
     Out:
-        * indices: Indices of strings in genotypes that have an allele in a specified position
+        * indices: Indices of strings in genotypes that have an allele in a
+            specified position
     Notes:
-        * Indices are repeated if they have multiple alleles in specified positions
+        * Indices are repeated if they have multiple alleles in specified
+            positions
     """
     indices = []
     for i in range(len(genotypes)):
