@@ -19,6 +19,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 ##############################################################################
 DRIVE = 6
 TRACES = False
+#TRACE_ANIMATION = True
 STACK = True
 SUMMARIES_DATA = False
 TRACES_DATA = False
@@ -97,6 +98,57 @@ if TRACES is True:
                 dpi=750
             )
             plt.close()
+##############################################################################
+##############################################################################
+# if TRACE_ANIMATION is True:
+#     pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+#         pathRoot + pathExt + "GARBAGE/"
+#     )
+#     for i in range(0, 1):
+#         pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+#             pathRoot + pathExt + "ANALYZED/"
+#         )
+#         pathSample = pathsRoot[i] + "/"
+#         experimentString = pathSample.split("/")[-2]
+#         filenames = monet.readExperimentFilenames(pathSample)
+#         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
+#             filenames, male=True, female=True, dataType=float
+#         )
+#         aggData = monet.aggregateGenotypesInNode(
+#             landscapeSumData,
+#             aggregationDictionary
+#         )
+#         ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
+#         #######################################################################
+#         pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+#             pathRoot + pathExt + "GARBAGE/"
+#         )
+#         pathSample = pathsRoot[i]
+#         experimentString = pathSample.split("/")[-1]
+#         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
+#         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+#                 paths, aggregationDictionary,
+#                 male=False, female=True, dataType=float
+#             )
+#         for i in range(1, len(landscapeReps)):
+#             print(i)
+#             landscapeSublist = {"genotypes": landscapeReps["genotypes"], "landscapes": landscapeReps["landscapes"][0:i]}
+#             figsArray = plots.plotLandscapeDataRepetitions(
+#                 landscapeSublist,
+#                 style,
+#                 ssDay,
+#                 yRangeFixed
+#             )
+#             for i in range(0, len(figsArray)):
+#                 figsArray[i].get_axes()[0].set_xlim(0, xRange)
+#                 figsArray[i].get_axes()[0].set_ylim(0, yRangeFixed)
+#                 monet.quickSaveFigure(
+#                     figsArray[i],
+#                     pathRoot + "images/trace_animation/" + str(DRIVE).rjust(2, "0") + "R_" +
+#                     experimentString + str(i) + ".png",
+#                     dpi=750
+#                 )
+#                 plt.close()
 ##############################################################################
 ##############################################################################
 if STACK is True:
