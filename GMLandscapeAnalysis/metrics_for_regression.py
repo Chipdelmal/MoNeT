@@ -3,7 +3,9 @@ import MoNeT_MGDrivE as monet
 import plotly.plotly as py
 import numpy as np
 import pandas as pd
+from __future__ import division
 from sklearn.linear_model import LinearRegression
+
 ###############################################################################
 # MCR Construct
 ###############################################################################
@@ -13,19 +15,25 @@ from sklearn.linear_model import LinearRegression
 #experiments = ['eta1e-05', 'eta5e-04', 'eta1e-04', 'eta5e-03',
 #'eta1e-03', 'eta5e-03', 'eta1e-02', 'eta5e-01', 'eta1e-01',
 # 'eta1','eta10', 'eta100','eta1000', 'eta10000','eta1e+05']
-range(1, 1000000, 10000)
-experiments = range(1, 1000000, 10000)
-iteration = 1
-d = []
 
-for experiment in experiments:
+#eriments =  ['eta1e-05', 'eta1e-04', 'eta1e-03', 'eta1e-02',  'eta1e-01', 'eta1', 'eta100','eta1000', 'eta10000','eta1e+05']
+iteration = 3
+pathRoot = "/Users/Biyonka/Desktop/Output/1clustering_analysis/drive_output/"
+#gets list of all folders
+path = monet.listDirectoriesWithPathWithinAPath(pathRoot)
+
+thres, rate, prop_exceeds = [], [], []
+for experiment in path:
     #type = float
-    if experiment < 1:
-        e =  "{:.1e}".format(experiment)
     #path = #"/Users/Biyonka/Desktop/Output/1clustering_analysis/drive_output/" + experiment + "/ANALYZED/"
-    time_to_thres, avg_rate = [], []
+    time_to_thres, avg_rate, exceeds = [], [], []
+    count_exceeds = 0
+    #gets eta parameter for that folder
+    eta_iter = experiment.split("/")[-1]
+    e = eta_iter.split("_")[0][3:]
+
     for i in range(1, iteration+1, 1):
-        path = ("/Users/Biyonka/Desktop/Output/1clustering_analysis/drive_output/eta%s_iter%s/ANALYZED/" % (experiment, i))
+        path = experiment + "/ANALYZED/"
         # Define the experiment's path, aggregation dictionary, and read filenames
         experimentString = "0001"#'{0:04d}'.format(i)
         aggregationDictionary = monet.generateAggregationDictionary(
@@ -38,7 +46,6 @@ for experiment in experiments:
             ]
         )
         filenames = monet.readExperimentFilenames(path + experimentString)
-        print(filenames)
         # To analyze a single node ...................................................
         # Load a single node (auxiliary function just for demonstration)
         nodeIndex = 0
@@ -58,49 +65,65 @@ for experiment in experiments:
             landscapeSumData,
             aggregationDictionary
         )
-    #     wbh = np.sum(aggData['population'], axis =1)
-        #get first time that exceeds 100
+
+        #get first time that exceeds threshold
+        m = max(aggData['population'][:, 1])
+        threshold = 0.9*m
         t1 = filter(lambda x: x[1]>30, enumerate(aggData['population'][:, 1]))[0][0]
         #get first time that is greater than 4000
-        t2 = filter(lambda x: x[1]<4000, enumerate(aggData['population'][:, 1]))[-1][0]
-        rate = (4000-30)/(t2 - t1)
-        #e = float(experiment[3:])
-        avg_rate.append((experiment, rate))
-    d.extend(avg_rate)
+        t2 = filter(lambda x: x[1]<threshold, enumerate(aggData['population'][:, 1]))[-1][0]
+        rate_est = (threshold-30)/(t2-t1)
+        avg_rate.append((e, rate_est))
 
+        #Get time exceeds proportion 0.9
+        allele_avg = np.mean(np.sum(aggData['population'], axis =1))
+        homing = aggData['population'][:, 1]
 
-    #     wbh = np.sum(aggData['population'], axis =1)
-    #     ratio_homing = aggData['population'][:, 1]/(wbh)
-    #     #get time at which homing ratio exceeds threshold
-    #     if any(ratio_homing >= 0.90):
-    #         #get first time that ratio exceeds 0.5
-    #         time = (list(ratio_homing>= 0.90)).index(True)
-    #     else:
-    #         # if threshold of homing never eceeds 0.5, set time to
-    #         #total length of experiment (i.e. 3 years)
-    #         time = aggData['population'].shape[0]
-    #     e = float(experiment[3:])
-    #     time_to_thres.append((e, time))
-    # d.extend(time_to_thres)
+        #get time at which homing ratio exceeds threshold
+        if any(homing >= 0.90*allele_avg):
+            #get first time that ratio exceeds 0.9
+            time = (list(homing>= 0.90*allele_avg)).index(True)
+            #keep count of number of times this occurs
+            count_exceeds += 1
+        else:
+            # if threshold of homing never eceeds 0.9, set time to
+            #total length of experiment (i.e. 3 years)
+            time = aggData['population'].shape[0]
+        time_to_thres.append((e, time))
+
+    thres.extend(time_to_thres)
+    rate.extend(avg_rate)
+    prop_exceeds.append((e, count_exceeds/iteration))
+
         # #get proportion of homing at end of 3 years
         # prop_homing = aggData['population'][:, 1][-1]/wbh[-1]
         # prop_homing_end.append(prop_homing)
 
-list1, list2 = zip(*d)
-df = pd.DataFrame({"log(eta)":  list1, "thres": list2})
+eta, metric_thres = zip(*thres)
+eta2, metric_rate = zip(*rate)
+df_prev = pd.DataFrame({"eta":  eta, "thres": metric_thres, 'rate': metric_rate})
+
+eta3, metric_prop = zip(*prop_exceeds)
+df_prop = pd.DataFrame({"eta":  eta3, 'prop': metric_prop})
+
+
+#------------------------------------------------------------------------------
+# RUN UP TO HERE
+#------------------------------------------------------------------------------
+
 #df.to_csv("regression_data.csv", index = False)
 
 #ax1 = df.plot.scatter(x='eta',
             #          y='thres',
             #         c='DarkBlue')
-df
+
 model = LinearRegression()
-X= df['log(eta)'].values.reshape(-1,1)
+X= df['eta'].values.reshape(-1,1)
 y= df['thres'].values.reshape(-1,1)
 model.fit(X,y)
 predictions = model.predict(X)
 #plt.scatter(X,predictions-y)
-df.plot.scatter(x='log(eta)', y = 'thres')
+df.plot.scatter(x='eta', y = 'thres')
 plt.plot(X,predictions)
 
     #d[experiment] = time_to_thres#{"thres": time_to_thres, "end": prop_homing_end}
