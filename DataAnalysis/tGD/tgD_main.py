@@ -8,6 +8,19 @@ import tGD_aux as aux
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
+def quickSaveFigure(
+    fig,
+    path,
+    dpi=1024,
+    format=None
+):
+    fig.savefig(
+        path, facecolor='w',
+        edgecolor='w', orientation='portrait',
+        transparent=True, bbox_inches=None,
+        pad_inches=0, frameon=None
+    )
+
 ##############################################################################
 # Drive:
 #   1: CRISPR
@@ -17,11 +30,12 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 6
+DRIVE = 1
 TRACES = False
-STACK = True
+STACK = False
 SUMMARIES_DATA = False
 TRACES_DATA = False
+FORMAT = ".eps"
 ##############################################################################
 ##############################################################################
 pathRoot = "/Volumes/marshallShare/tGD/"
@@ -47,7 +61,7 @@ styleS = {
     "width": 0, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .0075,
     "colors": colors, "xRange": [0, 600], "yRange": [0, 5000]
 }
-xRange = 1000
+xRange = 1250
 yRangeFixed = 11000
 ##############################################################################
 ##############################################################################
@@ -55,7 +69,7 @@ if TRACES is True:
     pathsRoot = monet.listDirectoriesWithPathWithinAPath(
         pathRoot + pathExt + "GARBAGE/"
     )
-    for i in range(0, len(pathsRoot)):
+    for i in range(0, 0):
         pathsRoot = monet.listDirectoriesWithPathWithinAPath(
             pathRoot + pathExt + "ANALYZED/"
         )
@@ -93,10 +107,61 @@ if TRACES is True:
             monet.quickSaveFigure(
                 figsArray[i],
                 pathRoot + "images/traces/" + str(DRIVE).rjust(2, "0") + "R_" +
-                experimentString + ".png",
+                experimentString + FORMAT,
                 dpi=750
             )
             plt.close()
+##############################################################################
+##############################################################################
+# if TRACE_ANIMATION is True:
+#     pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+#         pathRoot + pathExt + "GARBAGE/"
+#     )
+#     for i in range(0, 1):
+#         pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+#             pathRoot + pathExt + "ANALYZED/"
+#         )
+#         pathSample = pathsRoot[i] + "/"
+#         experimentString = pathSample.split("/")[-2]
+#         filenames = monet.readExperimentFilenames(pathSample)
+#         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
+#             filenames, male=True, female=True, dataType=float
+#         )
+#         aggData = monet.aggregateGenotypesInNode(
+#             landscapeSumData,
+#             aggregationDictionary
+#         )
+#         ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
+#         #######################################################################
+#         pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+#             pathRoot + pathExt + "GARBAGE/"
+#         )
+#         pathSample = pathsRoot[i]
+#         experimentString = pathSample.split("/")[-1]
+#         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
+#         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+#                 paths, aggregationDictionary,
+#                 male=False, female=True, dataType=float
+#             )
+#         for i in range(1, len(landscapeReps)):
+#             print(i)
+#             landscapeSublist = {"genotypes": landscapeReps["genotypes"], "landscapes": landscapeReps["landscapes"][0:i]}
+#             figsArray = plots.plotLandscapeDataRepetitions(
+#                 landscapeSublist,
+#                 style,
+#                 ssDay,
+#                 yRangeFixed
+#             )
+#             for i in range(0, len(figsArray)):
+#                 figsArray[i].get_axes()[0].set_xlim(0, xRange)
+#                 figsArray[i].get_axes()[0].set_ylim(0, yRangeFixed)
+#                 monet.quickSaveFigure(
+#                     figsArray[i],
+#                     pathRoot + "images/trace_animation/" + str(DRIVE).rjust(2, "0") + "R_" +
+#                     experimentString + str(i) + ".png",
+#                     dpi=750
+#                 )
+#                 plt.close()
 ##############################################################################
 ##############################################################################
 if STACK is True:
@@ -161,10 +226,10 @@ if STACK is True:
         #     "./images/" + str(DRIVE).rjust(2, "0") + "T_" +
         #     experimentString + ".png"
         # )
-        monet.quickSaveFigure(
+        quickSaveFigure(
             figB,
             pathRoot + "/images/stacks/" + str(DRIVE).rjust(2, "0") + "S_" +
-            experimentString + ".png",
+            experimentString + FORMAT,
             dpi=1024
         )
         plt.close()
