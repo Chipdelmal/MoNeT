@@ -1,0 +1,175 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6082,        167]
+NotebookOptionsPosition[      4967,        137]
+NotebookOutlinePosition[      5341,        154]
+CellTagsIndexPosition[      5298,        151]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Setup and Read File", "Chapter",
+ CellChangeTimes->{{3.764354844677889*^9, 
+  3.764354850062461*^9}},ExpressionUUID->"42591928-b311-496c-9112-\
+5c23612984cd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "SetDirectory", "[", 
+   "\"\</Volumes/marshallShare/ERACR/Bakersfield/Riverside/\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"latlongs", "=", 
+   RowBox[{"Reverse", "/@", 
+    RowBox[{"Import", "[", "\"\<barkersfiel3_LatLongs.csv\>\"", "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"filtered", "=", 
+   RowBox[{"Cases", "[", 
+    RowBox[{"latlongs", ",", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x_", ",", "y_"}], "}"}], "/;", 
+      RowBox[{"(", 
+       RowBox[{"x", "<", 
+        RowBox[{"-", "119.115"}]}], ")"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Length", "[", "filtered", "]"}]}], "Input",
+ CellChangeTimes->{{3.764352840509451*^9, 3.764352858433587*^9}, {
+   3.7643531230670424`*^9, 3.7643531897684603`*^9}, {3.7643533572308903`*^9, 
+   3.764353364580907*^9}, {3.764353525347825*^9, 3.764353804117386*^9}, 
+   3.76435383840326*^9, {3.764354055214251*^9, 3.764354055518311*^9}, {
+   3.764355178208055*^9, 3.764355182870914*^9}},
+ CellLabel->"In[17]:=",ExpressionUUID->"5543c382-6c5f-442a-b036-83e8fdb0ef07"],
+
+Cell[BoxData["2824"], "Output",
+ CellChangeTimes->{3.764355183195487*^9},
+ CellLabel->"Out[20]=",ExpressionUUID->"69a2a00b-0072-4bc2-afa3-5e589ccfe9cf"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Cluster and Plot", "Chapter",
+ CellChangeTimes->{{3.7643548610947647`*^9, 
+  3.764354866765976*^9}},ExpressionUUID->"a79bcebe-9791-4ade-a7ee-\
+a5e6fdab56f4"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustered", "=", 
+   RowBox[{"FindClusters", "[", 
+    RowBox[{"filtered", ",", "2", ",", 
+     RowBox[{"Method", "\[Rule]", "\"\<Spectral\>\""}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"lp", "=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{"clustered", "\[IndentingNewLine]", ",", 
+     RowBox[{"AspectRatio", "\[Rule]", "1"}], "\[IndentingNewLine]", ",", 
+     RowBox[{"Frame", "\[Rule]", "True"}], "\[IndentingNewLine]", ",", 
+     RowBox[{"FrameStyle", "\[Rule]", "Thick"}], "\[IndentingNewLine]", ",", 
+     RowBox[{"FrameTicks", "\[Rule]", "None"}], "\[IndentingNewLine]", ",", 
+     RowBox[{"FrameTicksStyle", "\[Rule]", "20"}], "\[IndentingNewLine]", ",", 
+     RowBox[{"ImageSize", "\[Rule]", "Large"}], "\[IndentingNewLine]", ",", 
+     RowBox[{"PlotStyle", "\[Rule]", 
+      RowBox[{"Directive", "[", 
+       RowBox[{
+        RowBox[{"PointSize", "[", ".0075", "]"}], ",", 
+        RowBox[{"Opacity", "[", ".75", "]"}]}], "]"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.764353905397504*^9, 3.764353971400193*^9}, {
+   3.7643540906334963`*^9, 3.764354138414475*^9}, {3.764354187950246*^9, 
+   3.7643542701482697`*^9}, {3.7643546584036007`*^9, 3.764354659224777*^9}, {
+   3.764354759347011*^9, 3.764354791161993*^9}, {3.7643550800939617`*^9, 
+   3.7643550804582167`*^9}, 3.764355276340028*^9},
+ CellLabel->"In[27]:=",ExpressionUUID->"4daa53ea-fd73-4ce3-a8f7-66d63d0002d6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Export", "Chapter",
+ CellChangeTimes->{{3.764354873790471*^9, 3.7643548746901417`*^9}, {
+  3.764355042016979*^9, 
+  3.76435504464655*^9}},ExpressionUUID->"65b4b1f2-d290-469b-8456-\
+558940f7ab1d"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{"\"\<./clean/North.csv\>\"", ",", 
+    RowBox[{"clustered", "[", 
+     RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{"\"\<./clean/South.csv\>\"", ",", 
+    RowBox[{"clustered", "[", 
+     RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{"\"\<./image/landscape.pdf\>\"", ",", "lp"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.7643547943224373`*^9, 3.7643548203912563`*^9}, {
+  3.764355066304694*^9, 3.764355105938223*^9}, {3.764355162671371*^9, 
+  3.764355162922073*^9}, {3.76435522951007*^9, 3.7643552401127367`*^9}},
+ CellLabel->"In[24]:=",ExpressionUUID->"203f25c4-bfc6-4512-b6c4-3ff9399c773a"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.764354767198738*^9, 
+  3.764354773020361*^9}},ExpressionUUID->"d42f9107-0f4c-472c-8d00-\
+50a2df5c7e85"]
+}, Open  ]]
+},
+Evaluator->"Local",
+WindowSize->{919, 897},
+WindowMargins->{{Automatic, 768}, {4, Automatic}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 164, 3, 69, "Chapter",ExpressionUUID->"42591928-b311-496c-9112-5c23612984cd"],
+Cell[CellGroupData[{
+Cell[769, 29, 1126, 28, 94, "Input",ExpressionUUID->"5543c382-6c5f-442a-b036-83e8fdb0ef07"],
+Cell[1898, 59, 152, 2, 34, "Output",ExpressionUUID->"69a2a00b-0072-4bc2-afa3-5e589ccfe9cf"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2099, 67, 163, 3, 69, "Chapter",ExpressionUUID->"a79bcebe-9791-4ade-a7ee-a5e6fdab56f4"],
+Cell[2265, 72, 1481, 28, 220, "Input",ExpressionUUID->"4daa53ea-fd73-4ce3-a8f7-66d63d0002d6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3783, 105, 201, 4, 69, "Chapter",ExpressionUUID->"65b4b1f2-d290-469b-8456-558940f7ab1d"],
+Cell[3987, 111, 809, 18, 73, "Input",ExpressionUUID->"203f25c4-bfc6-4512-b6c4-3ff9399c773a"],
+Cell[4799, 131, 152, 3, 30, "Input",ExpressionUUID->"d42f9107-0f4c-472c-8d00-50a2df5c7e85"]
+}, Open  ]]
+}
+]
+*)
+
