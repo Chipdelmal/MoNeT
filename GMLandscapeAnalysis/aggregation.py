@@ -74,7 +74,7 @@ def agglom_clustering(points, pop, total_num_nodes, levels_of_agg, filename_stri
 	# print("levels of agg ", levels_of_agg)
 
 	for i in range(1, total_num_nodes, int(total_num_nodes/levels_of_agg)):
-		# print("here is i ", i)
+		print("here is i ", i)
 		# print("num of points", len(points))
 		clustering = AgglomerativeClustering(n_clusters=i).fit(points)
 		grouping = dict()
@@ -97,7 +97,7 @@ def agglom_clustering(points, pop, total_num_nodes, levels_of_agg, filename_stri
 		for k in range(len(clustering)):
 			new_points.append([points[k], clustering[k]])
 		new_points = sorted(new_points, key=lambda x: x[0][0])
-		print("len of new_points", len(new_points))
+		# print("len of new_points", len(new_points))
 
 		with open(filename_string + str(i) + '.csv', mode='w') as destination:
 			writer = csv.writer(destination, delimiter=',')

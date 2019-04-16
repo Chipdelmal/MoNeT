@@ -73,7 +73,7 @@ Rep_names <- formatC(x = 1:REPETITIONS, width = 4, format = "d", flag = "0")
 ExperimentList <- vector(mode = "list", length = length(landscapes))
 listmarker=1
 
-lscape = landscapes[1]
+lscape = landscapes[2]
 
 # read in and setup landscape
 lFile <- read.csv(file = lscape, header = TRUE, sep = ",")
@@ -85,75 +85,80 @@ ExperimentList[[listmarker]]$movementKernel <- calc_HurdleExpKernel(distMat = ou
                                                                     r = MGDrivE::kernels$exp_rate,
                                                                     pi = stayProbability^(bioParameters$muAd))
 
-movement = ExperimentList[[1]]$movementKernel
-labels = unique(lFile$label)
 
-ending_matrix = matrix(nrow=length(labels), ncol=length(labels))
-
-for (ii in 1:nrow(ending_matrix)) 
-{
-  ending_matrix[ii, ] <- 0
-}
 
 #trial run
-trial_run = matrix(1:16, nrow = 4)
+# trial_run = matrix(1:16, nrow = 4)
 #another_one
 #labels
 
-labels = matrix(nrow=4)
-labels[1,] = 1
-labels[2,] = 1
-labels[3,] = 2
-labels[4,] = 2
-tmp_matrix = matrix(nrow=length(unique(labels)), ncol=length(unique(labels)))
-for (ii in 1:nrow(tmp_matrix)) 
-{
-  tmp_matrix[ii, ] <- 0
-}
-
-groupings = lFile$label[!duplicated(lFile$label)]
-for (i in 1:nrow(another_one)) 
-{
-  for (j in 1:ncol(another_one))
+# labels = matrix(nrow=4)
+# labels[1,] = 1
+# labels[2,] = 1
+# labels[3,] = 2
+# labels[4,] = 2
+# tmp_matrix = matrix(nrow=length(unique(labels)), ncol=length(unique(labels)))
+# counter = matrix(nrow=length(unique(labels)), ncol=length(unique(labels)))
+# for (ii in 1:nrow(tmp_matrix)) 
+# {
+#   tmp_matrix[ii, ] <- 0
+#   counter[ii, ] <- 0
+# }
+# 
+# groupings = lFile$label[!duplicated(lFile$label)]
+# for (i in 1:nrow(another_one)) 
+# {
+#   for (j in 1:ncol(another_one))
+#   {
+#     to_label = labels[i]
+#     from_label = labels[j]
+#     counter[to_label, from_label] = counter[to_label, from_label] + 1
+#     tmp_matrix[to_label, from_label] = tmp_matrix[to_label, from_label] + another_one[i, j]
+#   }
+# }
+# 
+# for (i in 1:nrow(tmp_matrix)) 
+# {
+#   for (j in 1:ncol(tmp_matrix))
+#   {
+#     #number of nodes in the cluster
+#     tmp_matrix[i, j] = tmp_matrix[i, j] / length(which(labels == i))
+#   }
+# }
+# 
+movement = ExperimentList[[1]]$movementKernel
+update_movement_kernel <- function(movement, lFile) {
+  
+  labels = unique(lFile$label)
+  ending_matrix = matrix(nrow=length(labels), ncol=length(labels))
+  
+  for (ii in 1:nrow(ending_matrix)) 
   {
-    to_label = labels[i]
-    from_label = labels[j]
-    tmp_matrix[to_label, from_label] = tmp_matrix[to_label, from_label] + another_one[i, j]
+    ending_matrix[ii, ] <- 0
+  }
+  
+  labels = labels + 1
+  
+  for (i in 1:nrow(movement)) 
+  {
+    for (j in 1:ncol(movement))
+    {
+      from_label = lFile[i, "label"]
+      to_label = lFile[j, "label"]
+      ending_matrix[from_label, to_label] = ending_matrix[from_label, to_label] + movement[i, j]
+    }
+  }
+  
+  for (i in 1:nrow(ending_matrix)) 
+  {
+    for (j in i:ncol(ending_matrix))
+    {
+      ending_matrix[i, j] = ending_matrix[i, j] / length(which(lFile$label == i))
+    }
   }
 }
 
-for (i in 1:nrow(tmp_matrix)) 
-{
-  for (j in 1:ncol(tmp_matrix))
-  {
-    
-    tmp_matrix[i, j] = tmp_matrix[i, j] * /nrow
-  }
-}
 
-
-#BEGIN ACTUAL EXPERIMENT
-
-
-groupings = lFile$label[!duplicated(lFile$label)]
-#labels are zero-indexed!!! need to bump them all up by one 
-for (i in 1:nrow(movement)) 
-{
-  for (j in i:ncol(movement))
-  {
-    to_label = lFile[j, "label"] + 1
-    from_label = lFile[i, "label"] + 1
-    ending_matrix[to_label, from_label] = ending_matrix[to_label, from_label] + movement[i, j]
-  }
-}
-
-for (i in 1:nrow(ending_matrix)) 
-{
-  for (j in i:ncol(ending_matrix))
-  {
-    ending_matrix[i, j] = ending_matrix[i, j] * nrow(movement)
-  }
-}
 
 # load a different population graph so I have more than just one node 
 # ok so for every population I need to calculate the probability 
