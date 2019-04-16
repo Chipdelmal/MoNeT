@@ -18,6 +18,7 @@ totalpop = stdpop * n
 points = array_creation(dist, totalpop, 100, C=0.0)
 # print("here are coords", coords)
 sizesLists = points[2]
+print(len(points[0]))
 coords = zip(points[0], points[1], sizesLists)
 # sizesLists = population_split(totalpop, n, C=0.0)
 k = agglom_clustering(coords, sizesLists, 100, 20, "New_Format_Outputs/pusheen")

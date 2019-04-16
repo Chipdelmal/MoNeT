@@ -31,6 +31,6 @@ def array_creation(dist, pop_size, n, C=0.0):
     Array of arrays containing the coordinates and population count
     """
     pop = np.array(population_split(pop_size, n, C))
-    x_coords = np.linspace(0, dist * (n + 1), n + 2)
-    y_coords = np.zeros(n + 2)
+    x_coords = np.linspace(0, dist * (n + 1), n)
+    y_coords = np.zeros(n)
     return np.array([x_coords, y_coords, pop])

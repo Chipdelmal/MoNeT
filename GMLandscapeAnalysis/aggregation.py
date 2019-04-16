@@ -80,6 +80,9 @@ def agglom_clustering(points, pop, total_num_nodes, levels_of_agg, filename_stri
 		grouping = dict()
 		clustering = clustering.labels_
 
+		# print("len of clustering is ", len(clustering))
+		# print("clustering is ", clustering)
+
 		for j in range(len(clustering)):
 			group = clustering[j]
 			if group in grouping.keys():
@@ -89,16 +92,19 @@ def agglom_clustering(points, pop, total_num_nodes, levels_of_agg, filename_stri
 		
 		# print("here is clustering", clustering)
 		#save csv file with grouping label
+		# UNCOMMENT THIS
 		new_points = []
 		for k in range(len(clustering)):
 			new_points.append([points[k], clustering[k]])
 		new_points = sorted(new_points, key=lambda x: x[0][0])
+		print("len of new_points", len(new_points))
 
 		with open(filename_string + str(i) + '.csv', mode='w') as destination:
 			writer = csv.writer(destination, delimiter=',')
 			writer.writerow(('x', 'y', 'n', 'label'))
 			for c in new_points:
 				writer.writerow((c[0][0], c[0][1], c[0][2], c[1]))
+		# UNCOMMENT THIS
 
 
 		# print("num groups is", len(grouping.keys()))
