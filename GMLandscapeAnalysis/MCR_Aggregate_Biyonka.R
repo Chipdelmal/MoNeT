@@ -16,9 +16,9 @@ library(parallel)
 ###############################################################################
 ### Experimental Setup and PATHS Definition
 ###############################################################################
-# USER: {1: JB, 2: Maya}
+# USER: {1: JB, 2: Maya, 3: Gillian}
 # NUM_CORES: Cores for the parallel threads
-USER=1
+USER=3
 REPETITIONS=8 # number of repetitions of each experiment
 REPITER=1 # number of groups of repetitions to perform, for analysis purposes ONLY BIYONKA SHOULD NEED THIS,
 SIM_TIME=365*4
@@ -32,8 +32,8 @@ if(USER==1){
   LANDSCAPE_PATH='~/Desktop/popHeterog_csv/test'
   BASE_OUTPUT_PATH="~/Desktop/Marshall_Simulations"
 }else if(USER==3){
-  LANDSCAPE_PATH=''
-  BASE_OUTPUT_PATH=""
+  LANDSCAPE_PATH='/Users/gillian/Desktop/marshall/MoNeT/GMLandscapeAnalysis/New_Format_Outputs'
+  BASE_OUTPUT_PATH="/Users/gillian/Desktop/MGDrive-Experiments"
 }else if(USER==4){
   LANDSCAPE_PATH=''
   BASE_OUTPUT_PATH=""
@@ -60,6 +60,34 @@ driveCube <-MGDrivE::Cube_HomingDrive(cM=1, cF=1, chM=.95, chF=.95, crM=.95, crF
 releasesParameters=list(releasesStart=50, releasesNumber=1,
                         eachreleasesInterval=7, releaseProportion=5)
 
+###############################################################################
+### Clustering Movement Kernel Update
+###############################################################################
+update_movement_kernel <- function(movement, lFile) {
+  labels = unique(lFile$label)+1
+  ending_matrix = matrix(nrow=length(labels), ncol=length(labels))
+  for (ii in 1:nrow(ending_matrix)) 
+  {
+    ending_matrix[ii, ] <- 0
+  }
+  for (i in 1:nrow(movement)) 
+  {
+    for (j in 1:ncol(movement))
+    {
+      from_label = lFile[i, "label"]
+      to_label = lFile[j, "label"]
+      ending_matrix[from_label, to_label] = ending_matrix[from_label, to_label] + movement[i, j]
+    }
+  }
+  for (i in 1:nrow(ending_matrix)) 
+  {
+    for (j in i:ncol(ending_matrix))
+    {
+      ending_matrix[i, j] = ending_matrix[i, j] / length(which(lFile$label == i))
+    }
+  }
+}
+
 
 ###############################################################################
 ### Factorial setup
@@ -74,6 +102,7 @@ Iter_names <- formatC(x = 1:REPITER, width = 4, format = "d", flag = "0")
 ExperimentList <- vector(mode = "list", length = length(landscapes)*REPITER)
 listmarker=1
 
+lscape <- landscapes[1]
 # read in and setup landscape
 lFile <- read.csv(file = lscape, header = TRUE, sep = ",")
 # population from each patch
@@ -83,7 +112,7 @@ movementKernel <- calc_HurdleExpKernel(distMat = outer(X = lFile$x, Y = lFile$x,
 FUN = function(x,y){abs(x-y)}),
 r = MGDrivE::kernels$exp_rate,
 pi = stayProbability^(bioParameters$muAd))
-
+movementKernel <- update_movement_kernel(movementKernel, lFile)
 for(lscape in landscapes){
 
   ####################
