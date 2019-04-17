@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import MoNeT_MGDrivE as monet
+import os
 import glob
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
@@ -15,44 +17,48 @@ def calculateMaxPopInLandscapeReps(landscapeReps):
     return max(list)
 
 
-STACK = False
-TRACE= True
-HEAT = False
+STACK = True
+TRACE= False
+HEAT = True
+
+colors = [
+    "#090446", "#f20060", "#6898ff",
+    "#ff28d4", "#7fff3a", "#c6d8ff"
+]
+cmaps = monet.generateAlphaColorMapFromColorArray(colors)
+styleS = {
+    "width": 0, "alpha": .85, "dpi": 512, "legend": False,
+    "aspect": .175, "dpi": 512,
+    "colors": colors, "format": "png",
+    "xRange": [0, 5400], "yRange": [0, 5000]  # 2500]
+}
+styleT = {
+    "width": 0.03, "alpha": .15, "dpi": 512, "legend": False,
+    "aspect": 2,  "dpi": 512,
+    "colors": colors, "format": "png",
+    "xRange": [0, 3000], "yRange": [0, 300]  # 2500]
+}
 ##############################################################################
 # Setup
 ##############################################################################
 # nameExp = "E_0125_02_00028"
 pathRoot = "/Volumes/marshallShare/vic/"
-pathSet = pathRoot + "eRACR34/"  # + "eRACR29"
+pathSet = pathRoot + "eRACR53/"  # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
 for j in range(len(foldersList)):
-    id = foldersList[j].split("/")[-1].split("_")[0]
+    #id = foldersList[j].split("/")[-1].split("_")[0]
     experimentsFolders = glob.glob(foldersList[0] + "/E_*")
 
-    for nameExp in experimentsFolders:
+    for nameExp in sorted(glob.glob(foldersList[0] + "/E_*")):
         pathFull = nameExp
         filenames = monet.readExperimentFilenames(pathFull)
+        # if os.path.isfile(pathOut + "/stack/" + nameExp.split("/")[-1] + "_S." + styleS["format"]) or os.path.isfile(pathOut + "/garbage/" + nameExp.split("/")[-1] + "_G." + styleT["format"]) or os.path.isfile(pathOut + "/heat/" + nameExp.split("/")[-1] + "F_L." + styleS["format"]):
+        #     continue
+
         if (len(filenames["male"]) > 0) or (len(filenames["female"]) > 0):
             ###################################################################
-            colors = [
-                "#090446", "#f20060", "#6898ff",
-                "#ff28d4", "#7fff3a", "#c6d8ff"
-            ]
-            cmaps = monet.generateAlphaColorMapFromColorArray(colors)
-            styleS = {
-                "width": 0, "alpha": .85, "dpi": 1024, "legend": False,
-                "aspect": .175, "dpi": 750,
-                "colors": colors, "format": "pdf",
-                "xRange": [0, 5400], "yRange": [0, 5000]  # 2500]
-            }
-            styleT = {
-                "width": 0.03, "alpha": .15, "dpi": 1024, "legend": False,
-                "aspect": 2,  "dpi": 1024,
-                "colors": colors, "format": "png",
-                "xRange": [0, 3000], "yRange": [0, 300]  # 2500]
-            }
             ###################################################################
             # Population breakdown analysis
             ###################################################################
@@ -77,7 +83,7 @@ for j in range(len(foldersList)):
                     styleS["yRange"][0], styleS["yRange"][1])
                 monet.quickSaveFigure(
                     figB,
-                    pathOut + "/stack/" + id + "-" +
+                    pathOut + "/stack/" +
                     nameExp.split("/")[-1] + "_S." + styleS["format"],
                     dpi = styleS["dpi"],
                     format = styleS["format"]
@@ -111,9 +117,8 @@ for j in range(len(foldersList)):
                 )
                 monet.quickSaveFigure(
                     fig,
-                    pathOut + "/garbage/" + id + "-" +
-                    nameExp.split("/")[-1] + "_" +
-                    str(1).rjust(3, "0") + "." + styleT["format"],
+                    pathOut + "/garbage/" +
+                    nameExp.split("/")[-1] + "_G." + styleT["format"],
                     dpi=styleS["dpi"],
                     format = styleT["format"]
                 )
@@ -140,15 +145,23 @@ for j in range(len(foldersList)):
                 )
                 ###############################################################
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals,
-                    style={"aspect": 50, "cmap": cmaps}
-                )
+                    geneSpatiotemporals, style={"aspect": 50, "cmap": cmaps},
+                    vmax=monet.maxAlleleInLandscape(
+                        geneSpatiotemporals["geneLandscape"])
+                    )
+                legends = []
+                for (allele,color) in zip(["W", "H", "E", "R", "B"], colors):
+                    legends.append(mpatches.Patch(color=color, label=allele))
+                plt.legend(handles=legends, bbox_to_anchor=(1.03, 1), fontsize='x-small', loc='upper left')
                 monet.quickSaveFigure(
                     overlay,
-                    pathOut + "/heat/" + id + "-" +
+                    pathOut + "/heat/" +
                         nameExp.split("/")[-1] + "F_L." + styleS["format"],
                     dpi=styleS["dpi"],
                     format = styleS["format"]
                 )
                 plt.close()
                 ###############################################################
+
+
+print("done")

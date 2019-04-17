@@ -478,7 +478,7 @@ def getGenotypeFromLandscape(
     geneArray = np.empty([nodesNumb, time])
     for i in range(0, nodesNumb):
         probe = landscapeData["landscape"][i]
-        geneArray[i] = [row[genotypeIndex] for row in probe]
+        geneArray[i] = np.resize([row[genotypeIndex] for row in probe], geneArray[i].shape)
     return geneArray
 
 
