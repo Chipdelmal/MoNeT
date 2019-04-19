@@ -24,9 +24,9 @@ For example, when looking at a simulation with nodes with increasing population 
 Additionally, in the increasing population sizes system, we are able to see the actual release in the first node at the 50 day mark due to the small population size in the initial nodes.
 
 Increasing population sizes:
-<img src="./popHeterog_media/O_step_up.png" align="middle">
+<img src="./media/O_step_up.png" align="middle">
 Decreasing population sizes:
-<img src="./popHeterog_media/O_step_down.png" align="middle">
+<img src="./media/O_step_down.png" align="middle">
 
 Currently, we are working on writing scripts to simulate different population setups given a total population size.
 
