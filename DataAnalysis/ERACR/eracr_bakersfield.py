@@ -19,7 +19,7 @@ def calculateMaxPopInLandscapeReps(landscapeReps):
 
 STACK = True
 TRACE= False
-HEAT = False
+HEAT = True
 
 colors = [
     "#090446", "#f20060", "#7fff3a",
@@ -27,13 +27,13 @@ colors = [
 ]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
-    "width": 0, "alpha": .85, "dpi": 512, "legend": False,
+    "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
     "aspect": .00075, "dpi": 512,
     "colors": colors, "format": "png",
     "xRange": [0, 3500], "yRange": [0, 590000]  # 2500]
 }
 styleT = {
-    "width": 0.2, "alpha": .15, "dpi": 512, "legend": False,
+    "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
     "aspect": 2,  "dpi": 512,
     "colors": colors, "format": "png",
     "xRange": [0, 3500], "yRange": [0, 300]  # 2500]
@@ -43,7 +43,7 @@ styleT = {
 ##############################################################################
 # nameExp = "E_0125_02_00028"
 pathRoot = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/"
-pathSet = pathRoot + "Erelease/"  # + "eRACR29"
+pathSet = pathRoot + "HRelease/"  # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
@@ -122,7 +122,14 @@ for j in range(len(foldersList)):
                     pathOut + "/garbage/" +
                     nameExp.split("/")[-1] + "_G." + styleT["format"],
                     dpi=styleS["dpi"],
-                    format = styleT["format"]
+                    format = "png"
+                )
+                monet.quickSaveFigure(
+                    fig,
+                    pathOut + "/garbage/" +
+                    nameExp.split("/")[-1] + "_G." + styleT["format"],
+                    dpi=styleS["dpi"],
+                    format = "pdf"
                 )
                 plt.close()
             if HEAT:
@@ -160,7 +167,14 @@ for j in range(len(foldersList)):
                     pathOut + "/heat/" +
                         nameExp.split("/")[-1] + "F_L." + styleS["format"],
                     dpi=styleS["dpi"],
-                    format = styleS["format"]
+                    format = "png"
+                )
+                monet.quickSaveFigure(
+                    overlay,
+                    pathOut + "/heat/" +
+                        nameExp.split("/")[-1] + "F_L." + styleS["format"],
+                    dpi=styleS["dpi"],
+                    format = "pdf"
                 )
                 plt.close()
                 ###############################################################
