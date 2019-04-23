@@ -19,24 +19,24 @@ def calculateMaxPopInLandscapeReps(landscapeReps):
 
 STACK = True
 TRACE= False
-HEAT = True
+HEAT = False
 
 colors = [
-    "#090446", "#f20060", "#6898ff",
-    "#ff28d4", "#7fff3a", "#c6d8ff"
+    "#090446", "#f20060", "#7fff3a",
+    "#ff28d4", "#6898ff", "#c6d8ff"
 ]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 512, "legend": False,
-    "aspect": .006, "dpi": 512,
+    "aspect": .00075, "dpi": 512,
     "colors": colors, "format": "png",
-    "xRange": [0, 5400], "yRange": [0, 590000]  # 2500]
+    "xRange": [0, 3500], "yRange": [0, 590000]  # 2500]
 }
 styleT = {
-    "width": 0.03, "alpha": .15, "dpi": 512, "legend": False,
+    "width": 0.2, "alpha": .15, "dpi": 512, "legend": False,
     "aspect": 2,  "dpi": 512,
     "colors": colors, "format": "png",
-    "xRange": [0, 3000], "yRange": [0, 300]  # 2500]
+    "xRange": [0, 3500], "yRange": [0, 300]  # 2500]
 }
 ##############################################################################
 # Setup
@@ -75,6 +75,7 @@ for j in range(len(foldersList)):
                     landscapeSumData,
                     aggregationDictionary
                 )
+                aggData["population"] = aggData["population"]/1
                 ###############################################################
                 figB = monet.plotMeanGenotypeStack(aggData, styleS)
                 figB.get_axes()[0].set_xlim(
@@ -146,7 +147,7 @@ for j in range(len(foldersList)):
                 )
                 ###############################################################
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals, style={"aspect": 1, "cmap": cmaps},
+                    geneSpatiotemporals, style={"aspect": .2, "cmap": cmaps},
                     vmax=monet.maxAlleleInLandscape(
                         geneSpatiotemporals["geneLandscape"])
                     )
