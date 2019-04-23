@@ -43,7 +43,7 @@ styleT = {
 ##############################################################################
 # nameExp = "E_0125_02_00028"
 pathRoot = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/"
-pathSet = pathRoot + "HRelease/"  # + "eRACR29"
+pathSet = pathRoot + "EResistance/"  # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
@@ -86,9 +86,16 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     figB,
                     pathOut + "/stack/" +
-                    nameExp.split("/")[-1] + "_S." + styleS["format"],
+                    nameExp.split("/")[-1] + "_S." + "pdf",
                     dpi = styleS["dpi"],
-                    format = styleS["format"]
+                    format = "pdf"
+                )
+                monet.quickSaveFigure(
+                    figB,
+                    pathOut + "/stack/" +
+                    nameExp.split("/")[-1] + "_S." + "png",
+                    dpi = styleS["dpi"],
+                    format = "png"
                 )
                 plt.close()
             ###################################################################
@@ -120,14 +127,14 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     fig,
                     pathOut + "/garbage/" +
-                    nameExp.split("/")[-1] + "_G." + styleT["format"],
+                    nameExp.split("/")[-1] + "_G." + "png",
                     dpi=styleS["dpi"],
                     format = "png"
                 )
                 monet.quickSaveFigure(
                     fig,
                     pathOut + "/garbage/" +
-                    nameExp.split("/")[-1] + "_G." + styleT["format"],
+                    nameExp.split("/")[-1] + "_G." + "pdf",
                     dpi=styleS["dpi"],
                     format = "pdf"
                 )
@@ -165,14 +172,14 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L." + styleS["format"],
+                        nameExp.split("/")[-1] + "F_L." + "png",
                     dpi=styleS["dpi"],
                     format = "png"
                 )
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L." + styleS["format"],
+                        nameExp.split("/")[-1] + "F_L." + "pdf",
                     dpi=styleS["dpi"],
                     format = "pdf"
                 )
