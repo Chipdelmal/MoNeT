@@ -43,7 +43,7 @@ styleT = {
 ##############################################################################
 # nameExp = "E_0125_02_00028"
 pathRoot = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/"
-pathSet = pathRoot + "EResistance/"  # + "eRACR29"
+pathSet = pathRoot + "MultipleRelease2/"  # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 

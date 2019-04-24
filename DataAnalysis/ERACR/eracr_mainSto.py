@@ -47,7 +47,7 @@ pathSet = pathRoot + "migration/"  # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
-for j in range(len(foldersList)):
+for j in range(0,1):#range(len(foldersList)):
     #id = foldersList[j].split("/")[-1].split("_")[0]
     experimentsFolders = glob.glob(foldersList[0] + "/E_*")
 
@@ -84,9 +84,16 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     figB,
                     pathOut + "/stack/" +
-                    nameExp.split("/")[-1] + "_S." + styleS["format"],
+                    nameExp.split("/")[-1] + "_S." + "pdf",
                     dpi = styleS["dpi"],
-                    format = styleS["format"]
+                    format = "pdf"
+                )
+                monet.quickSaveFigure(
+                    figB,
+                    pathOut + "/stack/" +
+                    nameExp.split("/")[-1] + "_S." + "png",
+                    dpi = styleS["dpi"],
+                    format = "png"
                 )
                 plt.close()
             ###################################################################
@@ -144,11 +151,11 @@ for j in range(len(foldersList)):
                     aggregatedNodesData
                 )
                 ###############################################################
+                initMax = np.sum([np.sum(i[0]) for i in aggregatedNodesData["landscape"]])
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals, style={"aspect": 50, "cmap": cmaps},
-                    vmax=monet.maxAlleleInLandscape(
-                        geneSpatiotemporals["geneLandscape"])
-                    )
+                    geneSpatiotemporals, style={"aspect": 15, "cmap": cmaps},
+                    vmax= 1.25 * initMax/len(aggregatedNodesData["landscape"])
+                )
                 legends = []
                 for (allele,color) in zip(["W", "H", "E", "R", "B"], colors):
                     legends.append(mpatches.Patch(color=color, label=allele))
@@ -156,12 +163,18 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L." + styleS["format"],
+                        nameExp.split("/")[-1] + "F_L." + "png",
                     dpi=styleS["dpi"],
-                    format = styleS["format"]
+                    format = "png"
+                )
+                monet.quickSaveFigure(
+                    overlay,
+                    pathOut + "/heat/" +
+                        nameExp.split("/")[-1] + "F_L." + "pdf",
+                    dpi=styleS["dpi"],
+                    format = "pdf"
                 )
                 plt.close()
                 ###############################################################
-
 
 print("done")
