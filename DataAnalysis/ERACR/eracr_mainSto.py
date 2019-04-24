@@ -22,8 +22,8 @@ TRACE= False
 HEAT = True
 
 colors = [
-    "#090446", "#f20060", "#6898ff",
-    "#ff28d4", "#7fff3a", "#c6d8ff"
+    "#090446", "#f20060", "#7fff3a",
+    "#ff28d4", "#6898ff", "#c6d8ff"
 ]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
@@ -42,8 +42,8 @@ styleT = {
 # Setup
 ##############################################################################
 # nameExp = "E_0125_02_00028"
-pathRoot = "/Volumes/marshallShare/vic/"
-pathSet = pathRoot + "eRACR53/"  # + "eRACR29"
+pathRoot = "/Volumes/marshallShare/ERACR/Line/experiments/"
+pathSet = pathRoot + "migration/"  # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
