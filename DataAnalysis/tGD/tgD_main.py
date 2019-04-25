@@ -31,9 +31,9 @@ def quickSaveFigure(
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 1
+DRIVE = 2
 TRACES = False
-TRACE_ANIMATION = False
+TRACE_ANIMATION = True
 STACK = False
 SUMMARIES_DATA = False
 TRACES_DATA = False
@@ -56,7 +56,7 @@ style = {
     "colors": colors, "xRange": [0, 600], "yRange": [0, 5000]
 }
 styleT = {
-    "width": 2, "alpha": .7, "dpi": 1024, "legend": False, "aspect": .02,
+    "width": 2, "alpha": .7, "dpi": 1024, "legend": False, "aspect": .005,
     "colors": colors, "xRange": [0, 600], "yRange": [0, 5000]
 }
 styleS = {
@@ -147,15 +147,18 @@ if TRACE_ANIMATION is True:
             )
         print(len(landscapeReps["landscapes"]))
         # make folder in /images/trace_animations/ with name of experiment
-        pathFolder = pathRoot + "images/trace_animations/" + str(DRIVE).rjust(2, "0") + "R_" + experimentString 
-        try:  
+        pathFolder = pathRoot + "images/traceAnimations/" + str(DRIVE).rjust(2, "0") + "R_" + experimentString
+        try:
             os.mkdir(pathFolder)
-        except OSError:  
+        except OSError:
             print ("Creation of the directory %s failed" % pathFolder)
         else:
             for i in range(1, len(landscapeReps["landscapes"])):
                 print(i)
-                landscapeSublist = {"genotypes": landscapeReps["genotypes"], "landscapes": landscapeReps["landscapes"][0:i]}
+                landscapeSublist = {
+                    "genotypes": landscapeReps["genotypes"],
+                    "landscapes": landscapeReps["landscapes"][0:i]
+                }
                 figsArray = plots.plotLandscapeDataRepetitions(
                     landscapeSublist,
                     style,

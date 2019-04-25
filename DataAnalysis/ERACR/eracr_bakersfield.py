@@ -30,7 +30,7 @@ styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
     "aspect": .00075, "dpi": 512,
     "colors": colors, "format": "png",
-    "xRange": [0, 3500], "yRange": [0, 590000]  # 2500]
+    "xRange": [0, 3500], "yRange": [0, 2750]#590000]  # 2500]
 }
 styleT = {
     "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
@@ -162,9 +162,8 @@ for j in range(len(foldersList)):
                 ###############################################################
                 overlay = monet.plotGenotypeOverlayFromLandscape(
                     geneSpatiotemporals, style={"aspect": .2, "cmap": cmaps},
-                    vmax=monet.maxAlleleInLandscape(
-                        geneSpatiotemporals["geneLandscape"])
-                    )
+                    vmax= 1.25 * initMax/len(aggregatedNodesData["landscape"])
+                    #monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"]))
                 legends = []
                 for (allele,color) in zip(["W", "H", "E", "R", "B"], colors):
                     legends.append(mpatches.Patch(color=color, label=allele))

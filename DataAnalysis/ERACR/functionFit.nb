@@ -1,0 +1,97 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      2922,         89]
+NotebookOptionsPosition[      2321,         71]
+NotebookOutlinePosition[      2660,         86]
+CellTagsIndexPosition[      2617,         83]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "DPATH", "=", "\"\</Volumes/marshallShare/ERACR/Line/experiments/\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetDirectory", "[", "DPATH", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"exp", "=", "\"\</migration/\>\""}], ";"}]}], "Input",
+ CellChangeTimes->{{3.765220052262649*^9, 3.7652201738879213`*^9}, {
+  3.765220217173238*^9, 3.7652203332008123`*^9}},
+ CellLabel->
+  "In[380]:=",ExpressionUUID->"b79d0afb-991b-45ca-9da1-076c06618ba5"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"folders", "=", 
+    RowBox[{"FileNames", "[", 
+     RowBox[{"\"\<*\>\"", ",", 
+      RowBox[{
+       RowBox[{"Directory", "[", "]"}], "<>", "exp", "<>", 
+       "\"\</ANALYZED/\>\""}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"i", "=", "1"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FileNames", "[", 
+   RowBox[{"\"\<*.csv\>\"", ",", 
+    RowBox[{"folders", "[", 
+     RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7652201876516657`*^9, 3.765220259698565*^9}, {
+  3.765220338903343*^9, 3.765220399213048*^9}, {3.765220435554914*^9, 
+  3.765220472722617*^9}},ExpressionUUID->"255dead4-b325-4b7b-88fb-\
+404bcd02741c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Directory", "[", "]"}], "<>", "exp"}]], "Input",
+ CellLabel->
+  "In[376]:=",ExpressionUUID->"b0e29ecb-61de-4f22-8984-9554abdbf5d7"],
+
+Cell[BoxData["\<\"/Volumes/marshallShare/ERACR/Line/experiments/E_0166_6480_\
+30_20_02_040/\"\>"], "Output",
+ CellChangeTimes->{{3.7652202642378407`*^9, 3.765220274526211*^9}},
+ CellLabel->
+  "Out[376]=",ExpressionUUID->"83d67da2-a22f-4563-9cd9-9075c6ca5142"]
+}, Open  ]]
+},
+WindowSize->{808, 911},
+WindowMargins->{{Automatic, 820}, {101, Automatic}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 510, 12, 73, "Input",ExpressionUUID->"b79d0afb-991b-45ca-9da1-076c06618ba5"],
+Cell[1071, 34, 781, 20, 94, "Input",ExpressionUUID->"255dead4-b325-4b7b-88fb-404bcd02741c"],
+Cell[CellGroupData[{
+Cell[1877, 58, 166, 4, 30, "Input",ExpressionUUID->"b0e29ecb-61de-4f22-8984-9554abdbf5d7"],
+Cell[2046, 64, 259, 4, 34, "Output",ExpressionUUID->"83d67da2-a22f-4563-9cd9-9075c6ca5142"]
+}, Open  ]]
+}
+]
+*)
+
