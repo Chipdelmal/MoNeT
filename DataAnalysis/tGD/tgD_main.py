@@ -67,52 +67,64 @@ xRange = 1250
 yRangeFixed = 11000
 ##############################################################################
 ##############################################################################
-if TRACES is True:
+def getAggDataSSDay(pathsRoot, i):
+    pathSample = pathsRoot[i] + "/"
+    experimentString = pathSample.split("/")[-2]
+    filenames = monet.readExperimentFilenames(pathSample)
+    landscapeSumData = monet.sumLandscapePopulationsFromFiles(
+        filenames, male=True, female=True, dataType=float
+    )
+    aggData = monet.aggregateGenotypesInNode(
+        landscapeSumData,
+        aggregationDictionary
+    )
+    ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
+    return aggData, ssDay, experimentString
+
+def getLandscapeReps(i):
+    pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+            pathRoot + pathExt + "ANALYZED/"
+        )
+    aggData, ssDay, _ = getAggDataSSDay(pathsRoot, i)
+    #######################################################################
     pathsRoot = monet.listDirectoriesWithPathWithinAPath(
         pathRoot + pathExt + "GARBAGE/"
     )
-    for i in range(0, 0):
-        pathsRoot = monet.listDirectoriesWithPathWithinAPath(
-            pathRoot + pathExt + "ANALYZED/"
-        )
-        pathSample = pathsRoot[i] + "/"
-        experimentString = pathSample.split("/")[-2]
-        filenames = monet.readExperimentFilenames(pathSample)
-        landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-            filenames, male=True, female=True, dataType=float
-        )
-        aggData = monet.aggregateGenotypesInNode(
-            landscapeSumData,
-            aggregationDictionary
-        )
-        ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
-        #######################################################################
-        pathsRoot = monet.listDirectoriesWithPathWithinAPath(
-            pathRoot + pathExt + "GARBAGE/"
-        )
-        pathSample = pathsRoot[i]
-        experimentString = pathSample.split("/")[-1]
-        paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
-        landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-            paths, aggregationDictionary,
-            male=False, female=True, dataType=float
-        )
-        figsArray = plots.plotLandscapeDataRepetitions(
+    pathSample = pathsRoot[i]
+    experimentString = pathSample.split("/")[-1]
+    paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
+    landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+        paths, aggregationDictionary,
+        male=False, female=True, dataType=float
+    )
+    return landscapeReps, ssDay, experimentString
+
+
+def plotAndSaveLandscapeReps(landscapeReps, ssDay, path):
+    figsArray = plots.plotLandscapeDataRepetitions(
             landscapeReps,
             style,
             ssDay,
             yRangeFixed
         )
-        for i in range(0, len(figsArray)):
-            figsArray[i].get_axes()[0].set_xlim(0, xRange)
-            figsArray[i].get_axes()[0].set_ylim(0, yRangeFixed)
-            monet.quickSaveFigure(
-                figsArray[i],
-                pathRoot + "images/traces/" + str(DRIVE).rjust(2, "0") + "R_" +
-                experimentString + FORMAT,
-                dpi=750
-            )
-            plt.close()
+    for i in range(0, len(figsArray)):
+        figsArray[i].get_axes()[0].set_xlim(0, xRange)
+        figsArray[i].get_axes()[0].set_ylim(0, yRangeFixed)
+        monet.quickSaveFigure(
+            figsArray[i],
+            path,
+            dpi=750
+        )
+        plt.close()
+##############################################################################
+##############################################################################        
+if TRACES is True:
+    pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+        pathRoot + pathExt + "GARBAGE/"
+    )
+    for i in range(0, len(pathsRoot)):
+        landscapeReps, ssDay, experimentString = getLandscapeReps(i)
+        plotAndSaveLandscapeReps(landscapeReps, ssDay, pathRoot + "images/traces/" + str(DRIVE).rjust(2, "0") + "R_" + experimentString + FORMAT)
 ##############################################################################
 ##############################################################################
 if TRACE_ANIMATION is True:
@@ -120,60 +132,19 @@ if TRACE_ANIMATION is True:
         pathRoot + pathExt + "GARBAGE/"
     )
     for i in range(0, len(pathsRoot)):
-        pathsRoot = monet.listDirectoriesWithPathWithinAPath(
-            pathRoot + pathExt + "ANALYZED/"
-        )
-        pathSample = pathsRoot[i] + "/"
-        experimentString = pathSample.split("/")[-2]
-        filenames = monet.readExperimentFilenames(pathSample)
-        landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-            filenames, male=True, female=True, dataType=float
-        )
-        aggData = monet.aggregateGenotypesInNode(
-            landscapeSumData,
-            aggregationDictionary
-        )
-        ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
-        #######################################################################
-        pathsRoot = monet.listDirectoriesWithPathWithinAPath(
-            pathRoot + pathExt + "GARBAGE/"
-        )
-        pathSample = pathsRoot[i]
-        experimentString = pathSample.split("/")[-1]
-        paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
-        landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-                paths, aggregationDictionary,
-                male=False, female=True, dataType=float
-            )
-        print(len(landscapeReps["landscapes"]))
+        landscapeReps, ssDay, experimentString = getLandscapeReps(i)
         # make folder in /images/trace_animations/ with name of experiment
-        pathFolder = pathRoot + "images/traceAnimations/" + str(DRIVE).rjust(2, "0") + "R_" + experimentString
-        try:
-            os.mkdir(pathFolder)
-        except OSError:
-            print ("Creation of the directory %s failed" % pathFolder)
+        pathFolder = pathRoot + "images/trace_animations/" + str(DRIVE).rjust(2, "0") + "R_" + experimentString 
+        if not os.path.isdir(pathFolder):
+            try:  
+                os.mkdir(pathFolder)
+            except OSError:  
+                print ("Creation of the directory %s failed" % pathFolder)
         else:
             for i in range(1, len(landscapeReps["landscapes"])):
                 print(i)
-                landscapeSublist = {
-                    "genotypes": landscapeReps["genotypes"],
-                    "landscapes": landscapeReps["landscapes"][0:i]
-                }
-                figsArray = plots.plotLandscapeDataRepetitions(
-                    landscapeSublist,
-                    style,
-                    ssDay,
-                    yRangeFixed
-                )
-                for j in range(0, len(figsArray)):
-                    figsArray[j].get_axes()[0].set_xlim(0, xRange)
-                    figsArray[j].get_axes()[0].set_ylim(0, yRangeFixed)
-                    monet.quickSaveFigure(
-                        figsArray[j],
-                        pathFolder + "/" + str(i).rjust(6, "0") + ".png",
-                        dpi=750
-                    )
-                    plt.close()
+                landscapeSublist = {"genotypes": landscapeReps["genotypes"], "landscapes": landscapeReps["landscapes"][0:i]}
+                plotAndSaveLandscapeReps(landscapeSublist, ssDay, pathFolder + "/" + str(i).rjust(6, "0") + ".png")
 ##############################################################################
 ##############################################################################
 if STACK is True:
@@ -182,17 +153,7 @@ if STACK is True:
     )
     for i in range(0, len(pathsRoot)):
         #####################################################################
-        pathSample = pathsRoot[i] + "/"
-        experimentString = pathSample.split("/")[-2]
-        filenames = monet.readExperimentFilenames(pathSample)
-        #####################################################################
-        landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-            filenames, male=True, female=True, dataType=float
-        )
-        aggData = monet.aggregateGenotypesInNode(
-            landscapeSumData,
-            aggregationDictionary
-        )
+        aggData, ssDay, experimentString = getAggDataSSDay(pathsRoot, i)
         #####################################################################
         if (DRIVE == 1 or DRIVE == 2):
             groupingsList = [[2]]
@@ -216,7 +177,6 @@ if STACK is True:
             ffStringH = "p(H): " + format(ratiosAtEndH[0]*2, '.3f') + ", p(G): " + format(
                 ratiosAtEndH[1]*2, '.3f') + ", p(H&G): " + format(intersectionH,
                 '.3f') + ", p(H|G): " + format(unionH, '.3f')
-        ssDay = aux.reachedSteadtStateAtDay(aggData, .01)
         if not (DRIVE == 1 or DRIVE == 2):
             aggData = {
                 "genotypes": aggData["genotypes"],
@@ -254,19 +214,9 @@ if SUMMARIES_DATA is True:
     summariesDict = {}
     ratiosDict = {}
     ratiosDictH = {}
-    for i in range(0, len(pathsRoot)):
+    for i in range(0, 2):
         #####################################################################
-        pathSample = pathsRoot[i] + "/"
-        experimentString = pathSample.split("/")[-2]
-        filenames = monet.readExperimentFilenames(pathSample)
-        #####################################################################
-        landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-            filenames, male=True, female=True, dataType=float
-        )
-        aggData = monet.aggregateGenotypesInNode(
-            landscapeSumData,
-            aggregationDictionary
-        )
+        aggData, ssReach, experimentString = getAggDataSSDay(pathsRoot, i)
         aux.quickSaveTraceAggData(
             aggData,
             pathRoot + "/data/mean/" + str(DRIVE).rjust(2, "0") +
@@ -281,7 +231,6 @@ if SUMMARIES_DATA is True:
         ratiosAtEnd = aux.getRatiosAtEnd(aggData, groupingsList, -1)
         ratiosAtEndH = aux.getRatiosAtEnd(aggData, groupingsListH, -1)
         #####################################################################
-        ssReach = aux.reachedSteadtStateAtDay(aggData, .01)
         summariesDict[experimentString] = ssReach
         ratiosDict[experimentString] = ratiosAtEnd
         ratiosDictH[experimentString] = ratiosAtEndH
@@ -317,3 +266,8 @@ if TRACES_DATA is True:
             str(DRIVE).rjust(2, "0") + experimentString
         )
         plt.close()
+
+
+
+
+
