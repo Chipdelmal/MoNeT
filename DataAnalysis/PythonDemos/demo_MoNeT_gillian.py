@@ -8,6 +8,7 @@ import os
 type = float
 # experimentString = "pusheen91"
 path = "/Users/gillian/Desktop/MGDrive-Experiments/"
+print(os.listdir(path))
 
 for filename in os.listdir(path):
     if filename == '.DS_Store':
@@ -23,8 +24,8 @@ for filename in os.listdir(path):
             [3, 6, 8, 9, 9]
         ]
     )
-    filenames = monet.readExperimentFilenames(path + experimentString + "/ANALYZED/")
-
+    filenames = monet.readExperimentFilenames(path + experimentString + "/ANALYZED/0001/")
+    #print(filenames)
     # To analyze a single node ...................................................
     # Load a single node (auxiliary function just for demonstration)
     nodeIndex = 0
