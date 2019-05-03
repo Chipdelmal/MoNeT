@@ -229,3 +229,47 @@ def getGenotypesWithPositions(genotypes, allelePositions):
             if s[index] == allele:
                 indices.append(i)
     return indices
+
+
+def quickSaveTraceAggData(
+    aggData,
+    filename,
+    fmt="%.10d"
+):
+    np.savetxt(
+        filename,
+        aggData["population"],
+        header=(",".join(aggData["genotypes"])),
+        delimiter=",",
+        fmt=fmt,
+        comments=''
+    )
+
+
+def quickSaveRepsAggData(
+    landscapeReps,
+    foldername,
+    fmt="%.10d",
+    padNumb=5
+):
+    if not os.path.exists(foldername):
+        try:
+            os.mkdir(foldername)
+        except:
+            raise OSError("Can't create destination directory (%s)!" %
+                          (foldername))
+
+    repsNumber = len(landscapeReps["landscapes"])
+    for i in range(0, repsNumber):
+        nodesNumber = len(landscapeReps["landscapes"][0])
+        for j in range(0, nodesNumber):
+            aggData = {
+                "genotypes": landscapeReps["genotypes"],
+                "population": (landscapeReps["landscapes"][i][j])
+            }
+            quickSaveTraceAggData(
+                aggData,
+                foldername + "/N" + str(j).rjust(padNumb, "0") +
+                "_R" + str(i).rjust(padNumb, "0") + ".csv",
+                fmt=fmt
+            )
