@@ -19,7 +19,7 @@ library(parallel)
 # USER: {1: JB, 2: Maya, 3: Gillian}
 # NUM_CORES: Cores for the parallel threads
 USER=3
-REPETITIONS=8 # number of repetitions of each experiment
+REPETITIONS=50 # number of repetitions of each experiment
 REPITER=1 # number of groups of repetitions to perform, for analysis purposes ONLY BIYONKA SHOULD NEED THIS,
 SIM_TIME=365*3
 NUM_CORES=4
@@ -32,7 +32,7 @@ if(USER==1){
   LANDSCAPE_PATH='~/Desktop/popHeterog_csv/test'
   BASE_OUTPUT_PATH="~/Desktop/Marshall_Simulations"
 }else if(USER==3){
-  LANDSCAPE_PATH='/Users/gillian/Desktop/marshall/MoNeT/GMLandscapeAnalysis/New_Format_Outputs'
+  LANDSCAPE_PATH='/Users/gillian/Desktop/marshall/MoNeT/GMLandscapeAnalysis/2d_outputs'
   BASE_OUTPUT_PATH="/Users/gillian/Desktop/MGDrive-Experiments"
 }else if(USER==4){
   LANDSCAPE_PATH=''
@@ -65,7 +65,7 @@ releasesParameters=list(releasesStart=50, releasesNumber=1,
 ###############################################################################
 
 update_movement_kernel <- function(movement, lFile) {
-  labels = unique(lFile$label)+1
+  labels = unique(lFile$label + 1)
   ending_matrix = matrix(nrow=length(labels), ncol=length(labels))
   for (ii in 1:nrow(ending_matrix)) 
   {
@@ -77,22 +77,16 @@ update_movement_kernel <- function(movement, lFile) {
     {
       from_label = lFile[i, "label"] + 1
       to_label = lFile[j, "label"] + 1
-      print("from label")
-      print(from_label)
-      print("to label")
-      print(to_label)
-      print(ending_matrix[from_label, to_label])
-      ending_matrix[from_label, to_label] = ending_matrix[from_label, to_label] + movement[i, j]
-      print(ending_matrix[from_label, to_label])
+      ending_matrix[from_label, to_label] = ending_matrix[from_label, to_label] + movement[i, j] #col is the sum prob of ending up in a cluster
+      #i need the prob leaving i to sum to 1 (row should sum to 1)
     }
   }
-  print(ending_matrix)
-  for (i in 1:nrow(ending_matrix)) 
+  
+  for (r in 1:nrow(ending_matrix)) 
   {
-    for (j in i:ncol(ending_matrix))
+    for (c in 1:ncol(ending_matrix))
     {
-      ending_matrix[i, j] = ending_matrix[i, j] / length(which(lFile$label == i-1))
-      print(ending_matrix[i, j])
+      ending_matrix[r, c] = ending_matrix[r, c] / length(which(lFile$label == r-1))
     }
   }
   return(ending_matrix)
@@ -123,6 +117,33 @@ update_population <- function(patchPops, lFile) {
 }
 
 ###############################################################################
+### Compare Transition Matrices
+###############################################################################
+compare_matrices <- function(movementKernel, newmoves) {
+  statesNamesA <- as.character(seq(1, length(movementKernel[1,]), by=1))
+  statesNamesB <- as.character(seq(1, length(new_moves[1,]), by=1))
+  markovA <- new("markovchain", states = statesNamesA, transitionMatrix =movementKernel,
+                 name = "Old MC to Check")
+  markovB <- new("markovchain", states = statesNamesB, transitionMatrix =new_moves,
+                 name = "New MC to Check")
+  stationary_old <- steadyStates(markovA)
+  stationary_new <- steadyStates(markovB)
+  
+  comparable <- vector("numeric", length(stationary_new))
+  for (k in 1:length(comparable))
+  {
+    comparable[k] = 0
+  }
+  for (j in 1:length(stationary_old))
+  {
+    label = lFile[j, "label"] + 1
+    comparable[label] = comparable[label] + stationary_old[j]
+  }
+  print(stationary_new)
+  print(comparable)
+}
+
+###############################################################################
 ### Factorial setup
 ###############################################################################
 # we are testing multiple landscapes, so we will loop over the landscapes in a folder
@@ -142,25 +163,19 @@ lFile <- read.csv(file = lscape, header = TRUE, sep = ",")
 patchPops <- lFile$n
 # movement, calculate distances, weight with an exponential kernal, pulse of pi
 movementKernel <- calc_HurdleExpKernel(distMat = outer(X = lFile$x, Y = lFile$x,
-FUN = function(x,y){abs(x-y)}),
-r = MGDrivE::kernels$exp_rate,
-pi = stayProbability^(bioParameters$muAd))
-new_moves <- update_movement_kernel(movementKernel, lFile)
-new_moves <- new_moves/rowSums(new_moves)
+                                                       FUN = function(x,y){abs(x-y)}),
+                                       r = MGDrivE::kernels$exp_rate,
+                                       pi = stayProbability^(bioParameters$muAd))
 
-statesNamesA <- as.character(seq(1, length(movementKernel[1,]), by=1))
-statesNamesB <- as.character(seq(1, length(new_moves[1,]), by=1))
-markovA <- new("markovchain", states = statesNamesA, transitionMatrix =movementKernel,
-               name = "Old MC to Check")
-markovB <- new("markovchain", states = statesNamesB, transitionMatrix =new_moves,
-               name = "New MC to Check")
-steadyStates(markovA)
-steadyStates(markovB)
-eigen(new_moves, symmetric=FALSE)$vectors[1,]
-eigen(movementKernel, symmetric=FALSE)$vectors[1,]
+write.csv(movementKernel, 'movementKernel.csv')
+new_moves <- update_movement_kernel(movementKernel, lFile)
+#new_moves <- new_moves/rowSums(new_moves)
+compare_matrices(movementKernel, new_moves)
+
+patchPops
 
 for(lscape in landscapes){
-
+  
   ####################
   # setup output folders
   ####################
@@ -168,19 +183,19 @@ for(lscape in landscapes){
   lscapeName <- tail(x = strsplit(x = lscape, split = "[/,.]")[[1]], n = 2)[1]
   OUTPUT_DIRECTORY=file.path(BASE_OUTPUT_PATH, lscapeName)
   if(!dir.exists(OUTPUT_DIRECTORY)){ dir.create(OUTPUT_DIRECTORY) }
-
+  
   # create holding/deleting directories
   SUB_DIRECTORES <- file.path(OUTPUT_DIRECTORY,c("RAW","ANALYZED","GARBAGE"))
-
+  
   # build output directories
   for(folder in SUB_DIRECTORES){if(!dir.exists(folder)){ dir.create(folder) }}
-
+  
   # create iteration folders
   SUB_DIRECTORES <- outer(X = SUB_DIRECTORES, Y = Iter_names, FUN = "file.path")
-
+  
   # build output directories
   for(folder in SUB_DIRECTORES){if(!dir.exists(folder)){ dir.create(folder) }}
-
+  
   ####################
   # setup landscape
   ####################
@@ -190,7 +205,7 @@ for(lscape in landscapes){
   patchPops <- lFile$n
   # movement, calculate distances, weight with an exponential kernal, pulse of pi
   movementKernel <- calc_HurdleExpKernel(distMat = outer(X = lFile$x, Y = lFile$x,
-                                         FUN = function(x,y){abs(x-y)}),
+                                                         FUN = function(x,y){abs(x-y)}),
                                          r = MGDrivE::kernels$exp_rate,
                                          pi = stayProbability^(bioParameters$muAd))
   # lumped transition matrix
@@ -203,7 +218,7 @@ for(lscape in landscapes){
   # batch migration, just zero
   batchMigration <- basicBatchMigration(batchProbs=0,sexProbs=c(.5,.5),
                                         numPatches=NROW(movementKernel))
-
+  
   ####################
   # things that depend on landscape info
   ####################
@@ -215,40 +230,44 @@ for(lscape in landscapes){
                                tLarva=bioParameters$tLarva, tPupa=bioParameters$tPupa,
                                AdPopEQ=patchPops)
   
-  # # all releases the same
-  # patchReleases <- replicate(n=NROW(movementKernel),
-  #                            expr={list(maleReleases=NULL,femaleReleases=NULL,eggReleases=NULL)},
-  #                            simplify=FALSE)
-  # patchReleases[[1]]$maleReleases <- generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="M")
-  # patchReleases[[1]]$femaleReleases <- generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="F")
-  # 
-  # 
-  # ####################
-  # # loop over repetition groups
-  # ####################
-  # for(iter in 1:REPITER){
-  #   
-  #   # Experiment Paths
-  #   ExperimentList[[listmarker]]$folders <- SUB_DIRECTORES[ ,iter]
-  #   
-  #   # Seed for each experiment
-  #   ExperimentList[[listmarker]]$randomSeed <- as.integer(sample(x = .Random.seed, size = 1, replace = FALSE) %% 2^31)
-  #   
-  #   # landscape
-  #   ExperimentList[[listmarker]]$patchPops <- patchPops
-  #   ExperimentList[[listmarker]]$movementKernel <- movementKernel
-  #   ExperimentList[[listmarker]]$batchMigration <- batchMigration
-  #   
-  #   # things that depend on landscape info
-  #   ExperimentList[[listmarker]]$netPar <- netPar
-  #   ExperimentList[[listmarker]]$patchReleases <- patchReleases
-  #   
-  #   # increment list counter
-  #   listmarker = listmarker + 1
-  #   
-  # } # end loop over RepIterations
- 
+  # all releases the same
+  patchReleases <- replicate(n=NROW(movementKernel),
+                             expr={list(maleReleases=NULL,femaleReleases=NULL,eggReleases=NULL)},
+                             simplify=FALSE)
+  
+  # replace with label of the cluster at 0, 0 + 1
+  release_node <- as.numeric(lFile$label[1] + 1)
+  patchReleases[[release_node]]$maleReleases <- generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="M")
+  patchReleases[[release_node]]$femaleReleases <- generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="F")
+
+
+  ####################
+  # loop over repetition groups
+  ####################
+  for(iter in 1:REPITER){
+
+    # Experiment Paths
+    ExperimentList[[listmarker]]$folders <- SUB_DIRECTORES[ ,iter]
+
+    # Seed for each experiment
+    ExperimentList[[listmarker]]$randomSeed <- as.integer(sample(x = .Random.seed, size = 1, replace = FALSE) %% 2^31)
+
+    # landscape
+    ExperimentList[[listmarker]]$patchPops <- patchPops
+    ExperimentList[[listmarker]]$movementKernel <- movementKernel
+    ExperimentList[[listmarker]]$batchMigration <- batchMigration
+
+    # things that depend on landscape info
+    ExperimentList[[listmarker]]$netPar <- netPar
+    ExperimentList[[listmarker]]$patchReleases <- patchReleases
+
+    # increment list counter
+    listmarker = listmarker + 1
+
+  } # end loop over RepIterations
+  
 } # end loop over landscapes
+
 
 
 ###############################################################################
@@ -265,16 +284,23 @@ parallel::clusterEvalQ(cl=cl,expr={
   library(MGDrivEv2)
 })
 
+range(10)
 
+for(i in 1:10)
+{
+  print(dim(ExperimentList[[i]]$movementKernel))
+}
 # Change ExperimentList_A to ExperimentList_B for second set of runs, comment out the subsetting stuff (Sept 29, 2018)
 parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
-
+  
   # make folders
   for(i in c(3,1)){
     repFolders <- file.path(x$folders[i], Rep_names)
     for(folder in repFolders){ dir.create(path = folder) }
   }
-
+  
+  print(dim(x$movementKernel))
+  
   # run experiments
   MGDrivEv2::stochastic_multiple(
     seed=x$randomSeed,
@@ -287,22 +313,22 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
     output=repFolders,
     verbose=FALSE
   )
-
+  
   # split and aggregate, save originals
   MGDrivEv2::SplitAggregateCpp(readDir = x$folders[1], writeDir = x$folders[3],
                                simTime = x$netPar$simTime, numPatch = x$netPar$nPatch,
                                genotypes = driveCube$genotypesID, remFiles = FALSE)
-
+  
   # mean and quantiles, remove split/agg files
   MGDrivEv2::AnalyzeQuantilesCpp(readDirectory = x$folders[3], writeDirectory = x$folders[2],
                                  doMean=TRUE, quantiles=NULL,
                                  simTime = x$netPar$simTime, numPatch = x$netPar$nPatch,
                                  genotypes = driveCube$genotypesID, remFiles = FALSE)
-
+  
   # remove raw/garbage folders
   #unlink(x = x$folders[c(1,3)], recursive = TRUE, force = TRUE)
   gc()
-
+  
 })
 
 # stop cluster
