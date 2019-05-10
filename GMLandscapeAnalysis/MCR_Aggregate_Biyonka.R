@@ -16,9 +16,9 @@ library(parallel)
 ###############################################################################
 ### Experimental Setup and PATHS Definition
 ###############################################################################
-# USER: {1: JB, 2: Maya, 3: Gillian}
+# USER: {1: JB, 2: Maya, 3: Gillian, 4: Hector}
 # NUM_CORES: Cores for the parallel threads
-USER=3
+USER=4
 REPETITIONS=8 # number of repetitions of each experiment
 REPITER=1 # number of groups of repetitions to perform, for analysis purposes ONLY BIYONKA SHOULD NEED THIS,
 SIM_TIME=365*4
@@ -35,8 +35,8 @@ if(USER==1){
   LANDSCAPE_PATH='/Users/gillian/Desktop/marshall/MoNeT/GMLandscapeAnalysis/New_Format_Outputs'
   BASE_OUTPUT_PATH="/Users/gillian/Desktop/MGDrive-Experiments"
 }else if(USER==4){
-  LANDSCAPE_PATH=''
-  BASE_OUTPUT_PATH=""
+  LANDSCAPE_PATH='~/Desktop/Output/1clustering_analysis'
+  BASE_OUTPUT_PATH="/Volumes/marshallShare/drive_output"
 }else if(USER==5){
   LANDSCAPE_PATH=''
   BASE_OUTPUT_PATH= ""
