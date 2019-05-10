@@ -17,33 +17,34 @@ def calculateMaxPopInLandscapeReps(landscapeReps):
     return max(list)
 
 
-STACK = True
+STACK = False
 TRACE= False
 HEAT = True
+SUMMARIES_DATA = False
 
 colors = [
-    "#090446", "#f20060", "#6898ff",
-    "#ff28d4", "#7fff3a", "#c6d8ff"
+    "#090446", "#f20060", "#7fff3a",
+    "#ff28d4", "#6898ff", "#c6d8ff"
 ]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
-    "width": 0, "alpha": .85, "dpi": 512, "legend": False,
+    "width": 0, "alpha": .85, "legend": False,
     "aspect": .175, "dpi": 512,
     "colors": colors, "format": "png",
-    "xRange": [0, 5400], "yRange": [0, 5000]  # 2500]
+    "xRange": [0, 5400], "yRange": [0, 3000]#5000]  # 2500]
 }
 styleT = {
-    "width": 0.03, "alpha": .15, "dpi": 512, "legend": False,
-    "aspect": 2,  "dpi": 512,
+    "width": 0.03, "alpha": .25, "legend": False,
+    "aspect": .175, "dpi": 512,
     "colors": colors, "format": "png",
-    "xRange": [0, 3000], "yRange": [0, 300]  # 2500]
+    "xRange": [0, 5400], "yRange": [0, 3000]#5000]  # 2500]
 }
 ##############################################################################
 # Setup
 ##############################################################################
 # nameExp = "E_0125_02_00028"
-pathRoot = "/Volumes/marshallShare/vic/"
-pathSet = pathRoot + "eRACR53/"  # + "eRACR29"
+pathRoot = "/Volumes/marshallShare/ERACR/Line/experiments/"
+pathSet = pathRoot + "migration/"  # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
@@ -56,7 +57,7 @@ for j in range(len(foldersList)):
         filenames = monet.readExperimentFilenames(pathFull)
         # if os.path.isfile(pathOut + "/stack/" + nameExp.split("/")[-1] + "_S." + styleS["format"]) or os.path.isfile(pathOut + "/garbage/" + nameExp.split("/")[-1] + "_G." + styleT["format"]) or os.path.isfile(pathOut + "/heat/" + nameExp.split("/")[-1] + "F_L." + styleS["format"]):
         #     continue
-
+        print(nameExp)
         if (len(filenames["male"]) > 0) or (len(filenames["female"]) > 0):
             ###################################################################
             ###################################################################
@@ -84,9 +85,16 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     figB,
                     pathOut + "/stack/" +
-                    nameExp.split("/")[-1] + "_S." + styleS["format"],
+                    nameExp.split("/")[-1] + "_S." + "pdf",
                     dpi = styleS["dpi"],
-                    format = styleS["format"]
+                    format = "pdf"
+                )
+                monet.quickSaveFigure(
+                    figB,
+                    pathOut + "/stack/" +
+                    nameExp.split("/")[-1] + "_S." + "png",
+                    dpi = styleS["dpi"],
+                    format = "png"
                 )
                 plt.close()
             ###################################################################
@@ -117,10 +125,17 @@ for j in range(len(foldersList)):
                 )
                 monet.quickSaveFigure(
                     fig,
-                    pathOut + "/garbage/" +
-                    nameExp.split("/")[-1] + "_G." + styleT["format"],
+                    pathOut + "/traces/" +
+                    nameExp.split("/")[-1] + "_T." + "pdf",
                     dpi=styleS["dpi"],
-                    format = styleT["format"]
+                    format = "pdf"
+                )
+                monet.quickSaveFigure(
+                    fig,
+                    pathOut + "/traces/" +
+                    nameExp.split("/")[-1] + "_T." + "png",
+                    dpi = styleS["dpi"],
+                    format = "png"
                 )
                 plt.close()
             if HEAT:
@@ -144,11 +159,11 @@ for j in range(len(foldersList)):
                     aggregatedNodesData
                 )
                 ###############################################################
+                initMax = np.sum([np.sum(i[0]) for i in aggregatedNodesData["landscape"]])
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals, style={"aspect": 50, "cmap": cmaps},
-                    vmax=monet.maxAlleleInLandscape(
-                        geneSpatiotemporals["geneLandscape"])
-                    )
+                    geneSpatiotemporals, style={"aspect": 15, "cmap": cmaps},
+                    vmax= 1 * initMax/len(aggregatedNodesData["landscape"])
+                )
                 legends = []
                 for (allele,color) in zip(["W", "H", "E", "R", "B"], colors):
                     legends.append(mpatches.Patch(color=color, label=allele))
@@ -156,12 +171,48 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L." + styleS["format"],
+                        nameExp.split("/")[-1] + "_L." + "png",
                     dpi=styleS["dpi"],
-                    format = styleS["format"]
+                    format = "png"
+                )
+                monet.quickSaveFigure(
+                    overlay,
+                    pathOut + "/heat/" +
+                        nameExp.split("/")[-1] + "_L." + "pdf",
+                    dpi=styleS["dpi"],
+                    format = "pdf"
                 )
                 plt.close()
                 ###############################################################
-
+            if SUMMARIES_DATA is True:
+                pathsRoot = monet.listDirectoriesWithPathWithinAPath(
+                    pathSet + "ANALYZED/"
+                )
+                summariesDict = {}
+                ratiosDict = {}
+                ratiosDictH = {}
+                for i in range(0, len(pathsRoot)):
+                    ###########################################################
+                    pathSample = pathsRoot[i] + "/"
+                    experimentString = pathSample.split("/")[-2]
+                    filenames = monet.readExperimentFilenames(pathSample)
+                    ###########################################################
+                    landscapeSumData = monet.sumLandscapePopulationsFromFiles(
+                        filenames, male=True, female=True, dataType=float
+                    )
+                    genotypes = landscapeSumData["genotypes"]
+                    aggregationDictionary = monet.autoGenerateGenotypesDictionary(
+                        ["W", "H", "E", "R", "B"],
+                        genotypes
+                    )
+                    aggData = monet.aggregateGenotypesInNode(
+                        landscapeSumData,
+                        aggregationDictionary
+                    )
+                    monet.quickSaveTraceAggData(
+                        aggData,
+                        pathSet + "data/" +
+                        experimentString + ".csv"
+                    )
 
 print("done")

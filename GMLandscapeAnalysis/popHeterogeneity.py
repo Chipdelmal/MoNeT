@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import math
 
 
 def population_split(pop_size, n, C=0.0):
@@ -21,6 +22,103 @@ def population_split(pop_size, n, C=0.0):
     populations.append(base)
     return populations
 
+
+def array_creation(dist_apart, pop_size, n, C=0.0):
+    pop = np.array(population_split(pop_size, n, C))
+    x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
+    y_coords = np.zeros(n + 2)
+    return np.array([x_coords, y_coords, pop])
+
+
+def manual_array_creation(dist_apart, pop, n):
+    # pop.insert(0, pop[0])
+    # pop.append(pop[-1])
+    # x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
+    # y_coords = np.zeros(n + 2)
+    x_coords = np.linspace(0, dist_apart * (n-1), n)
+    y_coords = np.zeros(n)
+    return np.array([x_coords, y_coords, pop])
+
+
+def csv_creation(arr, file_name, VERT=True):
+    if VERT:
+        pd.DataFrame({0: arr[0], 1: arr[1], 2: arr[2]}).to_csv("~/Desktop/popHeterog_csv/"+file_name+".csv", header=["x", "y", "n"], index=None)
+    else:
+        pd.DataFrame(arr).to_csv("~/Desktop/popHeterog_csv/"+file_name+".csv"".csv", header=None, index=None)
+
+
+def setup(pop, n, type, base=10):
+    if type == "step_up" or type == "step_down":
+        step = 2*(pop-(n*base))/((n-1)*n)
+        pop_sizes = [base+(step*i) for i in range(n)]
+        if type == "step_up":
+            return pop_sizes
+        else:
+            pop_sizes.reverse()
+            return pop_sizes
+    elif type == "up_down":
+        if n % 2 == 0:  # even
+            divide = (n-2)/2 * ((n-2)/2 + 1)
+            step = (pop - n*base)/divide
+            pop_sizes = [base+(step*i) for i in range(int(n/2))]
+            pop_sizes_reverse = pop_sizes.copy()
+            pop_sizes_reverse.reverse()
+            pop_sizes.extend(pop_sizes_reverse)
+            return pop_sizes
+        else:  # odd
+            divide = ((n-3)/2 * (n-1)/2) + ((n-1)/2)
+            step = (pop - n*base)/divide
+            peak = base+((n-1)*step/2)
+            pop_sizes = [base+(step*i) for i in range(int((n-1)/2))]
+            pop_sizes_reverse = pop_sizes.copy()
+            pop_sizes_reverse.reverse()
+            pop_sizes.append(peak)
+            pop_sizes.extend(pop_sizes_reverse)
+            return pop_sizes
+    elif type == "down_up":
+        if n % 2 == 0:  # even
+            divide = (n-2)/2 * ((n-2)/2 + 1)
+            step = (n*base - pop)/divide
+            pop_sizes = [base+(step*i) for i in range(int(n/2))]
+            if any(v <= 0 for v in pop_sizes):
+                print("Base set too low, population becomes non-positive")
+                return
+            pop_sizes_reverse = pop_sizes.copy()
+            pop_sizes_reverse.reverse()
+            pop_sizes.extend(pop_sizes_reverse)
+            return pop_sizes
+        else:  # odd
+            divide = ((n-3)/2 * (n-1)/2) + ((n-1)/2)
+            step = (n*base - pop)/divide
+            peak = base+((n-1)*step/2)
+            pop_sizes = [base+(step*i) for i in range(int((n-1)/2))]
+            pop_sizes_reverse = pop_sizes.copy()
+            pop_sizes_reverse.reverse()
+            pop_sizes.append(peak)
+            if any(v <= 0 for v in pop_sizes):
+                print("Base set too low, population becomes non-positive")
+                return
+            pop_sizes.extend(pop_sizes_reverse)
+            return pop_sizes
+    else:  # constant
+        return [pop/n] * n
+
+
+sum(setup(530, 13, "up_down", 30))
+plt.plot(range(13), setup(530, 13, "up_down", 30))
+
+
+def swap(pops, n):
+    for _ in range(n):
+        i, j = np.random.choice(range(len(pops)), 2)
+        pops[i], pops[j] = pops[j], pops[i]
+    return pops
+
+
+plt.plot(range(13), swap(setup(530, 13, "up_down", 30), 1))
+
+
+csv_creation(manual_array_creation(10, swap(setup(30*50, 50, "step_up"), i), 50), "step_up_"+str(i))
 
 step_up = list(range(10, 211, 10))
 sum(step_up)
@@ -80,31 +178,6 @@ plt.plot(range(21), sporadic)
 plt.xlabel('Node')
 plt.ylabel('Population')
 plt.savefig("sporadic.png")
-
-
-def array_creation(dist_apart, pop_size, n, C=0.0):
-    pop = np.array(population_split(pop_size, n, C))
-    x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
-    y_coords = np.zeros(n + 2)
-    return np.array([x_coords, y_coords, pop])
-
-
-def manual_array_creation(dist_apart, pop, n):
-    # pop.insert(0, pop[0])
-    # pop.append(pop[-1])
-    # x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
-    # y_coords = np.zeros(n + 2)
-    x_coords = np.linspace(0, dist_apart * (n-1), n)
-    y_coords = np.zeros(n)
-    return np.array([x_coords, y_coords, pop])
-
-
-def csv_creation(arr, file_name, VERT=True):
-    if VERT:
-        pd.DataFrame({0: arr[0], 1: arr[1], 2: arr[2]}).to_csv("~/Desktop/popHeterog_csv/"+file_name+".csv", header=["x", "y", "n"], index=None)
-    else:
-        pd.DataFrame(arr).to_csv("~/Desktop/popHeterog_csv/"+file_name+".csv"".csv", header=None, index=None)
-
 
 csv_creation(manual_array_creation(10, step_up, 21), "step_up")
 csv_creation(manual_array_creation(10, step_down, 21), "step_down")

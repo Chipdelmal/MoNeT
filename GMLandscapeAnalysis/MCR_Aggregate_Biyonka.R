@@ -21,8 +21,8 @@ library(parallel)
 USER=4
 REPETITIONS=8 # number of repetitions of each experiment
 REPITER=1 # number of groups of repetitions to perform, for analysis purposes ONLY BIYONKA SHOULD NEED THIS,
-SIM_TIME=365*4
-NUM_CORES=8
+SIM_TIME=365*3
+NUM_CORES=4
 
 ###############################################################################
 if(USER==1){
@@ -50,7 +50,7 @@ startTime=Sys.time()
 ###############################################################################
 ### Setup drive, release parameters, and biological parameters
 ###############################################################################
-# bioligcal parameters
+# biological parameters
 bioParameters=list(betaK=20,tEgg=5,tLarva=6,tPupa=4,popGrowth=1.175,muAd=0.09)
 # daily probs for staying in one patch
 stayProbability=.72
@@ -63,6 +63,7 @@ releasesParameters=list(releasesStart=50, releasesNumber=1,
 ###############################################################################
 ### Clustering Movement Kernel Update
 ###############################################################################
+
 update_movement_kernel <- function(movement, lFile) {
   labels = unique(lFile$label)+1
   ending_matrix = matrix(nrow=length(labels), ncol=length(labels))
@@ -74,20 +75,52 @@ update_movement_kernel <- function(movement, lFile) {
   {
     for (j in 1:ncol(movement))
     {
-      from_label = lFile[i, "label"]
-      to_label = lFile[j, "label"]
+      from_label = lFile[i, "label"] + 1
+      to_label = lFile[j, "label"] + 1
+      print("from label")
+      print(from_label)
+      print("to label")
+      print(to_label)
+      print(ending_matrix[from_label, to_label])
       ending_matrix[from_label, to_label] = ending_matrix[from_label, to_label] + movement[i, j]
+      print(ending_matrix[from_label, to_label])
     }
   }
+  print(ending_matrix)
   for (i in 1:nrow(ending_matrix)) 
   {
     for (j in i:ncol(ending_matrix))
     {
-      ending_matrix[i, j] = ending_matrix[i, j] / length(which(lFile$label == i))
+      ending_matrix[i, j] = ending_matrix[i, j] / length(which(lFile$label == i-1))
+      print(ending_matrix[i, j])
     }
   }
+  return(ending_matrix)
 }
 
+###############################################################################
+### Clustering Population Update
+###############################################################################
+update_population <- function(patchPops, lFile) {
+  num_labels <- length(unique(lFile$label))
+  newPops <- vector("numeric", num_labels)
+  patchPops <- lFile$n
+  for (n in 1:length(newPops)) 
+  {
+    newPops[n] = 0
+  }
+  for (ii in 1:nrow(lFile)) 
+  {
+    curr_label <- lFile$label[ii]
+    population <- lFile$n[ii]
+    
+    curr_label <- as.numeric(curr_label) + 1
+    population <- as.numeric(population)
+    
+    newPops[curr_label] <- as.numeric(newPops[curr_label]) + population
+  }
+  return(newPops)
+}
 
 ###############################################################################
 ### Factorial setup
@@ -102,7 +135,7 @@ Iter_names <- formatC(x = 1:REPITER, width = 4, format = "d", flag = "0")
 ExperimentList <- vector(mode = "list", length = length(landscapes)*REPITER)
 listmarker=1
 
-lscape <- landscapes[1]
+lscape <- landscapes[2]
 # read in and setup landscape
 lFile <- read.csv(file = lscape, header = TRUE, sep = ",")
 # population from each patch
@@ -112,7 +145,20 @@ movementKernel <- calc_HurdleExpKernel(distMat = outer(X = lFile$x, Y = lFile$x,
 FUN = function(x,y){abs(x-y)}),
 r = MGDrivE::kernels$exp_rate,
 pi = stayProbability^(bioParameters$muAd))
-movementKernel <- update_movement_kernel(movementKernel, lFile)
+new_moves <- update_movement_kernel(movementKernel, lFile)
+new_moves <- new_moves/rowSums(new_moves)
+
+statesNamesA <- as.character(seq(1, length(movementKernel[1,]), by=1))
+statesNamesB <- as.character(seq(1, length(new_moves[1,]), by=1))
+markovA <- new("markovchain", states = statesNamesA, transitionMatrix =movementKernel,
+               name = "Old MC to Check")
+markovB <- new("markovchain", states = statesNamesB, transitionMatrix =new_moves,
+               name = "New MC to Check")
+steadyStates(markovA)
+steadyStates(markovB)
+eigen(new_moves, symmetric=FALSE)$vectors[1,]
+eigen(movementKernel, symmetric=FALSE)$vectors[1,]
+
 for(lscape in landscapes){
 
   ####################
@@ -147,54 +193,61 @@ for(lscape in landscapes){
                                          FUN = function(x,y){abs(x-y)}),
                                          r = MGDrivE::kernels$exp_rate,
                                          pi = stayProbability^(bioParameters$muAd))
+  # lumped transition matrix
+  movementKernel <- update_movement_kernel(movementKernel, lFile)
+  
+  # lumped populations
+  typeof(patchPops) 
+  patchPops <- update_population(patchPops, lFile)
+  
   # batch migration, just zero
   batchMigration <- basicBatchMigration(batchProbs=0,sexProbs=c(.5,.5),
                                         numPatches=NROW(movementKernel))
-
 
   ####################
   # things that depend on landscape info
   ####################
   # all netPars the same
   netPar <- Network.Parameters(runID=1,simTime=SIM_TIME,
-                                                         nPatch=NROW(movementKernel),
-                                                         beta=bioParameters$betaK, muAd=bioParameters$muAd,
-                                                         popGrowth=bioParameters$popGrowth,tEgg=bioParameters$tEgg,
-                                                         tLarva=bioParameters$tLarva, tPupa=bioParameters$tPupa,
-                                                         AdPopEQ=patchPops)
-
-  # all releases the same
-  patchReleases <- replicate(n=NROW(movementKernel),
-                             expr={list(maleReleases=NULL,femaleReleases=NULL,eggReleases=NULL)},
-                             simplify=FALSE)
-  patchReleases[[1]]$maleReleases <- generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="M")
-  patchReleases[[1]]$femaleReleases <- generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="F")
-
-
-  ####################
-  # loop over repetition groups
-  ####################
-  for(iter in 1:REPITER){
-
-    # Experiment Paths
-    ExperimentList[[listmarker]]$folders <- SUB_DIRECTORES[ ,iter]
-
-    # Seed for each experiment
-    ExperimentList[[listmarker]]$randomSeed <- as.integer(sample(x = .Random.seed, size = 1, replace = FALSE) %% 2^31)
-
-    # landscape
-    ExperimentList[[listmarker]]$patchPops <- patchPops
-    ExperimentList[[listmarker]]$movementKernel <- movementKernel
-    ExperimentList[[listmarker]]$batchMigration <- batchMigration
-
-    # things that depend on landscape info
-    ExperimentList[[listmarker]]$netPar <- netPar
-    ExperimentList[[listmarker]]$patchReleases <- patchReleases
-
-    # increment list counter
-    listmarker = listmarker + 1
-
-  } # end loop over RepIterations
+                               nPatch=NROW(movementKernel),
+                               beta=bioParameters$betaK, muAd=bioParameters$muAd,
+                               popGrowth=bioParameters$popGrowth,tEgg=bioParameters$tEgg,
+                               tLarva=bioParameters$tLarva, tPupa=bioParameters$tPupa,
+                               AdPopEQ=patchPops)
+  
+  # # all releases the same
+  # patchReleases <- replicate(n=NROW(movementKernel),
+  #                            expr={list(maleReleases=NULL,femaleReleases=NULL,eggReleases=NULL)},
+  #                            simplify=FALSE)
+  # patchReleases[[1]]$maleReleases <- generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="M")
+  # patchReleases[[1]]$femaleReleases <- generateReleaseVector(driveCube=driveCube,releasesParameters=releasesParameters,sex="F")
+  # 
+  # 
+  # ####################
+  # # loop over repetition groups
+  # ####################
+  # for(iter in 1:REPITER){
+  #   
+  #   # Experiment Paths
+  #   ExperimentList[[listmarker]]$folders <- SUB_DIRECTORES[ ,iter]
+  #   
+  #   # Seed for each experiment
+  #   ExperimentList[[listmarker]]$randomSeed <- as.integer(sample(x = .Random.seed, size = 1, replace = FALSE) %% 2^31)
+  #   
+  #   # landscape
+  #   ExperimentList[[listmarker]]$patchPops <- patchPops
+  #   ExperimentList[[listmarker]]$movementKernel <- movementKernel
+  #   ExperimentList[[listmarker]]$batchMigration <- batchMigration
+  #   
+  #   # things that depend on landscape info
+  #   ExperimentList[[listmarker]]$netPar <- netPar
+  #   ExperimentList[[listmarker]]$patchReleases <- patchReleases
+  #   
+  #   # increment list counter
+  #   listmarker = listmarker + 1
+  #   
+  # } # end loop over RepIterations
+ 
 } # end loop over landscapes
 
 

@@ -73,7 +73,7 @@ Rep_names <- formatC(x = 1:REPETITIONS, width = 4, format = "d", flag = "0")
 ExperimentList <- vector(mode = "list", length = length(landscapes))
 listmarker=1
 
-lscape = landscapes[2]
+lscape = landscapes[3]
 
 # read in and setup landscape
 lFile <- read.csv(file = lscape, header = TRUE, sep = ",")
@@ -127,6 +127,7 @@ ExperimentList[[listmarker]]$movementKernel <- calc_HurdleExpKernel(distMat = ou
 # }
 # 
 movement = ExperimentList[[1]]$movementKernel
+
 update_movement_kernel <- function(movement, lFile) {
   
   labels = unique(lFile$label)
@@ -158,6 +159,7 @@ update_movement_kernel <- function(movement, lFile) {
   }
 }
 
+# May 1, 2019: 
 
 
 # load a different population graph so I have more than just one node 
