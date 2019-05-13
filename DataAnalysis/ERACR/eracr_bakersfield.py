@@ -9,6 +9,15 @@ import matplotlib.patches as mpatches
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
+
+monet.autoGenerateGenotypesDictionary(
+    ["W", "H", "E", "R", "B"],
+    [
+        'WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
+        'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB'
+    ]
+)
+
 def calculateMaxPopInLandscapeReps(landscapeReps):
     landscapes = landscapeReps["landscapes"]
     list = [None] * len(landscapeReps["landscapes"][0])
