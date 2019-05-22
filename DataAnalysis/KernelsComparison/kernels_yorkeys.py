@@ -9,15 +9,6 @@ import matplotlib.patches as mpatches
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-
-monet.autoGenerateGenotypesDictionary(
-    ["W", "H", "E", "R", "B"],
-    [
-        'WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
-        'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB'
-    ]
-)
-
 def calculateMaxPopInLandscapeReps(landscapeReps):
     landscapes = landscapeReps["landscapes"]
     list = [None] * len(landscapeReps["landscapes"][0])
@@ -37,22 +28,22 @@ colors = [
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
-    "aspect": .00075, "dpi": 512,
+    "aspect": 0.02, "dpi": 512,
     "colors": colors, "format": "png",
-    "xRange": [0, 3500], "yRange": [0, 2750]#590000]  # 2500]
+    "xRange": [0, 1500], "yRange": [0, 20000]  # 2500]
 }
 styleT = {
     "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
     "aspect": 2,  "dpi": 512,
     "colors": colors, "format": "png",
-    "xRange": [0, 3500], "yRange": [0, 300]  # 2500]
+    "xRange": [0, 1500], "yRange": [0, 300]  # 2500]
 }
 ##############################################################################
 # Setup
 ##############################################################################
 # nameExp = "E_0125_02_00028"
-pathRoot = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/"
-pathSet = pathRoot + "MultipleRelease2/"  # + "eRACR29"
+pathRoot = "/Volumes/marshallShare/YK_Alt_Kernels/output/"
+pathSet = pathRoot + "Fine3/"  # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
@@ -77,7 +68,7 @@ for j in range(len(foldersList)):
                 )
                 genotypes = landscapeSumData["genotypes"]
                 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
-                    ["W", "H", "E", "R", "B"],
+                    ["W", "H", "R", "B"],
                     genotypes
                 )
                 aggData = monet.aggregateGenotypesInNode(
@@ -158,7 +149,7 @@ for j in range(len(foldersList)):
                 )
                 genotypes = landscapeData["genotypes"]
                 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
-                    ["W", "H", "E", "R", "B"],
+                    ["W", "H", "R", "B"],
                     genotypes
                 )
                 aggregatedNodesData = monet.aggregateGenotypesInLandscape(
@@ -169,12 +160,12 @@ for j in range(len(foldersList)):
                     aggregatedNodesData
                 )
                 ###############################################################
+                initMax=monet.maxAlleleInLandscape( geneSpatiotemporals["geneLandscape"])
                 overlay = monet.plotGenotypeOverlayFromLandscape(
                     geneSpatiotemporals, style={"aspect": .2, "cmap": cmaps},
-                    vmax= 1.25 * initMax/len(aggregatedNodesData["landscape"])
-                    #monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"]))
+                    vmax= monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"]))
                 legends = []
-                for (allele,color) in zip(["W", "H", "E", "R", "B"], colors):
+                for (allele,color) in zip(["W", "H", "R", "B"], colors):
                     legends.append(mpatches.Patch(color=color, label=allele))
                 plt.legend(handles=legends, bbox_to_anchor=(1.03, 1), fontsize='x-small', loc='center left')
                 monet.quickSaveFigure(
