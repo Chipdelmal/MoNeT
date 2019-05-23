@@ -41,7 +41,7 @@ for clusterFile in glob.glob(pathRoot+'/pusheen*.csv'):
     ax=fig.add_subplot(111, label="1")
     m = Basemap(projection='merc',llcrnrlat=minLat-0.02,urcrnrlat=maxLat+0.02,llcrnrlon=minLong-0.02,urcrnrlon=maxLong+0.02,lat_ts=20,resolution='i', ax=ax)
     m.drawcounties(linewidth=0.3)
-    m.scatter(longs, lats, latlon=True, marker='.', s=1, cmap=plt.get_cmap('nipy_spectral'), c=clusters, vmin=minCluster, vmax=maxCluster)
+    m.scatter(longs, lats, latlon=True, alpha=.5, marker='.', s=1, cmap=plt.get_cmap('nipy_spectral'), c=clusters, vmin=minCluster, vmax=maxCluster)
     ax.tick_params(
     axis='both',          # changes apply to the both
     which='both',      # both major and minor ticks are affected
