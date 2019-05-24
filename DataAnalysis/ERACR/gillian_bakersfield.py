@@ -16,6 +16,24 @@ def calculateMaxPopInLandscapeReps(landscapeReps):
             list[i] = sum(landscapes[0][i][0])
     return max(list)
 
+def normalize(data):
+    genotypes = data['geneLandscape']
+    node_maximums = [0]*len(genotypes[0])
+    for g in genotypes:
+        for i in range(len(g)):
+            node_max = max(g[i])
+            if node_max > node_maximums[i]:
+                node_maximums[i] = node_max
+    normalized = []
+    for g in genotypes:
+        genotype_matrix = []
+        for i in range(len(g)):
+            genotype_matrix.append(g[i]/node_maximums[i])
+        normalized.append(np.array(genotype_matrix))
+    data['geneLandscape'] = normalized
+    return data
+
+
 
 STACK = True
 TRACE= False
@@ -159,11 +177,12 @@ for j in range(len(foldersList)):
                 geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
                     aggregatedNodesData
                 )
+                geneSpatiotemporals_normalized = normalize(geneSpatiotemporals)
                 ###############################################################
-                initMax=monet.maxAlleleInLandscape( geneSpatiotemporals["geneLandscape"])
+                initMax=monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals, style={"aspect": 20, "cmap": cmaps},
-                    vmax= monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"]))
+                    geneSpatiotemporals_normalized, style={"aspect": 20, "cmap": cmaps},
+                    vmax=75)
                 legends = []
                 for (allele,color) in zip(["W", "H", "R", "B"], colors):
                     legends.append(mpatches.Patch(color=color, label=allele))
@@ -171,14 +190,14 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L." + "png",
+                        nameExp.split("/")[-1] + "F_L2." + "png",
                     dpi=styleS["dpi"],
                     format = "png"
                 )
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L." + "pdf",
+                        nameExp.split("/")[-1] + "F_L2." + "pdf",
                     dpi=styleS["dpi"],
                     format = "pdf"
                 )
