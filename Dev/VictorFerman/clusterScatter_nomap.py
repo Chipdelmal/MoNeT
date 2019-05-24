@@ -55,6 +55,7 @@ plt.savefig(pathRoot+'/'+expName, dpi=2048,
             facecolor='w', edgecolor='w', orientation='portrait',
             papertype=None, format="png", transparent=False,
             bbox_inches='tight', pad_inches=0.05, frameon=False)
+plt.box(False)
 plt.close(fig)
 plt.close('all')
 
