@@ -28,15 +28,15 @@ colors = [
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
-    "aspect": 0.0007, "dpi": 512,
+    "aspect": 50.0, "dpi": 512,
     "colors": colors, "format": "png",
-    "xRange": [0, 5500], "yRange": [0, 110000]  # 2500]
+    "xRange": [0, 1800], "yRange": [0, 440000]  # 2500]
 }
 styleT = {
     "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
     "aspect": 2,  "dpi": 512,
     "colors": colors, "format": "png",
-    "xRange": [0, 1500], "yRange": [0, 300]  # 2500]
+    "xRange": [0, 1800], "yRange": [0, 300]  # 2500]
 }
 ##############################################################################
 # Setup
@@ -162,7 +162,7 @@ for j in range(len(foldersList)):
                 ###############################################################
                 initMax=monet.maxAlleleInLandscape( geneSpatiotemporals["geneLandscape"])
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals, style={"aspect": 20, "cmap": cmaps},
+                    geneSpatiotemporals, style={"aspect": 0.02, "cmap": cmaps},
                     vmax= monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"]))
                 legends = []
                 for (allele,color) in zip(["W", "H", "R", "B"], colors):
