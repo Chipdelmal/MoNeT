@@ -9,33 +9,8 @@ import matplotlib.patches as mpatches
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-def calculateMaxPopInLandscapeReps(landscapeReps):
-    landscapes = landscapeReps["landscapes"]
-    list = [None] * len(landscapeReps["landscapes"][0])
-    for i in range(len(landscapeReps["landscapes"][0])):
-            list[i] = sum(landscapes[0][i][0])
-    return max(list)
 
-def normalize(data):
-    genotypes = data['geneLandscape']
-    node_maximums = [0]*len(genotypes[0])
-    for g in genotypes:
-        for i in range(len(g)):
-            node_max = max(g[i])
-            if node_max > node_maximums[i]:
-                node_maximums[i] = node_max
-    normalized = []
-    for g in genotypes:
-        genotype_matrix = []
-        for i in range(len(g)):
-            genotype_matrix.append(g[i]/node_maximums[i])
-        normalized.append(np.array(genotype_matrix))
-    data['geneLandscape'] = normalized
-    return data
-
-
-
-STACK = True
+STACK = False
 TRACE= False
 HEAT = True
 
@@ -46,7 +21,7 @@ colors = [
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
-    "aspect": 50.0, "dpi": 512,
+    "aspect": 50.0, "dpi": 2*512,
     "colors": colors, "format": "png",
     "xRange": [0, 1800], "yRange": [0, 440000]  # 2500]
 }
@@ -177,12 +152,14 @@ for j in range(len(foldersList)):
                 geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
                     aggregatedNodesData
                 )
-                geneSpatiotemporals_normalized = normalize(geneSpatiotemporals)
+                geneSpatiotemporals_normalized = monet.rescaleGeneSpatiotemporals(
+                    geneSpatiotemporals
+                )
                 ###############################################################
                 initMax=monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals, style={"aspect": 0.02, "cmap": cmaps},
-                    vmax= monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"]))
+                    geneSpatiotemporals_normalized, style={"aspect": 0.02, "cmap": cmaps},
+                    vmax= monet.maxAlleleInLandscape(geneSpatiotemporals_normalized["geneLandscape"]))
                 legends = []
                 for (allele,color) in zip(["W", "H", "R", "B"], colors):
                     legends.append(mpatches.Patch(color=color, label=allele))
