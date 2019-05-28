@@ -6,15 +6,11 @@ id = "Networks"
 outName = "outVideo"
 rate = 24
 
-optsA = 'ffmpeg -start_number 1 -r ' + str(rate) + ' -f image2 -s 1920x1080 '
-optsB = '-vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" '
-optsC = '-vcodec libx264 -preset veryslow -crf 15 -pix_fmt yuv420p '
 outPath = path + outName + '.mp4'
-inPath = '-i ' + path + id + '%06d.png '
-inPath
+inPath = path + id + '%06d.png" '
 
 fullCmd = optsA + inPath + optsB + optsC + outPath
-subprocess.Popen(fullCmd)
+subprocess.Popen(['ffmpeg', '-start_number', '1','-r', str(rate), '-f', 'image2', '-s', '1920x1080', '-i', inPath, '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2', '-vcodec', 'libx264', '-preset', 'veryslow','-crf', '15', '-pix_fmt', 'yuv420p',outPath])
 
 
 # ffmpegCmd = 'ffmpeg -start_number 1 -r 24 -f image2 -s 1920x1080 -i Networks%06d.png -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -vcodec libx264 -preset veryslow -crf 15 -pix_fmt yuv420p 00VD.mp'
