@@ -9,31 +9,31 @@ import matplotlib.patches as mpatches
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-STACK = False
+STACK = True
 TRACE = False
 HEAT = True
 
 colors = [
-    "#090446", "#f20060", "#7fff3a",
+    "#090446", "#f20060", "#59ff00",
     "#ff28d4", "#6898ff", "#c6d8ff"
 ]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
-    "aspect": .00075, "colors": colors, "format": "png",
-    "xRange": [0, 3500], "yRange": [0, 2750]  # 590000]  # 2500]
+    "aspect": .0075, "colors": colors, "format": "png",
+    "xRange": [0, 5500], "yRange": [0, 70000]  # 590000]  # 2500]
 }
 styleT = {
     "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
     "aspect": 2, "colors": colors, "format": "png",
-    "xRange": [0, 3500], "yRange": [0, 300]  # 2500]
+    "xRange": [0, 5500], "yRange": [0, 2500]
 }
 ##############################################################################
 # Setup
 ##############################################################################
 # nameExp = "E_0125_02_00028"
 pathRoot = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/"
-pathSet = pathRoot + "MultipleRelease8/"  # + "eRACR29"
+pathSet = pathRoot + "MultipleRelease6/"  # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
@@ -153,13 +153,13 @@ for j in range(len(foldersList)):
                     geneSpatiotemporals, style={"aspect": .2, "cmap": cmaps},
                     vmax=50#monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
                 )
-                legends = []
-                for (allele, color) in zip(["W", "H", "E", "R", "B"], colors):
-                    legends.append(mpatches.Patch(color=color, label=allele))
-                plt.legend(
-                    handles=legends, bbox_to_anchor=(1.03, 1),
-                    fontsize='x-small', loc='center left'
-                )
+                # legends = []
+                # for (allele, color) in zip(["W", "H", "E", "R", "B"], colors):
+                #     legends.append(mpatches.Patch(color=color, label=allele))
+                # plt.legend(
+                #     handles=legends, bbox_to_anchor=(1.03, 1),
+                #     fontsize='x-small', loc='center left'
+                # )
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
