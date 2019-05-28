@@ -61,7 +61,7 @@ for j in range(len(foldersList)):
                 )
                 genotypes = landscapeSumData["genotypes"]
                 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
-                    ["W", "H", "R", "B"],
+                    ["W", "H", "R", "O"],
                     genotypes
                 )
                 aggData = monet.aggregateGenotypesInNode(
@@ -142,7 +142,7 @@ for j in range(len(foldersList)):
                 )
                 genotypes = landscapeData["genotypes"]
                 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
-                    ["W", "H", "R", "B"],
+                    ["W", "H", "R", "O"],
                     genotypes
                 )
                 aggregatedNodesData = monet.aggregateGenotypesInLandscape(
@@ -161,7 +161,7 @@ for j in range(len(foldersList)):
                     geneSpatiotemporals_normalized, style={"aspect": 12.0, "cmap": cmaps},
                     vmax= monet.maxAlleleInLandscape(geneSpatiotemporals_normalized["geneLandscape"]))
                 legends = []
-                for (allele,color) in zip(["W", "H", "R", "B"], colors):
+                for (allele,color) in zip(["W", "H", "R", "O"], colors):
                     legends.append(mpatches.Patch(color=color, label=allele))
                 plt.legend(handles=legends, bbox_to_anchor=(1.03, 1), fontsize='x-small', loc='center left')
                 monet.quickSaveFigure(
