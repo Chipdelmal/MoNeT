@@ -159,6 +159,7 @@ for j in range(len(foldersList)):
                 geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
                     aggregatedNodesData
                 )
+                geneSpatiotemporals = monet.rescaleGeneSpatiotemporals(geneSpatiotemporals)
                 ###############################################################
                 initMax=monet.maxAlleleInLandscape( geneSpatiotemporals["geneLandscape"])
                 overlay = monet.plotGenotypeOverlayFromLandscape(
@@ -171,14 +172,14 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L." + "png",
+                        nameExp.split("/")[-1] + "F_L2." + "png",
                     dpi=styleS["dpi"],
                     format = "png"
                 )
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L." + "pdf",
+                        nameExp.split("/")[-1] + "F_L2." + "pdf",
                     dpi=styleS["dpi"],
                     format = "pdf"
                 )
