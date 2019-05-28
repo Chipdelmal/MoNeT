@@ -42,7 +42,7 @@ def manual_array_creation(dist_apart, pop, n):
 
 def csv_creation(arr, file_name, VERT=True):
     if VERT:
-        pd.DataFrame({0: arr[0], 1: arr[1], 2: arr[2]}).to_csv("~/Desktop/popHeterog_csv/"+file_name+".csv", header=["x", "y", "n"], index=None)
+        pd.DataFrame({0: arr[0], 1: arr[1], 2: arr[2]}).to_csv("~/Desktop/popHeterog_csv/test/"+file_name+".csv", header=["x", "y", "n"], index=None)
     else:
         pd.DataFrame(arr).to_csv("~/Desktop/popHeterog_csv/"+file_name+".csv"".csv", header=None, index=None)
 
@@ -50,7 +50,7 @@ def csv_creation(arr, file_name, VERT=True):
 def setup(pop, n, type, base=10):
     if type == "step_up" or type == "step_down":
         step = 2*(pop-(n*base))/((n-1)*n)
-        pop_sizes = [base+(step*i) for i in range(n)]
+        pop_sizes = [round(base+(step*i)) for i in range(n)]
         if type == "step_up":
             return pop_sizes
         else:
@@ -115,10 +115,16 @@ def swap(pops, n):
     return pops
 
 
-plt.plot(range(13), swap(setup(530, 13, "up_down", 30), 1))
+plt.plot(range(50), swap(setup(30*50, 50, "step_down"), 4))
 
 
-csv_creation(manual_array_creation(10, swap(setup(30*50, 50, "step_up"), i), 50), "step_up_"+str(i))
+for i in range(51):
+    for j in range(5):
+        pop = swap(setup(30*50, 50, "step_down"), i)
+        csv_creation(manual_array_creation(10, pop, len(pop)), "swap_down_"+str(i)+"_iter"+str(j))
+
+pop = swap(setup(30*50, 50, "step_down"), 3)
+csv_creation(manual_array_creation(10, pop, len(pop)), "swap_down_"+str(3)+"_iter"+str(1))
 
 step_up = list(range(10, 211, 10))
 sum(step_up)
