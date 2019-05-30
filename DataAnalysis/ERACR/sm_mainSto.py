@@ -10,7 +10,7 @@ import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
-STACK = True
+STACK = False
 TRACE= False
 HEAT = True
 
@@ -21,14 +21,12 @@ colors = [
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
-    "aspect": 0.2, "dpi": 2*512,
-    "colors": colors, "format": "png",
-    "xRange": [0, 5500], "yRange": [0, 2000]  # 2500]
+    "aspect": 0.4, "colors": colors, "format": "png",
+    "xRange": [0, 5500], "yRange": [0, 3000]  # 2500]
 }
 styleT = {
     "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
-    "aspect": 2,  "dpi": 512,
-    "colors": colors, "format": "png",
+    "aspect": 2,  "colors": colors, "format": "png",
     "xRange": [0, 5500], "yRange": [0, 300]  # 2500]
 }
 ##############################################################################
@@ -36,8 +34,7 @@ styleT = {
 ##############################################################################
 # nameExp = "E_0125_02_00028"
 pathRoot = "/Volumes/marshallShare/ERACR/Line/experiments/"
-pathSet = pathRoot + "smActRelease2/"  # + "eRACR29"
-pathOut = pathSet + "images"
+pathSet = pathRoot + "insecticideRelease/"  # + "eRACR29"pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
 for j in range(len(foldersList)):
@@ -61,7 +58,7 @@ for j in range(len(foldersList)):
                 )
                 genotypes = landscapeSumData["genotypes"]
                 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
-                    ["W", "H", "R", "O"],
+                    ["W", "H", "R", "B"],
                     genotypes
                 )
                 aggData = monet.aggregateGenotypesInNode(
@@ -142,7 +139,7 @@ for j in range(len(foldersList)):
                 )
                 genotypes = landscapeData["genotypes"]
                 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
-                    ["W", "H", "R", "O"],
+                    ["W", "H", "R", "B"],
                     genotypes
                 )
                 aggregatedNodesData = monet.aggregateGenotypesInLandscape(
@@ -158,23 +155,24 @@ for j in range(len(foldersList)):
                 ###############################################################
                 initMax=monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals_normalized, style={"aspect": 12.0, "cmap": cmaps},
-                    vmax= monet.maxAlleleInLandscape(geneSpatiotemporals_normalized["geneLandscape"]))
+                    geneSpatiotemporals, style={"aspect": 8.0, "cmap": cmaps},
+                    vmax=40
+                )
                 legends = []
-                for (allele,color) in zip(["W", "H", "R", "O"], colors):
+                for (allele,color) in zip(["W", "H", "R", "B"], colors):
                     legends.append(mpatches.Patch(color=color, label=allele))
                 plt.legend(handles=legends, bbox_to_anchor=(1.03, 1), fontsize='x-small', loc='center left')
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L2." + "png",
+                        nameExp.split("/")[-1] + "F_L." + "png",
                     dpi=styleS["dpi"],
                     format = "png"
                 )
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L2." + "pdf",
+                        nameExp.split("/")[-1] + "F_L." + "pdf",
                     dpi=styleS["dpi"],
                     format = "pdf"
                 )
@@ -183,3 +181,4 @@ for j in range(len(foldersList)):
 
 
 print("done")
+initMax
