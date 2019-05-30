@@ -7,10 +7,13 @@ outName = id
 rate = 24
 
 outPath = path + outName + '.mp4'
-inPath = path + id + '%06d.png" '
+inPath = path + id + '%06d.png'
 
 
-subprocess.Popen(['ffmpeg', '-start_number', '1','-r', str(rate), '-f', 'image2', '-s', '1920x1080', '-i', inPath, '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2', '-vcodec', 'libx264', '-preset', 'veryslow','-crf', '15', '-pix_fmt', 'yuv420p',outPath])
+print(' '.join(command))
+print('\n')
+
+subprocess.Popen(['ffmpeg','-loglevel','+info', '-start_number', '1','-r', str(rate), '-f', 'image2', '-s', '1920x1080', '-i', inPath, '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2', '-vcodec', 'libx264', '-preset', 'veryslow','-crf', '15', '-pix_fmt', 'yuv420p',outPath])
 
 
 # ffmpegCmd = 'ffmpeg -start_number 1 -r 24 -f image2 -s 1920x1080 -i Networks%06d.png -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -vcodec libx264 -preset veryslow -crf 15 -pix_fmt yuv420p 00VD.mp4'
