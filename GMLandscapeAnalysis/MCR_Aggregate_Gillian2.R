@@ -144,6 +144,25 @@ compare_matrices <- function(movementKernel, newmoves) {
 }
 
 ###############################################################################
+### Check All Rows in the Movement Kernel Sum to 1
+###############################################################################
+kernel_check_sum_one <- function(movement) {
+  a = rowSums(movement)
+  not_all_sum_one = 0
+  for (j in 1:length(a)) {
+    if (a[j] != 1){
+      print("Row does not sum to 1.")
+      not_all_sum_one = 1
+    }
+  }
+  if (not_all_sum_one == 1) {
+    print("One of the rows does not sum to 1.")
+  } else {
+    print("All rows sum to 1.")
+  }
+}
+
+###############################################################################
 ### Factorial setup
 ###############################################################################
 # we are testing multiple landscapes, so we will loop over the landscapes in a folder

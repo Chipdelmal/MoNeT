@@ -24,7 +24,8 @@ STACK = True
 SPREAD = False
 TRACES = False
 nameExp = "pusheen" + str(6)
-pathRoot = "/Volumes/marshallShare/Heterogeneity/Gillian/20190306/"
+# pathRoot = "/Volumes/marshallShare/Heterogeneity/Gillian/20190306/"
+pathRoot = "/Users/gillian/Desktop/"
 pathExperiments = "MGDrive-Experiments/"
 pathPlots = pathRoot + "images/"
 ##############################################################################
@@ -60,14 +61,14 @@ for nameExp in folderNames[0:]:
     # Stack
     ##########################################################################
     if STACK is True:
-        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/")
+        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/0001/")
         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
             filenames, male=True, female=True, dataType=float
         )
         aggData = monet.aggregateGenotypesInNode(
             landscapeSumData, aggregationDictionary
         )
-        ssDay = monet.reachedSteadtStateAtDay(aggData, .01)
+        ssDay = monet.reachedSteadtStateAtDay(aggData, .5)
         figB = monet.plotMeanGenotypeStack(
             aggData,
             styleS,
@@ -87,7 +88,7 @@ for nameExp in folderNames[0:]:
     # Spread Plot (Heatmaps)
     ##########################################################################
     if SPREAD is True:
-        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/")
+        filenames = monet.readExperimentFilenames(pathFull + "/ANALYZED/0001/")
         landscapeData = monet.loadLandscapeData(filenames, dataType=float)
         aggregatedNodesData = monet.aggregateGenotypesInLandscape(
             landscapeData, aggregationDictionary
@@ -110,7 +111,7 @@ for nameExp in folderNames[0:]:
     # Garbage (Traces)
     ##########################################################################
     if TRACES is True:
-        paths = monet.listDirectoriesWithPathWithinAPath(pathFull + "/GARBAGE/")
+        paths = monet.listDirectoriesWithPathWithinAPath(pathFull + "/GARBAGE/0001/")
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
             paths, aggregationDictionary,
             male=False, female=True, dataType=float
