@@ -111,7 +111,7 @@ for nameExp in folderNames[0:]:
         geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
             aggregatedNodesData
         )
-        geneSpatiotemporals_normalized = normalize(geneSpatiotemporals)
+        geneSpatiotemporals_normalized = monet.rescaleGeneSpatiotemporals(geneSpatiotemporals)
         overlay = monet.plotGenotypeOverlayFromLandscape(
             geneSpatiotemporals_normalized,
             style={"aspect": 4, "cmap": cmaps},

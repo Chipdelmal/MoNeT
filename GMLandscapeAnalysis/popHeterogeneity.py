@@ -6,10 +6,10 @@ import math
 
 
 def population_split(pop_size, n, C=0.0):
-    """ Function to split population size into n groups.
+    """ Function to split population size into n groups with C randomness.
         pop_size: int, total population size
         n: int, number of groups to split pop_size
-        C: int or float, can take on range of values from 0 (uniform) to 1 (random).
+        C: int or float, can take on range of values from 0 (unif) to 1 (rand)
     """
     uniform_pop_size = ((pop_size * (1.0 - C)) // n) * n
     random_pop_size = pop_size - uniform_pop_size
@@ -24,33 +24,65 @@ def population_split(pop_size, n, C=0.0):
 
 
 def array_creation(dist_apart, pop_size, n, C=0.0):
+    """ Function that creates array of x coordinates, y coordinates, and
+        populations (using population_split fn) along horizontal line (y coords
+        = 0).
+        dist_apart: int, distance between nodes
+        pop_size: int, total population size
+        n: int, number of groups to split pop_size
+        C: int or float, can take on range of values from 0 (unif) to 1 (rand)
+    """
     pop = np.array(population_split(pop_size, n, C))
     x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
     y_coords = np.zeros(n + 2)
     return np.array([x_coords, y_coords, pop])
 
 
-def manual_array_creation(dist_apart, pop, n):
-    # pop.insert(0, pop[0])
-    # pop.append(pop[-1])
-    # x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
-    # y_coords = np.zeros(n + 2)
-    x_coords = np.linspace(0, dist_apart * (n-1), n)
-    y_coords = np.zeros(n)
+def manual_array_creation(dist_apart, pop, dummy=False):
+    """ Function that creates array of x coordinates, y coordinates, and
+        populations (using given pop) along horizontal line (y coords = 0).
+        dist_apart: int, distance between nodes
+        pop: list, n population sizes
+        dummy: boolean, default=False, whether or not to include dummy nodes at
+        beginning and end of pop (dummy nodes have same value as the node after
+        or before
+        them).
+    """
+    n = len(pop)
+    if dummy:
+        pop.insert(0, pop[0])
+        pop.append(pop[-1])
+        x_coords = np.linspace(0, dist_apart * (n + 1), n + 2)
+        y_coords = np.zeros(n + 2)
+    else:
+        x_coords = np.linspace(0, dist_apart * (n-1), n)
+        y_coords = np.zeros(n)
     return np.array([x_coords, y_coords, pop])
 
 
 def csv_creation(arr, file_name, VERT=True):
+    """ Function that creates csv file from array of x coordinates, y
+        coordinates, and populations. User may need to change path.
+        arr: array, array of x coordinates, y coordinates, and populations
+        file_name: string, name of file
+        VERT: boolean, default=True, to create a vertical or horizontal csv
+    """
     if VERT:
-        pd.DataFrame({0: arr[0], 1: arr[1], 2: arr[2]}).to_csv("~/Desktop/popHeterog_csv/"+file_name+".csv", header=["x", "y", "n"], index=None)
+        pd.DataFrame({0: arr[0], 1: arr[1], 2: arr[2]}).to_csv("~/Desktop/popHeterog_csv/test/"+file_name+".csv", header=["x", "y", "n"], index=None)
     else:
         pd.DataFrame(arr).to_csv("~/Desktop/popHeterog_csv/"+file_name+".csv"".csv", header=None, index=None)
 
 
 def setup(pop, n, type, base=10):
+    """ Function that creates csv file from array of x coordinates, y
+        coordinates, and populations. User may need to change path.
+        arr: array, array of x coordinates, y coordinates, and populations
+        file_name: string, name of file
+        VERT: boolean, default=True, to create a vertical or horizontal csv
+    """
     if type == "step_up" or type == "step_down":
         step = 2*(pop-(n*base))/((n-1)*n)
-        pop_sizes = [base+(step*i) for i in range(n)]
+        pop_sizes = [round(base+(step*i)) for i in range(n)]
         if type == "step_up":
             return pop_sizes
         else:
@@ -104,22 +136,31 @@ def setup(pop, n, type, base=10):
         return [pop/n] * n
 
 
-sum(setup(530, 13, "up_down", 30))
-plt.plot(range(13), setup(530, 13, "up_down", 30))
-
-
 def swap(pops, n):
+    """ Function that swaps the population nodes in an array n times.
+        pops: list/array, list/array of population sizes
+        n: int, number of times to swap two population nodes in pops
+    """
     for _ in range(n):
         i, j = np.random.choice(range(len(pops)), 2)
         pops[i], pops[j] = pops[j], pops[i]
     return pops
 
 
-plt.plot(range(13), swap(setup(530, 13, "up_down", 30), 1))
+# Script to manually create different population setups
+plt.plot(range(50), swap(setup(30*50, 50, "step_down"), 4))
 
 
-csv_creation(manual_array_creation(10, swap(setup(30*50, 50, "step_up"), i), 50), "step_up_"+str(i))
+for i in range(51):
+    for j in range(5):
+        pop = swap(setup(30*50, 50, "step_down"), i)
+        csv_creation(manual_array_creation(10, pop, len(pop)), "swap_down_"+str(i)+"_iter"+str(j))
 
+pop = swap(setup(30*50, 50, "step_down"), 3)
+csv_creation(manual_array_creation(10, pop, len(pop)), "swap_down_"+str(3)+"_iter"+str(1))
+
+
+# Script to manually create different population setups
 step_up = list(range(10, 211, 10))
 sum(step_up)
 step_down = step_up.copy()

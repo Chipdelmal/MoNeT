@@ -9,15 +9,8 @@ import matplotlib.patches as mpatches
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-def calculateMaxPopInLandscapeReps(landscapeReps):
-    landscapes = landscapeReps["landscapes"]
-    list = [None] * len(landscapeReps["landscapes"][0])
-    for i in range(len(landscapeReps["landscapes"][0])):
-            list[i] = sum(landscapes[0][i][0])
-    return max(list)
 
-
-STACK = True
+STACK = False
 TRACE= False
 HEAT = True
 
@@ -28,23 +21,20 @@ colors = [
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
-    "aspect": 0.02, "dpi": 512,
-    "colors": colors, "format": "png",
-    "xRange": [0, 1500], "yRange": [0, 20000]  # 2500]
+    "aspect": 0.4, "colors": colors, "format": "png",
+    "xRange": [0, 5500], "yRange": [0, 3000]  # 2500]
 }
 styleT = {
     "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
-    "aspect": 2,  "dpi": 512,
-    "colors": colors, "format": "png",
-    "xRange": [0, 1500], "yRange": [0, 300]  # 2500]
+    "aspect": 2,  "colors": colors, "format": "png",
+    "xRange": [0, 5500], "yRange": [0, 300]  # 2500]
 }
 ##############################################################################
 # Setup
 ##############################################################################
 # nameExp = "E_0125_02_00028"
-pathRoot = "/Volumes/marshallShare/YK_Alt_Kernels/output/"
-pathSet = pathRoot + "Fine3/"  # + "eRACR29"
-pathOut = pathSet + "images"
+pathRoot = "/Volumes/marshallShare/ERACR/Line/experiments/"
+pathSet = pathRoot + "insecticideRelease/"  # + "eRACR29"pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
 for j in range(len(foldersList)):
@@ -159,12 +149,15 @@ for j in range(len(foldersList)):
                 geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
                     aggregatedNodesData
                 )
-                geneSpatiotemporals = monet.rescaleGeneSpatiotemporals(geneSpatiotemporals)
+                geneSpatiotemporals_normalized = monet.rescaleGeneSpatiotemporals(
+                    geneSpatiotemporals
+                )
                 ###############################################################
-                initMax=monet.maxAlleleInLandscape( geneSpatiotemporals["geneLandscape"])
+                initMax=monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals, style={"aspect": .2, "cmap": cmaps},
-                    vmax= monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"]))
+                    geneSpatiotemporals, style={"aspect": 8.0, "cmap": cmaps},
+                    vmax=40
+                )
                 legends = []
                 for (allele,color) in zip(["W", "H", "R", "B"], colors):
                     legends.append(mpatches.Patch(color=color, label=allele))
@@ -172,14 +165,14 @@ for j in range(len(foldersList)):
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L2." + "png",
+                        nameExp.split("/")[-1] + "F_L." + "png",
                     dpi=styleS["dpi"],
                     format = "png"
                 )
                 monet.quickSaveFigure(
                     overlay,
                     pathOut + "/heat/" +
-                        nameExp.split("/")[-1] + "F_L2." + "pdf",
+                        nameExp.split("/")[-1] + "F_L." + "pdf",
                     dpi=styleS["dpi"],
                     format = "pdf"
                 )
@@ -188,3 +181,4 @@ for j in range(len(foldersList)):
 
 
 print("done")
+initMax
