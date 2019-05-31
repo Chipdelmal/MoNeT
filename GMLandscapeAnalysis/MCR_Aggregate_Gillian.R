@@ -126,6 +126,7 @@ ExperimentList[[listmarker]]$movementKernel <- calc_HurdleExpKernel(distMat = ou
 #   }
 # }
 # 
+
 movement = ExperimentList[[1]]$movementKernel
 
 update_movement_kernel <- function(movement, lFile) {
@@ -158,6 +159,7 @@ update_movement_kernel <- function(movement, lFile) {
     }
   }
 }
+
 
 # May 1, 2019: 
 
