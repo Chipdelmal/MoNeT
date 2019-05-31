@@ -154,7 +154,7 @@ plt.plot(range(50), swap(setup(30*50, 50, "step_down"), 4))
 for i in range(51):
     for j in range(5):
         pop = swap(setup(30*50, 50, "step_down"), i)
-        csv_creation(manual_array_creation(10, pop, len(pop)), "swap_down_"+str(i)+"_iter"+str(j))
+        csv_creation(manual_array_creation(10, pop, len(pop)), "swap_down_"+str(i)+"_"+str(j))
 
 pop = swap(setup(30*50, 50, "step_down"), 3)
 csv_creation(manual_array_creation(10, pop, len(pop)), "swap_down_"+str(3)+"_iter"+str(1))
