@@ -51,17 +51,17 @@ def getAlphas(header, fileList, weights, miss=False):
             miss=True
 
     if miss:
-        return []
+        return ([],0)
     else:
-        return [float(x)/total for x in res]
+        return ([float(x)/total for x in res],total)
 
 
-def draw_dots(m,alphas, X=0, Y=0):
+def draw_dots(m,alphas, X=0, Y=0, size=70):
     N = len(alphas)
     start = 0.0
     for i in range(N):
         alphaValue = alphas[i]
-        m.scatter([X],[Y], latlon=True, marker='o', s=80, facecolor=colors[i], alpha= alphaValue)
+        m.scatter([X],[Y], latlon=True, marker='o', s=max(70, size), facecolor=colors[i], alpha= alphaValue)
 
 #######
 # STATIC GLOBALS
@@ -125,9 +125,9 @@ for expPath in sorted(glob.glob(folder+'ANALYZED/E_*')):
         miss = False
         for k,pFileList in clusters.items():
             idx = int(k)
-            alphas = getAlphas(header,pFileList,weights,miss)
+            alphas,size = getAlphas(header,pFileList,weights,miss)
             if alphas:
-                draw_dots(m, alphas, longs[idx], lats[idx])
+                draw_dots(m, alphas, longs[idx], lats[idx], size)
             else:
                 miss=True
                 continue
