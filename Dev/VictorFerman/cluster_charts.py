@@ -139,7 +139,7 @@ colors = ["#090446", "#f20060", "#6898ff", "#ff28d4", "#7fff3a", "#c6d8ff", '#6e
 
 groups = ["W", "H", "E", "R", "B"]
 
-folder = '/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/MultipleRelease6/'
+folder = '/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/MultipleRelease8/'
 coordFileLocation = '/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/'
 coordFileName = coordFileLocation+'full2_clustered.csv'
 clusterFileName = coordFileLocation+'clusterResult.csv'
@@ -166,6 +166,6 @@ for expPath in sorted(glob.glob(folder+'ANALYZED/E_*')):
     generateClusterGraphs(aggList,coordinates, imageLocation )
     vname = vlocation+experiment+'_cdots.mp4'
     background = coordFileName.replace('.csv','.png')
-    video = generateVideo(vname,backgorund, imageLocation, imagePattern)
+    video = generateVideo(vname,background, imageLocation, imagePattern)
 
 video.wait()
