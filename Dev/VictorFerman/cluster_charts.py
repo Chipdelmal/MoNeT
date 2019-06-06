@@ -71,7 +71,7 @@ def createFig(coordinates):
     maxLat = max(coordinates[1])
     minLong = min(coordinates[0])
     maxLong = max(coordinates[0])
-    fig,ax = plt.subplots(figsize=(10, 10))
+    fig,ax = plt.subplots(figsize=(5, 5))
     ax.tick_params(
     axis='both',          # changes apply to the both
     which='both',      # both major and minor ticks are affected
@@ -81,7 +81,7 @@ def createFig(coordinates):
     right=False,
     labelbottom=False, # labels along the bottom edge are off
     labelleft=False)
-    m = Basemap(projection='merc',llcrnrlat=minLat-0.002,urcrnrlat=maxLat+0.002,llcrnrlon=minLong-0.002,urcrnrlon=maxLong+0.002,lat_ts=20,resolution='i', ax=ax)
+    m = Basemap(projection='merc',llcrnrlat=minLat-0.001,urcrnrlat=maxLat+0.001,llcrnrlon=minLong-0.001,urcrnrlon=maxLong+0.001,lat_ts=20,resolution='i', ax=ax)
     m.drawcounties(linewidth=0.3)
     return (fig,ax,m)
 
@@ -90,12 +90,12 @@ def getAlphas(popList):
     return ([float(x)/total for x in popList],total)
 
 
-def draw_dots(m,alphas, long=0, lat=0, size=70):
+def draw_dots(m,alphas, long=0, lat=0, size=60):
     N = len(alphas)
     start = 0.0
     for i in range(N):
         alphaValue = alphas[i]
-        m.scatter([long],[lat], latlon=True, marker='o', s=max(70, size), facecolor=colors[i], alpha= alphaValue)
+        m.scatter([long],[lat], latlon=True, marker=(6,0), s=max(9, 0.15*size), facecolor=colors[i], alpha= alphaValue)
 
 def generateClusterGraphs(aggList,coordinates,destination):
     time = len(aggList[0])
@@ -115,15 +115,19 @@ def generateClusterGraphs(aggList,coordinates,destination):
         else:
             fig.savefig(destination+'/c_'+str(tick).zfill(6)+".png",
                     dpi=512, orientation='portrait', papertype=None,
-                    facecolor='w', edgecolor='w', format="png",
+                    transparent=True, format="png",
                     bbox_inches='tight', pad_inches=0.05, frameon=None)
             plt.close(fig)
             plt.close('all')
             fig,ax,m = createFig(coordinates)
     return
 
-def generateVideo(name, imageLocation, imagePattern):
-    video = subprocess.Popen(['ffmpeg', '-r', '24', '-f', 'image2', '-s', '1920x1080', '-i', imageLocation+imagePattern, '-vcodec', 'libx264', '-crf', '25','-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2', '-pix_fmt', 'yuv420p', name])
+def generateVideo(name, background, imageLocation, imagePattern):
+    video = subprocess.Popen(['ffmpeg','-i', background, '-r', '24', '-f',
+    'image2', '-s', '1920x1080', '-i', imageLocation+imagePattern,
+    '-vcodec', 'libx264', '-crf', '25', '-filter_complex',
+    '[0:v][1:v]overlay=0:0[bg]; [bg]pad=ceil(iw/2)*2:ceil(ih/2)*2, ' +
+    'format=yuv420p[outv]', '-map', '[outv]', name])
     print(video.pid)
     return video
 
@@ -135,12 +139,12 @@ colors = ["#090446", "#f20060", "#6898ff", "#ff28d4", "#7fff3a", "#c6d8ff", '#6e
 
 groups = ["W", "H", "E", "R", "B"]
 
-folder = '/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/MultipleRelease8/'
+folder = '/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/MultipleRelease6/'
 coordFileLocation = '/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/'
 coordFileName = coordFileLocation+'full2_clustered.csv'
 clusterFileName = coordFileLocation+'clusterResult.csv'
 patchFilePattern = '/ADM_*'
-subfolder = folder+'clustercharts2/'
+subfolder = folder+'/images/clustercharts/'
 vlocation = folder+'videos/'
 imagePattern = '/c_%06d.png'
 
@@ -160,7 +164,8 @@ for expPath in sorted(glob.glob(folder+'ANALYZED/E_*')):
     aggList = aggregateClusters(clusters, aggDict)
     imageLocation = subfolder+experiment
     generateClusterGraphs(aggList,coordinates, imageLocation )
-    vname = vlocation+experiment+'_cdots2.mp4'
-    video = generateVideo(vname, imageLocation, imagePattern)
+    vname = vlocation+experiment+'_cdots.mp4'
+    background = coordFileName.replace('.csv','.png')
+    video = generateVideo(vname,backgorund, imageLocation, imagePattern)
 
 video.wait()
