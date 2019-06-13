@@ -100,14 +100,12 @@ def getAlphas(popList):
     return ([float(x)/total for x in popList],total)
 
 
-def draw_dots(m,alphas, long=0, lat=0, size=60):
-    N = len(alphas)
+def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
     start = 0.0
-    for i in range(N):
-        alphaValue = alphas[i]
-        m.scatter([long],[lat], latlon=True, marker=(6,0), s=max(9, 0.15*size), facecolor=colors[i], alpha= alphaValue)
+    for idx,value in ennumerate(alphas):
+        m.scatter([long],[lat], latlon=True, marker=(6,0), s=max(9, 0.15*size), facecolor=colorsList[idx], alpha= value)
 
-def generateClusterGraphs(aggList,coordinates,destination):
+def generateClusterGraphs(aggList, coordinates, destination, colorList):
     time = len(aggList[0])
     fig,ax,m = createFig(coordinates)
     for tick in range(time):
@@ -117,7 +115,7 @@ def generateClusterGraphs(aggList,coordinates,destination):
                 pops = cData[tick]
                 alphas,size = getAlphas(pops)
                 if alphas:
-                    draw_dots(m, alphas, coordinates[0][idx], coordinates[1][idx], size)
+                    draw_dots(m, alphas, colorList, coordinates[0][idx], coordinates[1][idx], size)
                 else:
                     continue
             except Exception as e:
@@ -173,7 +171,7 @@ for expPath in sorted(glob.glob(folder+'ANALYZED/E_05*')):
     aggDict = monet.autoGenerateGenotypesDictionary(groups, genotypes)
     aggList = aggregateClusters(clusters, aggDict)
     imageLocation = subfolder+experiment
-    generateClusterGraphs(aggList,coordinates, imageLocation )
+    generateClusterGraphs(aggList, coordinates, imageLocation, colors)
     vname = vlocation+experiment+'_cdots.mp4'
     background = coordFileName.replace('.csv','.png')
     video = generateVideo(vname,background, imageLocation, imagePattern)
