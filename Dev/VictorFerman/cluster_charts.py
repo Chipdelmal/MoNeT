@@ -14,31 +14,41 @@ def getClusters(fileLocation):
 
     for line in clusterFile:
         tokens = line.split(',')
-        coordinates[0].append(float(tokens[0]))
-        coordinates[1].append(float(tokens[1]))
+        coordinates[0].append(float(tokens[1]))
+        coordinates[1].append(float(tokens[0]))
 
     return coordinates
 
-def populateClusters(clusterNum, cFileName, pFileLocation, pFilePattern=""):
+def populateClusters(clusterNum, cFileName, pFileLocation, pFilePattern={}):
 
     clusters = []
     for i in range(clusterNum):
-        clusters.append([])
+        clusters.append({'male':[],'female':[]})
     patchCluster =[]
     coordFile = open(cFileName,'r')
 
     for line in coordFile:
         patchCluster.append(int(line.split(',')[2].strip()))
 
-    if pFilePattern:
-        patchFileList = sorted(glob.glob(pFileLocation+pFilePattern))
+    if 'male' in pFilePattern:
+        patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['male']))
     else:
         patchFileList = sorted(glob.glob(pFileLocation+'/ADM_*'))
         if not patchFileList:
             patchFileList = sorted(glob.glob(pFileLocation+'/M_*'))
 
     for index,patchFileN in enumerate(patchFileList):
-        clusters[patchCluster[index]].append(patchFileN)
+        clusters[patchCluster[index]]['male'].append(patchFileN)
+
+    if 'female' in pFilePattern:
+        patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['female']))
+    else:
+        patchFileList = sorted(glob.glob(pFileLocation+'/AF1_*'))
+        if not patchFileList:
+            patchFileList = sorted(glob.glob(pFileLocation+'/F_*'))
+
+    for index,patchFileN in enumerate(patchFileList):
+        clusters[patchCluster[index]]['female'].append(patchFileN)
 
     return clusters
 
@@ -47,7 +57,7 @@ def aggregateClusters(clusters,aggDict):
     aggList = []
     for fileList in clusters:
         aggPatches = monet.loadAndAggregateLandscapeData(
-            {'male':fileList, 'female':[]},aggDict, male=True, female=False
+            {'male':fileList['male'], 'female':fileList['female']},aggDict, male=True, female=True
         )["landscape"]
         res = np.zeros_like(aggPatches[0])
         for patch in aggPatches:
@@ -134,23 +144,23 @@ def generateVideo(name, background, imageLocation, imagePattern):
 
 #######
 # STATIC GLOBALS
-#######
-colors = ["#090446", "#f20060", "#6898ff", "#ff28d4", "#7fff3a", "#c6d8ff", '#6e44ff','#e56399','#ee6c4d', '#861657', '#5cf64a', 'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal']
+####### 3rd , "#6898ff"
+colors = ["#090446", "#f20060", "#ff28d4", "#7fff3a", "#c6d8ff", '#6e44ff','#e56399','#ee6c4d', '#861657', '#5cf64a', 'yellow', 'magenta', 'purple', 'black', 'cyan', 'teal']
 
-groups = ["W", "H", "E", "R", "B"]
+groups = ["W", "H", "R", "B"]
 
-folder = '/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/MultipleRelease8/'
-coordFileLocation = '/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/'
-coordFileName = coordFileLocation+'full2_clustered.csv'
-clusterFileName = coordFileLocation+'clusterResult.csv'
-patchFilePattern = '/ADM_*'
+folder = '/Volumes/marshallShare/Riverside_Alt_Kernels/output/Fine2/'
+coordFileLocation = '/Volumes/marshallShare/Riverside_Alt_Kernels/'
+coordFileName = coordFileLocation+'barkersfiel3_LatLongs_clustered.csv'
+clusterFileName = coordFileLocation+'clusteringResult.csv'
+patchFilePattern = {'males':'/M_*', 'females':'/F_*'}
 subfolder = folder+'/images/clustercharts/'
 vlocation = folder+'videos/'
 imagePattern = '/c_%06d.png'
 
 coordinates = getClusters(clusterFileName)
 
-for expPath in sorted(glob.glob(folder+'ANALYZED/E_*')):
+for expPath in sorted(glob.glob(folder+'ANALYZED/E_05*')):
     experiment = expPath.split("/")[-1]
 
     print(experiment)
