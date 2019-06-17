@@ -1,7 +1,21 @@
 import networkx as nx
 import numpy as np
 import random as rm
+import platform
 
+
+def genMskMat(ntNum=2, vct=[0, 1]):
+    if len(vct) != ntNum:
+        print(f'''Number of node types ({ntNum}) should be equal to mask
+        vector length ({len(vct)}).''')
+        return False
+    else:
+        mskVct = vct
+    # Create the mask matrix
+    mskMat = np.empty((ntNum, ntNum))
+    for i in range(ntNum):
+        mskMat[i] = np.roll(mskVct, i)
+    return mskMat
 
 if __name__ == "__main__":
     # n: Nodes
@@ -9,10 +23,15 @@ if __name__ == "__main__":
     (nNum, ntNum) = (10, 3)
     (tol, passMkvTest) = (.99, True)
 
+
+
     # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     # Define the classes masking vector
     #   By default, mosquitos will shift to the next state (node type)
     #   with 100% probability
+    genMskMat(3, [0,.75,.25])
+
+
     mskVct = np.zeros(ntNum)
     mskVct[1] = 1
 
@@ -23,14 +42,10 @@ if __name__ == "__main__":
 
     # Create the mask matrix
     mskMat = np.empty((ntNum, ntNum))
-    mskMat[0] = np.array([0,0,0])
-    mskMat
-
     for i in range(ntNum):
-        print(np.roll(mskVct, i))
+        mskMat[i] = np.roll(mskVct, i)
     mskMat
 
-    mksMat
 
     # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     # Define an adjacency matrix manually
