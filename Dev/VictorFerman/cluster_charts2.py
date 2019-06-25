@@ -41,4 +41,4 @@ for expPath in sorted(glob.glob(folder+'ANALYZED/E_05*')):
     monet.generateClusterGraphs(aggList, [coordinates[1],coordinates[0]], imageLocation, colors)
     video = monet.generateVideo(vname,background, imageLocation, imagePattern)
 
-wait(video)
+video.wait()
