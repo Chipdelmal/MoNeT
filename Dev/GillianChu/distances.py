@@ -35,34 +35,33 @@ def distanceMat(landscape, distFun=euclideanDistance):
 # Kernels
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-def inverseLinearStep(distance, step, rate, dummy):
+def inverseLinearStep(distance, params=[.5, .25]):
     '''
     This function returns a migration estimate based on the inverse of the
         distance. NOTE: This is a terrible way to do it, but it's a first
-        approximation. Should be replaced with the dtruncExp().
+        approximation. Should be replaced with the zero-inflated exponential.
     '''
     if math.isclose(distance, 0):
-        return step
+        return params[0]
     else:
-        return (1 / distance * rate)
+        return (1 / params[0] * params[1])
     return True
 
 
-def migrationKernel(distMat, step, rate, dummy, kernelFun=inverseLinearStep):
+def migrationKernel(distMat, kernelFun=inverseLinearStep, params=[.5, .25]):
     '''
     Takes in the distances matrix, zero inflated value (step) and two extra
         parameters to determine the change from distances into distance-based
         migration probabilities (based on the kernel function provided).
     '''
-    a = 1.0e-10
     coordsNum = len(distMat)
     migrMat = np.empty((coordsNum, coordsNum))
     for (i, row) in enumerate(distMat):
         for (j, dst) in enumerate(row):
-            migrMat[i][j] = kernelFun(x=dst, r=rate, a=a, b=float("inf"))
+            params[0] = dst
+            migrMat[i][j] = kernelFun(params=params)
         # Normalize rows to sum 1
         migrMat[i] = migrMat[i] / sum(migrMat[i])
-    print("migration kernel is ", migrMat)
     return migrMat
 
 def approxEqual(f1, f2):
@@ -71,14 +70,15 @@ def approxEqual(f1, f2):
     """
     return abs(f1 - f2) <= sys.float_info.epsilon * max(abs(f1), abs(f2))
 
-def dtruncExp(x, r, a, b):
+def dtruncExp(params):
     """
     Mirrors the dtruncExp truncated exponential distribution function in MGDrive-Kernels.cpp
-    r is 1/scale = rate param
     x the place in the support of the density function ( support of the normal is the whole real line, poisson is nonneg int )
+    r is 1/scale = rate param
     a is upper truncatin bounds
     b is lower truncation bounds
     """
+    x, r, a, b = params
     loc = 0
     if a >= b:
         return "argument a is greater than or equal to b"
@@ -107,7 +107,7 @@ def zeroInflatedExponential(distMat, rate, pi):
             if i == j:
                 kernMat[i][j] = 0
             else:
-                kernMat[i][j] = dtruncExp(distMat[i][j], rate, a, float("inf")) #truncated density
+                kernMat[i][j] = dtruncExp(params=[distMat[i][j], rate, a, float("inf")]) #truncated density
         kernMat[i] = kernMat[i] / sum(kernMat[i]) * (1-pi) #normalize density
         kernMat[i][i] = pi #point mass at zero
     
@@ -124,8 +124,9 @@ if __name__ == "__main__":
 
     row = distMat[0]
 
-    #inverseLinearStep(row, 0, .75, 1)
+    inverseLinearStep(0, [.75, 1])
 
-    movementProb = zeroInflatedExponential(distMat=distMat, rate=10, pi=1000)
+    movementProb = zeroInflatedExponential(distMat=distMat, rate=1/10, pi=0.5)
 
-    migrationKernel(distMat, 0, .75, 1, dtruncExp)
+    a = 1.0e-10 #lower truncation bound
+    migrationKernel(distMat, dtruncExp, params=[0, 1/10, a, float("inf")])
