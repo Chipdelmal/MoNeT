@@ -1,7 +1,8 @@
-import math, sys
+import sys
+import math
 import numpy as np
 import vincenty as vn
-from scipy import expon
+from scipy.stats import expon
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Distances
@@ -38,7 +39,7 @@ def inverseLinearStep(distance, step, rate, dummy):
     '''
     This function returns a migration estimate based on the inverse of the
         distance. NOTE: This is a terrible way to do it, but it's a first
-        approximation. Should be replaced with the zero-inflated exponential.
+        approximation. Should be replaced with the dtruncExp().
     '''
     if math.isclose(distance, 0):
         return step
@@ -53,13 +54,15 @@ def migrationKernel(distMat, step, rate, dummy, kernelFun=inverseLinearStep):
         parameters to determine the change from distances into distance-based
         migration probabilities (based on the kernel function provided).
     '''
+    a = 1.0e-10
     coordsNum = len(distMat)
     migrMat = np.empty((coordsNum, coordsNum))
     for (i, row) in enumerate(distMat):
         for (j, dst) in enumerate(row):
-            migrMat[i][j] = kernelFun(dst, step, rate, dummy)
+            migrMat[i][j] = kernelFun(x=dst, r=rate, a=a, b=float("inf"))
         # Normalize rows to sum 1
         migrMat[i] = migrMat[i] / sum(migrMat[i])
+    print("migration kernel is ", migrMat)
     return migrMat
 
 def approxEqual(f1, f2):
@@ -84,8 +87,9 @@ def dtruncExp(x, r, a, b):
     Gb = expon.pdf(b, loc, scale)
 
     if approxEqual(Ga, Gb):
-        print "Truncation interval is not inside the domain of the density function"
+        print("Truncation interval is not inside the domain of the density function")
     density = expon.cdf(x, loc, scale) / expon.pdf(b, loc, scale) - expon.pdf(a, loc, scale)
+    print("density is ", density)
     return density
 
 def zeroInflatedExponential(distMat, rate, pi):
@@ -93,23 +97,21 @@ def zeroInflatedExponential(distMat, rate, pi):
         Mirrors the zero-inflated calcHurdleExpKernel in MGDrive-Kernels.cpp
     """
     a = 1.0e-10 #lower truncation bound
+    print("distMat is ",distMat)
     n = len(distMat) #num rows
 
-    kernMat = np.zeros(n, len(distMat[1]))
+    kernMat = np.zeros((n, len(distMat[1])))
 
     for i in range(n):
         for j in range(n):
             if i == j:
                 kernMat[i][j] = 0
             else:
-                kernMat[i][j] = dtruncExp(distMat[i][j], rate, a, inf_pos) #truncated density
+                kernMat[i][j] = dtruncExp(distMat[i][j], rate, a, float("inf")) #truncated density
         kernMat[i] = kernMat[i] / sum(kernMat[i]) * (1-pi) #normalize density
         kernMat[i][i] = pi #point mass at zero
     
     return kernMat
-
-
-
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Tests
@@ -122,8 +124,8 @@ if __name__ == "__main__":
 
     row = distMat[0]
 
-    inverseLinearStep(distMat, 0, .75, 1)
+    inverseLinearStep(row, 0, .75, 1)
 
     movementProb = zeroInflatedExponential(distMat=distMat, rate=10, pi=1000)
 
-    migrationKernel(distMat, 0, .75, 1, movementProb)
+    migrationKernel(distMat, 0, .75, 1, dtruncExp)
