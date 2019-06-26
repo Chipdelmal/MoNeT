@@ -127,10 +127,3 @@ import matplotlib.cm as cm
 #         plt.plot(int(row[0]), int(row[1]), marker='o', markersize=3, color=c)
 
 #     plt.show()
-
-from disutils.core import setup
-from Cython.Build import cythonize
-
-setup(
-        ext_modules = cythonize("MCR_Aggregate_Gillian2.R")
-)
