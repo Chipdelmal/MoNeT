@@ -119,7 +119,7 @@ update_population <- function(patchPops, lFile) {
 ###############################################################################
 ### Compare Transition Matrices
 ###############################################################################
-compare_matrices <- function(movementKernel, newmoves) {
+compare_matrices <- function(movementKernel, new_moves) {
   statesNamesA <- as.character(seq(1, length(movementKernel[1,]), by=1))
   statesNamesB <- as.character(seq(1, length(new_moves[1,]), by=1))
   markovA <- new("markovchain", states = statesNamesA, transitionMatrix =movementKernel,
