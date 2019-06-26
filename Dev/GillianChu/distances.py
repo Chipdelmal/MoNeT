@@ -83,12 +83,12 @@ def dtruncExp(x, r, a, b):
     if a >= b:
         return "argument a is greater than or equal to b"
     scale = 1.0/r
-    Ga = expon.pdf(a, loc, scale)
-    Gb = expon.pdf(b, loc, scale)
+    Ga = expon.cdf(a, loc, scale)
+    Gb = expon.cdf(b, loc, scale)
 
     if approxEqual(Ga, Gb):
         print("Truncation interval is not inside the domain of the density function")
-    density = expon.cdf(x, loc, scale) / expon.pdf(b, loc, scale) - expon.pdf(a, loc, scale)
+    density = expon.pdf(x, loc, scale) / expon.cdf(b, loc, scale) - expon.cdf(a, loc, scale)
     print("density is ", density)
     return density
 
@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
     row = distMat[0]
 
-    inverseLinearStep(row, 0, .75, 1)
+    #inverseLinearStep(row, 0, .75, 1)
 
     movementProb = zeroInflatedExponential(distMat=distMat, rate=10, pi=1000)
 
