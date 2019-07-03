@@ -1,33 +1,16 @@
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
+import FowlerAux as aux
 from sklearn.cluster import KMeans
 from sklearn.cluster import AgglomerativeClustering
 
-
 ##############################################################################
-def appendClustersToLatlongs(latlongs, clusters):
-    cLatlongs = [
-        [
-            latlongs[i][0], latlongs[i][1], clusters[i]
-        ] for i in range(len(clusters))
-    ]
-    return cLatlongs
-
-
-def exportListToCSV(path, listToExport):
-    with open(path, "w") as f:
-        writer = csv.writer(f)
-        writer.writerows(listToExport)
-    return True
-##############################################################################
-
-
-(seed, clustersNo, CLST_METHOD) = (10, 1000, 2)
+(seed, clustersNo, CLST_METHOD) = (10, 1000, 1)
 PATH = "/Volumes/marshallShare/ERACR/Fowler/"
 LATLONGS = "fowler_centroids.csv"
 latlongs = np.genfromtxt(PATH + LATLONGS, delimiter=',')
-
+##############################################################################
 if CLST_METHOD == 1:
     clObj = KMeans(
         n_clusters=clustersNo,
@@ -39,8 +22,11 @@ elif CLST_METHOD == 2:
         affinity='euclidean', compute_full_tree='auto'
     )
 clusters = clObj.fit_predict(latlongs)
-
-
+##############################################################################
+cLatlongs = aux.appendClustersToLatlongs(latlongs, clusters)
+csvPath = PATH + "Fowler" + str(CLST_METHOD) + ".csv"
+aux.exportListToCSV(csvPath, cLatlongs)
+##############################################################################
 plt.figure(figsize=(20, 20))
 plt.scatter(
     latlongs[:, 0], latlongs[:, 1], c=clusters,
@@ -54,9 +40,3 @@ plt.savefig(
     dpi=250
 )
 plt.close()
-
-
-cLatlongs = appendClustersToLatlongs(latlongs, clusters)
-
-csvPath = PATH + "Fowler" + str(CLST_METHOD) + ".csv"
-exportListToCSV(csvPath, cLatlongs)
