@@ -1,4 +1,5 @@
 import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
 import FowlerAux as aux
 import vincenty as vn
@@ -61,3 +62,5 @@ plt.close()
 distPath = PATH + "FowlerDistanceMatrix.csv"
 distMat = monet.calculateDistanceMatrix(latlongs, distFun=vn.vincenty) * 1000
 np.savetxt(distPath, distMat.astype(int), fmt='%i', delimiter=',')
+heat = sns.heatmap(distMat, annot=False)
+heat.get_figure().savefig(PATH + "heatmap.png", dpi=500)
