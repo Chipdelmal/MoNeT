@@ -1,7 +1,26 @@
+import csv
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.cluster import AgglomerativeClustering
+
+
+##############################################################################
+def appendClustersToLatlongs(latlongs, clusters):
+    cLatlongs = [
+        [
+            latlongs[i][0], latlongs[i][1], clusters[i]
+        ] for i in range(len(clusters))
+    ]
+    return cLatlongs
+
+
+def exportListToCSV(path, listToExport):
+    with open(path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerows(listToExport)
+    return True
+##############################################################################
 
 
 (seed, clustersNo, CLST_METHOD) = (10, 1000, 2)
@@ -34,3 +53,10 @@ plt.savefig(
     "./images/fowler" + str(CLST_METHOD) + ".png",
     dpi=250
 )
+plt.close()
+
+
+cLatlongs = appendClustersToLatlongs(latlongs, clusters)
+
+csvPath = PATH + "Fowler" + str(CLST_METHOD) + ".csv"
+exportListToCSV(csvPath, cLatlongs)
