@@ -1,5 +1,6 @@
 import scipy.stats as stats
 import numpy as np
+import MoNeT_MGDrivE as monet
 
 def approx_equals(a, b, margin):
     dif = np.fabs(a-b)
@@ -27,3 +28,4 @@ def trunc_exp(x, rate, a ,b):
 
 
 print(trunc_exp(1023.1,1/800.0,50,5e3))
+monet.truncatedExponential(1023.1, params=[1/800,50,5e3])

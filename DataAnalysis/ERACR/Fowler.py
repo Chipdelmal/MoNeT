@@ -12,6 +12,7 @@ from sklearn.cluster import SpectralClustering
 # Parameters Setup
 ##############################################################################
 (seed, clustersNo, CLST_METHOD) = (42, 1000, 3)
+(lifeStayProb, adultMortality) = (.72, .09)
 PATH = "/Volumes/marshallShare/ERACR/Fowler/"
 LATLONGS = "fowler_centroids.csv"
 latlongs = np.genfromtxt(PATH + LATLONGS, delimiter=',')
@@ -26,7 +27,8 @@ if CLST_METHOD == 1:
 elif CLST_METHOD == 2:
     clObj = AgglomerativeClustering(
         n_clusters=clustersNo,
-        affinity='euclidean', compute_full_tree='auto'
+        affinity='euclidean',
+        compute_full_tree='auto'
     )
 elif CLST_METHOD == 3:
     clObj = SpectralClustering(
@@ -63,4 +65,18 @@ distPath = PATH + "FowlerDistanceMatrix.csv"
 distMat = monet.calculateDistanceMatrix(latlongs, distFun=vn.vincenty) * 1000
 np.savetxt(distPath, distMat.astype(int), fmt='%i', delimiter=',')
 heat = sns.heatmap(distMat, annot=False)
-heat.get_figure().savefig(PATH + "heatmap.png", dpi=500)
+heat.get_figure().savefig(PATH + "heatmapDist.png", dpi=500)
+##############################################################################
+# Export migration matrix
+##############################################################################
+migrPath = PATH + "FowlerMigrationMatrix.csv"
+zeroInflation = .72 ** .09
+migrMat = monet.zeroInflatedExponentialMigrationKernel(
+    distMat,
+    params=monet.AEDES_EXP_PARAMS,
+    zeroInflation=lifeStayProb ** adultMortality
+)
+monet.testMarkovMatrix(migrMat)
+np.savetxt(migrPath, migrMat, delimiter=',')
+heat = sns.heatmap(migrMat, annot=False)
+heat.get_figure().savefig(PATH + "heatmapMigr.png", dpi=500)
