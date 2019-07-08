@@ -11,10 +11,20 @@ from sklearn.cluster import SpectralClustering
 ##############################################################################
 # Parameters Setup
 ##############################################################################
-(seed, clustersNo, CLST_METHOD) = (42, 1000, 3)
+(seed, clustersNo, CLST_METHOD) = (42, 250, 1)
 (lifeStayProb, adultMortality) = (.72, .09)
+# PLACE = "BakersfieldRiver"
+# PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/"
+# LATLONGS = "full2.csv"
+PLACE = "Fowler"
 PATH = "/Volumes/marshallShare/ERACR/Fowler/"
-LATLONGS = "fowler_centroids.csv"
+LATLONGS = "fowler_centroids_ordered.csv"
+# PLACE = "Gordonvale"
+# PATH = "/Volumes/marshallShare/MGDrivE_Datasets/ThresholdDependent/GeoLocations/Curated/"
+# LATLONGS = "YorkeysKnob_03.csv"
+# PLACE = "Fowler"
+# PATH = "/Volumes/marshallShare/ERACR/Fowler/"
+# LATLONGS = "fowler_centroids.csv"
 latlongs = np.genfromtxt(PATH + LATLONGS, delimiter=',')
 ##############################################################################
 # Clustering Algorithms
@@ -40,7 +50,7 @@ clusters = clObj.fit_predict(latlongs)
 # Clustering the pointset
 ##############################################################################
 cLatlongs = aux.appendClustersToLatlongs(latlongs, clusters)
-csvPath = PATH + "Fowler" + str(CLST_METHOD) + ".csv"
+csvPath = PATH + PLACE + "CLS" + str(CLST_METHOD) + ".csv"
 aux.exportListToCSV(csvPath, cLatlongs)
 ##############################################################################
 # Plotting
@@ -54,22 +64,22 @@ plt.tight_layout()
 plt.xlim(min(latlongs[:, 0]) - .0005, max(latlongs[:, 0]) + .0005)
 plt.ylim(min(latlongs[:, 1]) - .0005, max(latlongs[:, 1]) + .0005)
 plt.savefig(
-    PATH + "fowler" + str(CLST_METHOD) + ".png",
+    PATH + PLACE + str(CLST_METHOD) + ".png",
     dpi=250
 )
 plt.close()
 ##############################################################################
 # Export distance matrix
 ##############################################################################
-distPath = PATH + "FowlerDistanceMatrix.csv"
+distPath = PATH + PLACE + "DIST.csv"
 distMat = monet.calculateDistanceMatrix(latlongs, distFun=vn.vincenty) * 1000
 np.savetxt(distPath, distMat.astype(int), fmt='%i', delimiter=',')
-heat = sns.heatmap(distMat, annot=False)
-heat.get_figure().savefig(PATH + "heatmapDist.png", dpi=500)
+# heat = sns.heatmap(distMat, annot=False)
+# heat.get_figure().savefig(PATH + PLACE + "DIST.png", dpi=500)
 ##############################################################################
 # Export migration matrix
 ##############################################################################
-migrPath = PATH + "FowlerMigrationMatrix.csv"
+migrPath = PATH + PLACE + "MIGR.csv"
 zeroInflation = .72 ** .09
 migrMat = monet.zeroInflatedExponentialMigrationKernel(
     distMat,
@@ -78,5 +88,5 @@ migrMat = monet.zeroInflatedExponentialMigrationKernel(
 )
 monet.testMarkovMatrix(migrMat)
 np.savetxt(migrPath, migrMat, delimiter=',')
-heat = sns.heatmap(migrMat, annot=False)
-heat.get_figure().savefig(PATH + "heatmapMigr.png", dpi=500)
+# heat = sns.heatmap(migrMat, annot=False)
+# heat.get_figure().savefig(PATH + "MIGR.png", dpi=500)
