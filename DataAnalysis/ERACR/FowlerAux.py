@@ -34,7 +34,7 @@ if __name__ == "__main__":
     from sklearn.cluster import SpectralClustering
     ###########################################################################
     # Setup
-    (seed, clustersNo, CLST_METHOD) = (42, 250, 1)
+    (seed, clustersNo, CLST_METHOD) = (42, 50, 1)
     (lifeStayProb, adultMortality) = (.72, .09)
     PLACE = "Gordonvale"
     PATH = "/Volumes/marshallShare/MGDrivE_Datasets/ThresholdDependent/GeoLocations/Curated/"
@@ -63,13 +63,13 @@ if __name__ == "__main__":
     clustersNum = len(clustersID)
     aggrdMat = np.zeros([clustersNum, clustersNum], dtype=float)
     grpdClust = [list(np.where(clusters == id)[0]) for id in clustersID]
-    grpdLens= [len(clst) for clst in groupedClusters]
-
-
+    grpdLens = [len(clst) for clst in grpdClust]
 
     for row in range(clustersNum):
+        rowGroup = grpdClust[row]
         for col in range(clustersNum):
-            group = clustersID[col]
-            currNodes = grpdClust[group]
-            aggrdMat[row, col] = sum(migrMat[row][currNodes])
-    aggrdMat
+            aggrdMat[row, col] = sum(migrMat[rowGroup][grpdClust[col]])
+        aggrdMat[row] = aggrdMat[row] / grpdLens[row]
+
+    sum(aggrdMat[1])
+    monet.testMarkovMatrix(migrMat)
