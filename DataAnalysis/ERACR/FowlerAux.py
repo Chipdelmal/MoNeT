@@ -60,6 +60,16 @@ if __name__ == "__main__":
     # Aggregation
     sitesNum = len(latlongs)
     clustersID = sorted(set(clusters))
-    aggregatedMat = np.empty([sitesNum, sitesNum], dtype=float)
+    clustersNum = len(clustersID)
+    aggrdMat = np.zeros([clustersNum, clustersNum], dtype=float)
     grpdClust = [list(np.where(clusters == id)[0]) for id in clustersID]
     grpdLens= [len(clst) for clst in groupedClusters]
+
+
+
+    for row in range(clustersNum):
+        for col in range(clustersNum):
+            group = clustersID[col]
+            currNodes = grpdClust[group]
+            aggrdMat[row, col] = sum(migrMat[row][currNodes])
+    aggrdMat
