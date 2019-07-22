@@ -10,7 +10,7 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import SpectralClustering
 
 
-for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 2000]:
+for clsts in [1, 2, 50, 100, 250, 500, 750, 1000, 1250, 1500, 2000]:
     ##############################################################################
     # Parameters Setup
     ##############################################################################
@@ -19,9 +19,9 @@ for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 2000]:
     # PLACE = "BakersfieldRiver"
     # PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/"
     # LATLONGS = "full2.csv"
-    PLACE = "Fowler"
-    PATH = "/Volumes/marshallShare/ERACR/Fowler/Clustered/"
-    LATLONGS = "fowler_centroids_ordered2.csv"
+    PLACE = "Yorkeys"
+    PATH = "/Volumes/marshallShare/ERACR/Yorkeys/Clustered/"
+    LATLONGS = "YorkeysKnob_01.csv"
     # PLACE = "Gordonvale"
     # PATH = "/Volumes/marshallShare/MGDrivE_Datasets/ThresholdDependent/GeoLocations/Curated/"
     # LATLONGS = "YorkeysKnob_03.csv"
@@ -60,7 +60,7 @@ for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 2000]:
     ##############################################################################
     # Plotting
     ##############################################################################
-    plt.figure(figsize=(20, 20))
+    plt.figure(figsize=(35, 20))
     plt.scatter(
         latlongs[:, 0], latlongs[:, 1], c=clusters,
         alpha=.25, cmap='hsv', s=150, linewidth=4
