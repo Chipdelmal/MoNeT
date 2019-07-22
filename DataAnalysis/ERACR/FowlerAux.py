@@ -40,11 +40,11 @@ def aggregateLandscapeAltVic(migrationMatrix, clusters):
     aggr_matrix = np.zeros([num_clusters, num_clusters], dtype=float)
     aggr_number = [0]*num_clusters
     for row in range(matrix_size):
+        cRow = clusters[row]
+        aggr_number[cRow] +=1
         for col in range(matrix_size):
-            cRow = clusters[row]
             cCol = clusters[col]
             aggr_matrix[cRow][cCol] += migrationMatrix[row][col]
-            aggr_number[cRow] +=1
     for row in range(num_clusters):
         aggr_matrix[row] = [x/aggr_number[row] for x in aggr_matrix[row]]
     return aggr_matrix
