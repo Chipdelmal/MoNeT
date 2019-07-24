@@ -10,7 +10,7 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import SpectralClustering
 
 
-for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 2000]:
+for clsts in [1, 500, 1000, 2000, 3000]:
     ##############################################################################
     # Parameters Setup
     ##############################################################################
@@ -19,9 +19,9 @@ for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 2000]:
     # PLACE = "BakersfieldRiver"
     # PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/"
     # LATLONGS = "full2.csv"
-    PLACE = "Fowler"
-    PATH = "/Volumes/marshallShare/ERACR/Fowler/Clustered/"
-    LATLONGS = "fowler_centroids_ordered2.csv"
+    PLACE = "Bakersfield"
+    PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Full/clustered/"
+    LATLONGS = "barkersfielFull_LatLongs.csv"
     # PLACE = "Gordonvale"
     # PATH = "/Volumes/marshallShare/MGDrivE_Datasets/ThresholdDependent/GeoLocations/Curated/"
     # LATLONGS = "YorkeysKnob_03.csv"
@@ -54,26 +54,26 @@ for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 2000]:
     ##############################################################################
     # Clustering the pointset
     ##############################################################################
-    cLatlongs = aux.appendClustersToLatlongs(latlongs, clusters)
     csvPath = PATH + PLACE + "_CLS_" + str(CLST_METHOD) + "_" + namePad + ".csv"
     csvPathSz = PATH + PLACE + "_CLL_" + str(CLST_METHOD) + "_" + namePad + ".csv"
+    cLatlongs = aux.appendClustersToLatlongs(latlongs, clusters)
     clustersSizes = [sorted(clusters).count(x) for x in range(clustersNo)]
     aux.exportListToCSV(csvPath, cLatlongs)
     np.savetxt(csvPathSz, clustersSizes, fmt='%i', delimiter='\n')
     ##############################################################################
     # Plotting
     ##############################################################################
-    plt.figure(figsize=(20, 20))
+    plt.figure(figsize=(35, 35))
     plt.scatter(
         latlongs[:, 0], latlongs[:, 1], c=clusters,
-        alpha=.25, cmap='hsv', s=150, linewidth=4
+        alpha=.1, cmap='hsv', s=50, linewidth=0
     )
     plt.tight_layout()
     plt.xlim(min(latlongs[:, 0]) - .0005, max(latlongs[:, 0]) + .0005)
     plt.ylim(min(latlongs[:, 1]) - .0005, max(latlongs[:, 1]) + .0005)
     plt.savefig(
         PATH + PLACE + "_MAP_" + str(CLST_METHOD) + "_" + namePad + ".png",
-        dpi=250
+        dpi=500
     )
     plt.close()
     ##############################################################################

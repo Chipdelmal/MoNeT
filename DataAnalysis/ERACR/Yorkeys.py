@@ -8,13 +8,14 @@ import MoNeT_MGDrivE as monet
 from sklearn.cluster import KMeans
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import SpectralClustering
+from itertools import groupby
 
 
-for clsts in [1, 2, 50, 100, 250, 500, 750, 1000, 1250, 1500, 2000]:
+for clsts in [1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000]:
     ##############################################################################
     # Parameters Setup
     ##############################################################################
-    (seed, clustersNo, CLST_METHOD) = (int(time.time()), clsts, 1)
+    (seed, clustersNo, CLST_METHOD) = (42, clsts, 1)
     (lifeStayProb, adultMortality) = (.72, .09)
     # PLACE = "BakersfieldRiver"
     # PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/"
@@ -56,7 +57,10 @@ for clsts in [1, 2, 50, 100, 250, 500, 750, 1000, 1250, 1500, 2000]:
     ##############################################################################
     cLatlongs = aux.appendClustersToLatlongs(latlongs, clusters)
     csvPath = PATH + PLACE + "_CLS_" + str(CLST_METHOD) + "_" + namePad + ".csv"
+    csvPathSz = PATH + PLACE + "_CLL_" + str(CLST_METHOD) + "_" + namePad + ".csv"
+    clustersSizes = [sorted(clusters).count(x) for x in range(clustersNo)]
     aux.exportListToCSV(csvPath, cLatlongs)
+    np.savetxt(csvPathSz, clustersSizes, fmt='%i', delimiter='\n')
     ##############################################################################
     # Plotting
     ##############################################################################
@@ -70,7 +74,7 @@ for clsts in [1, 2, 50, 100, 250, 500, 750, 1000, 1250, 1500, 2000]:
     plt.ylim(min(latlongs[:, 1]) - .0005, max(latlongs[:, 1]) + .0005)
     plt.savefig(
         PATH + PLACE + "_MAP_" + str(CLST_METHOD) + "_" + namePad + ".png",
-        dpi=250
+        dpi=500
     )
     plt.close()
     ##############################################################################
