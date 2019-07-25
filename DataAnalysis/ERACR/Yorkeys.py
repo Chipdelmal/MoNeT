@@ -11,11 +11,11 @@ from sklearn.cluster import SpectralClustering
 from itertools import groupby
 
 
-for clsts in [1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000]:
+for clsts in [1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]:
     ##############################################################################
     # Parameters Setup
     ##############################################################################
-    (seed, clustersNo, CLST_METHOD) = (42, clsts, 1)
+    (seed, clustersNo, CLST_METHOD) = (int(time.time()), clsts, 2)
     (lifeStayProb, adultMortality) = (.72, .09)
     # PLACE = "BakersfieldRiver"
     # PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/"
@@ -39,19 +39,21 @@ for clsts in [1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000]:
             n_clusters=clustersNo,
             random_state=seed
         )
+        clustersObj = clObj.fit(latlongs)
+        (clusters, centroids) = (clustersObj.labels_, clustersObj.cluster_centers_)
     elif CLST_METHOD == 2:
         clObj = AgglomerativeClustering(
             n_clusters=clustersNo,
             affinity='euclidean',
             compute_full_tree='auto'
         )
+        clustersObj = clObj.fit(latlongs)
+        (clusters) = (clustersObj.labels_)
     elif CLST_METHOD == 3:
         clObj = SpectralClustering(
             n_clusters=clustersNo,
             random_state=seed
         )
-    clustersObj = clObj.fit(latlongs)
-    (clusters, centroids) = (clustersObj.labels_, clustersObj.cluster_centers_)
     ##############################################################################
     # Clustering the pointset
     ##############################################################################
@@ -103,8 +105,8 @@ for clsts in [1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000]:
     # Export aggregated migration matrix
     ##############################################################################
     aggrPath = PATH + PLACE + "_AGG_" + str(CLST_METHOD) + "_" + namePad + ".csv"
-    aggrCPath = PATH + PLACE + "_AGC_" + str(CLST_METHOD) + namePad + ".csv"
+    aggrCPath = PATH + PLACE + "_AGC_" + str(CLST_METHOD) + "_" + namePad + ".csv"
     aggrMat = monet.aggregateLandscape(migrMat, clusters)
     monet.testMarkovMatrix(aggrMat)
     np.savetxt(aggrPath, aggrMat, delimiter=',')
-    np.savetxt(aggrCPath, centroids, delimiter=',')
+    # np.savetxt(aggrCPath, centroids, delimiter=',')

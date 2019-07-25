@@ -10,7 +10,7 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import SpectralClustering
 
 
-for clsts in [1750]:#[1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750]:
+for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]:
     ##############################################################################
     # Parameters Setup
     ##############################################################################
@@ -38,19 +38,21 @@ for clsts in [1750]:#[1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750]:
             n_clusters=clustersNo,
             random_state=seed
         )
+        clustersObj = clObj.fit(latlongs)
+        (clusters, centroids) = (clustersObj.labels_, clustersObj.cluster_centers_)
     elif CLST_METHOD == 2:
         clObj = AgglomerativeClustering(
             n_clusters=clustersNo,
             affinity='euclidean',
             compute_full_tree='auto'
         )
+        clustersObj = clObj.fit(latlongs)
+        (clusters) = (clustersObj.labels_)
     elif CLST_METHOD == 3:
         clObj = SpectralClustering(
             n_clusters=clustersNo,
             random_state=seed
         )
-    clustersObj = clObj.fit(latlongs)
-    (clusters, centroids) = (clustersObj.labels_, clustersObj.cluster_centers_)
     ##############################################################################
     # Clustering the pointset
     ##############################################################################
@@ -102,8 +104,8 @@ for clsts in [1750]:#[1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750]:
     # Export aggregated migration matrix
     ##############################################################################
     aggrPath = PATH + PLACE + "_AGG_" + str(CLST_METHOD) + "_" + namePad + ".csv"
-    aggrCPath = PATH + PLACE + "_AGC_" + str(CLST_METHOD) + namePad + ".csv"
+    aggrCPath = PATH + PLACE + "_AGC_" + str(CLST_METHOD) + "_" + namePad + ".csv"
     aggrMat = monet.aggregateLandscape(migrMat, clusters)
     monet.testMarkovMatrix(aggrMat)
     np.savetxt(aggrPath, aggrMat, delimiter=',')
-    np.savetxt(aggrCPath, centroids, delimiter=',')
+    # np.savetxt(aggrCPath, centroids, delimiter=',')

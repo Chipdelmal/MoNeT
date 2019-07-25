@@ -7,6 +7,7 @@ import MoNeT_MGDrivE as monet
 import aggregationMetricAux as aux
 import matplotlib.pyplot as plt
 
+
 def plotTimeError(data, metric=np.mean, yRange=1):
     plt.figure(figsize=(5, 5))
     plt.grid()
@@ -17,12 +18,21 @@ def plotTimeError(data, metric=np.mean, yRange=1):
     plt.ylim(0, yRange)
     return plt
 
+
+LAND = 1
 # #############################################################################
 # User-defined experiment input
 # #############################################################################
-expBaseName = "Fowler_AGG_2_"
-truthExperiment = expBaseName + "01750"
-pathRoot = "/Volumes/marshallShare/ERACR/Fowler/Experiment/"
+if LAND == 0:
+    expBaseName = "Fowler_AGG_2_"
+    pathRoot = "/Volumes/marshallShare/ERACR/Fowler/Experiment/"
+    truthExperiment = expBaseName + "01750"
+    expsList = [750, 1000, 1250, 1500, 1750]  # [250, 500, 750, 1000, 1250, 1500]
+elif LAND == 1:
+    expBaseName = "Yorkeys_AGG_1_"
+    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys/Experiment/"
+    truthExperiment = expBaseName + "02000"
+    expsList = [500, 750, 1000, 1250, 1500, 2000]
 pathSet = pathRoot + expBaseName + "*/"
 # #############################################################################
 # Setting up the experiments paths
@@ -38,9 +48,7 @@ basePopDyns = monet.aggregateGenotypesInNode(landscapeSumData, aux.genAggDict)
 # #############################################################################
 # Experiment iterations
 # #############################################################################
-# [250, 500, 750, 1000, 1250, 1500]:
-# [750, 1000, 1250, 1500]:
-for i in [250]:
+for i in [500]:
     # #############################################################################
     # Calculating the error metric
     # #############################################################################
