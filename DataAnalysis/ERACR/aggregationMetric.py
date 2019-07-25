@@ -8,14 +8,14 @@ import matplotlib.pyplot as plt
 import aggregationMetricAux as aux
 
 
-def plotTimeError(data):
+def plotTimeError(data, metric=np.mean, yRange = 1):
     plt.figure(figsize = (5, 5))
     plt.grid()
     for i in range(len(data[0])):
         plt.plot(data[:,i], color=aux.colors[i], linewidth=1.5, alpha=.8)
-    # plt.title("Mean:" + str(np.mean(data, axis=0)))
+    plt.title(str(np.around(metric(data, axis=0), decimals=3)))
     plt.xlim(0, len(data))
-    plt.ylim(0, 1)
+    plt.ylim(0, yRange)
     return plt
 
 
@@ -34,19 +34,15 @@ truthExpPath = glob.glob(pathRoot + truthExperiment + "/ANALYZED/*")[0] + "/"
 # Calculating the baseline level (unaggregated)
 # #############################################################################
 filenames = monet.readExperimentFilenames(truthExpPath)
-landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-    filenames, male=True, female=True
-)
+landscapeSumData = monet.sumLandscapePopulationsFromFiles(filenames)
 basePopDyns = monet.aggregateGenotypesInNode(landscapeSumData, aux.genAggDict)
 # #############################################################################
 # Calculating the error metric
 # #############################################################################
-refExperiment = "Fowler_AGG_1_01500"
+refExperiment = "Fowler_AGG_1_00750"
 refExpPath = glob.glob(pathRoot + refExperiment + "/ANALYZED/*")[0] + "/"
 filenames = monet.readExperimentFilenames(refExpPath)
-landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-    filenames, male=False, female=True, dataType=float
-)
+landscapeSumData = monet.sumLandscapePopulationsFromFiles(filenames)
 refPopDyns = monet.aggregateGenotypesInNode(landscapeSumData, aux.genAggDict)
 # #############################################################################
 # Calculating the error metric
@@ -59,22 +55,29 @@ error = (basePopDyns['population'] - refPopDyns['population'])
 rmse = abs(error)
 rmseNrm = rmse / initPop
 rmseAcc = np.cumsum(rmseNrm, axis=0) / simTime
+rmseGra = np.gradient(rmseNrm, axis=0)
+rmseInt = np.trapz(rmseNrm, axis=0) / simTime
 # #############################################################################
 # Export Plot
 # #############################################################################
 # RMSE Normalized
-fig = plotTimeError(rmseNrm)
+fig = plotTimeError(rmseNrm, metric=np.mean)
 monet.quickSaveFigure(
-    fig,
-    pathRoot + "RMSE_NRM_" + refExperiment + ".png",
+    fig, pathRoot + "RMSE_NRM_" + refExperiment + ".png",
     dpi=aux.styleS["dpi"], format="png"
 )
 fig.close()
 # RMSE Normalized Cumulative
-fig = plotTimeError(rmseAcc)
+fig = plotTimeError(rmseAcc, metric=np.max)
 monet.quickSaveFigure(
-    fig,
-    pathRoot + "RMSE_ACC_" + refExperiment + ".png",
+    fig, pathRoot + "RMSE_ACC_" + refExperiment + ".png",
+    dpi=aux.styleS["dpi"], format="png"
+)
+fig.close()
+# RMSE Normalized Gradient
+fig = plotTimeError(rmseGra, metric=np.max, yRange = np.max(rmseGra))
+monet.quickSaveFigure(
+    fig, pathRoot + "RMSE_GRA_" + refExperiment + ".png",
     dpi=aux.styleS["dpi"], format="png"
 )
 fig.close()
