@@ -4,26 +4,24 @@
 import glob
 import numpy as np
 import MoNeT_MGDrivE as monet
-import matplotlib.pyplot as plt
 import aggregationMetricAux as aux
+import matplotlib.pyplot as plt
 
-
-def plotTimeError(data, metric=np.mean, yRange = 1):
-    plt.figure(figsize = (5, 5))
+def plotTimeError(data, metric=np.mean, yRange=1):
+    plt.figure(figsize=(5, 5))
     plt.grid()
     for i in range(len(data[0])):
-        plt.plot(data[:,i], color=aux.colors[i], linewidth=1.5, alpha=.8)
+        plt.plot(data[:, i], color=aux.colors[i], linewidth=1.5, alpha=.8)
     plt.title(str(np.around(metric(data, axis=0), decimals=3)))
     plt.xlim(0, len(data))
     plt.ylim(0, yRange)
     return plt
 
-
 # #############################################################################
 # User-defined experiment input
 # #############################################################################
-expBaseName = "Fowler_AGG_1_"
-truthExperiment = expBaseName + "01500"
+expBaseName = "Fowler_AGG_2_"
+truthExperiment = expBaseName + "01750"
 pathRoot = "/Volumes/marshallShare/ERACR/Fowler/Experiment/"
 pathSet = pathRoot + expBaseName + "*/"
 # #############################################################################
@@ -40,15 +38,18 @@ basePopDyns = monet.aggregateGenotypesInNode(landscapeSumData, aux.genAggDict)
 # #############################################################################
 # Experiment iterations
 # #############################################################################
-for i in [250, 500, 750, 1000, 1250, 1500]:
+# [250, 500, 750, 1000, 1250, 1500]:
+# [750, 1000, 1250, 1500]:
+for i in [250]:
     # #############################################################################
     # Calculating the error metric
     # #############################################################################
-    refExperiment = expBaseName + str(i).rjust(5,"0")
+    refExperiment = expBaseName + str(i).rjust(5, "0")
     refExpPath = glob.glob(pathRoot + refExperiment + "/ANALYZED/*")[0] + "/"
     filenames = monet.readExperimentFilenames(refExpPath)
     landscapeSumData = monet.sumLandscapePopulationsFromFiles(filenames)
-    refPopDyns = monet.aggregateGenotypesInNode(landscapeSumData, aux.genAggDict)
+    refPopDyns = monet.aggregateGenotypesInNode(
+        landscapeSumData, aux.genAggDict)
     # #############################################################################
     # Calculating the error metric
     # #############################################################################

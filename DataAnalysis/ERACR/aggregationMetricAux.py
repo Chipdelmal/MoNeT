@@ -1,3 +1,4 @@
+import numpy as np
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
@@ -20,9 +21,12 @@ genAggDict = monet.autoGenerateGenotypesDictionary(
     ]
 )
 
-def plotTimeError(data):
-    plt.figure(figsize = (5, 5))
+def plotTimeError(data, metric=np.mean, yRange=1):
+    plt.figure(figsize=(5, 5))
+    plt.grid()
     for i in range(len(data[0])):
-        plt.plot(data[:,i], color=aux.colors[i], linewidth=1.5, alpha=.75)
-    plt.ylim(0, 1)
+        plt.plot(data[:, i], color=colors[i], linewidth=1.5, alpha=.8)
+    plt.title(str(np.around(metric(data, axis=0), decimals=3)))
+    plt.xlim(0, len(data))
+    plt.ylim(0, yRange)
     return plt
