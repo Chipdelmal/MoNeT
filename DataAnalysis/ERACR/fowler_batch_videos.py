@@ -17,6 +17,10 @@ imagePattern = '/c_%06d.png'
 
 for expFolder in sorted(glob.glob(folder+'*_AGG_*')):
     expBaseName = expFolder.split('/')[-1]
+    print(expBaseName)
+    clusteringNum = int(expBaseName.split('_')[-1])
+    if clusteringNum < 100 or clusteringNum >1200:
+        continue
     for expPath in sorted(glob.glob(expFolder+'/ANALYZED/E_*')):
         vname = expPath.replace('ANALYZED','videos')+'_cdots.mp4'
         bgName  = expBaseName.replace('_AGG_','_MAP_').replace('_2_','_1_')
