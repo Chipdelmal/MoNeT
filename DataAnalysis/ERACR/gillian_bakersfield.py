@@ -40,6 +40,7 @@ pathSet = pathRoot + "pusheen5541/"  # + "eRACR29"
 pathOut = pathSet + "images"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
+
 for j in range(len(foldersList)):
     #id = foldersList[j].split("/")[-1].split("_")[0]
     experimentsFolders = glob.glob(foldersList[0] + "/0*")
