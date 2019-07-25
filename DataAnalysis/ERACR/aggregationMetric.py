@@ -8,6 +8,17 @@ import matplotlib.pyplot as plt
 import aggregationMetricAux as aux
 
 
+def plotTimeError(data):
+    plt.figure(figsize = (5, 5))
+    plt.grid()
+    for i in range(len(data[0])):
+        plt.plot(data[:,i], color=aux.colors[i], linewidth=1.5, alpha=.8)
+    # plt.title("Mean:" + str(np.mean(data, axis=0)))
+    plt.xlim(0, len(data))
+    plt.ylim(0, 1)
+    return plt
+
+
 # #############################################################################
 # User-defined experiment input
 # #############################################################################
@@ -30,7 +41,7 @@ basePopDyns = monet.aggregateGenotypesInNode(landscapeSumData, aux.genAggDict)
 # #############################################################################
 # Calculating the error metric
 # #############################################################################
-refExperiment = "Fowler_AGG_1_00750"
+refExperiment = "Fowler_AGG_1_01500"
 refExpPath = glob.glob(pathRoot + refExperiment + "/ANALYZED/*")[0] + "/"
 filenames = monet.readExperimentFilenames(refExpPath)
 landscapeSumData = monet.sumLandscapePopulationsFromFiles(
@@ -47,21 +58,23 @@ simTime = len(basePopDyns['population'])
 error = (basePopDyns['population'] - refPopDyns['population'])
 rmse = abs(error)
 rmseNrm = rmse / initPop
-rmseAcc = np.cumsum(rmse, axis=0) / simTime
+rmseAcc = np.cumsum(rmseNrm, axis=0) / simTime
 # #############################################################################
 # Export Plot
 # #############################################################################
-fig = plt.figure()
-for i in range(len(rmse[0])):
-    plt.plot(rmseAcc[:,i], color=aux.colors[i], linewidth=0.5)
-fig.get_axes()[0].set_ylim(0, 1)
+# RMSE Normalized
+fig = plotTimeError(rmseNrm)
 monet.quickSaveFigure(
     fig,
-    pathRoot + "RMSE_" +
-    refExperiment + ".png",
-    dpi=aux.styleS["dpi"],
-    format="png"
+    pathRoot + "RMSE_NRM_" + refExperiment + ".png",
+    dpi=aux.styleS["dpi"], format="png"
 )
-
-
-monet.getClusters
+fig.close()
+# RMSE Normalized Cumulative
+fig = plotTimeError(rmseAcc)
+monet.quickSaveFigure(
+    fig,
+    pathRoot + "RMSE_ACC_" + refExperiment + ".png",
+    dpi=aux.styleS["dpi"], format="png"
+)
+fig.close()

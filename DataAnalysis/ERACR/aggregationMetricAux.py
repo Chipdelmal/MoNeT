@@ -20,9 +20,9 @@ genAggDict = monet.autoGenerateGenotypesDictionary(
     ]
 )
 
-def plotTimeError(data, path):
-    fig = plt.figure()
+def plotTimeError(data):
+    plt.figure(figsize = (5, 5))
     for i in range(len(data[0])):
-        plt.plot(data[:,i], color=colors[i], linewidth=0.5)
-    fig.get_axes()[0].set_ylim(0, 1)
-    return fig
+        plt.plot(data[:,i], color=aux.colors[i], linewidth=1.5, alpha=.75)
+    plt.ylim(0, 1)
+    return plt
