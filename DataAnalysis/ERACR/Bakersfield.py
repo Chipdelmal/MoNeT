@@ -10,7 +10,7 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import SpectralClustering
 
 
-for clsts in [1, 500, 1000, 2000, 3000]:
+for clsts in [1, 1000, 2000, 3000]:
     ##############################################################################
     # Parameters Setup
     ##############################################################################
@@ -20,7 +20,7 @@ for clsts in [1, 500, 1000, 2000, 3000]:
     # PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/"
     # LATLONGS = "full2.csv"
     PLACE = "Bakersfield"
-    PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Full/clustered/"
+    PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Full/Clustered/"
     LATLONGS = "barkersfielFull_LatLongs.csv"
     # PLACE = "Gordonvale"
     # PATH = "/Volumes/marshallShare/MGDrivE_Datasets/ThresholdDependent/GeoLocations/Curated/"
