@@ -21,7 +21,7 @@ cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
     "aspect": .0075, "colors": colors, "format": "png",
-    "xRange": [0, 5500], "yRange": [0, 70000]  # 590000]  # 2500]
+    "xRange": [0, 5500], "yRange": [0, 40000]  # 590000]  # 2500]
 }
 styleT = {
     "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
@@ -32,16 +32,17 @@ styleT = {
 # Setup
 ##############################################################################
 # nameExp = "E_0125_02_00028"
-pathRoot = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/"
-pathSet = pathRoot + "MultipleRelease6/"  # + "eRACR29"
-pathOut = pathSet + "images"
+pathRoot = "/Volumes/marshallShare/ERACR/Fowler/Experiment/"
+pathSet = pathRoot + "Fowler_AGG_*/"  # + "eRACR29"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
-for j in range(len(foldersList)):
+for folderElem in sorted(foldersList):
     # id = foldersList[j].split("/")[-1].split("_")[0]
-    experimentsFolders = glob.glob(foldersList[0] + "/E_*")
+    print(folderElem)
+    experimentsFolders = glob.glob(folderElem+ "/E_*")
+    pathOut = folderElem.replace("ANALYZED", "images")
 
-    for nameExp in sorted(glob.glob(foldersList[0] + "/E_*")):
+    for nameExp in sorted(glob.glob(folderElem + "/E_*")):
         pathFull = nameExp
         filenames = monet.readExperimentFilenames(pathFull)
         # if os.path.isfile(pathOut + "/stack/" + nameExp.split("/")[-1] + "_S." + styleS["format"]) or os.path.isfile(pathOut + "/garbage/" + nameExp.split("/")[-1] + "_G." + styleT["format"]) or os.path.isfile(pathOut + "/heat/" + nameExp.split("/")[-1] + "F_L." + styleS["format"]):
@@ -150,7 +151,7 @@ for j in range(len(foldersList)):
                 )
                 ###############################################################
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals, style={"aspect": .2, "cmap": cmaps},
+                    geneSpatiotemporals, style={"aspect": 2 , "cmap": cmaps},
                     vmax=50#monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
                 )
                 # legends = []
