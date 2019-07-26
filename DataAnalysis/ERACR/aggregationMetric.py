@@ -19,15 +19,15 @@ def plotTimeError(data, metric=np.mean, yRange=1):
     return plt
 
 
-LAND = 1
+LAND = 0
 # #############################################################################
 # User-defined experiment input
 # #############################################################################
 if LAND == 0:
     expBaseName = "Fowler_AGG_2_"
-    pathRoot = "/Volumes/marshallShare/ERACR/Fowler/Experiment/"
+    pathRoot = "/Volumes/marshallShare/ERACR/Fowler2/Experiment/"
     truthExperiment = expBaseName + "01750"
-    expsList = [750, 1000, 1250, 1500, 1750]  # [250, 500, 750, 1000, 1250, 1500]
+    expsList = [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750]
 elif LAND == 1:
     expBaseName = "Yorkeys_AGG_1_"
     pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys/Experiment/"
@@ -48,7 +48,7 @@ basePopDyns = monet.aggregateGenotypesInNode(landscapeSumData, aux.genAggDict)
 # #############################################################################
 # Experiment iterations
 # #############################################################################
-for i in [500]:
+for i in expsList:
     # #############################################################################
     # Calculating the error metric
     # #############################################################################

@@ -14,7 +14,7 @@ for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]:
     ##############################################################################
     # Parameters Setup
     ##############################################################################
-    (seed, clustersNo, CLST_METHOD) = (int(time.time()), clsts, 1)
+    (seed, clustersNo, CLST_METHOD) = (int(time.time()), clsts, 2)
     (lifeStayProb, adultMortality) = (.72, .09)
     # PLACE = "BakersfieldRiver"
     # PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/"
@@ -44,7 +44,8 @@ for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]:
         clObj = AgglomerativeClustering(
             n_clusters=clustersNo,
             affinity='euclidean',
-            compute_full_tree='auto'
+            compute_full_tree='auto',
+            memory='mycachedir'
         )
         clustersObj = clObj.fit(latlongs)
         (clusters) = (clustersObj.labels_)
