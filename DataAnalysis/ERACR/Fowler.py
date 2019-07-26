@@ -10,11 +10,11 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import SpectralClustering
 
 
-for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]:
+for clsts in [1971]:#[1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]:
     ##############################################################################
     # Parameters Setup
     ##############################################################################
-    (seed, clustersNo, CLST_METHOD) = (int(time.time()), clsts, 2)
+    (seed, clustersNo, CLST_METHOD) = (int(time.time()), clsts, 1)
     (lifeStayProb, adultMortality) = (.72, .09)
     # PLACE = "BakersfieldRiver"
     # PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/"
@@ -33,30 +33,38 @@ for clsts in [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]:
     ##############################################################################
     # Clustering Algorithms
     ##############################################################################
-    if CLST_METHOD == 1:
-        clObj = KMeans(
-            n_clusters=clustersNo,
-            random_state=seed
-        )
-        clustersObj = clObj.fit(latlongs)
-        (clusters, centroids) = (clustersObj.labels_, clustersObj.cluster_centers_)
-    elif CLST_METHOD == 2:
-        clObj = AgglomerativeClustering(
-            n_clusters=clustersNo,
-            affinity='euclidean',
-            compute_full_tree='auto',
-            memory='mycachedir'
-        )
-        clustersObj = clObj.fit(latlongs)
-        (clusters) = (clustersObj.labels_)
-    elif CLST_METHOD == 3:
-        clObj = SpectralClustering(
-            n_clusters=clustersNo,
-            random_state=seed
-        )
+    if len(latlongs) == clustersNo:
+        clusters = np.array(range(clustersNo))
+    else:
+        if CLST_METHOD == 1:
+            clObj = KMeans(
+                n_clusters=clustersNo,
+                random_state=seed,
+                n_jobs=4
+            )
+            clustersObj = clObj.fit(latlongs)
+            (clusters, centroids) = (clustersObj.labels_, clustersObj.cluster_centers_)
+        elif CLST_METHOD == 2:
+            clObj = AgglomerativeClustering(
+                n_clusters=clustersNo,
+                affinity='euclidean',
+                compute_full_tree='auto',
+                memory='mycachedir'
+            )
+            clustersObj = clObj.fit(latlongs)
+            (clusters) = (clustersObj.labels_)
+        elif CLST_METHOD == 3:
+            clObj = SpectralClustering(
+                n_clusters=clustersNo,
+                random_state=seed
+            )
+            clustersObj = clObj.fit(latlongs)
+            (clusters) = (clustersObj.labels_)
     ##############################################################################
     # Clustering the pointset
     ##############################################################################
+    if len(latlongs) == clustersNo:
+        clusters = np.array(range(clustersNo))
     cLatlongs = aux.appendClustersToLatlongs(latlongs, clusters)
     csvPath = PATH + PLACE + "_CLS_" + str(CLST_METHOD) + "_" + namePad + ".csv"
     csvPathSz = PATH + PLACE + "_CLL_" + str(CLST_METHOD) + "_" + namePad + ".csv"

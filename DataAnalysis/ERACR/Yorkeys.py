@@ -22,34 +22,39 @@ PATH = "/Volumes/marshallShare/ERACR/Yorkeys/Clustered/"
 LATLONGS = "YorkeysKnob_01.csv"
 ###############################################################################
 ###############################################################################
-for clustersNo in [25]:#[1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]:
+for clustersNo in [2195]:#[1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]:
     namePad = str(clustersNo).rjust(5, '0')
     latlongs = np.genfromtxt(PATH + LATLONGS, delimiter=',')
     ###########################################################################
     # Clustering Algorithms
     ###########################################################################
-    if CLST_METHOD == 1:
-        clObj = KMeans(
-            n_clusters=clustersNo,
-            random_state=seed,
-            n_jobs=4
-        )
-        clustersObj = clObj.fit(latlongs)
-        (clusters, centroids) = (clustersObj.labels_, clustersObj.cluster_centers_)
-    elif CLST_METHOD == 2:
-        clObj = AgglomerativeClustering(
-            n_clusters=clustersNo,
-            affinity='euclidean',
-            compute_full_tree='auto',
-            memory='mycachedir'
-        )
-        clustersObj = clObj.fit(latlongs)
-        (clusters) = (clustersObj.labels_)
-    elif CLST_METHOD == 3:
-        clObj = SpectralClustering(
-            n_clusters=clustersNo,
-            random_state=seed
-        )
+    if len(latlongs) == clustersNo:
+        clusters = np.array(range(clustersNo))
+    else:
+        if CLST_METHOD == 1:
+            clObj = KMeans(
+                n_clusters=clustersNo,
+                random_state=seed,
+                n_jobs=4
+            )
+            clustersObj = clObj.fit(latlongs)
+            (clusters, centroids) = (clustersObj.labels_, clustersObj.cluster_centers_)
+        elif CLST_METHOD == 2:
+            clObj = AgglomerativeClustering(
+                n_clusters=clustersNo,
+                affinity='euclidean',
+                compute_full_tree='auto',
+                memory='mycachedir'
+            )
+            clustersObj = clObj.fit(latlongs)
+            (clusters) = (clustersObj.labels_)
+        elif CLST_METHOD == 3:
+            clObj = SpectralClustering(
+                n_clusters=clustersNo,
+                random_state=seed
+            )
+            clustersObj = clObj.fit(latlongs)
+            (clusters) = (clustersObj.labels_)
     ###########################################################################
     # Clustering the pointset
     ###########################################################################
