@@ -18,8 +18,8 @@ clsts = -1
 (seed, clustersNo, CLST_METHOD) = (int(time.time()), clsts, 1)
 (lifeStayProb, adultMortality) = (.72, .09)
 PLACE = "Comoros"
-PATH = "/Volumes/marshallShare/Comoros_STP/Comoros/"
-LATLONGS = "comoros_sites_v1.csv"
+PATH = "/Volumes/marshallShare/Comoros_STP/STP/"
+LATLONGS = "stp_sites_v1.csv"
 ###############################################################################
 ###############################################################################
 #clsustersNo = -1
