@@ -11,9 +11,9 @@ from sklearn.cluster import SpectralClustering
 
 
 for clsts in [1, 1000, 2000, 3000]:
-    ##############################################################################
+    ###########################################################################
     # Parameters Setup
-    ##############################################################################
+    ###########################################################################
     (seed, clustersNo, CLST_METHOD) = (int(time.time()), clsts, 1)
     (lifeStayProb, adultMortality) = (.72, .09)
     # PLACE = "BakersfieldRiver"
@@ -30,13 +30,14 @@ for clsts in [1, 1000, 2000, 3000]:
     # LATLONGS = "fowler_centroids.csv"
     namePad = str(clustersNo).rjust(5, '0')
     latlongs = np.genfromtxt(PATH + LATLONGS, delimiter=',')
-    ##############################################################################
+    ###########################################################################
     # Clustering Algorithms
-    ##############################################################################
+    ###########################################################################
     if CLST_METHOD == 1:
         clObj = KMeans(
             n_clusters=clustersNo,
-            random_state=seed
+            random_state=seed,
+            n_jobs=4
         )
     elif CLST_METHOD == 2:
         clObj = AgglomerativeClustering(
@@ -51,18 +52,18 @@ for clsts in [1, 1000, 2000, 3000]:
         )
     clustersObj = clObj.fit(latlongs)
     (clusters, centroids) = (clustersObj.labels_, clustersObj.cluster_centers_)
-    ##############################################################################
+    ###########################################################################
     # Clustering the pointset
-    ##############################################################################
+    ###########################################################################
     csvPath = PATH + PLACE + "_CLS_" + str(CLST_METHOD) + "_" + namePad + ".csv"
     csvPathSz = PATH + PLACE + "_CLL_" + str(CLST_METHOD) + "_" + namePad + ".csv"
     cLatlongs = aux.appendClustersToLatlongs(latlongs, clusters)
     clustersSizes = [sorted(clusters).count(x) for x in range(clustersNo)]
     aux.exportListToCSV(csvPath, cLatlongs)
     np.savetxt(csvPathSz, clustersSizes, fmt='%i', delimiter='\n')
-    ##############################################################################
+    ###########################################################################
     # Plotting
-    ##############################################################################
+    ###########################################################################
     plt.figure(figsize=(35, 35))
     plt.scatter(
         latlongs[:, 0], latlongs[:, 1], c=clusters,
@@ -76,17 +77,17 @@ for clsts in [1, 1000, 2000, 3000]:
         dpi=500
     )
     plt.close()
-    ##############################################################################
+    ###########################################################################
     # Export distance matrix
-    ##############################################################################
+    ###########################################################################
     distPath = PATH + PLACE + "_DST_" + str(CLST_METHOD) + "_" + namePad + ".csv"
     distMat = monet.calculateDistanceMatrix(latlongs, distFun=vn.vincenty) * 1000
     # np.savetxt(distPath, distMat.astype(int), fmt='%i', delimiter=',')
     # heat = sns.heatmap(distMat, annot=False)
     # heat.get_figure().savefig(PATH + PLACE + "DIST.png", dpi=500)
-    ##############################################################################
+    ###########################################################################
     # Export migration matrix
-    ##############################################################################
+    ###########################################################################
     migrPath = PATH + PLACE + "_MIG_" + str(CLST_METHOD) + "_" + namePad + ".csv"
     zeroInflation = pow(lifeStayProb, adultMortality)
     migrMat = monet.zeroInflatedExponentialMigrationKernel(

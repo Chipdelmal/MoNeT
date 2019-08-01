@@ -49,18 +49,18 @@ basePopDyns = monet.aggregateGenotypesInNode(landscapeSumData, aux.genAggDict)
 # Experiment iterations
 # #############################################################################
 for i in expsList:
-    # #############################################################################
+    # #########################################################################
     # Calculating the error metric
-    # #############################################################################
+    # #########################################################################
     refExperiment = expBaseName + str(i).rjust(5, "0")
     refExpPath = glob.glob(pathRoot + refExperiment + "/ANALYZED/*")[0] + "/"
     filenames = monet.readExperimentFilenames(refExpPath)
     landscapeSumData = monet.sumLandscapePopulationsFromFiles(filenames)
     refPopDyns = monet.aggregateGenotypesInNode(
         landscapeSumData, aux.genAggDict)
-    # #############################################################################
+    # #########################################################################
     # Calculating the error metric
-    # #############################################################################
+    # #########################################################################
     # Pre-analyses numbers
     initPop = sum(basePopDyns['population'][0])
     simTime = len(basePopDyns['population'])
@@ -71,9 +71,9 @@ for i in expsList:
     rmseAcc = np.cumsum(rmseNrm, axis=0) / simTime
     # rmseGra = np.gradient(rmseNrm, axis=0)
     # rmseInt = np.trapz(rmseNrm, axis=0) / simTime
-    # #############################################################################
+    # #########################################################################
     # Export Plot
-    # #############################################################################
+    # #########################################################################
     # RMSE Normalized
     fig = plotTimeError(rmseNrm, metric=np.mean)
     monet.quickSaveFigure(
