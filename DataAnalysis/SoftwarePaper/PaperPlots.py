@@ -4,6 +4,7 @@
 import MoNeT_MGDrivE as monet
 
 #############################################################################
+# Plots setup
 colors = ['#9f00cc', '#ec0b43', '#232ed1', '#ff009d', '#000000']
 style = {
     "width": .01, "alpha": .05, "dpi": 2*1024, "legend": True,
@@ -15,6 +16,7 @@ styleS = {
 }
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 #############################################################################
+# Paths and genotypes selection
 basePath = "/Users/sanchez.hmsc/Desktop/SoftwarePaper/"
 experimentString = "ReplacementStochastic"
 aggregationDictionary = monet.generateAggregationDictionary(
@@ -27,19 +29,7 @@ aggregationDictionary = monet.generateAggregationDictionary(
     ]
 )
 #############################################################################
-repsFolders = monet.listDirectoriesWithPathWithinAPath(
-    basePath + experimentString + "/"
-)
-landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-    repsFolders, aggregationDictionary,
-    male=False, female=True
-)
-tracesPlot = monet.plotAllTraces(landscapeReps, style)
-monet.quickSaveFigure(
-    tracesPlot,
-    basePath + experimentString + "_Trace.png", format="png"
-)
-#############################################################################
+# Stack plots
 filenames = monet.readExperimentFilenames(
     basePath + experimentString + "_Analyzed/"
 )
@@ -57,6 +47,7 @@ monet.quickSaveFigure(
     basePath + experimentString + "_Stack.png", format="png"
 )
 #############################################################################
+# Spatial heatmaps
 landscapeData = monet.loadLandscapeData(filenames)
 aggregatedNodesData = monet.aggregateGenotypesInLandscape(
     landscapeData,
@@ -73,7 +64,7 @@ for i in range(0, len(genes)):
     fig = plotsArray["plots"][geneIndex]
     monet.quickSaveFigure(
         fig,
-        basePath + experimentString + "_Heat" + genes[i] +  ".png"
+        basePath + experimentString + "_Heat" + genes[i] + ".png"
     )
 
 overlay = monet.plotGenotypeOverlayFromLandscape(
@@ -81,3 +72,17 @@ overlay = monet.plotGenotypeOverlayFromLandscape(
     style={"aspect": 10, "cmap": cmaps}
 )
 monet.quickSaveFigure(overlay, basePath + experimentString + "HeatO.png")
+#############################################################################
+# Repetitions traces
+repsFolders = monet.listDirectoriesWithPathWithinAPath(
+    basePath + experimentString + "/"
+)
+landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+    repsFolders, aggregationDictionary,
+    male=False, female=True
+)
+tracesPlot = monet.plotAllTraces(landscapeReps, style)
+monet.quickSaveFigure(
+    tracesPlot,
+    basePath + experimentString + "_Trace.png", format="png"
+)
