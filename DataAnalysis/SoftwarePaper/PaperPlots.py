@@ -1,3 +1,6 @@
+# Please install MoNeT_MGDrivE before running this routine!
+#   pip install MoNeT-MGDrivE
+
 import MoNeT_MGDrivE as monet
 
 #############################################################################
@@ -27,15 +30,15 @@ aggregationDictionary = monet.generateAggregationDictionary(
 repsFolders = monet.listDirectoriesWithPathWithinAPath(
     basePath + experimentString + "/"
 )
-# landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-#     repsFolders, aggregationDictionary,
-#     male=False, female=True
-# )
-# tracesPlot = monet.plotAllTraces(landscapeReps, style)
-# monet.quickSaveFigure(
-#     tracesPlot,
-#     basePath + experimentString + "_Trace.png", format="png"
-# )
+landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+    repsFolders, aggregationDictionary,
+    male=False, female=True
+)
+tracesPlot = monet.plotAllTraces(landscapeReps, style)
+monet.quickSaveFigure(
+    tracesPlot,
+    basePath + experimentString + "_Trace.png", format="png"
+)
 #############################################################################
 filenames = monet.readExperimentFilenames(
     basePath + experimentString + "_Analyzed/"
