@@ -19,7 +19,7 @@ def plotTimeError(data, metric=np.mean, yRange=1):
     return plt
 
 
-LAND = 0
+LAND = 1
 # #############################################################################
 # User-defined experiment input
 # #############################################################################
@@ -27,12 +27,12 @@ if LAND == 0:
     expBaseName = "Fowler_AGG_1_"
     pathRoot = "/Volumes/marshallShare/ERACR/Fowler3/Experiment/"
     truthExperiment = expBaseName + "01971"
-    expsList = [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750]
+    expsList = [1971]#[1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]
 elif LAND == 1:
     expBaseName = "Yorkeys_AGG_1_"
     pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys2/Experiment/"
     truthExperiment = expBaseName + "02195"
-    expsList = [1, 10, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000]
+    expsList = [1, 10, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
 pathSet = pathRoot + expBaseName + "*/"
 # #############################################################################
 # Setting up the experiments paths
