@@ -89,7 +89,7 @@ layout = go.Layout(
     width=1500,
     height=400
 )
-#NOTE: needs dev version of plotly to work because of 'stackgroup'
+# NOTE: needs dev version of plotly to work because of 'stackgroup'
 fig = go.Figure(data=go.Data(tracesList), layout=layout)
 # py.iplot(fig,filename='stacked-area-plot-hover',validate=False)
 plotly.offline.plot(fig, filename='alleleFrequency.html')

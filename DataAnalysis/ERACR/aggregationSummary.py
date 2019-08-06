@@ -16,6 +16,10 @@ def getErrorAtDay(paths, day=-1):
     return (levels, sampleList)
 
 
+colors = [
+    "#090446", "#f20060", "#7fff3a",
+    "#ff28d4", "#6898ff", "#c6d8ff", "#000000"
+]
 (LAND, sampledDay) = (0, -1)
 # #############################################################################
 # User-defined experiment input
@@ -31,4 +35,11 @@ pathsNRM = glob.glob(pathRoot + "RMSE_NRM_" + expBaseName + "*.csv")
 
 
 (levels, accError) = getErrorAtDay(pathsACC, day=-1)
-(levels, nrmError) = getErrorAtDay(pathsNRM, day=-1)
+for j in range(len(accError[0])):
+    col = [i[j] for i in accError]
+    plt.scatter(levels, col, color=colors[j])
+    plt.plot(levels, col, color=colors[j])
+col
+
+
+range(len(accError[0]))
