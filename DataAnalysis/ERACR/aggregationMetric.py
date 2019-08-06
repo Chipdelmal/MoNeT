@@ -24,15 +24,15 @@ LAND = 0
 # User-defined experiment input
 # #############################################################################
 if LAND == 0:
-    expBaseName = "Fowler_AGG_2_"
-    pathRoot = "/Volumes/marshallShare/ERACR/Fowler2/Experiment/"
-    truthExperiment = expBaseName + "01750"
+    expBaseName = "Fowler_AGG_1_"
+    pathRoot = "/Volumes/marshallShare/ERACR/Fowler3/Experiment/"
+    truthExperiment = expBaseName + "01971"
     expsList = [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750]
 elif LAND == 1:
     expBaseName = "Yorkeys_AGG_1_"
-    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys/Experiment/"
-    truthExperiment = expBaseName + "02000"
-    expsList = [500, 750, 1000, 1250, 1500, 2000]
+    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys2/Experiment/"
+    truthExperiment = expBaseName + "02195"
+    expsList = [1, 10, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000]
 pathSet = pathRoot + expBaseName + "*/"
 # #############################################################################
 # Setting up the experiments paths
@@ -53,6 +53,7 @@ for i in expsList:
     # Calculating the error metric
     # #########################################################################
     refExperiment = expBaseName + str(i).rjust(5, "0")
+    print(pathRoot + refExperiment)
     refExpPath = glob.glob(pathRoot + refExperiment + "/ANALYZED/*")[0] + "/"
     filenames = monet.readExperimentFilenames(refExpPath)
     landscapeSumData = monet.sumLandscapePopulationsFromFiles(filenames)
@@ -72,19 +73,27 @@ for i in expsList:
     # rmseGra = np.gradient(rmseNrm, axis=0)
     # rmseInt = np.trapz(rmseNrm, axis=0) / simTime
     # #########################################################################
-    # Export Plot
+    # Export Plots and Summaries
     # #########################################################################
+    np.savetxt(
+        pathRoot + "RMSE_NRM_" + refExperiment + ".csv",
+        rmseNrm, fmt='%f', delimiter=',', newline='\n'
+    )
+    np.savetxt(
+        pathRoot + "RMSE_ACC_" + refExperiment + ".csv",
+        rmseAcc, fmt='%f', delimiter=',', newline='\n'
+    )
     # RMSE Normalized
     fig = plotTimeError(rmseNrm, metric=np.mean)
     monet.quickSaveFigure(
-        fig, pathRoot + "RMSE_NRM_" + refExperiment + ".png",
-        dpi=aux.styleS["dpi"], format="png"
+        fig, pathRoot + "RMSE_NRM_" + refExperiment + ".pdf",
+        dpi=aux.styleS["dpi"], format=None
     )
     fig.close()
     # RMSE Normalized Cumulative
     fig = plotTimeError(rmseAcc, metric=np.max)
     monet.quickSaveFigure(
-        fig, pathRoot + "RMSE_ACC_" + refExperiment + ".png",
-        dpi=aux.styleS["dpi"], format="png"
+        fig, pathRoot + "RMSE_ACC_" + refExperiment + ".pdf",
+        dpi=aux.styleS["dpi"], format=None
     )
     fig.close()
