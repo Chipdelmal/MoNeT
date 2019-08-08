@@ -15,7 +15,7 @@ from itertools import groupby
 ###############################################################################
 # Parameters Setup
 ###############################################################################
-(seed, CLST_METHOD) = (int(time.time()), 2)
+(seed, CLST_METHOD) = (42, 1)
 (lifeStayProb, adultMortality) = (.72, .09)
 PLACE = "Yorkeys"
 PATH = "/Volumes/marshallShare/ERACR/Yorkeys/Clustered/"

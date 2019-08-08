@@ -10,24 +10,15 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import SpectralClustering
 
 
-for clsts in [1971]:#[1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]:
+for clsts in [500, 1971]:#[1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]:
     ##############################################################################
     # Parameters Setup
     ##############################################################################
-    (seed, clustersNo, CLST_METHOD) = (int(time.time()), clsts, 1)
+    (seed, clustersNo, CLST_METHOD) = (42, clsts, 1)
     (lifeStayProb, adultMortality) = (.72, .09)
-    # PLACE = "BakersfieldRiver"
-    # PATH = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/clean/"
-    # LATLONGS = "full2.csv"
     PLACE = "Fowler"
-    PATH = "/Volumes/marshallShare/ERACR/Fowler/Clustered/"
+    PATH = "/Volumes/marshallShare/ERACR/Fowler4/Clustered/"
     LATLONGS = "fowler_centroids_ordered2.csv"
-    # PLACE = "Gordonvale"
-    # PATH = "/Volumes/marshallShare/MGDrivE_Datasets/ThresholdDependent/GeoLocations/Curated/"
-    # LATLONGS = "YorkeysKnob_03.csv"
-    # PLACE = "Fowler"
-    # PATH = "/Volumes/marshallShare/ERACR/Fowler/"
-    # LATLONGS = "fowler_centroids.csv"
     namePad = str(clustersNo).rjust(5, '0')
     latlongs = np.genfromtxt(PATH + LATLONGS, delimiter=',')
     ##############################################################################
@@ -68,7 +59,7 @@ for clsts in [1971]:#[1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 197
     cLatlongs = aux.appendClustersToLatlongs(latlongs, clusters)
     csvPath = PATH + PLACE + "_CLS_" + str(CLST_METHOD) + "_" + namePad + ".csv"
     csvPathSz = PATH + PLACE + "_CLL_" + str(CLST_METHOD) + "_" + namePad + ".csv"
-    clustersSizes = [sorted(clusters).count(x) for x in range(clustersNo)]
+    clustersSizes = [clusters.count(x) for x in range(clustersNo)]
     aux.exportListToCSV(csvPath, cLatlongs)
     np.savetxt(csvPathSz, clustersSizes, fmt='%i', delimiter='\n')
     ##############################################################################
@@ -114,7 +105,7 @@ for clsts in [1971]:#[1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 197
     ##############################################################################
     aggrPath = PATH + PLACE + "_AGG_" + str(CLST_METHOD) + "_" + namePad + ".csv"
     aggrCPath = PATH + PLACE + "_AGC_" + str(CLST_METHOD) + "_" + namePad + ".csv"
-    aggrMat = monet.aggregateLandscape(migrMat, clusters)
+    aggrMat = monet.aggregateLandscape(migrMat, clusters, type=1)
     monet.testMarkovMatrix(aggrMat)
     np.savetxt(aggrPath, aggrMat, delimiter=',')
     # np.savetxt(aggrCPath, centroids, delimiter=',')
