@@ -9,12 +9,11 @@ colors = ["#090446", "#f20060", "#ff28d4", "#7fff3a", "#c6d8ff", '#6e44ff','#e56
 
 groups = ["W", "H", "R", "B", "E"]
 
-folder = '/Volumes/marshallShare/Comoros_STP/Comoros/output/'
-extras = '/Volumes/marshallShare/ERACR/Fowler/Clustered/'
+folder = '/Volumes/marshallShare/Comoros_STP/STP/output/'
 patchFilePattern = {'males':'/M_*', 'females':'/F_*'}
 imagePattern = '/c_%06d.png'
-bgName  = '/Volumes/marshallShare/Comoros_STP/Comoros/all_sites2.png'
-clusterName = '/Volumes/marshallShare/Comoros_STP/Comoros/all_sites2.csv'
+bgname  = '/Volumes/marshallShare/Comoros_STP/STP/STP_all_sites2.png'
+clusterName = '/Volumes/marshallShare/Comoros_STP/STP/STP_all_sites2.csv'
 
 
 for expFolder in sorted(glob.glob(folder+'*')):
