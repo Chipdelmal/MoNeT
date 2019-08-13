@@ -18,11 +18,11 @@ from itertools import groupby
 (seed, CLST_METHOD) = (42, 1)
 (lifeStayProb, adultMortality) = (.72, .09)
 PLACE = "Yorkeys"
-PATH = "/Volumes/marshallShare/ERACR/Yorkeys/Clustered/"
+PATH = "/Volumes/marshallShare/ERACR/Yorkeys4/Clustered/"
 LATLONGS = "YorkeysKnob_01.csv"
 ###############################################################################
 ###############################################################################
-for clustersNo in [2195]:#[1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]:
+for clustersNo in [250, 500]:#[1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]:
     namePad = str(clustersNo).rjust(5, '0')
     latlongs = np.genfromtxt(PATH + LATLONGS, delimiter=',')
     ###########################################################################
