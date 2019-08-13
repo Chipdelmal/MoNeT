@@ -9,9 +9,9 @@ import matplotlib.patches as mpatches
 import numpy as np
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-STACK = True
-TRACE = False
-HEAT = True
+STACK = False
+TRACE = True
+HEAT = False
 
 colors = [
     "#090446", "#f20060", "#59ff00",
@@ -20,27 +20,37 @@ colors = [
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
-    "aspect": .0075, "colors": colors, "format": "png",
-    "xRange": [0, 5500], "yRange": [0, 40000]  # 590000]  # 2500]
+    "aspect": .009, "colors": colors, "format": "png",
+    "xRange": [0, 7300], "yRange": [0, 50000]  # 590000]  # 2500]
 }
 styleT = {
     "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
-    "aspect": 2, "colors": colors, "format": "png",
-    "xRange": [0, 5500], "yRange": [0, 2500]
+    "aspect":0.009, "colors": colors, "format": "png",
+    "xRange": [0, 7300], "yRange": [0, 50000]
 }
 ##############################################################################
 # Setup
 ##############################################################################
 # nameExp = "E_0125_02_00028"
-pathRoot = "/Volumes/marshallShare/ERACR/Fowler/Experiment/"
-pathSet = pathRoot + "Fowler_AGG_*/"  # + "eRACR29"
+pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment/"
+pathSet = pathRoot + "Yorkeys_AGG_*/"  # + "eRACR29"
 foldersList = glob.glob(pathSet + "*ANALYZED")
+
+def aggregateReps(landscapeReps):
+    repetitions = len(landscapeReps["landscapes"])
+    res = []
+    for rep in range(repetitions):
+        res.append([np.sum(landscapeReps["landscapes"][rep], axis=0)])
+    return {"genotypes":landscapeReps["genotypes"], "landscapes":res}
 
 for folderElem in sorted(foldersList):
     # id = foldersList[j].split("/")[-1].split("_")[0]
     print(folderElem)
     experimentsFolders = glob.glob(folderElem+ "/E_*")
     pathOut = folderElem.replace("ANALYZED", "images")
+    clusteringNum = int(folderElem.split('_')[-1].split('/')[0])
+    if clusteringNum < 10:
+        continue
 
     for nameExp in sorted(glob.glob(folderElem + "/E_*")):
         pathFull = nameExp
@@ -72,7 +82,7 @@ for folderElem in sorted(foldersList):
                     styleS["xRange"][0], styleS["xRange"][1])
                 figB.get_axes()[0].set_ylim(
                     styleS["yRange"][0], styleS["yRange"][1])
-                figB.get_axes()[0].set_aspect(styleS["aspect"])
+                figB.get_axes()[0].set_aspect(styleS["xRange"][1])
                 monet.quickSaveFigure(
                     figB,
                     pathOut + "/stack/" +
@@ -107,13 +117,15 @@ for folderElem in sorted(foldersList):
                     male=True,
                     female=False,
                 )
-                fig = monet.plotAllTraces(reps, styleT)
+                repsN = aggregateReps(reps)
+                fig = monet.plotAllTraces(repsN, styleT)
                 fig.get_axes()[0].set_xlim(
                     styleT["xRange"][0], styleT["xRange"][1]
                 )
                 fig.get_axes()[0].set_ylim(
                     styleT["yRange"][0], styleT["yRange"][1]
                 )
+                fig.get_axes()[0].set_aspect(styleT["aspect"])
                 monet.quickSaveFigure(
                     fig,
                     pathOut + "/garbage/" +
@@ -151,7 +163,7 @@ for folderElem in sorted(foldersList):
                 )
                 ###############################################################
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals, style={"aspect": 2 , "cmap": cmaps},
+                    geneSpatiotemporals, style={"aspect": 4 , "cmap": cmaps},
                     vmax=50#monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
                 )
                 # legends = []
