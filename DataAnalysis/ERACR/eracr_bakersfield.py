@@ -24,7 +24,7 @@ styleS = {
     "xRange": [0, 7300], "yRange": [0, 50000]  # 590000]  # 2500]
 }
 styleT = {
-    "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
+    "width": 0.1, "alpha": .05, "dpi": 2*512, "legend": False,
     "aspect":0.02, "colors": colors, "format": "png",
     "xRange": [0, 7300], "yRange": [0, 50000]
 }
@@ -32,7 +32,7 @@ styleT = {
 # Setup
 ##############################################################################
 # nameExp = "E_0125_02_00028"
-pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment/"
+pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/"
 pathSet = pathRoot + "Yorkeys_AGG_*/"  # + "eRACR29"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
@@ -53,7 +53,7 @@ for (i, folderElem) in enumerate(sorted(foldersList)):
     #if clusteringNum < 10:
     #    continue
 
-    for nameExp in sorted(glob.glob(folderElem + "/E_*")):
+    for nameExp in sorted(glob.glob(folderElem + "/E_*")[0::1]):
         pathFull = nameExp
         aggStr = folderElem.split("/")[-2]
         filenames = monet.readExperimentFilenames(pathFull)
@@ -197,3 +197,10 @@ for (i, folderElem) in enumerate(sorted(foldersList)):
 
 
 print("done")
+
+# Sanity Check
+ls = []
+for i in range(len(repsN["landscapes"])):
+    equal = np.array_equal(repsN["landscapes"][0], repsN["landscapes"][i])
+    ls.append(equal)
+sum(ls)

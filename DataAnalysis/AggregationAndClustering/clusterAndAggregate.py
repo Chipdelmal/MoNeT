@@ -65,3 +65,4 @@ for clst in CLUSTERS_NO:
             coordsList, clusters, centroids,
             filenames + "_I.csv"
         )
+    print("Done with " + str(clst) + " reps.")
