@@ -1,21 +1,19 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import time
 import numpy as np
 import vincenty as vn
 import MoNeT_MGDrivE as monet
-from sklearn.cluster import KMeans
+
 
 ###############################################################################
 # Parameters Setup
 ###############################################################################
 (PATH, LATLONGS) = (
     "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/",
-    "LandscapeOriginal/YorkeysKnob_01_Sort.csv"
+    "LandSorted/Yorkeys03_S.csv"
 )
-
-outFileStr = LATLONGS.split(".")[0].split("/")[1]
+(lifeStayProb, adultMortality) = (.72, .09)
 
 ###############################################################################
 # Matrices calculations
@@ -36,3 +34,6 @@ migrMat = monet.zeroInflatedExponentialMigrationKernel(
 ###############################################################################
 # Export files
 ###############################################################################
+outFileStr = LATLONGS.split(".")[0].split("_")[0]
+np.savetxt(PATH + outFileStr + "_D.csv", distMat, delimiter=',')
+np.savetxt(PATH + outFileStr + "_M.csv", migrMat, delimiter=',')
