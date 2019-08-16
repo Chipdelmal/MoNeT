@@ -69,9 +69,6 @@ fig.get_axes()[0].set_xlim(
 fig.get_axes()[0].set_ylim(
     styleT["yRange"][0], styleT["yRange"][1]
 )
-
-
-
 monet.quickSaveFigure(
     fig,
     pathOut + "/garbage/" +

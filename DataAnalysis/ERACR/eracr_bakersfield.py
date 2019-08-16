@@ -119,8 +119,8 @@ for (i, folderElem) in enumerate(sorted(foldersList)):
                     male=True,
                     female=False,
                 )
-                repsN = aggregateReps(reps)
-                #repsN = monet.sumAggregatedLandscapeDataRepetitions(reps)
+                # repsN = aggregateReps(reps)
+                repsN = monet.sumAggregatedLandscapeDataRepetitions(reps)
                 fig = monet.plotAllTraces(repsN, styleT)
                 fig.get_axes()[0].set_xlim(
                     styleT["xRange"][0], styleT["xRange"][1]
