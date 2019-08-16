@@ -6,6 +6,7 @@ import MoNeT_MGDrivE as monet
 import vincenty as vn
 import aux as aux
 
+# Define path, POI, and file
 PATH = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/LandscapeOriginal/"
 (LATLONGS, POI) = ("YorkeysKnob_01.csv", (-16.83, 145.730))
 
