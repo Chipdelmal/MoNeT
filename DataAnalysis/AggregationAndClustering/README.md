@@ -8,9 +8,9 @@
 
 ##  Key
 
-* S: Sorted
-* D: Distance
-* M: Migration
-* A: Aggregated
-* I: Aggregated with clusters IDs and centroids
-* R: Releases
+* *S*: Sorted
+* *D*: Distance
+* *M*: Migration
+* *A*: Aggregated
+* *I*: Aggregated with clusters IDs and centroids
+* *R*: Releases
