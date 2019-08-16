@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import aux
 import numpy as np
-import MoNeT_MGDrivE as monet
 import vincenty as vn
-import aux as aux
+import MoNeT_MGDrivE as monet
+
 
 ###############################################################################
 # Parameters Setup
