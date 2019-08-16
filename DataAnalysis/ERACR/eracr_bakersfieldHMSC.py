@@ -20,13 +20,13 @@ colors = [
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
-    "aspect": .009, "colors": colors, "format": "png",
-    "xRange": [0, 7300], "yRange": [0, 50000]  # 590000]  # 2500]
+    "aspect": .0075, "colors": colors, "format": "png",
+    "xRange": [0, 5500], "yRange": [0, 40000]  # 590000]  # 2500]
 }
 styleT = {
     "width": 0.2, "alpha": .15, "dpi": 2*512, "legend": False,
-    "aspect":0.02, "colors": colors, "format": "png",
-    "xRange": [0, 7300], "yRange": [0, 50000]
+    "aspect": .025, "colors": colors, "format": "png",
+    "xRange": [0, 5500], "yRange": [0, 50000]
 }
 ##############################################################################
 # Setup
@@ -36,26 +36,14 @@ pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment/"
 pathSet = pathRoot + "Yorkeys_AGG_*/"  # + "eRACR29"
 foldersList = glob.glob(pathSet + "*ANALYZED")
 
-def aggregateReps(landscapeReps):
-    repetitions = len(landscapeReps["landscapes"])
-    res = []
-    for rep in range(repetitions):
-        res.append([np.sum(landscapeReps["landscapes"][rep], axis=0)])
-    return {"genotypes":landscapeReps["genotypes"], "landscapes":res}
-
-
-for (i, folderElem) in enumerate(sorted(foldersList)):
+for folderElem in sorted(foldersList):
     # id = foldersList[j].split("/")[-1].split("_")[0]
     print(folderElem)
     experimentsFolders = glob.glob(folderElem+ "/E_*")
     pathOut = folderElem.replace("ANALYZED", "images")
-    clusteringNum = int(folderElem.split('_')[-1].split('/')[0])
-    #if clusteringNum < 10:
-    #    continue
 
     for nameExp in sorted(glob.glob(folderElem + "/E_*")):
         pathFull = nameExp
-        aggStr = folderElem.split("/")[-2]
         filenames = monet.readExperimentFilenames(pathFull)
         # if os.path.isfile(pathOut + "/stack/" + nameExp.split("/")[-1] + "_S." + styleS["format"]) or os.path.isfile(pathOut + "/garbage/" + nameExp.split("/")[-1] + "_G." + styleT["format"]) or os.path.isfile(pathOut + "/heat/" + nameExp.split("/")[-1] + "F_L." + styleS["format"]):
         #     continue
@@ -84,7 +72,7 @@ for (i, folderElem) in enumerate(sorted(foldersList)):
                     styleS["xRange"][0], styleS["xRange"][1])
                 figB.get_axes()[0].set_ylim(
                     styleS["yRange"][0], styleS["yRange"][1])
-                figB.get_axes()[0].set_aspect(styleS["xRange"][1])
+                figB.get_axes()[0].set_aspect(styleS["aspect"])
                 monet.quickSaveFigure(
                     figB,
                     pathOut + "/stack/" +
@@ -119,28 +107,24 @@ for (i, folderElem) in enumerate(sorted(foldersList)):
                     male=True,
                     female=False,
                 )
-                repsN = aggregateReps(reps)
-                fig = monet.plotAllTraces(repsN, styleT)
+                fig = monet.plotAllTraces(reps, styleT)
                 fig.get_axes()[0].set_xlim(
                     styleT["xRange"][0], styleT["xRange"][1]
                 )
                 fig.get_axes()[0].set_ylim(
                     styleT["yRange"][0], styleT["yRange"][1]
                 )
-                fig.get_axes()[0].set_aspect(styleT["aspect"])
                 monet.quickSaveFigure(
                     fig,
-                    pathRoot + "/images/garbage/" + aggStr +
-                    #nameExp.split("/")[-1] +
-                    "_G." + "png",
+                    pathRoot + "/images/garbage/" +
+                    nameExp.split("/")[-1] + "_G." + "png",
                     dpi=styleS["dpi"],
                     format="png"
                 )
                 monet.quickSaveFigure(
                     fig,
-                    pathRoot + "/images/garbage/" + aggStr +
-                    #nameExp.split("/")[-1] +
-                    "_G." + "pdf",
+                    pathRoot + "/images/garbage/" +
+                    nameExp.split("/")[-1] + "_G." + "pdf",
                     dpi=styleS["dpi"],
                     format="pdf"
                 )
@@ -167,7 +151,7 @@ for (i, folderElem) in enumerate(sorted(foldersList)):
                 )
                 ###############################################################
                 overlay = monet.plotGenotypeOverlayFromLandscape(
-                    geneSpatiotemporals, style={"aspect": 4 , "cmap": cmaps},
+                    geneSpatiotemporals, style={"aspect": 2 , "cmap": cmaps},
                     vmax=50#monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
                 )
                 # legends = []

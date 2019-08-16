@@ -8,11 +8,11 @@ LATLONGS = "fowler_centroids_ordered2.csv"
 
 POI = (36.617, -119.690)
 latlongs = np.genfromtxt(PATH + LATLONGS, delimiter=',')
-monet.sortByDistanceToPOI(POI, latlongs, distFun=vn.vincenty)
+latlongsSorted = monet.sortByDistanceToPOI(POI, latlongs, distFun=vn.vincenty)
 
 np.savetxt(
     PATH + "SORTED_TEST_HMSC.csv",
-    latlongDistSort,
+    latlongsSorted,
     fmt='%.10f',
     delimiter=","
 )

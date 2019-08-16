@@ -20,7 +20,7 @@ colors = [
     "#090446", "#f20060", "#7fff3a",
     "#ff28d4", "#6898ff", "#c6d8ff", "#000000"
 ]
-(LAND, sampledDay) = (0, -1)
+(LAND, sampledDay) = (1, -1)
 # #############################################################################
 # User-defined experiment input
 # #############################################################################
@@ -29,7 +29,7 @@ if LAND == 0:
     pathRoot = "/Volumes/marshallShare/ERACR/Fowler3/Experiment/"
 elif LAND == 1:
     expBaseName = "Yorkeys_AGG_1_"
-    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys2/Experiment/"
+    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment/"
 pathsACC = glob.glob(pathRoot + "RMSE_ACC_" + expBaseName + "*.csv")
 pathsNRM = glob.glob(pathRoot + "RMSE_NRM_" + expBaseName + "*.csv")
 # #############################################################################
