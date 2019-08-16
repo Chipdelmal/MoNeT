@@ -6,13 +6,26 @@ import MoNeT_MGDrivE as monet
 import vincenty as vn
 import aux as aux
 
-# Define path, POI, and file
-PATH = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/LandscapeOriginal/"
-(LATLONGS, POI) = ("YorkeysKnob_01.csv", (-16.83, 145.730))
+###############################################################################
+# Parameters Setup
+###############################################################################
+PATH = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/"
+(LATLONGS, OUT_FOLDER, POI) = (
+    "LandOriginal/Yorkeys03.csv",
+    "LandSorted/",
+    (-16.83, 145.730)
+)
 
-# Calculate distances to POI and sort
-latlongs = np.genfromtxt(PATH + LATLONGS_FILE, delimiter=',')
+###############################################################################
+# POI Operations
+###############################################################################
+latlongs = np.genfromtxt(PATH + LATLONGS, delimiter=',')
 latlongsSorted = monet.sortByDistanceToPOI(POI, latlongs, distFun=vn.vincenty)
+
+###############################################################################
+# Export files
+###############################################################################
 aux.writeLatLongsToFileWithID(
-    latlongsSorted, PATH + LATLONGS.split(".")[0] + "_Sort.csv"
+    latlongsSorted,
+    PATH + OUT_FOLDER + LATLONGS.split(".")[0].split("/")[1] + "_S.csv"
 )
