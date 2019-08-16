@@ -17,9 +17,9 @@ from sklearn.cluster import KMeans
     "LandSorted/Yorkeys01_M.csv",
     "LandAggregated/"
 )
-(CLUSTERS_NO, REPS, JOBS) = (
+(CLUSTERS_NO, REPS) = (
     [1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195],
-    10, 1
+    100
 )
 
 ###############################################################################
@@ -45,7 +45,7 @@ for clst in CLUSTERS_NO:
         clObj = KMeans(
             n_clusters=clst,
             random_state=int(time.time()),
-            n_jobs=JOBS
+            n_jobs=1
         )
         clustersObj = clObj.fit(latlongs)
         (clusters, centroids) = (
