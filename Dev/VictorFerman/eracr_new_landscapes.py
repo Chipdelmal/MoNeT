@@ -7,8 +7,21 @@ from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.mplot3d import Axes3D
 
 pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/LandAggregated"
+firstRun = True
 
-for clusterFile in glob.glob(pathRoot+'/*/Yorkeys*I.csv'):
+for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
+    clusterstr = clusterFile.split('/')[-2][1:]
+    clusterNum  = int(clusterstr) #getfolder name and ignore the C infront of it to chech for the number of clusters
+
+    if clusterNum == 1:
+        if firstRun:
+            firstRun = False
+            print(clusterFile)
+        else:
+            continue
+    else:
+        print(clusterFile)
+
     minGroup = 99999999
     maxGroup = 0
     minLat = 0
@@ -19,13 +32,13 @@ for clusterFile in glob.glob(pathRoot+'/*/Yorkeys*I.csv'):
     longs = []
     clusters = []
     centroidSet = {}
-    expName = (clusterFile.split("/")[-1]).replace('_I.csv','_VBG_.png')
+    expName = (clusterFile.split("/")[-1]).replace('_I.csv','_'+clusterstr+'_VBG_.png')
     clusterData = open(clusterFile,'r')
     next(clusterData)
     for line in clusterData:
         tokens = line.split(',')
-        lat = float(tokens[1])
-        long = float(tokens[2])
+        lat = float(tokens[2])
+        long = float(tokens[1])
         cluster = int(tokens[3])
         lats.append(lat)
         longs.append(long)
