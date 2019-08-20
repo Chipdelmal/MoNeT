@@ -24,7 +24,7 @@ styleS = {
     "xRange": [0, 7300], "yRange": [0, 50000]  # 590000]  # 2500]
 }
 styleT = {
-    "width": 0.1, "alpha": .05, "dpi": 2*512, "legend": False,
+    "width": 0.075, "alpha": .1, "dpi": 2*512, "legend": False,
     "aspect":0.02, "colors": colors, "format": "png",
     "xRange": [0, 7300], "yRange": [0, 50000]
 }
@@ -46,7 +46,6 @@ def aggregateReps(landscapeReps):
 
 for (i, folderElem) in enumerate(sorted(foldersList)):
     # id = foldersList[j].split("/")[-1].split("_")[0]
-    print(folderElem)
     experimentsFolders = glob.glob(folderElem+ "/E_*")
     pathOut = folderElem.replace("ANALYZED", "images")
     clusteringNum = int(folderElem.split('_')[-1].split('/')[0])
@@ -194,13 +193,12 @@ for (i, folderElem) in enumerate(sorted(foldersList)):
                 )
                 plt.close()
                 ###############################################################
-
-
+    print(folderElem)
 print("done")
 
 # Sanity Check
-ls = []
-for i in range(len(repsN["landscapes"])):
-    equal = np.array_equal(repsN["landscapes"][0], repsN["landscapes"][i])
-    ls.append(equal)
-sum(ls)
+# ls = []
+# for i in range(len(repsN["landscapes"])):
+#     equal = np.array_equal(repsN["landscapes"][0], repsN["landscapes"][i])
+#     ls.append(equal)
+# sum(ls)
