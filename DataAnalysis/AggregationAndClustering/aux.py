@@ -27,7 +27,7 @@ def readCoordsCSV(path):
         spamreader = csv.reader(csvfile, delimiter=',')
         for (i, row) in enumerate(spamreader):
             if i > 0:
-                coordsList.append([int(row[0]), float(row[1]), float(row[1])])
+                coordsList.append([int(row[0]), float(row[1]), float(row[2])])
     return coordsList
 
 
