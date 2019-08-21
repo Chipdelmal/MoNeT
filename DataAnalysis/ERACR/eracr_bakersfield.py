@@ -35,6 +35,7 @@ styleT = {
 pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/"
 pathSet = pathRoot + "Yorkeys_AGG_*/"  # + "eRACR29"
 foldersList = glob.glob(pathSet + "*ANALYZED")
+sortedFolders = sorted(foldersList)
 
 def aggregateReps(landscapeReps):
     repetitions = len(landscapeReps["landscapes"])
@@ -44,7 +45,7 @@ def aggregateReps(landscapeReps):
     return {"genotypes":landscapeReps["genotypes"], "landscapes":res}
 
 
-for (i, folderElem) in enumerate(sorted(foldersList)):
+for (i, folderElem) in enumerate(sortedFolders[7::]):
     # id = foldersList[j].split("/")[-1].split("_")[0]
     experimentsFolders = glob.glob(folderElem+ "/E_*")
     pathOut = folderElem.replace("ANALYZED", "images")

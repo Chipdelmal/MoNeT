@@ -18,7 +18,7 @@ from sklearn.cluster import KMeans
     "LandAggregated/"
 )
 (CLUSTERS_NO, REPS) = (
-    [1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195],
+    [1500, 2000, 2195], # 1, 25, 50, 250, 500, 750, 1000, 1250,
     500
 )
 
