@@ -104,6 +104,7 @@ for (i, folderElem) in enumerate(sortedFolders[7::]):
             # Garbage (Traces)
             ###################################################################
             if TRACE:
+                print("Plotting traces for: " + nameExp)
                 garbargePath = nameExp.replace('ANALYZED', 'GARBAGE')+'/'
                 paths = monet.listDirectoriesWithPathWithinAPath(garbargePath)
                 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
