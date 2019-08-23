@@ -25,12 +25,12 @@ LAND = 1
 # #############################################################################
 if LAND == 0:
     expBaseName = "Fowler_AGG_1_"
-    pathRoot = "/Volumes/marshallShare/ERACR/Fowler3/Experiment/"
+    pathRoot = "/Volumes/marshallShare/ERACR/Fowler4/Experiment/"
     truthExperiment = expBaseName + "01971"
     expsList = [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]
 elif LAND == 1:
     expBaseName = "Yorkeys_AGG_1_"
-    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment/"
+    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/"
     truthExperiment = expBaseName + "02195"
     expsList = [1, 25,50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
 pathSet = pathRoot + expBaseName + "*/"
@@ -70,9 +70,8 @@ for i in expsList:
     initPop = sum(basePopDyns['population'][0])
     simTime = len(basePopDyns['population'])
     # Metrics
-    error = np.nan_to_num(abs(ref - sig), 0)
-    rmseNrm = error
-    rmseAcc = np.cumsum(rmseNrm, axis=1) / simTime
+    error = abs(ref - sig)
+    rmseAcc = np.cumsum(error, axis=1) / simTime
     # rmseGra = np.gradient(rmseNrm, axis=0)
     # rmseInt = np.trapz(rmseNrm, axis=0) / simTime
     # #########################################################################
@@ -80,20 +79,22 @@ for i in expsList:
     # #########################################################################
     np.savetxt(
         pathRoot + "RMSE_NRM_" + refExperiment + ".csv",
-        rmseNrm, fmt='%f', delimiter=',', newline='\n'
+        error, fmt='%f', delimiter=',', newline='\n'
     )
-    # np.savetxt(
-    #     pathRoot + "RMSE_ACC_" + refExperiment + ".csv",
-    #     rmseAcc, fmt='%f', delimiter=',', newline='\n'
-    # )
+    print(pathRoot + "RMSE_NRM_" + refExperiment + ".csv")
+    np.savetxt(
+        pathRoot + "RMSE_ACC_" + refExperiment + ".csv",
+        rmseAcc, fmt='%f', delimiter=',', newline='\n'
+    )
+    print(pathRoot + "RMSE_ACC_" + refExperiment + ".csv")
     # RMSE Normalized
-    fig = plotTimeError(rmseNrm, metric=np.mean, yRange=5000)
-    monet.quickSaveFigure(
-        fig, pathRoot + "RMSE_NRM_" + refExperiment + ".pdf",
-        dpi=aux.styleS["dpi"], format=None
-    )
-    fig.close()
-    # RMSE Normalized Cumulative
+    # fig = plotTimeError(rmseNrm, metric=np.mean, yRange=5000)
+    # monet.quickSaveFigure(
+    #     fig, pathRoot + "RMSE_NRM_" + refExperiment + ".pdf",
+    #     dpi=aux.styleS["dpi"], format=None
+    # )
+    # fig.close()
+    # # RMSE Normalized Cumulative
     # fig = plotTimeError(rmseAcc, metric=np.max, yRange=1)
     # monet.quickSaveFigure(
     #     fig, pathRoot + "RMSE_ACC_" + refExperiment + ".pdf",
