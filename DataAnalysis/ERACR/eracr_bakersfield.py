@@ -45,7 +45,7 @@ def aggregateReps(landscapeReps):
     return {"genotypes":landscapeReps["genotypes"], "landscapes":res}
 
 
-for (i, folderElem) in enumerate(sortedFolders[7::]):
+for (i, folderElem) in enumerate(sortedFolders[8::]):
     # id = foldersList[j].split("/")[-1].split("_")[0]
     experimentsFolders = glob.glob(folderElem+ "/E_*")
     pathOut = folderElem.replace("ANALYZED", "images")
