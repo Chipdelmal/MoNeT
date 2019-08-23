@@ -19,17 +19,15 @@ nodeFile.close()
 
 
 sampledNumber = round(len(nodesIDPool) * coverage)
-sampledNodes = sample(nodesIDPool, k=sampledNumber)
 
 for clusterDir in sorted(glob.glob(clusterDirs)):
 
     clusterNum = int(clusterDir.split('/')[-1][1:])
+    print(clusterNum)
     clusterFileNames = sorted(glob.glob(clusterDir+'/*_I.csv'))
 
-    if clusterNum == 1:
-        clusterFileNames = clusterFileNames[:1]
-
     for clusterFileName in clusterFileNames:
+        sampledNodes = sorted(sample(nodesIDPool, k=sampledNumber))
 
         clusterFile = open(clusterFileName, 'r')
         header = next(clusterFile)
@@ -44,3 +42,5 @@ for clusterDir in sorted(glob.glob(clusterDirs)):
 
         clusterFile.close()
         resultFile.close()
+
+print('Done')
