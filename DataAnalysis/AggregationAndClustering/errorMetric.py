@@ -7,14 +7,16 @@ import statistics as stat
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
-funcsList = (stat.stdev, stat.mean, stat.median)
 funcsID = ["SSD", "SMN", "SMD"]
+funcsList = [stat.stdev, stat.mean, stat.median]
+funcsNum = len(funcsList)
 
 pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/"
-pathSet = pathRoot + "Yorkeys_AGG_*/"  # + "eRACR29"
+pathSet = pathRoot + "Yorkeys_AGG_*/"
 foldersList = sorted(glob.glob(pathSet + "*GARBAGE"))
 
-expPath = foldersList[3]
+expPath = foldersList[0]
+# Get paths and aggregate
 gPath = monet.listDirectoriesWithPathWithinAPath(expPath + "/")
 ePath = monet.listDirectoriesWithPathWithinAPath(gPath[0] + "/")
 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
@@ -24,6 +26,7 @@ aggregationDictionary = monet.autoGenerateGenotypesDictionary(
         'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB'
     ]
 )
+# Landscape calculations
 reps = monet.loadAndAggregateLandscapeDataRepetitions(
     ePath, aggregationDictionary, male=True, female=False
 )
@@ -31,24 +34,18 @@ repsN = monet.sumAggregatedLandscapeDataRepetitions(reps)
 (genes, lands) = (repsN['genotypes'], repsN['landscapes'])
 (geneNumber, totalTime) = (len(genes), len(lands[0][0]))
 
-
-(hSD, hMn, hMd) = [np.zeros(shape=(totalTime, geneNumber)) for i in range(3)]
+# Calculate the sumary stats
+sStats = [np.zeros(shape=(totalTime, geneNumber)) for i in range(funcsNum)]
 for time in range(totalTime):
     for gene in range(geneNumber):
         slice = [lanRep[0][time, gene] for lanRep in lands]
-        (sSD, sMn, sMd) = (stat.stdev(slice), stat.mean(slice), stat.median(slice))
-        (hSD[time][gene], hMn[time][gene], hMd[time][gene]) = (sSD, sMn, sMd)
+        sliceStat = [fun(slice) for fun in funcsList]
+        for i in range(funcsNum):
+            sStats[i][time][gene] = sliceStat[i]
 
-
-np.savetxt(
-    pathRoot + "SSD_" +  expPath.split('/')[-2] + ".csv",
-    hSD, fmt='%f', delimiter=',', newline='\n'
-)
-np.savetxt(
-    pathRoot + "SMN_" +  expPath.split('/')[-2] + ".csv",
-    hMn, fmt='%f', delimiter=',', newline='\n'
-)
-np.savetxt(
-    pathRoot + "SMD_" +  expPath.split('/')[-2] + ".csv",
-    hMd, fmt='%f', delimiter=',', newline='\n'
-)
+# Export the summary files
+for i in range(funcsNum):
+    np.savetxt(
+        pathRoot + funcsID[i] + "_" +  expPath.split('/')[-2] + ".csv",
+        sStats[i], fmt='%f', delimiter=',', newline='\n'
+    )
