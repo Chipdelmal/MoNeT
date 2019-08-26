@@ -15,37 +15,40 @@ pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/"
 pathSet = pathRoot + "Yorkeys_AGG_*/"
 foldersList = sorted(glob.glob(pathSet + "*GARBAGE"))
 
-expPath = foldersList[0]
-# Get paths and aggregate
-gPath = monet.listDirectoriesWithPathWithinAPath(expPath + "/")
-ePath = monet.listDirectoriesWithPathWithinAPath(gPath[0] + "/")
-aggregationDictionary = monet.autoGenerateGenotypesDictionary(
-    ["W", "H", "E", "R", "B"],
-    [
-        'WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
-        'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB'
-    ]
-)
-# Landscape calculations
-reps = monet.loadAndAggregateLandscapeDataRepetitions(
-    ePath, aggregationDictionary, male=True, female=False
-)
-repsN = monet.sumAggregatedLandscapeDataRepetitions(reps)
-(genes, lands) = (repsN['genotypes'], repsN['landscapes'])
-(geneNumber, totalTime) = (len(genes), len(lands[0][0]))
-
-# Calculate the sumary stats
-sStats = [np.zeros(shape=(totalTime, geneNumber)) for i in range(funcsNum)]
-for time in range(totalTime):
-    for gene in range(geneNumber):
-        slice = [lanRep[0][time, gene] for lanRep in lands]
-        sliceStat = [fun(slice) for fun in funcsList]
-        for i in range(funcsNum):
-            sStats[i][time][gene] = sliceStat[i]
-
-# Export the summary files
-for i in range(funcsNum):
-    np.savetxt(
-        pathRoot + funcsID[i] + "_" +  expPath.split('/')[-2] + ".csv",
-        sStats[i], fmt='%f', delimiter=',', newline='\n'
+for expPath  in foldersList[2:]:
+    # Get paths and aggregate
+    gPath = monet.listDirectoriesWithPathWithinAPath(expPath + "/")
+    ePath = monet.listDirectoriesWithPathWithinAPath(gPath[0] + "/")
+    aggregationDictionary = monet.autoGenerateGenotypesDictionary(
+        ["W", "H", "E", "R", "B"],
+        [
+            'WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
+            'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB'
+        ]
     )
+
+    # Landscape calculations
+    reps = monet.loadAndAggregateLandscapeDataRepetitions(
+        ePath, aggregationDictionary, male=True, female=False
+    )
+    repsN = monet.sumAggregatedLandscapeDataRepetitions(reps)
+    (genes, lands) = (repsN['genotypes'], repsN['landscapes'])
+    (geneNumber, totalTime) = (len(genes), len(lands[0][0]))
+
+    # Calculate the sumary stats
+    sStats = [np.zeros(shape=(totalTime, geneNumber)) for i in range(funcsNum)]
+    for time in range(totalTime):
+        for gene in range(geneNumber):
+            # Slice the arrays at a certain time for each genotype
+            slice = [lanRep[0][time, gene] for lanRep in lands]
+            sliceStat = [fun(slice) for fun in funcsList]
+            for i in range(funcsNum):
+                # Add each stat to its corresponding array
+                sStats[i][time][gene] = sliceStat[i]
+
+    # Export the summary files
+    for i in range(funcsNum):
+        np.savetxt(
+            pathRoot + funcsID[i] + "_" +  expPath.split('/')[-2] + ".csv",
+            sStats[i], fmt='%f', delimiter=',', newline='\n'
+        )
