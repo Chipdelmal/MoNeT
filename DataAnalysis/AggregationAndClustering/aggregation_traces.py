@@ -58,14 +58,14 @@ for aggFolder in aggFolders:
         fig,
         pathRoot + "/images/" +
         aggLevel + "_G." + "png",
-        dpi=styleS["dpi"],
+        dpi=styleT["dpi"],
         format="png"
     )
     monet.quickSaveFigure(
         fig,
         pathRoot + "/images/" +
         aggLevel + "_G." + "pdf",
-        dpi=styleS["dpi"],
+        dpi=styleT["dpi"],
         format="pdf"
     )
     plt.close()
