@@ -15,16 +15,16 @@ colors = [
 ]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleT = {
-    "width": 0.075, "alpha": .1, "dpi": 2*512, "legend": False,
+    "width": 0.075, "alpha": .05, "dpi": 2*512, "legend": False,
     "aspect":0.02, "colors": colors, "format": "png",
-    "xRange": [0, 9504], "yRange": [0, 50000]
+    "xRange": [0, 9125], "yRange": [0, 50000]
 }
 ##############################################################################
 # Setup
 ##############################################################################
 pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/Experiments/"
 aggFolders = sorted(glob.glob(pathRoot+'C*/'))
-for aggFolder in aggFolders:
+for aggFolder in aggFolders[3:]:
     aggLevel  = aggFolder.split('/')[-2]
     print('generating traces for: ' + aggLevel)
     landscapes = sorted(glob.glob(aggFolder+'Yorkeys01_*_A/GARBAGE/E*/'))
