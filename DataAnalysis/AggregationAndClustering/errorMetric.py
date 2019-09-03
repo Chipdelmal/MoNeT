@@ -15,7 +15,8 @@ pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/"
 pathSet = pathRoot + "Yorkeys_AGG_*/"
 foldersList = sorted(glob.glob(pathSet + "*GARBAGE"))
 
-for expPath  in foldersList[2:]:
+
+for expPath  in foldersList[7:]:
     # Get paths and aggregate
     gPath = monet.listDirectoriesWithPathWithinAPath(expPath + "/")
     ePath = monet.listDirectoriesWithPathWithinAPath(gPath[0] + "/")
@@ -28,10 +29,12 @@ for expPath  in foldersList[2:]:
     )
 
     # Landscape calculations
-    reps = monet.loadAndAggregateLandscapeDataRepetitions(
+    # reps = monet.loadAndAggregateLandscapeDataRepetitions(
+    #     ePath, aggregationDictionary, male=True, female=False
+    # )
+    repsN = monet.sumAggregatedLandscapeDataRepetitionsAlt(
         ePath, aggregationDictionary, male=True, female=False
     )
-    repsN = monet.sumAggregatedLandscapeDataRepetitions(reps)
     (genes, lands) = (repsN['genotypes'], repsN['landscapes'])
     (geneNumber, totalTime) = (len(genes), len(lands[0][0]))
 
