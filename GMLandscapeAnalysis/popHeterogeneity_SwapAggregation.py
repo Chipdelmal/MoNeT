@@ -73,14 +73,29 @@ def combineRepetitionData(paths, outputpaths, aggregationDictionary, male=True, 
             combineSingleSwap(paths[p], outputpaths[p], aggregationDictionary, False, True)
 
 
-def pathGenerator(pathRoot, expName, numRep, numSwap, output=False):
+def pathGenerator(pathRoot, expName, numSwap, numRep, output=False):
+    """
+    Description: This function generates file paths to experiments to be passed
+    into combineRepetitionData as paths argument.
+    In:
+        pathRoot: string, the root path of the experiments.
+        expName: string, the experiment name.
+        numSwap: int or array-like, if int: indicates that there are 1 to
+            numSwap swaps, if array-like: array of swaps made.
+        numRep: int, the number of repetitions of each swap.
+        output: boolean, if True
+    """
     paths = []
-    for r in range(numRep):
+    if isinstance(numSwap, int):
+        swaps = range(numSwap)
+    else:
+        swaps = numSwap
+    for s in swaps:
         if not output:
-            path = [pathRoot+expName+"_"+str(r)+"_"+str(s)+"/ANALYZED/0001" for s in range(numSwap)]
+            path = [pathRoot+expName+"_"+'%02d' % s+"_"+'%02d' % r+"/ANALYZED/0001" for r in range(numRep)]
             paths.append(path)
         else:
-            paths.append(pathRoot+expName+"_"+str(r))
+            paths.append(pathRoot+expName+"_"+'%02d' % s)
     return paths
 
 
@@ -94,8 +109,8 @@ aggregationDictionary = monet.generateAggregationDictionary(
     ]
 )
 
-combineRepetitionData(pathGenerator("/Users/mayashen/Desktop/Marshall_Simulations/test/", "swap_down", 51, 5),
-    pathGenerator("/Users/mayashen/Desktop/Marshall_Simulations/outputs/", "swap_down", 51, 0, True), aggregationDictionary)
+combineRepetitionData(pathGenerator("/Users/mayashen/Desktop/Marshall_Simulations/test/", "swap_down", range(0, 51, 10), 20),
+    pathGenerator("/Users/mayashen/Desktop/Marshall_Simulations/outputs/", "swap_down", range(0, 51, 10), 0, True), aggregationDictionary)
 
 
 # SCRATCH WORK
@@ -130,9 +145,9 @@ names.extend(["AF1_Mean_Patch_00"+str(i)+".csv" for i in range(10, 52)])
 names
 
 for i in range(52):
-    pd.DataFrame({'Time':range(1, 1460), 'W': comp_data[i][:,0],
-    'H': comp_data[i][:,1], 'R': comp_data[i][:,2],
-    'B': comp_data[i][:,3]}).to_csv(
+    pd.DataFrame({'Time':range(1, 1460), 'W': comp_data[i][:, 0],
+    'H': comp_data[i][:, 1], 'R': comp_data[i][:, 2],
+    'B': comp_data[i][:, 3]}).to_csv(
     "~/Desktop/Marshall_Simulations/test_real/test_swap/ANALYZED/0001/"+names[i], header=["Time", "W", "H", "R", "B"],
     index=None)
-comp_data[0][:,0]
+comp_data[0][:, 0]
