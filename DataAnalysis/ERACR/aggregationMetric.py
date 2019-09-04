@@ -27,12 +27,12 @@ if LAND == 0:
     expBaseName = "Fowler_AGG_1_"
     pathRoot = "/Volumes/marshallShare/ERACR/Fowler4/Experiment/"
     truthExperiment = expBaseName + "01971"
-    expsList = [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]
+    expsList = [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971] 
 elif LAND == 1:
     expBaseName = "Yorkeys_AGG_1_"
-    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/"
-    truthExperiment = expBaseName + "02195"
-    expsList = [1, 25,50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
+    pathRoot = "/Volumes/marshallShare/ERACR/Fowler4/Experiment/"
+    truthExperiment = expBaseName + "00250" #"02195"
+    expsList = [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971] 
 pathSet = pathRoot + expBaseName + "*/"
 # #############################################################################
 # Setting up the experiments paths
@@ -67,10 +67,12 @@ for i in expsList:
     # #########################################################################
     # Pre-analyses numbers
     alpha = 10
-    initPop = sum(basePopDyns['population'][0])
+    initPop = [sum(basePopDyns['population'][x]) for x in range(len(basePopDyns['population']))]
     simTime = len(basePopDyns['population'])
     # Metrics
-    error = abs(ref - sig)
+    if len(initPop) != len(ref):
+        print("something is wrong!")
+    error = [abs(ref - sig)[x] / initPop[x] for x in range(len(initPop))]
     rmseAcc = np.cumsum(error, axis=1) / simTime
     # rmseGra = np.gradient(rmseNrm, axis=0)
     # rmseInt = np.trapz(rmseNrm, axis=0) / simTime
