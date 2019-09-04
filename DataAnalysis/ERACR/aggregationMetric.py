@@ -11,13 +11,24 @@ import matplotlib.pyplot as plt
 def plotTimeError(data, metric=np.mean, yRange=1):
     plt.figure()#figsize=(5, 5))
     plt.grid()
-    for i in range(len(data[0])):
-        plt.plot(data[:, i], color=aux.colors[i], linewidth=.5, alpha=.8)
-    plt.title(str(np.around(metric(data, axis=0), decimals=3)))
+    plt.plot(data, color=aux.colors[1], linewidth=1.5, alpha=.75)
+    #plt.title(str(np.around(metric(data, axis=0), decimals=3)))
     plt.xlim(0, len(data))
     plt.ylim(0, yRange)
     return plt
 
+
+def shadeColor(inColor=255, steps=10):
+    stSh = inColor / steps
+    shades = [(inColor - (i * stSh)) for i in range(steps)]
+    return shades
+
+
+def scaleRGB(rgbTuple):
+    return [i/255 for i in rgbTuple]
+
+
+COLORS = [scaleRGB((i, 50, 50)) for i in shadeColor(255, 15)]
 
 LAND = 1
 # #############################################################################
@@ -32,7 +43,7 @@ elif LAND == 1:
     expBaseName = "Yorkeys_AGG_1_"
     pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/"
     truthExperiment = expBaseName + "02195" #"02195"
-    expsList = [1, 25,50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
+    expsList = [1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
 pathSet = pathRoot + expBaseName + "*/"
 # #############################################################################
 # Setting up the experiments paths
@@ -49,7 +60,9 @@ ref = basePopDyns['population']
 # #############################################################################
 # Experiment iterations
 # #############################################################################
-for i in expsList:
+plt.figure(figsize=(5, 5))
+plt.grid()
+for (j, i) in enumerate(expsList):
     # #########################################################################
     # Calculating the error metric
     # #########################################################################
@@ -72,10 +85,9 @@ for i in expsList:
     # Metrics
     if len(initPop) != len(ref):
         print("something is wrong!")
-    error = [abs(ref - sig)[x] / initPop[x] for x in range(len(initPop))]
-    rmseAcc = np.cumsum(error, axis=1) / simTime
-    # rmseGra = np.gradient(rmseNrm, axis=0)
-    # rmseInt = np.trapz(rmseNrm, axis=0) / simTime
+    errSum = [sum(slice) for slice in abs(ref - sig)]
+    error = [errSum[x] / initPop[x] for x in range(len(initPop))]
+    rmseAcc = np.cumsum(error, axis=0) / simTime
     # #########################################################################
     # Export Plots and Summaries
     # #########################################################################
@@ -90,16 +102,10 @@ for i in expsList:
     )
     print(pathRoot + "RMSE_ACC_" + refExperiment + ".csv")
     # RMSE Normalized
-    fig = plotTimeError(rmseNrm, metric=np.mean, yRange=5000)
+    plt.plot(rmseAcc, color=COLORS[j], linewidth= 2 - .2 * j, alpha=.6)
+    plt.xlim(0, len(rmseAcc))
+    plt.ylim(0, .25)
     monet.quickSaveFigure(
-        fig, pathRoot + "RMSE_NRM_" + refExperiment + ".pdf",
+        plt, pathRoot + "RMSE_ACC_" + refExperiment + ".pdf",
         dpi=aux.styleS["dpi"], format=None
     )
-    # fig.close()
-    # # RMSE Normalized Cumulative
-    # fig = plotTimeError(rmseAcc, metric=np.max, yRange=1)
-    # monet.quickSaveFigure(
-    #     fig, pathRoot + "RMSE_ACC_" + refExperiment + ".pdf",
-    #     dpi=aux.styleS["dpi"], format=None
-    # )
-    # fig.close()
