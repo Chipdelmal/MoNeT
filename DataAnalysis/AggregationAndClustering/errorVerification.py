@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 (selStat, funcsID) = (0, ["SSD", "SMN", "SMD"])
 pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/"
-pathOut = pathRoot + "images/errors/"
+pathOut = pathRoot + "images/frames/"
 # Filepaths ###################################################################
 (filesListMean, filesListStat) = (
     sorted(glob.glob(pathRoot + "SMN*")),
@@ -29,7 +29,7 @@ styleS = {
 
 for fileIx in range(len(filesListMean)):
     (fileM, fileS) = (filesListMean[fileIx], filesListStat[fileIx])
-    nameID = fileM.split("/")[-1].split(".")[0]
+    nameID = str(fileIx)#fileM.split("/")[-1].split(".")[0]
     # Read Files ##############################################################
     (readDataM, readDataS) = (
             np.genfromtxt(fileM, delimiter=','),
@@ -58,7 +58,7 @@ for fileIx in range(len(filesListMean)):
     ax.set_xlim(styleS["xRange"])
     ax.set_ylim(styleS["yRange"])
     monet.quickSaveFigure(
-        fig, pathOut + nameID + "_T.png",
+        fig, pathOut + nameID + ".png",
         format="png", dpi=styleS["dpi"]
     )
 
@@ -91,3 +91,6 @@ monet.quickSaveFigure(
     fig, pathOut + "SMN_Yorkeys_AGG_1_Full.png",
     format="png", dpi=styleS["dpi"]
 )
+
+# ffmpeg -i %05d.jpg output.mp4
+# ffmpeg -ss 2.6 -t 1.3 -i output.mp4 -vf fps=15,scale=320:-1:flags=lanczos,palettegen palette.png
