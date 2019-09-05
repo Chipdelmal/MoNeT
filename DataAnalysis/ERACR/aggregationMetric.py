@@ -30,7 +30,7 @@ def scaleRGB(rgbTuple):
 
 COLORS = [scaleRGB((i, 50, 50)) for i in shadeColor(255, 15)]
 cm = plt.get_cmap('jet')
-gradient = np.linspace(0, 1, 20)
+gradient = np.linspace(0, 1, 15)
 cm(gradient[10])
 
 LAND = 1
@@ -63,6 +63,7 @@ ref = basePopDyns['population']
 # #############################################################################
 # Experiment iterations
 # #############################################################################
+errList = []
 plt.figure(figsize=(5, 5))
 plt.grid()
 for (j, i) in enumerate(expsList):
@@ -91,6 +92,7 @@ for (j, i) in enumerate(expsList):
     errSum = [sum(slice) for slice in abs(ref - sig)]
     error = [errSum[x] / (initPop[x] + sigTot[x]) for x in range(len(initPop))]
     rmseAcc = np.cumsum(error, axis=0) / simTime
+    errList.append(rmseAcc[-1])
     # #########################################################################
     # Export Plots and Summaries
     # #########################################################################
@@ -107,8 +109,15 @@ for (j, i) in enumerate(expsList):
     # RMSE Normalized
     plt.plot(rmseAcc, color=cm(gradient[j]), linewidth= 1.5, alpha=.6)
     plt.xlim(0, len(rmseAcc))
-    plt.ylim(0, .25)
+    plt.ylim(0, .08)
+    plt.xlabel('time', fontsize=15)
+    plt.ylabel('error', fontsize=15)
+    titleStr = ''.join(['[' + str(expsList[i]) + ': ' + str(round(errList[i], 3)) + '] ' for i in range(len(errList))])
+    plt.title(titleStr, fontsize=6)
     monet.quickSaveFigure(
         plt, pathRoot + "RMSE_ACC_" + refExperiment + ".pdf",
         dpi=aux.styleS["dpi"], format=None
     )
+
+
+"".join([str(expsList[i]) + ': ' + str(errList[i]) + '\t' for i in range(len(errList))])
