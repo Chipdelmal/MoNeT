@@ -29,6 +29,9 @@ def scaleRGB(rgbTuple):
 
 
 COLORS = [scaleRGB((i, 50, 50)) for i in shadeColor(255, 15)]
+cm = plt.get_cmap('jet')
+gradient = np.linspace(0, 1, 20)
+cm(gradient[10])
 
 LAND = 1
 # #############################################################################
@@ -79,14 +82,14 @@ for (j, i) in enumerate(expsList):
     # Calculating the error metric
     # #########################################################################
     # Pre-analyses numbers
-    alpha = 10
     initPop = [sum(basePopDyns['population'][x]) for x in range(len(basePopDyns['population']))]
+    sigTot = [sum(refPopDyns['population'][x]) for x in range(len(refPopDyns['population']))]
     simTime = len(basePopDyns['population'])
     # Metrics
     if len(initPop) != len(ref):
         print("something is wrong!")
     errSum = [sum(slice) for slice in abs(ref - sig)]
-    error = [errSum[x] / initPop[x] for x in range(len(initPop))]
+    error = [errSum[x] / (initPop[x] + sigTot[x]) for x in range(len(initPop))]
     rmseAcc = np.cumsum(error, axis=0) / simTime
     # #########################################################################
     # Export Plots and Summaries
@@ -102,7 +105,7 @@ for (j, i) in enumerate(expsList):
     )
     print(pathRoot + "RMSE_ACC_" + refExperiment + ".csv")
     # RMSE Normalized
-    plt.plot(rmseAcc, color=COLORS[j], linewidth= 2 - .2 * j, alpha=.6)
+    plt.plot(rmseAcc, color=cm(gradient[j]), linewidth= 1.5, alpha=.6)
     plt.xlim(0, len(rmseAcc))
     plt.ylim(0, .25)
     monet.quickSaveFigure(
