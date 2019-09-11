@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
@@ -15,11 +18,11 @@ import inspect
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "TBSA"
+filename = "WBSA"
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
-path = "/Volumes/marshallShare/ThresholdResub/factorialSensitivity/Translocations_0002/2019_09_09_ANALYZED/"
-wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
-homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
+path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/WolbachiaRemediation/2019_09_07_ANALYZED/"
+wildsList = [1]
+homingList = [0]
 aggregationDictionary = monet.generateAggregationDictionary(
     ["W", "H"],
     [
@@ -53,3 +56,4 @@ print((end - start)/60)
 ###############################################################################
 outFilename = filename + ".csv"
 monet.compileFactorialCSVFromFiles(path, outFilename)
+outFilename

@@ -44,10 +44,11 @@ if LAND == 0:
     expsList = [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]
 elif LAND == 1:
     expBaseName = "Yorkeys_AGG_1_"
-    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/"
+    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/Experiment/"
     truthExperiment = expBaseName + "02195" #"02195"
-    expsList = [1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
+    expsList = [2195]#[1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
 pathSet = pathRoot + expBaseName + "*/"
+pathSet
 # #############################################################################
 # Setting up the experiments paths
 # #############################################################################
@@ -109,15 +110,12 @@ for (j, i) in enumerate(expsList):
     # RMSE Normalized
     plt.plot(rmseAcc, color=cm(gradient[j]), linewidth= 1.5, alpha=.6)
     plt.xlim(0, len(rmseAcc))
-    plt.ylim(0, .08)
+    plt.ylim(0, .07)
     plt.xlabel('time', fontsize=15)
     plt.ylabel('error', fontsize=15)
     titleStr = ''.join(['[' + str(expsList[i]) + ': ' + str(round(errList[i], 3)) + '] ' for i in range(len(errList))])
-    plt.title(titleStr, fontsize=6)
+    plt.title(titleStr, fontsize=2.5)
     monet.quickSaveFigure(
         plt, pathRoot + "RMSE_ACC_" + refExperiment + ".pdf",
         dpi=aux.styleS["dpi"], format=None
     )
-
-
-"".join([str(expsList[i]) + ': ' + str(errList[i]) + '\t' for i in range(len(errList))])

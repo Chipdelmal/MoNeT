@@ -27,7 +27,7 @@ latlongs = np.genfromtxt(
 distMat = monet.calculateDistanceMatrix(latlongs, distFun=vn.vincenty) * 1000
 migrMat = monet.zeroInflatedExponentialMigrationKernel(
     distMat,
-    params=monet.AEDES_EXP_PARAMS,
+    params=[1/54.08981, 1e-10, inf], #monet.AEDES_EXP_PARAMS,
     zeroInflation=pow(lifeStayProb, adultMortality)
 )
 
