@@ -6,6 +6,7 @@
 2. Run [calculateDistanceAndMigration](https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/AggregationAndClustering/calculateDistanceAndMigration.py) to generate the distances and migration matrix.
 3. Run [clusterAndAggregate](https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/AggregationAndClustering/clusterAndAggregate.py) to do the aggregation at the necessary levels, and at the repetitions needed.
 4. Run [sampleReleases](https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/AggregationAndClustering/sampleReleases.py) to generate the random sampling of the nodes to release gene-drive mosquitos.
+5. Run [mapCluster](https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/AggregationAndClustering/mapClusters.py) to export plots on the clusters as a basic means of verification.
 
 ##  Key
 

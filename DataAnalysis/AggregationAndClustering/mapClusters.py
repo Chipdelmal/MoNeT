@@ -6,46 +6,50 @@ import numpy as np
 from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.mplot3d import Axes3D
 
-pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_Left/LandAggregated"
+pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_Right/LandAggregated"
 firstRun = True
 
 for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
     clusterstr = clusterFile.split('/')[-2][1:]
     clusterNum  = int(clusterstr) #getfolder name and ignore the C infront of it to chech for the number of clusters
 
-    if clusterNum < 5:
+    if clusterNum == 1:
         if firstRun:
             firstRun = False
-            #print(clusterFile)
+            print(clusterFile)
         else:
-            break
-            #continue
+            continue
     else:
-        break
-        #print(clusterFile)
+        print(clusterFile)
 
+    minGroup = 99999999
+    maxGroup = 0
     minLat = 0
     minlong  = 0
     maxLat = 0
     maxLong = 0
     lats = []
     longs = []
-    ids = []
+    clusters = []
+    centroidSet = {}
+    expName = (clusterFile.split("/")[-1]).replace('_I.csv','_VBG_.png')
     clusterData = open(clusterFile,'r')
     next(clusterData)
     for line in clusterData:
         tokens = line.split(',')
         lat = float(tokens[2])
         long = float(tokens[1])
-        id = int(tokens[0])
+        cluster = int(tokens[3])
         lats.append(lat)
         longs.append(long)
-        ids.append(id)
+        clusters.append(cluster)
 
     minLat = min(lats)
     minLong  = min(longs)
+    minCluster = min(clusters)
     maxLat = max(lats)
     maxLong = max(longs)
+    maxCluster = max(clusters)
 
     fig = plt.figure(figsize=(5, 5))
     ax=fig.add_subplot(111, label="1")
@@ -53,10 +57,10 @@ for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
     # m.drawcounties(linewidth=0.3)
     # m.drawcoastlines(linewidth=0.3)
     # m.drawcountries(linewidth=0.3)
-    m.scatter(longs, lats, latlon=True, alpha=.2, marker='o', s=3)
-    tLon,tLat = m(longs,lats)
-    for i in range(len(longs)):
-        plt.text(tLon[i],tLat[i], ids[i], fontsize=1)
+    m.scatter(longs, lats, latlon=True, alpha=.2, marker='o', s=3, cmap=plt.get_cmap('rainbow'), c=clusters, vmin=minCluster, vmax=maxCluster)
+    # tLon,tLat = m(longs,lats)
+    # for i in range(len(longs)):
+    #     plt.text(tLon[i],tLat[i], str(i), fontsize=1)
     ax.tick_params(
     axis='both',          # changes apply to the both
     which='both',      # both major and minor ticks are affected
@@ -66,7 +70,9 @@ for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
     right=False,
     labelbottom=False, # labels along the bottom edge are off
     labelleft=False)
-    plt.savefig(pathRoot+'/images/ids.png', dpi=2048,
+    if not os.path.exists(pathRoot+'/images/C'+clusterstr):
+        os.mkdir(pathRoot+'/images/C'+clusterstr)
+    plt.savefig(pathRoot+'/images/C'+clusterstr+'/'+expName, dpi=512,
                 facecolor='w', edgecolor='w', orientation='portrait',
                 papertype=None, format="png", transparent=False,
                 bbox_inches='tight', pad_inches=0.05, frameon=None)

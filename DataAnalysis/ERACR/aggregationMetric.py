@@ -46,7 +46,7 @@ elif LAND == 1:
     expBaseName = "Yorkeys_AGG_1_"
     pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/Experiment/"
     truthExperiment = expBaseName + "02195" #"02195"
-    expsList = [2195]#[1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
+    expsList = [750]#[1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
 pathSet = pathRoot + expBaseName + "*/"
 pathSet
 # #############################################################################

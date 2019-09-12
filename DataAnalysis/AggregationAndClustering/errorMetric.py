@@ -64,15 +64,16 @@ for expPath  in foldersList[7:]:
 pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/Experiments/"
 pathClst = pathRoot + "C*"
 clustersList = sorted(glob.glob(pathClst))
+clustersList[5]
 ###############################################################################
-for expPath in [clustersList[-1]]:
+for expPath in [clustersList[4]]:
     sPath = monet.listDirectoriesWithPathWithinAPath(expPath + "/")
-    ###############################################################################
+    ###########################################################################
     paths = []
     for pth in sPath:
         paths.extend(glob.glob(pth + "/GARBAGE/" + "E*" + "/*"))
     [i + '/' for i in paths]
-    ###############################################################################
+    ###########################################################################
     aggregationDictionary = monet.autoGenerateGenotypesDictionary(
         ["W", "H", "E", "R", "B"],
         [
@@ -98,6 +99,7 @@ for expPath in [clustersList[-1]]:
         # Export the summary files
     for i in range(funcsNum):
         np.savetxt(
-            expPath + "_" + funcsID[i] + "_" + ".csv",
+            pathRoot + "O_" + expPath.split("/")[-1] + "_" +
+                funcsID[i] + ".csv",
             sStats[i], fmt='%f', delimiter=',', newline='\n'
         )

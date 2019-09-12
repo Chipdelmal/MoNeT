@@ -12,14 +12,14 @@ from sklearn.cluster import KMeans
 # Parameters Setup
 ###############################################################################
 (PATH, LATLONGS, DIST, OUT) = (
-    "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/",
+    "/Volumes/marshallShare/ERACR/Yorkeys_Right/",
     "LandSorted/Yorkeys01_S.csv",
     "LandSorted/Yorkeys01_M.csv",
     "LandAggregated/"
 )
 (CLUSTERS_NO, REPS) = (
     [2], # [1500, 2000, 2195], # 1, 25, 50, 250, 500, 750, 1000, 1250,
-    500
+    10#500
 )
 
 ###############################################################################
