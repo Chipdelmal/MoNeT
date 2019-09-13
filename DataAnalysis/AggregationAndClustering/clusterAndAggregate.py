@@ -3,23 +3,24 @@
 
 import aux
 import time
+import timeit
 import numpy as np
 import MoNeT_MGDrivE as monet
 from sklearn.cluster import KMeans
-
+from sklearn.cluster import MiniBatchKMeans
 
 ###############################################################################
 # Parameters Setup
 ###############################################################################
 (PATH, LATLONGS, DIST, OUT) = (
-    "/Volumes/marshallShare/ERACR/Yorkeys_Right/",
+    "/Volumes/marshallShare/ERACR/Yorkeys_MINI/",
     "LandSorted/Yorkeys01_S.csv",
     "LandSorted/Yorkeys01_M.csv",
     "LandAggregated/"
 )
 (CLUSTERS_NO, REPS) = (
-    [2], # [1500, 2000, 2195], # 1, 25, 50, 250, 500, 750, 1000, 1250,
-    10#500
+    [1, 2, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195],
+    500
 )
 
 ###############################################################################
@@ -35,9 +36,11 @@ coordsList = aux.readCoordsCSV(PATH + LATLONGS)
 ###############################################################################
 # Cluster and Export
 ###############################################################################
+timings = []
 for clst in CLUSTERS_NO:
     outRepPath = PATH + OUT + "C" + str(clst).rjust(6, '0')
     aux.createFolder(outRepPath)
+    start = time.process_time()
     for rep in range(REPS):
         #######################################################################
         # Cluster and Aggregate
@@ -47,6 +50,10 @@ for clst in CLUSTERS_NO:
             random_state=int(time.time()),
             n_jobs=1
         )
+        # clObj = MiniBatchKMeans(
+        #     n_clusters=clst,
+        #     random_state=int(time.time())
+        # )
         clustersObj = clObj.fit(latlongs)
         (clusters, centroids) = (
             clustersObj.labels_,
@@ -65,4 +72,14 @@ for clst in CLUSTERS_NO:
             coordsList, clusters, centroids,
             filenames + "_I.csv"
         )
+    end = time.process_time()
     print("Done with " + str(clst) + " reps.")
+    timings.append(end - start)
+    print(timings)
+    
+###############################################################################
+# Write timing file
+###############################################################################
+with open(PATH + 'timing.csv', 'w') as myfile:
+    wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+    wr.writerow(timings)

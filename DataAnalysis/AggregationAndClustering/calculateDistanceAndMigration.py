@@ -11,7 +11,7 @@ import MoNeT_MGDrivE as monet
 ###############################################################################
 (PATH, LATLONGS) = (
     "/Volumes/marshallShare/ERACR/Yorkeys_Middle/",
-    "LandSorted/Yorkeys01_S.csv"
+    "LandSorted/Yorkeys02_S.csv"
 )
 (lifeStayProb, adultMortality) = (.72, .09)
 
