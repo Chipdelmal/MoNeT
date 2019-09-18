@@ -56,4 +56,3 @@ print((end - start)/60)
 ###############################################################################
 outFilename = filename + ".csv"
 monet.compileFactorialCSVFromFiles(path, outFilename)
-outFilename

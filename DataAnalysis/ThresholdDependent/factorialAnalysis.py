@@ -15,9 +15,9 @@ import inspect
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "TBSA"
+filename = 'UDSA'
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
-path = "/Volumes/marshallShare/ThresholdResub/factorialSensitivity/Translocations_0002/2019_09_09_ANALYZED/"
+path = "/Volumes/marshallShare/ThresholdResub/factorialSensitivity/UDMel_0002/2019_09_11_ANALYZED/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
 aggregationDictionary = monet.generateAggregationDictionary(
