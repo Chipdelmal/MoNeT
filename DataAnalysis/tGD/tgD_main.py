@@ -31,17 +31,17 @@ def quickSaveFigure(
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 3
+DRIVE = 6
 TRACES = False
 TRACE_ANIMATION = False
-STACK = False
-STACK_ANIMATION = True
+STACK = True
+STACK_ANIMATION = False
 SUMMARIES_DATA = False
 TRACES_DATA = False
-FORMAT = ".png"
+FORMAT = ".pdf"
 ##############################################################################
 ##############################################################################
-pathRoot = "/Volumes/marshallShare/tGD/"
+pathRoot = "/Volumes/marshallShare/tGDSuppression/"
 pathExt, aggregationDictionary, yRange = sel.driveSelector(
     DRIVE, pathRoot
 )
@@ -159,19 +159,15 @@ def plotAndSaveStack(aggData, ssDay, ffString, ffStringH, path):
         "[tSS: " + str(ssDay) + "] :: [" + ffString + "] :: [" + ffStringH + "]",
         fontsize=5
     )
-    # monet.quickSaveFigure(
-    #     figA,
-    #     "./images/" + str(DRIVE).rjust(2, "0") + "T_" +
-    #     experimentString + ".png"
-    # )
-    quickSaveFigure(
+    monet.quickSaveFigure(
         figB,
         path,
-        dpi=1024
+        dpi=1024,
+        format="pdf"
     )
     plt.close()
 ##############################################################################
-##############################################################################        
+##############################################################################
 if TRACES is True:
     pathsRoot = monet.listDirectoriesWithPathWithinAPath(
         pathRoot + pathExt + "GARBAGE/"
@@ -188,11 +184,11 @@ if TRACE_ANIMATION is True:
     for i in range(0, len(pathsRoot)):
         landscapeReps, ssDay, experimentString = getLandscapeReps(i)
         # make folder in /images/trace_animations/ with name of experiment
-        pathFolder = pathRoot + "images/trace_animations/" + str(DRIVE).rjust(2, "0") + "R_" + experimentString 
+        pathFolder = pathRoot + "images/trace_animations/" + str(DRIVE).rjust(2, "0") + "R_" + experimentString
         if not os.path.isdir(pathFolder):
-            try:  
+            try:
                 os.mkdir(pathFolder)
-            except OSError:  
+            except OSError:
                 print ("Creation of the directory %s failed" % pathFolder)
         for i in range(1, len(landscapeReps["landscapes"])):
             landscapeSublist = {"genotypes": landscapeReps["genotypes"], "landscapes": landscapeReps["landscapes"][0:i]}
@@ -230,15 +226,15 @@ if STACK_ANIMATION is True:
         #####################################################################
 
         # make folder in /images/stack_animations/ with name of experiment
-        pathFolder = pathRoot + "images/stack_animations/" + str(DRIVE).rjust(2, "0") + "R_" + experimentString 
+        pathFolder = pathRoot + "images/stack_animations/" + str(DRIVE).rjust(2, "0") + "R_" + experimentString
         if not os.path.isdir(pathFolder):
-            try:  
+            try:
                 os.mkdir(pathFolder)
-            except OSError:  
+            except OSError:
                 print ("Creation of the directory %s failed" % pathFolder)
         for i in range(1, aggData["population"].shape[0]):
             aggSublist = {"genotypes": aggData["genotypes"], "population": aggData["population"][:i, :]}
-            plotAndSaveStack(aggSublist, ssDay, ffString, ffStringH, pathFolder+ "/" + str(i).rjust(6, "0") + ".png")       
+            plotAndSaveStack(aggSublist, ssDay, ffString, ffStringH, pathFolder+ "/" + str(i).rjust(6, "0") + ".png")
 ##############################################################################
 ##############################################################################
 if SUMMARIES_DATA is True:
@@ -300,8 +296,3 @@ if TRACES_DATA is True:
             str(DRIVE).rjust(2, "0") + experimentString
         )
         plt.close()
-
-
-
-
-
