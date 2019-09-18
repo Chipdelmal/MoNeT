@@ -37,6 +37,7 @@ for fileIx in range(len(filesListMean)):
     # Stack ###################################################################
     data = {"genotypes": ["W", "H", "E", "R", "B"], "population": readDataM}
     fig = monet.plotMeanGenotypeStack(data, styleS)
+    ax = fig.add_subplot(111)
     ax.set_aspect(aspect=styleS["aspect"])
     ax.set_xlim(styleS["xRange"])
     ax.set_ylim(styleS["yRange"])
