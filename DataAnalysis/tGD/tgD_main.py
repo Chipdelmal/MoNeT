@@ -31,7 +31,7 @@ def quickSaveFigure(
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 6
+DRIVE = 5
 TRACES = False
 TRACE_ANIMATION = False
 STACK = True
@@ -64,7 +64,7 @@ styleS = {
     "width": 0, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .0075,
     "colors": colors, "xRange": [0, 600], "yRange": [0, 5000]
 }
-xRange = 1250
+xRange = 1400
 yRangeFixed = 11000
 ##############################################################################
 ##############################################################################

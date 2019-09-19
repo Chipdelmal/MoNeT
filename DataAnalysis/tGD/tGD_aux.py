@@ -17,15 +17,15 @@ def reachedSteadtStateAtDay(
     toleranceDown = finalFrame - tolerance
 
     daysMax = len(aggData["population"])
-
     for i in range(0, daysMax):
         steadyStateReach = daysMax
         testFrame = aggData["population"][i]
 
         boolsUp = testFrame < toleranceUp
         boolsDown = testFrame > toleranceDown
+        zeros = testFrame <= 1
 
-        if all(boolsUp) and all(boolsDown) or (np.isclose(sum(testFrame), 0, safety)):
+        if (all(boolsUp) and all(boolsDown)) or all(zeros):
             steadyStateReach = i
             break
 

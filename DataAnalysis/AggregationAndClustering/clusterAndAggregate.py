@@ -20,7 +20,7 @@ from sklearn.cluster import MiniBatchKMeans
 )
 (CLUSTERS_NO, REPS) = (
     [1, 2, 25, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2195],
-    500
+    100
 )
 ###############################################################################
 # Read latlongs and migration matrix

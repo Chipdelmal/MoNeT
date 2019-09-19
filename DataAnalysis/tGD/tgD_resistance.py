@@ -23,7 +23,7 @@ resultsList = []
 resultsListH = []
 for i in range(0,6):
     DRIVE = i + 1
-    pathRoot = "/Volumes/marshallShare/tGD/"
+    pathRoot = "/Volumes/marshallShare/tGDSuppression/"
     pathExt, aggregationDictionary, yRange = sel.driveSelector(
         DRIVE, pathRoot
     )
@@ -66,12 +66,12 @@ for i in range(0,6):
             ratiosAtEndH.append(ratiosAtEndH[0] + ratiosAtEndH[1] - (ratiosAtEndH[0] * ratiosAtEndH[1]))
         #######################################################################
         ssReach = aux.reachedSteadtStateAtDay(aggData, .01)
-        id = map(int,experimentString.split("_")[1:])
+        id = [int(i) for i in experimentString.split("_")[1:]]
         resultsList.append([DRIVE] + id + ratiosAtEnd + [ssReach])
         resultsListH.append([DRIVE] + id + ratiosAtEndH + [ssReach])
 
 
 resultsArray = np.array(resultsList)
 resultsArrayH = np.array(resultsListH)
-np.savetxt("./data/experimentsOutput.csv", resultsArray, delimiter=",")
-np.savetxt("./data/experimentsOutputH.csv", resultsArrayH, delimiter=",")
+np.savetxt(pathRoot + "/data/experimentsOutput.csv", resultsArray, delimiter=",")
+np.savetxt(pathRoot + "./data/experimentsOutputH.csv", resultsArrayH, delimiter=",")
