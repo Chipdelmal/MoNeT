@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import aux
+import csv
 import time
 import timeit
 import numpy as np
