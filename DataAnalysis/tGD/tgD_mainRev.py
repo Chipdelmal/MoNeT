@@ -32,7 +32,7 @@ def quickSaveFigure(
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 5
+DRIVE = 1
 TRACES = False
 TRACE_ANIMATION = False
 STACK = True
@@ -49,7 +49,7 @@ pathExt, aggregationDictionary, yRange = sel.driveSelector(
 if (DRIVE == 1) or (DRIVE == 2):
     colors = ["#090446", "#f20060", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
 else:
-    colors = ["#090446", "#f20060", "#c6d8ff", "#ff28d4", "#7fff3a", "#7692ff"]
+    colors = ["#090446", "#7fff3a", "#ffee00", "#ff28d4", "#7692ff", "#c6d8ff"]
 genes = aggregationDictionary["genotypes"]
 ##############################################################################
 ##############################################################################
@@ -65,7 +65,7 @@ styleS = {
     "width": 0, "alpha": .85, "dpi": 1024, "legend": False, "aspect": .0075,
     "colors": colors, "xRange": [0, 600], "yRange": [0, 5000]
 }
-xRange = 1400
+xRange = 1000
 yRangeFixed = 11000
 ##############################################################################
 ##############################################################################
@@ -172,9 +172,10 @@ def plotAndSaveStack(aggData, ssDay, ffString, ffStringH, path):
 def getTimeToMin(aggData):
     pop = [sum(row) for row in aggData['population']]
     for time in range(len(pop)):
-        if np.isclose(pop[time], min(pop), atol=.1):
+        popMin = min(pop)
+        if np.isclose(pop[time], popMin, atol=.1):
             break
-    return time
+    return (time, popMin)
 
 ##############################################################################
 # MAIN
@@ -186,8 +187,8 @@ if STACK is True:
     for i in range(0, len(pathsRoot)):
         #####################################################################
         aggData, ssDay, experimentString = getAggDataSSDay(pathsRoot, i)
-        ssDay = getTimeToMin(aggData)
-        print("[" + str(i) + "] " + experimentString + ": " + str(ssDay))
+        (ssDay, popMin) = getTimeToMin(aggData)
+        print("[" + str(i) + "] " + experimentString + ": " + str(ssDay) + " @ " + str(popMin))
         #####################################################################
         ffString, ffStringH = getFFStrings(aggData)
         aggData = adjustAggDataForDrive(aggData)
