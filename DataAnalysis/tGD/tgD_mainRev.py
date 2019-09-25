@@ -32,7 +32,7 @@ def quickSaveFigure(
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 1
+DRIVE = 6
 TRACES = False
 TRACE_ANIMATION = False
 STACK = True
