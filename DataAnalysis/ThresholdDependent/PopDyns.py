@@ -1,7 +1,7 @@
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
-experimentString = 'E_02_05_0010_0100'
+experimentString = 'E_02_05_0010_0250'
 ##############################################################################
 ##############################################################################
 pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/Wolbachia/2019_09_06_ANALYZED/'
