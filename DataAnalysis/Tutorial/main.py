@@ -1,3 +1,4 @@
+import glob
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
@@ -87,7 +88,3 @@ monet.quickSaveFigure(
     overlay, PATH_ROOT + "O_" + EXP_NAME + ".png"
 )
 plt.close()
-
-##############################################################################
-# Analyzing traces files
-##############################################################################
