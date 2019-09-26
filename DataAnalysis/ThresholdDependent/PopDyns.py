@@ -1,11 +1,11 @@
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
-experimentString = 'E_02_05_0010_1000'
+experimentString = 'E_02_05_0010_0100'
 ##############################################################################
 ##############################################################################
 pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/Wolbachia/2019_09_06_ANALYZED/'
-(maleToggle, femaleToggle) = (False, True)
+(maleToggle, femaleToggle) = (True, True)
 colors = ['#454ade', '#ec0b43', '#dd1c1a', '#2e294e', '#c2e812']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 style = {
@@ -52,9 +52,7 @@ geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
 overlay = monet.plotGenotypeOverlayFromLandscape(
     geneSpatiotemporals,
     style={"aspect": .15, "cmap": cmaps},
-    vmax=monet.maxAlleleInLandscape(
-        geneSpatiotemporals["geneLandscape"]
-    )
+    vmax=30#monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
 )
 monet.quickSaveFigure(
     overlay, pathRoot + "O_" + experimentString + ".png"
