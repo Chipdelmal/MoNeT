@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 ##############################################################################
 # Paths, experiment name and other commonly-changed settings
 ##############################################################################
-EXP_NAME = 'C0025'
+EXP_NAME = 'C0500'
 PATH_ROOT = '/Volumes/marshallShare/MGDrivE_Datasets/Tutorial/'
 (maleToggle, femaleToggle) = (True, True)
 
@@ -15,7 +15,7 @@ colors = ['#2d2275', '#fc074f', '#ccf70c', '#00c1ff', '#454ade']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 style = {
     "width": .05,  "aspect": .01, "dpi": 1024, "legend": False,
-    "alpha": .95, "colors": colors,
+    "alpha": 1, "colors": colors,
     "xRange": [0,1000], "yRange": [0,100000]
 }
 
@@ -47,7 +47,7 @@ landscapeSumData = monet.sumLandscapePopulationsFromFiles(
 aggData = monet.aggregateGenotypesInNode(
     landscapeSumData, aggregationDictionary
 )
-ssDay = monet.reachedSteadtStateAtDay(aggData, .01)
+ssDay = monet.reachedSteadtStateAtDay(aggData, .025)
 figStack = monet.plotMeanGenotypeStack(
     aggData, style, vLinesCoords=[ssDay]
 )
@@ -65,7 +65,7 @@ plt.close()
 folderMean = PATH_ROOT  + EXP_NAME + '/ANALYZED/'
 innerFolder = monet.listDirectoriesInPath(folderMean)[0]
 filenames = monet.readExperimentFilenames(folderMean + innerFolder)
-#
+# Process landscape data
 landscapeData = monet.loadLandscapeData(
     filenames, male=maleToggle, female=femaleToggle, dataType=float
  )
@@ -73,14 +73,21 @@ aggregatedNodesData = monet.aggregateGenotypesInLandscape(
     landscapeData, aggregationDictionary
 )
 geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
+# Rescale the nodes on a relative "maxPop" instead of landscape-wide
 geneSpatiotemporalsNorm = monet.rescaleGeneSpatiotemporals(geneSpatiotemporals)
-max = monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
+# Plot the populations heatmap
+(nodes, maxTime) = geneSpatiotemporals['geneLandscape'][0].shape
+maxPop = monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
 overlay = monet.plotGenotypeOverlayFromLandscape(
     geneSpatiotemporalsNorm,
-    style={"aspect": 10, "cmap": cmaps},
+    style={"aspect": maxTime/nodes * .1, "cmap": cmaps},
     vmax=1
 )
 monet.quickSaveFigure(
     overlay, PATH_ROOT + "O_" + EXP_NAME + ".png"
 )
 plt.close()
+
+##############################################################################
+# Analyzing traces files
+##############################################################################
