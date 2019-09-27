@@ -53,6 +53,7 @@ These simulation results show an ERACR drive spreading in the **Yorkeys Knob & T
 
 ##  Tutorial
 
+### Setting Everything Up
 
 We start, as always, by loading our libraries.
 
@@ -70,7 +71,7 @@ PATH_ROOT = '/Volumes/marshallShare/MGDrivE_Datasets/Tutorial/'
 (maleToggle, femaleToggle) = (True, True)
 ```
 
-Although not critical, we then define the style constants that will be used for our plots throughout the script. Our package takes `#HEX`-coded color entries.
+Although not critical, we then define the style constants that will be used for our plots throughout the script. Our package takes `#HEX`-coded color entries. The `cmaps` for the spatial heatmaps can also be generated automatically (this will be clearer when the spatial analysis part is presented).
 
 ```python
 colors = ['#2d2275', '#fc074f', '#ccf70c', '#3399ff']
@@ -83,3 +84,95 @@ style = {
 ```
 
 Now, we can start defining the `aggregationDictionary` that sets-up how the genotypes counts will be aggregated. The way this works is by taking a list of the **genotype tags** (names), and a list of lists that denote which columns in the **CSV** files contain the desired genotype to be counted. These lists can have repeated indices for "double-counting" genes in a particular locus (**EE**, for example, would require counting the column twice to get the **E** gene correctly accounted for).
+
+
+```python
+# Population CSV Header: [WW, WH, WE, WR, WB, HH, HE, HR, HB, EE, ER, EB, RR, RB, BB]
+aggregationDictionary = {
+    'genotypes': ['W', 'H', 'E', 'R'],
+    'indices': [
+        [0, 0, 1, 2, 3, 4],
+        [1, 5, 5, 6, 7, 8],
+        [2, 6, 9, 9, 10, 11],
+        [3, 7, 10, 12, 12, 13, 4, 8, 11, 13, 14, 14]
+    ]
+}
+```
+
+In this example we are aggregating the **R** and **B** genes into the same counting category.
+
+### Aggregated Mean Response
+
+Loading the files in a correct way is highly experiment-dependent, but we provide with as many helper functions as possible to make it seamless. If necessary, however, paths to files can always be accessed with `glob`. In the specific case of these experiments, we have a nested folder within the **ANALYZED** folder: `./C0025/ANALYZED/E_0730_30_20_02_00020 `, so we access the folder to get all the experiment files stored within it:
+
+```python
+# Base ANALYZED folder
+folderMean = PATH_ROOT  + EXP_NAME + '/ANALYZED/'
+# Getting the paths for all the experiments files in the inner folder
+innerFolder = monet.listDirectoriesInPath(folderMean)[0]
+filenames = monet.readExperimentFilenames(folderMean + innerFolder)
+```
+
+With the paths correctly loaded, we can now sum our whole landscape into one population count, and then aggregate the counts by genotype:
+
+```python
+# Load and aggregate the whole landscape into a population count
+landscapeSumData = monet.sumLandscapePopulationsFromFiles(
+    filenames, male=maleToggle, female=femaleToggle
+)
+aggData = monet.aggregateGenotypesInNode(
+    landscapeSumData, aggregationDictionary
+)
+```
+
+Finally, we can plot the `stack` of the genotypes distribution for further analysis: 
+
+```python
+figStack = monet.plotMeanGenotypeStack(
+    aggData, style
+)
+figStack.get_axes()[0].set_xlim(style["xRange"][0], style["xRange"][1])
+figStack.get_axes()[0].set_ylim(style["yRange"][0], style["yRange"][1])
+monet.quickSaveFigure(
+    figStack, PATH_ROOT + "S_" + EXP_NAME + ".png"
+)
+plt.close()
+```
+
+### Spatiotemporal Response
+
+```python
+# Get the filenames for a particular experiment in the ANALYZED folder
+folderMean = PATH_ROOT  + EXP_NAME + '/ANALYZED/'
+innerFolder = monet.listDirectoriesInPath(folderMean)[0]
+filenames = monet.readExperimentFilenames(folderMean + innerFolder)
+```
+
+
+```python
+# Process landscape data
+landscapeData = monet.loadLandscapeData(
+    filenames, male=maleToggle, female=femaleToggle, dataType=float
+ )
+aggregatedNodesData = monet.aggregateGenotypesInLandscape(
+    landscapeData, aggregationDictionary
+)
+geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
+# Rescale the nodes on a relative "maxPop" instead of landscape-wide
+geneSpatiotemporalsNorm = monet.rescaleGeneSpatiotemporals(geneSpatiotemporals)
+```
+
+```python
+# Plot the populations heatmap
+(nodes, maxTime) = geneSpatiotemporals['geneLandscape'][0].shape
+maxPop = monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
+overlay = monet.plotGenotypeOverlayFromLandscape(
+    geneSpatiotemporalsNorm,
+    style={"aspect": maxTime/nodes * .1, "cmap": cmaps},
+    vmax=1
+)
+monet.quickSaveFigure(
+    overlay, PATH_ROOT + "O_" + EXP_NAME + ".png"
+)
+plt.close()
+```
