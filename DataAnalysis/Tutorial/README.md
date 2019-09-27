@@ -52,3 +52,34 @@ The datasets used for this demo can be found at the lab's shared drive in the fo
 These simulation results show an ERACR drive spreading in the **Yorkeys Knob & Trinity Park** landscape at three levels of aggregation.
 
 ##  Tutorial
+
+
+We start, as always, by loading our libraries.
+
+```python
+import glob
+import MoNeT_MGDrivE as monet
+import matplotlib.pyplot as plt
+```
+
+Most of the time, we define a `ROOT PATH` for the experiments, that we keep as a base for reading experiments **CSVs** and exporting **plots/summary statistics**. The experiment name is important for files export consistency. Finally, we setup the bool flags that determine if we're analyzing **male** and/or **female** mosquito counts (which is relevant to understand releases schemes).
+
+```python
+EXP_NAME = 'C2195'
+PATH_ROOT = '/Volumes/marshallShare/MGDrivE_Datasets/Tutorial/'
+(maleToggle, femaleToggle) = (True, True)
+```
+
+Although not critical, we then define the style constants that will be used for our plots throughout the script. Our package takes `#HEX`-coded color entries.
+
+```python
+colors = ['#2d2275', '#fc074f', '#ccf70c', '#3399ff']
+cmaps = monet.generateAlphaColorMapFromColorArray(colors)
+style = {
+    "width": .05,  "aspect": .01, "dpi": 1024, "legend": False,
+    "alpha": 1, "colors": colors,
+    "xRange": [0,1000], "yRange": [0,100000]
+}
+```
+
+Now, we can start defining the `aggregationDictionary` that sets-up how the genotypes counts will be aggregated. The way this works is by taking a list of the **genotype tags** (names), and a list of lists that denote which columns in the **CSV** files contain the desired genotype to be counted. These lists can have repeated indices for "double-counting" genes in a particular locus (**EE**, for example, would require counting the column twice to get the **E** gene correctly accounted for).
