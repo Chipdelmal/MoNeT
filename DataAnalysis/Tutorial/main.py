@@ -5,14 +5,14 @@ import matplotlib.pyplot as plt
 ##############################################################################
 # Paths, experiment name and other commonly-changed settings
 ##############################################################################
-EXP_NAME = 'C0500'
+EXP_NAME = 'C2195'
 PATH_ROOT = '/Volumes/marshallShare/MGDrivE_Datasets/Tutorial/'
 (maleToggle, femaleToggle) = (True, True)
 
 ##############################################################################
 # Defining style
 ##############################################################################
-colors = ['#2d2275', '#fc074f', '#ccf70c', '#00c1ff', '#454ade']
+colors = ['#2d2275', '#fc074f', '#ccf70c', '#3399ff']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 style = {
     "width": .05,  "aspect": .01, "dpi": 1024, "legend": False,
