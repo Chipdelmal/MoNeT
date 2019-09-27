@@ -43,4 +43,12 @@ conda deactivate
 
 ##  Dataset
 
+The datasets used for this demo can be found at the lab's shared drive in the following path:
+
+```bash
+/Volumes/marshallShare/MGDrivE_Datasets/Tutorial/
+```
+
+These simulation results show an ERACR drive spreading in the **Yorkeys Knob & Trinity Park** landscape at three levels of aggregation.
+
 ##  Tutorial
