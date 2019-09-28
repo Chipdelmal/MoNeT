@@ -101,7 +101,7 @@ aggregationDictionary = {
 
 In this example we are aggregating the **R** and **B** genes into the same counting category.
 
-### Aggregated Mean Response
+### Aggregated Mean Response
 
 Loading the files in a correct way is highly experiment-dependent, but we provide with as many helper functions as possible to make it seamless. If necessary, however, paths to files can always be accessed with `glob`. In the specific case of these experiments, we have a nested folder within the **ANALYZED** folder: `./C0025/ANALYZED/E_0730_30_20_02_00020 `, so we access the folder to get all the experiment files stored within it:
 
@@ -125,7 +125,7 @@ aggData = monet.aggregateGenotypesInNode(
 )
 ```
 
-Finally, we can plot the `stack` of the genotypes distribution for further analysis: 
+Finally, we can plot the `stack` of the genotypes distribution for further analysis:
 
 ```python
 figStack = monet.plotMeanGenotypeStack(
@@ -139,24 +139,34 @@ monet.quickSaveFigure(
 plt.close()
 ```
 
-### Spatiotemporal Response
+### Spatiotemporal Response
+
+The second type of analysis we will show is the spatiotemporal response...
 
 ```python
 # Get the filenames for a particular experiment in the ANALYZED folder
 folderMean = PATH_ROOT  + EXP_NAME + '/ANALYZED/'
+# Getting the paths for all the experiments files in the inner folder
 innerFolder = monet.listDirectoriesInPath(folderMean)[0]
 filenames = monet.readExperimentFilenames(folderMean + innerFolder)
 ```
 
+Once again, we process these files by aggregating them but this time, we don't sum the whole landscape into the same count:
 
 ```python
 # Process landscape data
 landscapeData = monet.loadLandscapeData(
-    filenames, male=maleToggle, female=femaleToggle, dataType=float
+    filenames, male=maleToggle, female=femaleToggle
  )
 aggregatedNodesData = monet.aggregateGenotypesInLandscape(
     landscapeData, aggregationDictionary
 )
+```
+
+This time, we need a bit more processing. After aggregating the landscape by genotypes, we need to generate spatiotemporal arrays to be able to process the information, along with their normalized version (in case the population sizes are heterogeneous):
+
+```python
+# Calculate the 
 geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 # Rescale the nodes on a relative "maxPop" instead of landscape-wide
 geneSpatiotemporalsNorm = monet.rescaleGeneSpatiotemporals(geneSpatiotemporals)
