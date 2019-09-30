@@ -166,7 +166,7 @@ aggregatedNodesData = monet.aggregateGenotypesInLandscape(
 This time, we need a bit more processing. After aggregating the landscape by genotypes, we need to generate spatiotemporal arrays to be able to process the information, along with their normalized version (in case the population sizes are heterogeneous):
 
 ```python
-# Calculate the 
+# Calculate the
 geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 # Rescale the nodes on a relative "maxPop" instead of landscape-wide
 geneSpatiotemporalsNorm = monet.rescaleGeneSpatiotemporals(geneSpatiotemporals)
