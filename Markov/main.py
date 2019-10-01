@@ -14,7 +14,7 @@ import MoNeT_MGDrivE as monet
 # ########################################################################
 random.seed(1)
 (classesNum, mskVct, zeroInflation) = (3, [0, .5, .5], .75)
-(lo, hi, ptsNum) = (0, 10, 3)
+(lo, hi, ptsNum) = (0, 10, 6)
 
 # ########################################################################
 # Mosquito biological behaviour
@@ -22,9 +22,14 @@ random.seed(1)
 # Create mask matrix: This matrix defines how probable is for a mosquito to
 #   move from one life stage to the next (and, as a consequence, from a site
 #   type to the next).
-mskMat = bts.genMskMat(classesNum, mskVct)
+#mskMat = bts.genMskMat(classesNum, mskVct)
+mskMat = [
+        [0.2, 0.8, 0.0],
+        [0.1, 0.7, 0.2],
+        [1.0, 0.0, 0.0]
+    ]
 passMkvtest = aux.testMarkovMat(mskMat)
-mskMat
+passMkvtest
 
 # ########################################################################
 # Landscape
@@ -51,6 +56,9 @@ sns.heatmap(migrMat, annot=True)
 # ########################################################################
 # Point types
 # ########################################################################
+# Assings classes types to the points in the landscape (this routine will
+#   fail if there's few points with respect to the dimension of the point
+#   types)
 pointClasses = bts.genURandLandscapeClasses(classesNum, ptsNum)
 clandMskMat = bts.calcClandMskMat(pointClasses, mskMat)
 clandMskMat
@@ -59,12 +67,5 @@ clandMskMat
 # Full network
 # ########################################################################
 network = mntw.normalizeMskMgrMat(migrMat, clandMskMat)
-aux.testMarkovMat(network)
 sns.heatmap(network, annot=True)
-
-distMat = [[0.0, 540690.9, 6874096, 992515.5, 2917802],[540690.9, 0.0, 7364822, 1102070.6, 2968899], [6874096.0,7364821.8, 0, 7378300.3, 8333337], [992515.5, 1102070.6, 7378300, 0.0, 1928446], [2917802.3, 2968898.7, 8333337, 1928445.8, 0]]
-monet.zeroInflatedExponentialMigrationKernel(
-    distMat,
-    params=monet.AEDES_EXP_PARAMS,
-    zeroInflation=zeroInflation
-)
+aux.testMarkovMat(network)
