@@ -16,7 +16,7 @@ def introgrationDay(aggData, geneIx, threshold, skipDays=10, refFrame=-1):
 experimentString = 'E_02_05_0010_0400'
 ##############################################################################
 ##############################################################################
-pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/20percent/2019_09_29_ANALYZED/'
+pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/15percent/2019_09_29_ANALYZED/'
 (maleToggle, femaleToggle) = (True, True)
 colors = ['#454ade', '#ec0b43', '#dd1c1a', '#2e294e', '#c2e812']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
@@ -26,11 +26,12 @@ style = {
 }
 ##############################################################################
 ##############################################################################
-(firstRelease, probeRatios) = (20, [.50, .75, .80, .90, .95, .99])
+(firstRelease, probeRatios) = (20, [.50, .80, .95, .99])
 (wList, hList) = ([1], [0])
 aggregationDictionary = monet.generateAggregationDictionary(
     ['W', 'H'], [wList, hList]
 )
+fmtStr = "[{}: {:.1f}]"
 ##############################################################################
 ##############################################################################
 for i in range(0, 1050, 50):
@@ -45,16 +46,16 @@ for i in range(0, 1050, 50):
     )
     ssDays = [introgrationDay(aggData, 0, 1 - k) for k in probeRatios]
     daysTup = [
-        '['+str(day[1])+': '+str((day[0]-firstRelease))+']' for day in
+        fmtStr.format(day[1], day[0]/7) for day in
         zip(ssDays, probeRatios)
     ]
-    title = ', '.join(daysTup)
+    title = ' '.join(daysTup)
     figB = monet.plotMeanGenotypeStack(
         aggData, style, vLinesCoords=ssDays
     )
     figB.get_axes()[0].set_xlim(style["xRange"][0], style["xRange"][1])
     figB.get_axes()[0].set_ylim(style["yRange"][0], style["yRange"][1])
-    plt.title('[Fraction: ReachedAtDay] :: ' + title, fontsize=5)
+    plt.title('[Fraction: Week] :: ' + title, fontsize=5)
     monet.quickSaveFigure(
         figB, pathRoot + "S_" + experimentString + ".png"
     )
@@ -64,7 +65,7 @@ for i in range(0, 1050, 50):
 
 
 
-     ##############################################################################
+    ##############################################################################
     ##############################################################################
     # filenames = monet.readExperimentFilenames(pathRoot + experimentString + '/')
     # landscapeData = monet.loadLandscapeData(
