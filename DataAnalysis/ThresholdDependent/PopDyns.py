@@ -22,7 +22,7 @@ colors = ['#454ade', '#ec0b43', '#dd1c1a', '#2e294e', '#c2e812']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 style = {
     "width": .05, "alpha": .85, "dpi": 1024, "legend": False,
-    "aspect": .006, "colors": colors, "xRange": [0,1000], "yRange": [0,30000]
+    "aspect": .006, "colors": colors, "xRange": [0,1000], "yRange": [0,40000]
 }
 ##############################################################################
 ##############################################################################
@@ -45,7 +45,7 @@ for i in range(0, 1050, 50):
     )
     ssDays = [introgrationDay(aggData, 0, 1 - k) for k in probeRatios]
     daysTup = [
-        '['+str(day[1])+': '+str(day[0]-firstRelease)+']' for day in
+        '['+str(day[1])+': '+str((day[0]-firstRelease))+']' for day in
         zip(ssDays, probeRatios)
     ]
     title = ', '.join(daysTup)
