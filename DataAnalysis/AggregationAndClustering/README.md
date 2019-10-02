@@ -8,7 +8,7 @@
 4. Run [sampleReleases](./sampleReleases.py) to generate the random sampling of the nodes to release gene-drive mosquitos.
 5. Run [mapCluster](./mapClusters.py) to export plots on the clusters as a basic means of verification.
 
-##  Key
+###  Key
 
 * *S*: Sorted
 * *D*: Distance
@@ -22,3 +22,4 @@
 
 1. Run [errorMetric](./errorMetric.py) to compute the mean responses across experiments, along with the standard deviation and median (the stats metrics can be changed if needed).
 2. Run [errorVerification](./errorVerification.py) to export plots of the aggregation responses.
+3. Run [errorSummary](./errorSummary.py) to create the cumulative errors plot for every mean of the aggregation levels.

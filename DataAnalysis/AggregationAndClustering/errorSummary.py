@@ -6,17 +6,6 @@ import numpy as np
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
-
-def plotTimeError(data, metric=np.mean, yRange=1):
-    plt.figure()#figsize=(5, 5))
-    plt.grid()
-    plt.plot(data, color=aux.colors[1], linewidth=1.5, alpha=.75)
-    #plt.title(str(np.around(metric(data, axis=0), decimals=3)))
-    plt.xlim(0, len(data))
-    plt.ylim(0, yRange)
-    return plt
-
-
 def shadeColor(inColor=255, steps=10):
     stSh = inColor / steps
     shades = [(inColor - (i * stSh)) for i in range(steps)]
@@ -45,10 +34,10 @@ filesNum = len(filesListMean)
 refPath = filesListMean[-1]
 refPop = np.genfromtxt(refPath, delimiter=',')
 refPopTotal = [sum(row) for row in refPop]
-simTime = len(refArray)
+simTime = len(refPop)
 errList = []
 expsList = [int(i.split('/')[-1].split('.')[0].split('_')[1].split('C')[1]) for i in filesListMean]
-# Plot #################################################
+# Plot ########################################################################
 fig = plt.figure(figsize=(5,5))
 ax = fig.add_subplot(111)
 ax.set_aspect(simTime/.07)
@@ -70,7 +59,8 @@ for (j, i) in enumerate(filesListMean):
     plt.title(titleStr, fontsize=2.5)
     plt.xlabel('time', fontsize=15)
     plt.ylabel('error', fontsize=15)
-    monet.quickSaveFigure(
-        plt, pathRoot + "RMSE_ACC.pdf",
-        dpi=500, format=None
-    )
+# Export ######################################################################
+monet.quickSaveFigure(
+    plt, pathRoot + "RMSE_ACC.pdf",
+    dpi=500, format=None
+)
