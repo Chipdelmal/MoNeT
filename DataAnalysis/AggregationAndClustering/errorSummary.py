@@ -41,13 +41,17 @@ pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/"
     sorted(glob.glob(pathRoot + '*' + funcsID[selStat] + '*'))
 )
 filesNum = len(filesListMean)
-# Reference Population (truth)#################################################
+# Reference Population (truth) ################################################
 refPath = filesListMean[-1]
 refPop = np.genfromtxt(refPath, delimiter=',')
 refPopTotal = [sum(row) for row in refPop]
 simTime = len(refArray)
 errList = []
 expsList = [int(i.split('/')[-1].split('.')[0].split('_')[1].split('C')[1]) for i in filesListMean]
+# Plot #################################################
+fig = plt.figure(figsize=(5,5))
+ax = fig.add_subplot(111)
+ax.set_aspect(simTime/.07)
 for (j, i) in enumerate(filesListMean):
     # Signal Population #######################################################
     sigPath = filesListMean[j]
@@ -59,9 +63,7 @@ for (j, i) in enumerate(filesListMean):
     rmseAcc = np.cumsum(error) / simTime
     errList.append(rmseAcc[-1])
     # Plotting the Error
-    fig = plt.plot(rmseAcc, color=cm(gradient[j]), linewidth= 1.5, alpha=.6)
-    ax = fig.add_subplot(111)
-    ax.set_aspect(1)
+    plt.plot(rmseAcc, color=cm(gradient[j]), linewidth= 1.5, alpha=.6)
     plt.xlim(0, len(rmseAcc))
     plt.ylim(0, .07)
     titleStr = ''.join(['[' + str(expsList[i]) + ': ' + str(round(errList[i], 3)) + '] ' for i in range(len(errList))])
