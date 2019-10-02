@@ -44,15 +44,16 @@ if LAND == 0:
     expsList = [1, 10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 1971]
 elif LAND == 1:
     expBaseName = "Yorkeys_AGG_1_"
-    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/Experiment/"
-    truthExperiment = expBaseName + "02195" #"02195"
-    expsList = [500]#[1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
+    pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnt/"
+    truthExperiment = expBaseName + "002195" #"02195"
+    expsList = [1, 25, 50, 250, 500, 750, 1000, 1250, 1500, 2000, 2195]
 pathSet = pathRoot + expBaseName + "*/"
 pathSet
 # #############################################################################
 # Setting up the experiments paths
 # #############################################################################
 foldersList = sorted(glob.glob(pathSet + "*ANALYZED"))
+foldersList
 truthExpPath = glob.glob(pathRoot + truthExperiment + "/ANALYZED/*")[0] + "/"
 # #############################################################################
 # Calculating the baseline level (unaggregated)
@@ -71,7 +72,7 @@ for (j, i) in enumerate(expsList):
     # #########################################################################
     # Calculating the error metric
     # #########################################################################
-    refExperiment = expBaseName + str(i).rjust(5, "0")
+    refExperiment = expBaseName + str(i).rjust(6, "0")
     print(pathRoot + refExperiment)
     refExpPath = glob.glob(pathRoot + refExperiment + "/ANALYZED/*")[0] + "/"
     filenames = monet.readExperimentFilenames(refExpPath)

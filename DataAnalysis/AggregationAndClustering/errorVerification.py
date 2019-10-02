@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 (selStat, funcsID) = (0, ["SSD", "SMN", "SMD"])
-pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/Experiments/"
+pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/"
 pathOut = pathRoot + "images/frames/"
 # Filepaths ###################################################################
 (filesListMean, filesListStat) = (
@@ -37,14 +37,15 @@ for fileIx in range(len(filesListMean)):
     # Stack ###################################################################
     data = {"genotypes": ["W", "H", "E", "R", "B"], "population": readDataM}
     fig = monet.plotMeanGenotypeStack(data, styleS)
-    ax = fig.add_subplot(111)
-    ax.set_aspect(aspect=styleS["aspect"])
-    ax.set_xlim(styleS["xRange"])
-    ax.set_ylim(styleS["yRange"])
+    #ax = fig.add_subplot(111)
+    # ax.set_aspect(aspect=styleS["aspect"])
+    # ax.set_xlim(styleS["xRange"])
+    # ax.set_ylim(styleS["yRange"])
     monet.quickSaveFigure(
         fig, pathOut + "S_" + nameID + ".png",
         format="png", dpi=styleS["dpi"]
     )
+    plt.close()
     # Deviation ###############################################################
     timeRange = range(len(readDataM[0:,0]))
     fig = plt.figure()
@@ -64,6 +65,7 @@ for fileIx in range(len(filesListMean)):
         fig, pathOut + "T_" + nameID + ".png",
         format="png", dpi=styleS["dpi"]
     )
+    plt.close()
 
 
 # Full traces #################################################################

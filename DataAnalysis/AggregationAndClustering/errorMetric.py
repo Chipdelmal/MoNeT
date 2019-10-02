@@ -61,13 +61,11 @@ for expPath  in foldersList[7:]:
 ###############################################################################
 # Nested Folders Structure
 ###############################################################################
-pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/Experiments/"
+pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/"
 pathClst = pathRoot + "C*"
 clustersList = sorted(glob.glob(pathClst))
-i=6
-clustersList[i]
 ###############################################################################
-for expPath in [clustersList[i]]:
+for expPath in clustersList:
     sPath = monet.listDirectoriesWithPathWithinAPath(expPath + "/")
     ###########################################################################
     paths = []
