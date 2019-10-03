@@ -38,9 +38,13 @@ simTime = len(refPop)
 errList = []
 expsList = [int(i.split('/')[-1].split('.')[0].split('_')[1].split('C')[1]) for i in filesListMean]
 # Plot ########################################################################
-fig = plt.figure(figsize=(5,5))
+fig = plt.figure(figsize=(10,10))
 ax = fig.add_subplot(111)
-ax.set_aspect(simTime/.07)
+ax.set_aspect(simTime/.05)
+fmtStr = '[{} : {:1f}]'
+# [fmtStr.format()]
+# ['[' + str(expsList[i]) + ': ' + str(round(errList[i], 3)) + '] ' for i in range(len(errList))]
+# ''.join(['[' + str(expsList[i]) + ': ' + str(round(errList[i], 3)) + '] ' for i in range(len(errList))])
 for (j, i) in enumerate(filesListMean):
     # Signal Population #######################################################
     sigPath = filesListMean[j]
@@ -52,13 +56,13 @@ for (j, i) in enumerate(filesListMean):
     rmseAcc = np.cumsum(error) / simTime
     errList.append(rmseAcc[-1])
     # Plotting the Error
-    plt.plot(rmseAcc, color=cm(gradient[j]), linewidth= 1.5, alpha=.6)
+    plt.plot(rmseAcc, color=cm(gradient[j]), linewidth=3, alpha=.6)
     plt.xlim(0, len(rmseAcc))
-    plt.ylim(0, .07)
+    plt.ylim(0, .05)
     titleStr = ''.join(['[' + str(expsList[i]) + ': ' + str(round(errList[i], 3)) + '] ' for i in range(len(errList))])
     plt.title(titleStr, fontsize=2.5)
-    plt.xlabel('time', fontsize=15)
-    plt.ylabel('error', fontsize=15)
+    plt.xlabel('time', fontsize=25)
+    plt.ylabel('error', fontsize=25)
 # Export ######################################################################
 monet.quickSaveFigure(
     plt, pathRoot + "RMSE_ACC.pdf",

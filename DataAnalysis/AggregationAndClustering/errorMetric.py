@@ -63,7 +63,7 @@ for expPath  in foldersList[7:]:
 ###############################################################################
 pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/"
 pathClst = pathRoot + "C*"
-clustersList = sorted(glob.glob(pathClst))
+clustersList = sorted(glob.glob(pathClst))[7:]
 ###############################################################################
 for expPath in clustersList:
     sPath = monet.listDirectoriesWithPathWithinAPath(expPath + "/")
