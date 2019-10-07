@@ -34,7 +34,7 @@ pathOut = pathOut + pathO + '/'
 ##############################################################################
 ##############################################################################
 num = len(pathsRoot)
-for i in range(0, 100):
+for i in range(99, num):
     pathSample = pathsRoot[i]
     experimentString = pathSample.split("/")[-1]
     paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
