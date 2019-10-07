@@ -2,7 +2,7 @@ import MoNeT_MGDrivE as monet
 
 def driveSelector(DRIVE, HEALTH, pathRoot):
     if DRIVE == 1:
-        pathExt = "CRISPR/2019_10_04_GARBAGE/"
+        (pathExt, pathO) = ("CRISPR/2019_10_04_GARBAGE/", 'CRISPR')
         if HEALTH is True:
             aggregationDictionary = monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
@@ -22,7 +22,7 @@ def driveSelector(DRIVE, HEALTH, pathRoot):
                 ]
             )
     if DRIVE == 2:
-        pathExt = "InundativeRelease/2019_10_04_GARBAGE/"
+        (pathExt, pathO) = ("InundativeRelease/2019_10_04_GARBAGE/", 'IR')
         if HEALTH is True:
             aggregationDictionary = monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
@@ -42,7 +42,7 @@ def driveSelector(DRIVE, HEALTH, pathRoot):
                 ]
             )
     if DRIVE == 3:
-        pathExt = "SplitDrive/2019_10_04_GARBAGE/"
+        (pathExt, pathO) = ("SplitDrive/2019_10_04_GARBAGE/", 'SD')
         if HEALTH is True:
             aggregationDictionary = monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
@@ -66,4 +66,4 @@ def driveSelector(DRIVE, HEALTH, pathRoot):
     else:
         prepend = "E"
     pathsRoot = monet.listDirectoriesWithPathWithinAPath(pathRoot+pathExt)
-    return [pathsRoot, aggregationDictionary, prepend]
+    return [pathsRoot, aggregationDictionary, prepend, pathO]

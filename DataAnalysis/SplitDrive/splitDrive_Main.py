@@ -4,14 +4,14 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 HEALTH = True
-DRIVE = 2
+DRIVE = 1
 ##############################################################################
 ##############################################################################
 pathRoot = "/Volumes/marshallShare/SplitDriveSup/"
 if HEALTH is True:
     colors = ['#9f00cc', '#ec0b43', '#0038a8']
     style = {
-        "width": .1, "alpha": .15, "dpi": 500,
+        "width": .1, "alpha": .15, "dpi": 750,
         "legend": True, "aspect": .5, "colors": colors,
         "xRange": [0,2000], "yRange": [0,7000]
     }
@@ -19,15 +19,18 @@ if HEALTH is True:
 else:
     colors = ['#50dd30', '#ff4eac', '#0038a8']
     style = {
-        "width": .1, "alpha": .15, "dpi": 500,
+        "width": .1, "alpha": .15, "dpi": 750,
         "legend": True, "aspect": .5, "colors": colors,
         "xRange": [0,2000], "yRange": [0,12500]
     }
     pathOut = "/Volumes/marshallShare/SplitDriveSup/imgECO/"
-pathsRoot, aggregationDictionary, prepend = aux.driveSelector(
+style['aspect'] = .2 * (style['xRange'][1] / style['yRange'][1])
+##############################################################################
+##############################################################################
+pathsRoot, aggregationDictionary, prepend, pathO = aux.driveSelector(
     DRIVE, HEALTH, pathRoot
 )
-style['aspect'] = .2 * (style['xRange'][1] / style['yRange'][1])
+pathOut = pathOut + pathO + '/'
 ##############################################################################
 ##############################################################################
 num = len(pathsRoot)
