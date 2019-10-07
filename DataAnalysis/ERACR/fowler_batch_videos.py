@@ -9,23 +9,47 @@ colors = ["#090446", "#f20060", "#ff28d4", "#7fff3a", "#c6d8ff", '#6e44ff','#e56
 
 groups = ["W", "H", "R", "B", "E"]
 
-folder = '/Volumes/marshallShare/ERACR/Fowler3/Experiment/'
-extras = '/Volumes/marshallShare/ERACR/Fowler/Clustered/'
+folder = '/Volumes/marshallShare/ERACR/Yorkeys4/Experiment4/'
+extras = '/Volumes/marshallShare/ERACR/Yorkeys4/Clustered/'
 patchFilePattern = {'males':'/M_*', 'females':'/F_*'}
 imagePattern = '/c_%06d.png'
 
+def get_corners(fileName):
+    lats = []
+    longs = []
+    clusterData = open(fileName,'r')
+    next(clusterData)
+    for line in clusterData:
+        tokens = line.split(',')
+        lat = float(tokens[1])
+        long = float(tokens[0])
+        lats.append(lat)
+        longs.append(long)
+
+    minLat = min(lats)
+    minLong  = min(longs)
+    maxLat = max(lats)
+    maxLong = max(longs)
+    return [[minLong,maxLong],[minLat,maxLat]]
+
+
 
 for expFolder in sorted(glob.glob(folder+'*_AGG_*')):
+    if '.csv' in expFolder:
+        continue
     expBaseName = expFolder.split('/')[-1]
     print(expBaseName)
     clusteringNum = int(expBaseName.split('_')[-1])
-    if clusteringNum < 400 or clusteringNum >2000:
+    bgName  = expBaseName.replace('_AGG_','_VBG_')
+    clusterName = bgName.replace('VBG_','AGCV_')
+    background = extras+bgName+'.png'
+    originalCoordFile = extras+expBaseName.replace('_AGG_','_CLS_')+'.csv'
+    original_corners = get_corners(originalCoordFile)
+
+    if clusteringNum < 1450 or clusteringNum >2001:
         continue
     for expPath in sorted(glob.glob(expFolder+'/ANALYZED/E_*')):
         vname = expPath.replace('ANALYZED','videos')+'_cdots.mp4'
-        bgName  = expBaseName.replace('_AGG_','_VBG_')
-        clusterName = bgName.replace('VBG_','AGCV_')
-        background = extras+bgName+'.png'
         coordinates = monet.getClusters(extras+clusterName+'.csv')
 
 
@@ -38,7 +62,7 @@ for expFolder in sorted(glob.glob(folder+'*_AGG_*')):
         genotypes = monet.getGenotypes(clusters[0]['male'][0])
         aggDict = monet.autoGenerateGenotypesDictionary(groups, genotypes)
         aggList = monet.aggregateClusters(clusters, aggDict)
-        monet.generateClusterGraphs(aggList, coordinates, imageLocation, colors, 0.001, 512)
+        monet.generateClusterGraphs(aggList, coordinates, imageLocation, colors, original_corners, 0.002, 512, skip=True)
         video = monet.generateVideo(vname,background, imageLocation, imagePattern)
 
 video.wait()
