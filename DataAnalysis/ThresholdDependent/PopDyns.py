@@ -16,7 +16,7 @@ def introgrationDay(aggData, geneIx, threshold, skipDays=10, refFrame=-1):
 experimentString = 'E_02_05_0010_0400'
 ##############################################################################
 ##############################################################################
-pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/20percent/2019_09_29_ANALYZED/'
+pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/15percent/2019_10_04_ANALYZED/'
 (maleToggle, femaleToggle) = (True, True)
 colors = ['#454ade', '#ec0b43', '#dd1c1a', '#2e294e', '#c2e812']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
@@ -26,7 +26,7 @@ style = {
 }
 ##############################################################################
 ##############################################################################
-(firstRelease, probeRatios) = (20, [.50, .80, .95, .99])
+(firstRelease, probeRatios) = (20, [.50, .76, .80, .88, .95, .98, .99])
 (wList, hList) = ([1], [0])
 aggregationDictionary = monet.generateAggregationDictionary(
     ['W', 'H'], [wList, hList]
@@ -60,9 +60,6 @@ for i in range(0, 1050, 50):
         figB, pathRoot + "S_" + experimentString + ".png"
     )
     plt.close()
-
-
-
 
 
     ##############################################################################

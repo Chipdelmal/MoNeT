@@ -1,26 +1,35 @@
 import MoNeT_MGDrivE as monet
 import splitDrive_Select as aux
+import matplotlib.pyplot as plt
+plt.rcParams.update({'figure.max_open_warning': 0})
 
 HEALTH = False
-DRIVE = 3
+DRIVE = 1
 ##############################################################################
 ##############################################################################
-pathRoot = "/Volumes/marshallShare/SplitDrive/"
+pathRoot = "/Volumes/marshallShare/SplitDriveSup/"
 if HEALTH is True:
-    colors = ['#9f00cc', '#ec0b43', '#0263e2', '#94d4ff', '#232ed1']
+    colors = ['#9f00cc', '#ec0b43', '#0038a8']
+    style = {
+        "width": .05, "alpha": .2, "dpi": 300,
+        "legend": True, "aspect": .5, "colors": colors,
+        "xRange": [0,2000], "yRange": [0,7000]
+    }
 else:
-    colors = ['#0153bf', '#9823ff', '#ff0022', '#94d4ff', '#232ed1']
-style = {
-    "width": .05, "alpha": .1, "dpi": 1024,
-    "legend": True, "aspect": .05, "colors": colors,
-    "xRange": [0,1000], "yRange": [0,5000]
-}
+    colors = ['#50dd30', '#9823ff', '#0038a8']
+    style = {
+        "width": .05, "alpha": .2, "dpi": 300,
+        "legend": True, "aspect": .5, "colors": colors,
+        "xRange": [0,2000], "yRange": [0,12500]
+    }
 pathsRoot, aggregationDictionary, prepend = aux.driveSelector(
     DRIVE, HEALTH, pathRoot
 )
+style['aspect'] = .2 * (style['xRange'][1] / style['yRange'][1])
 ##############################################################################
 ##############################################################################
-for i in range(0, len(pathsRoot)):
+num = len(pathsRoot)
+for i in range(0, num):
     pathSample = pathsRoot[i]
     pathSample
     experimentString = pathSample.split("/")[-1]
@@ -31,8 +40,11 @@ for i in range(0, len(pathsRoot)):
     )
     figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
     for i in range(0, len(figsArray)):
-        figsArray[i].get_axes()[0].set_xlim(0,1500)
+        figsArray[i].get_axes()[0].set_xlim(0,style['xRange'][1])
+        figsArray[i].get_axes()[0].set_ylim(0,style['yRange'][1])
         monet.quickSaveFigure(
             figsArray[i],
-            "./images/" + prepend + experimentString + "_N" + str(i) + ".png"
+            pathRoot + './images/' + prepend + experimentString + "_N" + str(i) + ".png"
         )
+    plt.close()
+    print('Exported ' + str(i + 1) + '/' + str(num))

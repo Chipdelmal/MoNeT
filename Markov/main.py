@@ -19,7 +19,7 @@ import MoNeT_MGDrivE as monet
 # ############################################################################
 random.seed(1)
 (zeroInflation) = (.75)
-(lo, hi, ptsNum) = (0, 10, 6)
+(lo, hi, ptsNum) = (0, 10, 10)
 
 # ############################################################################
 # Mosquito biological behaviour

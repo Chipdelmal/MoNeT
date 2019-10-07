@@ -53,7 +53,6 @@ pathSet
 # Setting up the experiments paths
 # #############################################################################
 foldersList = sorted(glob.glob(pathSet + "*ANALYZED"))
-foldersList
 truthExpPath = glob.glob(pathRoot + truthExperiment + "/ANALYZED/*")[0] + "/"
 # #############################################################################
 # Calculating the baseline level (unaggregated)
@@ -85,7 +84,7 @@ for (j, i) in enumerate(expsList):
     # Calculating the error metric
     # #########################################################################
     # Pre-analyses numbers
-    initPop = [sum(basePopDyns['population'][x]) for x in range(len(basePopDyns['population']))]
+    initPop = [sum(basePopDyns['population'][x]) for x in               range(len(basePopDyns['population']))]
     sigTot = [sum(refPopDyns['population'][x]) for x in range(len(refPopDyns['population']))]
     simTime = len(basePopDyns['population'])
     # Metrics
