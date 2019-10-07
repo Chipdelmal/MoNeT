@@ -27,13 +27,16 @@ style['aspect'] = .2 * (style['xRange'][1] / style['yRange'][1])
 ##############################################################################
 ##############################################################################
 for DRIVE in [1, 2, 3]:
+    print('******************************************************************')
+    print('* Started Drive (' + str(DRIVE) + '/3)')
+    print('******************************************************************')
     pathsRoot, aggregationDictionary, prepend, pathO = aux.driveSelector(
         DRIVE, HEALTH, pathRoot
     )
-    pathOut = pathOut + pathO + '/'
+    pathExport = pathOut + pathO + '/'
     ##############################################################################
     num = len(pathsRoot)
-    for i in range(0, 3):
+    for i in range(0, num):
         pathSample = pathsRoot[i]
         experimentString = pathSample.split("/")[-1]
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
@@ -47,10 +50,12 @@ for DRIVE in [1, 2, 3]:
             figsArray[j].get_axes()[0].set_ylim(0,style['yRange'][1])
             monet.quickSaveFigure(
                 figsArray[j],
-                pathOut + prepend + experimentString + "_N" + str(j) + ".png",
+                pathExport + prepend + experimentString + "_N" + str(j) + ".png",
                 dpi=style['dpi']
             )
         plt.close()
-        print('Exported ' + str(i + 1) + '/' + str(num))
+        print('\tExported ' + str(i + 1).rjust(4, '0') + '/' + str(num))
     ##############################################################################
-    print('Finished!')
+print('******************************************************************')
+print('* Finished all drives correctly')
+print('******************************************************************')
