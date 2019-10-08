@@ -3,6 +3,11 @@ import splitDrive_Select as aux
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
+def scaleAspect(aspect, style):
+    xDiff = (style['xRange'][1] - style['xRange'][0])
+    yDiff = (style['yRange'][1] - style['yRange'][0])
+    return aspect * (xDiff / yDiff)
+
 HEALTH = True
 ###############################################################################
 pathRoot = "/Volumes/marshallShare/SplitDriveSup/"
@@ -22,10 +27,11 @@ else:
         "xRange": [0,2000], "yRange": [0,12500]
     }
     pathOut = "/Volumes/marshallShare/SplitDriveSup/imgECO/"
-style['aspect'] = .2 * (style['xRange'][1] / style['yRange'][1])
+style['aspect'] = scaleAspect(.2, style)
+###############################################################################
 DRIVE = 1
 ###############################################################################
-for DRIVE in [1, 2, 3]:
+for DRIVE in [2, 3]:
     pathsRoot, aggregationDictionary, prepend, pathO = aux.driveSelector(
         DRIVE, HEALTH, pathRoot
     )
@@ -37,7 +43,7 @@ for DRIVE in [1, 2, 3]:
     print('******************************************************************')
     ###########################################################################
     num = len(pathsRoot)
-    for i in range(1200, num):
+    for i in range(0, num):
         pathSample = pathsRoot[i]
         experimentString = pathSample.split("/")[-1]
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
