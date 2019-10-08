@@ -9,7 +9,7 @@ pathRoot = "/Volumes/marshallShare/SplitDriveSup/"
 if HEALTH is True:
     colors = ['#9f00cc', '#ec0b43', '#0038a8']
     style = {
-        "width": .1, "alpha": .15, "dpi": 500,
+        "width": .1, "alpha": .15, "dpi": 300,
         "legend": True, "aspect": .5, "colors": colors,
         "xRange": [0,2000], "yRange": [0,7000]
     }
@@ -17,7 +17,7 @@ if HEALTH is True:
 else:
     colors = ['#50dd30', '#ff4eac', '#0038a8']
     style = {
-        "width": .1, "alpha": .15, "dpi": 500,
+        "width": .1, "alpha": .15, "dpi": 300,
         "legend": True, "aspect": .5, "colors": colors,
         "xRange": [0,2000], "yRange": [0,12500]
     }
@@ -37,7 +37,7 @@ for DRIVE in [1, 2, 3]:
     print('******************************************************************')
     ###########################################################################
     num = len(pathsRoot)
-    for i in range(0, num):
+    for i in range(1200, num):
         pathSample = pathsRoot[i]
         experimentString = pathSample.split("/")[-1]
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")

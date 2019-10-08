@@ -19,3 +19,14 @@ This workflow was created to calculate the response curves on the **releases num
 These are companion plots to do verify the behavior of the drives in terms of population dynamics.
 
 * Run the [PopDyns.py](./PopDyns.py) script pointing towards the path where the mean behavior results are stored.
+
+
+##  Scripts
+
+* [TD_GeoDatasetCleaner.nb](./TD_GeoDatasetCleaner.nb):
+* [factorialAnalysis.py](./factorialAnalysis.py): Creates the factorial combinations CSV for _Translocations_ and _UDMEL_ (coverage, releases, time, ratios).
+* [factorialAnalysis_Wolbachia.py](./factorialAnalysis_Wolbachia.py): Creates the factorial combinations CSV for _Wolbachia_ (coverage, releases, time, ratios).
+* [factorialDifferences.py](./factorialDifferences.py): Creates the factorial differences CSV with an "axis" file, and the sensitivity analyses ones (larva mortality, adult lifespan, fitness cost).
+* [factorialDifferences_Resub.py](./factorialDifferences_Resub.py): Creates the factorial differences CSV with an "axis" file, and the sensitivity analysis (migration).
+* [TD_ResponseSurfaces.nb](./TD_ResponseSurfaces04.nb): Creates all the response surfaces plots (base, sensitivity), and dynamics responses for the paper.
+* [PopDyns.py](./PopDyns.py): Batch exports the population dynamics plots for an experiment set.

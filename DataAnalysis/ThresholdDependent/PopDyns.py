@@ -16,7 +16,7 @@ def introgrationDay(aggData, geneIx, threshold, skipDays=10, refFrame=-1):
 experimentString = 'E_02_05_0010_0400'
 ##############################################################################
 ##############################################################################
-pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/15percent/2019_10_04_ANALYZED/'
+pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/15percent/2019_10_07_ANALYZED/'
 (maleToggle, femaleToggle) = (True, True)
 colors = ['#454ade', '#ec0b43', '#dd1c1a', '#2e294e', '#c2e812']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
@@ -24,6 +24,7 @@ style = {
     "width": .05, "alpha": .85, "dpi": 1024, "legend": False,
     "aspect": .006, "colors": colors, "xRange": [0,1000], "yRange": [0,40000]
 }
+style['aspect'] = .2 * (style['xRange'][1] / style['yRange'][1])
 ##############################################################################
 ##############################################################################
 (firstRelease, probeRatios) = (20, [.50, .76, .80, .88, .95, .98, .99])
