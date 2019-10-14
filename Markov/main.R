@@ -22,6 +22,10 @@ library(parallel)
 ###############################################################################
 # USER: {1: HS, 2: YJ}
 USER=1
+REPETITIONS=50 # number of repetitions of each experiment
+REPITER=1 # number of groups of repetitions to perform, for analysis purposes ONLY BIYONKA SHOULD NEED THIS,
+SIM_TIME=100
+NUM_CORES=4
 ###############################################################################
 if(USER==1){
   LANDSCAPE_PATH='/Volumes/marshallShare/Heterogeneity/Yunwen/Landscapes/'
@@ -52,6 +56,8 @@ releasesParameters=list(
   releasesStart=50, releasesNumber=1,
   eachreleasesInterval=7, releaseProportion=5
 )
+# constant population sizes
+popSize = 20
 
 ###############################################################################
 ### Factorial setup
@@ -59,14 +65,13 @@ releasesParameters=list(
 # we are testing multiple landscapes, so we will loop over the landscapes in a folder
 # The initial lines setup the experiment list, then the loop builds everything related
 #  to each experiment.
-landscapes <- list.files(path = LANDSCAPE_PATH, pattern = "*.csv", full.names = TRUE)
-Rep_names <- formatC(x = 1:REPETITIONS, width = 4, format = "d", flag = "0")
-Iter_names <- formatC(x = 1:REPITER, width = 4, format = "d", flag = "0")
-ExperimentList <- vector(mode = "list", length = length(landscapes)*REPITER)
+landscapes <- list.files(path=LANDSCAPE_PATH, pattern="*.csv", full.names=TRUE)
+Rep_names <- formatC(x=1:REPETITIONS, width=4, format="d", flag="0")
+Iter_names <- formatC(x=1:REPITER, width=4, format="d", flag="0")
+ExperimentList <- vector(mode="list", length=length(landscapes)*REPITER)
 listmarker=1
 
 for(lscape in landscapes){
-
   ####################
   # setup output folders
   ####################
@@ -74,16 +79,12 @@ for(lscape in landscapes){
   lscapeName <- tail(x = strsplit(x = lscape, split = "[/,.]")[[1]], n = 2)[1]
   OUTPUT_DIRECTORY=file.path(BASE_OUTPUT_PATH, lscapeName)
   if(!dir.exists(OUTPUT_DIRECTORY)){ dir.create(OUTPUT_DIRECTORY) }
-
   # create holding/deleting directories
   SUB_DIRECTORES <- file.path(OUTPUT_DIRECTORY, c("RAW","ANALYZED","GARBAGE"))
-
   # build output directories
   for(folder in SUB_DIRECTORES){if(!dir.exists(folder)){dir.create(folder)}}
-
   # create iteration folders
   SUB_DIRECTORES <- outer(X = SUB_DIRECTORES, Y = Iter_names, FUN = "file.path")
-
   # build output directories
   for(folder in SUB_DIRECTORES){if(!dir.exists(folder)){ dir.create(folder) }}
 
@@ -91,21 +92,23 @@ for(lscape in landscapes){
   # setup landscape
   ####################
   # read in and setup landscape
-  lFile <- read.csv(file = lscape, header = TRUE, sep = ",")
+  lFile <- as.matrix(read.csv(file=lscape, header=FALSE, sep=","))
+  movementKernel = lFile
   # population from each patch
-  patchPops <- lFile$n
+  popsNum = dim(lFile)[[1]]
+  patchPops = rep(popSize, popsNum)
   # movement, calculate distances, weight with an exponential kernal, pulse of pi
-  movementKernel <- MGDrivE::calcHurdleExpKernel(
-    distMat = outer(X=lFile$x, Y=lFile$x, FUN=function(x,y){abs(x-y)}),
-    r = MGDrivE::kernels$exp_rate,
-    pi = stayProbability^(bioParameters$muAd)
-  )
+  # movementKernel <- MGDrivE::calcHurdleExpKernel(
+  #  distMat = outer(X=lFile$x, Y=lFile$x, FUN=function(x,y){abs(x-y)}),
+  #  r = MGDrivE::kernels$exp_rate,
+  #  pi = stayProbability^(bioParameters$muAd)
+  #)
   # lumped transition matrix
   # movementKernel <- update_movement_kernel(movementKernel, lFile)
 
   # lumped populations
   #typeof(patchPops) # don't need?
-  patchPops <- update_population(patchPops, lFile)
+  #patchPops <- update_population(patchPops, lFile)
 
   # batch migration, just zero
   batchMigration <- MGDrivE::basicBatchMigration(
