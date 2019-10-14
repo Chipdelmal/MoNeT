@@ -9,23 +9,24 @@
 #     https://github.com/Chipdelmal/MoNeT/blob/master/GMLandscapeAnalysis/MCR_Aggregate_Gillian2.R
 ###############################################################################
 
+###############################################################################
+# Setup Sim ###################################################################
+###############################################################################
 
 ###############################################################################
-### Setup packages
+# Setup packages
 ###############################################################################
 rm(list=ls());gc()
-library(MGDrivE)
-library(MGDrivEv2)
-library(parallel)
+library(MGDrivE); library(MGDrivEv2); library(parallel);
+NUM_CORES = 4
 ###############################################################################
-### Experimental Setup and PATHS Definition
+# Experimental Setup and PATHS Definition
 ###############################################################################
 # USER: {1: HS, 2: YJ}
-USER=1
-REPETITIONS=4*2 # number of repetitions of each experiment
-REPITER=2     # number of groups of repetitions to perform, for analysis purposes
-SIM_TIME=365*1
-NUM_CORES=4
+USER = 1
+SIM_TIME = 365 * 3
+REPETITIONS = 4 * 2   # number of repetitions of each experiment
+REPITER = 1           # number of groups of repetitions to perform
 ###############################################################################
 if(USER==1){
   LANDSCAPE_PATH='/Volumes/marshallShare/Heterogeneity/Yunwen/Landscapes/'
@@ -36,10 +37,9 @@ if(USER==1){
 }else{
   warning("invalid user!")
 }
-
-startTime=Sys.time()
+startTime = Sys.time()
 ###############################################################################
-### Setup drive, release parameters, and biological parameters
+# Setup drive, release parameters, and biological parameters
 ###############################################################################
 # constant population sizes
 popSize = 20
@@ -48,8 +48,6 @@ RELEASE_NODE = 1
 bioParameters=list(
     tEgg=5, tLarva=6, tPupa=4, popGrowth=1.175, muAd=0.09, betaK=20
 )
-# daily probs for staying in one patch
-stayProbability=.72
 # gene drive is the same for all simulations
 driveCube <-MGDrivE::cubeHomingDrive(
   cM=1, cF=1, chM=.95, chF=.95, crM=.95, crF=.95
@@ -59,10 +57,8 @@ releasesParameters=list(
   releasesStart=50, releasesNumber=1,
   eachreleasesInterval=7, releaseProportion=popSize
 )
-
-
 ###############################################################################
-### Factorial setup
+# Factorial setup #############################################################
 ###############################################################################
 # we are testing multiple landscapes, so we will loop over the landscapes in a folder
 # The initial lines setup the experiment list, then the loop builds everything related
@@ -71,12 +67,12 @@ landscapes <- list.files(path=LANDSCAPE_PATH, pattern="*.csv", full.names=TRUE)
 Rep_names <- formatC(x=1:REPETITIONS, width=4, format="d", flag="0")
 Iter_names <- formatC(x=1:REPITER, width=4, format="d", flag="0")
 ExperimentList <- vector(mode="list", length=length(landscapes)*REPITER)
-listmarker=1
+listmarker = 1
 
 for(lscape in landscapes){
-  ####################
-  # setup output folders
-  ####################
+  ############################################################################
+  # Setup output folders
+  ############################################################################
   # create base directory
   lscapeName <- tail(x = strsplit(x = lscape, split = "[/,.]")[[1]], n = 2)[1]
   OUTPUT_DIRECTORY=file.path(BASE_OUTPUT_PATH, lscapeName)
@@ -90,36 +86,23 @@ for(lscape in landscapes){
   # build output directories
   for(folder in SUB_DIRECTORES){if(!dir.exists(folder)){ dir.create(folder) }}
 
-  ####################
-  # setup landscape
-  ####################
+  ############################################################################
+  # Setup landscape
+  ############################################################################
   # read in and setup landscape
   lFile <- as.matrix(read.csv(file=lscape, header=FALSE, sep=","))
   movementKernel = lFile
   # population from each patch
   popsNum = NROW(movementKernel)
   patchPops = rep(popSize, popsNum)
-  # movement, calculate distances, weight with an exponential kernal, pulse of pi
-  # movementKernel <- MGDrivE::calcHurdleExpKernel(
-  #  distMat = outer(X=lFile$x, Y=lFile$x, FUN=function(x,y){abs(x-y)}),
-  #  r = MGDrivE::kernels$exp_rate,
-  #  pi = stayProbability^(bioParameters$muAd)
-  #)
-  # lumped transition matrix
-  # movementKernel <- update_movement_kernel(movementKernel, lFile)
-
-  # lumped populations
-  #typeof(patchPops) # don't need?
-  #patchPops <- update_population(patchPops, lFile)
-
   # batch migration, just zero
   batchMigration <- MGDrivE::basicBatchMigration(
     batchProbs=0, sexProbs=c(.5,.5), numPatches=NROW(movementKernel)
   )
 
-  ####################
-  # things that depend on landscape info
-  ####################
+  ############################################################################
+  # Things that depend on landscape info
+  ############################################################################
   # all netPars the same
   netPar <- MGDrivE::parameterizeMGDrivE(
     runID=1, simTime=SIM_TIME,
@@ -129,14 +112,12 @@ for(lscape in landscapes){
     tLarva=bioParameters$tLarva, tPupa=bioParameters$tPupa,
     AdPopEQ=patchPops
   )
-
   # all releases the same
   patchReleases <- replicate(
     n=NROW(movementKernel),
     expr={list(maleReleases=NULL,femaleReleases=NULL,eggReleases=NULL)},
     simplify=FALSE
   )
-
   # replace with label of the cluster at 0, 0 + 1
   release_node <- RELEASE_NODE
   patchReleases[[release_node]]$maleReleases <- MGDrivE::generateReleaseVector(
@@ -145,10 +126,9 @@ for(lscape in landscapes){
   patchReleases[[release_node]]$femaleReleases <- MGDrivE::generateReleaseVector(
     driveCube=driveCube, releasesParameters=releasesParameters, sex="F"
   )
-
-  ####################
-  # loop over repetition groups
-  ####################
+  ############################################################################
+  # Loop over repetition groups
+  ############################################################################
   for(iter in 1:REPITER){
     # Experiment Paths
     ExperimentList[[listmarker]]$folders <- SUB_DIRECTORES[ ,iter]
@@ -161,29 +141,17 @@ for(lscape in landscapes){
     # things that depend on landscape info
     ExperimentList[[listmarker]]$netPar <- netPar
     ExperimentList[[listmarker]]$patchReleases <- patchReleases
-
     # increment list counter
     listmarker = listmarker + 1
-
   } # end loop over RepIterations
-
 } # end loop over landscapes
 
-
 ###############################################################################
-### Run Model
+# Run Model ###################################################################
 ###############################################################################
 cl=parallel::makePSOCKcluster(names=NUM_CORES)
 parallel::clusterExport(cl=cl, varlist=c("Rep_names","driveCube"))
-parallel::clusterEvalQ(cl=cl,expr={
-  library(MGDrivE)
-  library(MGDrivEv2)
-})
-
-# for(i in ExperimentList){
-#   print(dim(i$movementKernel))
-# }
-
+parallel::clusterEvalQ(cl=cl,expr={library(MGDrivE); library(MGDrivEv2)})
 # Change ExperimentList_A to ExperimentList_B for second set of runs, comment out the subsetting stuff (Sept 29, 2018)
 parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
   # make folders
@@ -191,8 +159,6 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
     repFolders <- file.path(x$folders[i], Rep_names)
     for(folder in repFolders){ dir.create(path = folder) }
   }
-  #print(dim(x$movementKernel))
-
   # run experiments
   MGDrivEv2::stochastic_multiple(
     seed=x$randomSeed,
@@ -205,14 +171,12 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
     output=repFolders,
     verbose=FALSE
   )
-
   # split and aggregate, save originals
   MGDrivEv2::SplitAggregateCpp(
     readDir = x$folders[1], writeDir = x$folders[3],
     simTime = x$netPar$simTime, numPatch = x$netPar$nPatch,
     genotypes = driveCube$genotypesID, remFiles = FALSE
   )
-
   # mean and quantiles, remove split/agg files
   MGDrivEv2::calcQuantilesCpp(
     readDirectory = x$folders[3], writeDirectory = x$folders[2],
@@ -220,18 +184,18 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
     simTime = x$netPar$simTime, numPatch = x$netPar$nPatch,
     genotypes = driveCube$genotypesID, remFiles = FALSE
   )
-
   # remove raw/garbage folders
-  #unlink(x = x$folders[c(1,3)], recursive = TRUE, force = TRUE)
+  # unlink(x = x$folders[c(1,3)], recursive = TRUE, force = TRUE)
   gc()
-
 })
 
+###############################################################################
+# Cleanup #####################################################################
+###############################################################################
 # stop cluster
 parallel::stopCluster(cl)
 # print time it took
 print(difftime(time1 = Sys.time(), time2 = startTime))
-
 # unload packages to be done
-#detach("package:MGDrivE", unload=TRUE)
-#detach("package:MGDrivEv2", unload=TRUE)
+detach("package:MGDrivE", unload=TRUE)
+detach("package:MGDrivEv2", unload=TRUE)
