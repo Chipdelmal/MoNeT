@@ -68,7 +68,6 @@ Rep_names <- formatC(x=1:REPETITIONS, width=4, format="d", flag="0")
 Iter_names <- formatC(x=1:REPITER, width=4, format="d", flag="0")
 ExperimentList <- vector(mode="list", length=length(landscapes)*REPITER)
 listmarker = 1
-
 for(lscape in landscapes){
   ############################################################################
   # Setup output folders
@@ -85,7 +84,6 @@ for(lscape in landscapes){
   SUB_DIRECTORES <- outer(X = SUB_DIRECTORES, Y = Iter_names, FUN = "file.path")
   # build output directories
   for(folder in SUB_DIRECTORES){if(!dir.exists(folder)){ dir.create(folder) }}
-
   ############################################################################
   # Setup landscape
   ############################################################################
@@ -99,7 +97,6 @@ for(lscape in landscapes){
   batchMigration <- MGDrivE::basicBatchMigration(
     batchProbs=0, sexProbs=c(.5,.5), numPatches=NROW(movementKernel)
   )
-
   ############################################################################
   # Things that depend on landscape info
   ############################################################################
@@ -145,7 +142,6 @@ for(lscape in landscapes){
     listmarker = listmarker + 1
   } # end loop over RepIterations
 } # end loop over landscapes
-
 ###############################################################################
 # Run Model ###################################################################
 ###############################################################################
@@ -161,15 +157,10 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
   }
   # run experiments
   MGDrivEv2::stochastic_multiple(
-    seed=x$randomSeed,
-    cubeR=driveCube,
-    parametersR=x$netPar,
-    migrationFemaleR=x$movementKernel,
-    migrationMaleR=x$movementKernel,
-    migrationBatchR=x$batchMigration,
-    releasesR=x$patchReleases,
-    output=repFolders,
-    verbose=FALSE
+    seed=x$randomSeed, cubeR=driveCube, parametersR=x$netPar,
+    migrationFemaleR=x$movementKernel, migrationMaleR=x$movementKernel,
+    migrationBatchR=x$batchMigration, releasesR=x$patchReleases,
+    output=repFolders, verbose=FALSE
   )
   # split and aggregate, save originals
   MGDrivEv2::SplitAggregateCpp(
@@ -188,7 +179,6 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
   # unlink(x = x$folders[c(1,3)], recursive = TRUE, force = TRUE)
   gc()
 })
-
 ###############################################################################
 # Cleanup #####################################################################
 ###############################################################################
