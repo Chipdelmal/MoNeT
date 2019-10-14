@@ -43,7 +43,7 @@ for DRIVE in [2, 3]:
     print('******************************************************************')
     ###########################################################################
     num = len(pathsRoot)
-    for i in range(0, num):
+    for i in range(1175, num):
         pathSample = pathsRoot[i]
         experimentString = pathSample.split("/")[-1]
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
