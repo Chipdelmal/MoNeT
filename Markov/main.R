@@ -22,9 +22,9 @@ library(parallel)
 ###############################################################################
 # USER: {1: HS, 2: YJ}
 USER=1
-REPETITIONS=50 # number of repetitions of each experiment
-REPITER=1 # number of groups of repetitions to perform, for analysis purposes ONLY BIYONKA SHOULD NEED THIS,
-SIM_TIME=100
+REPETITIONS=4*2 # number of repetitions of each experiment
+REPITER=2     # number of groups of repetitions to perform, for analysis purposes
+SIM_TIME=365*1
 NUM_CORES=4
 ###############################################################################
 if(USER==1){
@@ -41,6 +41,9 @@ startTime=Sys.time()
 ###############################################################################
 ### Setup drive, release parameters, and biological parameters
 ###############################################################################
+# constant population sizes
+popSize = 20
+RELEASE_NODE = 1
 # biological parameters
 bioParameters=list(
     tEgg=5, tLarva=6, tPupa=4, popGrowth=1.175, muAd=0.09, betaK=20
@@ -54,10 +57,9 @@ driveCube <-MGDrivE::cubeHomingDrive(
 # release parameters
 releasesParameters=list(
   releasesStart=50, releasesNumber=1,
-  eachreleasesInterval=7, releaseProportion=5
+  eachreleasesInterval=7, releaseProportion=popSize
 )
-# constant population sizes
-popSize = 20
+
 
 ###############################################################################
 ### Factorial setup
@@ -95,7 +97,7 @@ for(lscape in landscapes){
   lFile <- as.matrix(read.csv(file=lscape, header=FALSE, sep=","))
   movementKernel = lFile
   # population from each patch
-  popsNum = dim(lFile)[[1]]
+  popsNum = NROW(movementKernel)
   patchPops = rep(popSize, popsNum)
   # movement, calculate distances, weight with an exponential kernal, pulse of pi
   # movementKernel <- MGDrivE::calcHurdleExpKernel(
@@ -136,7 +138,7 @@ for(lscape in landscapes){
   )
 
   # replace with label of the cluster at 0, 0 + 1
-  release_node <- as.numeric(lFile$label[1] + 1)
+  release_node <- RELEASE_NODE
   patchReleases[[release_node]]$maleReleases <- MGDrivE::generateReleaseVector(
     driveCube=driveCube, releasesParameters=releasesParameters, sex="M"
   )
@@ -172,19 +174,15 @@ for(lscape in landscapes){
 ### Run Model
 ###############################################################################
 cl=parallel::makePSOCKcluster(names=NUM_CORES)
-parallel::clusterExport(
-  cl=cl,
-  varlist=c("Rep_names","driveCube")
-)
+parallel::clusterExport(cl=cl, varlist=c("Rep_names","driveCube"))
 parallel::clusterEvalQ(cl=cl,expr={
   library(MGDrivE)
   library(MGDrivEv2)
 })
 
-
-for(i in ExperimentList){
-  print(dim(i$movementKernel))
-}
+# for(i in ExperimentList){
+#   print(dim(i$movementKernel))
+# }
 
 # Change ExperimentList_A to ExperimentList_B for second set of runs, comment out the subsetting stuff (Sept 29, 2018)
 parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
