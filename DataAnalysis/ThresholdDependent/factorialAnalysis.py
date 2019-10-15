@@ -15,9 +15,9 @@ import inspect
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "UDSA"
+filename = 'UDSA'
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
-path = "/Volumes/marshallShare/Batch_SA/UDMel_Batch_200/2019_02_22_ANALYZED/"
+path = "/Volumes/marshallShare/ThresholdResub/factorialSensitivity/UDMel_0002/2019_09_11_ANALYZED/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
 aggregationDictionary = monet.generateAggregationDictionary(
@@ -35,17 +35,6 @@ ratiosDictionary = {
 ###############################################################################
 # Export Individual CSVs for Factorial Slots
 ###############################################################################
-# Running in single-thread
-# experimentFolders=fac.listDirectoriesInPath(path)
-# for folder in experimentFolders:
-#     fac.loadFolderAndWriteFactorialCSV(
-#       folder,
-#       path,
-#       aggregationDictionary,
-#       ratiosDictionary
-# )
-
-# Running in multi-thread
 start = time.time()
 experimentFolders = monet.listDirectoriesInPath(path)
 Parallel(n_jobs=4)(delayed(

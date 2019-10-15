@@ -8,7 +8,7 @@ import csv as csv
 
 def reachedSteadtStateAtDay(
     aggData,
-    safety=.01,
+    safety=.025,
     finalFrame=-1
 ):
     finalFrame = aggData["population"][finalFrame]
@@ -17,15 +17,15 @@ def reachedSteadtStateAtDay(
     toleranceDown = finalFrame - tolerance
 
     daysMax = len(aggData["population"])
-
     for i in range(0, daysMax):
         steadyStateReach = daysMax
         testFrame = aggData["population"][i]
 
         boolsUp = testFrame < toleranceUp
         boolsDown = testFrame > toleranceDown
+        zeros = testFrame <= 1
 
-        if all(boolsUp) and all(boolsDown):
+        if (all(boolsUp) and all(boolsDown)) or all(zeros):
             steadyStateReach = i
             break
 
@@ -95,6 +95,9 @@ def getRatiosAtEnd(aggData, groupingsList, finalFrame):
     outList = [None] * len(groupingsList)
     for i, grouping in enumerate(groupingsList):
         total = sum(finalFramePop[grouping])
-        ratios = total / sum(finalFramePop)
+        if sum(finalFramePop) > 0:
+            ratios = total / sum(finalFramePop)
+        else:
+            ratios = 0
         outList[i] = [ratios] # [total, ratios]
     return flatten(outList)

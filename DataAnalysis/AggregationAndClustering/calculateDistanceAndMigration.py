@@ -1,17 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import math
 import numpy as np
 import vincenty as vn
 import MoNeT_MGDrivE as monet
-
 
 ###############################################################################
 # Parameters Setup
 ###############################################################################
 (PATH, LATLONGS) = (
-    "/Volumes/marshallShare/ERACR/Yorkeys_DEMO/",
-    "LandSorted/Yorkeys03_S.csv"
+    "/Volumes/marshallShare/ERACR/Yorkeys_Middle/",
+    "LandSorted/Yorkeys02_S.csv"
 )
 (lifeStayProb, adultMortality) = (.72, .09)
 
@@ -27,7 +27,7 @@ latlongs = np.genfromtxt(
 distMat = monet.calculateDistanceMatrix(latlongs, distFun=vn.vincenty) * 1000
 migrMat = monet.zeroInflatedExponentialMigrationKernel(
     distMat,
-    params=monet.AEDES_EXP_PARAMS,
+    params=[(1/54.08981)/1.0, 1e-10, math.inf],#monet.AEDES_EXP_PARAMS,
     zeroInflation=pow(lifeStayProb, adultMortality)
 )
 
