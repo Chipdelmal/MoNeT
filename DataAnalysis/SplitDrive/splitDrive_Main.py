@@ -31,7 +31,7 @@ style['aspect'] = scaleAspect(.2, style)
 ###############################################################################
 DRIVE = 1
 ###############################################################################
-for DRIVE in [2, 3]:
+for DRIVE in [1, 2, 3]:
     pathsRoot, aggregationDictionary, prepend, pathO = aux.driveSelector(
         DRIVE, HEALTH, pathRoot
     )
@@ -43,7 +43,7 @@ for DRIVE in [2, 3]:
     print('******************************************************************')
     ###########################################################################
     num = len(pathsRoot)
-    for i in range(1175, num):
+    for i in range(0, num, 2):
         pathSample = pathsRoot[i]
         experimentString = pathSample.split("/")[-1]
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
@@ -60,7 +60,7 @@ for DRIVE in [2, 3]:
                 pathExport + prepend + experimentString + "_N" + str(j) + ".png",
                 dpi=style['dpi']
             )
-        plt.close()
+        plt.close('all')
         print('\tExported ' + str(i + 1).rjust(4, '0') + '/' + str(num))
 ###############################################################################
 print('******************************************************************')
