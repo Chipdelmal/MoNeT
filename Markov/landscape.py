@@ -1,5 +1,9 @@
 import random
 import numpy as np
+import math
+import itertools
+
+
 
 
 def genURandPoint(lo, hi):
@@ -22,6 +26,19 @@ def genURandLandscape(loCoord, hiCoord, ptsNum):
     '''
     coords = [genURandCoord(loCoord, hiCoord) for _ in range(ptsNum)]
     return coords
+
+
+def genUniformLandscape(loCoord, hiCoord, ptsNum):
+    '''
+    Generate a uniform landscape with ptsNum number of (x, y) coodinates.
+    '''
+    # check if ptsNum is square of an interger
+    numRow = math.sqrt(ptsNum)
+    if(numRow.is_integer()):
+        x = np.linspace(loCoord, hiCoord, int(numRow))
+        coords = list(itertools.product(x, x))
+        return coords
+
 
 
 if __name__ == "__main__":
