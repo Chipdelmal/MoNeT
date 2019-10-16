@@ -20,7 +20,7 @@ import inspect
 dataType = float
 filename = "WBSA"
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
-path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/20percent/2019_09_29_ANALYZED/"
+path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/Gordonvale/2019_10_11_ANALYZED/'
 wildsList = [1]
 homingList = [0]
 aggregationDictionary = monet.generateAggregationDictionary(

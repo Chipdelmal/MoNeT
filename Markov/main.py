@@ -44,6 +44,7 @@ passMkvtest
 # ############################################################################
 landscape = land.genURandLandscape(lo, hi, ptsNum)
 distMat = monet.calculateDistanceMatrix(landscape)
+print(distMat)
 sns.heatmap(distMat, annot=True)
 
 # ############################################################################
@@ -63,7 +64,7 @@ sns.heatmap(migrMat, annot=True)
 # ############################################################################
 # Point types
 # ############################################################################
-# Assings classes types to the points in the landscape (this routine will
+# Assigns classes types to the points in the landscape (this routine will
 #   fail if there's few points with respect to the dimension of the point
 #   types)
 # ############################################################################
