@@ -18,16 +18,15 @@ def introgrationDay(aggData, geneIx, threshold, skipDays=10, refFrame=-1):
     return 0
 
 
-EXP = 1
+(EXP, STACK, HEAT) = (1, True, True)
 ##############################################################################
 (maleToggle, femaleToggle) = (True, True)
 colors = ['#ff006e', '#8338ec', '#4b91ff', '#f7ff2b', '#4df25d']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 style = {
-    "width": .05, "alpha": .975, "dpi": 612 * 2, "legend": False,
-    "aspect": .006, "colors": colors, "xRange": [0,1000], "yRange": [0, 50000]
+    "width": .05, "alpha": .8, "dpi": 612 * 2, "legend": False,
+    "aspect": .006, "colors": colors, "xRange": [0,365], "yRange": [0, 50000]
 }
-style['aspect'] = .1 * (style['xRange'][1] / style['yRange'][1])
 ##############################################################################
 if EXP == 0:
     pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/Gordonvale/2019_10_11_ANALYZED/'
@@ -37,6 +36,7 @@ else:
     pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/5percent/2019_10_08_ANALYZED/'
     style['yRange'] = [0, 50000]
     (probeRatios, expHead) = ([.76, .88, .98], 'E_02_05_0010_')
+style['aspect'] = .2 * (style['xRange'][1] / style['yRange'][1])
 ##############################################################################
 ##############################################################################
 firstRelease = 20
@@ -53,47 +53,49 @@ for i in range(50, 1050, 50):
     print(expsPath)
     ###########################################################################
     ###########################################################################
-    filenames = monet.readExperimentFilenames(expsPath)
-    landscapeSumData = monet.sumLandscapePopulationsFromFiles(
-        filenames, male=maleToggle, female=femaleToggle, dataType=float
-    )
-    aggData = monet.aggregateGenotypesInNode(
-        landscapeSumData, aggregationDictionary
-    )
-    ssDays = [introgrationDay(aggData, 0, 1 - k) for k in probeRatios]
-    daysTup = [
-        fmtStr.format(day[1], day[0]/7) for day in
-        zip(ssDays, probeRatios)
-    ]
-    title = ' '.join(daysTup)
-    figB = monet.plotMeanGenotypeStack(
-        aggData, style, vLinesCoords=ssDays
-    )
-    figB.get_axes()[0].set_xlim(style["xRange"][0], style["xRange"][1])
-    figB.get_axes()[0].set_ylim(style["yRange"][0], style["yRange"][1])
-    plt.title('[Fraction: Week] :: ' + title, fontsize=5)
-    monet.quickSaveFigure(
-        figB, pathRoot + "S_" + experimentString + ".png", dpi=style['dpi']
-    )
-    plt.close()
+    if STACK:
+        filenames = monet.readExperimentFilenames(expsPath)
+        landscapeSumData = monet.sumLandscapePopulationsFromFiles(
+            filenames, male=maleToggle, female=femaleToggle, dataType=float
+        )
+        aggData = monet.aggregateGenotypesInNode(
+            landscapeSumData, aggregationDictionary
+        )
+        ssDays = [introgrationDay(aggData, 0, 1 - k) for k in probeRatios]
+        daysTup = [
+            fmtStr.format(day[1], day[0]/7) for day in
+            zip(ssDays, probeRatios)
+        ]
+        title = ' '.join(daysTup)
+        figB = monet.plotMeanGenotypeStack(
+            aggData, style, vLinesCoords=ssDays
+        )
+        figB.get_axes()[0].set_xlim(style["xRange"][0], style["xRange"][1])
+        figB.get_axes()[0].set_ylim(style["yRange"][0], style["yRange"][1])
+        plt.title('[Fraction: Week] :: ' + title, fontsize=5)
+        monet.quickSaveFigure(
+            figB, pathRoot + "S_" + experimentString + ".png", dpi=style['dpi']
+        )
+        plt.close()
     ###########################################################################
     ###########################################################################
-    filenames = monet.readExperimentFilenames(pathRoot + experimentString + '/')
-    landscapeData = monet.loadLandscapeData(
-        filenames, male=maleToggle, female=femaleToggle, dataType=float
-     )
-    aggregatedNodesData = monet.aggregateGenotypesInLandscape(
-        landscapeData, aggregationDictionary
-    )
-    geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
-        aggregatedNodesData
-    )
-    overlay = monet.plotGenotypeOverlayFromLandscape(
-        geneSpatiotemporals,
-        style={"aspect": .15, "cmap": cmaps},
-        vmax=20#monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
-    )
-    monet.quickSaveFigure(
-        overlay, pathRoot + "O_" + experimentString + ".png"
-    )
-    plt.close()
+    if HEAT:
+        filenames = monet.readExperimentFilenames(pathRoot+experimentString+'/')
+        landscapeData = monet.loadLandscapeData(
+            filenames, male=maleToggle, female=femaleToggle, dataType=float
+         )
+        aggregatedNodesData = monet.aggregateGenotypesInLandscape(
+            landscapeData, aggregationDictionary
+        )
+        geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
+            aggregatedNodesData
+        )
+        overlay = monet.plotGenotypeOverlayFromLandscape(
+            geneSpatiotemporals,
+            style={"aspect": 30 * style['aspect'], "cmap": cmaps},
+            vmax=27.5#monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
+        )
+        monet.quickSaveFigure(
+            overlay, pathRoot + "O_" + experimentString + ".png"
+        )
+        plt.close()
