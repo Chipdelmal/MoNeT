@@ -30,11 +30,11 @@ style = {
 ##############################################################################
 if EXP == 0:
     pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/Gordonvale/2019_10_11_ANALYZED/'
-    style['yRange'] = [0, 100000]
+    style['yRange'] = [0, 125000]
     (probeRatios, expHead) = ([.49, .66, .68, .79, .81, .9], 'E_04_05_0010_')
 else:
     pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/5percent/2019_10_08_ANALYZED/'
-    style['yRange'] = [0, 50000]
+    style['yRange'] = [0, 40000]
     (probeRatios, expHead) = ([.76, .88, .98], 'E_02_05_0010_')
 style['aspect'] = .2 * (style['xRange'][1] / style['yRange'][1])
 ##############################################################################
@@ -47,7 +47,7 @@ aggregationDictionary = monet.generateAggregationDictionary(
 fmtStr = "[{}: {:.1f}]"
 ##############################################################################
 ##############################################################################
-for i in range(50, 1050, 50):
+for i in range(500, 550, 50):
     experimentString = expHead + str(i).rjust(4,'0')
     expsPath = pathRoot + experimentString + '/'
     print(expsPath)
@@ -96,6 +96,6 @@ for i in range(50, 1050, 50):
             vmax=27.5#monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
         )
         monet.quickSaveFigure(
-            overlay, pathRoot + "O_" + experimentString + ".png"
+            overlay, pathRoot + "O_" + experimentString + ".eps"
         )
         plt.close()
