@@ -7,7 +7,7 @@ import landscape as land
 import MoNeT_MGDrivE as monet
 
 
-def genSingle(n, zeroInflation):
+def genSingle(n, zeroInflation, landscapeProb):
     (lo, hi, n) = (0, 10, n)
     # ############################################################################
     # Mosquito biological behaviour
@@ -52,7 +52,9 @@ def genSingle(n, zeroInflation):
     #   fail if there's few points with respect to the dimension of the point
     #   types)
     # ############################################################################
-    pointClasses = bts.genURandLandscapeClasses(len(mskMat), n)
+    #pointClasses = bts.genURandLandscapeClasses(len(mskMat), n)
+
+    pointClasses = bts.genMRandLanscapeClasses(len(mskMat), n, landscapeProb)
     clandMskMat = bts.calcClandMskMat(pointClasses, mskMat)
 
     # ############################################################################
