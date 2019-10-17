@@ -1,7 +1,7 @@
 patches = 10
-folder = '/Volumes/marshallShare/vic/eRACRfact17/'
+folder = '/Volumes/marshallShare/vic/eRACRfact19/'
 for interval in range(100, 275, 25):
-    for releases in range (20,32,2):
+    for releases in range (20,42,2):
         experiment='E_'+str(interval).zfill(4)+'_02_'+str(releases).zfill(5)
         print(experiment)
         maleFile = open(folder+experiment+'/ADM_Run001.csv', 'r')
