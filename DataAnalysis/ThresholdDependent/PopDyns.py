@@ -1,32 +1,26 @@
+import aux
 import math
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
-
-def roundup(x):
-    return int(math.ceil(x / 10000.0)) * 10000
-
-
-def introgrationDay(aggData, geneIx, threshold, skipDays=10, refFrame=-1):
-    popCounts = aggData['population']
-    for j in range(len(popCounts)):
-        totalPop = sum(popCounts[j])
-        if (totalPop > 0):
-            ratio = popCounts[j][geneIx] / sum(popCounts[-1])
-            if (ratio <= threshold):
-                return j
-    return 0
-
-
-(EXP, STACK, HEAT) = (1, True, True)
 ##############################################################################
+# Define constants for experiment and types of plots to export (analyses)
+##############################################################################
+(EXP, STACK, HEAT) = (1, True, True)
 (maleToggle, femaleToggle) = (True, True)
+##############################################################################
+# Styling options for the plots
+##############################################################################
 colors = ['#ff006e', '#8338ec', '#4b91ff', '#f7ff2b', '#4df25d']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 style = {
     "width": .05, "alpha": .8, "dpi": 612 * 2, "legend": False,
     "aspect": .006, "colors": colors, "xRange": [0,365], "yRange": [0, 50000]
 }
+fmtStr = "[{}: {:.1f}]"
+##############################################################################
+# Setting up the paths for the experiments data, and some other experiment-
+#   dependent variables for styling
 ##############################################################################
 if EXP == 0:
     pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/Gordonvale/2019_10_11_ANALYZED/'
@@ -38,30 +32,41 @@ else:
     (probeRatios, expHead) = ([.76, .88, .98], 'E_02_05_0010_')
 style['aspect'] = .2 * (style['xRange'][1] / style['yRange'][1])
 ##############################################################################
+# Drive variables for aggregation and steady-state calculations
 ##############################################################################
 firstRelease = 20
-(wList, hList) = ([1], [0])
 aggregationDictionary = monet.generateAggregationDictionary(
-    ['W', 'H'], [wList, hList]
+    ['W', 'H'], [[1], [0]]
 )
-fmtStr = "[{}: {:.1f}]"
 ##############################################################################
+# Loops through experiment folders
 ##############################################################################
-for i in range(500, 550, 50):
+for i in range(0, 1050, 50):
     experimentString = expHead + str(i).rjust(4,'0')
     expsPath = pathRoot + experimentString + '/'
     print(expsPath)
     ###########################################################################
+    # Stacked population plots (sums the whole landscape into a single
+    #   population count over time)
     ###########################################################################
     if STACK:
+        # Parses the paths of all CSV files starting with 'F_' and/or 'M_'
         filenames = monet.readExperimentFilenames(expsPath)
+        # Loads all the files provided and sums them into one array of dims:
+        #   [originalGenotypes, time, [counts]]
         landscapeSumData = monet.sumLandscapePopulationsFromFiles(
             filenames, male=maleToggle, female=femaleToggle, dataType=float
         )
+        # Groups the genotypes into "bins" provided by the
+        #   "aggregationDictionary" by summing the counts in each one of the
+        #   columns.
         aggData = monet.aggregateGenotypesInNode(
             landscapeSumData, aggregationDictionary
         )
-        ssDays = [introgrationDay(aggData, 0, 1 - k) for k in probeRatios]
+        # Calculates the dates at which the system arrives to the required
+        #   thresholds
+        ssDays = [aux.introgrationDay(aggData, 0, 1 - k) for k in probeRatios]
+        # Plotting-related instructions
         daysTup = [
             fmtStr.format(day[1], day[0]/7) for day in
             zip(ssDays, probeRatios)
@@ -78,24 +83,34 @@ for i in range(500, 550, 50):
         )
         plt.close()
     ###########################################################################
+    # Heatmap population plots (maintains the spatial information, so that the
+    #   spread of the gene drive can be analyzed geographically)
     ###########################################################################
     if HEAT:
+        # Parses the paths of all CSV files starting with 'F_' and/or 'M_'
         filenames = monet.readExperimentFilenames(pathRoot+experimentString+'/')
+        # Loads all the files provided without summing them
         landscapeData = monet.loadLandscapeData(
             filenames, male=maleToggle, female=femaleToggle, dataType=float
          )
+        # Groups the genotypes into "bins" provided by the
+        #   "aggregationDictionary" by summing the counts in each one of the
+        #   columns.
         aggregatedNodesData = monet.aggregateGenotypesInLandscape(
             landscapeData, aggregationDictionary
         )
+        # Reshapes the data to take the form:
+        #    [nodeNUM, [originalGenotypes, time, [counts]]
         geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(
             aggregatedNodesData
         )
+        # Plotting-related instructions
         overlay = monet.plotGenotypeOverlayFromLandscape(
             geneSpatiotemporals,
             style={"aspect": 30 * style['aspect'], "cmap": cmaps},
             vmax=27.5#monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
         )
         monet.quickSaveFigure(
-            overlay, pathRoot + "O_" + experimentString + ".eps"
+            overlay, pathRoot + "O_" + experimentString + ".png"
         )
         plt.close()
