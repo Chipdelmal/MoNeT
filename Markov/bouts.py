@@ -4,9 +4,6 @@ import landscape as land
 import network as mntw
 from random import choices
 
-multinomial(8, [0.3, 0.2, 0.5])
-rv
-
 
 def calcClandMskMat(pointClasses, mskMat):
     '''
@@ -29,7 +26,9 @@ def genURandLandscapeClasses(classesNumber, ptsNum):
     '''
     return np.random.randint(classesNumber, size=ptsNum)
 
-
+ptsNum=10
+probability = [0.7, 0.2, 0.1]
+classesNumber = 3
 
 def genMRandLanscapeClasses(classesNumber, ptsNum, probability):
     '''
@@ -37,7 +36,8 @@ def genMRandLanscapeClasses(classesNumber, ptsNum, probability):
     based on the probability vector (multinomial distribution)
     '''
     # check if the probability vector is valid
-    if all( p>= 0 and p <=1 for p in probability) and sum(probability)==1:
+    if all( p>= 0 and p <=1 for p in probability) and \
+    math.isclose(sum(probability), 1.0, rel_tol=1e-5):
         return np.random.choice(classesNumber, ptsNum, p=probability)
 
 
