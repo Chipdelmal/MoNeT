@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 ##############################################################################
 # Define constants for experiment and types of plots to export (analyses)
 ##############################################################################
-(EXP, STACK, HEAT) = (1, True, True)
+(EXP, STACK, HEAT) = (0, True, True)
 (maleToggle, femaleToggle) = (True, True)
 ##############################################################################
 # Styling options for the plots

@@ -19,6 +19,7 @@ import inspect
 ###############################################################################
 dataType = float
 filename = "WBSA"
+(maleToggle, femaleToggle) = (True, True)
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
 #path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/Gordonvale/2019_10_11_ANALYZED/'
 path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/5percent/2019_10_08_ANALYZED/'
@@ -41,12 +42,12 @@ ratiosDictionary = {
 ###############################################################################
 start = time.time()
 experimentFolders = monet.listDirectoriesInPath(path)
-Parallel(n_jobs=4)(delayed(
-    monet.loadFolderAndWriteFactorialCSV)(
+Parallel(n_jobs=4)(delayed(monet.loadFolderAndWriteFactorialCSVFixedPopSize)(
         experimentString=folder,
         path=path,
         aggregationDictionary=aggregationDictionary,
-        ratiosDictionary=ratiosDictionary
+        ratiosDictionary=ratiosDictionary,
+        male=maleToggle, female=femaleToggle
     )
     for folder in experimentFolders
 )

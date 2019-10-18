@@ -1,14 +1,35 @@
+import numpy as np
 import MoNeT_MGDrivE as monet
 import splitDrive_Select as aux
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
+
+###############################################################################
+def normalizePopulationInNode(node, totalPopIx=-1):
+    popSize = node[:,-1]
+    normalizedNode = np.empty(node.shape)
+    for i in range(0, len(node), 1):
+        normalizedNode[i] = node[i] / popSize[i]
+    return normalizedNode
+
+
+def normalizeLandscapeDataRepetitions(landscapeReps, totalPopIx=-1):
+    landscapes = landscapeReps['landscapes']
+    for (i, land) in enumerate(landscapes):
+        landscapes[i] = [normalizePopulationInNode(node, totalPopIx=totalPopIx) for node in land]
+    landscapeReps['landscapes'] = landscapes
+    return landscapeReps
+
+
 def scaleAspect(aspect, style):
     xDiff = (style['xRange'][1] - style['xRange'][0])
     yDiff = (style['yRange'][1] - style['yRange'][0])
     return aspect * (xDiff / yDiff)
+###############################################################################
 
-HEALTH = True
+###############################################################################
+HEALTH = False
 ###############################################################################
 pathRoot = "/Volumes/marshallShare/SplitDriveSup/"
 if HEALTH is True:
@@ -43,14 +64,17 @@ for DRIVE in [1, 2, 3]:
     print('******************************************************************')
     ###########################################################################
     num = len(pathsRoot)
-    for i in range(0, num, 2):
+    for i in range(0, 1, 1):
         pathSample = pathsRoot[i]
         experimentString = pathSample.split("/")[-1]
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-            paths, aggregationDictionary,
-            male=False, female=True, dataType=float
-        )
+                paths, aggregationDictionary,
+                male=False, female=True, dataType=float
+            )
+        landscapeReps = normalizeLandscapeDataRepetitions(
+                landscapeReps, totalPopIx=-1
+            )
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
         for j in range(0, len(figsArray)):
             figsArray[j].get_axes()[0].set_xlim(0,style['xRange'][1])
@@ -66,3 +90,14 @@ for DRIVE in [1, 2, 3]:
 print('******************************************************************')
 print('* Finished all drives correctly')
 print('******************************************************************')
+
+
+
+land = landscapeReps['landscapes'][0]
+node = land[1]
+#
+temp = np.empty(node.shape)
+popSize = node[:,-1]
+for i in range(0, len(node), 1):
+    temp[i] = node[i] / popSize[i]
+temp
