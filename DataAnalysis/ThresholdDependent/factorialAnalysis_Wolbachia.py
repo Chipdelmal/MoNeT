@@ -22,7 +22,7 @@ filename = "WBSA"
 (maleToggle, femaleToggle) = (True, True)
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
 #path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/Gordonvale/2019_10_11_ANALYZED/'
-path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/5percent/2019_10_08_ANALYZED/'
+path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK/Wolbachia_1_05/ANALYZED/'
 wildsList = [1]
 homingList = [0]
 aggregationDictionary = monet.generateAggregationDictionary(
@@ -42,7 +42,7 @@ ratiosDictionary = {
 ###############################################################################
 start = time.time()
 experimentFolders = monet.listDirectoriesInPath(path)
-Parallel(n_jobs=4)(delayed(monet.loadFolderAndWriteFactorialCSVFixedPopSize)(
+Parallel(n_jobs=4)(delayed(monet.loadFolderAndWriteFactorialCSV)(
         experimentString=folder,
         path=path,
         aggregationDictionary=aggregationDictionary,

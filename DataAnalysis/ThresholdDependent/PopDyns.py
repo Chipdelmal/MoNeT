@@ -23,11 +23,11 @@ fmtStr = "[{}: {:.1f}]"
 #   dependent variables for styling
 ##############################################################################
 if EXP == 0:
-    pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/GV/Wolbachia_1_05'
+    pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/GV/Wolbachia_1_05/ANALYZED/'
     style['yRange'] = [0, 125000]
     (probeRatios, expHead) = ([.49, .66, .68, .79, .81, .9], 'E_04_05_0010_')
 else:
-    pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK/Wolbachia_1_05'
+    pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK/Wolbachia_1_05/ANALYZED/'
     style['yRange'] = [0, 40000]
     (probeRatios, expHead) = ([.76, .88, .98], 'E_02_05_0010_')
 style['aspect'] = .2 * (style['xRange'][1] / style['yRange'][1])
