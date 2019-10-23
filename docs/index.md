@@ -27,11 +27,11 @@ Click on each on the corresponding images to learn more about our projects or ta
 
 <p style="font-size:12px">
   <b>Lead:</b> <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]<br>
-  <b>Dev:</b> Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Gillian Chu [UCB], Maya Shen [UCB], Jared Bennett [UCB], Victor Ferman [UCB]<br>
-  <b>Former dev:</b> Sabrina Wong [UCB]<br>
+  <b>Active Dev</b>: Gillian Chu [UCB], Maya Shen [UCB], Yunwen Ji [McGill]<br>
+  <b>Former dev:</b> Victor Ferman [UCB], Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Sabrina Wong [UCB]<br>
   <b>Participant Students:</b> Moisés Montaño Copca [ITESM]<br>
-  <b>Former participant students:</b> Martín Alejandro Molinero Morales [ITESM], Christian Ricardo Solís Cortés [ITESM], Salomón Olivera Abud [ITESM], Esteban Quintana Cueto [ITESM]<br>
-  <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]<!--, <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a> [ITESM]--><br>
+  <b>Former participant students: </b> Martín Alejandro Molinero Morales [ITESM], Christian Ricardo Solís Cortés [ITESM], Salomón Olivera Abud [ITESM], Esteban Quintana Cueto [ITESM]<br>
+  <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]<br>
   <b>PI's:</b> <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]
 </p>
 
