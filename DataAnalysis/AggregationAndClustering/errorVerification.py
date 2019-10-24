@@ -28,7 +28,7 @@ cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
     "aspect": .03, "colors": colors, "format": "png",
-    "xRange": [0, 2500],#9124],
+    "xRange": [0, 3000],#9124],
     "yRange": [0, 50000]  # 590000]  # 2500]
 }
 styleS['aspect'] = scaleAspect(.2, styleS)
@@ -46,9 +46,9 @@ for fileIx in range(len(filesListMean)):
     data = {"genotypes": ["W", "H", "E", "R", "B"], "population": readDataM}
     fig = monet.plotMeanGenotypeStack(data, styleS)
     #ax = fig.add_subplot(111)
-    # ax.set_aspect(aspect=styleS["aspect"])
-    # ax.set_xlim(styleS["xRange"])
-    # ax.set_ylim(styleS["yRange"])
+    #ax.set_aspect(aspect=styleS["aspect"])
+    #ax.set_xlim(styleS["xRange"])
+    #ax.set_ylim(styleS["yRange"])
     monet.quickSaveFigure(
         fig, pathOut + "S_" + nameID + ".png",
         format="png", dpi=styleS["dpi"]
@@ -91,8 +91,8 @@ for fileIx in range(filesNum):
     for i in range(len(data["genotypes"])):
         plt.plot(
             timeRange, readDataM[0:, i],
-            color=colors[i], alpha=.75/(filesNum - 2) * fileIx,
-            linewidth=(.04 * fileIx)
+            color=colors[i], alpha=.8/(filesNum - 2) * fileIx,
+            linewidth=.3#(.04 * fileIx)
         )
         # max = readDataM[0:, i] + readDataS[0:, i]
         # min = readDataM[0:, i] - readDataS[0:, i]
