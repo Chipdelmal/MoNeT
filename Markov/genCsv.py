@@ -23,3 +23,6 @@ def genCSV(reps, n, heterogenity, landscapeProb):
             # save the simulated data as csv files
             filename = delimiter.join(['H', str(j), probInNames, str(i)])
             np.savetxt("kernels" + os.sep + filename + ".csv", singleMatrix, delimiter=",")
+
+
+genCSV(10, 10, [.5], [0.7, 0.2, 0.1])

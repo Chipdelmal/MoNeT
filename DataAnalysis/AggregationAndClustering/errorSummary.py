@@ -22,7 +22,7 @@ gradient = np.linspace(0, 1, 15)
 cm(gradient[10])
 
 
-(selStat, funcsID) = (0, ["SSD", "SMN", "SMD"])
+(selStat, funcsID) = (0, ["SSD", "SMD", "SMD"])
 pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/"
 # Filepaths ###################################################################
 (filesListMean, filesListStat) = (

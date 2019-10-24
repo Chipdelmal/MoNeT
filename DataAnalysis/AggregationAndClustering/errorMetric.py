@@ -64,9 +64,9 @@ funcsNum = len(funcsList)
 pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/"
 pathClst = pathRoot + "C*"
 clustersList = sorted(glob.glob(pathClst))
-clustersList[9]
+clustersList[10]
 ###############################################################################
-for expPath in [clustersList[9]]:
+for expPath in [clustersList[10]]:
     sPath = monet.listDirectoriesWithPathWithinAPath(expPath + "/")
     ###########################################################################
     paths = []
