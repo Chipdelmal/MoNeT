@@ -18,7 +18,7 @@ pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/"
 pathOut = pathRoot + "images/frames/"
 # Filepaths ###################################################################
 (filesListMean, filesListStat) = (
-    sorted(glob.glob(pathRoot + '*SMN*')),
+    sorted(glob.glob(pathRoot + '*SMD*')),
     sorted(glob.glob(pathRoot + '*' + funcsID[selStat] + '*'))
 )
 filesNum = len(filesListMean)
@@ -27,11 +27,11 @@ colors = ["#090446", "#f20060", "#59ff00", "#ff28d4", "#6898ff", "#c6d8ff"]
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 styleS = {
     "width": 0, "alpha": .85, "dpi": 2*512, "legend": False,
-    "aspect": .03, "colors": colors, "format": "png",
+    "aspect": 1, "colors": colors, "format": "png",
     "xRange": [0, 3000],#9124],
-    "yRange": [0, 50000]  # 590000]  # 2500]
+    "yRange": [0, 45000]  # 590000]  # 2500]
 }
-styleS['aspect'] = scaleAspect(.2, styleS)
+styleS['aspect'] = scaleAspect(1, styleS)
 
 # Main ########################################################################
 for fileIx in range(len(filesListMean)):
@@ -91,8 +91,8 @@ for fileIx in range(filesNum):
     for i in range(len(data["genotypes"])):
         plt.plot(
             timeRange, readDataM[0:, i],
-            color=colors[i], alpha=.8/(filesNum - 2) * fileIx,
-            linewidth=.3#(.04 * fileIx)
+            color=colors[i], alpha=1/(filesNum - 1) * fileIx,
+            linewidth=.35#(.04 * fileIx)
         )
         # max = readDataM[0:, i] + readDataS[0:, i]
         # min = readDataM[0:, i] - readDataS[0:, i]
