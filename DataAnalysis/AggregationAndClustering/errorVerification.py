@@ -18,7 +18,7 @@ pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/"
 pathOut = pathRoot + "images/frames/"
 # Filepaths ###################################################################
 (filesListMean, filesListStat) = (
-    sorted(glob.glob(pathRoot + '*SMD*')),
+    sorted(glob.glob(pathRoot + '*SMN*')),
     sorted(glob.glob(pathRoot + '*' + funcsID[selStat] + '*'))
 )
 filesNum = len(filesListMean)
