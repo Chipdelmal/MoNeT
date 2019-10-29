@@ -42,6 +42,8 @@ ratiosDictionary = {
 ###############################################################################
 start = time.time()
 experimentFolders = sorted(monet.listDirectoriesInPath(path))
+experimentFolders = experimentFolders[303:]
+print(experimentFolders)
 Parallel(n_jobs=4)(delayed(monet.loadFolderAndWriteFactorialCSV)(
         experimentString=folder,
         path=path,

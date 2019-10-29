@@ -29,7 +29,7 @@ def genSingle(n, zeroInflation, landscapeProb):
     # Creates a random landscape (x,y coordinates) and calculates the distances
     #   matrix.
     # ############################################################################
-    landscape = land.genURandLandscape(lo, hi, n)
+    landscape = land.genUniformLandscape(lo, hi, n)
     distMat = monet.calculateDistanceMatrix(landscape)
 
     # ############################################################################
