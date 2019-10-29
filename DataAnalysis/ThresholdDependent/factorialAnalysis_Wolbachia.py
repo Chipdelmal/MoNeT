@@ -21,7 +21,7 @@ dataType = float
 filename = "WBSA"
 (maleToggle, femaleToggle) = (True, True)
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
-path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/GV/Wolbachia_1_10/ANALYZED/'
+path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/GV/Wolbachia_2_10/ANALYZED/'
 #path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK/Wolbachia_2_05/ANALYZED/'
 wildsList = [1]
 homingList = [0]
@@ -41,7 +41,7 @@ ratiosDictionary = {
 # Export Individual CSVs for Factorial Slots
 ###############################################################################
 start = time.time()
-experimentFolders = monet.listDirectoriesInPath(path)
+experimentFolders = sorted(monet.listDirectoriesInPath(path))
 Parallel(n_jobs=4)(delayed(monet.loadFolderAndWriteFactorialCSV)(
         experimentString=folder,
         path=path,
