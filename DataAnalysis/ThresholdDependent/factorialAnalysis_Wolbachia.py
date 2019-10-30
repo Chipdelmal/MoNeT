@@ -18,10 +18,10 @@ import inspect
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "WBSA"
+filename = "WXYM"
 (maleToggle, femaleToggle) = (True, True)
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
-path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/GV/Wolbachia_2_10/ANALYZED/'
+path = '/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationYes/Wolbachia/ANALYZED/'
 #path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK/Wolbachia_2_05/ANALYZED/'
 wildsList = [1]
 homingList = [0]
