@@ -38,7 +38,7 @@ experimentFolders = sorted(monet.listDirectoriesInPath(path + experiment))
 Parallel(n_jobs=4)(delayed(
     monet.loadFolderAndWriteFactorialCSV)(
         experimentString=folder,
-        path=path,
+        path=path+experiment,
         aggregationDictionary=aggregationDictionary,
         ratiosDictionary=ratiosDictionary
     )
@@ -49,5 +49,5 @@ print((end - start)/60)
 ###############################################################################
 # Load and Compile CSVs into one
 ###############################################################################
-outFilename = filename + ".csv"
-monet.compileFactorialCSVFromFiles(path, outFilename)
+# outFilename = filename + ".csv"
+# monet.compileFactorialCSVFromFiles(path, outFilename)
