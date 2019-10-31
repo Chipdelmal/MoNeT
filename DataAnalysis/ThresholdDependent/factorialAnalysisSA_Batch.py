@@ -5,6 +5,7 @@ import fnmatch
 import os
 import csv
 import time
+import datetime
 import numpy as np
 import MoNeT_MGDrivE as monet
 import driveSelector as drive
@@ -23,7 +24,7 @@ dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 print('\n')
 print('**********************************************************************')
-print('Processing ' + str(len(dirs)) + ' experiments')
+print('* Processing ' + str(len(dirs)) + ' experiments [' + str(datetime.datetime.now()) + ']')
 print('**********************************************************************')
 ###############################################################################
 # Sweeping through experiments
@@ -54,7 +55,7 @@ for (i, expName) in enumerate(dirs):
         for folder in experimentFolders
     )
     end = time.time()
-    print('  * {0}) {1} [{2:.2f}]'.format(i, expName, (end - start)/60))
+    print('  * {0}) {1} [{2:.2f} min]'.format(i, expName, (end - start)/60))
     ###############################################################################
     # Load and Compile CSVs into one
     ###############################################################################
@@ -62,6 +63,9 @@ for (i, expName) in enumerate(dirs):
         path + experiment,
         path + expName + ".csv"
     )
+###############################################################################
+# Message for terminal
+###############################################################################
 print('**********************************************************************')
-print('Finished ' + str(len(dirs)) + ' experiments')
+print('* Finished ' + str(len(dirs)) + ' experiments [' + str(datetime.datetime.now()) + ']')
 print('**********************************************************************')
