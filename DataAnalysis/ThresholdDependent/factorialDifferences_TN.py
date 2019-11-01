@@ -13,7 +13,7 @@ path = "/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/"
 (folderA, folderB) = ("MigrationNo", "MigrationYes")
 files = sorted(glob.glob(path+folderA+"/*.csv"))
 filenames = [os.path.basename(f).split('.')[0] for f in files]
-coverageRescale = 100
+coverageRescale = 1
 
 ###############################################################################
 # Message for terminal
