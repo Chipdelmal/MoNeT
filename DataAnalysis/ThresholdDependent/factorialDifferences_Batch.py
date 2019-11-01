@@ -1,12 +1,15 @@
 import os
 import glob
+import time
+import datetime
 import numpy as np
 import MoNeT_MGDrivE as monet
+from itertools import compress
 
 def getFilenameFromPath(path):
     return path.split('/')[-1].split('.')[0]
 
-coverageRescale = 10
+cScale = 1
 ###############################################################################
 # Define paths for central files and sensitivity analysis ones
 ###############################################################################
@@ -22,61 +25,44 @@ pathCF = '/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationYes/'
 cfFiles = [getFilenameFromPath(i) for i in cfPaths]
 saFiles = [getFilenameFromPath(i) for i in saPaths]
 ###############################################################################
-centralFile = cfFiles[0]
-
-centralFile
-expCoreID = [i.split('_')[0] for i in saFiles]
-matchingIndices = [i == centralFile for i in expCoreID]
+# Message for terminal
 ###############################################################################
-sensitivitySelector = 3
-if(sensitivitySelector == 1):
-    # 001 larval life decrease
-    # 002 larval life increase
-    title = "Larval Lifespan"
-    testFileA = "UBSA_0001.csv"
-    testFileB = "UBSA_0002.csv"
-if(sensitivitySelector == 2):
-    # 010 adult life increase
-    # 020 adult life decrease
-    title = "Adult Mortality"
-    testFileA = "UBSA_0010.csv"
-    testFileB = "UBSA_0020.csv"
-if(sensitivitySelector == 3):
-    # 100 fitness cost 10% reduction
-    # 200 fitness cost 20% reduction
-    title = "Fitness Cost"
-    testFileA = "UBSA_0100.csv"
-    testFileB = "UBSA_0200.csv"
-centralData = monet.loadAndHashFactorialCSV(
-    path + centralFile, floatMultiplier=coverageRescale
-)
-probeDataA = monet.loadAndHashFactorialCSV(
-    path + testFileA, floatMultiplier=coverageRescale
-)
-probeDataB = monet.loadAndHashFactorialCSV(
-    path + testFileB, floatMultiplier=coverageRescale
-)
-differencesHashA = monet.calculateFactorialHashError(
-    probeDataA,
-    centralData,
-    monet.sampleDifference
-)
-differencesHashB = monet.calculateFactorialHashError(
-    probeDataB,
-    centralData,
-    monet.sampleDifference
-)
-errorsA = differencesHashA.values()
-errorsB = differencesHashB.values()
-
-deHashedA = monet.deHashFactorial(differencesHashA)
-deHashedB = monet.deHashFactorial(differencesHashB)
-
-np.savetxt(
-    path + testFileA.split(".")
-    [0] + "Diff.csv", deHashedA, fmt='%2.6f', delimiter=","
-)
-np.savetxt(
-    path + testFileB.split(".")
-    [0] + "Diff.csv", deHashedB, fmt='%2.6f', delimiter=","
-)
+print('\n')
+print('**********************************************************************')
+print('* Processing ' + str(len(saFiles)) + ' experiments [' + str(datetime.datetime.now()) + ']')
+print('**********************************************************************')
+###############################################################################
+count = 0
+for (i, cfFile) in enumerate(cfFiles):
+    start = time.time()
+    # Load central file
+    cData = monet.loadAndHashFactorialCSV(
+        pathCF+cfFile+'.csv', floatMultiplier=cScale
+    )
+    expCoreID = [i.split('_')[0] for i in saFiles]
+    matchingIndices = [i == cfFile for i in expCoreID]
+    matchingFiles = list(compress(saFiles, matchingIndices))
+    for (j, pFile) in enumerate(matchingFiles):
+        # Load probe file
+        pData = monet.loadAndHashFactorialCSV(
+            pathSA+pFile+'.csv', floatMultiplier=cScale
+        )
+        # Calculate differences between files
+        diffHash = monet.calculateFactorialHashError(
+            pData, cData, monet.sampleDifference
+        )
+        deHashed = monet.deHashFactorial(diffHash)
+        # Export results
+        np.savetxt(
+            pathSA + 'sensitivity/' + pFile + "_SA.csv",
+            deHashed, fmt='%2.6f', delimiter=","
+        )
+        end = time.time()
+        count = count + 1
+        print('* {0}) {1} [{2:.2f} min]'.format(count, pFile, (end-start)/60))
+###############################################################################
+# Message for terminal
+###############################################################################
+print('**********************************************************************')
+print('* Finished ' + str(len(saFiles)) + ' experiments [' + str(datetime.datetime.now()) + ']')
+print('**********************************************************************')
