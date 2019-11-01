@@ -17,7 +17,7 @@ from sklearn.externals.joblib import Parallel, delayed
 ###############################################################################
 # Factorial experiment
 ###############################################################################
-path = "/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationYes/"
+path = "/Volumes/marshallShare/ThresholdResub/tnFactorialSA/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
