@@ -5,8 +5,11 @@ import bouts as bts
 import network as mntw
 import landscape as land
 import MoNeT_MGDrivE as monet
+import matplotlib.pyplot as plt
 
-
+zeroInflation = 0.5
+landscapeProb = [0.7, 0.2, 0.1]
+n = 100
 def genSingle(n, zeroInflation, landscapeProb):
     (lo, hi, n) = (0, 10, n)
     # ############################################################################
@@ -55,6 +58,11 @@ def genSingle(n, zeroInflation, landscapeProb):
     #pointClasses = bts.genURandLandscapeClasses(len(mskMat), n)
 
     pointClasses = bts.genMRandLanscapeClasses(len(mskMat), n, landscapeProb)
+    [i[0] for i in landscape]
+
+    # plot the assigned landscape
+    sns.scatterplot([i[0] for i in landscape], [i[1] for i in landscape], hue = pointClasses)
+
     clandMskMat = bts.calcClandMskMat(pointClasses, mskMat)
 
     # ############################################################################
