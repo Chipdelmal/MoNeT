@@ -1,9 +1,7 @@
-import plotly.offline as offline
-import plotly.graph_objs as go
-import plotly
+import os
+import glob
 import numpy as np
 import MoNeT_MGDrivE as monet
-offline.init_notebook_mode(connected=True)
 
 ###############################################################################
 # Load compiled CSV and analyze the output
@@ -63,25 +61,3 @@ np.savetxt(
     path + testFileB.split(".")
     [0] + "Diff.csv", deHashedB, fmt='%2.6f', delimiter=","
 )
-
-###############################################################################
-# Plotting the results
-###############################################################################
-# binsDict = dict(start=0, end=1, size=0.05)
-# trace1 = go.Histogram(
-#     x=errorsA, histnorm='percent',
-#     name='Increase', xbins=binsDict,
-#     marker=dict(color='#B9C1DB'), opacity=0.75
-# )
-# trace2 = go.Histogram(
-#     x=errorsB, histnorm='percent',
-#     name='Decrease', xbins=binsDict,
-#     marker=dict(color='#FF7373'), opacity=0.75
-# )
-# layout = go.Layout(
-#     title=title, xaxis=dict(title='Difference'),
-#     yaxis=dict(title='Count'), bargap=0.125, bargroupgap=0.05
-# )
-# data = [trace1, trace2]
-# fig = go.Figure(data=data, layout=layout)
-# plotly.offline.iplot(fig, filename='normalized histogram')

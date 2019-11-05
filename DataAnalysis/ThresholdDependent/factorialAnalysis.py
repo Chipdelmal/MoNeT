@@ -15,9 +15,10 @@ import inspect
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = 'UDSA'
+filename = 'URYM'
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
-path = "/Volumes/marshallShare/ThresholdResub/factorialSensitivity/UDMel_0002/2019_09_11_ANALYZED/"
+path = "/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationYes/"
+experiment = "UDMelRemediation/ANALYZED/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
 aggregationDictionary = monet.generateAggregationDictionary(
@@ -27,20 +28,17 @@ aggregationDictionary = monet.generateAggregationDictionary(
         [x - 1 for x in homingList]
     ]
 )
-ratiosDictionary = {
-    "numerator": [1],
-    "denominator": [0, 1]
-}
+ratiosDictionary = {"numerator": [1], "denominator": [0, 1]}
 
 ###############################################################################
 # Export Individual CSVs for Factorial Slots
 ###############################################################################
 start = time.time()
-experimentFolders = monet.listDirectoriesInPath(path)
+experimentFolders = sorted(monet.listDirectoriesInPath(path + experiment))
 Parallel(n_jobs=4)(delayed(
     monet.loadFolderAndWriteFactorialCSV)(
         experimentString=folder,
-        path=path,
+        path=path+experiment,
         aggregationDictionary=aggregationDictionary,
         ratiosDictionary=ratiosDictionary
     )
@@ -51,5 +49,5 @@ print((end - start)/60)
 ###############################################################################
 # Load and Compile CSVs into one
 ###############################################################################
-outFilename = filename + ".csv"
-monet.compileFactorialCSVFromFiles(path, outFilename)
+# outFilename = filename + ".csv"
+# monet.compileFactorialCSVFromFiles(path, outFilename)

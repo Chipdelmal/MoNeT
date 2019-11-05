@@ -175,8 +175,8 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
     simTime = x$netPar$simTime, numPatch = x$netPar$nPatch,
     genotypes = driveCube$genotypesID, remFiles = FALSE
   )
-  # remove raw/garbage folders
-  # unlink(x = x$folders[c(1,3)], recursive = TRUE, force = TRUE)
+  # remove raw folder
+  unlink(x = x$folders[c(1)], recursive = TRUE, force = TRUE)
   gc()
 })
 ###############################################################################
