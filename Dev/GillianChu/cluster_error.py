@@ -3,13 +3,15 @@ import numpy as np
 import csv
 import MoNeT_MGDrivE as monet
 
-experiments_path = "/Users/gillian/Desktop/GillianDataset/Experiments"
-land_aggregated_path = "/Users/gillian/Desktop/GillianDataset/LandAggregated"
+experiments_path = '/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts'
+land_aggregated_path = '/Volumes/marshallShare/ERACR/Yorkeys_MINI/LandAggregated'
+#experiments_path = "/Users/gillian/Desktop/GillianDataset/Experiments"
+#land_aggregated_path = "/Users/gillian/Desktop/GillianDataset/LandAggregated"
 gender_mean = "F"
 maleToggle, femaleToggle = True, True
-reference_pop = "/Users/gillian/Desktop/GillianDataset/Experiments/C002195/Yorkeys01_0027_A/ANALYZED/E_0730_30_20_02_00020/"
+reference_pop = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/C002195/Yorkeys01_0027_A/ANALYZED/E_0730_30_20_02_00020/"
 population_IDs = ["W", "H", "E", "R", "B"]
-aggregation_levels = ["C000002", "C000025", "C000250", "C001000", "C002195"] 
+aggregation_levels = ["C000002", "C000025", "C000250", "C001000", "C002195"]
 num_runs = 1
 # it computes for rall provided runs
 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
@@ -19,7 +21,7 @@ aggregationDictionary = monet.autoGenerateGenotypesDictionary(
         'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB'
     ]
 )
-# STEP 1 FUNCTIONS 
+# STEP 1 FUNCTIONS
 
 # Finds the paths to each aggregation level
 def getExperimentPaths(experiments_path):
@@ -37,6 +39,7 @@ def getExperimentPaths(experiments_path):
 			run_paths.append(os.path.join(a, run))
 			counts[a] += [run]
 	return run_paths, counts
+
 
 def getAggregation(run_path, land_aggregated_path):
 	"""
@@ -73,9 +76,9 @@ def getAggregation(run_path, land_aggregated_path):
 		result_writer.writerow(["Cluster ID", "Node ID"]) # labels
 		for r in result:
 			result_writer.writerow(r)
-	
+
 	# put into dict with:
-	# key: cluster ID, value: 
+	# key: cluster ID, value:
 	result_dict = dict()
 	for c, i in result:
 		if c not in result_dict.keys():
@@ -84,7 +87,7 @@ def getAggregation(run_path, land_aggregated_path):
 			result_dict[c].append(i)
 
 	# return dictionary
-	return result_dict 
+	return result_dict
 
 # STEP 2 FUNCTIONS
 def process_node_id(node_id):
@@ -109,14 +112,14 @@ def getSum(key, run):
 	agg_level, run_id = key.split('/')
 	print(agg_level, run_id)
 
-	if not os.path.exists("agg_" + agg_level): 
+	if not os.path.exists("agg_" + agg_level):
 		os.mkdir("agg_" + agg_level)
 
 	clusters = list(run.keys())
 	for c in clusters:
 		print("Processing cluster ID ", c)
 		nodes_to_summarize = run[c]
-		
+
 		if not os.path.exists("agg_" + agg_level + "/cluster_" + process_node_id(c)):
 			os.mkdir("agg_" + agg_level + "/cluster_" + process_node_id(c))
 
@@ -153,13 +156,13 @@ def getSum(key, run):
 
 		agg_sum = monet.sumLandscapePopulationsFromFiles(filenames2, male=maleToggle, female=femaleToggle)
 		aggGeno_sum = monet.aggregateGenotypesInNode(agg_sum, aggregationDictionary)
-		
+
 		getDiff(aggGeno_sum, clusterGeno_sum, "agg_" + agg_level + "/cluster_" + process_node_id(c) + "/run_" + run_id + str(maleToggle) + str(femaleToggle))
 
 
 def getDiff(aggGeno_sum, clusterGeno_sum, name):
 	"""
-	Takes path to cluster_id run in Experiments/, 
+	Takes path to cluster_id run in Experiments/,
 	as well as the cluster_sum, which is the sum of all the nodes in that cluster_id.
 	"""
 	# print("AGG_GENO_RESULT: ", aggGeno_sum['population'].shape)
@@ -184,7 +187,7 @@ def compareOnce():
 		cluster_run_sum = getSum(run_path, aggData)
 
 
-## MAIN 
+## MAIN
 
 ## STEP 1: Create mapping from aggregated to not aggregated in csv
 
@@ -192,7 +195,7 @@ run_paths, counts = getExperimentPaths(experiments_path)
 
 # STEP 2: Sum all nodes in a cluster and generate difference
 
-for i in range(num_runs): 
+for i in range(num_runs):
 	compareOnce()
 
 # run_dict = dict()
@@ -204,7 +207,3 @@ for i in range(num_runs):
 # key = 'C000250/Yorkeys01_0000_A' # 250 nodes, run 0
 # run = run_dict[key] # dictionary for that run
 # cluster_run_sum = getSum(key, run)
-
-
-
-
