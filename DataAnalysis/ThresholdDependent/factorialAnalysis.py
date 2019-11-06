@@ -15,10 +15,10 @@ import inspect
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = 'TXYK'
+filename = 'UXYK'
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
 path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/"
-experiment = "Translocations/ANALYZED/"
+experiment = "UDMel/ANALYZED/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
 aggregationDictionary = monet.generateAggregationDictionary(
