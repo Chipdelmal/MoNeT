@@ -1,15 +1,15 @@
+from joblib import Parallel, delayed
+import driveSelector as drive
+import MoNeT_MGDrivE as monet
+import numpy as np
+import datetime
+import time
+import csv
+import os
+import fnmatch
 import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
-import fnmatch
-import os
-import csv
-import time
-import datetime
-import numpy as np
-import MoNeT_MGDrivE as monet
-import driveSelector as drive
-from joblib import Parallel, delayed
 # import inspect
 # print inspect.getsource(monet.loadAndHashFactorialCSV)
 
@@ -32,7 +32,8 @@ dirs = temp
 ###############################################################################
 print('\n')
 print('**********************************************************************')
-print('* Processing ' + str(len(dirs)) + ' experiments [' + str(datetime.datetime.now()) + ']')
+print('* Processing ' + str(len(dirs))
+      + ' experiments [' + str(datetime.datetime.now()) + ']')
 print('**********************************************************************')
 ###############################################################################
 # Sweeping through experiments
@@ -41,22 +42,21 @@ for (i, expName) in enumerate(dirs):
     experiment = expName + "/ANALYZED/"
     driveID = expName.split("_")[0][0]
     (wildsList, homingList) = drive.driveGenesSelector(driveID)
-    ###############################################################################
+    ###########################################################################
     # Drive dictionary
-    ###############################################################################
+    ###########################################################################
     aggregationDictionary = monet.generateAggregationDictionary(
         ["W", "H"],
         [[x - 1 for x in wildsList], [x - 1 for x in homingList]]
     )
     ratiosDictionary = {"numerator": [1], "denominator": [0, 1]}
-    ###############################################################################
+    ###########################################################################
     # Export Individual CSVs for Factorial Slots
-    ###############################################################################
+    ###########################################################################
     start = time.time()
     experimentFolders = sorted(monet.listDirectoriesInPath(path + experiment))
     print('* {0}) {1}'.format(i+1, expName))
-    Parallel(n_jobs=16)(delayed(
-        monet.loadFolderAndWriteFactorialCSV)(
+    Parallel(n_jobs=16)(delayed(monet.loadFolderAndWriteFactorialCSV)(
             experimentString=folder, path=path+experiment,
             aggregationDictionary=aggregationDictionary,
             ratiosDictionary=ratiosDictionary
@@ -65,9 +65,9 @@ for (i, expName) in enumerate(dirs):
     )
     end = time.time()
     print('\t[{2:.2f} min]'.format(i+1, expName, (end-start)/60))
-    ###############################################################################
+    ###########################################################################
     # Load and Compile CSVs into one
-    ###############################################################################
+    ###########################################################################
     drive.compileFactorialCSVFromFiles(
         path + experiment,
         path + expName + ".csv"

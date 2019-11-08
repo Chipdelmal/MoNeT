@@ -19,7 +19,6 @@ def driveGenesSelector(driveID):
     return (wildsList, homingList)
 
 
-
 def compileFactorialCSVFromFiles(pathFiles, outPath):
     """
     Description:
@@ -77,7 +76,7 @@ def loadFolderAndWriteFactorialCSVInclude(
     # Filter out non-needed files
     (mFiles, fFiles) = (filenames['male'], filenames['female'])
     filenames['male'] = [i for i in mFiles if includePattern in i]
-    filenames['female'] = [i for i in mFiles if includePattern in i]
+    filenames['female'] = [i for i in fFiles if includePattern in i]
     # Aggregate data
     landscapeSumData = monet.sumLandscapePopulationsFromFiles(
         filenames,
