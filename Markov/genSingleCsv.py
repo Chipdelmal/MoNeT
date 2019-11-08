@@ -7,10 +7,9 @@ import landscape as land
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
-zeroInflation = 0.5
-landscapeProb = [0.7, 0.2, 0.1]
-n = 100
-def genSingle(n, zeroInflation, landscapeProb):
+
+
+def genSingle(n, zeroInflation, landscapeProb, mskMat):
     (lo, hi, n) = (0, 10, n)
     # ############################################################################
     # Mosquito biological behaviour
@@ -19,11 +18,6 @@ def genSingle(n, zeroInflation, landscapeProb):
     #   move from one life stage to the next (and, as a consequence, from a site
     #   type to the next).
     # ############################################################################
-    mskMat = [
-            [0.20, 0.80, 0.00],
-            [0.10, 0.75, 0.15],
-            [0.80, 0.00, 0.20]
-        ]
     passMkvtest = aux.testMarkovMat(mskMat)
     passMkvtest
     # ############################################################################
@@ -56,12 +50,9 @@ def genSingle(n, zeroInflation, landscapeProb):
     #   types)
     # ############################################################################
     #pointClasses = bts.genURandLandscapeClasses(len(mskMat), n)
-
     pointClasses = bts.genMRandLanscapeClasses(len(mskMat), n, landscapeProb)
-
     # plot the assigned landscape
-    landscape_plot = sns.scatterplot([i[0] for i in landscape], [i[1] for i in landscape], hue = pointClasses, legend=False)
-
+    landscape_plot = sns.scatterplot([i[0] for i in landscape], [i[1] for i in landscape], hue=pointClasses, legend=False)
     clandMskMat = bts.calcClandMskMat(pointClasses, mskMat)
 
     # ############################################################################
@@ -71,4 +62,4 @@ def genSingle(n, zeroInflation, landscapeProb):
     #   take into account the movement due to life-stage, and distance.
     # ############################################################################
     network = mntw.normalizeMskMgrMat(migrMat, clandMskMat)
-    return network, pointClasses, landscape_plot
+    return (network, pointClasses, landscape_plot)
