@@ -6,7 +6,7 @@ import os
 reps = 10 # number of simulations
 n = [25] # Has to have int sqrt
 heterogenity = [0.5]
-landscapeProb = [[0.7, 0.2, 0.1]]
+landscapeProb = [[1/3, 1/3, 1/3]]
 
 def genCSV(reps, n, heterogenity, landscapeProb):
     params = list(itertools.product(n, heterogenity, landscapeProb))
@@ -24,4 +24,5 @@ def genCSV(reps, n, heterogenity, landscapeProb):
             filename = delimiter.join(['H', str(j), probInNames, str(round(heterogenity[0]*10)), str(i)])
             np.savetxt("kernels" + os.sep + filename + ".csv", singleMatrix, delimiter=",")
 
-genCSV(reps, n, heterogenity, [[0.7, 0.2, 0.1]])
+
+genCSV(reps, n, heterogenity, [[0.9, 0.1, 0.0]])

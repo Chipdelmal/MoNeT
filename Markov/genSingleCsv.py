@@ -61,7 +61,7 @@ def genSingle(n, zeroInflation, landscapeProb):
     [i[0] for i in landscape]
 
     # plot the assigned landscape
-    sns.scatterplot([i[0] for i in landscape], [i[1] for i in landscape], hue = pointClasses)
+    sns.scatterplot([i[0] for i in landscape], [i[1] for i in landscape], hue=pointClasses, legend=False)
 
     clandMskMat = bts.calcClandMskMat(pointClasses, mskMat)
 
