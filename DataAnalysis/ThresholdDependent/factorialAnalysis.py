@@ -15,10 +15,10 @@ import inspect
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = 'UXYK'
+filename = 'WRYK'
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
 path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/"
-experiment = "UDMel/ANALYZED/"
+experiment = "WolbachiaRemediation/ANALYZED/"
 wildsList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
 homingList = [4, 5, 6, 7, 7, 8, 8, 9, 9, 2, 3, 3, 5, 6, 6, 8, 9, 9]
 aggregationDictionary = monet.generateAggregationDictionary(
@@ -49,5 +49,5 @@ print((end - start)/60)
 ###############################################################################
 # Load and Compile CSVs into one
 ###############################################################################
-# outFilename = filename + ".csv"
-# monet.compileFactorialCSVFromFiles(path, outFilename)
+outFilename = filename + ".csv"
+monet.compileFactorialCSVFromFiles(path+experiment, outFilename)
