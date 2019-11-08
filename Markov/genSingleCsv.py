@@ -58,10 +58,9 @@ def genSingle(n, zeroInflation, landscapeProb):
     #pointClasses = bts.genURandLandscapeClasses(len(mskMat), n)
 
     pointClasses = bts.genMRandLanscapeClasses(len(mskMat), n, landscapeProb)
-    [i[0] for i in landscape]
 
     # plot the assigned landscape
-    sns.scatterplot([i[0] for i in landscape], [i[1] for i in landscape], hue=pointClasses, legend=False)
+    landscape_plot = sns.scatterplot([i[0] for i in landscape], [i[1] for i in landscape], hue = pointClasses, legend=False)
 
     clandMskMat = bts.calcClandMskMat(pointClasses, mskMat)
 
@@ -72,4 +71,4 @@ def genSingle(n, zeroInflation, landscapeProb):
     #   take into account the movement due to life-stage, and distance.
     # ############################################################################
     network = mntw.normalizeMskMgrMat(migrMat, clandMskMat)
-    return network
+    return network, pointClasses, landscape_plot
