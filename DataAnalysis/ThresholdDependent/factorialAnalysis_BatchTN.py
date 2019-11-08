@@ -9,7 +9,7 @@ import datetime
 import numpy as np
 import MoNeT_MGDrivE as monet
 import driveSelector as drive
-# from sklearn.externals.joblib import Parallel, delayed
+from joblib import Parallel, delayed
 # import inspect
 # print inspect.getsource(monet.loadAndHashFactorialCSV)
 
@@ -17,7 +17,7 @@ import driveSelector as drive
 ###############################################################################
 # Factorial experiment
 ###############################################################################
-path = "/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationNo/"
+path = "/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationYes/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)

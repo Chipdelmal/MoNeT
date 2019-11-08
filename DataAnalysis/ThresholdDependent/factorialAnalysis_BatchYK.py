@@ -9,7 +9,7 @@ import datetime
 import numpy as np
 import MoNeT_MGDrivE as monet
 import driveSelector as drive
-from sklearn.externals.joblib import Parallel, delayed
+from joblib import Parallel, delayed
 # import inspect
 # print inspect.getsource(monet.loadAndHashFactorialCSV)
 
@@ -17,7 +17,7 @@ from sklearn.externals.joblib import Parallel, delayed
 ###############################################################################
 # Factorial experiment
 ###############################################################################
-path = "/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationYes/"
+path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
@@ -54,7 +54,8 @@ for (i, expName) in enumerate(dirs):
     ###############################################################################
     start = time.time()
     experimentFolders = sorted(monet.listDirectoriesInPath(path + experiment))
-    Parallel(n_jobs=4)(delayed(
+    print('* {0}) {1}'.format(i+1, expName))
+    Parallel(n_jobs=16)(delayed(
         monet.loadFolderAndWriteFactorialCSV)(
             experimentString=folder, path=path+experiment,
             aggregationDictionary=aggregationDictionary,
@@ -63,7 +64,7 @@ for (i, expName) in enumerate(dirs):
         for folder in experimentFolders
     )
     end = time.time()
-    print('* {0}) {1} [{2:.2f} min]'.format(i+1, expName, (end-start)/60))
+    print('\t[{2:.2f} min]'.format(i+1, expName, (end-start)/60))
     ###############################################################################
     # Load and Compile CSVs into one
     ###############################################################################
