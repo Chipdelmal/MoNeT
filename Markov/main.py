@@ -34,7 +34,6 @@ mskMat = [
         [0.80, 0.00, 0.20]
     ]
 passMkvtest = aux.testMarkovMat(mskMat)
-passMkvtest
 
 # ############################################################################
 # Landscape

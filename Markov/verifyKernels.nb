@@ -10,14 +10,16 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     66312,       1297]
-NotebookOptionsPosition[     65026,       1267]
-NotebookOutlinePosition[     65367,       1282]
-CellTagsIndexPosition[     65324,       1279]
+NotebookDataLength[     31185,        622]
+NotebookOptionsPosition[     30315,        599]
+NotebookOutlinePosition[     30687,        615]
+CellTagsIndexPosition[     30644,        612]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
 Cell[BoxData[{
  RowBox[{
   RowBox[{"SetDirectory", "[", 
@@ -25,23 +27,110 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"path", "=", "\"\</kernels/\>\""}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"filenames", "=", 
-   RowBox[{"FileNames", "[", 
-    RowBox[{"\"\<*.csv\>\"", ",", 
-     RowBox[{
-      RowBox[{"Directory", "[", "]"}], "<>", "path"}]}], "]"}]}], 
-  ";"}]}], "Input",
- CellChangeTimes->{{3.782232131765016*^9, 3.7822321921239767`*^9}},
+ RowBox[{"filenames", "=", 
+  RowBox[{"FileNames", "[", 
+   RowBox[{"\"\<*.csv\>\"", ",", 
+    RowBox[{
+     RowBox[{"Directory", "[", "]"}], "<>", "path"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.782232131765016*^9, 3.7822321921239767`*^9}, {
+   3.7822470644101973`*^9, 3.782247073857296*^9}, 3.782248121966922*^9},
  CellLabel->
-  "In[278]:=",ExpressionUUID->"d27d9055-688f-4478-8945-e8c330f113f8"],
+  "In[458]:=",ExpressionUUID->"d27d9055-688f-4478-8945-e8c330f113f8"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+050-050-000_0001.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+050-050-000_0002.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+050-050-000_0003.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+050-050-000_0004.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+050-050-000_0005.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+050-050-000_0006.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+050-050-000_0007.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+050-050-000_0008.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+050-050-000_0009.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+050-050-000_0010.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+099-000-000_0001.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+099-000-000_0002.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+099-000-000_0003.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+099-000-000_0004.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+099-000-000_0005.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+099-000-000_0006.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+099-000-000_0007.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+099-000-000_0008.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+099-000-000_0009.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_25_\
+099-000-000_0010.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+050-050-000_0001.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+050-050-000_0002.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+050-050-000_0003.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+050-050-000_0004.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+050-050-000_0005.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+050-050-000_0006.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+050-050-000_0007.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+050-050-000_0008.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+050-050-000_0009.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+050-050-000_0010.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+099-000-000_0001.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+099-000-000_0002.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+099-000-000_0003.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+099-000-000_0004.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+099-000-000_0005.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+099-000-000_0006.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+099-000-000_0007.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+099-000-000_0008.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+099-000-000_0009.csv\"\>", 
+   ",", "\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_25_\
+099-000-000_0010.csv\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.782248122231415*^9},
+ CellLabel->
+  "Out[460]=",ExpressionUUID->"01c1026c-b05c-4f5a-b79c-7e7d0a990132"]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[{
  RowBox[{"filename", "=", 
   RowBox[{"filenames", "[", 
-   RowBox[{"[", "2", "]"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"[", 
+    RowBox[{"-", "1"}], "]"}], "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"rawData", "=", 
    RowBox[{"Import", "[", "filename", "]"}]}], ";"}], "\[IndentingNewLine]", 
@@ -50,234 +139,119 @@ Cell[BoxData[{
    RowBox[{"ColorFunction", "\[Rule]", "\"\<LakeColors\>\""}], 
    "\[IndentingNewLine]", ",", 
    RowBox[{"PlotLegends", "\[Rule]", "Automatic"}]}], "\[IndentingNewLine]", 
-  "]"}]}], "Input",
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Diagonal", "[", "rawData", "]"}]}], "Input",
  CellChangeTimes->{{3.782232196275592*^9, 3.782232236130505*^9}, {
-  3.7822323436227627`*^9, 3.782232343695107*^9}, {3.782232396864172*^9, 
-  3.7822323969851713`*^9}, {3.7822326979602337`*^9, 3.782232707535654*^9}, {
-  3.782232755599276*^9, 3.782232766489546*^9}},
+   3.7822323436227627`*^9, 3.782232343695107*^9}, {3.782232396864172*^9, 
+   3.7822323969851713`*^9}, {3.7822326979602337`*^9, 3.782232707535654*^9}, {
+   3.782232755599276*^9, 3.782232766489546*^9}, {3.7822470604941387`*^9, 
+   3.78224708274706*^9}, {3.782247118474077*^9, 3.782247131767107*^9}, 
+   3.782248133475358*^9},
  CellLabel->
-  "In[311]:=",ExpressionUUID->"c3ffeac2-1473-43b2-a3fa-12f8e46bbe76"],
+  "In[461]:=",ExpressionUUID->"c3ffeac2-1473-43b2-a3fa-12f8e46bbe76"],
 
-Cell[BoxData["\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/H_\
-25_702010_5_1.csv\"\>"], "Output",
+Cell[BoxData["\<\"/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/T_\
+25_099-000-000_0010.csv\"\>"], "Output",
  CellChangeTimes->{
   3.7822322365208387`*^9, 3.78223226875*^9, 3.782232344040494*^9, 
    3.7822323978969603`*^9, {3.782232698364831*^9, 3.7822327083679447`*^9}, {
-   3.78223275641919*^9, 3.78223276677761*^9}},
+   3.78223275641919*^9, 3.78223276677761*^9}, {3.782247057225621*^9, 
+   3.782247083170814*^9}, {3.782247119231811*^9, 3.782247132173237*^9}, {
+   3.782248115131769*^9, 3.7822481338082113`*^9}},
  CellLabel->
-  "Out[311]=",ExpressionUUID->"38e73594-d102-481c-9b75-a9e445eb77b5"],
+  "Out[461]=",ExpressionUUID->"57da7bb1-f97f-427a-b9da-5cb9058068d5"],
 
 Cell[BoxData[
  TemplateBox[{GraphicsBox[
     RasterBox[CompressedData["
-1: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
-
+1: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
+wfRj/Fh++z/sV64w
      "], {{0, 0}, {25, 25}}, {0, 1}], Frame -> True, 
     FrameLabel -> {None, None}, FrameTicks -> {{{{24.5, 
          FormBox["1", TraditionalForm]}, {20.5, 
@@ -456,14 +430,16 @@ Did/B6tNUe1CYkrtX1dx9r3pY36Esjz+H5Rrtn8=
                    StyleBox[
                     LineBox[{{{7.5, -111.24611797498106`}, 
                     Offset[{4., 0}, {7.5, -111.24611797498106`}]}, {{
-                    7.5, -54.190454167492106`}, 
-                    Offset[{4., 0}, {7.5, -54.190454167492106`}]}, {{
-                    7.5, -0.13772003408146816`}, 
-                    Offset[{4., 0}, {7.5, -0.13772003408146816`}]}, {{7.5, 
-                    56.91794377340753}, 
-                    Offset[{4., 0}, {7.5, 56.91794377340753}]}, {{7.5, 
-                    110.97067790681811`}, 
-                    Offset[{4., 0}, {7.5, 110.97067790681811`}]}}], 
+                    7.5, -67.97328595241956}, 
+                    Offset[{4., 0}, {7.5, -67.97328595241956}]}, {{
+                    7.5, -19.892361482906807`}, 
+                    Offset[{4., 0}, {7.5, -19.892361482906807`}]}, {{7.5, 
+                    23.380470539654738`}, 
+                    Offset[{4., 0}, {7.5, 23.380470539654738`}]}, {{7.5, 
+                    66.65330256221623}, 
+                    Offset[{4., 0}, {7.5, 66.65330256221623}]}, {{7.5, 
+                    109.92613458477777`}, 
+                    Offset[{4., 0}, {7.5, 109.92613458477777`}]}}], 
                     Directive[
                     AbsoluteThickness[0.2], 
                     GrayLevel[0.4]], StripOnInput -> False]}, 
@@ -477,34 +453,43 @@ Did/B6tNUe1CYkrtX1dx9r3pY36Esjz+H5Rrtn8=
                     InsetBox[
                     FormBox[
                     TagBox[
-                    InterpretationBox["\"0.19\"", 0.19, AutoDelete -> True], 
+                    InterpretationBox[
+                    "\"0.009\"", 0.009000000000000001, AutoDelete -> True], 
                     NumberForm[#, {
-                    DirectedInfinity[1], 2}]& ], TraditionalForm], 
-                    Offset[{7., 0.}, {7.5, -54.190454167492106`}], {-1, 0.}, 
+                    DirectedInfinity[1], 3}]& ], TraditionalForm], 
+                    Offset[{7., 0.}, {7.5, -67.97328595241956}], {-1, 0.}, 
                     Automatic, {1, 0}], 
                     InsetBox[
                     FormBox[
                     TagBox[
-                    InterpretationBox["\"0.37\"", 0.37, AutoDelete -> True], 
-                    NumberForm[#, {
-                    DirectedInfinity[1], 2}]& ], TraditionalForm], 
-                    Offset[{7., 0.}, {7.5, -0.13772003408146816`}], {-1, 0.}, 
+                    InterpretationBox["\"0.019\"", 0.019, AutoDelete -> True],
+                     NumberForm[#, {
+                    DirectedInfinity[1], 3}]& ], TraditionalForm], 
+                    Offset[{7., 0.}, {7.5, -19.892361482906807`}], {-1, 0.}, 
                     Automatic, {1, 0}], 
                     InsetBox[
                     FormBox[
                     TagBox[
-                    InterpretationBox["\"0.56\"", 0.56, AutoDelete -> True], 
-                    NumberForm[#, {
-                    DirectedInfinity[1], 2}]& ], TraditionalForm], 
-                    Offset[{7., 0.}, {7.5, 56.91794377340753}], {-1, 0.}, 
+                    InterpretationBox["\"0.028\"", 0.028, AutoDelete -> True],
+                     NumberForm[#, {
+                    DirectedInfinity[1], 3}]& ], TraditionalForm], 
+                    Offset[{7., 0.}, {7.5, 23.380470539654738`}], {-1, 0.}, 
                     Automatic, {1, 0}], 
                     InsetBox[
                     FormBox[
                     TagBox[
-                    InterpretationBox["\"0.74\"", 0.74, AutoDelete -> True], 
-                    NumberForm[#, {
-                    DirectedInfinity[1], 2}]& ], TraditionalForm], 
-                    Offset[{7., 0.}, {7.5, 110.97067790681811`}], {-1, 0.}, 
+                    InterpretationBox["\"0.037\"", 0.037, AutoDelete -> True],
+                     NumberForm[#, {
+                    DirectedInfinity[1], 3}]& ], TraditionalForm], 
+                    Offset[{7., 0.}, {7.5, 66.65330256221623}], {-1, 0.}, 
+                    Automatic, {1, 0}], 
+                    InsetBox[
+                    FormBox[
+                    TagBox[
+                    InterpretationBox["\"0.046\"", 0.046, AutoDelete -> True],
+                     NumberForm[#, {
+                    DirectedInfinity[1], 3}]& ], TraditionalForm], 
+                    Offset[{7., 0.}, {7.5, 109.92613458477777`}], {-1, 0.}, 
                     Automatic, {1, 0}]}, 
                     Directive[
                     AbsoluteThickness[0.2], 
@@ -547,18 +532,21 @@ Did/B6tNUe1CYkrtX1dx9r3pY36Esjz+H5Rrtn8=
              RowBox[{"{", 
                RowBox[{
                  RowBox[{"{", 
-                   RowBox[{"0.6282194490155617`", ",", "0.19`"}], "}"}], ",", 
+                   
+                   RowBox[{
+                    "0.5972457125027353`", ",", "0.009000000000000001`"}], 
+                   "}"}], ",", 
+                 RowBox[{"{", 
+                   RowBox[{"0.705296504172441`", ",", "0.019`"}], "}"}], ",", 
                  
                  RowBox[{"{", 
-                   RowBox[{"0.7496905059776728`", ",", "0.37`"}], "}"}], ",", 
-                 
+                   RowBox[{"0.8025422166751763`", ",", "0.028`"}], "}"}], ",", 
                  RowBox[{"{", 
-                   RowBox[{"0.8779099549932344`", ",", "0.56`"}], "}"}], ",", 
-                 
+                   RowBox[{"0.8997879291779116`", ",", "0.037`"}], "}"}], ",", 
                  RowBox[{"{", 
                    RowBox[{"0.5`", ",", "0.`"}], "}"}], ",", 
                  RowBox[{"{", 
-                   RowBox[{"0.9993810119553456`", ",", "0.74`"}], "}"}]}], 
+                   RowBox[{"0.9970336416806469`", ",", "0.046`"}], "}"}]}], 
                "}"}]}], ",", 
            RowBox[{"\"PinningPoint\"", "\[Rule]", "0.5`"}], ",", 
            RowBox[{"\"SmoothRange\"", "\[Rule]", "False"}], ",", 
@@ -585,688 +573,33 @@ Did/B6tNUe1CYkrtX1dx9r3pY36Esjz+H5Rrtn8=
  CellChangeTimes->{
   3.7822322365208387`*^9, 3.78223226875*^9, 3.782232344040494*^9, 
    3.7822323978969603`*^9, {3.782232698364831*^9, 3.7822327083679447`*^9}, {
-   3.78223275641919*^9, 3.782232767130576*^9}},
+   3.78223275641919*^9, 3.78223276677761*^9}, {3.782247057225621*^9, 
+   3.782247083170814*^9}, {3.782247119231811*^9, 3.782247132173237*^9}, {
+   3.782248115131769*^9, 3.782248134231007*^9}},
  CellLabel->
-  "Out[313]=",ExpressionUUID->"a78b2562-6cf8-4157-9e90-6523b100cc21"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"Total", "/@", "rawData"}]], "Input",
- CellChangeTimes->{{3.782232355520076*^9, 3.7822323597672853`*^9}},
- CellLabel->
-  "In[306]:=",ExpressionUUID->"ea8b37aa-c51e-4a91-bf26-44ccc7bcd0ed"],
+  "Out[463]=",ExpressionUUID->"6f71b94a-aee2-462e-bf55-c988edf209d2"],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{
-  "0.999999999999999734543`18.847711655616944", ",", "1.0000000000000004`", 
-   ",", "1.0000000000000002`", ",", "1.0000000000000002`", ",", 
-   "0.999999999999999651321`18.847711655616944", ",", "1.0000000000000002`", 
-   ",", "1.`", ",", "1.`", ",", "1.0000000000000002`", ",", 
-   "1.0000000000000002`", ",", "1.0000000000000002`", ",", "1.`", ",", 
-   "1.0000000000000002`", ",", "1.`", ",", "1.`", ",", "1.0000000000000002`", 
-   ",", "0.9999999999999999`", ",", "1.`", ",", "0.9999999999999999`", ",", 
-   "1.0000000000000002`", ",", "1.`", ",", "1.`", ",", 
-   "1.00000000000000007800999999999999999999`18.847711655616944", ",", "1.`", 
-   ",", "1.`"}], "}"}]], "Output",
+  "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", 
+   "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", 
+   "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", 
+   "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", 
+   "0.`"}], "}"}]], "Output",
  CellChangeTimes->{
-  3.7822323601528683`*^9, {3.782232740933481*^9, 3.7822327580967073`*^9}},
+  3.7822322365208387`*^9, 3.78223226875*^9, 3.782232344040494*^9, 
+   3.7822323978969603`*^9, {3.782232698364831*^9, 3.7822327083679447`*^9}, {
+   3.78223275641919*^9, 3.78223276677761*^9}, {3.782247057225621*^9, 
+   3.782247083170814*^9}, {3.782247119231811*^9, 3.782247132173237*^9}, {
+   3.782248115131769*^9, 3.782248134253448*^9}},
  CellLabel->
-  "Out[306]=",ExpressionUUID->"5a19722e-bda0-4e97-a5ee-4df51d7d4389"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"MatrixForm", "[", "rawData", "]"}]], "Input",
- CellChangeTimes->{{3.782232468845367*^9, 3.782232480700873*^9}},
- CellLabel->
-  "In[307]:=",ExpressionUUID->"8a2a91cb-bcfc-4bd0-b876-0bbe67b55b46"],
-
-Cell[BoxData[
- TagBox[
-  RowBox[{"(", "\[NoBreak]", GridBox[{
-     {"0.82775567595870847`18.917902167411537", 
-      "0.00510720105589493583`18.708182955123405", 
-      "0.00487652116966240997`18.688110113889167", 
-      "0.004656260534469713885`18.66803727265492", 
-      "0.03334461403511310845`18.523025694812382", 
-      "0.00510720105589493583`18.708182955123405", 
-      "0.007515532740719944697`18.8759597711045", 
-      "0.004823603025128288431`18.683371558856322", 
-      "0.004621467454187996871`18.6647798989465", 
-      "0.004420723495014660005`18.645493351742616", 
-      "0.00487652116966240997`18.688110113889167", 
-      "0.004823603025128288431`18.683371558856322", 
-      "0.004693331470820334347`18.671481227739996", 
-      "0.004527746859812457371`18.655882138043342", 
-      "0.004349980612602688014`18.638487321354997", 
-      "0.004656260534469713885`18.66803727265492", 
-      "0.004621467454187996871`18.6647798989465", 
-      "0.004527746859812457371`18.655882138043342", 
-      "0.006594550562623929454`18.81918520248685", 
-      "0.004245135824413136423`18.62789159018644", 
-      "0.004445948538015082052`18.647964431420682", 
-      "0.004420723495014660005`18.645493351742616", 
-      "0.03262485459452016401`18.513548584746697", 
-      "0.004245135824413136423`18.62789159018644", 
-      "0.004118192649708815947`18.614706659122344"},
-     {"0.07904073379442996816`18.897850963479783", 
-      "0.4363195268193573728`18.639804649613293", 
-      "0.01976018344860749204`18.29579097215182", 
-      "0.01886766388261208738`18.27571813091758", 
-      "0.07206182904386171373`18.8577052810113", 
-      "0.01938547866634017514`18.287476529077235", "0.`", 
-      "0.01938547866634017514`18.287476529077235", 
-      "0.01866291920302928092`18.270979575884734", 
-      "0.0178808399546200418`18.25238791597491", 
-      "0.01866291920302928092`18.270979575884734", 
-      "0.01886766388261208738`18.27571813091758", 
-      "0.01866291920302928092`18.270979575884734", 
-      "0.0181588877809083192`18.259089244768408", 
-      "0.01751822722065774635`18.243490155071754", 
-      "0.0178808399546200418`18.25238791597491", 
-      "0.01801545726096542843`18.255645289683336", 
-      "0.0178808399546200418`18.25238791597491", "0.`", 
-      "0.01700990783437151405`18.23070196045958", 
-      "0.01710414496727735018`18.23310136877103", 
-      "0.01720174274573410544`18.235572448449094", 
-      "0.0684165798691094007`18.83516136009899", 
-      "0.01683043490204889914`18.226095338383413", 
-      "0.01642478174181847411`18.215499607214856"},
-     {"0.07497866170988909396`18.8749376844558", 
-      "0.01963136665111843079`18.29295053436208", 
-      "0.4366432866439841076`18.640126787302496", 
-      "0.01963136665111843079`18.29295053436208", 
-      "0.07497866170988909396`18.8749376844558", 
-      "0.0185412554801299527`18.268139138095", "0.`", 
-      "0.01963136665111843079`18.29295053436208", 
-      "0.01925910457239084217`18.284636091287496", 
-      "0.0185412554801299527`18.268139138095", 
-      "0.01804050984297148053`18.256248806978668", 
-      "0.0185412554801299527`18.268139138095", 
-      "0.01874466542747227349`18.27287769312784", 
-      "0.0185412554801299527`18.268139138095", 
-      "0.01804050984297148053`18.256248806978668", 
-      "0.01740402575415213662`18.240649717282018", 
-      "0.01776427461273649352`18.24954747818517", 
-      "0.01789801434776098696`18.252804851893597", "0.`", 
-      "0.01740402575415213662`18.240649717282018", 
-      "0.01672071715929267927`18.22325490059367", 
-      "0.01699264290636766372`18.23026093098129", 
-      "0.068358417776434241`18.834792001987317", 
-      "0.01699264290636766372`18.23026093098129", 
-      "0.01672071715929267927`18.22325490059367"},
-     {"0.07201861541119876364`18.857444767617658", 
-      "0.01885634942796877295`18.275457617523934", 
-      "0.01974833377284668234`18.295530458758176", 
-      "0.4360578771775731055`18.63954413621965", 
-      "0.07899333509138672937`18.89759045008614", 
-      "0.01787011727300404085`18.25212740258127", "0.`", 
-      "0.01937385369143740377`18.287216015683594", 
-      "0.01974833377284668234`18.295530458758176", 
-      "0.01937385369143740377`18.287216015683594", 
-      "0.01750772198860821305`18.243229641678113", 
-      "0.01814799836113444378`18.258828731374766", 
-      "0.01865172752852477939`18.270719062491093", 
-      "0.01885634942796877295`18.275457617523934", 
-      "0.01865172752852477939`18.270719062491093", 
-      "0.01699970742843485982`18.23044144706594", 
-      "0.01750772198860821305`18.243229641678113", 
-      "0.01787011727300404085`18.25212740258127", "0.`", 
-      "0.01787011727300404085`18.25212740258127", 
-      "0.01641493222100866983`18.21523909382121", 
-      "0.01682034212143168617`18.225834824989768", 
-      "0.06837555219898575065`18.83490084670535", 
-      "0.01719142730131589455`18.235311935055453", 
-      "0.01709388804974643766`18.232840855377386"},
-     {"0.03334734497080808768`18.523061262227735", 
-      "0.004656641883856013978`18.668072840070277", 
-      "0.004876920558472714121`18.68814568130452", 
-      "0.005107619337469593811`18.70821852253876", 
-      "0.8278234694416324313`18.917937734826893", 
-      "0.004421085553834037604`18.64552891915797", 
-      "0.00693276893101305372`18.840906725417536", 
-      "0.004823998079923819647`18.68340712627168", 
-      "0.00501076551034150032`18.699904079464176", 
-      "0.005107619337469593811`18.70821852253876", 
-      "0.004350336877554950368`18.638522888770353", 
-      "0.004528117683883303192`18.655917705458698", 
-      "0.004693715856329445935`18.671516795155352", 
-      "0.004823998079923819647`18.68340712627168", 
-      "0.004876920558472714121`18.68814568130452", 
-      "0.004245483502540126249`18.627927157601796", 
-      "0.004396727105766519254`18.643129510846524", 
-      "0.004528117683883303192`18.655917705458698", 
-      "0.00693276893101305372`18.840906725417536", 
-      "0.004656641883856013978`18.668072840070277", 
-      "0.004118529931144854044`18.6147422265377", 
-      "0.004245483502540126249`18.627927157601796", 
-      "0.03262752658166212516`18.513584152162053", 
-      "0.004421085553834037604`18.64552891915797", 
-      "0.004446312662774412616`18.64799999883604"},
-     {"0.07915881421557932618`18.898499279931936", 
-      "0.0194144389931895818`18.28812484552939", 
-      "0.01869080008486802627`18.27162789233689", 
-      "0.01790755247373502362`18.253036232427068", 
-      "0.06851878866926496003`18.835809676551147", 
-      "0.4369713526692605154`18.64045296606545", "0.`", 
-      "0.01889585063633274567`18.276366447369732", 
-      "0.01804237088737615721`18.256293606135493", 
-      "0.01722744074890803986`18.23622076490125", 
-      "0.01978970355389483154`18.296439288603974", 
-      "0.0194144389931895818`18.28812484552939", 
-      "0.01869080008486802627`18.27162789233689", 
-      "0.01790755247373502362`18.253036232427068", 
-      "0.01712969716731624001`18.233749685223184", 
-      "0.01889585063633274567`18.276366447369732", 
-      "0.01869080008486802627`18.27162789233689", 
-      "0.01818601568083837855`18.259737561220565", "0.`", 
-      "0.01685557820153457328`18.226743654835566", 
-      "0.01804237088737615721`18.256293606135493", 
-      "0.01790755247373502362`18.253036232427068", 
-      "0.07017759210348191445`18.846198462851874", 
-      "0.01703531925180620452`18.23135027691174", 
-      "0.01644931902850921279`18.21614792366701"},
-     {"0.`", "0.04035613046362982598`18.605909517355297", 
-      "0.03959087263503454496`18.59759507428071", 
-      "0.03811519281430091055`18.581098121088214", "0.`", 
-      "0.04035613046362982598`18.605909517355297", 
-      "0.2280882287015480736`18.3581028725547", 
-      "0.04035613046362982598`18.605909517355297", 
-      "0.03853334191815247639`18.585836676121055", 
-      "0.03679288431083378025`18.565763834886813", 
-      "0.03959087263503454496`18.59759507428071", 
-      "0.04035613046362982598`18.605909517355297", 
-      "0.03959087263503454496`18.59759507428071", 
-      "0.03811519281430091055`18.581098121088214", 
-      "0.03651795601415749187`18.56250646117839", 
-      "0.03811519281430091055`18.581098121088214", 
-      "0.03853334191815247639`18.585836676121055", 
-      "0.03811519281430091055`18.581098121088214", 
-      "0.009271452948130295968`18.967147798643925", 
-      "0.03577739371939867713`18.553608700275234", 
-      "0.03651795601415749187`18.56250646117839", 
-      "0.03679288431083378025`18.565763834886813", "0.`", 
-      "0.03577739371939867713`18.553608700275234", 
-      "0.03473925540841021897`18.54082050566306"},
-     {"0.07260495550658792319`18.860966263616337", 
-      "0.01885398796313550104`18.275403225480872", 
-      "0.0192184194830475677`18.283717668555457", 
-      "0.01885398796313550104`18.275403225480872", 
-      "0.07260495550658792319`18.860966263616337", 
-      "0.01835037008154588589`18.263644827321215", "0.`", 
-      "0.4379488200002984444`18.641423360526538", 
-      "0.0192184194830475677`18.283717668555457", 
-      "0.01835037008154588589`18.263644827321215", 
-      "0.0181512388766469808`18.258906272288375", 
-      "0.01885398796313550104`18.275403225480872", 
-      "0.0192184194830475677`18.283717668555457", 
-      "0.01885398796313550104`18.275403225480872", 
-      "0.0181512388766469808`18.258906272288375", 
-      "0.01766102645892571668`18.247015941172048", 
-      "0.0181512388766469808`18.258906272288375", 
-      "0.01835037008154588589`18.263644827321215", "0.`", 
-      "0.01766102645892571668`18.247015941172048", 
-      "0.01703793085735084978`18.231416851475394", 
-      "0.01739060185604409531`18.24031461237855", 
-      "0.07008611346562121369`18.84563197741494", 
-      "0.01739060185604409531`18.24031461237855", 
-      "0.01703793085735084978`18.231416851475394"},
-     {"0.07004097735504777322`18.845352197619043", 
-      "0.01827611432958319362`18.261883866200904", 
-      "0.01898369813347432211`18.2783808193934", 
-      "0.01935063684043970486`18.286695262467987", 
-      "0.07593479253389728845`18.880440810721364", 
-      "0.0176420715869402174`18.246549579999506", "0.`", 
-      "0.01935063684043970486`18.286695262467987", 
-      "0.4374703352850474181`18.64094860899535", 
-      "0.01935063684043970486`18.286695262467987", 
-      "0.01751024433876194331`18.24329220629108", 
-      "0.01827611432958319362`18.261883866200904", 
-      "0.01898369813347432211`18.2783808193934", 
-      "0.01935063684043970486`18.286695262467987", 
-      "0.01898369813347432211`18.2783808193934", 
-      "0.01715514706211607177`18.234394445387924", 
-      "0.01778252938736847935`18.249993535084577", 
-      "0.01827611432958319362`18.261883866200904", "0.`", 
-      "0.01827611432958319362`18.261883866200904", 
-      "0.01665736302744035696`18.22160625077575", 
-      "0.01715514706211607177`18.234394445387924", 
-      "0.07004097735504777322`18.845352197619043", 
-      "0.0176420715869402174`18.246549579999506", 
-      "0.01751024433876194331`18.24329220629108"},
-     {"0.06847763836044340469`18.835548774088583", 
-      "0.01789679774019632338`18.252775329964503", 
-      "0.01867957495654115271`18.271366989874327", 
-      "0.01940277926925570648`18.287863943066824", 
-      "0.07911127382973505429`18.898238377469372", 
-      "0.01721709446986851438`18.235959862438687", "0.`", 
-      "0.01888450236085630063`18.276105544907168", 
-      "0.01977781845743376357`18.29617838614141", 
-      "0.4367089209121068349`18.640192063602885", 
-      "0.01711940959011085117`18.23348878276062", 
-      "0.01789679774019632338`18.252775329964503", 
-      "0.01867957495654115271`18.271366989874327", 
-      "0.01940277926925570648`18.287863943066824", 
-      "0.01977781845743376357`18.29617838614141", 
-      "0.01684545525187609166`18.226482752373002", 
-      "0.01753386139189205828`18.243877569061347", 
-      "0.01817509371073303126`18.259476658758", "0.`", 
-      "0.01888450236085630063`18.276105544907168", 
-      "0.01643944006580316114`18.215887021204445", 
-      "0.01702508835511785945`18.231089374449173", 
-      "0.07013544556756823312`18.84593756038931", 
-      "0.01789679774019632338`18.252775329964503", 
-      "0.01803153518598230379`18.25603270367293"},
-     {"0.07522080716213783158`18.87633798933873", 
-      "0.01860113492570964269`18.269539442977926", 
-      "0.01809877211806551478`18.2576491118616", 
-      "0.01746023248805590039`18.242050022164946", 
-      "0.06709886852439868321`18.826715196804564", 
-      "0.01969476663782917039`18.29435083924501", "0.`", 
-      "0.01860113492570964269`18.269539442977926", 
-      "0.01782164477928621996`18.250947783068103", 
-      "0.01704752106913594994`18.23166123586422", 
-      "0.4380534369948249629`18.641527092185424", 
-      "0.01969476663782917039`18.29435083924501", 
-      "0.0188052017905344579`18.274277998010767", 
-      "0.01795581643011025588`18.25420515677653", 
-      "0.01714479574657381405`18.234132315542283", 
-      "0.01969476663782917039`18.29435083924501", 
-      "0.01932130232946246626`18.286036396170424", 
-      "0.01860113492570964269`18.269539442977926", "0.`", 
-      "0.01704752106913594994`18.23166123586422", 
-      "0.0188052017905344579`18.274277998010767", 
-      "0.01860113492570964269`18.269539442977926", 
-      "0.07239508847226205912`18.859709103189562", 
-      "0.01746023248805590039`18.242050022164946", 
-      "0.0167747171310996708`18.2246552054766"},
-     {"0.07271044327433706655`18.861596792299096", 
-      "0.01837703134128727128`18.264275356003974", 
-      "0.01817761081858426664`18.259536800971134", 
-      "0.01768668617105296006`18.247646469854804", 
-      "0.0682507410945567411`18.834107371486116", 
-      "0.01888138092949053284`18.27603375416363", "0.`", 
-      "0.01888138092949053284`18.27603375416363", 
-      "0.01817761081858426664`18.259536800971134", 
-      "0.01741586866816192264`18.24094514106131", 
-      "0.0192463419320978886`18.284348197238216", 
-      "0.4385851160091295275`18.6420538892093", 
-      "0.0192463419320978886`18.284348197238216", 
-      "0.01837703134128727128`18.264275356003974", 
-      "0.01754698540170033724`18.244202514769732", 
-      "0.01888138092949053284`18.27603375416363", 
-      "0.0192463419320978886`18.284348197238216", 
-      "0.01888138092949053284`18.27603375416363", "0.`", 
-      "0.01741586866816192264`18.24094514106131", 
-      "0.01817761081858426664`18.259536800971134", 
-      "0.01837703134128727128`18.264275356003974", 
-      "0.07271044327433706655`18.861596792299096", 
-      "0.01768668617105296006`18.247646469854804", 
-      "0.01706268527363918527`18.232047380158154"},
-     {"0.07019489033643099007`18.846305499886824", 
-      "0.01803581781302223894`18.25613583967519", 
-      "0.0182336827718193456`18.26087439470803", 
-      "0.01803581781302223894`18.25613583967519", 
-      "0.07019489033643099007`18.846305499886824", 
-      "0.01803581781302223894`18.25613583967519", "0.`", 
-      "0.01909621237459649054`18.28094723594227", 
-      "0.01873409822122521287`18.27263279286769", 
-      "0.01803581781302223894`18.25613583967519", 
-      "0.0182336827718193456`18.26087439470803", 
-      "0.01909621237459649054`18.28094723594227", 
-      "0.4387374063111730838`18.642204663495395", 
-      "0.01909621237459649054`18.28094723594227", 
-      "0.0182336827718193456`18.26087439470803", 
-      "0.01803581781302223894`18.25613583967519", 
-      "0.01873409822122521287`18.27263279286769", 
-      "0.01909621237459649054`18.28094723594227", "0.`", 
-      "0.01803581781302223894`18.25613583967519", 
-      "0.01754872258410774752`18.244245508558862", 
-      "0.01803581781302223894`18.25613583967519", 
-      "0.07293473108727738241`18.86293438603599", 
-      "0.01803581781302223894`18.25613583967519", 
-      "0.01754872258410774752`18.244245508558862"},
-     {"0.06825074109455672722`18.834107371486116", 
-      "0.01768668617105296006`18.247646469854804", 
-      "0.01817761081858426317`18.259536800971134", 
-      "0.01837703134128727128`18.264275356003974", 
-      "0.07271044327433705268`18.861596792299096", 
-      "0.01741586866816192264`18.24094514106131", "0.`", 
-      "0.01888138092949052937`18.27603375416363", 
-      "0.01924634193209788513`18.284348197238216", 
-      "0.01888138092949052937`18.27603375416363", 
-      "0.01754698540170033377`18.244202514769732", 
-      "0.01837703134128727128`18.264275356003974", 
-      "0.01924634193209788513`18.284348197238216", 
-      "0.4385851160091295275`18.6420538892093", 
-      "0.01924634193209788513`18.284348197238216", 
-      "0.01741586866816192264`18.24094514106131", 
-      "0.01817761081858426317`18.259536800971134", 
-      "0.01888138092949052937`18.27603375416363", "0.`", 
-      "0.01888138092949052937`18.27603375416363", 
-      "0.0170626852736391818`18.232047380158154", 
-      "0.01768668617105296006`18.247646469854804", 
-      "0.07271044327433705268`18.861596792299096", 
-      "0.01837703134128727128`18.264275356003974", 
-      "0.01817761081858426317`18.259536800971134"},
-     {"0.06709886852439868321`18.826715196804564", 
-      "0.01746023248805589692`18.242050022164946", 
-      "0.01809877211806551131`18.2576491118616", 
-      "0.01860113492570964269`18.269539442977926", 
-      "0.07522080716213783158`18.87633798933873", 
-      "0.01704752106913594648`18.23166123586422", "0.`", 
-      "0.01860113492570964269`18.269539442977926", 
-      "0.01932130232946246626`18.286036396170424", 
-      "0.01969476663782916692`18.29435083924501", 
-      "0.01714479574657381405`18.234132315542283", 
-      "0.01795581643011025588`18.25420515677653", 
-      "0.0188052017905344579`18.274277998010767", 
-      "0.01969476663782916692`18.29435083924501", 
-      "0.4380534369948249074`18.641527092185424", 
-      "0.01704752106913594648`18.23166123586422", 
-      "0.01782164477928621996`18.250947783068103", 
-      "0.01860113492570964269`18.269539442977926", "0.`", 
-      "0.01969476663782916692`18.29435083924501", 
-      "0.0167747171310996708`18.2246552054766", 
-      "0.01746023248805589692`18.242050022164946", 
-      "0.07239508847226204524`18.859709103189562", 
-      "0.01860113492570964269`18.269539442977926", 
-      "0.0188052017905344579`18.274277998010767"},
-     {"0.07240429034679850273`18.85976430126254", 
-      "0.01796581553503080395`18.254446936226152", 
-      "0.0176014795471491764`18.245549175323", 
-      "0.01709074446143308765`18.232760980710825", 
-      "0.06601135063577566464`18.81961861879406", 
-      "0.01895732917202182233`18.277777151168817", "0.`", 
-      "0.01824518473522997175`18.26114826501965", 
-      "0.0176014795471491764`18.245549175323", 
-      "0.01691041861522998152`18.22815435863465", 
-      "0.01985409028194586034`18.297849992403062", 
-      "0.01947760478040379967`18.289535549328477", 
-      "0.01875161147897724812`18.27303859613598", 
-      "0.01796581553503080395`18.254446936226152", 
-      "0.01718542943991470395`18.235160389022273", 
-      "0.4383930594459073959`18.641863669864534", 
-      "0.01985409028194586034`18.297849992403062", 
-      "0.01895732917202182233`18.277777151168817", "0.`", 
-      "0.01728349103483043173`18.237631468700336", 
-      "0.01985409028194586034`18.297849992403062", 
-      "0.01947760478040379967`18.289535549328477", 
-      "0.07500644591590899246`18.875098587463942", 
-      "0.01796581553503080395`18.254446936226152", 
-      "0.01718542943991470395`18.235160389022273"},
-     {"0.07022064698750141165`18.846464826579165", 
-      "0.01768732715928436616`18.24766220895963", 
-      "0.01755516174687535291`18.244404835251206", 
-      "0.01719915357207257856`18.235507074348046", 
-      "0.06680037047245737658`18.824778871063835", 
-      "0.01832299635305398994`18.262996495161026", "0.`", 
-      "0.01832299635305398994`18.262996495161026", 
-      "0.01782814526309975042`18.2511061640447", 
-      "0.01719915357207257856`18.235507074348046", 
-      "0.01903239525614527569`18.279493448353527", 
-      "0.01940027523699207682`18.28780789142811", 
-      "0.01903239525614527569`18.279493448353527", 
-      "0.01832299635305398994`18.262996495161026", 
-      "0.01755516174687535291`18.244404835251206", 
-      "0.01940027523699207682`18.28780789142811", 
-      "0.4385925374204002192`18.642061237955474", 
-      "0.01940027523699207682`18.28780789142811", "0.`", 
-      "0.01768732715928436616`18.24766220895963", 
-      "0.01903239525614527569`18.279493448353527", 
-      "0.01940027523699207682`18.28780789142811", 
-      "0.07612958102458110277`18.88155343968149", 
-      "0.01832299635305398994`18.262996495161026", 
-      "0.01755516174687535291`18.244404835251206"},
-     {"0.06826020081805529716`18.834167561616884", 
-      "0.01741828255113881188`18.241005331192074", 
-      "0.01754941745778458226`18.2442627049005", 
-      "0.01741828255113881188`18.241005331192074", 
-      "0.06826020081805529716`18.834167561616884", 
-      "0.01768913759001341374`18.24770665998557", "0.`", 
-      "0.01837957844381575903`18.26433554613474", 
-      "0.01818013028092929986`18.2595969911019", 
-      "0.01768913759001341374`18.24770665998557", 
-      "0.01818013028092929986`18.2595969911019", 
-      "0.01888399793613396854`18.2760939442944", 
-      "0.01924900952324952105`18.284408387368984", 
-      "0.01888399793613396854`18.2760939442944", 
-      "0.01818013028092929986`18.2595969911019", 
-      "0.01837957844381575903`18.26433554613474", 
-      "0.01924900952324952105`18.284408387368984", 
-      "0.4386459050036737306`18.642114079340065", "0.`", 
-      "0.01837957844381575903`18.26433554613474", 
-      "0.01818013028092929986`18.2595969911019", 
-      "0.01888399793613396854`18.2760939442944", 
-      "0.07699603809299808421`18.886468378696947", 
-      "0.01888399793613396854`18.2760939442944", 
-      "0.01818013028092929986`18.2595969911019"},
-     {"0.`", "0.03571386943819537807`18.552836906608828", 
-      "0.03645311683316496132`18.56173466751199", 
-      "0.03672755698298053179`18.56499204122041", "0.`", 
-      "0.03571386943819537807`18.552836906608828", 
-      "0.009254991089872554449`18.96637600497752", 
-      "0.03804751767157130149`18.58032632742181", 
-      "0.03846492433393967209`18.585064882454652", 
-      "0.03804751767157130149`18.58032632742181", 
-      "0.03645311683316496132`18.56173466751199", 
-      "0.03804751767157130149`18.58032632742181", 
-      "0.03952057736014456812`18.59682328061431", 
-      "0.04028447644098203523`18.60513772368889", 
-      "0.03952057736014456812`18.59682328061431", 
-      "0.03672755698298053179`18.56499204122041", 
-      "0.03846492433393967209`18.585064882454652", 
-      "0.04028447644098203523`18.60513772368889", 
-      "0.2276832483697542597`18.357331078888294", 
-      "0.04028447644098203523`18.60513772368889", 
-      "0.03645311683316496132`18.56173466751199", 
-      "0.03804751767157130149`18.58032632742181", "0.`", 
-      "0.04028447644098203523`18.60513772368889", 
-      "0.03952057736014456812`18.59682328061431"},
-     {"0.0660511719469995956`18.819880527712844", 
-      "0.017101054443696629`18.23302288962961", 
-      "0.01761209763007427764`18.245811084241783", 
-      "0.01797665340344163989`18.25470884514494", 
-      "0.07244796819541207689`18.860026210181324", 
-      "0.01692061981602527299`18.22841626755344", "0.`", 
-      "0.01825619113295827087`18.261410173938433", 
-      "0.01876292337836216531`18.27330050505476", 
-      "0.01896876517049273306`18.278039060087604", 
-      "0.01719579654083981321`18.235422297941057", 
-      "0.01797665340344163989`18.25470884514494", 
-      "0.01876292337836216531`18.27330050505476", 
-      "0.01948935463485135591`18.28979745824726", 
-      "0.01986606725106663737`18.298111901321846", 
-      "0.01729391729135912326`18.237893377619123", 
-      "0.01811199204885301922`18.257966218853362", 
-      "0.01896876517049273306`18.278039060087604", "0.`", 
-      "0.4386575198196229763`18.642125578783318", 
-      "0.01719579654083981321`18.235422297941057", 
-      "0.01797665340344163989`18.25470884514494", 
-      "0.07505169351344866124`18.875360496382722", 
-      "0.01948935463485135591`18.28979745824726", 
-      "0.01986606725106663737`18.298111901321846"},
-     {"0.07062276632307473712`18.848944725055407", 
-      "0.0175555182261922689`18.244413654049378", 
-      "0.01727458503438389012`18.237407623661763", 
-      "0.01685822680884487695`18.226811892493206", 
-      "0.06541644706117898111`18.81568695275707", 
-      "0.01849087977815535092`18.266957574961687", "0.`", 
-      "0.01798052798612296069`18.254802440350108", 
-      "0.01745879420359554637`18.242014245737934", 
-      "0.01685822680884487695`18.226811892493206", 
-      "0.01936557587710809394`18.287030416195925", 
-      "0.01915542804680097147`18.28229186116309", 
-      "0.01863809538652788297`18.270401530046758", 
-      "0.01798052798612296069`18.254802440350108", 
-      "0.01727458503438389012`18.237407623661763", 
-      "0.02028164876692760063`18.30710325743017", 
-      "0.01989705563776971928`18.298788814355586", 
-      "0.01915542804680097147`18.28229186116309", "0.`", 
-      "0.0175555182261922689`18.244413654049378", 
-      "0.4382896411266882786`18.6417612063266", 
-      "0.02028164876692760063`18.30710325743017", 
-      "0.07746230350843237578`18.889090407523888", 
-      "0.01849087977815535092`18.266957574961687", 
-      "0.01765569158076868428`18.246884733727445"},
-     {"0.06870320913217839442`18.83697702346197", 
-      "0.01727380894454359078`18.237388111812074", 
-      "0.01717580228304459861`18.234917032134007", 
-      "0.01690094551749232038`18.22791100174639", 
-      "0.06597437154078125698`18.819375261905794", 
-      "0.01795575121135126878`18.25420357933789", "0.`", 
-      "0.01795575121135126878`18.25420357933789", 
-      "0.01759161932193113037`18.245305818434733", 
-      "0.01708117034642290394`18.23251762382256", 
-      "0.01874110695792896228`18.272795239247714", 
-      "0.01894670940936675485`18.277533794280554", 
-      "0.01874110695792896228`18.272795239247714", 
-      "0.01823496391088663682`18.260904908131387", 
-      "0.01759161932193113037`18.245305818434733", 
-      "0.01946669356300707865`18.28929219244021", 
-      "0.01984296816001543048`18.297606635514796", 
-      "0.01946669356300707865`18.28929219244021", "0.`", 
-      "0.01795575121135126878`18.25420357933789", 
-      "0.01984296816001543048`18.297606635514796", 
-      "0.4381474747330663666`18.641620312976272", 
-      "0.07937187264006172194`18.89966662684276", 
-      "0.01894670940936675485`18.277533794280554", 
-      "0.01809093249296972461`18.257460953046316"},
-     {"0.03176951931804883333`18.502010643876623", 
-      "0.004304824104816404318`18.63395541087254", 
-      "0.004329387815547397489`18.636426490550605", 
-      "0.004304824104816404318`18.63395541087254", 
-      "0.03176951931804883333`18.502010643876623", 
-      "0.004409041607014782885`18.644344197173268", 
-      "0.006750457652072744397`18.829333217132103", 
-      "0.004534186001385293735`18.656499331784847", 
-      "0.004500305101381830465`18.65324195807642", 
-      "0.004409041607014782885`18.644344197173268", 
-      "0.004570285038244356786`18.659943286869918", 
-      "0.00469714122542484909`18.67183361798625", 
-      "0.004748671999613632635`18.67657217301909", 
-      "0.00469714122542484909`18.67183361798625", 
-      "0.004570285038244356786`18.659943286869918", 
-      "0.00469714122542484909`18.67183361798625", 
-      "0.004878997225872387135`18.688330571178746", 
-      "0.00497330408435495315`18.69664501425333", 
-      "0.007318495838808581136`18.864421830234424", 
-      "0.00469714122542484909`18.67183361798625", 
-      "0.004748671999613632635`18.67657217301909", 
-      "0.00497330408435495315`18.69664501425333", 
-      "0.8296263370750779353`18.918882530585446", 
-      "0.00497330408435495315`18.69664501425333", 
-      "0.004748671999613632635`18.67657217301909"},
-     {"0.06601414823582206493`18.819637024060818", 
-      "0.01691113528876335079`18.228172763901412", 
-      "0.01718615776856933022`18.23517879428903", 
-      "0.01728422351939339421`18.237649873967094", 
-      "0.06874463107427732089`18.837238785616993", 
-      "0.01709146877728237243`18.232779385977583", "0.`", 
-      "0.01796657693690927385`18.254465341492914", 
-      "0.01810183972085186929`18.25772271520134", 
-      "0.01796657693690927385`18.254465341492914", 
-      "0.01760222550825318866`18.245567580589757", 
-      "0.01824595797694022678`18.26116667028641", 
-      "0.01875240618335215215`18.273057001402737", 
-      "0.01895813259483411853`18.277795556435578", 
-      "0.01875240618335215215`18.273057001402737", 
-      "0.01796657693690927385`18.254465341492914", 
-      "0.01875240618335215215`18.273057001402737", 
-      "0.01947843025280381057`18.289553954595235", "0.`", 
-      "0.01947843025280381057`18.289553954595235", 
-      "0.01810183972085186929`18.25772271520134", 
-      "0.01895813259483411853`18.277795556435578", 
-      "0.07941972684009558636`18.899928388997782", 
-      "0.4384116388028154732`18.641882075131292", 
-      "0.01985493171002389659`18.29786839766982"},
-     {"0.06545902356854206572`18.815969522787494", 
-      "0.01686919904060157904`18.227094462523628", 
-      "0.01728582825424606131`18.23769019369219", 
-      "0.01756694429233617363`18.244696224079803", 
-      "0.07066873138026506795`18.849227295085832", 
-      "0.01686919904060157904`18.227094462523628", "0.`", 
-      "0.01799223067125163208`18.25508501038053", 
-      "0.01836465488242348953`18.263982771283686", 
-      "0.01850291462740799239`18.267240144992112", 
-      "0.01728582825424606131`18.23769019369219", 
-      "0.01799223067125163208`18.25508501038053", 
-      "0.0186502260515381095`18.270684100077183", 
-      "0.01916789541945596725`18.28257443119351", 
-      "0.01937818002516203397`18.287312986226354", 
-      "0.01756694429233617363`18.244696224079803", 
-      "0.01836465488242348953`18.263982771283686", 
-      "0.01916789541945596725`18.28257443119351", "0.`", 
-      "0.02029484914400177947`18.307385827460593", 
-      "0.01766718284506626699`18.24716730375787", 
-      "0.01850291462740799239`18.267240144992112", 
-      "0.07751272010064813589`18.889372977554313", 
-      "0.02029484914400177947`18.307385827460593", 
-      "0.4385749033653290607`18.642043776357024"}
-    },
-    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
-    GridBoxSpacings->{"Columns" -> {
-        Offset[0.27999999999999997`], {
-         Offset[0.7]}, 
-        Offset[0.27999999999999997`]}, "Rows" -> {
-        Offset[0.2], {
-         Offset[0.4]}, 
-        Offset[0.2]}}], "\[NoBreak]", ")"}],
-  Function[BoxForm`e$, 
-   MatrixForm[BoxForm`e$]]]], "Output",
- CellChangeTimes->{3.7822324810951967`*^9, 3.782232758729062*^9},
- CellLabel->
-  "Out[307]//MatrixForm=",ExpressionUUID->"c3c89d08-e825-4193-b501-\
-4a64d2d2f875"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"Diagonal", "[", "rawData", "]"}]], "Input",
- CellChangeTimes->{{3.7822325026950073`*^9, 3.782232507095439*^9}},
- CellLabel->
-  "In[302]:=",ExpressionUUID->"4d24cc72-cb5a-416a-a6e8-fd45784cd7cf"],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-  "0.3634070638601864522`18.560393364814846", ",", 
-   "0.3615876991124549189`18.558213647747877", ",", 
-   "0.7575436805842368226`18.87940767966909", ",", 
-   "0.7552430942796815039`18.878086762902697", ",", 
-   "0.754997766776504986`18.877945667022466", ",", 
-   "0.3648924436317662057`18.562164869878746", ",", 
-   "0.3632456693003371373`18.560200445240735", ",", 
-   "0.3607970855328848092`18.55726302071553", ",", 
-   "0.756757551585024002`18.878956763418294", ",", 
-   "0.3582325514820671741`18.55416504630009", ",", 
-   "0.3661907605168207569`18.563707382272664", ",", 
-   "0.3648007837834830736`18.56205576274979", ",", 
-   "0.362680105545893805`18.55952373344477", ",", 
-   "0.7593998102295086428`18.880470484275616", ",", 
-   "0.3603972645138216468`18.55678148593893", ",", 
-   "0.3671802257063354613`18.564879284463125", ",", 
-   "0.3660420666848455129`18.563530998725767", ",", 
-   "0.7637266894761227665`18.882937967883823", ",", 
-   "0.3632080783092425103`18.56015549933724", ",", 
-   "0.3625027893898983278`18.559311352733165", ",", 
-   "0.3677468564229453563`18.56554896897536", ",", 
-   "0.3669927844286405283`18.56465752552285", ",", 
-   "0.3658492116400313687`18.563302123519332", ",", 
-   "0.3649148344326732518`18.562191518561416", ",", 
-   "0.3640196675659443937`18.561124848716677"}], "}"}]], "Output",
- CellChangeTimes->{3.7822325075460577`*^9, 3.782232747842958*^9},
- CellLabel->
-  "Out[302]=",ExpressionUUID->"c7d3e004-0aa9-4de0-bf1c-84075f63f740"]
+  "Out[464]=",ExpressionUUID->"1d7c4bf4-2237-4b18-b725-ab9a6cf871ab"]
 }, Open  ]]
 },
-WindowSize->{1225, 1101},
-WindowMargins->{{566, Automatic}, {Automatic, 106}},
+WindowSize->{1475, 1120},
+WindowMargins->{{Automatic, 519}, {Automatic, 106}},
+Magnification:>0.75 Inherited,
 FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
 StyleDefinitions->"Default.nb"
 ]
@@ -1281,23 +614,15 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 584, 16, 73, "Input",ExpressionUUID->"d27d9055-688f-4478-8945-e8c330f113f8"],
 Cell[CellGroupData[{
-Cell[1167, 40, 867, 18, 136, "Input",ExpressionUUID->"c3ffeac2-1473-43b2-a3fa-12f8e46bbe76"],
-Cell[2037, 60, 408, 7, 34, "Output",ExpressionUUID->"38e73594-d102-481c-9b75-a9e445eb77b5"],
-Cell[2448, 69, 28632, 520, 382, "Output",ExpressionUUID->"a78b2562-6cf8-4157-9e90-6523b100cc21"]
+Cell[580, 22, 633, 15, 57, "Input",ExpressionUUID->"d27d9055-688f-4478-8945-e8c330f113f8"],
+Cell[1216, 39, 4414, 84, 332, "Output",ExpressionUUID->"01c1026c-b05c-4f5a-b79c-7e7d0a990132"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[31117, 594, 211, 4, 30, "Input",ExpressionUUID->"ea8b37aa-c51e-4a91-bf26-44ccc7bcd0ed"],
-Cell[31331, 600, 896, 16, 56, "Output",ExpressionUUID->"5a19722e-bda0-4e97-a5ee-4df51d7d4389"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[32264, 621, 218, 4, 30, "Input",ExpressionUUID->"8a2a91cb-bcfc-4bd0-b876-0bbe67b55b46"],
-Cell[32485, 627, 30753, 596, 450, "Output",ExpressionUUID->"c3c89d08-e825-4193-b501-4a64d2d2f875"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[63275, 1228, 218, 4, 30, "Input",ExpressionUUID->"4d24cc72-cb5a-416a-a6e8-fd45784cd7cf"],
-Cell[63496, 1234, 1514, 30, 98, "Output",ExpressionUUID->"c7d3e004-0aa9-4de0-bf1c-84075f63f740"]
+Cell[5667, 128, 1081, 22, 121, "Input",ExpressionUUID->"c3ffeac2-1473-43b2-a3fa-12f8e46bbe76"],
+Cell[6751, 152, 562, 9, 27, "Output",ExpressionUUID->"57da7bb1-f97f-427a-b9da-5cb9058068d5"],
+Cell[7316, 163, 22168, 416, 287, "Output",ExpressionUUID->"6f71b94a-aee2-462e-bf55-c988edf209d2"],
+Cell[29487, 581, 812, 15, 27, "Output",ExpressionUUID->"1d7c4bf4-2237-4b18-b725-ab9a6cf871ab"]
 }, Open  ]]
 }
 ]
