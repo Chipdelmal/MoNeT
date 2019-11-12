@@ -40,7 +40,7 @@ def genSingle(n, zeroInflation, landscapeProb, mskMat):
     migrMat = monet.zeroInflatedExponentialMigrationKernel(
         distMat,
         params=monet.AEDES_EXP_PARAMS,
-        zeroInflation=.75
+        zeroInflation=.
     )
     aux.testMarkovMat(migrMat)
 
