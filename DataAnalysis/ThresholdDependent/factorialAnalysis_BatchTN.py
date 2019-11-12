@@ -26,14 +26,14 @@ temp = []
 for i in dirs:
     if(i[0] != 'i'):
         temp.append(i)
-dirs = temp
+(expsNum, dirs) = (len(temp), temp)
 ###############################################################################
 # Message for terminal
 ###############################################################################
 print('\n')
+date = datetime.datetime.now()
 print('**********************************************************************')
-print('* Processing ' + str(len(dirs))
-      + ' experiments [' + str(datetime.datetime.now()) + ']')
+print('* Processing ' + str(expsNum) + ' experiments [' + str(date) + ']')
 print('**********************************************************************')
 ###############################################################################
 # Sweeping through experiments
@@ -75,6 +75,7 @@ for (i, expName) in enumerate(dirs):
 #######################################################################
 # Message for terminal
 #######################################################################
+date = datetime.datetime.now()
 print('**********************************************************************')
-print('* Finished ' + str(len(dirs)) + ' experiments [' + str(datetime.datetime.now()) + ']')
+print('* Finished ' + str(exspNum) + ' experiments [' + str(date) + ']')
 print('**********************************************************************')
