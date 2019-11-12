@@ -60,7 +60,7 @@ for (i, expName) in enumerate(dirs):
     start = time.time()
     experimentFolders = sorted(monet.listDirectoriesInPath(path + experiment))
     print('* {0}) {1}'.format(i+1, expName))
-    Parallel(n_jobs=16)(delayed(monet.loadFolderAndWriteFactorialCSV)(
+    Parallel(n_jobs=20)(delayed(monet.loadFolderAndWriteFactorialCSV)(
             experimentString=folder, path=path+experiment,
             aggregationDictionary=aggregationDictionary,
             ratiosDictionary=ratiosDictionary
