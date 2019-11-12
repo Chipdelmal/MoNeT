@@ -7,7 +7,12 @@ experiments_path = "/Users/gillian/Desktop/GillianDataset/Experiments"
 land_aggregated_path = "/Users/gillian/Desktop/GillianDataset/LandAggregated"
 gender_mean = "F"
 maleToggle, femaleToggle = True, True
-reference_pop = "/Users/gillian/Desktop/GillianDataset/Experiments/C002195/Yorkeys01_0027_A/ANALYZED/E_0730_30_20_02_00020/"
+
+"""
+Note: reference_pop below is hardcoded because it's the folder where we expect to find all of the nodeIDs available
+"""
+start_ref = "/Users/gillian/Desktop/GillianDataset/Experiments/C002195/"
+finish_ref = "/ANALYZED/E_0730_30_20_02_00020/"
 population_IDs = ["W", "H", "E", "R", "B"]
 aggregation_levels = ["C000002", "C000025", "C000250", "C001000", "C002195"] 
 num_runs = 1
@@ -128,6 +133,14 @@ def getSum(key, run):
 		for node_id in nodes_to_summarize:
 			# print("Here is ", node_id)
 			processed_node_id = process_node_id(node_id)
+
+			#pick a run: Yorkeys01_0027_A
+			list_dir = [f for f in os.listdir(start_ref) if os.path.isfile(f)]
+			i = int(np.round(np.random.uniform(0, len(os.listdir(start_ref)) )))
+
+			#build reference_pop
+			reference_pop = list_dir[i]
+			reference_pop += finish_ref			
 
 			file_path = os.path.join(reference_pop + "F_Mean_Patch" + processed_node_id + ".csv")
 			filenames['female'].append(file_path)
