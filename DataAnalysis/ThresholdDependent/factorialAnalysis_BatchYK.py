@@ -21,7 +21,7 @@ USER = 1
 if USER==0:
     path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/"
 elif USER ==1:
-    path = "/RAID5/marshallShare/ThresholdResub/factorialHP/"
+    path = "/RAID5/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
