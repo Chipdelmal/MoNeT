@@ -17,7 +17,7 @@ warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 ###############################################################################
 # Factorial experiment
 ###############################################################################
-path = "/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationNo/"
+path = "/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationYes/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
@@ -77,5 +77,5 @@ for (i, expName) in enumerate(dirs):
 #######################################################################
 date = datetime.datetime.now()
 print('**********************************************************************')
-print('* Finished ' + str(exspNum) + ' experiments [' + str(date) + ']')
+print('* Finished ' + str(expsNum) + ' experiments [' + str(date) + ']')
 print('**********************************************************************')

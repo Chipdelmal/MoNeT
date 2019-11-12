@@ -9,20 +9,27 @@ import MoNeT_MGDrivE as monet
 ###############################################################################
 # Migration/NoMigration
 ###############################################################################
-path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/SweepSummaries/"
 coverageRescale = 1
+# path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/SweepSummaries/"
+# tuples = [
+#     ('TXTN', 'TXYK', 'TX'), ('TRTN', 'TRYK', 'TR'),
+#     ('UXTN', 'UXYK', 'UX'), ('URTN', 'URYK', 'UR'),
+#     ('WXTN', 'WXYK', 'WX'), ('WRTN', 'WRYK', 'WR'),
+# ]
+path = "/Volumes/marshallShare/ThresholdResub/factorialHP/"
 tuples = [
-    ('TXTN', 'TXYK', 'TX'), ('TRTN', 'TRYK', 'TR'),
-    ('UXTN', 'UXYK', 'UX'), ('URTN', 'URYK', 'UR'),
-    ('WXTN', 'WXYK', 'WX'), ('WRTN', 'WRYK', 'WR'),
+    ('TXHP', 'TXYK', 'TX'), ('TRHP', 'TRYK', 'TR'),
+    ('UXHP', 'UXYK', 'UX'), ('URHP', 'URYK', 'UR'),
+    ('WXHP', 'WXYK', 'WX'), ('WRHP', 'WRYK', 'WR'),
 ]
-
+expsNum = len(tuples)
 ###############################################################################
 # Message for terminal
 ###############################################################################
 print('\n')
+date = datetime.datetime.now()
 print('**********************************************************************')
-print('* Processing ' + str(len(tuples)) + ' experiments [' + str(datetime.datetime.now()) + ']')
+print('* Processing ' + str(expsNum) + ' experiments [' + str(date) + ']')
 print('**********************************************************************')
 for (i, file) in enumerate(tuples):
     start = time.time()
@@ -50,6 +57,7 @@ for (i, file) in enumerate(tuples):
 ###############################################################################
 # Message for terminal
 ###############################################################################
+date = datetime.datetime.now()
 print('**********************************************************************')
-print('* Finished ' + str(len(tuples)) + ' experiments [' + str(datetime.datetime.now()) + ']')
+print('* Finished ' + str(expsNum) + ' experiments [' + str(date) + ']')
 print('**********************************************************************')
