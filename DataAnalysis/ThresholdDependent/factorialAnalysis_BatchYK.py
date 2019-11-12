@@ -21,7 +21,7 @@ USER = 1
 if USER==0:
     path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/"
 elif USER ==1:
-    path = "/RAID5/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/"
+    path = "/RAID5/marshallShare/ThresholdResub/factorialHP/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
@@ -36,6 +36,7 @@ for i in dirs:
 ###############################################################################
 print('\n')
 date = datetime.datetime.now()
+print(path)
 print('**********************************************************************')
 print('* Processing ' + str(expsNum) + ' experiments [' + str(date) + ']')
 print('**********************************************************************')
@@ -81,5 +82,5 @@ for (i, expName) in enumerate(dirs):
 ###############################################################################
 date = datetime.datetime.now()
 print('**********************************************************************')
-print('* Finished ' + str(exspNum) + ' experiments [' + str(date) + ']')
+print('* Finished ' + str(expsNum) + ' experiments [' + str(date) + ']')
 print('**********************************************************************')
