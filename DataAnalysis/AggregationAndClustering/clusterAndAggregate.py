@@ -14,14 +14,14 @@ from sklearn.cluster import MiniBatchKMeans
 # Parameters Setup
 ###############################################################################
 (PATH, LATLONGS, DIST, OUT) = (
-    "/Volumes/marshallShare/ERACR/Yorkeys_MINI/",
+    "/Volumes/marshallShare/SplitDrive_Yorkeys/Landscapes/",
     "LandSorted/Yorkeys01_S.csv",
     "LandSorted/Yorkeys01_M.csv",
     "LandAggregated/"
 )
 (CLUSTERS_NO, REPS) = (
-    [1, 2, 25, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2195],
-    100
+    [2, 50, 100, 500, 1000, 1500, 2000, 2195],
+    1000
 )
 ###############################################################################
 # Read latlongs and migration matrix

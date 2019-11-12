@@ -30,3 +30,14 @@ These are companion plots to do verify the behavior of the drives in terms of po
 * [factorialDifferences_Resub.py](./factorialDifferences_Resub.py): Creates the factorial differences CSV with an "axis" file, and the sensitivity analysis (migration).
 * [TD_ResponseSurfaces.nb](./TD_ResponseSurfaces04.nb): Creates all the response surfaces plots (base, sensitivity), and dynamics responses for the paper.
 * [PopDyns.py](./PopDyns.py): Batch exports the population dynamics plots for an experiment set.
+
+<hr>
+
+##  Updated Factorial Analysis
+
+These are the new instructions for the revised version of the paper.
+
+### Two-Nodes
+
+1. Run [factorialAnalysis_Batch.py](./factorialAnalysis_Batch.py) on the folder with the experiments to loop over (`tnFactorialSweep/NEST/`). This will generate **CSV** files with the factorial entries of each experiment.
+2. Run [TD_ResponseSurfaces.nb](./TD_ResponseSurfaces05.nb) section **Response Surface: Fixation/Remediation for Two Nodes** to batch export the plots of the **CSV** files to an **images** folder.

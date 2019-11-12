@@ -18,11 +18,11 @@ import inspect
 # Factorial Experiment Example
 ###############################################################################
 dataType = float
-filename = "WBSA"
+filename = "WXYM"
 (maleToggle, femaleToggle) = (True, True)
 #path = "/Users/sanchez.hmsc/Desktop/" + filename + "/"
-#path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/Gordonvale/2019_10_11_ANALYZED/'
-path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK/Wolbachia_1_05/ANALYZED/'
+path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/Wolbachia/ANALYZED/'
+#path = '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK/Wolbachia_2_05/ANALYZED/'
 wildsList = [1]
 homingList = [0]
 aggregationDictionary = monet.generateAggregationDictionary(
@@ -41,7 +41,9 @@ ratiosDictionary = {
 # Export Individual CSVs for Factorial Slots
 ###############################################################################
 start = time.time()
-experimentFolders = monet.listDirectoriesInPath(path)
+experimentFolders = sorted(monet.listDirectoriesInPath(path))
+experimentFolders = experimentFolders[:]
+print(experimentFolders)
 Parallel(n_jobs=4)(delayed(monet.loadFolderAndWriteFactorialCSV)(
         experimentString=folder,
         path=path,

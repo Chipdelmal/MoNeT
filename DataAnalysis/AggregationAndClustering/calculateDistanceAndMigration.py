@@ -10,8 +10,8 @@ import MoNeT_MGDrivE as monet
 # Parameters Setup
 ###############################################################################
 (PATH, LATLONGS) = (
-    "/Volumes/marshallShare/ERACR/Yorkeys_Middle/",
-    "LandSorted/Yorkeys02_S.csv"
+    "/Volumes/marshallShare/SplitDrive_Yorkeys/Landscapes/",
+    "LandSorted/Yorkeys01_S.csv"
 )
 (lifeStayProb, adultMortality) = (.72, .09)
 

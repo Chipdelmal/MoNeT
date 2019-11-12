@@ -10,12 +10,6 @@ The idea in these sets of experiments is to understand the differences in dynami
 
 <center><img src="./media/aggregation01.png" weight="100%"></center>
 
-## [Mosquito Habitats Spatial Heterogeneity (Biyonka Liang)](https://chipdelmal.github.io/MoNeT/SpatialDistribution.html)
-
-The thorough study of spatial heterogeneity in mosquito habitats is still a missing piece in our understanding of the spread of gene drives for disease control applications. To tackle this problem, we will look into how an MCR construct spreads in landscapes with varying degrees of heterogeneity in their spatial distribution.
-
-<center><img src="./media/habitat02.png" width="100%" align="middle"></center>
-
 
 ##  [Mosquito Population Size Heterogeneity (Maya Shen)](https://chipdelmal.github.io/MoNeT/PopSizeHeterogeneity.html)
 
@@ -23,11 +17,25 @@ Although widely thought as being important for gene-flow dynamics, the effects o
 
 <center><img src="./media/flow.jpg" width="100%" align="middle"></center>
 
+
+##  [Point-Type Heterogeneity (Yunewn Ji)](./PointType.html)
+
+Mosquitos move to fulfill biological needs. Despite of this, most models consider resource availability to be fairly homogeneous across the landscape. To understand the effects of resource distribution, we will perform experiments under different network point-types topologies and compare the population dynamics across them.
+
+## [Mosquito Habitats Spatial Heterogeneity (Biyonka Liang)](https://chipdelmal.github.io/MoNeT/SpatialDistribution.html)
+
+The thorough study of spatial heterogeneity in mosquito habitats is still a missing piece in our understanding of the spread of gene drives for disease control applications. To tackle this problem, we will look into how an MCR construct spreads in landscapes with varying degrees of heterogeneity in their spatial distribution.
+
+<center><img src="./media/habitat02.png" width="100%" align="middle"></center>
+
+
 ##  [Clustering of Directed Networks with Geographical Constraints (Biyonka Liang)](https://chipdelmal.github.io/MoNeT/Community.html)
 
 The main idea for this workflow is to create an algorithm that combines the information of the geographical clustering of a pointset, along with the mosquito movement kernel. The advantage of doing this, would be that it would take into account the mosquito movement part of the dynamics of the disease transmission, while still making it aware that these dynamics are "anchored" to a geographic setting; giving us an informed way to aggregate geographic populations of mosquitos moving on the landscape.
 
 <center><img src="./media/headerImage.jpg" width="100%" align="middle"></center>
+
+<hr>
 
 ##  [Gene-Drives Data Visualization Python Module (Sarafina Smith)](https://chipdelmal.github.io/MoNeT/DataVisualization.html)
 

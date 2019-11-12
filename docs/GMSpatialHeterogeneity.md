@@ -14,33 +14,38 @@ We will start our analysis in a one-dimensional landscape. Across our experiment
 
 <img src="./media/habitat00.png" width="100%" align="middle">
 
-### 1) [Spatial Distribution](./SpatialDistribution.html)
+### 1) [Spatial Distribution (Biyonka Liang)](./SpatialDistribution.html)
 
 The first dimension of heterogeneity we will look into is the spatial distribution of mosquito breeding sites. To do this, we will randomly select **m** nodes in our baseline landscape, and shift them with a Gaussian probability kernel centered in the nodes' initial locations.
 
 <img src="./media/habitat02.png" width="100%" align="middle">
 
-### 2) [Population Distribution](./PopSizeHeterogeneity.html)
+### 2) [Population Distribution (Maya Shen)](./PopSizeHeterogeneity.html)
 
 The second dimension of variation we intend to study is the distribution of the population across breeding sites. Our initial systematic approach to doing it is to take the total population **p** and re distribute it randomly through the breeding sites.
 
 <img src="./media/habitat01.png" width="100%" align="middle">
 
-### 3) [Levels of Aggregation](./LandscapeAggregation.html)
+### 3) [Levels of Aggregation (Gillian Chu)](./LandscapeAggregation.html)
 
 Additionally, understanding the level of abstraction in the resolution of landscapes that can be tolerated for a particular analysis is extremely important. This is because we are ultimately constrained by computational resources, so we need to have a clear image of how much information is being lost when we aggregate breeding sites by mixing their populations to allow us the simulation of larger landscapes.
 
 <img src="./media/habitat03.png" width="100%" align="middle">
 
-### 4) Factorial Combinations
+
+### 4) [Point-Type Heterogeneity (Yunewn Ji)](./PointType.html)
+
+Another point of interest in these studies is how the availability of resources affects the way mosquitos move across the landscape. For this, we are setting up landscapes with heterogeneous pointsets to understand the impact of resources locations in mosquito flows.
+
+<!-- ### 4) Factorial Combinations
 
 Finally, once our routines have been tested independently, we will perform factorial combination experiments and data analysis to look for non-linear interactions of the heterogeneity components in an effort to enhance our understanding of these complex processes and to optimize our use of resources when performing gene-drive releases in the field.
 
-<center><img src="./media/habitat04.png" width="60%" align="middle"></center>
+<center><img src="./media/habitat04.png" width="60%" align="middle"></center> -->
 
 
 ### Authors
 
 * **Lead:** Héctor M. Sánchez C.
-* **Dev/Research:** Gillian Chu, Biyonka Liang, Maya Shen, Sarafina Smith
+* **Dev/Research:** Gillian Chu, Maya Shen, Yunwen Ji, Biyonka Liang*, Sarafina Smith*
 * **PI:** John M. Marshall
