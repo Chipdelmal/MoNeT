@@ -49,7 +49,8 @@ for (i, file) in enumerate(tuples):
     deHashed = monet.deHashFactorial(differencesHash)
     # Save output
     np.savetxt(
-        path + '/ResolutionDifferences/' + file[2] + ".csv", deHashed, fmt='%2.6f', delimiter=","
+        path + '/ResolutionDifferences/' + file[2] + ".csv", deHashed,
+        fmt='%2.6f', delimiter=","
     )
     # Terminal Output
     end = time.time()

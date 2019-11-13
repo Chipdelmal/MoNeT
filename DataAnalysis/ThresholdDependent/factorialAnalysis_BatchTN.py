@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 # import inspect
 # print inspect.getsource(monet.loadAndHashFactorialCSV)
 
-
+(CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
 # Factorial experiment
 ###############################################################################
@@ -32,6 +32,7 @@ for i in dirs:
 ###############################################################################
 print('\n')
 date = datetime.datetime.now()
+print(CRED + path + CEND)
 print('**********************************************************************')
 print('* Processing ' + str(expsNum) + ' experiments [' + str(date) + ']')
 print('**********************************************************************')
