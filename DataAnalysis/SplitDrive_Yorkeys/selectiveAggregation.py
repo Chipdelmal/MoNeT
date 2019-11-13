@@ -2,12 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import aux
-import csv
-import time
 import numpy as np
 import MoNeT_MGDrivE as monet
-from sklearn.cluster import KMeans
-from collections import Counter
 
 ###############################################################################
 # Parameters Setup
