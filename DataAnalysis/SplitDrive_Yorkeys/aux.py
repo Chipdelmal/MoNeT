@@ -5,6 +5,13 @@ import csv
 import os
 
 
+def centroid(data):
+    # https://stackoverflow.com/questions/23020659/fastest-way-to-calculate-the-centroid-of-a-set-of-coordinate-tuples-in-python-wi
+    x, y = zip(*data)
+    l = len(x)
+    return sum(x) / l, sum(y) / l
+
+
 def writeLatLongsToFileWithID(latlongs, path):
     with open(path, 'w') as fh:
         writer = csv.writer(fh, delimiter=',')

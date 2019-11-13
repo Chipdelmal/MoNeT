@@ -12,6 +12,7 @@ from collections import Counter
 ###############################################################################
 # Parameters Setup
 ###############################################################################
+placeName = 'Yorkeys'
 (PATH, LATLONGS, DIST, OUT) = (
     "/Volumes/marshallShare/SplitDrive_Yorkeys/Landscapes/",
     "LandSorted/Yorkeys01_S.csv",
@@ -30,7 +31,7 @@ latlongs = np.genfromtxt(
     PATH + LATLONGS, skip_header=1,
     delimiter=',', usecols=[1, 2]
 )
-coordsList = aux.readCoordsCSV(PATH + LATLONGS)
+cList = aux.readCoordsCSV(PATH + LATLONGS)
 ###############################################################################
 # 'Cluster'
 ###############################################################################
@@ -38,29 +39,29 @@ coordsList = aux.readCoordsCSV(PATH + LATLONGS)
 #   label 0. All the other elements are shifted one above their original ID
 #   to avoid clashes.
 sOI = tp
-labels = [0 if (row[0] in sOI) else (row[0] + 1) for row in coordsList]
+lbls = [0 if (row[0] in sOI) else (row[0] + 1) for row in cList]
+clstCentroids = []
+for i in set(lbls):
+    tCoords = [
+            (row[1][1], row[1][2]) for row in zip(lbls, cList) if (row[0] == i)
+        ]
+    clstCentroids.append(aux.centroid(tCoords))
 ###############################################################################
 # Aggregate
 ###############################################################################
-# (clusters, centroids) = (labels,
-#         clustersObj.cluster_centers_
-#     )
-# aggrMat = monet.aggregateLandscape(migrMat, clusters)
+(clusters, centroids) = (lbls, clstCentroids)
+aggrMat = monet.aggregateLandscape(migrMat, clusters)
 # #######################################################################
 # # Export
 # #######################################################################
-# # Define filenames
-# placeName = LATLONGS.split("/")[1].split(".")[0].split("_")[0]
-# filenames = outRepPath + "/" + placeName + "_" + str(rep).rjust(4, '0')
-# # Export files
-# np.savetxt(filenames + "_A.csv", aggrMat, delimiter=',')
-# aux.writeLatLongsClustersWithID(
-# coordsList, clusters, centroids,
-# filenames + "_I.csv"
-# )
-# ###############################################################################
-# # Write timing file
-# ###############################################################################
-# with open(PATH + 'timing.csv', 'w') as myfile:
-#     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-#     wr.writerow(timings)
+# Define filenames
+outRepPath = PATH + OUT + "C" + str(len(set(lbls))).rjust(6, '0')
+aux.createFolder(outRepPath)
+placeName = LATLONGS.split("/")[1].split(".")[0].split("_")[0]
+filenames = outRepPath + "/" + placeName + "_" + str(1).rjust(4, '0')
+# Export files
+np.savetxt(filenames + "_A.csv", aggrMat, delimiter=',')
+aux.writeLatLongsClustersWithID(
+    cList, clusters, centroids,
+    filenames + "_I.csv"
+)
