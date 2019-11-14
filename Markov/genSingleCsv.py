@@ -12,7 +12,7 @@ import MoNeT_MGDrivE as monet
 
 
 def genSingle(n, zeroInflation, landscapeProb, mskMat):
-    (lo, hi, n) = (0, 10, n)
+    (lo, hi, n) = (0, 50, n)
     # ############################################################################
     # Mosquito biological behaviour
     # ############################################################################
@@ -40,7 +40,7 @@ def genSingle(n, zeroInflation, landscapeProb, mskMat):
     migrMat = monet.zeroInflatedExponentialMigrationKernel(
         distMat,
         params=monet.AEDES_EXP_PARAMS,
-        zeroInflation=.
+        zeroInflation=0.75
     )
     aux.testMarkovMat(migrMat)
 
