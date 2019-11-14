@@ -1,4 +1,3 @@
-import os
 import glob
 import time
 import datetime
@@ -6,50 +5,47 @@ import numpy as np
 import MoNeT_MGDrivE as monet
 
 
+(CRED, CEND) = ('\033[95m', '\033[00m')
 ###############################################################################
 # Migration/NoMigration
 ###############################################################################
 coverageRescale = 1
-# path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/SweepSummaries/"
-# tuples = [
-#     ('TXTN', 'TXYK', 'TX'), ('TRTN', 'TRYK', 'TR'),
-#     ('UXTN', 'UXYK', 'UX'), ('URTN', 'URYK', 'UR'),
-#     ('WXTN', 'WXYK', 'WX'), ('WRTN', 'WRYK', 'WR'),
-# ]
-path = "/Volumes/marshallShare/ThresholdResub/factorialHP/"
-tuples = [
-    ('TXHP', 'TXYK', 'TX'), ('TRHP', 'TRYK', 'TR'),
-    ('UXHP', 'UXYK', 'UX'), ('URHP', 'URYK', 'UR'),
-    ('WXHP', 'WXYK', 'WX'), ('WRHP', 'WRYK', 'WR'),
-]
-expsNum = len(tuples)
+patterns = ['TX', 'TR', 'UX', 'UR', 'WX', 'WR']
+(pathBase, pathProbe) = (
+        '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/',
+        '/Volumes/marshallShare/ThresholdResub/factorialHP/'
+    )
 ###############################################################################
 # Message for terminal
 ###############################################################################
-print('\n')
+expsNum = len(patterns)
 date = datetime.datetime.now()
+print('\n')
+print(CRED + 'BASE: ' + pathBase + CEND)
+print(CRED + 'PROBE: ' + pathProbe + CEND)
 print('**********************************************************************')
 print('* Processing ' + str(expsNum) + ' experiments [' + str(date) + ']')
 print('**********************************************************************')
-for (i, file) in enumerate(tuples):
+for (i, file) in enumerate(patterns):
     start = time.time()
     # Load files
     dataA = monet.loadAndHashFactorialCSV(
-        path + '/' + file[0] + '.csv',
+        glob.glob(pathBase + file + '*.csv')[0],
         floatMultiplier=coverageRescale
     )
     dataB = monet.loadAndHashFactorialCSV(
-        path + '/' + file[1] + '.csv',
+        glob.glob(pathProbe + file + '*.csv')[0],
         floatMultiplier=coverageRescale
     )
     # Claculate the hashed differences
     differencesHash = monet.calculateFactorialHashError(
-        dataA, dataB, monet.sampleDifference
+        dataB, dataA, monet.sampleDifference
     )
     deHashed = monet.deHashFactorial(differencesHash)
     # Save output
     np.savetxt(
-        path + '/ResolutionDifferences/' + file[2] + ".csv", deHashed, fmt='%2.6f', delimiter=","
+        pathProbe + '/ResolutionDifferences/' + file + ".csv", deHashed,
+        fmt='%2.6f', delimiter=","
     )
     # Terminal Output
     end = time.time()

@@ -1,26 +1,26 @@
 from joblib import Parallel, delayed
 import driveSelector as drive
 import MoNeT_MGDrivE as monet
-import numpy as np
+# import numpy as np
 import datetime
 import time
-import csv
+# import csv
 import os
-import fnmatch
+# import fnmatch
 import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 # import inspect
 # print inspect.getsource(monet.loadAndHashFactorialCSV)
 
-
+(CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
 # Factorial experiment
 ###############################################################################
-USER = 1
-if USER==0:
-    path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/"
-elif USER ==1:
+USER = 0
+if USER == 0:
+    path = "/Volumes/marshallShare/ThresholdResub/batchSweep/TranslocationsBatch/"
+elif USER == 1:
     path = "/RAID5/marshallShare/ThresholdResub/factorialHP/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
@@ -36,7 +36,7 @@ for i in dirs:
 ###############################################################################
 print('\n')
 date = datetime.datetime.now()
-print(path)
+print(CRED + path + CEND)
 print('**********************************************************************')
 print('* Processing ' + str(expsNum) + ' experiments [' + str(date) + ']')
 print('**********************************************************************')
