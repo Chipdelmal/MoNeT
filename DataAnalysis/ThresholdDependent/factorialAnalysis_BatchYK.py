@@ -17,9 +17,9 @@ warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 ###############################################################################
 # Factorial experiment
 ###############################################################################
-USER = 1
+USER = 0
 if USER == 0:
-    path = "/Volumes/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/"
+    path = "/Volumes/marshallShare/ThresholdResub/batchSweep/TranslocationsBatch/"
 elif USER == 1:
     path = "/RAID5/marshallShare/ThresholdResub/factorialHP/"
 dirs = sorted(next(os.walk(path))[1])
