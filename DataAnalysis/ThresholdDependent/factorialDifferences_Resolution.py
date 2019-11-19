@@ -9,7 +9,7 @@ import MoNeT_MGDrivE as monet
 ###############################################################################
 # Migration/NoMigration
 ###############################################################################
-coverageRescale = 1
+COV_SCL = 1
 patterns = ['TX', 'TR', 'UX', 'UR', 'WX', 'WR']
 (pathBase, pathProbe) = (
         '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/',
@@ -31,11 +31,11 @@ for (i, file) in enumerate(patterns):
     # Load files
     dataA = monet.loadAndHashFactorialCSV(
         glob.glob(pathBase + file + '*.csv')[0],
-        floatMultiplier=coverageRescale
+        floatMultiplier=COV_SCL
     )
     dataB = monet.loadAndHashFactorialCSV(
         glob.glob(pathProbe + file + '*.csv')[0],
-        floatMultiplier=coverageRescale
+        floatMultiplier=COV_SCL
     )
     # Claculate the hashed differences
     differencesHash = monet.calculateFactorialHashError(
@@ -44,8 +44,8 @@ for (i, file) in enumerate(patterns):
     deHashed = monet.deHashFactorial(differencesHash)
     # Save output
     np.savetxt(
-        pathProbe + '/ResolutionDifferences/' + file + ".csv", deHashed,
-        fmt='%2.6f', delimiter=","
+        pathProbe + '/ResolutionDifferences/' + file + ".csv",
+        deHashed, fmt='%2.6f', delimiter=","
     )
     # Terminal Output
     end = time.time()
