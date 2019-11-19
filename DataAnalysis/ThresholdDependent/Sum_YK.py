@@ -15,7 +15,7 @@ warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 ###############################################################################
 USER = 0
 if USER == 0:
-    path = "/Volumes/marshallShare/ThresholdResub/batchSweep/"
+    path = "/Volumes/marshallShare/ThresholdResub/factorialSA/"
 elif USER == 1:
     path = "/RAID5/marshallShare/ThresholdResub/batchSweep/"
 dirs = sorted(next(os.walk(path))[1])

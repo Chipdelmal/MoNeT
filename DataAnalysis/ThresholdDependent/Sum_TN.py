@@ -13,14 +13,14 @@ warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 ###############################################################################
 # Factorial experiment
 ###############################################################################
-path = "/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationYes/"
+path = "/Volumes/marshallShare/ThresholdResub/tnBatchSA/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
 ###############################################################################
 temp = []
 for i in dirs:
-    if(i[0] != 'i'):
+    if(i[0] != 'i' and i[0] != 'sensitivity'):
         temp.append(i)
 (expsNum, dirs) = (len(temp), temp)
 ###############################################################################
