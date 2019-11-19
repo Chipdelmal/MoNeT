@@ -1,3 +1,9 @@
+###############################################################################
+# Sum_YK
+##  Calculates the differences csv between a factorial sweep and a SA set
+##  of experiments
+###############################################################################
+
 from joblib import Parallel, delayed
 import driveSelector as drive
 import MoNeT_MGDrivE as monet

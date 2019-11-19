@@ -1,3 +1,10 @@
+###############################################################################
+# Sum_YK
+##  Generates the summary CSV files for both: factorial and sensitivity
+##  analyses. This script takes into account only matching nodes in the
+##  landscape (to make it comparable to the full, unaggregated, sims).
+###############################################################################
+
 from joblib import Parallel, delayed
 import driveSelector as drive
 import MoNeT_MGDrivE as monet
