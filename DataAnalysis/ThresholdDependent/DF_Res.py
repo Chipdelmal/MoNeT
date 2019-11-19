@@ -10,7 +10,11 @@ import MoNeT_MGDrivE as monet
 # Migration/NoMigration
 ###############################################################################
 COV_SCL = 1
-patterns = ['TX', 'TR', 'UX', 'UR', 'WX', 'WR']
+patterns = (
+        'Translocations', 'TranslocationsRemediation',
+        'UDMel', 'UDMelRemediation',
+        'Wolbachia', 'WolbachiaRemediation'
+    )
 (pathBase, pathProbe) = (
         '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/',
         '/Volumes/marshallShare/ThresholdResub/factorialHP/'

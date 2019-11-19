@@ -7,11 +7,7 @@ import os
 import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
-# import fnmatch
-# import numpy as np
-# import csv
-# import inspect
-# print inspect.getsource(monet.loadAndHashFactorialCSV)
+
 
 (CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################

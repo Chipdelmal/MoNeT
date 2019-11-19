@@ -1,17 +1,13 @@
 from joblib import Parallel, delayed
 import driveSelector as drive
 import MoNeT_MGDrivE as monet
-# import numpy as np
 import datetime
 import time
-# import csv
 import os
-# import fnmatch
 import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
-# import inspect
-# print inspect.getsource(monet.loadAndHashFactorialCSV)
+
 
 (CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
@@ -19,16 +15,16 @@ warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 ###############################################################################
 USER = 0
 if USER == 0:
-    path = "/Volumes/marshallShare/ThresholdResub/tnBatchSweep/"
+    path = "/Volumes/marshallShare/ThresholdResub/batchSweep/"
 elif USER == 1:
-    path = "/RAID5/marshallShare/ThresholdResub/tnBatchSweep/"
+    path = "/RAID5/marshallShare/ThresholdResub/batchSweep/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
 ###############################################################################
 temp = []
 for i in dirs:
-    if(i[0] != 'i'):
+    if(i[0] != 'i' and i[0] != 'sensitivity'):
         temp.append(i)
 (expsNum, dirs) = (len(temp), temp)
 ###############################################################################
@@ -60,7 +56,7 @@ for (i, expName) in enumerate(dirs):
     ###########################################################################
     start = time.time()
     experimentFolders = sorted(monet.listDirectoriesInPath(path + experiment))
-    print('* {0}) {1}'.format(i+1, expName))
+    print('* {0}) {1}'.format(i+1, expName), end='\r')
     Parallel(n_jobs=20)(delayed(monet.loadFolderAndWriteFactorialCSV)(
             experimentString=folder, path=path+experiment,
             aggregationDictionary=aggregationDictionary,
@@ -69,7 +65,7 @@ for (i, expName) in enumerate(dirs):
         for folder in experimentFolders
     )
     end = time.time()
-    print('\t[{2:.2f} min]'.format(i+1, expName, (end-start)/60))
+    print(' [{2:.2f} min]'.format(i+1, expName, (end-start)/60))
     ###########################################################################
     # Load and Compile CSVs into one
     ###########################################################################
