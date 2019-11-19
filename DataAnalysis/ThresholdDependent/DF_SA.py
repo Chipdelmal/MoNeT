@@ -10,11 +10,12 @@ def getFilenameFromPath(path):
     return path.split('/')[-1].split('.')[0]
 
 cScale = 1
+(CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
 # Define paths for central files and sensitivity analysis ones
 ###############################################################################
-pathSA = '/Volumes/marshallShare/ThresholdResub/tnFactorialSA/'
-pathCF = '/Volumes/marshallShare/ThresholdResub/tnFactorialSweep/MigrationYes/'
+pathSA = '/Volumes/marshallShare/ThresholdResub/tnBatchSA/'
+pathCF = '/Volumes/marshallShare/ThresholdResub/tnBatchSweep/'
 ###############################################################################
 # Get filepaths and filenames (not in the same sorting!)
 ###############################################################################
@@ -28,6 +29,8 @@ saFiles = [getFilenameFromPath(i) for i in saPaths]
 # Message for terminal
 ###############################################################################
 print('\n')
+print(CRED + 'CT: ' + pathCF+ CEND)
+print(CRED + 'SA: ' + pathSA + CEND)
 print('**********************************************************************')
 print('* Processing ' + str(len(saFiles)) + ' experiments [' + str(datetime.datetime.now()) + ']')
 print('**********************************************************************')
@@ -39,9 +42,11 @@ for (i, cfFile) in enumerate(cfFiles):
     cData = monet.loadAndHashFactorialCSV(
         pathCF+cfFile+'.csv', floatMultiplier=cScale
     )
-    expCoreID = [i.split('_')[0] for i in saFiles]
+    # Filter the SA files for matching IDs
+    expCoreID = ["_".join(i.split('_')[0:-1]) for i in saFiles]
     matchingIndices = [i == cfFile for i in expCoreID]
     matchingFiles = list(compress(saFiles, matchingIndices))
+    # Go through the SA files doing the differences
     for (j, pFile) in enumerate(matchingFiles):
         # Load probe file
         pData = monet.loadAndHashFactorialCSV(
