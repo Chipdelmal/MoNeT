@@ -7,18 +7,19 @@ from mpl_toolkits.basemap import Basemap
 # %matplotlib inline
 
 BASE_PATH = '/Volumes/marshallShare/Comoros_STP/Comoros/'
+BASE_PATH = '/Volumes/marshallShare/Comoros_STP/STP/'
 PAD = .1
 # Setup Style #################################################################
 COLORS = [
         aux.rescaleRGBA((47, 28, 191, 255/2.5)), # Faded navy blue
         aux.rescaleRGBA((255, 0, 152, 255/1)),  # Magenta
-        aux.rescaleRGBA((37, 216, 17, 255/5)),   # Bright green
+        aux.rescaleRGBA((37, 216, 17, 255/6)),   # Bright green
         aux.rescaleRGBA((255, 255, 255, 255/1)), # White
-        aux.rescaleRGBA((0, 169, 255, 255/10))
+        aux.rescaleRGBA((0, 169, 255, 255/7.5))
     ]
 # Read LongLats ###############################################################
 coordinates = np.genfromtxt(
-        BASE_PATH + 'all_sites_NEW.csv',
+        BASE_PATH + 'stp_all_sites_NEW.csv',
         delimiter=',', skip_header=1
     )
 # Calculate boundary ##########################################################
@@ -30,7 +31,7 @@ ax = fig.add_subplot(111, label="1")
 ax.axis('off')
 map = aux.createBasemapInstance(minLat, maxLat, minLon, maxLon, pad=PAD)
 # map.arcgisimage(service="NatGeo_World_Map", xpixels=2000)
-map.drawcoastlines(color=COLORS[2], linewidth=4, zorder=1)
+map.drawcoastlines(color=COLORS[4], linewidth=5, zorder=1)
 map.drawcoastlines(color=COLORS[0], linewidth=2, zorder=1)
 map.drawcoastlines(color=COLORS[3], linewidth=.5, zorder=1)
 # map.fillcontinents(color=COLORS[4], lake_color='aqua')
@@ -38,7 +39,7 @@ map.drawcoastlines(color=COLORS[3], linewidth=.5, zorder=1)
 # map.drawcountries(color=COLORS[0], linewidth=2)
 map.scatter(
         [i[0] for i in coordinates], [i[1] for i in coordinates],
-        s=.15, alpha=.75, marker='x',
+        s=.15, alpha=.6, marker='x',
         edgecolors=COLORS[1], color=COLORS[1], zorder=2
     )
 plt.savefig(
