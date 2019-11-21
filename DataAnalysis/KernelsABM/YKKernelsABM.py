@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 ##############################################################################
 # Paths, experiment name and other commonly-changed settings
 ##############################################################################
-EXP_NAME = 'kernel_elevation_NEW'
+EXP_NAME = 'kernel_landcover_NEW_NRM'
 PATH_ROOT = '/Volumes/marshallShare/Comoros_STP/Comoros/kernels/out/'
 (maleToggle, femaleToggle) = (True, True)
 
@@ -17,7 +17,7 @@ cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 style = {
     "width": .05,  "aspect": .01, "dpi": 1024, "legend": False,
     "alpha": 1, "colors": colors,
-    "xRange": [0, 10*365], "yRange": [0, 100000]
+    "xRange": [0, 3*365], "yRange": [0, 897050*4]
 }
 
 ##############################################################################
@@ -48,7 +48,7 @@ aggData = monet.aggregateGenotypesInNode(
     landscapeSumData, aggregationDictionary
 )
 ssDay = monet.reachedSteadtStateAtDay(aggData, .025)
-style['aspect'] = monet.scaleAspect(1.15, style)
+style['aspect'] = monet.scaleAspect(.25, style)
 figStack = monet.plotMeanGenotypeStack(
     aggData, style, vLinesCoords=[ssDay]
 )
@@ -56,6 +56,7 @@ monet.quickSaveFigure(
     figStack, PATH_ROOT + "S_" + EXP_NAME + ".png"
 )
 plt.close()
+
 
 ##############################################################################
 # Analyzing geo-spatiotemporal files
@@ -76,13 +77,24 @@ geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 geneSpatiotemporalsNorm = monet.rescaleGeneSpatiotemporals(geneSpatiotemporals)
 # Plot the populations heatmap
 (nodes, maxTime) = geneSpatiotemporals['geneLandscape'][0].shape
-maxPop = monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
 overlay = monet.plotGenotypeOverlayFromLandscape(
     geneSpatiotemporalsNorm,
-    style={"aspect": monet.scaleAspect(30, style), "cmap": cmaps},
+    style={"aspect": monet.scaleAspect(1000, style), "cmap": cmaps},
     vmax=1
 )
 monet.quickSaveFigure(
     overlay, PATH_ROOT + "O_" + EXP_NAME + ".png"
+)
+plt.close()
+
+
+maxPop = monet.maxAlleleInLandscape(geneSpatiotemporals["geneLandscape"])
+overlay = monet.plotGenotypeOverlayFromLandscape(
+    geneSpatiotemporals,
+    style={"aspect": monet.scaleAspect(1000, style), "cmap": cmaps},
+    vmax=maxPop/20
+)
+monet.quickSaveFigure(
+    overlay, PATH_ROOT + "M_" + EXP_NAME + ".png"
 )
 plt.close()
