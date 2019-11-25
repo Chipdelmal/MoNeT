@@ -1,5 +1,14 @@
 import MoNeT_MGDrivE as monet
 
+
+def driveSelector(folder):
+    if(folder == drive_CRISPR.get('folder')):   return drive_CRISPR;
+    if(folder == drive_fsRIDL.get('folder')):   return drive_fsRIDL;
+    if(folder == drive_IIT.get('folder')):      return drive_IIT;
+    if(folder == drive_SIT.get('folder')):      return drive_SIT;
+    if(folder == drive_SD.get('folder')):       return drive_SD;
+    if(folder == drive_pgSIT.get('folder')):    return drive_pgSIT;
+
 ###############################################################################
 # CRISPR
 ###############################################################################
@@ -24,7 +33,6 @@ drive_CRISPR = {
                 ]
             )
     }
-
 ###############################################################################
 # fsRIDL
 ###############################################################################
@@ -138,7 +146,6 @@ drive_pgSIT = {
                 ]
             )
     }
-
 ###############################################################################
 # Autosomal X-Shredder
 ###############################################################################
