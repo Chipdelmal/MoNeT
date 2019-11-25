@@ -6,16 +6,13 @@ import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
-ECO = True
-PATH = '/Volumes/marshallShare/SplitDriveSup/'
+(ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/')
+###############################################################################
+# Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
-(PATH_HLT, PATH_ECO) = (PATH_IMG + 'hlt/', PATH_IMG + 'eco/')
 (expsNum, folders) = aux.getExperiments(PATH)
-if ECO == True:
-    (expType, style, path) = ('ECO', aux.STYLE_ECO, PATH_ECO)
-else:
-    (expType, style, path) = ('HLT', aux.STYLE_HLT, PATH_HLT)
+(expType, style, path) = aux.selectAnalysisType(ECO, PATH_IMG)
 ###############################################################################
 # Iterate through folders
 ###############################################################################
@@ -27,9 +24,9 @@ pathExps = monet.listDirectoriesWithPathWithinAPath(pathDrive)
 ###############################################################################
 # Iterate through experiments
 ###############################################################################
-print(125 * '*')
-print('* Processing Experiments [' + str(datetime.datetime.now()) + ']')
-print(125 * '*')
+time = str(datetime.datetime.now())
+print(aux.PAD + '* Processing Experiments [{0}]'.format(time) + aux.PAD)
+###############################################################################
 num = len(pathExps)
 aux.makeFolder(path + dir)
 for i in range(0, num, 1):
@@ -52,6 +49,6 @@ for i in range(0, num, 1):
     plt.close('all')
     print('Exported ' + str(i + 1).rjust(4, '0') + '/' + str(num) + ': ' + expOutStr)
 ###############################################################################
-print(125 * '*')
-print('* Finished! ' + '[' + str(datetime.datetime.now()) + ']')
-print(125 * '*')
+time = str(datetime.datetime.now())
+print(aux.PAD + '* Finished [{0}]'.format(time) + aux.PAD)
+###############################################################################

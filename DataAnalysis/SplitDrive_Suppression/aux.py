@@ -1,7 +1,9 @@
 import os
 import numpy as np
+import aux
 import MoNeT_MGDrivE as monet
 
+PAD = '\n' + 125 * '*' + '\n'
 ###############################################################################
 # Style
 ###############################################################################
@@ -60,3 +62,12 @@ def makeFolder(foldername):
             os.mkdir(foldername)
         except:
             raise OSError("Can't create destination directory (%s)!" % (foldername))
+
+
+def selectAnalysisType(ECO, PATH_IMG):
+    (PATH_HLT, PATH_ECO) = (PATH_IMG + 'hlt/', PATH_IMG + 'eco/')
+    if ECO == True:
+        (expType, style, path) = ('ECO', aux.STYLE_ECO, PATH_ECO)
+    else:
+        (expType, style, path) = ('HLT', aux.STYLE_HLT, PATH_HLT)
+    return (expType, style, path)
