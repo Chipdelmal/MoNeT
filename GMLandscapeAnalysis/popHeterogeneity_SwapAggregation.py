@@ -11,7 +11,7 @@ import os
 
 def combineSingleSwap(paths, outputpath, aggregationDictionary, male, female):
     """
-    Description: This function combinesa single set of repetition experiments
+    Description: This function combines a single set of repetition experiments
         and writes them to files.
     In:
         paths: list of strings, paths to folder containing repetitions to combine.
