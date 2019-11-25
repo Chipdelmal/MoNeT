@@ -24,14 +24,14 @@ USER = 0
 if USER == 0:
     path = "/Volumes/marshallShare/ThresholdResub/factorialSA/"
 elif USER == 1:
-    path = "/RAID5/marshallShare/ThresholdResub/batchSweep/"
+    path = "/RAID5/marshallShare/ThresholdResub/factorialSA/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
 ###############################################################################
 temp = []
 for i in dirs:
-    if(i[0] != 'i' and i[0] != 'sensitivity'):
+    if(i[0] != 'i' and i[0] != 's'):
         temp.append(i)
 (expsNum, dirs) = (len(temp), temp)
 ###############################################################################
