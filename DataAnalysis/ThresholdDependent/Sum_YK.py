@@ -1,7 +1,8 @@
 ###############################################################################
 # Sum_YK
-##  Calculates the differences csv between a factorial sweep and a SA set
-##  of experiments
+##  Generates the summary CSV files for both: factorial and sensitivity
+##  analyses. This script takes into account all the nodes present in the
+##  landscape.
 ###############################################################################
 
 from joblib import Parallel, delayed
