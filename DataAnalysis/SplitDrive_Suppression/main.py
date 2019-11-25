@@ -25,6 +25,8 @@ pathExps = monet.listDirectoriesWithPathWithinAPath(pathDrive)
 # Iterate through experiments
 ###############################################################################
 time = str(datetime.datetime.now())
+print(aux.CRED + '\n\nE: ' + drivePars.get('folder') + aux.CEND)
+print(aux.CRED + 'O: ' + PATH_IMG + aux.CEND)
 print(aux.PAD + '* Processing Experiments [{0}]'.format(time) + aux.PAD)
 ###############################################################################
 num = len(pathExps)
@@ -47,7 +49,7 @@ for i in range(0, num, 1):
             figsArray[j], expOutStr + "_N" + str(j) + ".png", dpi=style['dpi']
         )
     plt.close('all')
-    print('Exported ' + str(i + 1).rjust(4, '0') + '/' + str(num) + ': ' + expOutStr)
+    print('Exported {0}/{1}: {2}'.format(str(i+1).rjust(4,'0'), num, expOutStr))
 ###############################################################################
 time = str(datetime.datetime.now())
 print(aux.PAD + '* Finished [{0}]'.format(time) + aux.PAD)
