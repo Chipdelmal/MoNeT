@@ -1,5 +1,27 @@
+import os
 import numpy as np
+import MoNeT_MGDrivE as monet
 
+###############################################################################
+# Style
+###############################################################################
+STYLE_HLT = {
+    "width": .1, "alpha": .15, "dpi": 300,
+    "legend": True, "aspect": .5, "xRange": [0,2000], "yRange": [0, 12500],
+    "colors": ['#9f00cc', '#ec0b43', '#0038a8']
+}
+STYLE_HLT['aspect'] = monet.scaleAspect(.1, STYLE_HLT)
+
+STYLE_ECO = {
+    "width": .1, "alpha": .15, "dpi": 300,
+    "legend": True, "aspect": .5, "xRange": [0,2000], "yRange": [0, 1],
+    "colors": ['#ff004d', '#80ff80', '#6600ff', '#e600ff', '#b3ccff', '#333380']
+}
+STYLE_ECO['aspect'] = monet.scaleAspect(.1, STYLE_ECO)
+
+###############################################################################
+# Functions Definitions
+###############################################################################
 def normalizePopulationInNode(node, totalPopIx=-1):
     popSize = node[:,-1]
     normalizedNode = np.empty(node.shape)
@@ -20,3 +42,21 @@ def scaleAspect(aspect, style):
     xDiff = (style['xRange'][1] - style['xRange'][0])
     yDiff = (style['yRange'][1] - style['yRange'][0])
     return aspect * (xDiff / yDiff)
+
+
+def getExperiments(PATH):
+    dirs = sorted(next(os.walk(PATH))[1])
+    temp = []
+    for i in dirs:
+        if(i != 'img'):
+            temp.append(i)
+    (expsNum, dirs) = (len(temp), temp)
+    return (expsNum, dirs)
+
+
+def makeFolder(foldername):
+    if not os.path.exists(foldername):
+        try:
+            os.mkdir(foldername)
+        except:
+            raise OSError("Can't create destination directory (%s)!" % (foldername))
