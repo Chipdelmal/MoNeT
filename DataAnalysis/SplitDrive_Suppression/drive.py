@@ -115,12 +115,38 @@ drive_pgSIT = {
 ###############################################################################
 # Autosomal X-Shredder
 ###############################################################################
+drive_autoShred = {
+        'id': 'autoShred', 'folder': 'autosomalXShredder',
+        'HLT': monet.generateAggregationDictionary(
+                ["H", "Other", "Total"],
+                [[1, 2], [0], [0, 1, 2]]
+            ),
+        'ECO': monet.generateAggregationDictionary(
+                ["H", "W", "Total"],
+                [[1, 2, 2], [0, 0, 1], [0, 0, 1, 1, 2, 2]]
+            )
+    }
 ###############################################################################
 # Y-Linked X-Shredder
 ###############################################################################
+drive_yShred = {
+        'id': 'yShred', 'folder': 'ylinkedXShredder',
+        'HLT': monet.generateAggregationDictionary(
+                ["H", "Other", "Total"],
+                [[4, 7], [0, 1, 3, 5, 6, 8], [0, 1, 2, 3, 4, 5, 6, 7, 8]]
+            ),
+        'ECO': monet.generateAggregationDictionary(
+                ["H", "W", "Total"],
+                [[1, 2, 2], [0, 0, 1], [0, 0, 1, 1, 2, 2]]
+            )
+    }
 
 
-
+#
+# monet.autoGenerateGenotypesDictionary(
+#     ['A', 'B', 'X', 'Y', 'R'],
+#     ['XX','XR','RR','XY','XA','XB','RY','RA','RB']
+# )
 
 
 # monet.autoGenerateGenotypesDictionary(

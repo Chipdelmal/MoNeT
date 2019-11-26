@@ -6,7 +6,7 @@ import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
-(ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/')
+(ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
