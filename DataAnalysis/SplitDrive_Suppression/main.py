@@ -7,15 +7,17 @@ import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
-if __name__ == "__main__":
-    (ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/')
+if sys.argv[1] != "srv":
+    (ECO, PATH) = (sys.argv[2]=='eco', '/Volumes/marshallShare/SplitDriveSup/')
 else:
-    (ECO, PATH) = (sys.argv[1]=='eco', '/RAID5/marshallShare/SplitDriveSup/')
+    (ECO, PATH) = (sys.argv[2]=='eco', '/RAID5/marshallShare/SplitDriveSup/')
+# For testing
+# (ECO, PATH) = (sys.argv[2]=='eco', '/Volumes/marshallShare/SplitDriveSup/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
-(expsNum, folders) = (6, [ 'ylinkedXShredder'])#['CRISPR','IIT','SIT','SplitDrive','fsRIDL','pgSIT']) ##aux.getExperiments(PATH)
+(expsNum, folders) = (6, ['ylinkedXShredder'])#['CRISPR','IIT','SIT','SplitDrive','fsRIDL','pgSIT']) ##aux.getExperiments(PATH)
 (expType, style, path) = aux.selectAnalysisType(ECO, PATH_IMG)
 ###############################################################################
 # Iterate through folders
