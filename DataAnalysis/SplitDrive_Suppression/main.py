@@ -1,3 +1,4 @@
+import sys
 import os
 import aux as aux
 import drive as drive
@@ -6,12 +7,12 @@ import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
-(ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
+(ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
-(expsNum, folders) = (6, ['CRISPR','IIT','SIT','SplitDrive','fsRIDL','pgSIT']) ##aux.getExperiments(PATH)
+(expsNum, folders) = (6, ['autosomalXShredder', 'ylinkedXShredder'])#['CRISPR','IIT','SIT','SplitDrive','fsRIDL','pgSIT']) ##aux.getExperiments(PATH)
 (expType, style, path) = aux.selectAnalysisType(ECO, PATH_IMG)
 ###############################################################################
 # Iterate through folders
