@@ -9,14 +9,14 @@ PAD = '\n' + 125 * '*' + '\n'
 # Style
 ###############################################################################
 STYLE_HLT = {
-    "width": .1, "alpha": .15, "dpi": 300,
-    "legend": True, "aspect": .5, "xRange": [0,2000], "yRange": [0, 12500],
+    "width": .075, "alpha": .15, "dpi": 500,
+    "legend": True, "aspect": .5, "xRange": [0,2000], "yRange": [0, 20000],
     "colors": ['#9f00cc', '#ec0b43', '#0038a8']
 }
 STYLE_HLT['aspect'] = monet.scaleAspect(.1, STYLE_HLT)
 
 STYLE_ECO = {
-    "width": .1, "alpha": .15, "dpi": 300,
+    "width": .075, "alpha": .15, "dpi": 500,
     "legend": True, "aspect": .5, "xRange": [0,2000], "yRange": [0, 1],
     "colors": ['#ff004d', '#80ff80', '#6600ff', '#e600ff', '#b3ccff', '#333380']
 }

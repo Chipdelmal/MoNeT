@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 # Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
-(expsNum, folders) = aux.getExperiments(PATH)
+(expsNum, folders) = (6, ['CRISPR','IIT','SIT','SplitDrive','fsRIDL','pgSIT']) ##aux.getExperiments(PATH)
 (expType, style, path) = aux.selectAnalysisType(ECO, PATH_IMG)
 ###############################################################################
 # Iterate through folders
@@ -26,7 +26,7 @@ for dir in folders:
     ###############################################################################
     time = str(datetime.datetime.now())
     print(aux.CRED + '\n\nE: ' + drivePars.get('folder') + aux.CEND)
-    print(aux.CRED + 'O: ' + PATH_IMG + aux.CEND)
+    print(aux.CRED + 'O: ' + path + dir + aux.CEND)
     print(aux.PAD + '* Processing Experiments [{0}]'.format(time) + aux.PAD)
     ###############################################################################
     num = len(pathExps)

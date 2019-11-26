@@ -20,7 +20,7 @@ warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 ###############################################################################
 # Factorial experiment
 ###############################################################################
-USER = 0
+USER = 1
 if USER == 0:
     path = "/Volumes/marshallShare/ThresholdResub/factorialSA/"
 elif USER == 1:
@@ -46,7 +46,7 @@ print('**********************************************************************')
 ###############################################################################
 # Sweeping through experiments
 ###############################################################################
-for (i, expName) in enumerate(dirs):
+for (i, expName) in enumerate(dirs[10:]):
     experiment = expName + "/ANALYZED/"
     driveID = expName.split("_")[0][0]
     (wildsList, homingList) = drive.driveGenesSelector(driveID)
@@ -63,7 +63,7 @@ for (i, expName) in enumerate(dirs):
     ###########################################################################
     start = time.time()
     experimentFolders = sorted(monet.listDirectoriesInPath(path + experiment))
-    print('* {0}) {1}'.format(i+1, expName), end='\r')
+    print('* {0}) {1}'.format(i+1, expName), end=' ')
     Parallel(n_jobs=20)(delayed(monet.loadFolderAndWriteFactorialCSV)(
             experimentString=folder, path=path+experiment,
             aggregationDictionary=aggregationDictionary,
@@ -72,7 +72,7 @@ for (i, expName) in enumerate(dirs):
         for folder in experimentFolders
     )
     end = time.time()
-    print(' [{2:.2f} min]'.format(i+1, expName, (end-start)/60))
+    print('[{2:.2f} min]'.format(i+1, expName, (end-start)/60))
     ###########################################################################
     # Load and Compile CSVs into one
     ###########################################################################
