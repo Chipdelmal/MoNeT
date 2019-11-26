@@ -28,12 +28,13 @@ n_samp = 1 # how many times to resample from ZITE/ZITG
 # PATH TO EDIT
 folder = "simulations/"
 filepath = "/Users/mayashen/Desktop/MoNeT/GMLandscapeAnalysis/Sample_Distribution/"+folder
+
 os.path.exists(filepath)
 if not os.path.exists(filepath):
     os.mkdir(folder)
 
-def main():
 
+def main():
     if EXP:
         print("Sampling from truncated EXPONENTIAL distribution "+str(n_samp)+" times with "+str(n)+" nodes and size "+str(popnode)+" per node.")
         filename = "sample_exp_"+str(n).zfill(4)+"_"+str(popnode).zfill(4)+"_"+str(int(p*100)).zfill(3)+"_"+str(b).zfill(3)
@@ -50,6 +51,7 @@ def main():
         retcode = subprocess.call(commandline_args + [filepath+filename+"_"+str(i).zfill(3)] + args, stdout=FNULL, stderr=subprocess.STDOUT)
     print("Process completed.")
 
+# RUN THIS
 t0 = time.time()
 main()
 t1 = time.time()
