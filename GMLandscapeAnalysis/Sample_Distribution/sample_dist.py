@@ -23,16 +23,16 @@ popnode = 15 # average population per node
 cv = 0.8 # somewhat clustered compared to exponential
 p = 0.15 # fraction of empty nodes
 b = 90 # truncation upper bound
-n_samp = 10 # how many times to resample from ZITE/ZITG
+n_samp = 1 # how many times to resample from ZITE/ZITG
 
 # PATH TO EDIT
 folder = "simulations/"
-filepath = "~/Desktop/python2R/"+folder
+filepath = "/Users/mayashen/Desktop/MoNeT/GMLandscapeAnalysis/Sample_Distribution/"+folder
+os.path.exists(filepath)
+if not os.path.exists(filepath):
+    os.mkdir(folder)
 
 def main():
-    os.path.exists(folder)
-    if not os.path.exists(folder):
-        os.mkdir(folder)
 
     if EXP:
         print("Sampling from truncated EXPONENTIAL distribution "+str(n_samp)+" times with "+str(n)+" nodes and size "+str(popnode)+" per node.")
@@ -43,7 +43,7 @@ def main():
         print("Sampling from truncated GAMMA distribution "+str(n_samp)+" times with "+str(n)+" nodes and size "+str(popnode)+" per node.")
         filename = "sample_gamma_"+str(n).zfill(4)+"_"+str(popnode).zfill(4)+"_"+str(int(p*100)).zfill(3)+"_"+str(b).zfill(3)
         commandline_args = ['Rscript', '--vanilla', 'sample_gamma.R']
-        args = [str(cv), str(n), str(popnode), str(p), str(b)]
+        args = [str(n), str(popnode), str(cv), str(p), str(b)]
 
     FNULL = open(os.devnull, 'w')
     for i in range(n_samp):
