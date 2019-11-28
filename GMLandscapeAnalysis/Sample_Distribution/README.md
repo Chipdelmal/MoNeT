@@ -1,4 +1,5 @@
 # Sampling Population from Distributions
+*Sample from truncated exponential/gamma distribution and write to csv files.*
 
 First-time users:
 1. Open terminal.
@@ -10,9 +11,14 @@ install.packages("truncdist")
 install.packages("pracma")
 ```
 
-You should now be able to run code from `sample_dist.py` as expected.
+You should now be able to run code from `sample_dist.py` or  `sample_dist_coordinates.py` as expected.
 
 Steps:
-Open `sample_dist.py`.
-Edit parameters and file path as necessary.
+
+Open `sample_dist.py` or `sample_dist_coordinates.py`.
+
+Edit parameters and file path as necessary (in particular, set `EXP` to `True` for the truncated exponential and `False` for the truncated gamma).
+
+Run code body of file.
+
 Run `main()` at bottom of file.
