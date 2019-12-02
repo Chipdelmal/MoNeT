@@ -12,51 +12,65 @@ if sys.argv[1] != "srv":
 else:
     (ECO, PATH) = (sys.argv[2]=='eco', '/RAID5/marshallShare/SplitDriveSup/')
 # For testing
-# (ECO, PATH) = (sys.argv[2]=='eco', '/Volumes/marshallShare/SplitDriveSup/')
+(ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
-(expsNum, folders) = (6, ['ylinkedXShredder'])#['CRISPR','IIT','SIT','SplitDrive','fsRIDL','pgSIT']) ##aux.getExperiments(PATH)
+(expsNum, folders) = (
+        6,
+        [
+            'ylinkedXShredder', 'autosomalXShredder'
+            #'CRISPR','IIT','SIT','SplitDrive','fsRIDL',
+            #'pgSIT', 'ylinkedXShredder', 'autosomalXShredder'
+        ]
+    ) ##aux.getExperiments(PATH)
 (expType, style, path) = aux.selectAnalysisType(ECO, PATH_IMG)
 ###############################################################################
 # Iterate through folders
 ###############################################################################
-for dir in folders:
-    # Get drive
-    drivePars = drive.driveSelector(dir)
-    pathDrive = PATH + drivePars.get('folder') + '/GARBAGE/'
-    pathExps = monet.listDirectoriesWithPathWithinAPath(pathDrive)
-    ###############################################################################
-    # Iterate through experiments
-    ###############################################################################
-    time = str(datetime.datetime.now())
-    print(aux.CRED + '\n\nE: ' + drivePars.get('folder') + aux.CEND)
-    print(aux.CRED + 'O: ' + path + dir + aux.CEND)
-    print(aux.PAD + '* Processing Experiments [{0}]'.format(time) + aux.PAD)
-    ###############################################################################
-    num = len(pathExps)
-    aux.makeFolder(path + dir)
-    for i in range(0, num, 1):
-        pathSample = pathExps[i]
-        experimentString = pathSample.split("/")[-1]
-        paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
-        landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-                paths, drivePars.get(expType), male=True, female=True
-            )
-        if(ECO):
-            landscapeReps = aux.normalizeLandscapeDataRepetitions(landscapeReps)
-        figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
-        for j in range(0, len(figsArray)):
-            figsArray[j].get_axes()[0].set_xlim(0, style['xRange'][1])
-            figsArray[j].get_axes()[0].set_ylim(0, style['yRange'][1])
-            expOutStr = path + drivePars.get('folder') + '/' + experimentString
-            monet.quickSaveFigure(
-                figsArray[j], expOutStr + "_N" + str(j) + ".png", dpi=style['dpi']
-            )
-        plt.close('all')
-        print('Exported {0}/{1}: {2}'.format(str(i+1).rjust(4,'0'), num, expOutStr))
-    ###############################################################################
-    time = str(datetime.datetime.now())
-    print(aux.PAD + '* Finished [{0}]'.format(time) + aux.PAD)
-    ###############################################################################
+dir = folders[1]
+#for dir in folders:
+# Get drive
+drivePars = drive.driveSelector(dir)
+pathDrive = PATH + drivePars.get('folder') + '/GARBAGE/'
+pathExps = monet.listDirectoriesWithPathWithinAPath(pathDrive)
+###############################################################################
+# Iterate through experiments
+###############################################################################
+time = str(datetime.datetime.now())
+print(aux.CRED + '\n\nE: ' + drivePars.get('folder') + aux.CEND)
+print(aux.CRED + 'O: ' + path + dir + aux.CEND)
+print(aux.PAD + '* Processing Experiments [{0}]'.format(time) + aux.PAD)
+###############################################################################
+num = len(pathExps)
+aux.makeFolder(path + dir)
+for i in range(0, num, 1):
+    pathSample = pathExps[i]
+    experimentString = pathSample.split("/")[-1]
+    paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
+    landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+            paths, drivePars.get(expType), male=True, female=True
+        )
+    if(ECO):
+        landscapeReps = aux.normalizeLandscapeDataRepetitions(landscapeReps)
+    figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
+    for j in range(0, len(figsArray)):
+        figsArray[j].get_axes()[0].set_xlim(0, style['xRange'][1])
+        figsArray[j].get_axes()[0].set_ylim(0, style['yRange'][1])
+        expOutStr = path + drivePars.get('folder') + '/' + experimentString
+        monet.quickSaveFigure(
+            figsArray[j], expOutStr + "_N" + str(j) + ".png", dpi=style['dpi']
+        )
+    plt.close('all')
+    print('Exported {0}/{1}: {2}'.format(str(i+1).rjust(4,'0'), num, expOutStr))
+###############################################################################
+time = str(datetime.datetime.now())
+print(aux.PAD + '* Finished [{0}]'.format(time) + aux.PAD)
+###############################################################################
+
+
+nrml = aux.normalizeLandscapeDataRepetitions(landscapeReps)
+genes = nrml['genotypes']
+land = nrml['landscapes']
+land

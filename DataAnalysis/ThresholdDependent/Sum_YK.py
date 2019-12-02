@@ -15,12 +15,11 @@ import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 
-
+(NCORES, USER) = (20, 0)
 (CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
 # Factorial experiment
 ###############################################################################
-USER = 1
 if USER == 0:
     path = "/Volumes/marshallShare/ThresholdResub/factorialSA/"
 elif USER == 1:
@@ -46,7 +45,7 @@ print('**********************************************************************')
 ###############################################################################
 # Sweeping through experiments
 ###############################################################################
-for (i, expName) in enumerate(dirs[10:]):
+for (i, expName) in enumerate(dirs[16:24]):
     experiment = expName + "/ANALYZED/"
     driveID = expName.split("_")[0][0]
     (wildsList, homingList) = drive.driveGenesSelector(driveID)
@@ -64,7 +63,7 @@ for (i, expName) in enumerate(dirs[10:]):
     start = time.time()
     experimentFolders = sorted(monet.listDirectoriesInPath(path + experiment))
     print('* {0}) {1}'.format(i+1, expName), end=' ')
-    Parallel(n_jobs=20)(delayed(monet.loadFolderAndWriteFactorialCSV)(
+    Parallel(n_jobs=NCORES)(delayed(monet.loadFolderAndWriteFactorialCSV)(
             experimentString=folder, path=path+experiment,
             aggregationDictionary=aggregationDictionary,
             ratiosDictionary=ratiosDictionary
