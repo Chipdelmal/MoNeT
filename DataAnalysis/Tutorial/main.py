@@ -1,12 +1,13 @@
 import glob
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
+import csv
 
 ##############################################################################
 # Paths, experiment name and other commonly-changed settings
 ##############################################################################
 
-PATH_ROOT = '/Users/yunwenji/Documents/GitHub/MoNeT/Markov/out/'
+PATH_ROOT = '/Users/yunwenji/Documents/GitHub/MoNeT/Markov/50/'
 EXP_NAME_all = monet.listDirectoriesInPath(PATH_ROOT)
 
 (maleToggle, femaleToggle) = (True, True)
@@ -46,7 +47,7 @@ aggregationDictionary = {
 # Analyzing mean-response files
 ##############################################################################
 # Get the filenames for a particular experiment in the ANALYZED folder
-
+days = []
 for EXP_NAME in EXP_NAME_all:
     folderMean = PATH_ROOT  +EXP_NAME + '/ANALYZED/'
     innerFolder = monet.listDirectoriesInPath(folderMean)[0]
@@ -59,6 +60,11 @@ for EXP_NAME in EXP_NAME_all:
         landscapeSumData, aggregationDictionary
     )
     ssDay = monet.reachedSteadtStateAtDay(aggData, .025)
+
+    # save ssday in a list
+    days.append(ssDay)
+
+
     style["aspect"]=.1
     figStack = monet.plotMeanGenotypeStack(
         aggData, style, vLinesCoords=[ssDay]
@@ -99,3 +105,11 @@ for EXP_NAME in EXP_NAME_all:
         overlay, PATH_ROOT + "O_" + EXP_NAME + ".png"
     )
     plt.close()
+# save the list in a file
+with open("day.csv", 'w') as myfile:
+    wr = csv.writer(myfile, delimiter="\n")
+    wr.writerow(days)
+
+# plot the distribution in histogram and violinplot
+plt.hist(days)
+plt.violinplot(days)
