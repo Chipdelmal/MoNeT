@@ -2,6 +2,8 @@ import os
 import numpy as np
 import aux
 import MoNeT_MGDrivE as monet
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 
 PAD = '\n' + 125 * '*' + '\n'
 (CRED, CEND) = ('\033[91m', '\033[0m')
@@ -18,7 +20,7 @@ STYLE_HLT['aspect'] = monet.scaleAspect(.1, STYLE_HLT)
 STYLE_ECO = {
     "width": .075, "alpha": .15, "dpi": 500,
     "legend": True, "aspect": .5, "xRange": [0,2000], "yRange": [0, 1],
-    "colors": ['#ff004d', '#80ff80', '#6600ff', '#e600ff', '#b3ccff', '#333380']
+    "colors": ['#ff004d', '#80ff80', '#6600ff', '#e600ff', '#b3ccff', '#f0a6ca', '#333380']
 }
 STYLE_ECO['aspect'] = monet.scaleAspect(.1, STYLE_ECO)
 
@@ -72,3 +74,18 @@ def selectAnalysisType(ECO, PATH_IMG):
     else:
         (expType, style, path) = ('HLT', aux.STYLE_HLT, PATH_HLT)
     return (expType, style, path)
+
+
+def export_legend(legend, filename="legend.png", dpi=500):
+    fig  = legend.figure
+    fig.canvas.draw()
+    bbox  = legend.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+    fig.savefig(filename, dpi=dpi, bbox_inches=bbox)
+
+
+def exportGeneLegend(labels, colors, filename, dpi):
+    f = lambda m,c: plt.plot([],[],marker=m, color=c, ls="none")[0]
+    handles = [f("s", colors[i]) for i in range(len(labels))]
+    legend = plt.legend(handles, labels, loc=3, framealpha=1, frameon=False)
+    export_legend(legend, filename=filename, dpi=dpi)
+    plt.close('all')

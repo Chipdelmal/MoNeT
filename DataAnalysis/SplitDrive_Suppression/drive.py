@@ -15,7 +15,7 @@ def driveSelector(folder):
 # CRISPR
 ###############################################################################
 drive_CRISPR = {
-        'id': 'CRISPR', 'folder': 'CRISPR',
+        'id': 'CRISPR', 'folder': 'CRISPR', 'loc': 1,
         'HLT': monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
                 [[1, 4, 5, 6], [0, 2, 3, 7, 8, 9], [1, 4, 5, 6, 0, 2, 3, 7, 8, 9]]
@@ -33,7 +33,7 @@ drive_CRISPR = {
 # fsRIDL
 ###############################################################################
 drive_fsRIDL = {
-        'id': 'fsRIDL', 'folder': 'fsRIDL',
+        'id': 'fsRIDL', 'folder': 'fsRIDL', 'scl': 1,
         'HLT': monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
                 [
@@ -51,7 +51,7 @@ drive_fsRIDL = {
 # IIT (Wolbachia)
 ###############################################################################
 drive_IIT = {
-        'id': 'IIT', 'folder': 'IIT',
+        'id': 'IIT', 'folder': 'IIT', 'loc': 1,
         'HLT': monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
                 [[0], [1], [0, 1]]
@@ -65,7 +65,7 @@ drive_IIT = {
 # SIT
 ###############################################################################
 drive_SIT = {
-        'id': 'SIT', 'folder': 'SIT',
+        'id': 'SIT', 'folder': 'SIT', 'scl': 1,
         'HLT': monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
                 [[1, 2], [0], [0, 1, 2]]
@@ -79,7 +79,7 @@ drive_SIT = {
 # Split Drive
 ###############################################################################
 drive_SD = {
-        'id': 'SD', 'folder': 'SplitDrive',
+        'id': 'SD', 'folder': 'SplitDrive', 'loc': 1,
         'HLT': monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
                 [
@@ -104,7 +104,7 @@ drive_SD = {
 # pgSIT
 ###############################################################################
 drive_pgSIT = {
-        'id': 'pgSIT', 'folder': 'pgSIT',
+        'id': 'pgSIT', 'folder': 'pgSIT', 'loc': 1,
         'HLT': monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
                 [[1, 2], [0], [0, 1, 2]]
@@ -118,7 +118,7 @@ drive_pgSIT = {
 # Autosomal X-Shredder
 ###############################################################################
 drive_autoShred = {
-        'id': 'autoShred', 'folder': 'autosomalXShredder',
+        'id': 'autoShred', 'folder': 'autosomalXShredder', 'loc': 2,
         'HLT': monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
                 [
@@ -154,7 +154,7 @@ drive_autoShred = {
 # Y-Linked X-Shredder
 ###############################################################################
 drive_yShred = {
-        'id': 'yShred', 'folder': 'ylinkedXShredder',
+        'id': 'yShred', 'folder': 'ylinkedXShredder', 'loc': 1,
         'HLT': monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
                 [[4, 7], [0, 1, 3, 5, 6, 8], [0, 1, 2, 3, 4, 5, 6, 7, 8]]
