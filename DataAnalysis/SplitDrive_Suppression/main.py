@@ -23,7 +23,7 @@ PATH_IMG = PATH + 'img/'
 (expsNum, folders) = (
         6,
         [
-            'ylinkedXShredder', 'autosomalXShredder'
+            'ylinkedXShredder', 'autosomalXShredder',
             'CRISPR','IIT','SIT','SplitDrive','fsRIDL',
             'pgSIT', 'ylinkedXShredder', 'autosomalXShredder'
         ]
@@ -49,7 +49,7 @@ for dir in folders:
     num = len(pathExps)
     aux.makeFolder(path + dir)
     drv = drivePars.get(expType)
-    for i in range(0, 2, 1):
+    for i in range(0, num, 1):
         pathSample = pathExps[i]
         experimentString = pathSample.split("/")[-1]
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
@@ -83,3 +83,7 @@ nrml = aux.normalizeLandscapeDataRepetitions(landscapeReps)
 genes = nrml['genotypes']
 land = nrml['landscapes']
 land
+
+dir
+
+drivePars.get('folder')
