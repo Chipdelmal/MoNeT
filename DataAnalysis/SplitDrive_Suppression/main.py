@@ -58,7 +58,7 @@ for dir in folders:
                 paths, drv, male=True, female=True
             )
         if(ECO):
-            landscapeReps = aux.normalizeLandscapeDataRepetitions(
+            landscapeReps = monet.normalizeLandscapeDataRepetitions(
                     landscapeReps, lociiScaler=drivePars['loc']
                 )
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
