@@ -20,7 +20,7 @@ else:
             '/RAID5/marshallShare/SplitDriveSup/'
         )
 # For testing
-(ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/')
+# (ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
@@ -48,7 +48,7 @@ for dir in folders:
     print(aux.PAD + '* Processing Experiments [{0}]'.format(time) + aux.PAD)
     ###########################################################################
     num = len(pathExps)
-    monet.makeFolder(path + dir)
+    aux.makeFolder(path + dir)
     drv = drivePars.get(expType)
     for i in range(0, num, 1):
         pathSample = pathExps[i]
@@ -58,7 +58,7 @@ for dir in folders:
                 paths, drv, male=True, female=True
             )
         if(ECO):
-            landscapeReps = monet.normalizeLandscapeDataRepetitions(
+            landscapeReps = aux.normalizeLandscapeDataRepetitions(
                     landscapeReps, lociiScaler=drivePars['loc']
                 )
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
