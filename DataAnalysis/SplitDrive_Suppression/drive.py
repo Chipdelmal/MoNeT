@@ -11,6 +11,7 @@ def driveSelector(folder):
     if(folder == drive_autoShred.get('folder')):    return drive_autoShred;
     if(folder == drive_yShred.get('folder')):    return drive_yShred;
 
+
 ###############################################################################
 # CRISPR
 ###############################################################################
@@ -33,7 +34,7 @@ drive_CRISPR = {
 # fsRIDL
 ###############################################################################
 drive_fsRIDL = {
-        'id': 'fsRIDL', 'folder': 'fsRIDL', 'scl': 1,
+        'id': 'fsRIDL', 'folder': 'fsRIDL', 'loc': 1,
         'HLT': monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
                 [
@@ -65,7 +66,7 @@ drive_IIT = {
 # SIT
 ###############################################################################
 drive_SIT = {
-        'id': 'SIT', 'folder': 'SIT', 'scl': 1,
+        'id': 'SIT', 'folder': 'SIT', 'loc': 1,
         'HLT': monet.generateAggregationDictionary(
                 ["H", "Other", "Total"],
                 [[1, 2], [0], [0, 1, 2]]
