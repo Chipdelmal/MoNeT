@@ -46,35 +46,35 @@ tgamma_start <- function(mean,var){
 
 main <- function(filepath, n, popnode, cv, p, b) {
   totpop <- n*popnode
-  
+
   # resample
   pops <- replicate(n = 1,expr = {
-    
+
     # bernoulli draws for 0 adults
     x <- rbinom(n = n,size = 1,prob = p)
     x <- as.integer(!x)
-    
+
     # the mean and variance we would need to hit the same mean overall with untruncated
     mean_star <- (popnode*n)/sum(x!=0)
     var_star <- (mean_star*cv)^2
-    
+
     # get some starting points, perturb them
     x0_pts <- tgamma_start(mean = mean_star,var = var_star)
-    
+
     # try Newton's method
     soln <- try(pracma::newtonsys(Ffun = tgamma_sys,x0 = log(x0_pts),Jfun = NULL,
                                   b = b,mean = mean_star,var = var_star))
     if(inherits(soln,"try-error")){
       stop("warning: Newton's method did not converge; try reducing CV and re-sample")
     }
-    
+
     # draw from the distribution
     x[x!=0] <- rtrunc(n = sum(x!=0),spec = "gamma",a = 0,b = b,shape = exp(soln$zero)[[1]],rate = exp(soln$zero)[[2]])
     if(any(x[x!=0] > b)) {
       stop("something has gone horribly awry")
     }
     x <- as.integer(round(x))
-    write.csv(x, file = paste(filepath,".csv", sep=""),row.names=FALSE)
+    write.csv(x, file = filepath, col.names = c("n"), row.names=FALSE)
     return(x)
   })
 }

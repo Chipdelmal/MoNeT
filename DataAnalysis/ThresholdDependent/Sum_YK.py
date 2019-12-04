@@ -1,7 +1,8 @@
 ###############################################################################
 # Sum_YK
-##  Calculates the differences csv between a factorial sweep and a SA set
-##  of experiments
+##  Generates the summary CSV files for both: factorial and sensitivity
+##  analyses. This script takes into account all the nodes present in the
+##  landscape.
 ###############################################################################
 
 from joblib import Parallel, delayed
@@ -14,23 +15,22 @@ import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 
-
+(NCORES, USER) = (20, 0)
 (CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
 # Factorial experiment
 ###############################################################################
-USER = 0
 if USER == 0:
     path = "/Volumes/marshallShare/ThresholdResub/factorialSA/"
 elif USER == 1:
-    path = "/RAID5/marshallShare/ThresholdResub/batchSweep/"
+    path = "/RAID5/marshallShare/ThresholdResub/factorialSA/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
 ###############################################################################
 temp = []
 for i in dirs:
-    if(i[0] != 'i' and i[0] != 'sensitivity'):
+    if(i[0] != 'i' and i[0] != 's'):
         temp.append(i)
 (expsNum, dirs) = (len(temp), temp)
 ###############################################################################
@@ -45,7 +45,7 @@ print('**********************************************************************')
 ###############################################################################
 # Sweeping through experiments
 ###############################################################################
-for (i, expName) in enumerate(dirs):
+for (i, expName) in enumerate(dirs[16:24]):
     experiment = expName + "/ANALYZED/"
     driveID = expName.split("_")[0][0]
     (wildsList, homingList) = drive.driveGenesSelector(driveID)
@@ -62,8 +62,8 @@ for (i, expName) in enumerate(dirs):
     ###########################################################################
     start = time.time()
     experimentFolders = sorted(monet.listDirectoriesInPath(path + experiment))
-    print('* {0}) {1}'.format(i+1, expName), end='\r')
-    Parallel(n_jobs=20)(delayed(monet.loadFolderAndWriteFactorialCSV)(
+    print('* {0}) {1}'.format(i+1, expName), end=' ')
+    Parallel(n_jobs=NCORES)(delayed(monet.loadFolderAndWriteFactorialCSV)(
             experimentString=folder, path=path+experiment,
             aggregationDictionary=aggregationDictionary,
             ratiosDictionary=ratiosDictionary
@@ -71,7 +71,7 @@ for (i, expName) in enumerate(dirs):
         for folder in experimentFolders
     )
     end = time.time()
-    print(' [{2:.2f} min]'.format(i+1, expName, (end-start)/60))
+    print('[{2:.2f} min]'.format(i+1, expName, (end-start)/60))
     ###########################################################################
     # Load and Compile CSVs into one
     ###########################################################################

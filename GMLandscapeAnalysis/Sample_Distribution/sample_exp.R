@@ -31,7 +31,7 @@ main <- function(filepath, n, popnode, p, b) {
       stop("something has gone horribly awry")
     }
     x <- as.integer(round(x))
-    write.csv(x, file = paste(filepath,".csv", sep=""),row.names=FALSE)
+    write.csv(x, file = filepath ,row.names=FALSE)
     return(x)
   },simplify = FALSE)
 }

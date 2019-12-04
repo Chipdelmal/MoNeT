@@ -4,7 +4,7 @@ import genSingleCsv as gS
 # Main
 ###############################################################################
 # Define sim parameters
-(reps, n, zeroInflation) = (10, [5 ** 2], .75)
+(reps, n, zeroInflation) = (250, [5 ** 2], .75)
 mskMat = [
         [0.30, 0.70, 0.00],
         [0.70, 0.30, 0.00],
@@ -12,6 +12,6 @@ mskMat = [
     ]
 
 # Generate landscapes with two point-types and different probabilities
-probsList = [.999, .500]
+probsList = [.5, .6, .7, .8, .9, .999]
 for pA in probsList:
     gS.genCSV(reps, n, [0], [[pA, 1-pA, 0.0]], mskMat, zeroInflation)

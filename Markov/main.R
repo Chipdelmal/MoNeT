@@ -30,7 +30,7 @@ REPITER = 1           # number of groups of repetitions to perform
 ###############################################################################
 if(USER==0){
   LANDSCAPE_PATH='/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/kernels/'
-  BASE_OUTPUT_PATH='/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/out'
+  BASE_OUTPUT_PATH='/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/out/'
 }else if(USER==1){
   LANDSCAPE_PATH='/Volumes/marshallShare/Heterogeneity/Yunwen/Landscapes/'
   BASE_OUTPUT_PATH='/Volumes/marshallShare/Heterogeneity/Yunwen/Output/'
@@ -179,7 +179,7 @@ parallel::clusterApplyLB(cl = cl, x = ExperimentList, fun = function(x){
     genotypes = driveCube$genotypesID, remFiles = FALSE
   )
   # remove raw folder
-  unlink(x = x$folders[c(1)], recursive = TRUE, force = TRUE)
+  unlink(x = x$folders[c(1, 3)], recursive = TRUE, force = TRUE)
   gc()
 })
 ###############################################################################
