@@ -23,7 +23,7 @@ NUM_CORES = 4
 # Experimental Setup and PATHS Definition
 ###############################################################################
 # USER: {1: HS, 2: YJ}
-USER = 0
+USER = 2
 SIM_TIME = 365 * 3
 REPETITIONS = 10 * 2   # number of repetitions of each experiment
 REPITER = 1           # number of groups of repetitions to perform
@@ -34,6 +34,9 @@ if(USER==0){
 }else if(USER==1){
   LANDSCAPE_PATH='/Volumes/marshallShare/Heterogeneity/Yunwen/Landscapes/'
   BASE_OUTPUT_PATH='/Volumes/marshallShare/Heterogeneity/Yunwen/Output/'
+}else if(USER==2){
+  LANDSCAPE_PATH='/Volumes/marshallShare/Markov/kernels/'
+  BASE_OUTPUT_PATH='/Volumes/marshallShare/Markov/out/'
 }else{
   warning("invalid user!")
 }
