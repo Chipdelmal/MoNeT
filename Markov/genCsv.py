@@ -4,7 +4,7 @@ import genSingleCsv as gS
 # Main
 ###############################################################################
 # Define sim parameters
-(reps, n, zeroInflation) = (500, [5 ** 2], .75)
+(reps, n, zeroInflation) = (250, [5 ** 2], .75)
 mskMat = [
         [0.30, 0.70, 0.00],
         [0.70, 0.30, 0.00],
