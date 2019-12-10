@@ -20,14 +20,14 @@ else:
             '/RAID5/marshallShare/SplitDriveSup/'
         )
 # For testing
-# (ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/')
+(ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/noMigration/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'ylinkedXShredder', 'autosomalXShredder', 'CRISPR',
-        'IIT', 'SIT', 'SplitDrive', 'fsRIDL', 'pgSIT'
+        'SplitDrive', 'ylinkedXShredder',  'autosomalXShredder',
+        'CRISPR', 'IIT', 'SIT', 'fsRIDL', 'pgSIT'
     ]
 (expType, style, path) = aux.selectAnalysisType(ECO, PATH_IMG)
 ###############################################################################
@@ -48,7 +48,7 @@ for dir in folders:
     print(aux.PAD + '* Processing Experiments [{0}]'.format(time) + aux.PAD)
     ###########################################################################
     num = len(pathExps)
-    aux.makeFolder(path + dir)
+    monet.makeFolder(path + dir)
     drv = drivePars.get(expType)
     for i in range(0, num, 1):
         pathSample = pathExps[i]
@@ -86,3 +86,35 @@ for dir in folders:
 time = str(datetime.datetime.now())
 print(aux.PAD + '* Finished [{0}]'.format(time) + aux.PAD)
 ###########################################################################
+
+
+import numpy as np
+
+def introgrationDay(aggData, geneIx, threshold, skipDays=10, refFrame=-1):
+    popCounts = aggData
+    for j in range(len(popCounts)):
+        totalPop = sum(popCounts[j])
+        if (totalPop > 0):
+            ratio = popCounts[j][geneIx] / sum(popCounts[-1])
+            if (ratio <= threshold):
+                return j
+    return 0
+
+
+lands = landscapeReps['landscapes']
+(pop, gIx, tIx, thrs, ssDay, tol, skipDays) = (
+            lands[0][0],
+            1, [0, 1],
+            [.975, .925],
+            -1, .005,
+            0
+        )
+
+ssPop = sum(pop[ssDay])
+for dayData in pop[skipDays:]:
+    totalPop = sum(dayData[tIx])
+    if (totalPop > 0):
+        fraction = (dayData[gIx] / totalPop)
+        closeFlags = [np.isclose(fraction, i, tol) for i in thrs]
+        if (any(closeFlags)):
+            print(closeFlags)
