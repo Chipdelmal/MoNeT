@@ -102,6 +102,6 @@ def genCSV(reps, n, heterogenity, landscapeProb, mskMat, zeroInflation):
                 )
 
             # save figure
-            filenameLand = "kernels" + os.sep + 'L_' + baseName + '.png'
+            filenameLand = "kernels" + os.sep + 'H_' + baseName + '.png'
             fig = landscapePlot.get_figure()
             fig.savefig(filenameLand)

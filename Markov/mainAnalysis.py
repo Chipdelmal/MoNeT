@@ -7,7 +7,7 @@ import csv
 # Paths, experiment name and other commonly-changed settings
 ##############################################################################
 
-PATH_ROOT = '/Users/sanchez.hmsc/Documents/GitHub/MoNeT/Markov/out/099/'
+PATH_ROOT = '/Volumes/marshallShare/Heterogeneity/Yunwen/Markov/EXP03/out/070/'
 EXP_NAME_all = monet.listDirectoriesInPath(PATH_ROOT)
 
 (maleToggle, femaleToggle) = (True, True)
@@ -18,9 +18,9 @@ EXP_NAME_all = monet.listDirectoriesInPath(PATH_ROOT)
 colors = ['#2d2275', '#fc074f', '#ccf70c', '#3399ff']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 style = {
-    "width": .05,  "aspect": .01, "dpi": 1024, "legend": False,
+    "width": .05,  "aspect": .01, "dpi": 300, "legend": False,
     "alpha": 1, "colors": colors,
-    "xRange": [0,1000], "yRange": [0,100000]
+    "xRange": [0, 1000], "yRange": [0, 100000]
 }
 
 ##############################################################################
@@ -35,7 +35,7 @@ aggregationDictionary = {
     #     [2, 6, 9, 9, 10, 11],
     #     [3, 7, 10, 12, 12, 13, 4, 8, 11, 13, 14, 14]
     # ]
-    'indices':[
+    'indices': [
         [0, 0, 1, 2, 3],
         [1, 4, 4, 5, 6],
         [2, 5, 7, 7, 8],
@@ -63,9 +63,7 @@ for EXP_NAME in EXP_NAME_all:
 
     # save ssday in a list
     days.append(ssDay)
-
-
-    style["aspect"]=.1
+    style["aspect"] = .1
     figStack = monet.plotMeanGenotypeStack(
         aggData, style, vLinesCoords=[ssDay]
     )
@@ -76,11 +74,11 @@ for EXP_NAME in EXP_NAME_all:
     )
     plt.close()
 
-    ##############################################################################
+    ###########################################################################
     # Analyzing geo-spatiotemporal files
-    ##############################################################################
+    ###########################################################################
     # Get the filenames for a particular experiment in the ANALYZED folder
-    folderMean = PATH_ROOT  + EXP_NAME + '/ANALYZED/'
+    folderMean = PATH_ROOT + EXP_NAME + '/ANALYZED/'
     innerFolder = monet.listDirectoriesInPath(folderMean)[0]
     filenames = monet.readExperimentFilenames(folderMean + innerFolder)
     # Process landscape data
@@ -110,7 +108,6 @@ for EXP_NAME in EXP_NAME_all:
 with open("day.csv", 'w') as myfile:
     wr = csv.writer(myfile, delimiter="\n")
     wr.writerow(days)
-
 
 
 # plot the distribution in histogram and violinplot
