@@ -1,7 +1,7 @@
 ###############################################################################
 # DF_SA
-##  Calculates the differences csv between a factorial sweep and a SA set
-##  of experiments
+#   Calculates the differences csv between a factorial sweep and a SA set
+#   of experiments
 ###############################################################################
 
 import aux
@@ -17,8 +17,8 @@ cScale = 1
 (CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
 # Define paths for central files and sensitivity analysis ones
-##  SA: Expects the IDa_(IDb)_ABCD.csv files folder (SA)
-##  CF: Expects the IDa_(IDb).csv files folder (sweep)
+#  SA: Expects the IDa_(IDb)_ABCD.csv files folder (SA)
+#  CF: Expects the IDa_(IDb).csv files folder (sweep)
 ###############################################################################
 pathSA = '/Volumes/marshallShare/ThresholdResub/factorialSA/'
 pathCF = '/Volumes/marshallShare/ThresholdResub/factorialSweep/'
@@ -35,7 +35,7 @@ saFiles = [aux.getFilenameFromPath(i) for i in saPaths]
 # Message for terminal
 ###############################################################################
 print('\n')
-print(CRED + 'CT: ' + pathCF+ CEND)
+print(CRED + 'CT: ' + pathCF + CEND)
 print(CRED + 'SA: ' + pathSA + CEND)
 print('**********************************************************************')
 print('* Processing ' + str(len(saFiles)) + ' experiments [' + str(datetime.datetime.now()) + ']')
