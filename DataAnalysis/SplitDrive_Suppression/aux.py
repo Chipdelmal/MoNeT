@@ -11,14 +11,14 @@ PAD = '\n' + 125 * '*' + '\n'
 # Style
 ###############################################################################
 STYLE_HLT = {
-    "width": .075, "alpha": .15, "dpi": 500,
+    "width": .1, "alpha": .1, "dpi": 500,
     "legend": True, "aspect": .5, "xRange": [0, 2000], "yRange": [0, 20000],
     "colors": ['#9f00cc', '#ec0b43', '#0038a8']
 }
 STYLE_HLT['aspect'] = monet.scaleAspect(.1, STYLE_HLT)
 
 STYLE_ECO = {
-    "width": .075, "alpha": .15, "dpi": 500,
+    "width": .1, "alpha": .1, "dpi": 500,
     "legend": True, "aspect": .5, "xRange": [0, 2000], "yRange": [0, 1],
     "colors": [
             '#ff004d', '#80ff80', '#6600ff',
@@ -44,7 +44,7 @@ def getExperiments(PATH):
 def selectAnalysisType(ECO, PATH_IMG):
     (PATH_HLT, PATH_ECO) = (PATH_IMG + 'hlt/', PATH_IMG + 'eco/')
     if ECO is True:
-        (expType, style, path) = ('ECO', aux.STYLE_ECO, PATH_ECO)
+        (expType, style, path, doi) = ('ECO', aux.STYLE_ECO, PATH_ECO, 'W')
     else:
-        (expType, style, path) = ('HLT', aux.STYLE_HLT, PATH_HLT)
-    return (expType, style, path)
+        (expType, style, path, doi) = ('HLT', aux.STYLE_HLT, PATH_HLT, 'Other')
+    return (expType, style, path, doi)

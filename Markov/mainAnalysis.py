@@ -7,7 +7,7 @@ import csv
 # Paths, experiment name and other commonly-changed settings
 ##############################################################################
 
-PATH_ROOT = '/Volumes/marshallShare/Heterogeneity/Yunwen/Markov/EXP03/out/070/'
+PATH_ROOT = '/Volumes/marshallShare/Heterogeneity/Yunwen/Markov/EXP03/out/080/'
 EXP_NAME_all = monet.listDirectoriesInPath(PATH_ROOT)
 
 (maleToggle, femaleToggle) = (True, True)
@@ -29,12 +29,6 @@ style = {
 ##############################################################################
 aggregationDictionary = {
     'genotypes': ['W', 'H', 'B', 'R'],
-    # 'indices': [
-    #     [0, 0, 1, 2, 3, 4],
-    #     [1, 5, 5, 6, 7, 8],
-    #     [2, 6, 9, 9, 10, 11],
-    #     [3, 7, 10, 12, 12, 13, 4, 8, 11, 13, 14, 14]
-    # ]
     'indices': [
         [0, 0, 1, 2, 3],
         [1, 4, 4, 5, 6],

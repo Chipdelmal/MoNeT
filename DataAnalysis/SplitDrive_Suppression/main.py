@@ -1,11 +1,13 @@
 import sys
 # import os
+import operator as op
 import aux as aux
 import drive as drive
-# import numpy as np
+import numpy as np
 import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
+from operator import and_
 # import matplotlib.patches as mpatches
 
 
@@ -26,10 +28,12 @@ else:
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'SplitDrive', 'ylinkedXShredder',  'autosomalXShredder',
-        'CRISPR', 'IIT', 'SIT', 'fsRIDL', 'pgSIT'
+        'SplitDrive'
+        #, 'ylinkedXShredder',  'autosomalXShredder',
+        # 'CRISPR', 'IIT', 'SIT', 'fsRIDL', 'pgSIT'
     ]
-(expType, style, path) = aux.selectAnalysisType(ECO, PATH_IMG)
+(expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
+(NOI, thresholds, SSPOP) = (0, [.9, .75, .5], 10000)
 ###############################################################################
 # Iterate through folders
 ###############################################################################
@@ -37,8 +41,14 @@ dir = folders[0]
 for dir in folders:
     # Get drive
     drivePars = drive.driveSelector(dir)
+    gIx = drivePars[expType]['genotypes'].index(doi)
+    ###########################################################################
+    # Paths
+    ###########################################################################
     pathDrive = PATH + drivePars.get('folder') + '/GARBAGE/'
     pathExps = monet.listDirectoriesWithPathWithinAPath(pathDrive)
+    pathDriveM = PATH + drivePars.get('folder') + '/ANALYZED/'
+    pathExpsM = monet.listDirectoriesWithPathWithinAPath(pathDriveM)
     ###########################################################################
     # Iterate through experiments
     ###########################################################################
@@ -51,8 +61,30 @@ for dir in folders:
     monet.makeFolder(path + dir)
     drv = drivePars.get(expType)
     for i in range(0, num, 1):
-        pathSample = pathExps[i]
+        (pathSample, pathSampleM) = (pathExps[i], pathExpsM[i])
         experimentString = pathSample.split("/")[-1]
+        ######################################################################
+        # Mean response analysis
+        if expType == 'HLT':
+            filenames = monet.readExperimentFilenames(pathSampleM)
+            landscapeData = monet.loadLandscapeData(
+                filenames, male=True, female=True, dataType=float
+             )
+            aggregatedNodesData = monet.aggregateGenotypesInLandscape(
+                landscapeData, drv
+            )
+            nodePop = aggregatedNodesData['landscape'][NOI]
+            thrsBool = monet.comparePopToThresholds(
+                nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
+            )
+            monet.countConditionDays(thrsBool)
+            chngDays = monet.getConditionChangeDays(thrsBool)
+            prtcDays = monet.countConditionDays(thrsBool)
+        else:
+            chngDays = [0 for _ in thresholds]
+            prtcDays = [0 for _ in thresholds]
+        ######################################################################
+        # Traces
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
                 paths, drv, male=True, female=True
@@ -63,8 +95,15 @@ for dir in folders:
                 )
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
         for j in range(0, len(figsArray)):
-            figsArray[j].get_axes()[0].set_xlim(0, style['xRange'][1])
-            figsArray[j].get_axes()[0].set_ylim(0, style['yRange'][1])
+            axTemp = figsArray[j].get_axes()[0]
+            axTemp.set_xlim(0, style['xRange'][1])
+            axTemp.set_ylim(0, style['yRange'][1])
+            title = '  '.join(['[{} : {}]'.format(x[0], x[1]) for x in zip(thresholds, prtcDays)])
+            axTemp.set_title(title, fontsize=5)
+            for vLine in chngDays:
+                axTemp.axvline(
+                    x=vLine, linewidth=.075, linestyle='--', color='gray'
+                )
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             monet.quickSaveFigure(
                 figsArray[j], expOutStr + "_N" + str(j) + ".png",
@@ -76,45 +115,13 @@ for dir in folders:
                     str(i+1).rjust(4, '0'), num, expOutStr
                 )
             )
+    ##########################################################################
     # Export color palette
     drvNum = len(drv['genotypes'])
     (labels, colors) = (drv['genotypes'], style['colors'][0:drvNum])
     filename = path + drivePars.get('folder') + '/legend.png'
     monet.exportGeneLegend(labels, colors, filename, dpi=750)
-
-###########################################################################
+##############################################################################
 time = str(datetime.datetime.now())
 print(aux.PAD + '* Finished [{0}]'.format(time) + aux.PAD)
-###########################################################################
-
-
-import numpy as np
-
-def introgrationDay(aggData, geneIx, threshold, skipDays=10, refFrame=-1):
-    popCounts = aggData
-    for j in range(len(popCounts)):
-        totalPop = sum(popCounts[j])
-        if (totalPop > 0):
-            ratio = popCounts[j][geneIx] / sum(popCounts[-1])
-            if (ratio <= threshold):
-                return j
-    return 0
-
-
-lands = landscapeReps['landscapes']
-(pop, gIx, tIx, thrs, ssDay, tol, skipDays) = (
-            lands[0][0],
-            1, [0, 1],
-            [.975, .925],
-            -1, .005,
-            0
-        )
-
-ssPop = sum(pop[ssDay])
-for dayData in pop[skipDays:]:
-    totalPop = sum(dayData[tIx])
-    if (totalPop > 0):
-        fraction = (dayData[gIx] / totalPop)
-        closeFlags = [np.isclose(fraction, i, tol) for i in thrs]
-        if (any(closeFlags)):
-            print(closeFlags)
+##############################################################################
