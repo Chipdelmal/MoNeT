@@ -28,9 +28,8 @@ else:
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'SplitDrive'
-        #, 'ylinkedXShredder',  'autosomalXShredder',
-        # 'CRISPR', 'IIT', 'SIT', 'fsRIDL', 'pgSIT'
+        'SplitDrive', 'ylinkedXShredder',  'autosomalXShredder',
+        'CRISPR', 'IIT', 'SIT', 'fsRIDL', 'pgSIT'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
 (NOI, thresholds, SSPOP) = (0, [.9, .75, .5], 10000)
@@ -98,11 +97,17 @@ for dir in folders:
             axTemp = figsArray[j].get_axes()[0]
             axTemp.set_xlim(0, style['xRange'][1])
             axTemp.set_ylim(0, style['yRange'][1])
-            title = '  '.join(['[{} : {}]'.format(x[0], x[1]) for x in zip(thresholds, prtcDays)])
-            axTemp.set_title(title, fontsize=5)
+            title = '  '.join(['[{} : {}]'.format(str(round(1-x[0],2)).ljust(4,'0'), str(x[1]).zfill(4)) for x in zip(thresholds, prtcDays)])
+            axTemp.text(
+                    .99, .95, title,
+                    verticalalignment='top', horizontalalignment='right',
+                    transform=axTemp.transAxes,
+                    color='Black', fontsize=2.5, alpha=.5
+                )
             for vLine in chngDays:
                 axTemp.axvline(
-                    x=vLine, linewidth=.075, linestyle='--', color='gray'
+                    x=vLine, linewidth=.1,
+                    linestyle='--', color='Black', alpha=.5
                 )
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             monet.quickSaveFigure(
