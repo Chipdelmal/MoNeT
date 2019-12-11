@@ -22,17 +22,17 @@ else:
             '/RAID5/marshallShare/SplitDriveSup/'
         )
 # For testing
-(ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/noMigration/')
+# (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/noMigration/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'SplitDrive', 'ylinkedXShredder',  'autosomalXShredder',
+        'ylinkedXShredder', 'autosomalXShredder', 'SplitDrive',
         'CRISPR', 'IIT', 'SIT', 'fsRIDL', 'pgSIT'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
-(NOI, thresholds, SSPOP) = (0, [.9, .75, .5], 10000)
+(NOI, thresholds, SSPOP) = (0, [.9, .75, .5, .25, .1], 10000)
 ###############################################################################
 # Iterate through folders
 ###############################################################################
