@@ -1,29 +1,20 @@
 import sys
-# import os
-# import operator as op
 import aux as aux
 import drive as drive
-# import numpy as np
 import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
-# from operator import and_
-# import matplotlib.patches as mpatches
 
 
-
-
+###############################################################################
+# Code for terminal-call: python main.py "srv" "eco"
+###############################################################################
 if sys.argv[1] != "srv":
-    (ECO, PATH) = (
-            sys.argv[2] == 'eco',
-            '/Volumes/marshallShare/SplitDriveSup/noMigration/'
-        )
+    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', '/Volumes/')
 else:
-    (ECO, PATH) = (
-            sys.argv[2] == 'eco',
-            '/RAID5/marshallShare/SplitDriveSup/noMigration/'
-        )
-# For testing
+    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', '/RAID5/')
+PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
+# For testing #################################################################
 (ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/noMigration/')
 ###############################################################################
 # Setup paths and analysis type
@@ -65,8 +56,10 @@ for dir in folders:
         experimentString = pathSample.split("/")[-1]
         #######################################################################
         # Mean response analysis
+        #   Calculates the times for drives to achieve given thresholds of
+        #   interest (for vertical lines in traces).
         #######################################################################
-        # Load files with the mean response and aggregate
+        # Load files with the mean response and aggregate #####################
         filenames = monet.readExperimentFilenames(pathSampleM)
         landscapeData = monet.loadLandscapeData(
                 filenames, male=True, female=True, dataType=float
@@ -75,7 +68,7 @@ for dir in folders:
                 landscapeData, drv
             )
         nodePop = aggregatedNodesData['landscape'][NOI]
-        # Load files with the mean response
+        # Normalize if the analysis is ECO ####################################
         if expType == 'HLT':
             thrsBool = monet.comparePopToThresholds(
                     nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
@@ -87,13 +80,14 @@ for dir in folders:
             thrsBool = monet.comparePopToThresholds(
                     nodePop, gIx, [0, 1], thresholds, refPop=1
                 )
-        # Calculate the metrics
+        # Calculate the metrics ###############################################
         (chngDays, prtcDays) = (
                 monet.getConditionChangeDays(thrsBool),
                 monet.countConditionDays(thrsBool)
             )
         #######################################################################
         # Traces
+        #   Generates the plot of the experiment at a repetition level.
         #######################################################################
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
@@ -133,6 +127,7 @@ for dir in folders:
             )
     ##########################################################################
     # Export color palette
+    ##########################################################################
     drvNum = len(drv['genotypes'])
     (labels, colors) = (drv['genotypes'], style['colors'][0:drvNum])
     filename = path + drivePars.get('folder') + '/legend.png'

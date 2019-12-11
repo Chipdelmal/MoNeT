@@ -1,9 +1,7 @@
 import os
-# import numpy as np
 import aux
 import MoNeT_MGDrivE as monet
-# import matplotlib.pyplot as plt
-# import matplotlib.patches as mpatches
+
 
 PAD = '\n' + 125 * '*' + '\n'
 (CRED, CEND) = ('\033[91m', '\033[0m')
