@@ -160,7 +160,7 @@ drive_yShred = {
                 [[4, 7], [0, 1, 3, 5, 6, 8], [0, 1, 2, 3, 4, 5, 6, 7, 8]]
             ),
         'ECO': monet.generateAggregationDictionary(
-                ['A', 'B', 'X & Y', 'R', 'Total'],
+                ['A', 'B', 'W', 'R', 'Total'],
                 [
                     [4, 7],
                     [5, 8],

@@ -48,3 +48,12 @@ def selectAnalysisType(ECO, PATH_IMG):
     else:
         (expType, style, path, doi) = ('HLT', aux.STYLE_HLT, PATH_HLT, 'Other')
     return (expType, style, path, doi)
+
+
+def parseTitle(thresholds, prtcDays):
+    title = '  '.join(['[{} : {}]'.format(
+                str(round(1-x[0], 2)).ljust(4, '0'),
+                str(x[1]).zfill(4)
+            ) for x in zip(thresholds, prtcDays)]
+        )
+    return title

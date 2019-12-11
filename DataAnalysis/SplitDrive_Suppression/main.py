@@ -1,28 +1,30 @@
 import sys
 # import os
-import operator as op
+# import operator as op
 import aux as aux
 import drive as drive
-import numpy as np
+# import numpy as np
 import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
-from operator import and_
+# from operator import and_
 # import matplotlib.patches as mpatches
+
+
 
 
 if sys.argv[1] != "srv":
     (ECO, PATH) = (
             sys.argv[2] == 'eco',
-            '/Volumes/marshallShare/SplitDriveSup/'
+            '/Volumes/marshallShare/SplitDriveSup/noMigration/'
         )
 else:
     (ECO, PATH) = (
             sys.argv[2] == 'eco',
-            '/RAID5/marshallShare/SplitDriveSup/'
+            '/RAID5/marshallShare/SplitDriveSup/noMigration/'
         )
 # For testing
-# (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/noMigration/')
+(ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/noMigration/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
@@ -38,7 +40,7 @@ folders = [
 ###############################################################################
 dir = folders[0]
 for dir in folders:
-    # Get drive
+    # Get drive parameters
     drivePars = drive.driveSelector(dir)
     gIx = drivePars[expType]['genotypes'].index(doi)
     ###########################################################################
@@ -56,34 +58,43 @@ for dir in folders:
     print(aux.CRED + 'O: ' + path + dir + aux.CEND)
     print(aux.PAD + '* Processing Experiments [{0}]'.format(time) + aux.PAD)
     ###########################################################################
-    num = len(pathExps)
     monet.makeFolder(path + dir)
-    drv = drivePars.get(expType)
+    (num, drv) = (len(pathExps), drivePars.get(expType))
     for i in range(0, num, 1):
         (pathSample, pathSampleM) = (pathExps[i], pathExpsM[i])
         experimentString = pathSample.split("/")[-1]
-        ######################################################################
+        #######################################################################
         # Mean response analysis
-        if expType == 'HLT':
-            filenames = monet.readExperimentFilenames(pathSampleM)
-            landscapeData = monet.loadLandscapeData(
+        #######################################################################
+        # Load files with the mean response and aggregate
+        filenames = monet.readExperimentFilenames(pathSampleM)
+        landscapeData = monet.loadLandscapeData(
                 filenames, male=True, female=True, dataType=float
-             )
-            aggregatedNodesData = monet.aggregateGenotypesInLandscape(
+            )
+        aggregatedNodesData = monet.aggregateGenotypesInLandscape(
                 landscapeData, drv
             )
-            nodePop = aggregatedNodesData['landscape'][NOI]
+        nodePop = aggregatedNodesData['landscape'][NOI]
+        # Load files with the mean response
+        if expType == 'HLT':
             thrsBool = monet.comparePopToThresholds(
-                nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
-            )
-            monet.countConditionDays(thrsBool)
-            chngDays = monet.getConditionChangeDays(thrsBool)
-            prtcDays = monet.countConditionDays(thrsBool)
+                    nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
+                )
         else:
-            chngDays = [0 for _ in thresholds]
-            prtcDays = [0 for _ in thresholds]
-        ######################################################################
+            nodePop = monet.normalizePopulationInNode(
+                    nodePop, lociiScaler=drivePars['loc']
+                )
+            thrsBool = monet.comparePopToThresholds(
+                    nodePop, gIx, [0, 1], thresholds, refPop=1
+                )
+        # Calculate the metrics
+        (chngDays, prtcDays) = (
+                monet.getConditionChangeDays(thrsBool),
+                monet.countConditionDays(thrsBool)
+            )
+        #######################################################################
         # Traces
+        #######################################################################
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
                 paths, drv, male=True, female=True
@@ -97,7 +108,7 @@ for dir in folders:
             axTemp = figsArray[j].get_axes()[0]
             axTemp.set_xlim(0, style['xRange'][1])
             axTemp.set_ylim(0, style['yRange'][1])
-            title = '  '.join(['[{} : {}]'.format(str(round(1-x[0],2)).ljust(4,'0'), str(x[1]).zfill(4)) for x in zip(thresholds, prtcDays)])
+            title = aux.parseTitle(thresholds, prtcDays)
             axTemp.text(
                     .99, .95, title,
                     verticalalignment='top', horizontalalignment='right',
