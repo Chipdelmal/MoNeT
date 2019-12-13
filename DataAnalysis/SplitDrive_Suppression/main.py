@@ -21,8 +21,8 @@ PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'SplitDrive', 'ylinkedXShredder', 'autosomalXShredder',
-        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
+        'ylinkedXShredder', 'autosomalXShredder',
+        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR', 'SplitDrive'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
 (NOI, thresholds, SSPOP) = (0, [.9, .75, .5, .25, .1], 10000)
@@ -36,10 +36,14 @@ for dir in folders:
     ###########################################################################
     # Paths
     ###########################################################################
-    pathDrive = PATH + drivePars.get('folder') + '/GARBAGE/'
-    pathExps = monet.listDirectoriesWithPathWithinAPath(pathDrive)
-    pathDriveM = PATH + drivePars.get('folder') + '/ANALYZED/'
-    pathExpsM = monet.listDirectoriesWithPathWithinAPath(pathDriveM)
+    (pathDrive, pathDriveM) = (
+        PATH + drivePars.get('folder') + '/GARBAGE/',
+        PATH + drivePars.get('folder') + '/ANALYZED/'
+    )
+    (pathExps, pathExpsM) = (
+        monet.listDirectoriesWithPathWithinAPath(pathDrive),
+        monet.listDirectoriesWithPathWithinAPath(pathDriveM)
+    )
     ###########################################################################
     # Iterate through experiments
     ###########################################################################
@@ -59,7 +63,6 @@ for dir in folders:
         #   interest (for vertical lines in traces).
         #######################################################################
         # Load files with the mean response and aggregate #####################
-        # gIx = drivePars[expType]['genotypes'].index(doi)
         gIx = drivePars['HLT']['genotypes'].index('Other')
         filenames = monet.readExperimentFilenames(pathSampleM)
         landscapeData = monet.loadLandscapeData(
@@ -68,19 +71,11 @@ for dir in folders:
         aggregatedNodesData = monet.aggregateGenotypesInLandscape(
                 landscapeData, drivePars.get('HLT')
             )
+        # Get the crosses through thresholds ##################################
         nodePop = aggregatedNodesData['landscape'][NOI]
-        # Normalize if the analysis is ECO ####################################
-        # if True: # expType == 'HLT':
         thrsBool = monet.comparePopToThresholds(
                 nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
             )
-        # else:
-        #     nodePop = monet.normalizePopulationInNode(
-        #             nodePop, lociiScaler=drivePars['loc']
-        #         )
-        #     thrsBool = monet.comparePopToThresholds(
-        #             nodePop, gIx, [0, 1], thresholds, refPop=1
-        #         )
         # Calculate the metrics ###############################################
         (chngDays, prtcDays) = (
                 monet.getConditionChangeDays(thrsBool),
@@ -90,6 +85,7 @@ for dir in folders:
         # Traces
         #   Generates the plot of the experiment at a repetition level.
         #######################################################################
+        # Load Data ###########################################################
         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
                 paths, drv, male=True, female=True
@@ -98,29 +94,21 @@ for dir in folders:
             landscapeReps = monet.normalizeLandscapeDataRepetitions(
                     landscapeReps, lociiScaler=drivePars['loc']
                 )
+        # Plot ################################################################
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
         for j in range(0, len(figsArray)):
-            axTemp = figsArray[j].get_axes()[0]
-            axTemp.set_xlim(0, style['xRange'][1])
-            axTemp.set_ylim(0, style['yRange'][1])
             title = aux.parseTitle(thresholds, prtcDays)
-            axTemp.text(
-                    .99, .95, title,
-                    verticalalignment='top', horizontalalignment='right',
-                    transform=axTemp.transAxes,
-                    color='Black', fontsize=2.5, alpha=.5
-                )
-            for vLine in chngDays:
-                axTemp.axvline(
-                    x=vLine, linewidth=.1,
-                    linestyle='--', color='Black', alpha=.5
-                )
+            axTemp = figsArray[j].get_axes()[0]
+            axTemp = aux.setRange(axTemp, style)
+            axTemp = aux.printTitle(axTemp, title)
+            axTemp = aux.printVLines(axTemp, chngDays)
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             monet.quickSaveFigure(
-                figsArray[j], expOutStr + "_N" + str(j) + ".png",
-                dpi=style['dpi']
-            )
+                    figsArray[j], expOutStr + "_N" + str(j) + ".png",
+                    dpi=style['dpi']
+                )
         plt.close('all')
+        # Terminal ############################################################
         print(
                 'Exported {0}/{1}: {2}'.format(
                     str(i+1).rjust(4, '0'), num, expOutStr
