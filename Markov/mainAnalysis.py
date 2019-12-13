@@ -54,7 +54,6 @@ for EXP_NAME in EXP_NAME_all:
         landscapeSumData, aggregationDictionary
     )
     ssDay = monet.reachedSteadtStateAtDay(aggData, .025)
-
     # save ssday in a list
     days.append(ssDay)
     style["aspect"] = .1
