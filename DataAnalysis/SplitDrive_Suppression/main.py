@@ -15,14 +15,14 @@ else:
     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', '/RAID5/')
 PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
 # For testing #################################################################
-# (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
+(ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'ylinkedXShredder', 'autosomalXShredder',
-        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'SplitDrive', 'CRISPR'
+        'SplitDrive', 'ylinkedXShredder', 'autosomalXShredder',
+        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
 (NOI, thresholds, SSPOP) = (0, [.9, .75, .5, .25, .1], 10000)
@@ -33,7 +33,6 @@ dir = folders[0]
 for dir in folders:
     # Get drive parameters
     drivePars = drive.driveSelector(dir)
-    gIx = drivePars[expType]['genotypes'].index(doi)
     ###########################################################################
     # Paths
     ###########################################################################
@@ -60,26 +59,28 @@ for dir in folders:
         #   interest (for vertical lines in traces).
         #######################################################################
         # Load files with the mean response and aggregate #####################
+        # gIx = drivePars[expType]['genotypes'].index(doi)
+        gIx = drivePars['HLT']['genotypes'].index('Other')
         filenames = monet.readExperimentFilenames(pathSampleM)
         landscapeData = monet.loadLandscapeData(
                 filenames, male=True, female=True, dataType=float
             )
         aggregatedNodesData = monet.aggregateGenotypesInLandscape(
-                landscapeData, drv
+                landscapeData, drivePars.get('HLT')
             )
         nodePop = aggregatedNodesData['landscape'][NOI]
         # Normalize if the analysis is ECO ####################################
-        if expType == 'HLT':
-            thrsBool = monet.comparePopToThresholds(
-                    nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
-                )
-        else:
-            nodePop = monet.normalizePopulationInNode(
-                    nodePop, lociiScaler=drivePars['loc']
-                )
-            thrsBool = monet.comparePopToThresholds(
-                    nodePop, gIx, [0, 1], thresholds, refPop=1
-                )
+        # if True: # expType == 'HLT':
+        thrsBool = monet.comparePopToThresholds(
+                nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
+            )
+        # else:
+        #     nodePop = monet.normalizePopulationInNode(
+        #             nodePop, lociiScaler=drivePars['loc']
+        #         )
+        #     thrsBool = monet.comparePopToThresholds(
+        #             nodePop, gIx, [0, 1], thresholds, refPop=1
+        #         )
         # Calculate the metrics ###############################################
         (chngDays, prtcDays) = (
                 monet.getConditionChangeDays(thrsBool),
