@@ -16,15 +16,16 @@ We are doing this by separating our tasks into four main categories:
 * <a href="./ITESM.html">__Software Development:__</a> Another set of projects in collaboration with _Tecnológico de Monterrey_ in the development of software applications that could help in the deployment of solutions for field and health-oriented individuals (non-programmers/mathematicians).
 * <a href="./DataVizQro.html">__Data Visualization:__</a> Most of our applications require communicating extremely complex sets of data to people from diverse backgrounds, as such, we devote a lot of our time into coming up with attractive, informative ways to display our results.
 
-Click on each on the corresponding images to learn more about our projects! 
+Click on each on the corresponding images to learn more about our projects!
+
 <hr>
 
 # Authors
 
 <p style="font-size:12px">
   <b>Lead:</b> <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]<br>
-  <b>Active Dev</b>: Gillian Chu [UCB], Maya Shen [UCB], Yunwen Ji [McGill], Marco Luna [ITESM]<br>
-  <b>Former dev:</b> Victor Ferman [UCB], Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Sabrina Wong [UCB]<br>
+  <b>Active Dev/Research</b>: Gillian Chu [UCB], Maya Shen [UCB], Yunwen Ji [McGill], Marco Luna [ITESM]<br>
+  <b>Former Dev/Research:</b> Victor Ferman [UCB], Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Sabrina Wong [UCB]<br>
   <b>Former participant students: </b> Martín Alejandro Molinero Morales [ITESM], Christian Ricardo Solís Cortés [ITESM], Salomón Olivera Abud [ITESM], Esteban Quintana Cueto [ITESM], Moisés Montaño Copca [ITESM]<br>
   <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]<br>
   <b>PI's:</b> <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]

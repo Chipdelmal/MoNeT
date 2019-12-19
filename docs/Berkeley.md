@@ -1,5 +1,7 @@
 # Data Analysis
 
+This is the activity in which we spend most of our time. Most of the data we generate in our simulations has strong spatio-temporal relationships, which makes the study of relationships difficult. On top of this, we usually analyze large number of genotypes and how they spread under the influence of large numbers of stochastic events. For this to be a more manageable task, we have divided our landscape analysis into modular components that we tackle independently. We also develop the software we need to streamline these analysis in a parallel workflow so that we can reproduce, and extend our results.
+
 <hr>
 
 ##  Habitat Heterogeneity Effects on the Spread of Gene Drives
