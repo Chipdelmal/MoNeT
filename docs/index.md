@@ -8,7 +8,7 @@ This project was born to facilitate collaboration in network analysis routines u
 We are doing this by separating our tasks into four main categories:
 
 <center>
-  <a href="./Berkeley.html"><img src="./media/btn_Ber.png" height="150px"></a><a href="./MachineLearning.html"><img src="./media/btn_Mex.png" height="150px"></a><a href="./DataVizQro.html"><img src="./media/btn_mixed.png" height="150px"></a><a href="./ITESM.html"><img src="./media/btn_Qro.png" height="150px"></a><!--<a href="./EnvironmentalSensors.html"><img src="./media/btn_Leo.png" height="175px"></a>-->
+  <a href="./Berkeley.html"><img src="./media/btn_Ber.png" height="150px"></a><a href="./MachineLearning.html"><img src="./media/btn_Mex.png" height="150px"></a><a href="./DataVizQro.html"><img src="./media/btn_BerDV.png" height="150px"></a><a href="./ITESM.html"><img src="./media/btn_Qro.png" height="150px"></a><!--<a href="./EnvironmentalSensors.html"><img src="./media/btn_Leo.png" height="175px"></a>-->
 </center>
 
 * <a href="./Berkeley.html">__Data Analysis:__</a> The core of our gene-drive related projects. These lines of research deal with the analyses of the landscapes, how mosquitos move in search for resources, and how this affects the way genes spread across geographical settings.

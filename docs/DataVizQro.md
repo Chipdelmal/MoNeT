@@ -2,7 +2,9 @@
 
 One of our most innovative and dynamic lines of research! We spend a lot of time working and thing on ways to display our information and analyses effectively and in an attractive way. Have a look at our [youtube playlist](https://www.youtube.com/playlist?list=PLRzY6w7pvIWqFJi94ZfhPkSVnazlUylpN) for some examples of our work.
 
+<center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLRzY6w7pvIWqFJi94ZfhPkSVnazlUylpN" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
 
 <hr>
 
@@ -15,7 +17,6 @@ Take a look at our [Python package](https://pypi.org/project/MoNeT-MGDrivE/)! Th
 </center>
 
 <center><img src="./media/E_065_000_010_005_01C.png" width="100%" align="middle"></center>
-
 
 <hr>
 
