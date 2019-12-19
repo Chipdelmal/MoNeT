@@ -48,6 +48,7 @@ _Related areas of interest: Graphics, Animation, Data Visualization, Data Analys
 <br>
 * Esteban Quintana Cueto:	Herramienta para la visualizacion gráfica de reproducción y comportamiento de distintas especies de mosquitos
 <button>[Github repository](https://github.com/estebanquintana6/Tesina_MGraph)</button> <button>[YouTube Video](https://www.youtube.com/watch?v=f0VMLtwOxmk&feature=youtu.be)</button>
+* Marco Luna <button>[Github Repository](https://github.com/Chipdelmal/MGGraph)</button>
 
 ## 5) Random scenarios generator
 

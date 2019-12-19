@@ -24,11 +24,11 @@ popnode = 15 # average population per node
 cv = 0.8 # somewhat clustered compared to exponential
 p = 0.15 # fraction of empty nodes
 b = 90 # truncation upper bound
-n_samp = 1 # how many times to resample from ZITE/ZITG
+n_samp = 10 # how many times to resample from ZITE/ZITG
 
 # PATH TO EDIT
 folder = "simulations/"
-filepath = "/Users/mayashen/Desktop/MoNeT/GMLandscapeAnalysis/Sample_Distribution/"+folder
+filepath = "/Users/sanchez.hmsc/Desktop/MoNeT/Sample/"+folder
 
 os.path.exists(filepath)
 if not os.path.exists(filepath):
