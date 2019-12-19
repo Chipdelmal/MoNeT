@@ -12,9 +12,6 @@ One of our most innovative and dynamic lines of research! We spend a lot of time
 
 Take a look at our [Python package](https://pypi.org/project/MoNeT-MGDrivE/)! This code works as a companion to the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project in terms of data and experiments analyses.
 
-<center>
-  <a href="https://chipdelmal.github.io/MoNeT/PythonModule.html"><img src="./media/btn_Python.png" width="100%"></a>
-</center>
 
 <center><img src="./media/E_065_000_010_005_01C.png" width="100%" align="middle"></center>
 
