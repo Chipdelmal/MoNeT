@@ -22,3 +22,12 @@ Edit parameters and file path as necessary (in particular, set `EXP` to `True` f
 Run code body of file.
 
 Run `main()` at bottom of file.
+
+
+<hr>
+
+# Next Steps
+
+1. Adapt [main.R](https://github.com/Chipdelmal/MoNeT/tree/master/GMLandscapeAnalysis/Sample_Distribution/main.R) to run over pop-sizes instead of kernels (ideally both).
+2. Use the kernel in the folder (local to my computer for now) and the sampled population distributions to simulate some basic dynamics.
+3. Generate results like the ones shown in the [tutorial](https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/Tutorial).

@@ -47,7 +47,7 @@ print('**********************************************************************')
 ###############################################################################
 # Sweeping through experiments
 ###############################################################################
-for (i, expName) in enumerate(dirs[16:24]):
+for (i, expName) in enumerate(dirs):
     experiment = expName + "/ANALYZED/"
     driveID = expName.split("_")[0][0]
     (wildsList, homingList) = drive.driveGenesSelector(driveID)
