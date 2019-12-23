@@ -9,7 +9,7 @@ We are doing this by separating our tasks into four main categories:
 
 <center>
   <a href="./Berkeley.html"><img src="./media/btn_Ber.png" height="150px"></a><a href="./MachineLearning.html"><img src="./media/btn_Mex.png" height="150px"></a><a href="./DataVizQro.html"><img src="./media/btn_BerDV.png" height="150px"></a><a href="./ITESM.html"><img src="./media/btn_Qro.png" height="150px"></a><!--<a href="./EnvironmentalSensors.html"><img src="./media/btn_Leo.png" height="175px"></a>-->
-</center>
+</center><br>
 
 * <a href="./Berkeley.html">__Data Analysis:__</a> The core of our gene-drive related projects. These lines of research deal with the analyses of the landscapes, how mosquitos move in search for resources, and how this affects the way genes spread across geographical settings.
 * <a href="./MachineLearning.html">__Machine Learning/Network Theory:__</a> These projects have been developed in collaboration with people from _Tecnológico de Monterrey_ to incorporate more CS techniques into the prediction and study of the spread of mosquito-borne diseases.
