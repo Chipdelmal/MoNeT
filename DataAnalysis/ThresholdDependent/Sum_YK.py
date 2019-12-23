@@ -15,7 +15,7 @@ import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 
-(NCORES, USER) = (20, 0)
+(NCORES, USER) = (20, 2)
 (CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
 # Factorial experiment
@@ -24,6 +24,8 @@ if USER == 0:
     path = "/Volumes/marshallShare/ThresholdResub/factorialSA/"
 elif USER == 1:
     path = "/RAID5/marshallShare/ThresholdResub/factorialSA/"
+elif USER == 2:
+    "/RAID0/batchSA/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
@@ -33,7 +35,6 @@ for i in dirs:
     if(i[0] != 'i' and i[0] != 's'):
         temp.append(i)
 (expsNum, dirs) = (len(temp), temp)
-dirs[16:24]
 ###############################################################################
 # Message for terminal
 ###############################################################################
@@ -54,9 +55,9 @@ for (i, expName) in enumerate(dirs[16:24]):
     # Drive dictionary
     ###########################################################################
     aggregationDictionary = monet.generateAggregationDictionary(
-        ["W", "H"],
-        [[x - 1 for x in wildsList], [x - 1 for x in homingList]]
-    )
+            ["W", "H"],
+            [[x - 1 for x in wildsList], [x - 1 for x in homingList]]
+        )
     ratiosDictionary = {"numerator": [1], "denominator": [0, 1]}
     ###########################################################################
     # Export Individual CSVs for Factorial Slots
@@ -65,21 +66,21 @@ for (i, expName) in enumerate(dirs[16:24]):
     experimentFolders = sorted(monet.listDirectoriesInPath(path + experiment))
     print('* {0}) {1}'.format(i+1, expName), end=' ')
     Parallel(n_jobs=NCORES)(delayed(monet.loadFolderAndWriteFactorialCSV)(
-            experimentString=folder, path=path+experiment,
-            aggregationDictionary=aggregationDictionary,
-            ratiosDictionary=ratiosDictionary
+                experimentString=folder, path=path+experiment,
+                aggregationDictionary=aggregationDictionary,
+                ratiosDictionary=ratiosDictionary
+            )
+            for folder in experimentFolders
         )
-        for folder in experimentFolders
-    )
     end = time.time()
     print('[{2:.2f} min]'.format(i+1, expName, (end-start)/60))
     ###########################################################################
     # Load and Compile CSVs into one
     ###########################################################################
     drive.compileFactorialCSVFromFiles(
-        path + experiment,
-        path + expName + ".csv"
-    )
+            path + experiment,
+            path + expName + ".csv"
+        )
 ###############################################################################
 # Message for terminal
 ###############################################################################
