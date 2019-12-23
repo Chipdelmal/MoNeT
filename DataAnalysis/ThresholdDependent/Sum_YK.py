@@ -25,7 +25,7 @@ if USER == 0:
 elif USER == 1:
     path = "/RAID5/marshallShare/ThresholdResub/factorialSA/"
 elif USER == 2:
-    "/RAID0/batchSA/"
+    path = "/RAID0/batchSA/"
 dirs = sorted(next(os.walk(path))[1])
 ###############################################################################
 # Ignore unwanted folders (images)
