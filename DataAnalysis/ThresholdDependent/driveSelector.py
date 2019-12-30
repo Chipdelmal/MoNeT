@@ -14,7 +14,7 @@ def driveGenesSelector(driveID):
         homingList = [1, 1, 2, 2, 3, 3, 4, 5, 6, 1, 1, 2, 4, 4, 5, 7, 7, 8]
     elif (driveID == 'W'):
         # Wolbachia
-        wildsList = [0]
+        wildsList = [2]
         homingList = [1]
     return (wildsList, homingList)
 

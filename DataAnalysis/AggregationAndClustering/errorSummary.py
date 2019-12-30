@@ -6,6 +6,7 @@ import numpy as np
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
+
 def shadeColor(inColor=255, steps=10):
     stSh = inColor / steps
     shades = [(inColor - (i * stSh)) for i in range(steps)]

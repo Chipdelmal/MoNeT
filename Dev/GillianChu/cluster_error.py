@@ -19,23 +19,19 @@ path_to_aggregated_landscapes = '/Volumes/marshallShare/ERACR/Yorkeys_MINI/LandA
 
 gender_mean = "F"
 maleToggle, femaleToggle = True, True
-
-"""
-Note: reference_pop below is hardcoded because it's the folder where we expect to find all of the nodeIDs available
-"""
-start_ref = "/Users/gillian/Desktop/GillianDataset/Experiments/C002195/"
-finish_ref = "/ANALYZED/E_0730_30_20_02_00020/"
+start_ref = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/C002195"
+end_ref = "/ANALYZED/E_0730_30_20_02_00020/"
 population_IDs = ["W", "H", "E", "R", "B"]
 aggregation_levels = ["C000002", "C000025", "C000250", "C001000", "C002195"]
 num_runs = 1
 
 # it computes for all provided runs
 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
-    population_IDs,
-    [
-        'WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
-        'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB'
-    ]
+	population_IDs,
+	[
+		'WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
+		'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB'
+	]
 )
 
 """
@@ -164,13 +160,17 @@ def sum_nodes_in_cluster(key, cluster_dict):
 			# print("Here is ", node_id)
 			processed_node_id = process_node_id(node_id)
 
-			#pick a run: Yorkeys01_0027_A
-			list_dir = [f for f in os.listdir(start_ref) if os.path.isfile(f)]
-			i = int(np.round(np.random.uniform(0, len(os.listdir(start_ref)) )))
+			# pick a run: Yorkeys01_0027_A
+			# print(os.listdir(start_ref))
+			list_dir = [f for f in os.listdir(start_ref)]
+			i = int(np.random.uniform(0, len(os.listdir(start_ref))))
+			print(i)
+			print(len(list_dir))
 
-			#build reference_pop
-			reference_pop = list_dir[i]
-			reference_pop += finish_ref			
+			# build reference_pop
+			reference_pop = start_ref + '/'
+			reference_pop += list_dir[i]
+			reference_pop += end_ref
 
 			file_path = os.path.join(reference_pop + "F_Mean_Patch" + processed_node_id + ".csv")
 			filenames['female'].append(file_path)
@@ -217,8 +217,7 @@ def get_diff_cluster_vs_full(aggGeno_sum, clusterGeno_sum, name):
 	# print("AGG_GENO_RESULT: ", aggGeno_sum['population'].shape)
 	# print("CLUSTER_GENO_RESULT: ", clusterGeno_sum['population'].shape)
 
-	result = np.subtract(aggGeno_sum['population'], clusterGeno_sum['population'])
-
+	result = np.subtract(aggGeno_sum['population'], clusterGeno_sum['population']); print(name)
 	with open(name + ".csv", mode="w") as cluster_summary:
 		result_writer = csv.writer(cluster_summary)
 		result_writer.writerow(population_IDs) # labels
@@ -261,9 +260,15 @@ for i in range(num_runs):
 	compare_all_aggregations_once(agg_level_dict)
 
 # run_dict = dict()
+<<<<<<< HEAD
 # for run_path in all_run_paths:
 # 	run_dict[run_path] = find_node_to_cluster(run_path, path_to_aggregated_landscapes)
 # 	cluster_run_sum = sum_nodes_in_cluster(run_path, run_dict[run_path])
+=======
+# for run_path in run_paths:
+#   run_dict[run_path] = getAggregation(run_path, land_aggregated_path)
+#   cluster_run_sum = getSum(run_path, run_dict[run_path])
+>>>>>>> 878ef5c66a47acc8616cdd0f0f79b35e3a8a5fca
 
 # Previously used for testing, hardcoded
 # key = 'C000250/Yorkeys01_0000_A' # 250 nodes, run 0

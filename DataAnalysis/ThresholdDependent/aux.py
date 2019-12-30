@@ -1,5 +1,12 @@
+import math
+
+
 def roundup(x):
     return int(math.ceil(x / 10000.0)) * 10000
+
+
+def getFilenameFromPath(path):
+    return path.split('/')[-1].split('.')[0]
 
 
 def introgrationDay(aggData, geneIx, threshold, skipDays=10, refFrame=-1):
