@@ -2,9 +2,9 @@
     a. This yields all_run_paths, and agg_level_dict (a dictionary where the key is agg_path, and the value is a list of paths to experiment runs at that aggregation level)
 2. compare_all_aggregations_once() currently gets called once:
     a. for each aggregation level (agg_level_dict.keys()), samples randomly over all runs to select a run_path
-    b. Call find_nodes_to_cluster() on that run_path, and land_aggregated_path
+    b. Call find_nodes_to_cluster() on that run_path, and path_to_aggregated_landscapes
             run_path: the path specifying a level of aggregation, and a runID
-            path_to_aggregated_landscapese: the path to the LandAggregated folder, holding cluster summaries
+            path_to_aggregated_landscapes: the path to the LandAggregated folder, holding cluster summaries
         Returns a dictionary agg_data[clusterID] = [nodeIDs that were aggregated into this cluster] 
         Also saves a CSV file with the results. 
     c. Call sum_nodes_in_cluster() on that run_path, and agg_data
