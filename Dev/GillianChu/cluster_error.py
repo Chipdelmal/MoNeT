@@ -91,7 +91,7 @@ def find_node_to_cluster(run_path, path_to_aggregated_landscapes):
 	result.sort(key=lambda x: x[0])
 
 	# Count num clusters
-	agg_level_count = len(np.unique(clusters))
+	# agg_level_count = len(np.unique(clusters))
 	# assert(agg_level_count == agg_level) # add this in later
 
 	# Save this result into a csv file
@@ -127,7 +127,7 @@ def process_node_id(node_id):
 
 def sum_nodes_in_cluster(key, cluster_dict):
 	"""
-	Gets the summed output vector for the nodes aggregated into each cluster, and calls get_diff_agg_vs_full to calculate the 
+	Gets the summed output vector for the nodes aggregated into each cluster, and calls get_diff_cluster_vs_full to calculate the 
 	difference betweeen this aggregation level's summed output vector, and the full resolution output vector. 
 
 	Input:
@@ -135,7 +135,7 @@ def sum_nodes_in_cluster(key, cluster_dict):
 		cluster_dict: is a dictionary where cluster ID maps to list of node IDs that cluster summarizes.
 
 	Output: None
-		Calls get_diff_agg_vs_full() writes the summed output difference vector for each of the clusters to the CSV.
+		Calls get_diff_cluster_vs_full() writes the summed output difference vector for each of the clusters to the CSV.
 	"""
 	agg_level, run_id = key.split('/')
 	print(agg_level, run_id)
@@ -144,6 +144,7 @@ def sum_nodes_in_cluster(key, cluster_dict):
 		os.mkdir("agg_" + agg_level)
 
 	clusters = list(cluster_dict.keys())
+	# iterate over the clusters
 	for c in clusters:
 		print("Processing cluster ID ", c)
 		nodes_to_summarize = cluster_dict[c]
@@ -180,6 +181,7 @@ def sum_nodes_in_cluster(key, cluster_dict):
 
 		# sum all the filepaths inside one cluster, then group by genotypes
 		cluster_sum = monet.sumLandscapePopulationsFromFiles(filenames, male=maleToggle, female=femaleToggle, dataType=float)
+		# returns a dictionary with 'population' as the time series population vector
 		clusterGeno_sum = monet.aggregateGenotypesInNode(cluster_sum, aggregationDictionary)
 
 		# take the difference between the sum and the clustered result
@@ -198,7 +200,7 @@ def sum_nodes_in_cluster(key, cluster_dict):
 		aggGeno_sum = monet.aggregateGenotypesInNode(agg_sum, aggregationDictionary)
 
 		# take the difference between the aggregated_sum vector and the full unaggregated sum vector, writes it to CSV
-		get_diff_agg_vs_full(aggGeno_sum, clusterGeno_sum, "agg_" + agg_level + "/cluster_" + process_node_id(c) + "/run_" + run_id + str(maleToggle) + str(femaleToggle))
+		get_diff_cluster_vs_full(aggGeno_sum, clusterGeno_sum, "agg_" + agg_level + "/cluster_" + process_node_id(c) + "/run_" + run_id + str(maleToggle) + str(femaleToggle))
 
 
 def get_diff_cluster_vs_full(aggGeno_sum, clusterGeno_sum, name):
@@ -233,7 +235,7 @@ def compare_all_aggregations_once(agg_level_dict):
 
 	Output: None
 		A side effect of find_node_to_cluster() saves a CSV of each node mapped to the cluster ID in a particular aggregation level. 
-		A side effect of sum_nodes_in_cluster()->get_diff_agg_vs_full saves the difference vector into a CSV.
+		A side effect of sum_nodes_in_cluster()->get_diff_cluster_vs_full saves the difference vector into a CSV.
 	"""
 	# iterate over all of the aggregation levels
 	print("Available aggregation_levels to use as keys to agg_level_dict: ", agg_level_dict.keys())
@@ -246,7 +248,7 @@ def compare_all_aggregations_once(agg_level_dict):
 		# generate a dict of clusterIDs to nodeIDs aggregated into that cluster
 		aggData = find_node_to_cluster(run_path, path_to_aggregated_landscapes)
 		# sums an output difference vector for each cluster
-		cluster_run_sum = sum_nodes_in_cluster(run_path, aggData)
+		sum_nodes_in_cluster(run_path, aggData)
 
 
 ## MAIN
@@ -260,15 +262,9 @@ for i in range(num_runs):
 	compare_all_aggregations_once(agg_level_dict)
 
 # run_dict = dict()
-<<<<<<< HEAD
 # for run_path in all_run_paths:
 # 	run_dict[run_path] = find_node_to_cluster(run_path, path_to_aggregated_landscapes)
 # 	cluster_run_sum = sum_nodes_in_cluster(run_path, run_dict[run_path])
-=======
-# for run_path in run_paths:
-#   run_dict[run_path] = getAggregation(run_path, land_aggregated_path)
-#   cluster_run_sum = getSum(run_path, run_dict[run_path])
->>>>>>> 878ef5c66a47acc8616cdd0f0f79b35e3a8a5fca
 
 # Previously used for testing, hardcoded
 # key = 'C000250/Yorkeys01_0000_A' # 250 nodes, run 0
