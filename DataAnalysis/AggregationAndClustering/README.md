@@ -36,9 +36,9 @@ Please set the following variables:
 1. Given a path to the AggregatedLandscapes folder, run [find_agg_to_listruns](./cluster_error.py) to create a dictionary where an aggregation level path looks up the list of experiment run paths at that aggregation level.
 
 2. Run [compare_all_aggregations_once](./cluster_error.py) for num_runs number of times. Each call performs the following:
-    2.1 For each aggregation level, it will sample randomly over all runs to find an experiment run run_path.
-    2.2 Call [find_nodes_to_cluster](./cluster_error.py) on that run_path, and path_to_aggregated_landscapes. This returns a dictionary cluster_dict[clusterID] = nodeIDs that were aggregated into this cluster]. **This also saves a CSV file per dictionary** (a mapping between each unaggregated node, and the cluster it gets aggregated into. One CSV file for each aggregation level provided in the folder). 
-    2.3 Call [sum_nodes_in_cluster](./cluster_error.py) on that run_path, and the cluster_dict dictionary created above. The key (run_path), is parsed for the level of aggregation, and a runID. Thus, the aggregation level, and the experiment run is given. The following pseudocode describes what happens:
+    1. For each aggregation level, it will sample randomly over all runs to find an experiment run run_path.
+    2. Call [find_nodes_to_cluster](./cluster_error.py) on that run_path, and path_to_aggregated_landscapes. This returns a dictionary cluster_dict[clusterID] = nodeIDs that were aggregated into this cluster]. **This also saves a CSV file per dictionary** (a mapping between each unaggregated node, and the cluster it gets aggregated into. One CSV file for each aggregation level provided in the folder). 
+    3. Call [sum_nodes_in_cluster](./cluster_error.py) on that run_path, and the cluster_dict dictionary created above. The key (run_path), is parsed for the level of aggregation, and a runID. Thus, the aggregation level, and the experiment run is given. The following pseudocode describes what happens:
         ```
             For each clusterID in the given aggregation level:
                 for each nodeID aggregated into this cluster:
