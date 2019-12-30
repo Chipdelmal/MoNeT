@@ -1,5 +1,6 @@
 import os
 import aux
+import numpy as np
 import MoNeT_MGDrivE as monet
 
 
@@ -9,20 +10,21 @@ PAD = '\n' + 125 * '*' + '\n'
 # Style
 ###############################################################################
 STYLE_HLT = {
-    "width": .1, "alpha": .1, "dpi": 500,
-    "legend": True, "aspect": .5, "xRange": [0, 2000], "yRange": [0, 20000],
-    "colors": ['#9f00cc', '#ec0b43', '#0038a8']
-}
+        "width": .1, "alpha": .1, "dpi": 500,
+        "legend": True, "aspect": .5,
+        "xRange": [0, 2000], "yRange": [0, 20000],
+        "colors": ['#9f00cc', '#ec0b43', '#0038a8']
+    }
 STYLE_HLT['aspect'] = monet.scaleAspect(.1, STYLE_HLT)
 
 STYLE_ECO = {
-    "width": .1, "alpha": .1, "dpi": 500,
-    "legend": True, "aspect": .5, "xRange": [0, 2000], "yRange": [0, 1],
-    "colors": [
-            '#ff004d', '#80ff80', '#6600ff',
-            '#e600ff', '#b3ccff', '#333380', '#f0a6ca'
-        ]
-}
+        "width": .1, "alpha": .1, "dpi": 500,
+        "legend": True, "aspect": .5, "xRange": [0, 2000], "yRange": [0, 1],
+        "colors": [
+                '#ff004d', '#80ff80', '#6600ff',
+                '#e600ff', '#b3ccff', '#333380', '#f0a6ca'
+            ]
+    }
 STYLE_ECO['aspect'] = monet.scaleAspect(.1, STYLE_ECO)
 
 
@@ -59,19 +61,19 @@ def parseTitle(thresholds, prtcDays):
 
 def printTitle(ax, title):
     ax.text(
-        .99, .95, title, color='Black', fontsize=2.5, alpha=.5,
-        verticalalignment='top', horizontalalignment='right',
-        transform=ax.transAxes
-    )
+            .99, .95, title, color='Black', fontsize=2.5, alpha=.5,
+            verticalalignment='top', horizontalalignment='right',
+            transform=ax.transAxes
+        )
     return ax
 
 
 def printVLines(ax, chngDays):
     for vLine in chngDays:
         ax.axvline(
-            x=vLine, linewidth=.1,
-            linestyle='--', color='Black', alpha=.5
-        )
+                x=vLine, linewidth=.1,
+                linestyle='--', color='Black', alpha=.5
+            )
     return ax
 
 
@@ -79,3 +81,30 @@ def setRange(ax, style):
     ax.set_xlim(0, style['xRange'][1])
     ax.set_ylim(0, style['yRange'][1])
     return ax
+
+
+def getTimeToMinAtAllele(
+            aggData,
+            gIx,
+            safety=.01
+        ):
+    """
+    Description:
+        * Calculates the point at which the total population reaches
+            its minimum.
+    In:
+        * aggData: Genotypes aggregated data.
+        * gIx: Gene-index of interest (column in the genotypes dictionary).
+        * safety: Envelope of values around the steady state that are
+            considered "stable" (as a proportion of the final total allele
+            composition).
+    Out:
+        * time: Point in time at which the minimum is reached
+        * popMin: Population size at its minimum
+    """
+    pop = [row[gIx] for row in aggData['population']]
+    for time in range(len(pop)):
+        popMin = min(pop)
+        if np.isclose(pop[time], popMin, atol=safety):
+            break
+    return (time, popMin)

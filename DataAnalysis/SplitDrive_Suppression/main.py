@@ -76,6 +76,8 @@ for dir in folders:
         thrsBool = monet.comparePopToThresholds(
                 nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
             )
+        # nodePopDict["population"] = nodePop
+        # aux.getTimeToMinAtAllele(nodePopDict, gIx)
         # Calculate the metrics ###############################################
         (chngDays, prtcDays) = (
                 monet.getConditionChangeDays(thrsBool),
@@ -111,8 +113,8 @@ for dir in folders:
         # Terminal ############################################################
         print(
                 'Exported {0}/{1}: {2}'.format(
-                    str(i+1).rjust(4, '0'), num, expOutStr
-                )
+                        str(i+1).rjust(4, '0'), num, expOutStr
+                    )
             )
     ##########################################################################
     # Export color palette
