@@ -60,7 +60,7 @@ def find_agg_to_listruns(path_to_all_experiments):
 	return all_run_paths, agg_level_dict
 
 
-def find_node_to_cluster(run_path, path_to_aggregated_landscapes):
+def find_nodes_to_cluster(run_path, path_to_aggregated_landscapes):
 	"""
 	Reads in the experiment at run_path, and generates a mapping of each node to the cluster ID it's 
 	aggregated into. 
@@ -234,7 +234,7 @@ def compare_all_aggregations_once(agg_level_dict):
 		agg_level_dict: dictionary of agg_level to list of experimnt runs' paths. 
 
 	Output: None
-		A side effect of find_node_to_cluster() saves a CSV of each node mapped to the cluster ID in a particular aggregation level. 
+		A side effect of find_nodes_to_cluster() saves a CSV of each node mapped to the cluster ID in a particular aggregation level. 
 		A side effect of sum_nodes_in_cluster()->get_diff_cluster_vs_full saves the difference vector into a CSV.
 	"""
 	# iterate over all of the aggregation levels
@@ -246,7 +246,7 @@ def compare_all_aggregations_once(agg_level_dict):
 		run_path = key + "/" + agg_level_dict[key][i]
 		print("Running for key: ", key, " and run: ", agg_level_dict[key][i])
 		# generate a dict of clusterIDs to nodeIDs aggregated into that cluster
-		aggData = find_node_to_cluster(run_path, path_to_aggregated_landscapes)
+		aggData = find_nodes_to_cluster(run_path, path_to_aggregated_landscapes)
 		# sums an output difference vector for each cluster
 		sum_nodes_in_cluster(run_path, aggData)
 
@@ -263,7 +263,7 @@ for i in range(num_runs):
 
 # run_dict = dict()
 # for run_path in all_run_paths:
-# 	run_dict[run_path] = find_node_to_cluster(run_path, path_to_aggregated_landscapes)
+# 	run_dict[run_path] = find_nodes_to_cluster(run_path, path_to_aggregated_landscapes)
 # 	cluster_run_sum = sum_nodes_in_cluster(run_path, run_dict[run_path])
 
 # Previously used for testing, hardcoded
