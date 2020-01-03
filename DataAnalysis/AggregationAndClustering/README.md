@@ -50,3 +50,7 @@ Please set the following variables:
                     this takes the difference betweeen aggGeno_sum['population'] and clusterGeno_sum['population']
                     writes the difference in time series format to csv
         ```
+3. To visualize this, run [run_from_beginning](./plot_cluster_error.py), then run [just_run_plots](./plot_cluster_error.py). This should generate CSV files representing the summation of each aggregation's cumulative error, in the same directory as `plot_cluster_error.py` is saved.
+
+## Time Taken Visualization
+In order to visualize a violin plot of how much time is taken to run the full model at a particular aggregation level, set `expBaseName` to be the base name of an experiment run, the `pathRoot` to be the path to the root folder with the experiments, the `truthExperiment` as a particular experiment run ID, and `expsList` as the list of aggregation levels. Then, run [aggregationMetric](./aggregationMetric.py). 
