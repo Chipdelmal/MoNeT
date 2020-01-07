@@ -19,8 +19,8 @@ import pandas as pd
 EXP = True
 
 # PARAMETERS TO EDIT
-n = 10 # number of nodes in the network
-popnode = 15 # average population per node
+n = 50 # number of nodes in the network
+popnode = 20 # average population per node
 cv = 0.8 # somewhat clustered compared to exponential
 p = 0.15 # fraction of empty nodes
 b = 90 # truncation upper bound
