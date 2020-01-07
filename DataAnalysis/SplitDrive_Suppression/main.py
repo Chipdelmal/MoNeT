@@ -21,9 +21,9 @@ PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'SplitDrive'
-        # 'ylinkedXShredder', 'autosomalXShredder',
-        # 'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
+        'SplitDrive',
+        'ylinkedXShredder', 'autosomalXShredder',
+        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
 (NOI, thresholds, SSPOP) = (0, [.9, .75, .5, .25, .1], 10000)
