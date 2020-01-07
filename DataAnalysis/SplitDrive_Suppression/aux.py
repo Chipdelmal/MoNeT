@@ -59,11 +59,14 @@ def parseTitle(thresholds, prtcDays):
     return 'THR: ' + title
 
 
-def parseMinTitle(minTuple, SSPOP):
-    title = "MIN: [{}: {}]".format(
-            int(minTuple[0]),
-            round(1 - minTuple[1]/SSPOP, 2)
-        )
+def parseMinTitle(minTuple, SSPOP, thrs=.05):
+    if(1 - minTuple[1] / SSPOP >= thrs):
+        title = "MIN: [{}: {}]".format(
+                int(minTuple[0]),
+                round(1 - minTuple[1]/SSPOP, 2)
+            )
+    else:
+        title = "MIN: [0: 0]"
     return title
 
 
@@ -94,15 +97,16 @@ def printVLines(ax, chngDays):
     return ax
 
 
-def printMinLines(ax, minTuple, style):
-    ax.axhline(
-            y=minTuple[1], xmin=0, xmax=minTuple[0]/style['xRange'][1],
-            linewidth=.1, linestyle='--', color='Red', alpha=.5
-        )
-    ax.axvline(
-            x=minTuple[0], ymin=0, ymax=minTuple[1]/style['yRange'][1],
-            linewidth=.075, linestyle='--', color='Red', alpha=.5
-        )
+def printMinLines(ax, minTuple, style, SSPOP, thrs=.05):
+    if(1 - minTuple[1] / SSPOP >= thrs):
+        ax.axhline(
+                y=minTuple[1], xmin=0, xmax=minTuple[0]/style['xRange'][1],
+                linewidth=.1, linestyle='--', color='Red', alpha=.5
+            )
+        ax.axvline(
+                x=minTuple[0], ymin=0, ymax=minTuple[1]/style['yRange'][1],
+                linewidth=.075, linestyle='--', color='Red', alpha=.5
+            )
     return ax
 
 
