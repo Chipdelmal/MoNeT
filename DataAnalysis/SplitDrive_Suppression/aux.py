@@ -72,7 +72,7 @@ def parseMinTitle(minTuple, SSPOP, thrs=.05):
 
 def printTitle(ax, title):
     ax.text(
-            .99, .95, title, color='Black', fontsize=2.5, alpha=.5,
+            .99, .95, title, color='Blue', fontsize=2.5, alpha=.5,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -92,7 +92,7 @@ def printVLines(ax, chngDays):
     for vLine in chngDays:
         ax.axvline(
                 x=vLine, linewidth=.1,
-                linestyle='--', color='Black', alpha=.5
+                linestyle='--', color='Blue', alpha=.5
             )
     return ax
 
