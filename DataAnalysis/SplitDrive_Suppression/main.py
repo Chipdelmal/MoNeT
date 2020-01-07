@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 # Code for terminal-call: python main.py "srv" "eco"
 ###############################################################################
 if sys.argv[1] != "srv":
-    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', '/Volumes/')
+    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'Volumes/')
 else:
-    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', '/RAID5/')
+    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
 PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
 # For testing #################################################################
 # (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
@@ -73,33 +73,19 @@ for dir in folders:
                 landscapeData, drivePars.get('HLT')
             )
         # Get the crosses through thresholds ##################################
-        nodePopR = aggregatedNodesData['landscape'][NOI]
-        nodePopS = aggregatedNodesData['landscape'][1]
-        thrsBoolR = monet.comparePopToThresholds(
-                nodePopR, gIx, [0, 1], thresholds, refPop=SSPOP
+        (chngDays, prtcDays, minTuple) = ([], [], [])
+        for j in range(len(aggregatedNodesData['landscape'])):
+            nodePop = aggregatedNodesData['landscape'][j]
+            thrsBool = monet.comparePopToThresholds(
+                nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
             )
-        thrsBoolS = monet.comparePopToThresholds(
-                nodePopS, gIx, [0, 1], thresholds, refPop=SSPOP
-            )
-        # Get the info to min pop #############################################
-        nodePopDict = {}
-        # Releases Node
-        nodePopDict["population"] = nodePopR
-        minTupleR = aux.getTimeToMinAtAllele(nodePopDict, gIx)
-        # Spillover Node
-        nodePopDict["population"] = nodePopS
-        minTupleS = aux.getTimeToMinAtAllele(nodePopDict, gIx)
-        # Both nodes
-        minTuple = [minTupleR, minTupleS]
-        # Calculate the metrics ###############################################
-        chngDays = (
-                monet.getConditionChangeDays(thrsBoolR),
-                monet.getConditionChangeDays(thrsBoolS)
-            )
-        prtcDays = (
-                monet.countConditionDays(thrsBoolR),
-                monet.countConditionDays(thrsBoolS)
-            )
+            chngDays.append(monet.getConditionChangeDays(thrsBool))
+            prtcDays.append(monet.countConditionDays(thrsBool))
+            # Get the info to min pop #########################################
+            nodePopDict = {}
+            nodePopDict["population"] = nodePop
+            minData = aux.getTimeToMinAtAllele(nodePopDict, gIx)
+            minTuple.append(minData)
         #######################################################################
         # Traces
         #   Generates the plot of the experiment at a repetition level.
