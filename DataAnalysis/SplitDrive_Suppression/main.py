@@ -15,7 +15,7 @@ else:
     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', '/RAID5/')
 PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
 # For testing #################################################################
-(ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
+# (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
@@ -103,7 +103,7 @@ for dir in folders:
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
         for j in range(0, len(figsArray)):
             title = aux.parseTitle(thresholds, prtcDays)
-            minTitle = aux.parseMinTitle(minTuple)
+            minTitle = aux.parseMinTitle(minTuple, SSPOP)
             axTemp = figsArray[j].get_axes()[0]
             axTemp = aux.setRange(axTemp, style)
             axTemp = aux.printTitle(axTemp, title)
@@ -125,10 +125,10 @@ for dir in folders:
     ##########################################################################
     # Export color palette
     ##########################################################################
-    # drvNum = len(drv['genotypes'])
-    # (labels, colors) = (drv['genotypes'], style['colors'][0:drvNum])
-    # filename = path + drivePars.get('folder') + '/legend.png'
-    # monet.exportGeneLegend(labels, colors, filename, dpi=750)
+    drvNum = len(drv['genotypes'])
+    (labels, colors) = (drv['genotypes'], style['colors'][0:drvNum])
+    filename = path + drivePars.get('folder') + '/legend.png'
+    monet.exportGeneLegend(labels, colors, filename, dpi=750)
 ##############################################################################
 time = str(datetime.datetime.now())
 print(aux.PAD + '* Finished [{0}]'.format(time) + aux.PAD)

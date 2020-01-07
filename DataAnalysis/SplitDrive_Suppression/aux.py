@@ -59,8 +59,8 @@ def parseTitle(thresholds, prtcDays):
     return 'THR: ' + title
 
 
-def parseMinTitle(minTuple):
-    title = "MIN: [{}: {}]".format(int(minTuple[0]), int(minTuple[1]))
+def parseMinTitle(minTuple, SSPOP):
+    title = "MIN: [{}: {}]".format(int(minTuple[0]), round(minTuple[1]/SSPOP, 2))
     return title
 
 
