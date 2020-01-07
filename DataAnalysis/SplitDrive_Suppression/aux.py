@@ -56,7 +56,7 @@ def parseTitle(thresholds, prtcDays):
                 str(x[1]).zfill(4)
             ) for x in zip(thresholds, prtcDays)]
         )
-    return 'THR: ' + title
+    return 'SUP: ' + title
 
 
 def parseMinTitle(minTuple, SSPOP, thrs=.05):
