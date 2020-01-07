@@ -20,8 +20,8 @@ cScale = 1
 #  SA: Expects the IDa_(IDb)_ABCD.csv files folder (SA)
 #  CF: Expects the IDa_(IDb).csv files folder (sweep)
 ###############################################################################
-pathSA = '/Volumes/marshallShare/ThresholdResub/factorialSA/'
-pathCF = '/Volumes/marshallShare/ThresholdResub/factorialSweep/'
+pathSA = '/RAID5/marshallShare/ThresholdResub/batchSA/'
+pathCF = '/RAID5/marshallShare/ThresholdResub/batchSweep/'
 ###############################################################################
 # Get filepaths and filenames (not in the same sorting!)
 ###############################################################################

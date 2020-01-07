@@ -15,7 +15,7 @@ import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 
-(NCORES, USER) = (20, 2)
+(NCORES, USER) = (20, 1)
 (CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
 # Factorial experiment
@@ -23,7 +23,7 @@ warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 if USER == 0:
     path = "/Volumes/marshallShare/ThresholdResub/factorialSA/"
 elif USER == 1:
-    path = "/RAID5/marshallShare/ThresholdResub/factorialSA/"
+    path = "/RAID5/marshallShare/ThresholdResub/batchSA/"
 elif USER == 2:
     path = "/RAID0/batchSA/"
 dirs = sorted(next(os.walk(path))[1])
@@ -47,7 +47,7 @@ print('**********************************************************************')
 ###############################################################################
 # Sweeping through experiments
 ###############################################################################
-for (i, expName) in enumerate(dirs[16:24]):
+for (i, expName) in enumerate(dirs):
     experiment = expName + "/ANALYZED/"
     driveID = expName.split("_")[0][0]
     (wildsList, homingList) = drive.driveGenesSelector(driveID)
