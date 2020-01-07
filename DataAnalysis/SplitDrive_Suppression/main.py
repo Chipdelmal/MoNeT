@@ -126,8 +126,8 @@ for dir in folders:
             axTemp = aux.printMinLines(axTemp, minTuple[j], style)
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             monet.quickSaveFigure(
-                    figsArray[j], expOutStr + "_N" + str(j) + ".png",
-                    dpi=style['dpi']
+                    figsArray[j], expOutStr + "_N" + str(j) + ".pdf",
+                    dpi=style['dpi'], format='pdf'
                 )
         plt.close('all')
         # Terminal ############################################################
@@ -141,7 +141,7 @@ for dir in folders:
     ##########################################################################
     drvNum = len(drv['genotypes'])
     (labels, colors) = (drv['genotypes'], style['colors'][0:drvNum])
-    filename = path + drivePars.get('folder') + '/legend.png'
+    filename = path + drivePars.get('folder') + '/legend.pdf'
     monet.exportGeneLegend(labels, colors, filename, dpi=750)
 ##############################################################################
 time = str(datetime.datetime.now())
