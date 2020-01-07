@@ -55,7 +55,7 @@ for dir in folders:
     ###########################################################################
     monet.makeFolder(path + dir)
     (num, drv) = (len(pathExps), drivePars.get(expType))
-    for i in range(4, 6, 1):
+    for i in range(0, num, 1):
         (pathSample, pathSampleM) = (pathExps[i], pathExpsM[i])
         experimentString = pathSample.split("/")[-1]
         #######################################################################
