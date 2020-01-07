@@ -15,7 +15,7 @@ else:
     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
 # Migration/No Migration terminal selector
 if sys.argv[3] != "mig":
-    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration'
+    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
 else:
     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
 # For testing #################################################################
