@@ -73,18 +73,32 @@ for dir in folders:
                 landscapeData, drivePars.get('HLT')
             )
         # Get the crosses through thresholds ##################################
-        nodePop = aggregatedNodesData['landscape'][NOI]
-        thrsBool = monet.comparePopToThresholds(
-                nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
+        nodePopR = aggregatedNodesData['landscape'][NOI]
+        nodePopS = aggregatedNodesData['landscape'][1]
+        thrsBoolR = monet.comparePopToThresholds(
+                nodePopR, gIx, [0, 1], thresholds, refPop=SSPOP
+            )
+        thrsBoolS = monet.comparePopToThresholds(
+                nodePopS, gIx, [0, 1], thresholds, refPop=SSPOP
             )
         # Get the info to min pop #############################################
         nodePopDict = {}
-        nodePopDict["population"] = nodePop
-        minTuple = aux.getTimeToMinAtAllele(nodePopDict, gIx)
+        # Releases Node
+        nodePopDict["population"] = nodePopR
+        minTupleR = aux.getTimeToMinAtAllele(nodePopDict, gIx)
+        # Spillover Node
+        nodePopDict["population"] = nodePopS
+        minTupleS = aux.getTimeToMinAtAllele(nodePopDict, gIx)
+        # Both nodes
+        minTuple = [minTupleR, minTupleS]
         # Calculate the metrics ###############################################
-        (chngDays, prtcDays) = (
-                monet.getConditionChangeDays(thrsBool),
-                monet.countConditionDays(thrsBool)
+        chngDays = (
+                monet.getConditionChangeDays(thrsBoolR),
+                monet.getConditionChangeDays(thrsBoolS)
+            )
+        prtcDays = (
+                monet.countConditionDays(thrsBoolR),
+                monet.countConditionDays(thrsBoolS)
             )
         #######################################################################
         # Traces
@@ -102,14 +116,14 @@ for dir in folders:
         # Plot ################################################################
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
         for j in range(0, len(figsArray)):
-            title = aux.parseTitle(thresholds, prtcDays)
-            minTitle = aux.parseMinTitle(minTuple, SSPOP)
+            title = aux.parseTitle(thresholds, prtcDays[j])
+            minTitle = aux.parseMinTitle(minTuple[j], SSPOP)
             axTemp = figsArray[j].get_axes()[0]
             axTemp = aux.setRange(axTemp, style)
             axTemp = aux.printTitle(axTemp, title)
             axTemp = aux.printMinTitle(axTemp, minTitle)
-            axTemp = aux.printVLines(axTemp, chngDays)
-            axTemp = aux.printMinLines(axTemp, minTuple, style)
+            axTemp = aux.printVLines(axTemp, chngDays[j])
+            axTemp = aux.printMinLines(axTemp, minTuple[j], style)
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             monet.quickSaveFigure(
                     figsArray[j], expOutStr + "_N" + str(j) + ".png",
