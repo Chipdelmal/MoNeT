@@ -51,11 +51,16 @@ def selectAnalysisType(ECO, PATH_IMG):
 
 
 def parseTitle(thresholds, prtcDays):
-    title = '  '.join(['[{} : {}]'.format(
+    title = '  '.join(['[{}: {}]'.format(
                 str(round(1-x[0], 2)).ljust(4, '0'),
                 str(x[1]).zfill(4)
             ) for x in zip(thresholds, prtcDays)]
         )
+    return 'THR: ' + title
+
+
+def parseMinTitle(minTuple):
+    title = "MIN: [{}: {}]".format(int(minTuple[0]), int(minTuple[1]))
     return title
 
 
@@ -68,12 +73,33 @@ def printTitle(ax, title):
     return ax
 
 
+def printMinTitle(ax, title):
+    ax.text(
+            .99, .85, title, color='Red', fontsize=2.5, alpha=.5,
+            verticalalignment='top', horizontalalignment='right',
+            transform=ax.transAxes
+        )
+    return ax
+
+
 def printVLines(ax, chngDays):
     for vLine in chngDays:
         ax.axvline(
                 x=vLine, linewidth=.1,
                 linestyle='--', color='Black', alpha=.5
             )
+    return ax
+
+
+def printMinLines(ax, minTuple, style):
+    ax.axhline(
+            y=minTuple[1], xmin=0, xmax=minTuple[0]/style['xRange'][1],
+            linewidth=.1, linestyle='--', color='Red', alpha=.5
+        )
+    ax.axvline(
+            x=minTuple[0], ymin=0, ymax=minTuple[1]/style['yRange'][1],
+            linewidth=.075, linestyle='--', color='Red', alpha=.5
+        )
     return ax
 
 
