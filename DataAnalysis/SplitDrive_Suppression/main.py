@@ -111,7 +111,8 @@ for dir in folders:
             axTemp = aux.setRange(axTemp, style)
             # Add labels to the days of threshold-crossing
             axTemp = aux.printHAxisNumbersAlt(
-                    axTemp, chngDays[j], style['xRange'][1], 'Gray'
+                    axTemp, chngDays[j], style['xRange'][1], 'Gray',
+                    relStr=REL_STR
                 )
             # Min pop prints
             if(1 - minTuple[j][1] / SSPOP >= .05):

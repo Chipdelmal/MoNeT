@@ -55,7 +55,7 @@ def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True):
     (yPos, vAlign) = (-.03, 'top')
     if top:
         (yPos, vAlign) = (1.02, 'bottom')
-    #
+    # Plot text if the list is longer than one
     if len(numbers) > 0:
         for i in numbers:
             ax.text(
@@ -66,19 +66,20 @@ def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True):
     return ax
 
 
-def printHAxisNumbersAlt(ax, numbers, xRange, color='Black'):
+def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
     if len(numbers) > 0:
         for (ix, i) in enumerate(numbers):
             (yPos, vAlign) = (-.03, 'top')
+            # Alternate based on open/close of the threshold cross
             if ix < len(numbers) / 2:
                 if (ix % 2 == 0):
                     (yPos, vAlign) = (1.02, 'bottom')
             else:
                 if (ix % 2 != 0):
                     (yPos, vAlign) = (1.02, 'bottom')
-            # Plot textt
+            # Plot text
             ax.text(
-                    i/xRange, yPos, str(i), color=color, fontsize=1.5,
+                    i/xRange, yPos, str(i-relStr), color=color, fontsize=1.5,
                     alpha=.5, verticalalignment=vAlign,
                     horizontalalignment='center', transform=ax.transAxes
                 )
