@@ -66,6 +66,21 @@ def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True):
     return ax
 
 
+def printHAxisNumbersAlt(ax, numbers, xRange, color='Black'):
+    if len(numbers) > 0:
+        for (ix, i) in enumerate(numbers):
+            (yPos, vAlign) = (-.03, 'top')
+            if (ix % 2 == 0):
+                (yPos, vAlign) = (1.02, 'bottom')
+            # Plot textt
+            ax.text(
+                    i/xRange, yPos, str(i), color=color, fontsize=1.5,
+                    alpha=.5, verticalalignment=vAlign,
+                    horizontalalignment='center', transform=ax.transAxes
+                )
+    return ax
+
+
 def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True):
     (xPos, hAlign) = (-.002, 'right')
     #
@@ -101,7 +116,7 @@ def parseMinTitle(minTuple, SSPOP, thrs=.05):
 
 def printTitle(ax, title):
     ax.text(
-            .99, .95, title, color=SUP_COL, fontsize=2.5, alpha=.75,
+            .99, .95, title, color=SUP_COL, fontsize=2, alpha=.75,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -110,7 +125,7 @@ def printTitle(ax, title):
 
 def printMinTitle(ax, title):
     ax.text(
-            .99, .85, title, color=MIN_COL, fontsize=2.5, alpha=.5,
+            .99, .875, title, color=MIN_COL, fontsize=2, alpha=.5,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )

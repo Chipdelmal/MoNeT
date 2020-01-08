@@ -110,9 +110,11 @@ for dir in folders:
             minTitle = aux.parseMinTitle(minTuple[j], SSPOP)
             axTemp = figsArray[j].get_axes()[0]
             axTemp = aux.setRange(axTemp, style)
-            axTemp = aux.printHAxisNumbers(
-                    axTemp, chngDays[j], style['xRange'][1], 'Gray', top=True
+            # Add labels to the days of threshold-crossing
+            axTemp = aux.printHAxisNumbersAlt(
+                    axTemp, chngDays[j], style['xRange'][1], 'Gray'
                 )
+            # Min pop prints
             if(1 - minTuple[j][1] / SSPOP >= .05):
                 axTemp = aux.printHAxisNumbers(
                         axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
