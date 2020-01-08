@@ -70,8 +70,12 @@ def printHAxisNumbersAlt(ax, numbers, xRange, color='Black'):
     if len(numbers) > 0:
         for (ix, i) in enumerate(numbers):
             (yPos, vAlign) = (-.03, 'top')
-            if (ix % 2 == 0):
-                (yPos, vAlign) = (1.02, 'bottom')
+            if ix < len(numbers) / 2:
+                if (ix % 2 == 0):
+                    (yPos, vAlign) = (1.02, 'bottom')
+            else:
+                if (ix % 2 != 0):
+                    (yPos, vAlign) = (1.02, 'bottom')
             # Plot textt
             ax.text(
                     i/xRange, yPos, str(i), color=color, fontsize=1.5,
