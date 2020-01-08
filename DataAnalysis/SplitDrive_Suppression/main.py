@@ -26,10 +26,13 @@ else:
 PATH_IMG = PATH + 'img/'
 folders = [
         'SplitDrive', 'ylinkedXShredder', 'autosomalXShredder',
-       	'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
+        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
-(NOI, thresholds, SSPOP, REL_STR) = (0, [.95, .9, .75, .5, .25, .1], 10000, 20)
+(thresholds, NOI, SSPOP, REL_STR) = (
+        [.95, .9, .75, .5, .25, .1, .05],
+        0, 10000, 20
+    )
 ###############################################################################
 # Iterate through folders
 ###############################################################################

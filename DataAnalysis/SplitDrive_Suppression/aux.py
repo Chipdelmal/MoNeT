@@ -15,7 +15,7 @@ STYLE_HLT = {
         "xRange": [0, 2000], "yRange": [0, 20000],
         "colors": ['#9f00cc', '#ec0b43', '#0038a8']
     }
-STYLE_HLT['aspect'] = monet.scaleAspect(.1, STYLE_HLT)
+STYLE_HLT['aspect'] = monet.scaleAspect(.15, STYLE_HLT)
 
 STYLE_ECO = {
         "width": .1, "alpha": .1, "dpi": 500,
@@ -26,7 +26,7 @@ STYLE_ECO = {
                 '#e600ff', '#b3ccff', '#333380', '#f0a6ca'
             ]
     }
-STYLE_ECO['aspect'] = monet.scaleAspect(.1, STYLE_ECO)
+STYLE_ECO['aspect'] = monet.scaleAspect(.15, STYLE_ECO)
 
 
 ###############################################################################
@@ -52,9 +52,9 @@ def selectAnalysisType(ECO, PATH_IMG):
 
 
 def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
-    (yPos, vAlign) = (-.03, 'top')
+    (yPos, vAlign) = (-.02, 'top')
     if top:
-        (yPos, vAlign) = (1.02, 'bottom')
+        (yPos, vAlign) = (1.01, 'bottom')
     # Plot text if the list is longer than one
     if len(numbers) > 0:
         for i in numbers:
@@ -69,14 +69,14 @@ def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
 def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
     if len(numbers) > 0:
         for (ix, i) in enumerate(numbers):
-            (yPos, vAlign) = (-.03, 'top')
+            (yPos, vAlign) = (-.02, 'top')
             # Alternate based on open/close of the threshold cross
             if ix < len(numbers) / 2:
                 if (ix % 2 == 0):
-                    (yPos, vAlign) = (1.02, 'bottom')
+                    (yPos, vAlign) = (1.01, 'bottom')
             else:
                 if (ix % 2 != 0):
-                    (yPos, vAlign) = (1.02, 'bottom')
+                    (yPos, vAlign) = (1.01, 'bottom')
             # Plot text
             ax.text(
                     i/xRange, yPos, str(i-relStr), color=color, fontsize=1.5,
@@ -121,7 +121,7 @@ def parseMinTitle(minTuple, SSPOP, thrs=.05, relStr=0):
 
 def printTitle(ax, title):
     ax.text(
-            .99, .95, title, color=SUP_COL, fontsize=2, alpha=.75,
+            .999, .975, title, color=SUP_COL, fontsize=2, alpha=.75,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -130,8 +130,8 @@ def printTitle(ax, title):
 
 def printMinTitle(ax, title):
     ax.text(
-            .99, .875, title, color=MIN_COL, fontsize=2, alpha=.5,
-            verticalalignment='top', horizontalalignment='right',
+            .999, .02, title + ' ', color=MIN_COL, fontsize=2, alpha=.5,
+            verticalalignment='bottom', horizontalalignment='right',
             transform=ax.transAxes
         )
     return ax
@@ -147,14 +147,14 @@ def printVLines(ax, chngDays):
 
 
 def printMinLines(ax, minTuple, style, SSPOP, thrs=.05):
-    (width, alpha) = (.05, .75)
+    (width, alpha) = (.05, .5)
     if(1 - minTuple[1] / SSPOP >= thrs):
         ax.axhline(
                 y=minTuple[1], xmin=0, xmax=minTuple[0]/style['xRange'][1],
                 linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
             )
         ax.axvline(
-                x=minTuple[0], ymin=0, ymax=minTuple[1]/style['yRange'][1],
+                x=minTuple[0], ymin=0, ymax=1, # minTuple[1]/style['yRange'][1],
                 linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
             )
     return ax
