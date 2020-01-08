@@ -25,12 +25,12 @@ else:
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'SplitDrive',
-        'ylinkedXShredder', 'autosomalXShredder',
-        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
+        'SplitDrive'
+        # , 'ylinkedXShredder', 'autosomalXShredder',
+        # 'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
-(NOI, thresholds, SSPOP) = (0, [.9, .75, .5, .25, .1], 10000)
+(NOI, thresholds, SSPOP, REL_STR) = (0, [.95, .9, .75, .5, .25, .1], 10000, 20)
 ###############################################################################
 # Iterate through folders
 ###############################################################################
@@ -110,6 +110,19 @@ for dir in folders:
             minTitle = aux.parseMinTitle(minTuple[j], SSPOP)
             axTemp = figsArray[j].get_axes()[0]
             axTemp = aux.setRange(axTemp, style)
+            axTemp = aux.printHAxisNumbers(
+                    axTemp, chngDays[j], style['xRange'][1], 'Gray', top=True
+                )
+            print(1 - minTuple[j][1] / SSPOP)
+            if(1 - minTuple[j][1] / SSPOP >= .05):
+                axTemp = aux.printHAxisNumbers(
+                        axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
+                        top=False
+                    )
+                axTemp = aux.printVAxisNumbers(
+                        axTemp, [minTuple[j][1]], style['yRange'][1], 'Red',
+                        left=True
+                    )
             axTemp = aux.printTitle(axTemp, title)
             axTemp = aux.printMinTitle(axTemp, minTitle)
             axTemp = aux.printVLines(axTemp, chngDays[j])
@@ -129,10 +142,10 @@ for dir in folders:
     ##########################################################################
     # Export color palette
     ##########################################################################
-    drvNum = len(drv['genotypes'])
-    (labels, colors) = (drv['genotypes'], style['colors'][0:drvNum])
-    filename = path + drivePars.get('folder') + '/legend.pdf'
-    monet.exportGeneLegend(labels, colors, filename, dpi=750)
+    # drvNum = len(drv['genotypes'])
+    # (labels, colors) = (drv['genotypes'], style['colors'][0:drvNum])
+    # filename = path + drivePars.get('folder') + '/legend.pdf'
+    # monet.exportGeneLegend(labels, colors, filename, dpi=750)
 ##############################################################################
 time = str(datetime.datetime.now())
 print(aux.PAD + '* Finished [{0}]'.format(time) + aux.PAD)

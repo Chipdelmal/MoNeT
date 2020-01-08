@@ -19,7 +19,8 @@ STYLE_HLT['aspect'] = monet.scaleAspect(.1, STYLE_HLT)
 
 STYLE_ECO = {
         "width": .1, "alpha": .1, "dpi": 500,
-        "legend": True, "aspect": .5, "xRange": [0, 2000], "yRange": [0, 1],
+        "legend": True, "aspect": .5,
+        "xRange": [0, 2000], "yRange": [0, 1],
         "colors": [
                 '#ff004d', '#80ff80', '#6600ff',
                 '#e600ff', '#b3ccff', '#333380', '#f0a6ca'
@@ -48,6 +49,34 @@ def selectAnalysisType(ECO, PATH_IMG):
     else:
         (expType, style, path, doi) = ('HLT', aux.STYLE_HLT, PATH_HLT, 'Other')
     return (expType, style, path, doi)
+
+
+def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True):
+    (yPos, vAlign) = (-.03, 'top')
+    if top:
+        (yPos, vAlign) = (1.02, 'bottom')
+    #
+    if len(numbers) > 0:
+        for i in numbers:
+            ax.text(
+                    i/xRange, yPos, str(i), color=color, fontsize=1.5,
+                    alpha=.5, verticalalignment=vAlign,
+                    horizontalalignment='center', transform=ax.transAxes
+                )
+    return ax
+
+
+def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True):
+    (xPos, hAlign) = (-.002, 'right')
+    #
+    if len(numbers) > 0:
+        for i in numbers:
+            ax.text(
+                    xPos, i/yRange, str(int(i)), color=color, fontsize=1.5,
+                    alpha=.5, verticalalignment='center',
+                    horizontalalignment=hAlign, transform=ax.transAxes
+                )
+    return ax
 
 
 def parseTitle(thresholds, prtcDays):
@@ -112,8 +141,8 @@ def printMinLines(ax, minTuple, style, SSPOP, thrs=.05):
 
 
 def setRange(ax, style):
-    ax.set_xlim(0, style['xRange'][1])
-    ax.set_ylim(0, style['yRange'][1])
+    ax.set_xlim(style['xRange'][0], style['xRange'][1])
+    ax.set_ylim(style['yRange'][0], style['yRange'][1])
     return ax
 
 
