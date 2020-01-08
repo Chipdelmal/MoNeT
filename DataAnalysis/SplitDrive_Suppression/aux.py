@@ -51,7 +51,7 @@ def selectAnalysisType(ECO, PATH_IMG):
     return (expType, style, path, doi)
 
 
-def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True):
+def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
     (yPos, vAlign) = (-.03, 'top')
     if top:
         (yPos, vAlign) = (1.02, 'bottom')
@@ -59,7 +59,7 @@ def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True):
     if len(numbers) > 0:
         for i in numbers:
             ax.text(
-                    i/xRange, yPos, str(i), color=color, fontsize=1.5,
+                    i/xRange, yPos, str(i-relStr), color=color, fontsize=1.5,
                     alpha=.5, verticalalignment=vAlign,
                     horizontalalignment='center', transform=ax.transAxes
                 )

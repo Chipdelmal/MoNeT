@@ -106,7 +106,7 @@ for dir in folders:
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
         for j in range(0, len(figsArray)):
             title = aux.parseTitle(thresholds, prtcDays[j])
-            minTitle = aux.parseMinTitle(minTuple[j], SSPOP)
+            minTitle = aux.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
             axTemp = figsArray[j].get_axes()[0]
             axTemp = aux.setRange(axTemp, style)
             # Add labels to the days of threshold-crossing
@@ -118,14 +118,14 @@ for dir in folders:
             if(1 - minTuple[j][1] / SSPOP >= .05):
                 axTemp = aux.printHAxisNumbers(
                         axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
-                        top=False
+                        top=False, relStr=REL_STR
                     )
                 axTemp = aux.printVAxisNumbers(
                         axTemp, [minTuple[j][1]], style['yRange'][1], 'Red',
                         left=True
                     )
             axTemp = aux.printTitle(axTemp, title)
-            axTemp = aux.printMinTitle(axTemp, minTitle, relStr=REL_STR)
+            axTemp = aux.printMinTitle(axTemp, minTitle)
             axTemp = aux.printVLines(axTemp, chngDays[j])
             axTemp = aux.printMinLines(axTemp, minTuple[j], style, SSPOP)
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
