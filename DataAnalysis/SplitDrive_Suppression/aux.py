@@ -3,7 +3,7 @@ import aux
 import numpy as np
 import MoNeT_MGDrivE as monet
 
-
+(SUP_COL, MIN_COL) = ('gray', 'red')
 PAD = '\n' + 125 * '*' + '\n'
 (CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
@@ -72,7 +72,7 @@ def parseMinTitle(minTuple, SSPOP, thrs=.05):
 
 def printTitle(ax, title):
     ax.text(
-            .99, .95, title, color='gray', fontsize=2.5, alpha=.75,
+            .99, .95, title, color=SUP_COL, fontsize=2.5, alpha=.75,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -81,7 +81,7 @@ def printTitle(ax, title):
 
 def printMinTitle(ax, title):
     ax.text(
-            .99, .85, title, color='red', fontsize=2.5, alpha=.5,
+            .99, .85, title, color=MIN_COL, fontsize=2.5, alpha=.5,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -92,20 +92,21 @@ def printVLines(ax, chngDays):
     for vLine in chngDays:
         ax.axvline(
                 x=vLine, linewidth=.05,
-                linestyle='--', color='gray', alpha=.75
+                linestyle='--', color=SUP_COL, alpha=.75
             )
     return ax
 
 
 def printMinLines(ax, minTuple, style, SSPOP, thrs=.05):
+    (width, alpha) = (.05, .75)
     if(1 - minTuple[1] / SSPOP >= thrs):
         ax.axhline(
                 y=minTuple[1], xmin=0, xmax=minTuple[0]/style['xRange'][1],
-                linewidth=.05, linestyle='--', color='red', alpha=.75
+                linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
             )
         ax.axvline(
                 x=minTuple[0], ymin=0, ymax=minTuple[1]/style['yRange'][1],
-                linewidth=.05, linestyle='--', color='red', alpha=.75
+                linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
             )
     return ax
 
