@@ -86,13 +86,18 @@ def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
     return ax
 
 
-def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True):
+def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True, rnd=True):
     (xPos, hAlign) = (-.002, 'right')
     #
     if len(numbers) > 0:
         for i in numbers:
+            if rnd:
+                val = str(int(i))
+            else:
+                val = round(i, 2)
+            #####
             ax.text(
-                    xPos, i/yRange, str(int(i)), color=color, fontsize=1.5,
+                    xPos, i/yRange, val, color=color, fontsize=1.5,
                     alpha=.5, verticalalignment='center',
                     horizontalalignment=hAlign, transform=ax.transAxes
                 )

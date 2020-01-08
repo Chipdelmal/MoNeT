@@ -123,14 +123,29 @@ for dir in folders:
                         axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
                         top=False, relStr=REL_STR
                     )
-                axTemp = aux.printVAxisNumbers(
-                        axTemp, [minTuple[j][1]], style['yRange'][1], 'Red',
-                        left=True
-                    )
+                # Pop suppression level
+                if ECO is False:
+                    axTemp = aux.printVAxisNumbers(
+                            axTemp, [minTuple[j][1]],
+                            style['yRange'][1], 'Red', left=True, rnd=True
+                        )
+                    axTemp = aux.printMinLines(
+                            axTemp, minTuple[j], style, SSPOP
+                        )
+                else:
+                    axTemp = aux.printVAxisNumbers(
+                            axTemp, [minTuple[j][1] / SSPOP],
+                            style['yRange'][1], 'Red', left=True, rnd=False
+                        )
+                    axTemp = aux.printMinLines(
+                            axTemp, (minTuple[j][0], minTuple[j][1] / SSPOP),
+                            style, SSPOP
+                        )
+            # Titles and lines common for both analyses
             axTemp = aux.printTitle(axTemp, title)
             axTemp = aux.printMinTitle(axTemp, minTitle)
             axTemp = aux.printVLines(axTemp, chngDays[j])
-            axTemp = aux.printMinLines(axTemp, minTuple[j], style, SSPOP)
+            # Export to disk
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             monet.quickSaveFigure(
                     figsArray[j], expOutStr + "_N" + str(j) + ".pdf",
