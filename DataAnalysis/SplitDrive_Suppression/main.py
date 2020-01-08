@@ -113,7 +113,6 @@ for dir in folders:
             axTemp = aux.printHAxisNumbers(
                     axTemp, chngDays[j], style['xRange'][1], 'Gray', top=True
                 )
-            print(1 - minTuple[j][1] / SSPOP)
             if(1 - minTuple[j][1] / SSPOP >= .05):
                 axTemp = aux.printHAxisNumbers(
                         axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
