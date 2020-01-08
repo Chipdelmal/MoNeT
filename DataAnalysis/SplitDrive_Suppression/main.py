@@ -125,7 +125,7 @@ for dir in folders:
                         left=True
                     )
             axTemp = aux.printTitle(axTemp, title)
-            axTemp = aux.printMinTitle(axTemp, minTitle)
+            axTemp = aux.printMinTitle(axTemp, minTitle, relStr=REL_STR)
             axTemp = aux.printVLines(axTemp, chngDays[j])
             axTemp = aux.printMinLines(axTemp, minTuple[j], style, SSPOP)
             expOutStr = path + drivePars.get('folder') + '/' + experimentString

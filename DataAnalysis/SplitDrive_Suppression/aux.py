@@ -108,10 +108,10 @@ def parseTitle(thresholds, prtcDays):
     return 'SUP: ' + title
 
 
-def parseMinTitle(minTuple, SSPOP, thrs=.05):
+def parseMinTitle(minTuple, SSPOP, thrs=.05, relStr=0):
     if(1 - minTuple[1] / SSPOP >= thrs):
         title = "MIN: [{}: {}]".format(
-                int(minTuple[0]),
+                int(minTuple[0] - relStr),
                 round(1 - minTuple[1]/SSPOP, 2)
             )
     else:
