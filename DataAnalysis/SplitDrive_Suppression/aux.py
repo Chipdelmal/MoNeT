@@ -72,7 +72,7 @@ def parseMinTitle(minTuple, SSPOP, thrs=.05):
 
 def printTitle(ax, title):
     ax.text(
-            .99, .95, title, color='Blue', fontsize=2.5, alpha=.5,
+            .99, .95, title, color='gray', fontsize=2.5, alpha=.75,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -81,7 +81,7 @@ def printTitle(ax, title):
 
 def printMinTitle(ax, title):
     ax.text(
-            .99, .85, title, color='Red', fontsize=2.5, alpha=.5,
+            .99, .85, title, color='red', fontsize=2.5, alpha=.5,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -91,8 +91,8 @@ def printMinTitle(ax, title):
 def printVLines(ax, chngDays):
     for vLine in chngDays:
         ax.axvline(
-                x=vLine, linewidth=.1,
-                linestyle='--', color='Blue', alpha=.5
+                x=vLine, linewidth=.05,
+                linestyle='--', color='gray', alpha=.75
             )
     return ax
 
@@ -101,11 +101,11 @@ def printMinLines(ax, minTuple, style, SSPOP, thrs=.05):
     if(1 - minTuple[1] / SSPOP >= thrs):
         ax.axhline(
                 y=minTuple[1], xmin=0, xmax=minTuple[0]/style['xRange'][1],
-                linewidth=.1, linestyle='--', color='Red', alpha=.5
+                linewidth=.05, linestyle='--', color='red', alpha=.75
             )
         ax.axvline(
                 x=minTuple[0], ymin=0, ymax=minTuple[1]/style['yRange'][1],
-                linewidth=.075, linestyle='--', color='Red', alpha=.5
+                linewidth=.05, linestyle='--', color='red', alpha=.75
             )
     return ax
 
