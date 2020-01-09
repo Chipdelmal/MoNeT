@@ -15,15 +15,15 @@ import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 
-(NCORES, USER) = (20, 1)
+(NCORES, USER) = (20, 0)
 (CRED, CEND) = ('\033[91m', '\033[0m')
 ###############################################################################
 # Factorial experiment
 ###############################################################################
 if USER == 0:
-    path = "/Volumes/marshallShare/ThresholdResub/factorialSA/"
+    path = "/Volumes/marshallShare/ThresholdResub/batchHP/"
 elif USER == 1:
-    path = "/RAID5/marshallShare/ThresholdResub/batchSA/"
+    path = "/RAID5/marshallShare/ThresholdResub/batchHP/"
 elif USER == 2:
     path = "/RAID0/batchSA/"
 dirs = sorted(next(os.walk(path))[1])
