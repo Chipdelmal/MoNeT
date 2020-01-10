@@ -1,9 +1,9 @@
 import aux
-import MoNeT_MGDrivE as monet
+# import MoNeT_MGDrivE as monet
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from mpl_toolkits.basemap import Basemap
+# import matplotlib.patches as mpatches
+# from mpl_toolkits.basemap import Basemap
 # %matplotlib inline
 
 # Setup Paths #################################################################

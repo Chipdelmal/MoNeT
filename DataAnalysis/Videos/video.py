@@ -9,9 +9,14 @@
 #       https://github.com/matplotlib/basemap/issues/324
 ###############################################################################
 import aux
+import glob
 import subprocess
 import MoNeT_MGDrivE as monet
 
+BASE_PATH = '/Volumes/marshallShare/VideoDemo/'
+(dataFldr, clstFldr, expName, aggLvl, clstSample) = (
+        'Sim', 'Clustered', 'E_0200_30_20_02_00020', '500', '1'
+    )
 ###############################################################################
 # Colors and genotypes
 ###############################################################################
@@ -20,7 +25,15 @@ colors = [
         '#e56399', '#ee6c4d', '#861657', '#5cf64a', 'yellow', 'magenta',
         'purple', 'black', 'cyan', 'teal'
     ]
-groups = ["W", "H", "R", "B", "E"]
+aggDict = {
+        'genotypes': ['W', 'H', 'R/B', 'E'],
+        'indices': [
+                [0, 0, 1, 2, 3, 4],
+                [1, 5, 5, 6, 7, 8],
+                [3, 7, 10, 12, 12, 13, 4, 8, 11, 13, 14, 14],
+                [2, 6, 9, 9, 10, 11]
+            ]
+    }
 
 ###############################################################################
 # File paths
@@ -32,46 +45,47 @@ groups = ["W", "H", "R", "B", "E"]
 #   expPath: Folder nested within the ANALYZED folder for parameters sweeps
 #       (would be equal to expFolder in case it's not existing)
 ###############################################################################
-BASE_PATH = '/Volumes/marshallShare/ERACR/Yorkeys4/'
-expFolder = BASE_PATH + 'Experiment4/Yorkeys_AGG_1_00001'
-extras = BASE_PATH + '/Yorkeys4/Clustered/'
-expPath = expFolder + '/ANALYZED/' + 'E_0200_30_20_02_00020'
+(expFolder, extras, expPath, outPath) = (
+        BASE_PATH + dataFldr,
+        BASE_PATH + clstFldr + '/' + aggLvl + '/',
+        BASE_PATH + dataFldr + '/ANALYZED/' + expName + '/',
+        BASE_PATH + 'images/'
+    )
 
 ###############################################################################
 # File names parsing
+###############################################################################
+#   VBG:
+#   CLS:
+#   AGCV:
 ###############################################################################
 (patchFilePattern, imagePattern) = (
         {'males': '/M_*', 'females': '/F_*'},
         '/c_%06d.png'
     )
-expBaseName = expFolder.split('/')[-1]
-(clusteringNum, bgName, originalCoordFile) = (
-        int(expBaseName.split('_')[-1]),
-        expBaseName.replace('_AGG_', '_VBG_'),
-        extras + expBaseName.replace('_AGG_', '_CLS_') + '.csv'
+(bgName, originalCoordFile) = (
+        glob.glob(extras + '/*_VBG_' + clstSample + '_*.png')[0],
+        glob.glob(extras + '/*_CLS_' + clstSample + '_*.csv')[0]
     )
-(clusterName, background, vname, imageLocation) = (
-        bgName.replace('VBG_', 'AGCV_'),
-        extras + bgName + '.png',
-        expPath.replace('ANALYZED', 'videos') + '.mp4',
-        expPath.replace('ANALYZED', 'images/clustercharts')
+(clusterName, vname, imageLocation) = (
+        glob.glob(extras + '/*_AGCV_' + clstSample + '_*.csv')[0],
+        outPath + 'video/movie.mp4',
+        outPath + 'clustercharts/'
     )
 original_corners = aux.get_corners(originalCoordFile)
-coordinates = monet.getClusters(extras+clusterName+'.csv')
+coordinates = monet.getClusters(clusterName)
+subprocess.Popen(['mkdir', imageLocation])
 
 ###############################################################################
 # Create video
 ###############################################################################
-subprocess.Popen(['mkdir', imageLocation])
 clusters = monet.populateClusters(
         len(coordinates[0]), '', expPath, patchFilePattern
     )
-genotypes = monet.getGenotypes(clusters[0]['male'][0])
-aggDict = monet.autoGenerateGenotypesDictionary(groups, genotypes)
 aggList = monet.aggregateClusters(clusters, aggDict)
 monet.generateClusterGraphs(
         aggList, coordinates, imageLocation, colors, original_corners,
         0.002, 512, skip=True
     )
-video = monet.generateVideo(vname, background, imageLocation, imagePattern)
+video = monet.generateVideo(vname, bgName, imageLocation, imagePattern)
 video.wait()

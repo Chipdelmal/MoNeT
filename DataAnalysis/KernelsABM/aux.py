@@ -9,22 +9,41 @@
 from mpl_toolkits.basemap import Basemap
 
 
-def get_corners(fileName):
-    lats = []
-    longs = []
-    clusterData = open(fileName, 'r')
-    next(clusterData)
-    for line in clusterData:
-        tokens = line.split(',')
-        (lat, long) = (float(tokens[1]), float(tokens[0]))
-        lats.append(lat)
-        longs.append(long)
+def listColumnsNumbers(data):
+    ts = ["{}. {}".format(i, cl) for (i, cl) in enumerate(list(data.columns))]
+    return ts
 
-    minLat = min(lats)
-    minLong = min(longs)
-    maxLat = max(lats)
-    maxLong = max(longs)
-    return [[minLong, maxLong], [minLat, maxLat]]
+
+def printList(listIn):
+    [print(i) for i in listColumnsNumbers(listIn)]
+    return True
+
+
+def printFormattedList(dataList):
+    [print("* **" + i + "**: ") for i in listColumnsNumbers(dataList)]
+    return True
+
+
+def getYearFromCol(dataCol):
+    return [i.year for i in dataCol]
+
+
+def getNumericalRange(dataCol):
+    rangeTuple = (min(dataCol), max(dataCol))
+    return rangeTuple
+
+
+def stringCategorySet(dataCol):
+    catSet = [str(i) for i in set(dataCol)]
+    return ', '.join(catSet)
+
+
+def getCoordsMinMaxes(coordColumn):
+    (minLat, maxLat) = (
+        min(coordColumn),
+        max(coordColumn)
+    )
+    return (minLat, maxLat)
 
 
 def rescaleRGBA(colorsTuple, colors=255):
