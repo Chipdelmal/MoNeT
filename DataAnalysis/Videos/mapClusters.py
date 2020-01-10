@@ -1,20 +1,25 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+###############################################################################
+# Video Background Generator
+###############################################################################
 import os
 import glob
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
+# import matplotlib.patches as mpatches
+# import numpy as np
 from mpl_toolkits.basemap import Basemap
-from mpl_toolkits.mplot3d import Axes3D
+# from mpl_toolkits.mplot3d import Axes3D
 
 pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_Middle/LandAggregated"
 firstRun = True
 
 for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
     clusterstr = clusterFile.split('/')[-2][1:]
-    clusterNum  = int(clusterstr) #getfolder name and ignore the C infront of it to chech for the number of clusters
+    # getfolder name and ignore the C in front of it to chech for the number
+    #   of clusters
+    clusterNum = int(clusterstr)
 
     if clusterNum == 1:
         if firstRun:
@@ -42,7 +47,7 @@ for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
         clusters.append(cluster)
 
     (minLat, minLong) = (min(lats), min(longs))
-    (minCluster, maxCluter) = (min(clusters), max(clusters))
+    (minCluster, maxCluster) = (min(clusters), max(clusters))
     (maxLat, maxLong) = (max(lats), max(longs))
 
     fig = plt.figure(figsize=(5, 5))
@@ -56,7 +61,11 @@ for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
     # m.drawcounties(linewidth=0.3)
     # m.drawcoastlines(linewidth=0.3)
     # m.drawcountries(linewidth=0.3)
-    m.scatter(longs, lats, latlon=True, alpha=.2, marker='o', s=3, cmap=plt.get_cmap('rainbow'), c=clusters, vmin=minCluster, vmax=maxCluster)
+    m.scatter(
+            longs, lats, latlon=True, alpha=.2, marker='o', s=3,
+            cmap=plt.get_cmap('rainbow'), c=clusters,
+            vmin=minCluster, vmax=maxCluster
+        )
     # tLon,tLat = m(longs,lats)
     # for i in range(len(longs)):
     #     plt.text(tLon[i],tLat[i], str(i), fontsize=1)
@@ -67,7 +76,7 @@ for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
             top=False,         # ticks along the top edge are off
             left=False,
             right=False,
-            labelbottom=False, # labels along the bottom edge are off
+            labelbottom=False,  # labels along the bottom edge are off
             labelleft=False
         )
     if not os.path.exists(pathRoot+'/images/C'+clusterstr):
