@@ -4,9 +4,12 @@
 ###############################################################################
 # Clustered video routines
 ###############################################################################
-#   In case of:
-#       UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1
-#       https://github.com/matplotlib/basemap/issues/324
+# In case of:
+#   UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1
+#   https://github.com/matplotlib/basemap/issues/324
+# Depends on an obsolete structure (needs to be updated):
+#   https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/ERACR/Yorkeys.py
+#   https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/AggregationAndClustering
 ###############################################################################
 import aux
 import glob
@@ -15,7 +18,7 @@ import MoNeT_MGDrivE as monet
 
 BASE_PATH = '/Volumes/marshallShare/VideoDemo/'
 (dataFldr, clstFldr, expName, aggLvl, clstSample) = (
-        'Sim', 'Clustered', 'E_0200_30_20_02_00020', '500', '1'
+        'Sim', 'Clustered', 'E_0200_30_20_02_00020', 'C000500', '1'
     )
 ###############################################################################
 # Colors and genotypes
@@ -55,9 +58,11 @@ aggDict = {
 ###############################################################################
 # File names parsing
 ###############################################################################
-#   VBG:
-#   CLS:
-#   AGCV:
+#   VBG: Clustered PNG
+#   CLL: Number of nodes in cluster?
+#   CLS: {x, y, clusterID}
+#   AGG: Aggregated migration matrix
+#   AGCV: Clusters centroids?
 ###############################################################################
 (patchFilePattern, imagePattern) = (
         {'males': '/M_*', 'females': '/F_*'},
