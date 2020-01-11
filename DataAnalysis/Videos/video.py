@@ -60,9 +60,9 @@ aggDict = {
 ###############################################################################
 #   VBG: Clustered PNG
 #   CLL: Number of nodes in cluster?
-#   CLS: {x, y, clusterID}
-#   AGG: Aggregated migration matrix
-#   AGCV: Clusters centroids?
+#   CLS: {x, y, clusterID} -> contained now in "_I"
+#   AGG: Aggregated migration matrix "_A"
+#   AGCV: Clusters centroids? -> contained now in "_I"
 ###############################################################################
 (patchFilePattern, imagePattern) = (
         {'males': '/M_*', 'females': '/F_*'},
