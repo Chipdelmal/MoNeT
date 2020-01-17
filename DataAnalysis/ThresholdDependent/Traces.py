@@ -14,7 +14,7 @@ style = {
         "xRange": [0, 3 * 365], "yRange": [0, 20000],
         "colors": ['#9f00cc', '#ec0b43', '#0038a8']
     }
-style['aspect'] = monet.scaleAspect(.15, style)
+style['aspect'] = monet.scaleAspect(.04, style)
 
 
 def driveGenesSelector(driveID):
@@ -37,22 +37,24 @@ def driveGenesSelector(driveID):
 aggregationDictionary = monet.generateAggregationDictionary(
         ["W", "H"], [[x - 1 for x in wildsList], [x - 1 for x in homingList]]
     )
-pathRoot  = '/Volumes/marshallShare/ThresholdResub/factorialTRACES/udMel/'
-pathExt = 'GARBAGE/E_02_04_0020_0750/'
-pathFull = pathRoot + pathExt
-paths = monet.listDirectoriesWithPathWithinAPath(pathFull)
-landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-    paths, aggregationDictionary,
-    male=False, female=True, dataType=float
-)
-figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
-
-
-
-for i in range(0,len(figsArray)):
-    figsArray[i].savefig(PATH + "img/" + str(i) + ".png",
+pathRoot = '/Volumes/marshallShare/ThresholdResub/factorialTRACES/udMel/GARBAGE/'
+exps = monet.listDirectoriesWithPathWithinAPath(pathRoot)
+expsNames = [i.split('/')[-1] for i in exps]
+for i in expsNames:
+    pathExt = i
+    pathFull = pathRoot + pathExt + '/'
+    print(pathFull)
+    paths = monet.listDirectoriesWithPathWithinAPath(pathFull)
+    landscapeReps = monet.sumAggregatedLandscapeDataRepetitionsAlt(
+            paths, aggregationDictionary,
+            male=False, female=True, dataType=float
+        )
+    figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
+    figsArray[0].savefig(
+            pathRoot + "img/" + pathExt + ".pdf",
             dpi=1024, facecolor='w',
             edgecolor='w', orientation='portrait', papertype=None,
-            format="png", transparent=True, bbox_inches='tight',
+            format="pdf", transparent=True, bbox_inches='tight',
             pad_inches=0, frameon=None
-    )
+        )
+    plt.close('all')
