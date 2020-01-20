@@ -10,22 +10,29 @@ import matplotlib.pyplot as plt
 # Code for terminal-call: python main.py "srv" "eco"
 ###############################################################################
 if sys.argv[1] != "srv":
-    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', '/Volumes/')
+    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'Volumes/')
 else:
-    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', '/RAID5/')
-PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
+    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
+# Migration/No Migration terminal selector
+if sys.argv[3] != "mig":
+    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
+else:
+    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
 # For testing #################################################################
-(ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/')
+# (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'ylinkedXShredder', 'autosomalXShredder',
-        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR', 'SplitDrive'
+        'SplitDrive', 'ylinkedXShredder', 'autosomalXShredder',
+        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
-(NOI, thresholds, SSPOP) = (0, [.9, .75, .5, .25, .1], 10000)
+(thresholds, NOI, SSPOP, REL_STR) = (
+        [.95, .9, .75, .5, .25, .1, .05],
+        0, 10000, 20
+    )
 ###############################################################################
 # Iterate through folders
 ###############################################################################
@@ -72,17 +79,19 @@ for dir in folders:
                 landscapeData, drivePars.get('HLT')
             )
         # Get the crosses through thresholds ##################################
-        nodePop = aggregatedNodesData['landscape'][NOI]
-        thrsBool = monet.comparePopToThresholds(
+        (chngDays, prtcDays, minTuple) = ([], [], [])
+        for j in range(len(aggregatedNodesData['landscape'])):
+            nodePop = aggregatedNodesData['landscape'][j]
+            thrsBool = monet.comparePopToThresholds(
                 nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
             )
-        # nodePopDict["population"] = nodePop
-        # aux.getTimeToMinAtAllele(nodePopDict, gIx)
-        # Calculate the metrics ###############################################
-        (chngDays, prtcDays) = (
-                monet.getConditionChangeDays(thrsBool),
-                monet.countConditionDays(thrsBool)
-            )
+            chngDays.append(monet.getConditionChangeDays(thrsBool))
+            prtcDays.append(monet.countConditionDays(thrsBool))
+            # Get the info to min pop #########################################
+            nodePopDict = {}
+            nodePopDict["population"] = nodePop
+            minData = aux.getTimeToMinAtAllele(nodePopDict, gIx)
+            minTuple.append(minData)
         #######################################################################
         # Traces
         #   Generates the plot of the experiment at a repetition level.
@@ -99,15 +108,48 @@ for dir in folders:
         # Plot ################################################################
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
         for j in range(0, len(figsArray)):
-            title = aux.parseTitle(thresholds, prtcDays)
+            title = aux.parseTitle(thresholds, prtcDays[j])
+            minTitle = aux.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
             axTemp = figsArray[j].get_axes()[0]
             axTemp = aux.setRange(axTemp, style)
+            # Add labels to the days of threshold-crossing
+            axTemp = aux.printHAxisNumbersAlt(
+                    axTemp, chngDays[j], style['xRange'][1], 'Gray',
+                    relStr=REL_STR
+                )
+            # Min pop prints
+            if(1 - minTuple[j][1] / SSPOP >= .05):
+                axTemp = aux.printHAxisNumbers(
+                        axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
+                        top=False, relStr=REL_STR
+                    )
+                # Pop suppression level
+                if ECO is False:
+                    axTemp = aux.printVAxisNumbers(
+                            axTemp, [minTuple[j][1]],
+                            style['yRange'][1], 'Red', left=True, rnd=True
+                        )
+                    axTemp = aux.printMinLines(
+                            axTemp, minTuple[j], style, SSPOP
+                        )
+                else:
+                    axTemp = aux.printVAxisNumbers(
+                            axTemp, [minTuple[j][1] / SSPOP],
+                            style['yRange'][1], 'Red', left=True, rnd=False
+                        )
+                    axTemp = aux.printMinLines(
+                            axTemp, (minTuple[j][0], minTuple[j][1] / SSPOP),
+                            style, SSPOP
+                        )
+            # Titles and lines common for both analyses
             axTemp = aux.printTitle(axTemp, title)
-            axTemp = aux.printVLines(axTemp, chngDays)
+            axTemp = aux.printMinTitle(axTemp, minTitle)
+            axTemp = aux.printVLines(axTemp, chngDays[j])
+            # Export to disk
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             monet.quickSaveFigure(
-                    figsArray[j], expOutStr + "_N" + str(j) + ".png",
-                    dpi=style['dpi']
+                    figsArray[j], expOutStr + "_N" + str(j) + ".pdf",
+                    dpi=style['dpi'], format='pdf'
                 )
         plt.close('all')
         # Terminal ############################################################
@@ -119,10 +161,10 @@ for dir in folders:
     ##########################################################################
     # Export color palette
     ##########################################################################
-    drvNum = len(drv['genotypes'])
-    (labels, colors) = (drv['genotypes'], style['colors'][0:drvNum])
-    filename = path + drivePars.get('folder') + '/legend.png'
-    monet.exportGeneLegend(labels, colors, filename, dpi=750)
+    # drvNum = len(drv['genotypes'])
+    # (labels, colors) = (drv['genotypes'], style['colors'][0:drvNum])
+    # filename = path + drivePars.get('folder') + '/legend.pdf'
+    # monet.exportGeneLegend(labels, colors, filename, dpi=750)
 ##############################################################################
 time = str(datetime.datetime.now())
 print(aux.PAD + '* Finished [{0}]'.format(time) + aux.PAD)

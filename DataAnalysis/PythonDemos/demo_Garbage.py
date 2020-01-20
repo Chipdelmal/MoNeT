@@ -30,10 +30,11 @@ landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
     male=False, female=True, dataType=float
 )
 figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
-for i in range(0,len(figsArray)):
-    figsArray[i].savefig("./images/TracesDemo"+str(i)+".png",
+for i in range(0, len(figsArray)):
+    figsArray[i].savefig(
+            "./images/TracesDemo"+str(i)+".png",
             dpi=1024, facecolor='w',
             edgecolor='w', orientation='portrait', papertype=None,
             format="png", transparent=True, bbox_inches='tight',
             pad_inches=0, frameon=None
-    )
+        )

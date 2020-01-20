@@ -59,7 +59,7 @@ def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
     if len(numbers) > 0:
         for i in numbers:
             ax.text(
-                    i/xRange, yPos, str(i-relStr), color=color, fontsize=2,
+                    i/xRange, yPos, str(i-relStr), color=color, fontsize=1.5,
                     alpha=.5, verticalalignment=vAlign,
                     horizontalalignment='center', transform=ax.transAxes
                 )
@@ -69,7 +69,7 @@ def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
 def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
     if len(numbers) > 0:
         for (ix, i) in enumerate(numbers):
-            (yPos, vAlign) = (-.05, 'top')
+            (yPos, vAlign) = (-.02, 'top')
             # Alternate based on open/close of the threshold cross
             if ix < len(numbers) / 2:
                 if (ix % 2 == 0):
@@ -79,7 +79,7 @@ def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
                     (yPos, vAlign) = (1.01, 'bottom')
             # Plot text
             ax.text(
-                    i/xRange, yPos, str(i-relStr), color=color, fontsize=2,
+                    i/xRange, yPos, str(i-relStr), color=color, fontsize=1.5,
                     alpha=.5, verticalalignment=vAlign,
                     horizontalalignment='center', transform=ax.transAxes
                 )
@@ -87,7 +87,7 @@ def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
 
 
 def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True, rnd=True):
-    (xPos, hAlign) = (-.004, 'right')
+    (xPos, hAlign) = (-.002, 'right')
     #
     if len(numbers) > 0:
         for i in numbers:
@@ -97,7 +97,7 @@ def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True, rnd=True):
                 val = round(i, 2)
             #####
             ax.text(
-                    xPos, i/yRange, val, color=color, fontsize=2,
+                    xPos, i/yRange, val, color=color, fontsize=1.5,
                     alpha=.5, verticalalignment='center',
                     horizontalalignment=hAlign, transform=ax.transAxes
                 )

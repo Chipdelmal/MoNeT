@@ -16,8 +16,8 @@ patterns = (
         'Wolbachia', 'WolbachiaRemediation'
     )
 (pathBase, pathProbe) = (
-        '/Volumes/marshallShare/ThresholdResub/factorialSweep/YK_BioParams/',
-        '/Volumes/marshallShare/ThresholdResub/factorialHP/'
+        '/Volumes/marshallShare/ThresholdResub/batchSweep/',
+        '/Volumes/marshallShare/ThresholdResub/tnBatchSweep/'
     )
 ###############################################################################
 # Message for terminal
@@ -41,7 +41,7 @@ for (i, file) in enumerate(patterns):
         glob.glob(pathProbe + file + '*.csv')[0],
         floatMultiplier=COV_SCL
     )
-    # Claculate the hashed differences
+    # Claculate the hashed differences (probe - base)
     differencesHash = monet.calculateFactorialHashError(
         dataB, dataA, monet.sampleDifference
     )
