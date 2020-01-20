@@ -46,6 +46,8 @@ def find_agg_to_listruns(path_to_all_experiments):
 	Output:
 		all_run_paths: a list of "aggregation_level/run_id" paths 
 		agg_level_dict: a dictionary with key: aggregation_level, value: a list of different experiment runs
+	
+	Note from Gillian: This is compatible with multiple runs already. 
 	"""
 	agg_level_dict = dict()
 	all_run_paths = []
@@ -75,6 +77,9 @@ def find_nodes_to_cluster(run_path, path_to_aggregated_landscapes):
  
 	A side effect is a CSV file generated saving a mapping from cluster ID to node ID for a particular 
 	aggregation level. For an example, look for a file with "_cluster_summary_".
+
+	Note to Gillian: An example of this filename is `C000002_cluster_summary_Yorkeys01_0078.csv` where 2 is 
+	the aggregation level, and 78 is the run ID. 
 	"""
 	agg_level, run = run_path.split('/')
 	agg_level_run = os.path.join(path_to_aggregated_landscapes, run_path)
@@ -136,6 +141,12 @@ def sum_nodes_in_cluster(key, cluster_dict):
 
 	Output: None
 		Calls get_diff_cluster_vs_full() writes the summed output difference vector for each of the clusters to the CSV.
+	
+	Note to Gillian: The side effect CSV that writes the summed output difference vector is called 
+	`agg_C000002/cluster_0000/run_Yorkeys01_0078_ATrueTrue` for example. Therefore, we have:
+		1. aggregation level
+		2. cluster ID
+		3. runID, M, F
 	"""
 	agg_level, run_id = key.split('/')
 	print(agg_level, run_id)
@@ -211,7 +222,7 @@ def get_diff_cluster_vs_full(aggGeno_sum, clusterGeno_sum, name):
 	Input: 
 		aggGeno_sum: dict representing the full resolution of nodes.
 		clusterGeno_sum: dict representing the aggregated clusters.
-		name: rseulting difference vector csv's name.
+		name: resulting difference vector csv's name.
 
 	Output: None
 
@@ -219,7 +230,8 @@ def get_diff_cluster_vs_full(aggGeno_sum, clusterGeno_sum, name):
 	# print("AGG_GENO_RESULT: ", aggGeno_sum['population'].shape)
 	# print("CLUSTER_GENO_RESULT: ", clusterGeno_sum['population'].shape)
 
-	result = np.subtract(aggGeno_sum['population'], clusterGeno_sum['population']); print(name)
+	result = np.subtract(aggGeno_sum['population'], clusterGeno_sum['population'])
+	print(name)
 	with open(name + ".csv", mode="w") as cluster_summary:
 		result_writer = csv.writer(cluster_summary)
 		result_writer.writerow(population_IDs) # labels
@@ -270,3 +282,8 @@ for i in range(num_runs):
 # key = 'C000250/Yorkeys01_0000_A' # 250 nodes, run 0
 # run = run_dict[key] # dictionary for that run
 # cluster_run_sum = sum_nodes_in_cluster(key, run)
+
+
+
+# TODO: Iterate over and re-set [start-ref] and [end-ref] in each [num_run]
+# TODO: 
