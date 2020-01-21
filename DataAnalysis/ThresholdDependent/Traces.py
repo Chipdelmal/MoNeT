@@ -12,7 +12,7 @@ colors = ['#9f00cc', '#ec0b43', '#ff009d', '#94d4ff', '#232ed1']
 style = {
         "width": .1, "alpha": .1, "dpi": 500,
         "legend": True, "aspect": .5,
-        "xRange": [0, 3 * 365], "yRange": [0, 100000],
+        "xRange": [0, 3 * 365], "yRange": [0, 75000],
         "colors": ['#9f00cc', '#ec0b43', '#0038a8']
     }
 style['aspect'] = monet.scaleAspect(.175, style)
