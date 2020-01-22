@@ -11,19 +11,20 @@ series vector.
 """
 *************************** Input Paths ************************************************************************************* 
 """
-path_to_all_experiments = '/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts'
-path_to_aggregated_landscapes = '/Volumes/marshallShare/ERACR/Yorkeys_MINI/LandAggregated'
+path_to_all_experiments = '/RAID5/marshallShare/ERACR/Yorkeys_MINI/Experiemnts'
+path_to_aggregated_landscapes = '/RAID5/marshallShare/ERACR/Yorkeys_MINI/LandAggregated'
 
 #path_to_all_experiments = "/Users/gillian/Desktop/GillianDataset/Experiments"
 #path_to_aggregated_landscapes = "/Users/gillian/Desktop/GillianDataset/LandAggregated"
 
 gender_mean = "F"
 maleToggle, femaleToggle = True, True
-start_ref = "/Volumes/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/C002195"
-end_ref = "/ANALYZED/E_0730_30_20_02_00020/"
+ref_dir = "/RAID5/marshallShare/ERACR/Yorkeys_MINI/Experiemnts/C002195"
+# end_ref = "/ANALYZED/E_0730_30_20_02_00020/"
 population_IDs = ["W", "H", "E", "R", "B"]
-aggregation_levels = ["C000002", "C000025", "C000250", "C001000", "C002195"]
+# aggregation_levels = ["C000002", "C000025", "C000250", "C001000", "C002195"]
 num_runs = 1
+output_path = "/RAID5/marshallShare/ERACR/Yorkeys_MINI/OUT/"
 
 # it computes for all provided runs
 aggregationDictionary = monet.autoGenerateGenotypesDictionary(
@@ -100,7 +101,7 @@ def find_nodes_to_cluster(run_path, path_to_aggregated_landscapes):
 	# assert(agg_level_count == agg_level) # add this in later
 
 	# Save this result into a csv file
-	with open(agg_level + "_cluster_summary_" + run[:len(run) - 2] + ".csv", mode="w") as cluster_summary:
+	with open(output_path + agg_level + "_cluster_summary_" + run[:len(run) - 2] + ".csv", mode="w") as cluster_summary:
 		result_writer = csv.writer(cluster_summary) 
 		result_writer.writerow(["Cluster ID", "Node ID"]) # labels
 		for r in result:
@@ -174,16 +175,16 @@ def sum_nodes_in_cluster(key, cluster_dict):
 
 			# pick a run: Yorkeys01_0027_A
 			# print(os.listdir(start_ref))
-			list_dir = [f for f in os.listdir(start_ref)]
-			i = int(np.random.uniform(0, len(os.listdir(start_ref))))
+			list_dir = [f for f in os.listdir(ref_dir)]
+			i = int(np.random.uniform(0, len(os.listdir(ref_dir))))
 			print(i)
 			print(len(list_dir))
 
 			# build reference_pop
-			reference_pop = start_ref + '/'
-			reference_pop += list_dir[i]
-			reference_pop += end_ref
-
+            		# reference_pop = ref_dir + '/'
+			reference_pop = ref_dir + '/' +  end_ref # reference_pop += list_dir[i]
+			# reference_pop += end_ref
+                        
 			file_path = os.path.join(reference_pop + "F_Mean_Patch" + processed_node_id + ".csv")
 			filenames['female'].append(file_path)
 
@@ -269,9 +270,9 @@ def compare_all_aggregations_once(agg_level_dict):
 all_run_paths, agg_level_dict = find_agg_to_listruns(path_to_all_experiments)
 
 # STEP 2: Sum all nodes in a cluster and generate difference
-for i in range(num_runs):
+# for i in range(num_runs):
 	# call compare_all_aggregations_once to iterate over each aggregation level and sample randomly
-	compare_all_aggregations_once(agg_level_dict)
+#	compare_all_aggregations_once(agg_level_dict)
 
 # run_dict = dict()
 # for run_path in all_run_paths:
@@ -283,6 +284,15 @@ for i in range(num_runs):
 # run = run_dict[key] # dictionary for that run
 # cluster_run_sum = sum_nodes_in_cluster(key, run)
 
+# STEP 2: Sum all nodes in a cluster and generate difference
+# Find all the dirs in the ref_dir
+ref_dir_runs = os.listdir(ref_dir)
+for i in range(num_runs): 
+    ref_sample = int(np.round(np.random.uniform(0, len(ref_dir_runs) - 1)))
+    end_ref = ref_dir_runs[ref_sample] + "/ANALYZED/E_0730_30_20_02_00020/"
+    print("ref_dir: ", ref_dir)
+    print("end_ref: ", end_ref)
+    compare_all_aggregations_once(agg_level_dict)
 
 
 # TODO: Iterate over and re-set [start-ref] and [end-ref] in each [num_run]
