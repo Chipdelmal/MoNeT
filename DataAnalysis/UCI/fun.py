@@ -25,8 +25,9 @@ def experimentSelector(args):
 
 
 def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
+    print(aux.PAD)
     print(
-            aux.CWHT + '\nUCI Experiments Analysis ' +
+            aux.CWHT + 'UCI Experiments Analysis ' +
             '[' + time + ']' + aux.CEND
         )
     print(aux.CRED + 'Root  PATH: ' + PATH_ROOT + aux.CEND)
@@ -129,7 +130,7 @@ def parseMinTitle(minTuple, SSPOP, thrs=.05, relStr=0):
 
 def printTitle(ax, title):
     ax.text(
-            .999, .975, title, color=SUP_COL, fontsize=2, alpha=.75,
+            .999, .75, title, color=SUP_COL, fontsize=2, alpha=.75,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -138,7 +139,7 @@ def printTitle(ax, title):
 
 def printMinTitle(ax, title):
     ax.text(
-            .999, .02, title + ' ', color=MIN_COL, fontsize=2, alpha=.5,
+            .999, .25, title + ' ', color=MIN_COL, fontsize=2, alpha=.5,
             verticalalignment='bottom', horizontalalignment='right',
             transform=ax.transAxes
         )

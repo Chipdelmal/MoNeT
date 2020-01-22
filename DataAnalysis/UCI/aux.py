@@ -22,7 +22,7 @@ cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 STYLE_HLT = {
         "width": .1, "alpha": .1, "dpi": 500,
         "legend": True, "aspect": .5,
-        "xRange": [0, 2000], "yRange": [0, 20000],
+        "xRange": [0, 3 * 365], "yRange": [0, 525066.0],
         "colors": colors
     }
 STYLE_HLT['aspect'] = monet.scaleAspect(.15, STYLE_HLT)

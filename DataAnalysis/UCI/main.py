@@ -7,9 +7,11 @@ import fun
 import datetime
 import argparse
 import aux
+import numpy as np
 import drive as drv
 import matplotlib.pyplot as plt
 import MoNeT_MGDrivE as monet
+plt.rcParams.update({'figure.max_open_warning': 0})
 
 
 driveID = 'CRISPR'
@@ -65,6 +67,7 @@ expOutSetPath = expOutExpPath + '/' + dirMean.split('/')[-1]
 monet.makeFolder(expOutSetPath)
 # Mean response --------------------------------------------------------------
 filenames = monet.readExperimentFilenames(dirMean)
+print('Loading mean response data...')
 landscapeData = monet.loadLandscapeData(filenames, male=True, female=True)
 aggregatedNodesData = monet.aggregateGenotypesInLandscape(
         landscapeData, drvPars.get('HLT')
@@ -85,20 +88,32 @@ for j in range(len(aggregatedNodesData['landscape'])):
     minTuple.append(minData)
 # Traces ---------------------------------------------------------------------
 paths = monet.listDirectoriesWithPathWithinAPath(dirTraces + '/')
+print('Loading ' + str(len(paths)) + ' traces reps datasets...')
 landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
         paths, drvPars.get('HLT'), male=True, female=True
     )
+# Get the max range for each node
+maxPops = []
+for i in landscapeReps["landscapes"][0]:
+    maxPops.append(i[REL_STR][-1] * 1.15)
 # Plot
 figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
 for j in range(0, len(figsArray)):
+    print(
+            'Exporting Population Plots: ' +
+            '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
+            end=''
+        )
     title = fun.parseTitle(thresholds, prtcDays[j])
     minTitle = fun.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
     axTemp = figsArray[j].get_axes()[0]
+    style['yRange'] = (0, maxPops[j])
+    style['aspect'] = monet.scaleAspect(.15, style)
     axTemp = fun.setRange(axTemp, style)
     # Add labels to the days of threshold-crossing
     axTemp = fun.printHAxisNumbersAlt(
-            axTemp, chngDays[j], style['xRange'][1], 'Gray',
-            relStr=REL_STR
+            axTemp, chngDays[j], style['xRange'][1],
+            'Gray', relStr=REL_STR
         )
     # Min pop prints
     if(1 - minTuple[j][1] / SSPOP >= .05):
@@ -119,9 +134,10 @@ for j in range(0, len(figsArray)):
     axTemp = fun.printMinTitle(axTemp, minTitle)
     axTemp = fun.printVLines(axTemp, chngDays[j])
     # Export to disk
+    axTemp.set_aspect(aspect=style["aspect"])
     expOutStr = expOutSetPath
     monet.quickSaveFigure(
-            figsArray[j], expOutStr + "_N" + str(j) + ".pdf",
+            figsArray[j], expOutStr + "/Pop_" + str(j).zfill(3) + ".pdf",
             dpi=style['dpi'], format='pdf'
         )
-plt.close('all')
+    plt.close('all')
