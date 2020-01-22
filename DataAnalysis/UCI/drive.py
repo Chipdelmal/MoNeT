@@ -3,6 +3,11 @@
 
 import MoNeT_MGDrivE as monet
 
+
+def driveSelector(id):
+    if(id == drive_CRISPR.get('id')):   return drive_CRISPR;
+
+
 # #############################################################################
 # Linked Drive
 # #############################################################################
