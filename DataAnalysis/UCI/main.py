@@ -16,7 +16,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 driveID = 'CRISPR'
 (thresholds, NOI, SSPOP, REL_STR) = (
-        [.5],
+        [.75, .5, .25],
         0, 10000, 20
     )
 style = aux.STYLE_HLT
