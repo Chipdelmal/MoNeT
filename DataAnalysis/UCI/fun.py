@@ -30,10 +30,10 @@ def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
             aux.CWHT + 'UCI Experiments Analysis ' +
             '[' + time + ']' + aux.CEND
         )
-    print(aux.CRED + 'Root  PATH: ' + PATH_ROOT + aux.CEND)
-    print(aux.CRED + 'Data  PATH: ' + PATH_DATA + aux.CEND)
-    print(aux.CRED + 'Image PATH: ' + PATH_IMG + aux.CEND)
-    print(aux.PAD)
+    print(aux.PADL)
+    print(aux.CRED + '* Root  PATH: ' + PATH_ROOT + aux.CEND)
+    print(aux.CRED + '* Data  PATH: ' + PATH_DATA + aux.CEND)
+    print(aux.CRED + '* Image PATH: ' + PATH_IMG + aux.CEND)
 
 
 def getExperiments(PATH):
@@ -130,7 +130,7 @@ def parseMinTitle(minTuple, SSPOP, thrs=.05, relStr=0):
 
 def printTitle(ax, title):
     ax.text(
-            .999, .75, title, color=SUP_COL, fontsize=2, alpha=.75,
+            .999, .05, title, color=SUP_COL, fontsize=2, alpha=.75,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -139,7 +139,7 @@ def printTitle(ax, title):
 
 def printMinTitle(ax, title):
     ax.text(
-            .999, .25, title + ' ', color=MIN_COL, fontsize=2, alpha=.5,
+            .999, .45, title + ' ', color=MIN_COL, fontsize=2, alpha=.5,
             verticalalignment='bottom', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -178,7 +178,7 @@ def setRange(ax, style):
 def getTimeToMinAtAllele(
             aggData,
             gIx,
-            safety=.01
+            safety=.1
         ):
     """
     Description:
