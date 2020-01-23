@@ -16,7 +16,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 driveID = 'CRISPR'
 (thresholds, NOI, SSPOP, REL_STR) = (
-        [.95, .9, .75, .5, .25, .1, .05],
+        [.75, .5, .25],
         0, 10000, 20
     )
 style = aux.STYLE_HLT
@@ -67,17 +67,22 @@ expOutSetPath = expOutExpPath + '/' + dirMean.split('/')[-1]
 monet.makeFolder(expOutSetPath)
 # Mean response --------------------------------------------------------------
 filenames = monet.readExperimentFilenames(dirMean)
-print('Loading mean response data...')
+print(aux.PADL)
+print('* Loading mean response data...')
 landscapeData = monet.loadLandscapeData(filenames, male=True, female=True)
 aggregatedNodesData = monet.aggregateGenotypesInLandscape(
         landscapeData, drvPars.get('HLT')
     )
+# Get the max range for each node
+maxPops = []
+for i in aggregatedNodesData["landscape"]:
+    maxPops.append(i[REL_STR][-1] * 1)
 # Get the crosses through thresholds
 (chngDays, prtcDays, minTuple) = ([], [], [])
 for j in range(len(aggregatedNodesData['landscape'])):
     nodePop = aggregatedNodesData['landscape'][j]
     thrsBool = monet.comparePopToThresholds(
-            nodePop, gIx, [0, 1], thresholds, refPop=SSPOP
+            nodePop, gIx, [0, 1], thresholds, refPop=maxPops[j]
         )
     chngDays.append(monet.getConditionChangeDays(thrsBool))
     prtcDays.append(monet.countConditionDays(thrsBool))
@@ -88,26 +93,29 @@ for j in range(len(aggregatedNodesData['landscape'])):
     minTuple.append(minData)
 # Traces ---------------------------------------------------------------------
 paths = monet.listDirectoriesWithPathWithinAPath(dirTraces + '/')
-print('Loading ' + str(len(paths)) + ' traces reps datasets...')
+print(
+        '* Loading ' + str(len(paths)) + ' traces reps datasets for ' +
+        str(len(aggregatedNodesData['landscape'])) + ' populations...'
+    )
 landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
         paths, drvPars.get('HLT'), male=True, female=True
     )
 # Get the max range for each node
 maxPops = []
 for i in landscapeReps["landscapes"][0]:
-    maxPops.append(i[REL_STR][-1] * 1.15)
+    maxPops.append(i[REL_STR][-1] * 1)
 # Plot
 figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
 for j in range(0, len(figsArray)):
     print(
-            'Exporting Population Plots: ' +
+            '* Exporting Population Plots: ' +
             '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
-            end=''
+            end='\r'
         )
     title = fun.parseTitle(thresholds, prtcDays[j])
     minTitle = fun.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
     axTemp = figsArray[j].get_axes()[0]
-    style['yRange'] = (0, maxPops[j])
+    style['yRange'] = (0, maxPops[j] * 1.15)
     style['aspect'] = monet.scaleAspect(.15, style)
     axTemp = fun.setRange(axTemp, style)
     # Add labels to the days of threshold-crossing
@@ -116,22 +124,22 @@ for j in range(0, len(figsArray)):
             'Gray', relStr=REL_STR
         )
     # Min pop prints
-    if(1 - minTuple[j][1] / SSPOP >= .05):
+    if(1 - minTuple[j][1] / maxPops[j] >= .05):
         axTemp = fun.printHAxisNumbers(
                 axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
-                top=False, relStr=REL_STR
+                top=True, relStr=REL_STR
             )
-        axTemp = fun.printVAxisNumbers(
-                axTemp, [minTuple[j][1] / SSPOP],
-                style['yRange'][1], 'Red', left=True, rnd=False
-            )
+        # axTemp = fun.printVAxisNumbers(
+        #        axTemp, [minTuple[j][1] / SSPOP],
+        #        style['yRange'][1], 'Red', left=True, rnd=False
+        #    )
         axTemp = fun.printMinLines(
                 axTemp, (minTuple[j][0], minTuple[j][1] / SSPOP),
-                style, SSPOP
+                style, maxPops[j]
             )
     # Titles and lines common for both analyses
     axTemp = fun.printTitle(axTemp, title)
-    axTemp = fun.printMinTitle(axTemp, minTitle)
+    # axTemp = fun.printMinTitle(axTemp, minTitle)
     axTemp = fun.printVLines(axTemp, chngDays[j])
     # Export to disk
     axTemp.set_aspect(aspect=style["aspect"])
@@ -141,3 +149,9 @@ for j in range(0, len(figsArray)):
             dpi=style['dpi'], format='pdf'
         )
     plt.close('all')
+print(
+        '* Exporting Population Plots: ' +
+        '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
+        end='\n'
+    )
+print(aux.PAD)
