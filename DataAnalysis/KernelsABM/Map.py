@@ -1,4 +1,5 @@
 import aux
+import math
 # import MoNeT_MGDrivE as monet
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,12 +9,12 @@ import matplotlib.pyplot as plt
 
 # Setup Paths #################################################################
 (BASE_PATH, FILE_COORDS) = (
-        '/Volumes/marshallShare/Comoros_STP/Comoros/',
-        'all_sites_NEW.csv'
+        '/Volumes/marshallShare/UCI/Comoros/kernels/',
+        'all_sites_pop_NEW.csv'
     )
 (BASE_PATH, FILE_COORDS) = (
-        '/Volumes/marshallShare/Comoros_STP/STP/',
-        'stp_all_sites_NEW.csv'
+        '/Volumes/marshallShare/UCI/STP/kernels/',
+        'stp_all_sites_v3.csv'
     )
 # Setup Style #################################################################
 PAD = .1
@@ -30,9 +31,11 @@ coordinates = np.genfromtxt(
         BASE_PATH + FILE_COORDS,
         delimiter=',', skip_header=1
     )
+coords = [(i[0], i[1]) for i in coordinates]
+pops = [math.log(i[2]) ** 2  for i in coordinates]
 # Calculate boundary ##########################################################
-(minLon, minLat) = np.amin(coordinates, 0)
-(maxLon, maxLat) = np.amax(coordinates, 0)
+(minLon, minLat) = np.amin(coords, 0)
+(maxLon, maxLat) = np.amax(coords, 0)
 # Export Map ##################################################################
 fig = plt.gcf()
 ax = fig.add_subplot(111, label="1")
@@ -46,12 +49,12 @@ map.fillcontinents(color=COLORS[3], lake_color='aqua')
 # map.drawmapboundary(fill_color=COLORS[0])
 # map.drawcountries(color=COLORS[0], linewidth=2)
 map.scatter(
-        [i[0] for i in coordinates], [i[1] for i in coordinates],
-        s=.15, alpha=.6, marker='x',
+        [i[0] for i in coords], [i[1] for i in coords],
+        s=.025, alpha=.2, marker='x',
         edgecolors=COLORS[1], color=COLORS[1], zorder=2
     )
 plt.savefig(
-        BASE_PATH + "Map.png",
+        BASE_PATH + "Map.pdf",
         dpi=1000, bbox_inches='tight', pad_inches=0.0, frameon=None
     )
 plt.close()

@@ -9,14 +9,16 @@ import argparse
 import aux
 import numpy as np
 import drive as drv
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import MoNeT_MGDrivE as monet
 plt.rcParams.update({'figure.max_open_warning': 0})
+mpl.rcParams['axes.linewidth'] = 1.5
 
 
 driveID = 'CRISPR'
 (thresholds, NOI, SSPOP, REL_STR) = (
-        [.75, .5, .25],
+        [.5],
         0, 10000, 20
     )
 style = aux.STYLE_HLT
@@ -31,7 +33,7 @@ style = aux.STYLE_HLT
 # parser.add_argument("--dev", default=0, type=int, help="Device")
 # parser.add_argument("--land", default=0, type=int, help="Landscape")
 # (ROOT, LAND) = fun.experimentSelector(parser.parse_args())
-(ROOT, LAND) = ('/Volumes', 'Comoros')
+(ROOT, LAND) = ('/Volumes', 'STP')
 # Full path ###################################################################
 PATH_ROOT = '{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
 (PATH_IMG, PATH_DATA) = (PATH_ROOT + 'img/', PATH_ROOT + 'out/')
@@ -89,7 +91,7 @@ for j in range(len(aggregatedNodesData['landscape'])):
     # Get the info to min pop
     nodePopDict = {}
     nodePopDict["population"] = nodePop
-    minData = fun.getTimeToMinAtAllele(nodePopDict, gIx)
+    minData = fun.getTimeToMinAtAllele(nodePopDict, gIx, safety=.2)
     minTuple.append(minData)
 # Traces ---------------------------------------------------------------------
 paths = monet.listDirectoriesWithPathWithinAPath(dirTraces + '/')
@@ -112,23 +114,24 @@ for j in range(0, len(figsArray)):
             '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
             end='\r'
         )
-    title = fun.parseTitle(thresholds, prtcDays[j])
-    minTitle = fun.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
+    # title = fun.parseTitle(thresholds, prtcDays[j])
+    title = str(minTuple[j][0]).zfill(4) + " "
+    # minTitle = fun.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
     axTemp = figsArray[j].get_axes()[0]
     style['yRange'] = (0, maxPops[j] * 1.15)
-    style['aspect'] = monet.scaleAspect(.15, style)
+    style['aspect'] = monet.scaleAspect(.25, style)
     axTemp = fun.setRange(axTemp, style)
     # Add labels to the days of threshold-crossing
-    axTemp = fun.printHAxisNumbersAlt(
-            axTemp, chngDays[j], style['xRange'][1],
-            'Gray', relStr=REL_STR
-        )
+    # axTemp = fun.printHAxisNumbers(
+    #         axTemp, chngDays[j], style['xRange'][1],
+    #         'Gray', relStr=REL_STR
+    #     )
     # Min pop prints
     if(1 - minTuple[j][1] / maxPops[j] >= .05):
-        axTemp = fun.printHAxisNumbers(
-                axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
-                top=True, relStr=REL_STR
-            )
+        # axTemp = fun.printHAxisNumbers(
+        #         axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
+        #         top=True, relStr=REL_STR
+        #     )
         # axTemp = fun.printVAxisNumbers(
         #        axTemp, [minTuple[j][1] / SSPOP],
         #        style['yRange'][1], 'Red', left=True, rnd=False
@@ -138,20 +141,61 @@ for j in range(0, len(figsArray)):
                 style, maxPops[j]
             )
     # Titles and lines common for both analyses
-    axTemp = fun.printTitle(axTemp, title)
+    # if(prtcDays[j][0] > REL_STR):
+    #     axTemp = fun.printTitle(axTemp, title)
     # axTemp = fun.printMinTitle(axTemp, minTitle)
-    axTemp = fun.printVLines(axTemp, chngDays[j])
+    # axTemp = fun.printVLines(axTemp, chngDays[j]) # Uncomment when more reps are done
     # Export to disk
     axTemp.set_aspect(aspect=style["aspect"])
+    axTemp.set_xticklabels([])
+    axTemp.set_yticklabels([])
+    axTemp.set_xticks([])
+    axTemp.set_yticks([])
+    axTemp.tick_params(color=(0, 0, 0, 0.5))
+    for spine in axTemp.spines.values():
+        spine.set_edgecolor((0, 0, 0, 0.5))
     expOutStr = expOutSetPath
-    monet.quickSaveFigure(
-            figsArray[j], expOutStr + "/Pop_" + str(j).zfill(3) + ".pdf",
-            dpi=style['dpi'], format='pdf'
-        )
+    figsArray[j].savefig(
+        expOutStr + "/Pop_" + str(1 + j).zfill(3) + ".pdf", dpi=style['dpi'],
+        facecolor=None, edgecolor='w', orientation='portrait', papertype=None,
+        format='pdf', transparent=True, bbox_inches='tight',
+        pad_inches=.01
+    )
     plt.close('all')
 print(
         '* Exporting Population Plots: ' +
         '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
         end='\n'
     )
+
+
+# Full landscape traces -------------------------------------------------------
+print('* Exporting full population traces plot...')
+mpl.rcParams['axes.linewidth'] = .5
+landscapeRepsFull = monet.sumAggregatedLandscapeDataRepetitionsAlt(
+        paths, drvPars.get('HLT'), male=True, female=True
+    )
+maxPop = landscapeRepsFull['landscapes'][0][0][-1][-1]
+figsArray = monet.plotLandscapeDataRepetitions(landscapeRepsFull, style)
+axTemp = figsArray[0].get_axes()[0]
+style['yRange'] = (0, maxPop * 1.15)
+style['aspect'] = monet.scaleAspect(.1, style)
+axTemp = fun.setRange(axTemp, style)
+axTemp.set_aspect(aspect=style["aspect"])
+axTemp.set_xticklabels([])
+axTemp.set_yticklabels([])
+axTemp.set_xticks([])
+axTemp.set_yticks([])
+axTemp.tick_params(color=(0, 0, 0, 0.5))
+for spine in axTemp.spines.values():
+    spine.set_edgecolor((0, 0, 0, 0.5))
+figsArray[0].savefig(
+    expOutStr + "/Pop_FULL.pdf", dpi=style['dpi'],
+    facecolor=None, edgecolor='w', orientation='portrait', papertype=None,
+    format='pdf', transparent=True, bbox_inches='tight',
+    pad_inches=.01
+)
+plt.close('all')
+
+print('* Finished!')
 print(aux.PAD)
