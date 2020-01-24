@@ -164,11 +164,9 @@ for j in range(0, len(figsArray)):
     plt.close('all')
 print(
         '* Exporting Population Plots: ' +
-        '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
+        '(' + str(j + 1) + '/' + str(len(figsArray)) + ')...',
         end='\n'
     )
-
-
 # Full landscape traces -------------------------------------------------------
 print('* Exporting full population traces plot...')
 mpl.rcParams['axes.linewidth'] = .5
@@ -196,6 +194,6 @@ figsArray[0].savefig(
     pad_inches=.01
 )
 plt.close('all')
-
+# Print finished -------------------------------------------------------------
 print('* Finished!')
 print(aux.PAD)
