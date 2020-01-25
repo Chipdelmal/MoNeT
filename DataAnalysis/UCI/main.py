@@ -5,6 +5,7 @@
 # import aux
 import fun
 import datetime
+import plot
 import argparse
 import aux
 import numpy as np
@@ -38,8 +39,11 @@ style = aux.STYLE_HLT
 PATH_ROOT = '{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
 (PATH_IMG, PATH_DATA) = (PATH_ROOT + 'img/', PATH_ROOT + 'out/')
 # Print experiment info to terminal ###########################################
-time = str(datetime.datetime.now())
-fun.printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time)
+print(aux.PAD)
+fun.printExperimentHead(
+        PATH_ROOT, PATH_IMG, PATH_DATA,
+        str(datetime.datetime.now())
+    )
 
 ###############################################################################
 # Selecting drive and get exp dirs
@@ -52,15 +56,12 @@ expSetsDirs = monet.listDirectoriesWithPathWithinAPath(PATH_DATA)
 dir = expSetsDirs[0]
 # for loop here
 fldrName = dir.split('/')[-1]
-(pathTraces, pathMean) = (dir + '/GARBAGE/', dir + '/ANALYZED/')
-(dirsTraces, dirsMean) = (
-        monet.listDirectoriesWithPathWithinAPath(pathTraces),
-        monet.listDirectoriesWithPathWithinAPath(pathMean)
-    )
+(pathTraces, pathMean) = [dir + i for i in ('/GARBAGE/', '/ANALYZED/')]
+(dirsTraces, dirsMean) = fun.getTracesAndMeanDirs(pathTraces, pathMean)
 # Experiment Selector #########################################################
 expOutRootPath = PATH_IMG + driveID
-monet.makeFolder(expOutRootPath)
 expOutExpPath = expOutRootPath + '/' + fldrName
+monet.makeFolder(expOutRootPath)
 monet.makeFolder(expOutExpPath)
 # for loop here
 # Create output folder -------------------------------------------------------
@@ -69,6 +70,7 @@ expOutSetPath = expOutExpPath + '/' + dirMean.split('/')[-1]
 monet.makeFolder(expOutSetPath)
 # Mean response --------------------------------------------------------------
 filenames = monet.readExperimentFilenames(dirMean)
+# Terminal msg
 print(aux.PADL)
 print('* Loading mean response data...')
 landscapeData = monet.loadLandscapeData(filenames, male=True, female=True)
@@ -96,8 +98,8 @@ for j in range(len(aggregatedNodesData['landscape'])):
 # Traces ---------------------------------------------------------------------
 paths = monet.listDirectoriesWithPathWithinAPath(dirTraces + '/')
 print(
-        '* Loading ' + str(len(paths)) + ' traces reps datasets for ' +
-        str(len(aggregatedNodesData['landscape'])) + ' populations...'
+        '* Loading traces reps datasets (' + str(len(paths)) + ') for ' +
+        ' populations (' + str(len(aggregatedNodesData['landscape'])) + ')...'
     )
 landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
         paths, drvPars.get('HLT'), male=True, female=True
@@ -112,39 +114,40 @@ for j in range(0, len(figsArray)):
     print(
             '* Exporting Population Plots: ' +
             '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
-            end='\r'
+            end="\r"
         )
-    # title = fun.parseTitle(thresholds, prtcDays[j])
+    # title = plot.parseTitle(thresholds, prtcDays[j])
     title = str(minTuple[j][0]).zfill(4) + " "
-    # minTitle = fun.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
+    # minTitle = plot.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
     axTemp = figsArray[j].get_axes()[0]
+    style['xRange'] = (95, 3 * 365)
     style['yRange'] = (0, maxPops[j] * 1.15)
     style['aspect'] = monet.scaleAspect(.25, style)
-    axTemp = fun.setRange(axTemp, style)
+    axTemp = plot.setRange(axTemp, style)
     # Add labels to the days of threshold-crossing
-    # axTemp = fun.printHAxisNumbers(
+    # axTemp = plot.printHAxisNumbers(
     #         axTemp, chngDays[j], style['xRange'][1],
     #         'Gray', relStr=REL_STR
     #     )
     # Min pop prints
     if(1 - minTuple[j][1] / maxPops[j] >= .05):
-        # axTemp = fun.printHAxisNumbers(
+        # axTemp = plot.printHAxisNumbers(
         #         axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
         #         top=True, relStr=REL_STR
         #     )
-        # axTemp = fun.printVAxisNumbers(
+        # axTemp = plot.printVAxisNumbers(
         #        axTemp, [minTuple[j][1] / SSPOP],
         #        style['yRange'][1], 'Red', left=True, rnd=False
         #    )
-        axTemp = fun.printMinLines(
+        axTemp = plot.printMinLines(
                 axTemp, (minTuple[j][0], minTuple[j][1] / SSPOP),
                 style, maxPops[j]
             )
     # Titles and lines common for both analyses
     # if(prtcDays[j][0] > REL_STR):
-    #     axTemp = fun.printTitle(axTemp, title)
-    # axTemp = fun.printMinTitle(axTemp, minTitle)
-    # axTemp = fun.printVLines(axTemp, chngDays[j]) # Uncomment when more reps are done
+    #     axTemp = plot.printTitle(axTemp, title)
+    # axTemp = plot.printMinTitle(axTemp, minTitle)
+    # axTemp = plot.printVLines(axTemp, chngDays[j]) # Uncomment when more reps are done
     # Export to disk
     axTemp.set_aspect(aspect=style["aspect"])
     axTemp.set_xticklabels([])
@@ -163,7 +166,7 @@ for j in range(0, len(figsArray)):
     )
     plt.close('all')
 print(
-        '* Exporting Population Plots: ' +
+        '* Exporting population plots: ' +
         '(' + str(j + 1) + '/' + str(len(figsArray)) + ')...',
         end='\n'
     )
@@ -176,9 +179,10 @@ landscapeRepsFull = monet.sumAggregatedLandscapeDataRepetitionsAlt(
 maxPop = landscapeRepsFull['landscapes'][0][0][-1][-1]
 figsArray = monet.plotLandscapeDataRepetitions(landscapeRepsFull, style)
 axTemp = figsArray[0].get_axes()[0]
-style['yRange'] = (0, maxPop * 1.15)
+style['xRange'] = (95, 3 * 365)
+style['yRange'] = (0, maxPop * 1.25)
 style['aspect'] = monet.scaleAspect(.1, style)
-axTemp = fun.setRange(axTemp, style)
+axTemp = plot.setRange(axTemp, style)
 axTemp.set_aspect(aspect=style["aspect"])
 axTemp.set_xticklabels([])
 axTemp.set_yticklabels([])
@@ -196,4 +200,9 @@ figsArray[0].savefig(
 plt.close('all')
 # Print finished -------------------------------------------------------------
 print('* Finished!')
+print(aux.PADL)
+print(
+        aux.CWHT + 'UCI Experiments Analysis ' +
+        '[' + str(datetime.datetime.now()) + ']' + aux.CEND
+    )
 print(aux.PAD)
