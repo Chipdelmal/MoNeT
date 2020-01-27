@@ -21,7 +21,7 @@ colors = ['#0038a8', '#ff0098', '#ffffff']  # '#9f00cc']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 
 STYLE_HLT = {
-        "width": .05, "alpha": .1, "dpi": 500,
+        "width": .075, "alpha": .075, "dpi": 500,
         "legend": True, "aspect": .5,
         "xRange": [0, 3 * 365], "yRange": [0, 525066.0],
         "colors": colors

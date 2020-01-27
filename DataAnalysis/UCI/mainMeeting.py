@@ -20,7 +20,7 @@ mpl.rcParams['axes.linewidth'] = .4
 colors = ['#0038a8', '#ff0098', '#ffffff']  # '#9f00cc']
 cmaps = monet.generateAlphaColorMapFromColorArray(colors)
 STYLE_HLT = {
-        "width": .175, "alpha": .225, "dpi": 500,
+        "width": .175, "alpha": .175, "dpi": 500,
         "legend": True, "aspect": .5,
         "xRange": [0, 3 * 365], "yRange": [0, 525066.0],
         "colors": colors
@@ -41,6 +41,10 @@ style = STYLE_HLT
 #       --dev:  {0: Desktop, 1: Server  }
 #       --land:  {0: Comoros, 1: STP     }
 ###############################################################################
+# parser = argparse.ArgumentParser(description='Main UCI Analysis routine!')
+# parser.add_argument("--dev", default=0, type=int, help="Device")
+# parser.add_argument("--land", default=0, type=int, help="Landscape")
+# (ROOT, LAND) = fun.experimentSelector(parser.parse_args())
 (ROOT, LAND) = ('/Volumes', 'STP')
 # Full path ###################################################################
 PATH_ROOT = '{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
@@ -51,6 +55,7 @@ fun.printExperimentHead(
         PATH_ROOT, PATH_IMG, PATH_DATA,
         str(datetime.datetime.now())
     )
+
 ###############################################################################
 # Selecting drive and get exp dirs
 # -----------------------------------------------------------------------------
@@ -132,6 +137,32 @@ for j in range(0, len(figsArray)):
     style['yRange'] = (0, maxPops[j] * 1.15)
     style['aspect'] = monet.scaleAspect(.25, style)
     axTemp = plot.setRange(axTemp, style)
+    # Add labels to the days of threshold-crossing
+    # axTemp = plot.printHAxisNumbers(
+    #         axTemp, chngDays[j], style['xRange'][1],
+    #         'Gray', relStr=REL_STR
+    #     )
+    # Min pop prints
+    # if(1 - minTuple[j][1] / maxPops[j] >= .05):
+    #     # axTemp = plot.printHAxisNumbers(
+    #     #         axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
+    #     #         top=True, relStr=REL_STR
+    #     #     )
+    #     # axTemp = plot.printVAxisNumbers(
+    #     #        axTemp, [minTuple[j][1] / SSPOP],
+    #     #        style['yRange'][1], 'Red', left=True, rnd=False
+    #     #    )
+    #     axTemp = plot.printMinLines(
+    #             axTemp, (minTuple[j][0], minTuple[j][1] / SSPOP),
+    #             style, maxPops[j]
+    #         )
+    # Titles and lines common for both analyses
+    # if(prtcDays[j][0] > REL_STR):
+    #     axTemp = plot.printTitle(axTemp, title)
+    # axTemp = plot.printMinTitle(axTemp, minTitle)
+    # axTemp = plot.printVLines(axTemp, chngDays[j]) # Uncomment when more reps are done
+    # Export to disk
+    # axTemp = plot.printMinTitle(axTemp, str(maxPops[j]/2))
     axTemp.set_aspect(aspect=style["aspect"])
     axTemp.set_xticklabels([])
     axTemp.set_yticklabels([])
@@ -165,7 +196,7 @@ maxPop = landscapeRepsFull['landscapes'][0][0][-1][-1]
 figsArray = monet.plotLandscapeDataRepetitions(landscapeRepsFull, style)
 axTemp = figsArray[0].get_axes()[0]
 style['xRange'] = (95, 3 * 365)
-style['yRange'] = (0, maxPop * 1.1)
+style['yRange'] = (0, maxPop * 1.25)
 style['aspect'] = monet.scaleAspect(.1, style)
 # axTemp = plot.printMinTitle(axTemp, str(maxPop/2))
 axTemp = plot.setRange(axTemp, style)
