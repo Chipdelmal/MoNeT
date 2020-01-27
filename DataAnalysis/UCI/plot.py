@@ -4,6 +4,21 @@
 (SUP_COL, MIN_COL) = ('gray', 'red')
 
 
+def setAxesColor(axTemp, color):
+    axTemp.tick_params(color=color)
+    for spine in axTemp.spines.values():
+        spine.set_edgecolor(color)
+    return axTemp
+
+
+def removeTicksAndLabels(axTemp):
+    axTemp.set_xticklabels([])
+    axTemp.set_yticklabels([])
+    axTemp.set_xticks([])
+    axTemp.set_yticks([])
+    return axTemp
+
+
 def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
     (yPos, vAlign) = (-.02, 'top')
     if top:

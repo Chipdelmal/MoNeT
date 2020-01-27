@@ -106,8 +106,9 @@ for j in range(len(aggregatedNodesData['landscape'])):
 ###############################################################################
 paths = monet.listDirectoriesWithPathWithinAPath(dirTraces + '/')
 print(
-        '* Loading traces reps datasets (' + str(len(paths)) + ') for ' +
-        ' populations (' + str(len(aggregatedNodesData['landscape'])) + ')...'
+        '* Loading traces reps datasets (' + str(len(paths)) + ') for '
+        + ' populations (' + str(len(aggregatedNodesData['landscape']))
+        + ')...'
     )
 landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
         paths, drvPars.get('HLT'), male=True, female=True
@@ -120,9 +121,9 @@ for i in landscapeReps["landscapes"][0]:
 figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
 for j in range(0, len(figsArray)):
     print(
-            '* Exporting Population Plots: ' +
-            '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
-            end="\r"
+            '* Exporting Population Plots: '
+            + '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
+            end='\r'
         )
     # title = plot.parseTitle(thresholds, prtcDays[j])
     title = str(minTuple[j][0]).zfill(4) + " "
@@ -133,24 +134,19 @@ for j in range(0, len(figsArray)):
     style['aspect'] = monet.scaleAspect(.25, style)
     axTemp = plot.setRange(axTemp, style)
     axTemp.set_aspect(aspect=style["aspect"])
-    axTemp.set_xticklabels([])
-    axTemp.set_yticklabels([])
-    axTemp.set_xticks([])
-    axTemp.set_yticks([])
-    axTemp.tick_params(color=(0, 0, 0, 0.5))
-    for spine in axTemp.spines.values():
-        spine.set_edgecolor((0, 0, 0, 0.5))
+    axTemp = plot.removeTicksAndLabels(axTemp)
+    axTemp = plot.setAxesColor(axTemp, (0, 0, 0, 0.5))
     expOutStr = expOutSetPath
     figsArray[j].savefig(
-        expOutStr + "/Pop_" + str(1 + j).zfill(3) + ".pdf", dpi=style['dpi'],
-        facecolor=None, edgecolor='w', orientation='portrait', papertype=None,
-        format='pdf', transparent=True, bbox_inches='tight',
-        pad_inches=.01
-    )
+            expOutStr + "/Pop_" + str(1 + j).zfill(3) + ".pdf",
+            dpi=style['dpi'], facecolor=None, edgecolor='w',
+            orientation='portrait', papertype=None, format='pdf',
+            transparent=True, bbox_inches='tight', pad_inches=.01
+        )
     plt.close('all')
 print(
-        '* Exporting population plots: ' +
-        '(' + str(j + 1) + '/' + str(len(figsArray)) + ')...',
+        '* Exporting population plots: '
+        + '(' + str(j + 1) + '/' + str(len(figsArray)) + ')...',
         end='\n'
     )
 ###############################################################################
@@ -163,32 +159,27 @@ landscapeRepsFull = monet.sumAggregatedLandscapeDataRepetitionsAlt(
     )
 maxPop = landscapeRepsFull['landscapes'][0][0][-1][-1]
 figsArray = monet.plotLandscapeDataRepetitions(landscapeRepsFull, style)
+# axTemp = plot.printMinTitle(axTemp, str(maxPop/2))
 axTemp = figsArray[0].get_axes()[0]
 style['xRange'] = (95, 3 * 365)
 style['yRange'] = (0, maxPop * 1.1)
 style['aspect'] = monet.scaleAspect(.1, style)
-# axTemp = plot.printMinTitle(axTemp, str(maxPop/2))
+axTemp = plot.removeTicksAndLabels(axTemp)
 axTemp = plot.setRange(axTemp, style)
 axTemp.set_aspect(aspect=style["aspect"])
-axTemp.set_xticklabels([])
-axTemp.set_yticklabels([])
-axTemp.set_xticks([])
-axTemp.set_yticks([])
-axTemp.tick_params(color=(0, 0, 0, 0.5))
-for spine in axTemp.spines.values():
-    spine.set_edgecolor((0, 0, 0, 0.5))
+axTemp = plot.setAxesColor(axTemp, (0, 0, 0, 0.5))
 figsArray[0].savefig(
-    expOutStr + "/Pop_FULL.pdf", dpi=style['dpi'],
-    facecolor=None, edgecolor='w', orientation='portrait', papertype=None,
-    format='pdf', transparent=True, bbox_inches='tight',
-    pad_inches=.01
-)
+        expOutStr + "/Pop_FULL.pdf", dpi=style['dpi'],
+        facecolor=None, edgecolor='w', orientation='portrait', papertype=None,
+        format='pdf', transparent=True, bbox_inches='tight',
+        pad_inches=.01
+    )
 plt.close('all')
 # Print finished -------------------------------------------------------------
 print('* Finished!')
 print(aux.PADL)
 print(
-        aux.CWHT + 'UCI Experiments Analysis ' +
-        '[' + str(datetime.datetime.now()) + ']' + aux.CEND
+        aux.CWHT + 'UCI Experiments Analysis '
+        + '[' + str(datetime.datetime.now()) + ']' + aux.CEND
     )
 print(aux.PAD)
