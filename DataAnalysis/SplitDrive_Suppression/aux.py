@@ -15,7 +15,7 @@ STYLE_HLT = {
         "xRange": [0, 2000], "yRange": [0, 20000],
         "colors": ['#9f00cc', '#ec0b43', '#0038a8']
     }
-STYLE_HLT['aspect'] = monet.scaleAspect(.15, STYLE_HLT)
+STYLE_HLT['aspect'] = monet.scaleAspect(1, STYLE_HLT)
 
 STYLE_ECO = {
         "width": .1, "alpha": .1, "dpi": 500,
@@ -26,12 +26,20 @@ STYLE_ECO = {
                 '#e600ff', '#b3ccff', '#333380', '#f0a6ca'
             ]
     }
-STYLE_ECO['aspect'] = monet.scaleAspect(.15, STYLE_ECO)
+STYLE_ECO['aspect'] = monet.scaleAspect(1, STYLE_ECO)
 
 
 ###############################################################################
 # Functions Definitions
 ###############################################################################
+def removeTicksAndLabels(axTemp):
+    axTemp.set_xticklabels([])
+    axTemp.set_yticklabels([])
+    axTemp.set_xticks([])
+    axTemp.set_yticks([])
+    return axTemp
+
+
 def getExperiments(PATH):
     dirs = sorted(next(os.walk(PATH))[1])
     temp = []
@@ -52,14 +60,14 @@ def selectAnalysisType(ECO, PATH_IMG):
 
 
 def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
-    (yPos, vAlign) = (-.02, 'top')
+    (yPos, vAlign) = (-.01, 'top')
     if top:
         (yPos, vAlign) = (1.01, 'bottom')
     # Plot text if the list is longer than one
     if len(numbers) > 0:
         for i in numbers:
             ax.text(
-                    i/xRange, yPos, str(i-relStr), color=color, fontsize=2,
+                    i/xRange, yPos, str(i-relStr), color=color, fontsize=4,
                     alpha=.5, verticalalignment=vAlign,
                     horizontalalignment='center', transform=ax.transAxes
                 )
@@ -69,7 +77,7 @@ def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
 def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
     if len(numbers) > 0:
         for (ix, i) in enumerate(numbers):
-            (yPos, vAlign) = (-.05, 'top')
+            (yPos, vAlign) = (-.01, 'top')
             # Alternate based on open/close of the threshold cross
             if ix < len(numbers) / 2:
                 if (ix % 2 == 0):
@@ -79,7 +87,7 @@ def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
                     (yPos, vAlign) = (1.01, 'bottom')
             # Plot text
             ax.text(
-                    i/xRange, yPos, str(i-relStr), color=color, fontsize=2,
+                    i/xRange, yPos, str(i-relStr), color=color, fontsize=4,
                     alpha=.5, verticalalignment=vAlign,
                     horizontalalignment='center', transform=ax.transAxes
                 )
@@ -97,7 +105,7 @@ def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True, rnd=True):
                 val = round(i, 2)
             #####
             ax.text(
-                    xPos, i/yRange, val, color=color, fontsize=2,
+                    xPos, i/yRange, val, color=color, fontsize=4,
                     alpha=.5, verticalalignment='center',
                     horizontalalignment=hAlign, transform=ax.transAxes
                 )
@@ -126,7 +134,7 @@ def parseMinTitle(minTuple, SSPOP, thrs=.05, relStr=0):
 
 def printTitle(ax, title):
     ax.text(
-            .999, .975, title, color=SUP_COL, fontsize=2, alpha=.75,
+            .999, .98, title, color=SUP_COL, fontsize=3, alpha=.75,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -135,7 +143,7 @@ def printTitle(ax, title):
 
 def printMinTitle(ax, title):
     ax.text(
-            .999, .02, title + ' ', color=MIN_COL, fontsize=2, alpha=.5,
+            .999, .01, title + ' ', color=MIN_COL, fontsize=3, alpha=.5,
             verticalalignment='bottom', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -159,7 +167,7 @@ def printMinLines(ax, minTuple, style, SSPOP, thrs=.05):
                 linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
             )
         ax.axvline(
-                x=minTuple[0], ymin=0, ymax=1, # minTuple[1]/style['yRange'][1],
+                x=minTuple[0], ymin=0, ymax=minTuple[1]/style['yRange'][1], #ymax=1,
                 linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
             )
     return ax
