@@ -39,6 +39,14 @@ def genUniformLandscape(loCoord, hiCoord, ptsNum):
         coords = list(itertools.product(x, x))
         return coords
 
+def genLineLandscape(loCoord, hiCoord, ptsNum):
+    '''
+    Generate a line landscape (one dimension) with ptsNum for base case
+    '''
+    x = np.linspace(loCoord, hiCoord, ptsNum)
+    coords = [(val, 0) for val in x]
+    return coords
+
 
 
 if __name__ == "__main__":

@@ -1,37 +1,16 @@
-import os
-import aux
-import numpy as np
-import MoNeT_MGDrivE as monet
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 (SUP_COL, MIN_COL) = ('gray', 'red')
-PAD = '\n' + 125 * '*' + '\n'
-(CRED, CEND) = ('\033[91m', '\033[0m')
-###############################################################################
-# Style
-###############################################################################
-STYLE_HLT = {
-        "width": .1, "alpha": .1, "dpi": 500,
-        "legend": True, "aspect": .5,
-        "xRange": [0, 2000], "yRange": [0, 20000],
-        "colors": ['#9f00cc', '#ec0b43', '#0038a8']
-    }
-STYLE_HLT['aspect'] = monet.scaleAspect(1, STYLE_HLT)
-
-STYLE_ECO = {
-        "width": .1, "alpha": .1, "dpi": 500,
-        "legend": True, "aspect": .5,
-        "xRange": [0, 2000], "yRange": [0, 1],
-        "colors": [
-                '#ff004d', '#80ff80', '#6600ff',
-                '#e600ff', '#b3ccff', '#333380', '#f0a6ca'
-            ]
-    }
-STYLE_ECO['aspect'] = monet.scaleAspect(1, STYLE_ECO)
 
 
-###############################################################################
-# Functions Definitions
-###############################################################################
+def setAxesColor(axTemp, color):
+    axTemp.tick_params(color=color)
+    for spine in axTemp.spines.values():
+        spine.set_edgecolor(color)
+    return axTemp
+
+
 def removeTicksAndLabels(axTemp):
     axTemp.set_xticklabels([])
     axTemp.set_yticklabels([])
@@ -40,34 +19,15 @@ def removeTicksAndLabels(axTemp):
     return axTemp
 
 
-def getExperiments(PATH):
-    dirs = sorted(next(os.walk(PATH))[1])
-    temp = []
-    for i in dirs:
-        if(i != 'img'):
-            temp.append(i)
-    (expsNum, dirs) = (len(temp), temp)
-    return (expsNum, dirs)
-
-
-def selectAnalysisType(ECO, PATH_IMG):
-    (PATH_HLT, PATH_ECO) = (PATH_IMG + 'hlt/', PATH_IMG + 'eco/')
-    if ECO is True:
-        (expType, style, path, doi) = ('ECO', aux.STYLE_ECO, PATH_ECO, 'W')
-    else:
-        (expType, style, path, doi) = ('HLT', aux.STYLE_HLT, PATH_HLT, 'Other')
-    return (expType, style, path, doi)
-
-
 def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
-    (yPos, vAlign) = (-.01, 'top')
+    (yPos, vAlign) = (-.02, 'top')
     if top:
         (yPos, vAlign) = (1.01, 'bottom')
     # Plot text if the list is longer than one
     if len(numbers) > 0:
         for i in numbers:
             ax.text(
-                    i/xRange, yPos, str(i-relStr), color=color, fontsize=4,
+                    i/xRange, yPos, str(i-relStr), color=color, fontsize=2,
                     alpha=.5, verticalalignment=vAlign,
                     horizontalalignment='center', transform=ax.transAxes
                 )
@@ -77,7 +37,7 @@ def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
 def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
     if len(numbers) > 0:
         for (ix, i) in enumerate(numbers):
-            (yPos, vAlign) = (-.01, 'top')
+            (yPos, vAlign) = (-.05, 'top')
             # Alternate based on open/close of the threshold cross
             if ix < len(numbers) / 2:
                 if (ix % 2 == 0):
@@ -87,7 +47,7 @@ def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
                     (yPos, vAlign) = (1.01, 'bottom')
             # Plot text
             ax.text(
-                    i/xRange, yPos, str(i-relStr), color=color, fontsize=4,
+                    i/xRange, yPos, str(i-relStr), color=color, fontsize=2,
                     alpha=.5, verticalalignment=vAlign,
                     horizontalalignment='center', transform=ax.transAxes
                 )
@@ -105,7 +65,7 @@ def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True, rnd=True):
                 val = round(i, 2)
             #####
             ax.text(
-                    xPos, i/yRange, val, color=color, fontsize=4,
+                    xPos, i/yRange, val, color=color, fontsize=2,
                     alpha=.5, verticalalignment='center',
                     horizontalalignment=hAlign, transform=ax.transAxes
                 )
@@ -134,7 +94,7 @@ def parseMinTitle(minTuple, SSPOP, thrs=.05, relStr=0):
 
 def printTitle(ax, title):
     ax.text(
-            .999, .98, title, color=SUP_COL, fontsize=3, alpha=.75,
+            .999, .5, title, color=SUP_COL, fontsize=15, alpha=.75,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -143,7 +103,7 @@ def printTitle(ax, title):
 
 def printMinTitle(ax, title):
     ax.text(
-            .999, .01, title + ' ', color=MIN_COL, fontsize=3, alpha=.5,
+            .999, .45, title + ' ', color=MIN_COL, fontsize=2, alpha=.5,
             verticalalignment='bottom', horizontalalignment='right',
             transform=ax.transAxes
         )
@@ -153,21 +113,21 @@ def printMinTitle(ax, title):
 def printVLines(ax, chngDays):
     for vLine in chngDays:
         ax.axvline(
-                x=vLine, linewidth=.05,
+                x=vLine, linewidth=.1,
                 linestyle='--', color=SUP_COL, alpha=.75
             )
     return ax
 
 
 def printMinLines(ax, minTuple, style, SSPOP, thrs=.05):
-    (width, alpha) = (.05, .5)
+    (width, alpha) = (.3, .5)
     if(1 - minTuple[1] / SSPOP >= thrs):
         ax.axhline(
                 y=minTuple[1], xmin=0, xmax=minTuple[0]/style['xRange'][1],
                 linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
             )
         ax.axvline(
-                x=minTuple[0], ymin=0, ymax=minTuple[1]/style['yRange'][1], #ymax=1,
+                x=minTuple[0], ymin=0, ymax=1,
                 linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
             )
     return ax
@@ -177,30 +137,3 @@ def setRange(ax, style):
     ax.set_xlim(style['xRange'][0], style['xRange'][1])
     ax.set_ylim(style['yRange'][0], style['yRange'][1])
     return ax
-
-
-def getTimeToMinAtAllele(
-            aggData,
-            gIx,
-            safety=.01
-        ):
-    """
-    Description:
-        * Calculates the point at which the total population reaches
-            its minimum.
-    In:
-        * aggData: Genotypes aggregated data.
-        * gIx: Gene-index of interest (column in the genotypes dictionary).
-        * safety: Envelope of values around the steady state that are
-            considered "stable" (as a proportion of the final total allele
-            composition).
-    Out:
-        * time: Point in time at which the minimum is reached
-        * popMin: Population size at its minimum
-    """
-    pop = [row[gIx] for row in aggData['population']]
-    for time in range(len(pop)):
-        popMin = min(pop)
-        if np.isclose(pop[time], popMin, atol=safety):
-            break
-    return (time, popMin)

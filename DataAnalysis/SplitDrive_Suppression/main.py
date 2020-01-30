@@ -19,7 +19,7 @@ if sys.argv[3] != "mig":
 else:
     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/Migration/'
 # For testing #################################################################
-# (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
+(ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/Migration/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
@@ -112,6 +112,7 @@ for dir in folders:
             minTitle = aux.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
             axTemp = figsArray[j].get_axes()[0]
             axTemp = aux.setRange(axTemp, style)
+            axTemp = aux.removeTicksAndLabels(axTemp)
             # Add labels to the days of threshold-crossing
             axTemp = aux.printHAxisNumbersAlt(
                     axTemp, chngDays[j], style['xRange'][1], 'Gray',
@@ -147,9 +148,9 @@ for dir in folders:
             axTemp = aux.printVLines(axTemp, chngDays[j])
             # Export to disk
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
-            monet.quickSaveFigure(
-                    figsArray[j], expOutStr + "_N" + str(j) + ".pdf",
-                    dpi=style['dpi'], format='pdf'
+            figsArray[j].savefig(
+                    expOutStr + "_N" + str(j) + ".pdf", dpi=style['dpi'],
+                     bbox_inches='tight', pad_inches=0.025
                 )
         plt.close('all')
         # Terminal ############################################################

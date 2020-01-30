@@ -41,7 +41,8 @@ passMkvtest = aux.testMarkovMat(mskMat)
 # Creates a random landscape (x,y coordinates) and calculates the distances
 #   matrix.
 # ############################################################################
-landscape = land.genURandLandscape(lo, hi, ptsNum)
+#landscape = land.genURandLandscape(lo, hi, ptsNum)
+landscape = land.genLineLandscape(lo, hi, ptsNum)
 distMat = monet.calculateDistanceMatrix(landscape)
 print(distMat)
 sns.heatmap(distMat, annot=True)
