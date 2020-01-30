@@ -17,7 +17,7 @@ else:
 if sys.argv[3] != "mig":
     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
 else:
-    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
+    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/Migration/'
 # For testing #################################################################
 # (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
 ###############################################################################
