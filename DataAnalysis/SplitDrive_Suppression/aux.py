@@ -150,35 +150,6 @@ def printMinTitle(ax, title):
     return ax
 
 
-def printVLines(ax, chngDays):
-    for vLine in chngDays:
-        ax.axvline(
-                x=vLine, linewidth=.05,
-                linestyle='--', color=SUP_COL, alpha=.75
-            )
-    return ax
-
-
-def printMinLines(ax, minTuple, style, SSPOP, thrs=.05):
-    (width, alpha) = (.05, .5)
-    if(1 - minTuple[1] / SSPOP >= thrs):
-        ax.axhline(
-                y=minTuple[1], xmin=0, xmax=minTuple[0]/style['xRange'][1],
-                linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
-            )
-        ax.axvline(
-                x=minTuple[0], ymin=0, ymax=minTuple[1]/style['yRange'][1], #ymax=1,
-                linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
-            )
-    return ax
-
-
-def setRange(ax, style):
-    ax.set_xlim(style['xRange'][0], style['xRange'][1])
-    ax.set_ylim(style['yRange'][0], style['yRange'][1])
-    return ax
-
-
 def getTimeToMinAtAllele(
             aggData,
             gIx,

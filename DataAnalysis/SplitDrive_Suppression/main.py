@@ -151,7 +151,7 @@ for dir in folders:
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             figsArray[j].savefig(
                     expOutStr + "_N" + str(j) + ".pdf", dpi=style['dpi'],
-                     bbox_inches='tight', pad_inches=0.025
+                    bbox_inches='tight', pad_inches=0.025
                 )
         plt.close('all')
         # Terminal ############################################################
