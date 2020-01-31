@@ -9,15 +9,15 @@ import matplotlib.pyplot as plt
 ###############################################################################
 # Code for terminal-call: python main.py "srv" "eco"
 ###############################################################################
-if sys.argv[1] != "srv":
-    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'Volumes/')
-else:
-    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
-# Migration/No Migration terminal selector
-if sys.argv[3] != "mig":
-    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
-else:
-    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
+# if sys.argv[1] != "srv":
+#     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'Volumes/')
+# else:
+#     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
+# # Migration/No Migration terminal selector
+# if sys.argv[3] != "mig":
+#     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
+# else:
+#     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
 # For testing #################################################################
 (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/Migration/')
 ###############################################################################
@@ -108,11 +108,11 @@ for dir in folders:
         # Plot ################################################################
         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
         for j in range(0, len(figsArray)):
+            axTemp = figsArray[j].get_axes()[0]
             title = aux.parseTitle(thresholds, prtcDays[j])
             minTitle = aux.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
-            axTemp = figsArray[j].get_axes()[0]
-            axTemp = aux.setRange(axTemp, style)
-            axTemp = aux.removeTicksAndLabels(axTemp)
+            axTemp = monet.setRange(axTemp, style)
+            axTemp = monet.removeTicksAndLabels(axTemp)
             # Add labels to the days of threshold-crossing
             axTemp = aux.printHAxisNumbersAlt(
                     axTemp, chngDays[j], style['xRange'][1], 'Gray',
@@ -130,22 +130,23 @@ for dir in folders:
                             axTemp, [minTuple[j][1]],
                             style['yRange'][1], 'Red', left=True, rnd=True
                         )
-                    axTemp = aux.printMinLines(
-                            axTemp, minTuple[j], style, SSPOP
-                        )
+                    if(1 - minTuple[j][1] / SSPOP >= .05):
+                        axTemp = monet.printMinLines(
+                                axTemp, minTuple[j], style
+                            )
                 else:
-                    axTemp = aux.printVAxisNumbers(
+                    axTemp = monet.printVAxisNumbers(
                             axTemp, [minTuple[j][1] / SSPOP],
                             style['yRange'][1], 'Red', left=True, rnd=False
                         )
-                    axTemp = aux.printMinLines(
-                            axTemp, (minTuple[j][0], minTuple[j][1] / SSPOP),
-                            style, SSPOP
-                        )
+                    if(1 - minTuple[j][1] / SSPOP >= .05):
+                        axTemp = monet.printMinLines(
+                                axTemp, minTuple[j], style
+                            )
             # Titles and lines common for both analyses
             axTemp = aux.printTitle(axTemp, title)
             axTemp = aux.printMinTitle(axTemp, minTitle)
-            axTemp = aux.printVLines(axTemp, chngDays[j])
+            axTemp = monet.printVLines(axTemp, chngDays[j])
             # Export to disk
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             figsArray[j].savefig(
