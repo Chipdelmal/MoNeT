@@ -1,10 +1,11 @@
-import sys
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import aux as aux
 import drive as drive
 import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
-
 
 ###############################################################################
 # Code for terminal-call: python main.py "srv" "eco"
@@ -19,7 +20,7 @@ import matplotlib.pyplot as plt
 # else:
 #     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
 # For testing #################################################################
-(ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/Migration/')
+(ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/Migration/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
@@ -30,8 +31,7 @@ folders = [
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
 (thresholds, NOI, SSPOP, REL_STR) = (
-        [.95, .9, .75, .5, .25, .1, .05],
-        0, 10000, 20
+        [.95, .9, .75, .5, .25, .1, .05], 0, 10000, 20
     )
 ###############################################################################
 # Iterate through folders
@@ -113,40 +113,27 @@ for dir in folders:
             minTitle = aux.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
             axTemp = monet.setRange(axTemp, style)
             axTemp = monet.removeTicksAndLabels(axTemp)
-            # Add labels to the days of threshold-crossing
-            axTemp = aux.printHAxisNumbersAlt(
-                    axTemp, chngDays[j], style['xRange'][1], 'Gray',
-                    relStr=REL_STR
-                )
             # Min pop prints
-            if(1 - minTuple[j][1] / SSPOP >= .05):
-                axTemp = aux.printHAxisNumbers(
-                        axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
-                        top=False, relStr=REL_STR
-                    )
-                # Pop suppression level
-                if ECO is False:
+            if ECO is False:
+                if(1 - minTuple[j][1] / SSPOP >= .05):
+                    axTemp = aux.printHAxisNumbers(
+                            axTemp, [minTuple[j][0]], style['xRange'][1],
+                            'Red', top=False, relStr=REL_STR
+                        )
                     axTemp = aux.printVAxisNumbers(
-                            axTemp, [minTuple[j][1]],
-                            style['yRange'][1], 'Red', left=True, rnd=True
+                            axTemp, [minTuple[j][1]], style['yRange'][1],
+                            'Red', left=True, rnd=True
                         )
-                    if(1 - minTuple[j][1] / SSPOP >= .05):
-                        axTemp = monet.printMinLines(
-                                axTemp, minTuple[j], style
-                            )
-                else:
-                    axTemp = monet.printVAxisNumbers(
-                            axTemp, [minTuple[j][1] / SSPOP],
-                            style['yRange'][1], 'Red', left=True, rnd=False
+                    axTemp = monet.printMinLines(
+                            axTemp, [minTuple[j][1]], style
                         )
-                    if(1 - minTuple[j][1] / SSPOP >= .05):
-                        axTemp = monet.printMinLines(
-                                axTemp, minTuple[j], style
-                            )
-            # Titles and lines common for both analyses
-            axTemp = aux.printTitle(axTemp, title)
-            axTemp = aux.printMinTitle(axTemp, minTitle)
-            axTemp = monet.printVLines(axTemp, chngDays[j])
+                    axTemp = aux.printTitle(axTemp, title)
+                    axTemp = aux.printMinTitle(axTemp, minTitle)
+                    axTemp = monet.printVLines(axTemp, chngDays[j])
+                    axTemp = aux.printHAxisNumbersAlt(
+                            axTemp, chngDays[j], style['xRange'][1],
+                            'Gray', relStr=REL_STR
+                        )
             # Export to disk
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             figsArray[j].savefig(

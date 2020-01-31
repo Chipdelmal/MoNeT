@@ -15,7 +15,7 @@ STYLE_HLT = {
         "xRange": [0, 2000], "yRange": [0, 20000],
         "colors": ['#9f00cc', '#ec0b43', '#0038a8']
     }
-STYLE_HLT['aspect'] = monet.scaleAspect(1, STYLE_HLT)
+STYLE_HLT['aspect'] = monet.scaleAspect(.25, STYLE_HLT)
 
 STYLE_ECO = {
         "width": .1, "alpha": .1, "dpi": 500,
@@ -26,7 +26,7 @@ STYLE_ECO = {
                 '#e600ff', '#b3ccff', '#333380', '#f0a6ca'
             ]
     }
-STYLE_ECO['aspect'] = monet.scaleAspect(1, STYLE_ECO)
+STYLE_ECO['aspect'] = monet.scaleAspect(.25, STYLE_ECO)
 
 
 ###############################################################################
@@ -96,7 +96,6 @@ def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
 
 def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True, rnd=True):
     (xPos, hAlign) = (-.004, 'right')
-    #
     if len(numbers) > 0:
         for i in numbers:
             if rnd:
