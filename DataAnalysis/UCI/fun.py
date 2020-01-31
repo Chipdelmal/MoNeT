@@ -7,6 +7,13 @@ import numpy as np
 import MoNeT_MGDrivE as monet
 
 
+def getSSPopsInLandscape(aggregatedNodesData, ssDay):
+    ssPops = []
+    for node in aggregatedNodesData['landscape']:
+        ssPops.append(node[ssDay - 1][-1])
+    return ssPops
+
+
 def getTracesAndMeanDirs(pathTraces, pathMean):
     (dirsTraces, dirsMean) = (
             monet.listDirectoriesWithPathWithinAPath(pathTraces),
