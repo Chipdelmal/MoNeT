@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 import aux as aux
 import drive as drive
 import datetime
@@ -10,17 +11,17 @@ import matplotlib.pyplot as plt
 ###############################################################################
 # Code for terminal-call: python main.py "srv" "eco"
 ###############################################################################
-# if sys.argv[1] != "srv":
-#     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'Volumes/')
-# else:
-#     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
-# # Migration/No Migration terminal selector
-# if sys.argv[3] != "mig":
-#     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
-# else:
-#     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
+if sys.argv[1] != "srv":
+    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'Volumes/')
+else:
+    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
+# Migration/No Migration terminal selector
+if sys.argv[3] != "mig":
+    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
+else:
+    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/Migration/'
 # For testing #################################################################
-(ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/Migration/')
+# (ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/Migration/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
