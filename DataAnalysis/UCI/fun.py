@@ -88,3 +88,23 @@ def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
     print(aux.CRED + '* Root  PATH: ' + PATH_ROOT + aux.CEND)
     print(aux.CRED + '* Data  PATH: ' + PATH_DATA + aux.CEND)
     print(aux.CRED + '* Image PATH: ' + PATH_IMG + aux.CEND)
+
+
+###############################################################################
+# Experiment Selection and Terminal
+###############################################################################
+def listDirectoriesWithPathWithinAPath(pathFilename):
+    '''
+    Description:
+        * Returns a list of folder paths within a given path.
+    In:
+        * pathFilename: Path to search directories in
+    Out:
+        * List of folder paths
+    Notes:
+        * NA
+    '''
+    folders = monet.listDirectoriesInPath(pathFilename)
+    for i, folder in enumerate(folders):
+        folders[i] = pathFilename + '/' + folder
+    return folders

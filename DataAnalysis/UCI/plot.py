@@ -19,7 +19,10 @@ def removeTicksAndLabels(axTemp):
     return axTemp
 
 
-def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
+def printHAxisNumbers(
+            ax, numbers, xRange, top=True,
+            color='Black', relStr=0, fntSz=4, alpha=.5
+        ):
     (yPos, vAlign) = (-.02, 'top')
     if top:
         (yPos, vAlign) = (1.01, 'bottom')
@@ -27,14 +30,17 @@ def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
     if len(numbers) > 0:
         for i in numbers:
             ax.text(
-                    i/xRange, yPos, str(i-relStr), color=color, fontsize=2,
+                    i/xRange, yPos, str(i-relStr), color=color, fontsize=fntSz,
                     alpha=.5, verticalalignment=vAlign,
                     horizontalalignment='center', transform=ax.transAxes
                 )
     return ax
 
 
-def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
+def printHAxisNumbersAlt(
+            ax, numbers, xRange,
+            color='Black', relStr=0, fntSz=4, alpha=.5
+        ):
     if len(numbers) > 0:
         for (ix, i) in enumerate(numbers):
             (yPos, vAlign) = (-.05, 'top')
@@ -47,7 +53,7 @@ def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
                     (yPos, vAlign) = (1.01, 'bottom')
             # Plot text
             ax.text(
-                    i/xRange, yPos, str(i-relStr), color=color, fontsize=2,
+                    i/xRange, yPos, str(i-relStr), color=color, fontsize=fntSz,
                     alpha=.5, verticalalignment=vAlign,
                     horizontalalignment='center', transform=ax.transAxes
                 )
@@ -74,11 +80,11 @@ def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True, rnd=True):
 
 def parseTitle(thresholds, prtcDays):
     title = '  '.join(['[{}: {}]'.format(
-                str(round(1-x[0], 2)).ljust(4, '0'),
+                str(round(x[0], 2)).ljust(4, '0'),
                 str(x[1]).zfill(4)
             ) for x in zip(thresholds, prtcDays)]
         )
-    return 'SUP: ' + title
+    return title
 
 
 def parseMinTitle(minTuple, SSPOP, thrs=.05, relStr=0):
@@ -92,9 +98,10 @@ def parseMinTitle(minTuple, SSPOP, thrs=.05, relStr=0):
     return title
 
 
-def printTitle(ax, title):
+def printTitle(ax, title, pos=(.999, .5), fntSz=10, alpha=.75):
     ax.text(
-            .999, .5, title, color=SUP_COL, fontsize=15, alpha=.75,
+            pos[0], pos[1], title, color=SUP_COL,
+            fontsize=fntSz, alpha=alpha,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes
         )
