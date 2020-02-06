@@ -27,8 +27,8 @@ else:
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'SplitDrive', 'ylinkedXShredder', 'autosomalXShredder',
-        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
+        'autosomalXShredder',
+        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR', 'SplitDrive'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
 (thresholds, NOI, SSPOP, REL_STR) = (
