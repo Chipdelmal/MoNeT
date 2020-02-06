@@ -3,6 +3,7 @@
 
 import MoNeT_MGDrivE as monet
 
+CSV_PAD = '0'
 # #############################################################################
 # Terminal aesthetics
 # #############################################################################
@@ -17,13 +18,28 @@ PADL = '' + 75 * '-' + ''
 # #############################################################################
 # Colors
 # #############################################################################
-colors = ['#0038a8', '#ff0098', '#ffffff']  # '#9f00cc']
-cmaps = monet.generateAlphaColorMapFromColorArray(colors)
+# Health ----------------------------------------------------------------------
+colorsH = ['#FFB0DF', '#979EE5', '#ffffff']  # '#9f00cc']
+cmapsH = monet.generateAlphaColorMapFromColorArray(colorsH)
 
 STYLE_HLT = {
-        "width": .075, "alpha": .075, "dpi": 500,
+        "width": .25, "alpha": .1, "dpi": 500,
         "legend": True, "aspect": .5,
-        "xRange": [0, 3 * 365], "yRange": [0, 525066.0],
-        "colors": colors
+        "xRange": [0, 5 * 365], "yRange": [0, 525066.0],
+        "colors": colorsH
     }
 STYLE_HLT['aspect'] = monet.scaleAspect(.15, STYLE_HLT)
+
+# Ecology ---------------------------------------------------------------------
+colorsE = [
+        '#ff004d', '#80ff80', '#6600ff',
+        '#e600ff', '#b3ccff', '#333380', '#f0a6ca'
+    ]
+STYLE_ECO = {
+        "width": .1, "alpha": .1, "dpi": 500,
+        "legend": True, "aspect": .5,
+        "xRange": [0, 2000], "yRange": [0, 1],
+        "colors": colorsE
+    }
+STYLE_ECO['aspect'] = monet.scaleAspect(.25, STYLE_ECO)
+cmapsE = monet.generateAlphaColorMapFromColorArray(colorsE)

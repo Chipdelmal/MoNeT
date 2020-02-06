@@ -30,8 +30,7 @@ STYLE_HLT['aspect'] = monet.scaleAspect(.15, STYLE_HLT)
 
 driveID = 'CRISPR'
 (thresholds, NOI, SSPOP, REL_STR) = (
-        [.5],
-        0, 10000, 20
+        [.5], 0, 10000, 20
     )
 style = STYLE_HLT
 ###############################################################################

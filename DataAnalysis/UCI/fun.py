@@ -7,12 +7,61 @@ import numpy as np
 import MoNeT_MGDrivE as monet
 
 
+def getSSPopsInLandscape(aggregatedNodesData, ssDay):
+    ssPops = []
+    for node in aggregatedNodesData['landscape']:
+        ssPops.append(node[ssDay - 1][-1])
+    return ssPops
+
+
 def getTracesAndMeanDirs(pathTraces, pathMean):
     (dirsTraces, dirsMean) = (
             monet.listDirectoriesWithPathWithinAPath(pathTraces),
             monet.listDirectoriesWithPathWithinAPath(pathMean)
         )
     return (dirsTraces, dirsMean)
+
+
+def calcDaysCrosses(aggregatedNodesData, thresholds, ssPops, gIx):
+    chngDays = []
+    for j in range(len(aggregatedNodesData['landscape'])):
+        nodePop = aggregatedNodesData['landscape'][j]
+        thrsBool = monet.comparePopToThresholds(
+                nodePop, gIx, [0, 1], thresholds, refPop=ssPops[j]
+            )
+        chngDays.append(monet.getConditionChangeDays(thrsBool))
+    return chngDays
+
+
+def getTimeToMinAtAllele(aggData, gIx, safety=.1):
+    pop = [row[gIx] for row in aggData['population']]
+    for time in range(len(pop)):
+        popMin = min(pop)
+        if np.isclose(pop[time], popMin, atol=safety):
+            break
+    return (time, popMin)
+
+
+###############################################################################
+# Experiment Selection and Terminal
+###############################################################################
+def getExperiments(PATH):
+    dirs = sorted(next(os.walk(PATH))[1])
+    temp = []
+    for i in dirs:
+        if(i != 'img'):
+            temp.append(i)
+    (expsNum, dirs) = (len(temp), temp)
+    return (expsNum, dirs)
+
+
+def selectAnalysisType(ECO, PATH_IMG):
+    (PATH_HLT, PATH_ECO) = (PATH_IMG + 'hlt/', PATH_IMG + 'eco/')
+    if ECO is True:
+        (expType, style, path, doi) = ('ECO', aux.STYLE_ECO, PATH_ECO, 'W')
+    else:
+        (expType, style, path, doi) = ('HLT', aux.STYLE_HLT, PATH_HLT, 'Other')
+    return (expType, style, path, doi)
 
 
 def experimentSelector(args):
@@ -41,47 +90,21 @@ def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
     print(aux.CRED + '* Image PATH: ' + PATH_IMG + aux.CEND)
 
 
-def getExperiments(PATH):
-    dirs = sorted(next(os.walk(PATH))[1])
-    temp = []
-    for i in dirs:
-        if(i != 'img'):
-            temp.append(i)
-    (expsNum, dirs) = (len(temp), temp)
-    return (expsNum, dirs)
-
-
-def selectAnalysisType(ECO, PATH_IMG):
-    (PATH_HLT, PATH_ECO) = (PATH_IMG + 'hlt/', PATH_IMG + 'eco/')
-    if ECO is True:
-        (expType, style, path, doi) = ('ECO', aux.STYLE_ECO, PATH_ECO, 'W')
-    else:
-        (expType, style, path, doi) = ('HLT', aux.STYLE_HLT, PATH_HLT, 'Other')
-    return (expType, style, path, doi)
-
-
-def getTimeToMinAtAllele(
-            aggData,
-            gIx,
-            safety=.1
-        ):
-    """
+###############################################################################
+# Experiment Selection and Terminal
+###############################################################################
+def listDirectoriesWithPathWithinAPath(pathFilename):
+    '''
     Description:
-        * Calculates the point at which the total population reaches
-            its minimum.
+        * Returns a list of folder paths within a given path.
     In:
-        * aggData: Genotypes aggregated data.
-        * gIx: Gene-index of interest (column in the genotypes dictionary).
-        * safety: Envelope of values around the steady state that are
-            considered "stable" (as a proportion of the final total allele
-            composition).
+        * pathFilename: Path to search directories in
     Out:
-        * time: Point in time at which the minimum is reached
-        * popMin: Population size at its minimum
-    """
-    pop = [row[gIx] for row in aggData['population']]
-    for time in range(len(pop)):
-        popMin = min(pop)
-        if np.isclose(pop[time], popMin, atol=safety):
-            break
-    return (time, popMin)
+        * List of folder paths
+    Notes:
+        * NA
+    '''
+    folders = monet.listDirectoriesInPath(pathFilename)
+    for i, folder in enumerate(folders):
+        folders[i] = pathFilename + '/' + folder
+    return folders
