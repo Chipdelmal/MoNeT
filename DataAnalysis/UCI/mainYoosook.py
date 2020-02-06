@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 
 
 (ROOT, LAND, DRIVE_ID) = ('Volumes', 'Yoosook', 'LDR')
+(FACT, PLOT) = (True, False)
 (thresholds, NOI, SSPOP, REL_STRT) = (
         [.05, .10, .25, .50, .75],
         0, 2 * 750000, 1
@@ -64,46 +65,50 @@ for (i, (pathMean, pathTraces)) in enumerate(zip(expDirsMean, expDirsTrac)):
     aggregatedNodesData = monet.aggregateGenotypesInLandscape(
             landscapeData, DRIVE
         )
-    # Populations at steady state and crosses through thresholds
+    # Populations at steady state and crosses through thresholds (node 0 only)
     ssPops = fun.getSSPopsInLandscape(aggregatedNodesData, REL_STRT)
-    chgDays = fun.calcDaysCrosses(aggregatedNodesData, thresholds, ssPops, gIx)[0]
+    chDy = fun.calcDaysCrosses(aggregatedNodesData, thresholds, ssPops, gIx)
+    chDayNode = chDy[0]
     # Print to CSV
-    printList = [expName]
-    chgDays += [aux.CSV_PAD] * (len(thresholds) - len(chgDays))
-    printList.extend(chgDays)
-    writer.writerow(printList)
+    if FACT:
+        printList = [expName]
+        chDayNode += [aux.CSV_PAD] * (len(thresholds) - len(chDayNode))
+        chDayNodeSt = [str(i) for i in chDayNode]
+        printList.extend(chDayNodeSt)
+        writer.writerow(printList)
     # Traces -----------------------------------------------------------------
-    # landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-    #         dirsTraces, DRIVE, male=True, female=True
-    #     )
-    # figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, STYLE)
-    # for j in range(len(figsArray)):
-    #     # Plot style corrections
-    #     axTemp = figsArray[j].get_axes()[0]
-    #     STYLE['yRange'] = (0, SSPOP)
-    #     STYLE['aspect'] = monet.scaleAspect(.175, STYLE)
-    #     axTemp.set_aspect(aspect=STYLE["aspect"])
-    #     axTemp = plot.setRange(axTemp, STYLE)
-    #     axTemp = plot.removeTicksAndLabels(axTemp)
-    #     axTemp = plot.setAxesColor(axTemp, (0, 0, 0, 0.5))
-    #     axTemp = monet.printVLines(
-    #             axTemp, chgDays[j], width=.1,
-    #             color='gray', alpha=.75, lStyle='--'
-    #         )
-    #     axTemp = plot.printHAxisNumbers(
-    #             axTemp, chgDays[j], STYLE['xRange'][1],
-    #             'Gray', relStr=REL_STRT, fntSz=2
-    #         )
-    #     # title = plot.parseTitle(thresholds, chngDays)
-    #     # axTemp = plot.printTitle(axTemp, title, (.999, .99), 2, .75)
-    #     # Plot save
-    #     figsArray[j].savefig(
-    #             expOutImgPath + expName + "_N" + str(1 + j).zfill(3) + ".pdf",
-    #             dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
-    #             orientation='portrait', papertype=None, format='pdf',
-    #             transparent=True, bbox_inches='tight', pad_inches=.01
-    #         )
-    #     plt.close('all')
+    if PLOT:
+        landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+                dirsTraces, DRIVE, male=True, female=True
+            )
+        figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, STYLE)
+        for j in range(len(figsArray)):
+            # Plot style corrections
+            axTemp = figsArray[j].get_axes()[0]
+            STYLE['yRange'] = (0, SSPOP)
+            STYLE['aspect'] = monet.scaleAspect(.175, STYLE)
+            axTemp.set_aspect(aspect=STYLE["aspect"])
+            axTemp = plot.setRange(axTemp, STYLE)
+            axTemp = plot.removeTicksAndLabels(axTemp)
+            axTemp = plot.setAxesColor(axTemp, (0, 0, 0, 0.5))
+            axTemp = monet.printVLines(
+                    axTemp, chDy[j], width=.1,
+                    color='gray', alpha=.75, lStyle='--'
+                )
+            axTemp = plot.printHAxisNumbers(
+                    axTemp, chDy[j], STYLE['xRange'][1],
+                    'Gray', relStr=REL_STRT, fntSz=2
+                )
+            # title = plot.parseTitle(thresholds, chngDays)
+            # axTemp = plot.printTitle(axTemp, title, (.999, .99), 2, .75)
+            # Plot save
+            figsArray[j].savefig(
+                    expOutImgPath + expName + str(1+j).zfill(3) + ".pdf",
+                    dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
+                    orientation='portrait', papertype=None, format='pdf',
+                    transparent=True, bbox_inches='tight', pad_inches=.01
+                )
+            plt.close('all')
 fileCSV.close()
 time = datetime.datetime.now()
 print(aux.PADL)
