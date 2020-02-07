@@ -27,8 +27,8 @@ import matplotlib.pyplot as plt
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'autosomalXShredder',
-        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR', 'SplitDrive'
+        'CRISPR', 'fsRIDL',
+        'pgSIT', 'SplitDrive', 'autosomalXShredder', 'IIT', 'SIT'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
 (thresholds, NOI, SSPOP, REL_STR) = (
@@ -38,7 +38,7 @@ folders = [
 # Iterate through folders
 ###############################################################################
 dir = folders[0]
-for dir in folders:
+for (k, dir) in enumerate(folders):
     # Get drive parameters
     drivePars = drive.driveSelector(dir)
     ###########################################################################
@@ -62,6 +62,7 @@ for dir in folders:
     ###########################################################################
     monet.makeFolder(path + dir)
     (num, drv) = (len(pathExps), drivePars.get(expType))
+    style['colors'] = aux.COLORS[k]
     for i in range(0, num, 1):
         (pathSample, pathSampleM) = (pathExps[i], pathExpsM[i])
         experimentString = pathSample.split("/")[-1]
@@ -107,7 +108,7 @@ for dir in folders:
                     landscapeReps, lociiScaler=drivePars['loc']
                 )
         # Plot ################################################################
-        figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
+        figsArray = aux.plotLandscapeDataRepetitions(landscapeReps, style)
         for j in range(0, len(figsArray)):
             axTemp = figsArray[j].get_axes()[0]
             title = aux.parseTitle(thresholds, prtcDays[j])
@@ -115,7 +116,7 @@ for dir in folders:
             axTemp = monet.setRange(axTemp, style)
             axTemp = monet.removeTicksAndLabels(axTemp)
             # Min pop prints
-            if ECO is False:
+            if False:  # ECO is False:
                 if(1 - minTuple[j][1] / SSPOP >= .05):
                     axTemp = aux.printHAxisNumbers(
                             axTemp, [minTuple[j][0]], style['xRange'][1],
@@ -135,11 +136,12 @@ for dir in folders:
                             axTemp, chngDays[j], style['xRange'][1],
                             'Gray', relStr=REL_STR
                         )
+            axTemp = monet.printVLines(axTemp, [20])
             # Export to disk
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             figsArray[j].savefig(
                     expOutStr + "_N" + str(j) + ".pdf", dpi=style['dpi'],
-                    bbox_inches='tight', pad_inches=0.025
+                    bbox_inches='tight', pad_inches=0.025, transparent=True
                 )
         plt.close('all')
         # Terminal ############################################################
