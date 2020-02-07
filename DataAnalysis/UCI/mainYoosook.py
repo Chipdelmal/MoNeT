@@ -15,18 +15,19 @@ import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
 
-(ROOT, LAND, DRIVE_ID) = ('Volumes', 'Yoosook', 'LDR')
+(ROOT, LAND, SETTING, DRIVE_ID) = ('Volumes', 'Yoosook', 'village', 'LDR')
 (FACT, PLOT) = (True, True)
 (thresholds, NOI, SSPOP, REL_STRT) = (
         [.05, .10, .25, .50, .75],
-        0, 2 * 750000, 1
+        0, 10000, # 2 * 750000,
+        1
     )
 drvPars = drv.driveSelector(DRIVE_ID)
 (STYLE, DRIVE) = (aux.STYLE_HLT, drvPars.get('HLT'))
 ###############################################################################
 # Setting up paths and directories
 ###############################################################################
-PATH_ROOT = '/{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
+PATH_ROOT = '/{}/marshallShare/UCI/{}/{}/'.format(ROOT, LAND, SETTING)
 (PATH_IMG, PATH_DATA) = (
         '{}img/'.format(PATH_ROOT),
         '{}out/{}/'.format(PATH_ROOT, DRIVE_ID)

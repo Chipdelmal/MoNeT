@@ -19,13 +19,13 @@ PADL = '' + 75 * '-' + ''
 # Colors
 # #############################################################################
 # Health ----------------------------------------------------------------------
-colorsH = ['#FFB0DF', '#979EE5', '#ffffff']  # '#9f00cc']
+colorsH = ['#FFB0DF30', '#979EE530', '#ffffff00']  # '#9f00cc']
 cmapsH = monet.generateAlphaColorMapFromColorArray(colorsH)
 
 STYLE_HLT = {
-        "width": .25, "alpha": .1, "dpi": 500,
+        "width": .1, "alpha": .1, "dpi": 500,
         "legend": True, "aspect": .5,
-        "xRange": [0, 5 * 365], "yRange": [0, 525066.0],
+        "xRange": [0, 5 * 365], "yRange": [0, 10100],  # [0, 525066.0],
         "colors": colorsH
     }
 STYLE_HLT['aspect'] = monet.scaleAspect(.15, STYLE_HLT)

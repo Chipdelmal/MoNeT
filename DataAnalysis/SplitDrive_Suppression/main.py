@@ -136,7 +136,10 @@ for (k, dir) in enumerate(folders):
                             axTemp, chngDays[j], style['xRange'][1],
                             'Gray', relStr=REL_STR
                         )
-            axTemp = monet.printVLines(axTemp, [20])
+            axTemp = monet.printVLines(
+                    axTemp, list(range(20, 26 * 7, 7)),
+                    alpha=.1, lStyle='--', width=.1
+                )
             # Export to disk
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
             figsArray[j].savefig(
