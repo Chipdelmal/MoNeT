@@ -3,7 +3,7 @@
 
 import MoNeT_MGDrivE as monet
 
-CSV_PAD = '0'
+CSV_PAD = '1825'
 # #############################################################################
 # Terminal aesthetics
 # #############################################################################
@@ -25,7 +25,7 @@ cmapsH = monet.generateAlphaColorMapFromColorArray(colorsH)
 STYLE_HLT = {
         "width": .25, "alpha": .1, "dpi": 500,
         "legend": True, "aspect": .5,
-        "xRange": [0, 5 * 365], "yRange": [0, 23* 50000],
+        "xRange": [0, 5 * 365], "yRange": [0, 525066.0],
         "colors": colorsH
     }
 STYLE_HLT['aspect'] = monet.scaleAspect(.15, STYLE_HLT)

@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 
 (ROOT, LAND, DRIVE_ID) = ('Volumes', 'Yoosook', 'LDR')
-(FACT, PLOT) = (True, False)
+(FACT, PLOT) = (True, True)
 (thresholds, NOI, SSPOP, REL_STRT) = (
         [.05, .10, .25, .50, .75],
         0, 2 * 750000, 1
@@ -78,6 +78,7 @@ for (i, (pathMean, pathTraces)) in enumerate(zip(expDirsMean, expDirsTrac)):
         writer.writerow(printList)
     # Traces -----------------------------------------------------------------
     if PLOT:
+        chDy = [[int(i) for i in chDy[0]]]
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
                 dirsTraces, DRIVE, male=True, female=True
             )
@@ -103,7 +104,7 @@ for (i, (pathMean, pathTraces)) in enumerate(zip(expDirsMean, expDirsTrac)):
             # axTemp = plot.printTitle(axTemp, title, (.999, .99), 2, .75)
             # Plot save
             figsArray[j].savefig(
-                    expOutImgPath + expName + str(1+j).zfill(3) + ".pdf",
+                    expOutImgPath + expName + '_' + str(1+j).zfill(2) + '.pdf',
                     dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
                     orientation='portrait', papertype=None, format='pdf',
                     transparent=True, bbox_inches='tight', pad_inches=.01
