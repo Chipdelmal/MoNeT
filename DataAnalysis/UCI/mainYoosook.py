@@ -15,8 +15,8 @@ import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
 
-(ROOT, LAND, SETTING, DRIVE_ID) = ('Volumes', 'Yoosook', 'village', 'LDR')
-(FACT, PLOT) = (True, True)
+(ROOT, LAND, SETTING, DRIVE_ID) = ('Volumes', 'Yoosook', 'villageGravidFemales', 'LDR')
+(FACT, PLOT) = (False, True)
 (thresholds, NOI, SSPOP, REL_STRT) = (
         [.05, .10, .25, .50, .75],
         0, 10000, # 2 * 750000,
@@ -37,8 +37,9 @@ print(aux.PAD)
 fun.printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, str(time))
 expOutRootPath = PATH_IMG
 monet.makeFolder(expOutRootPath)
-fileCSV = open(PATH_ROOT + 'thresholdCrosses.csv', 'w')
-writer = csv.writer(fileCSV)
+if FACT:
+    fileCSV = open(PATH_ROOT + 'thresholdCrosses.csv', 'w')
+    writer = csv.writer(fileCSV)
 ###############################################################################
 # Selecting drive and get exp dirs
 ###############################################################################
