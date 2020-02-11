@@ -42,6 +42,11 @@ def getTimeToMinAtAllele(aggData, gIx, safety=.1):
     return (time, popMin)
 
 
+def padListLength(inList, length, pad=0):
+    inList += [pad] * (length - len(inList))
+    return inList
+
+
 ###############################################################################
 # Experiment Selection and Terminal
 ###############################################################################

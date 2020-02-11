@@ -15,11 +15,14 @@ import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
 
-(ROOT, LAND, SETTING, DRIVE_ID) = ('Volumes', 'Yoosook', 'villageGravidFemales', 'LDR')
-(FACT, PLOT) = (False, True)
+(ROOT, LAND, DRIVE_ID, SETTING) = (
+        'Volumes', 'Yoosook', 'LDR',
+        'island'
+    )
+(FACT, PLOT) = (True, False)
 (thresholds, NOI, SSPOP, REL_STRT) = (
         [.05, .10, .25, .50, .75],
-        0, 10000, # 2 * 750000,
+        0, 2 * 750000, # ,10000, #
         1
     )
 drvPars = drv.driveSelector(DRIVE_ID)
@@ -37,6 +40,7 @@ print(aux.PAD)
 fun.printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, str(time))
 expOutRootPath = PATH_IMG
 monet.makeFolder(expOutRootPath)
+# Open CSV for writing
 if FACT:
     fileCSV = open(PATH_ROOT + 'thresholdCrosses.csv', 'w')
     writer = csv.writer(fileCSV)
@@ -73,13 +77,15 @@ for (i, (pathMean, pathTraces)) in enumerate(zip(expDirsMean, expDirsTrac)):
     chDayNode = chDy[0]
     # Print to CSV
     if FACT:
+        # Pad the list, trim, and convert to strings
         printList = [expName]
-        chDayNode += [aux.CSV_PAD] * (len(thresholds) - len(chDayNode))
-        chDayNodeSt = [str(i) for i in chDayNode]
+        chDayNode = fun.padListLength(chDayNode, len(thresholds), aux.CSV_PAD)
+        chDayNodeSt = [str(i) for i in chDayNode][0:len(thresholds)]
         printList.extend(chDayNodeSt)
         writer.writerow(printList)
     # Traces -----------------------------------------------------------------
     if PLOT:
+        # Analyzes node zero only
         chDy = [[int(i) for i in chDy[0]]]
         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
                 dirsTraces, DRIVE, male=True, female=True
