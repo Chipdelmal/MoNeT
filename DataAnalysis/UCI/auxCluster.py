@@ -10,7 +10,7 @@ def writeLatLongsToFileWithID(latlongs, path):
         writer = csv.writer(fh, delimiter=',')
         writer.writerow(['ID', 'Latitude', 'Longitude'])
         for (i, row) in enumerate(latlongs):
-            writer.writerow([i, row[0], row[1]])
+            writer.writerow([i, row[1], row[0]])
     return True
 
 
@@ -28,7 +28,7 @@ def readCoordsCSV(path):
         spamreader = csv.reader(csvfile, delimiter=',')
         for (i, row) in enumerate(spamreader):
             if i > 0:
-                coordsList.append([id, float(row[1]), float(row[2])])
+                coordsList.append([id, float(row[1]), float(row[0])])
             id = id + 1
     return coordsList
 
