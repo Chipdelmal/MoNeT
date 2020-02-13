@@ -16,8 +16,8 @@ import matplotlib.pyplot as plt
 
 
 (ROOT, LAND, DRIVE_ID, SETTING) = (
-        'Volumes', 'Yoosook', 'LDR',
-        'island'
+        'Volumes', 'Yoosook',
+        'LDR', 'island'
     )
 (FACT, PLOT) = (True, False)
 (thresholds, NOI, SSPOP, REL_STRT) = (
