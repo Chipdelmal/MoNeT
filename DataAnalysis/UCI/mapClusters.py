@@ -46,7 +46,7 @@ for clusterFile in sorted(glob.glob(pathRoot+'/C*I.csv')):
     # Read coordinates
     (minLat, maxLat, minLong, maxLong) = (0, 0, 0, 0)
     (lats, longs, clusters, centroidSet) = ([], [], [], {})
-    expName = (clusterFile.split("/")[-1]).replace('_I.csv', '_VBG_.png')
+    expName = (clusterFile.split("/")[-1]).replace('_I.csv', '_VBG.png')
     clusterData = open(clusterFile, 'r')
     next(clusterData)
     for line in clusterData:
@@ -71,9 +71,9 @@ for clusterFile in sorted(glob.glob(pathRoot+'/C*I.csv')):
             llcrnrlon=minLong-0.025, urcrnrlon=maxLong+0.025,
             lat_ts=20, resolution='i', ax=ax
         )
-    m.drawcoastlines(color=COLORS[4], linewidth=5, zorder=1)
-    m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=1)
-    m.drawcoastlines(color=COLORS[4], linewidth=.5, zorder=1)
+    m.drawcoastlines(color=COLORS[4], linewidth=5, zorder=-1)
+    m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=-1)
+    m.drawcoastlines(color=COLORS[4], linewidth=.5, zorder=-1)
     # m.fillcontinents(color=COLORS[3], lake_color='aqua')
     m.scatter(
             longs, lats, latlon=True, alpha=.1, marker='x', s=1,

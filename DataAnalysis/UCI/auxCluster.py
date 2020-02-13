@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import csv
 import os
+import csv
+from operator import itemgetter
 
 
 def writeLatLongsToFileWithID(latlongs, path):
@@ -52,3 +53,23 @@ def writeLatLongsClustersWithID(latlongs, clusters, centroids, path):
                 ])
         return True
     return False
+
+
+def getClustersNewScheme(coordinatesFileI):
+    coordinates = []
+    clusterFile = open(coordinatesFileI, 'r')
+    for (i, line) in enumerate(clusterFile):
+        if i > 0:
+            tokens = line.split(',')
+            coordinates.append((
+                    float(tokens[4]),
+                    float(tokens[5]),
+                    int(tokens[3])
+                ))
+    coordinates = list(set(coordinates))
+    sortedCoordinates = sorted(coordinates, key=itemgetter(2))
+    (lats, lons) = (
+            [i[0] for i in sortedCoordinates],
+            [i[1] for i in sortedCoordinates]
+        )
+    return (lats, lons)
