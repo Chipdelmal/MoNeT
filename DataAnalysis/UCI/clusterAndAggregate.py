@@ -18,14 +18,14 @@ from sklearn.cluster import KMeans
     "stp_kernel_elevation_v3_balanced_NRM.csv",
     "clustered/"
 )
-(CLUSTERS_NO, REPS) = ([20, 50, 75, 100, 200, 250], 10)
+(CLUSTERS_NO, REPS) = ([1, 2, 10, 50, 100, 250], 10)
 ###############################################################################
 # Read latlongs and migration matrix
 ###############################################################################
 migrMat = np.genfromtxt(PATH + DIST, delimiter=',')
 latlongs = np.genfromtxt(
     PATH + LATLONGS, skip_header=1,
-    delimiter=',', usecols=[1, 2]
+    delimiter=',', usecols=[0, 1]
 )
 coordsList = aux.readCoordsCSV(PATH + LATLONGS)
 ###############################################################################

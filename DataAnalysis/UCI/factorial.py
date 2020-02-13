@@ -45,7 +45,7 @@ dfF = df[filter]
         np.asarray(list(dfF[th]))
     )
 
-xi, yi = np.linspace(x.min(), x.max(), 1000), np.linspace(y.min(), y.max(), 1000)
+xi, yi = np.linspace(x.min(), x.max(), 100), np.linspace(y.min(), y.max(), 100)
 xi, yi = np.meshgrid(xi, yi)
 
 rbf = scipy.interpolate.Rbf(x, y, z, function='inverse')

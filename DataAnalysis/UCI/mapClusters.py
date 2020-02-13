@@ -1,10 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+
 ###############################################################################
 # Video Background Generator
 ###############################################################################
-import os
+# import os
+import fun
 import glob
 import matplotlib.pyplot as plt
 # import matplotlib.patches as mpatches
@@ -12,9 +14,20 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 # from mpl_toolkits.mplot3d import Axes3D
 
+PAD = .1
+COLORS = [
+        fun.rescaleRGBA((47, 28, 191, 255/2.5)),    # 0: Faded navy blue
+        fun.rescaleRGBA((255, 0, 152, 255/1)),      # 1: Magenta
+        fun.rescaleRGBA((37, 216, 17, 255/6)),      # 2: Bright green
+        fun.rescaleRGBA((255, 255, 255, 255/1)),    # 3: White
+        fun.rescaleRGBA((0, 169, 255, 255/7.5)),    # 4: Cyan
+        fun.rescaleRGBA((0, 0, 0, 255/5))           # 5: Black
+    ]
+
+###############################################################################
 pathRoot = "/Volumes/marshallShare/UCI/STP/kernels/clustered"
 firstRun = True
-
+###############################################################################
 for clusterFile in sorted(glob.glob(pathRoot+'/C*I.csv')):
     clusterstr = clusterFile.split('/')[-1][1:][0:4]
     # getfolder name and ignore the C in front of it to chech for the number
@@ -54,15 +67,16 @@ for clusterFile in sorted(glob.glob(pathRoot+'/C*I.csv')):
     ax = fig.add_subplot(111, label="1")
     m = Basemap(
             projection='merc',
-            llcrnrlat=minLat-0.001, urcrnrlat=maxLat+0.001,
-            llcrnrlon=minLong-0.001, urcrnrlon=maxLong+0.001,
+            llcrnrlat=minLat-0.025, urcrnrlat=maxLat+0.025,
+            llcrnrlon=minLong-0.025, urcrnrlon=maxLong+0.025,
             lat_ts=20, resolution='i', ax=ax
         )
-    m.drawcounties(linewidth=0.3)
-    m.drawcoastlines(linewidth=0.3)
-    m.drawcountries(linewidth=0.3)
+    m.drawcoastlines(color=COLORS[4], linewidth=5, zorder=1)
+    m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=1)
+    m.drawcoastlines(color=COLORS[4], linewidth=.5, zorder=1)
+    # m.fillcontinents(color=COLORS[3], lake_color='aqua')
     m.scatter(
-            longs, lats, latlon=True, alpha=.2, marker='o', s=3,
+            longs, lats, latlon=True, alpha=.1, marker='x', s=1,
             cmap=plt.get_cmap('winter'), c=clusters,
             vmin=minCluster, vmax=maxCluster
         )
@@ -79,7 +93,7 @@ for clusterFile in sorted(glob.glob(pathRoot+'/C*I.csv')):
     ax.axis('off')
     # if not os.path.exists(pathRoot+'/images/C'+clusterstr):
     #     os.mkdir(pathRoot+'/images/C'+clusterstr)
-    plt.savefig(pathRoot+'/C'+expName, dpi=512,
+    plt.savefig(pathRoot+'/'+expName, dpi=512,
                 facecolor='w', edgecolor='w', orientation='portrait',
                 papertype=None, format="png", transparent=False,
                 bbox_inches='tight', pad_inches=0.05, frameon=None)

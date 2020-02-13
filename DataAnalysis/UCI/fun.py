@@ -113,3 +113,10 @@ def listDirectoriesWithPathWithinAPath(pathFilename):
     for i, folder in enumerate(folders):
         folders[i] = pathFilename + '/' + folder
     return folders
+
+
+###############################################################################
+# Style and colors
+###############################################################################
+def rescaleRGBA(colorsTuple, colors=255):
+    return [i/colors for i in colorsTuple]

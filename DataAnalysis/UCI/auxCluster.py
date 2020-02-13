@@ -23,7 +23,7 @@ def createFolder(path):
 
 def readCoordsCSV(path):
     coordsList = []
-    id = 1
+    id = 0
     with open(path) as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',')
         for (i, row) in enumerate(spamreader):
