@@ -151,6 +151,10 @@ for (k, dir) in enumerate(folders):
                     bbox_inches='tight', pad_inches=0.025, transparent=True
                 )
         plt.close('all')
+        monet.exportGeneLegend(
+                drv['genotypes'], style['colors'],
+                path + drivePars.get('folder') + '/Swatch.png', 300
+            )
         # Terminal ############################################################
         print(
                 'Exported {0}/{1}: {2}'.format(

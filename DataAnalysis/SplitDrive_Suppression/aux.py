@@ -21,13 +21,20 @@ STYLE_HLT['aspect'] = monet.scaleAspect(.25, STYLE_HLT)
 STYLE_ECO = {
         "width": .1, "alpha": .1, "dpi": 500,
         "legend": True, "aspect": .5,
-        "xRange": [0, 2000], "yRange": [0, 1],
+        "xRange": [0, 5 * 365], "yRange": [0, 1],
         "colors": [
-                '#ff004d', '#80ff80', '#6600ff',
-                '#e600ff', '#b3ccff', '#333380', '#f0a6ca'
+                (255, 100, 100),  # Red
+                (125, 255, 125),  # Light Green
+                (100, 0, 255),  # Purple
+                (230, 0, 255),  # Pink
+                (180, 200, 254),  # Light Green
+                (50, 50, 125),  # Dark Blue
+                (250, 160, 200)   # Light Pink
             ]
     }
 STYLE_ECO['aspect'] = monet.scaleAspect(.25, STYLE_ECO)
+STYLE_ECO['colors'] = [(i[0]/255, i[1]/255, i[2]/255, .15) for i in STYLE_ECO['colors']]
+STYLE_ECO['colors']
 
 COLOR_SWATCH = [
         (149, 255, 68),  # Green
@@ -44,7 +51,6 @@ COLORS = [
         [(.62, 0, .8, 0), (i[0]/255, i[1]/255, i[2]/255, .15), (0, .22, .66, 0)]
         for i in COLOR_SWATCH
     ]
-
 
 ###############################################################################
 # Functions Definitions
