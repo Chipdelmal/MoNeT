@@ -37,7 +37,8 @@ COLOR_SWATCH = [
         (255, 236, 0),  # Yellow
         (43, 132, 255),  # Gray
         (150, 99, 196),  # Purple
-        (225, 100, 100)  # Light Blue
+        (252, 110, 180),  # Pink (SD Ideal)
+        (50, 200, 50) # Bright Green-Yellow (CRISPR Ideal)
     ]
 COLORS = [
         [(.62, 0, .8, 0), (i[0]/255, i[1]/255, i[2]/255, .15), (0, .22, .66, 0)]

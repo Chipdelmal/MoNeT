@@ -8,27 +8,30 @@ import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
+drivePars = drive.driveSelector('SIT')
+drivePars.get('folder')
+
 ###############################################################################
 # Code for terminal-call: python main.py "srv" "eco"
 ###############################################################################
-# if sys.argv[1] != "srv":
-#     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'Volumes/')
-# else:
-#     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
-# # Migration/No Migration terminal selector
-# if sys.argv[3] != "mig":
-#     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
-# else:
-#     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/Migration/'
+if sys.argv[1] != "srv":
+    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'Volumes/')
+else:
+    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
+# Migration/No Migration terminal selector
+if sys.argv[3] != "mig":
+    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
+else:
+    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/Migration/'
 # For testing #################################################################
-(ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/Migration/')
+# (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/Migration/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
         'CRISPR', 'fsRIDL',
-        'pgSIT', 'SplitDrive', 'autosomalXShredder', 'IIT', 'SIT'
+        'pgSIT', 'SplitDrive', 'autosomalXShredder', 'IIT', 'SIT',
         'SplitDriveIdeal', 'CRISPRIdeal'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
