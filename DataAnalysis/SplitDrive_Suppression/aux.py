@@ -13,7 +13,7 @@ PAD = '\n' + 125 * '*' + '\n'
 STYLE_HLT = {
         "width": .1, "alpha": .1, "dpi": 500,
         "legend": True, "aspect": 1,
-        "xRange": [0, 1.5 * 365], "yRange": [0, 10500],
+        "xRange": [20, 1 * 365], "yRange": [0, 10500],
         "colors": [(.62, 0, .8, 0), (.93, .04, .26, .1), (0, .22, .66, 0)]
     }
 STYLE_HLT['aspect'] = monet.scaleAspect(.25, STYLE_HLT)
@@ -37,8 +37,8 @@ COLOR_SWATCH = [
         (255, 236, 0),  # Yellow
         (43, 132, 255),  # Gray
         (150, 99, 196),  # Purple
-        (252, 110, 180),  # Pink (SD Ideal)
-        (50, 200, 50) # Bright Green-Yellow (CRISPR Ideal)
+        (40, 40, 120),  # Pink (SD Ideal)
+        (160, 100, 215) # Bright Green-Yellow (CRISPR Ideal)
     ]
 COLORS = [
         [(.62, 0, .8, 0), (i[0]/255, i[1]/255, i[2]/255, .15), (0, .22, .66, 0)]
