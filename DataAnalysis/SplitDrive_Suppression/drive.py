@@ -2,16 +2,26 @@ import MoNeT_MGDrivE as monet
 
 
 def driveSelector(folder):
-    if(folder == drive_CRISPR.get('folder')):       return drive_CRISPR;
-    if(folder == drive_CRISPRI.get('folder')):       return drive_CRISPRI;
-    if(folder == drive_fsRIDL.get('folder')):       return drive_fsRIDL;
-    if(folder == drive_IIT.get('folder')):          return drive_IIT;
-    if(folder == drive_SIT.get('folder')):          return drive_SIT;
-    if(folder == drive_SD.get('folder')):           return drive_SD;
-    if(folder == drive_pgSIT.get('folder')):        return drive_pgSIT;
-    if(folder == drive_autoShred.get('folder')):    return drive_autoShred;
-    if(folder == drive_yShred.get('folder')):       return drive_yShred;
-    if(folder == drive_SDI.get('folder')):      return drive_SDI;
+    if(folder == drive_CRISPR.get('folder')):
+        return drive_CRISPR
+    if(folder == drive_CRISPRI.get('folder')):
+        return drive_CRISPRI
+    if(folder == drive_fsRIDL.get('folder')):
+        return drive_fsRIDL
+    if(folder == drive_IIT.get('folder')):
+        return drive_IIT
+    if(folder == drive_SIT.get('folder')):
+        return drive_SIT
+    if(folder == drive_SD.get('folder')):
+        return drive_SD
+    if(folder == drive_SDI.get('folder')):
+        return drive_SDI
+    if(folder == drive_pgSIT.get('folder')):
+        return drive_pgSIT
+    if(folder == drive_autoShred.get('folder')):
+        return drive_autoShred
+    if(folder == drive_yShred.get('folder')):
+        return drive_yShred
 
 
 ###############################################################################
