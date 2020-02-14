@@ -3,6 +3,7 @@
 
 import os
 import csv
+import glob
 from operator import itemgetter
 
 
@@ -73,3 +74,40 @@ def getClustersNewScheme(coordinatesFileI):
             [i[1] for i in sortedCoordinates]
         )
     return (lats, lons)
+
+
+def populateClustersFromList(clusterNum, clist, pFileLocation, pFilePattern={}):
+
+    clusters = []
+    for i in range(clusterNum):
+        clusters.append({'male': [], 'female': []})
+    patchCluster = []
+
+    if cFileName:
+        coordFile = open(cFileName, 'r')
+        for line in coordFile:
+            patchCluster.append(int(line.split(',')[2].strip()))
+    else:
+        patchCluster = range(clusterNum)
+
+    if 'male' in pFilePattern:
+        patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['male']))
+    else:
+        patchFileList = sorted(glob.glob(pFileLocation+'/ADM_*'))
+        if not patchFileList:
+            patchFileList = sorted(glob.glob(pFileLocation+'/M_*'))
+
+    for index, patchFileN in enumerate(patchFileList):
+        clusters[patchCluster[index]]['male'].append(patchFileN)
+
+    if 'female' in pFilePattern:
+        patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['female']))
+    else:
+        patchFileList = sorted(glob.glob(pFileLocation+'/AF1_*'))
+        if not patchFileList:
+            patchFileList = sorted(glob.glob(pFileLocation+'/F_*'))
+
+    for index, patchFileN in enumerate(patchFileList):
+        clusters[patchCluster[index]]['female'].append(patchFileN)
+
+    return clusters

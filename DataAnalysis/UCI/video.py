@@ -16,7 +16,6 @@ import subprocess
 import auxVideo as aux
 import auxCluster as auxC
 import MoNeT_MGDrivE as monet
-from operator import itemgetter
 
 BASE_PATH = '/Volumes/marshallShare/UCI/STP/'
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
@@ -54,7 +53,7 @@ aggDict = {
 (expFolder, extras, expPath, outPath) = (
         BASE_PATH + dataFldr,
         BASE_PATH + clstFldr + '/',
-        BASE_PATH + dataFldr + '/' + expName + '/ANALYZED/',
+        BASE_PATH + dataFldr + '/' + expName + '/ANALYZED/0001/',
         BASE_PATH + 'video/'
     )
 ###############################################################################
@@ -74,20 +73,20 @@ aggDict = {
         glob.glob(extras + aggLvl + '_' + clstSample + '*VBG.png')[0],
         glob.glob(extras + aggLvl + '_' + clstSample + '*I.csv')[0]
     )
-# (clusterName, vname, imageLocation) = (
-#         glob.glob(extras + '/*_AGCV_' + clstSample + '_*.csv')[0],
-#         outPath + 'movie.mp4',
-#         outPath + 'clustercharts/'
-#     )
+(vname, imageLocation) = (
+        outPath + 'movie.mp4',
+        outPath + 'clustercharts/'
+    )
 original_corners = aux.get_corners(originalCoordFile)
 coordinates = auxC.getClustersNewScheme(originalCoordFile)
-# subprocess.Popen(['mkdir', imageLocation])
+subprocess.Popen(['mkdir', imageLocation])
 ###############################################################################
 # Create video
 ###############################################################################
 clusters = monet.populateClusters(
         len(coordinates[0]), '', expPath, patchFilePattern
     )
+expPath
 aggList = monet.aggregateClusters(clusters, aggDict)
 monet.generateClusterGraphs(
         aggList, coordinates, imageLocation, colors, original_corners,
@@ -95,3 +94,5 @@ monet.generateClusterGraphs(
     )
 video = monet.generateVideo(vname, bgName, imageLocation, imagePattern)
 video.wait()
+
+expPath
