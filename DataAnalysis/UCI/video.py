@@ -13,15 +13,18 @@
 ###############################################################################
 import glob
 import subprocess
+import numpy as np
 import auxVideo as aux
 import auxCluster as auxC
 import MoNeT_MGDrivE as monet
+
 
 BASE_PATH = '/Volumes/marshallShare/UCI/STP/'
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
         'out', 'stp_kernel_elevation_v3_balanced_NRM',
         'kernels/clustered', 'C0050', '001'
     )
+(PAD, DPI) = (.025, 512)
 ###############################################################################
 # Colors and genotypes
 ###############################################################################
@@ -30,16 +33,10 @@ colors = [
         '#e56399', '#ee6c4d', '#861657', '#5cf64a', 'yellow', 'magenta',
         'purple', 'black', 'cyan', 'teal'
     ]
-aggDict = {
-        'genotypes': ['W', 'H', 'R/B', 'E'],
-        'indices': [
-                [0, 0, 1, 2, 3, 4],
-                [1, 5, 5, 6, 7, 8],
-                [3, 7, 10, 12, 12, 13, 4, 8, 11, 13, 14, 14],
-                [2, 6, 9, 9, 10, 11]
-            ]
-    }
-
+aggDict = monet.autoGenerateGenotypesDictionary(
+        ['W', 'H', 'R', 'B'],
+        ['WW', 'WH', 'WR', 'WB', 'HH', 'HR', 'HB', 'RR', 'RB', 'BB']
+    )
 ###############################################################################
 # File paths
 ###############################################################################
@@ -66,7 +63,7 @@ aggDict = {
 #   AGCV: Clusters centroids? -> contained now in "_I"
 ###############################################################################
 (patchFilePattern, imagePattern) = (
-        {'males': '/M_*', 'females': '/F_*'},
+        {'male': '/M_*', 'female': '/F_*'},
         '/c_%06d.png'
     )
 (bgName, originalCoordFile) = (
@@ -78,23 +75,21 @@ aggDict = {
         outPath + 'clustercharts/'
     )
 original_corners = aux.get_corners(originalCoordFile)
-coordinates = auxC.getClustersNewScheme(originalCoordFile)
+(coordinates, clstList) = (
+        auxC.getClustersNewScheme(originalCoordFile),
+        auxC.readClustersIDs(originalCoordFile)
+    )
 subprocess.Popen(['mkdir', imageLocation])
-
-len(coordinates[0])
 ###############################################################################
 # Create video
 ###############################################################################
-clusters = monet.populateClusters(
-        len(coordinates[0]), '', expPath, patchFilePattern
+clusters = auxC.populateClustersFromList(
+        clstList, expPath, patchFilePattern
     )
 aggList = monet.aggregateClusters(clusters, aggDict)
-monet.generateClusterGraphs(
+aux.generateClusterGraphs(
         aggList, coordinates, imageLocation, colors, original_corners,
-        0.002, 512, skip=True
+        PAD, DPI, skip=False, countries=True, refPopSize=np.amax(aggList)
     )
 video = monet.generateVideo(vname, bgName, imageLocation, imagePattern)
 video.wait()
-
-coordinates
-expPath

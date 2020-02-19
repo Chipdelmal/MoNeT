@@ -80,12 +80,14 @@ aggDict = {
 original_corners = aux.get_corners(originalCoordFile)
 coordinates = monet.getClusters(clusterName)
 subprocess.Popen(['mkdir', imageLocation])
+
 ###############################################################################
 # Create video
 ###############################################################################
 clusters = monet.populateClusters(
         len(coordinates[0]), '', expPath, patchFilePattern
     )
+clusters
 aggList = monet.aggregateClusters(clusters, aggDict)
 monet.generateClusterGraphs(
         aggList, coordinates, imageLocation, colors, original_corners,

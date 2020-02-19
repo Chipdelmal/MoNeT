@@ -76,38 +76,38 @@ def getClustersNewScheme(coordinatesFileI):
     return (lats, lons)
 
 
-def populateClustersFromList(clusterNum, clist, pFileLocation, pFilePattern={}):
+def readClustersIDs(filepath):
+    with open(filepath) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        clustersList = []
+        for (i, row) in enumerate(csv_reader):
+            if i != 0:
+                clustersList.append(int(row[3]))
+    return clustersList
 
-    clusters = []
+
+def populateClustersFromList(
+            cList, pFileLocation, pFilePattern={}
+        ):
+    # Create the empty list to contain the clusters
+    (clusterNum, clusters) = (len(set(cList)), [])
     for i in range(clusterNum):
         clusters.append({'male': [], 'female': []})
-    patchCluster = []
-
-    if cFileName:
-        coordFile = open(cFileName, 'r')
-        for line in coordFile:
-            patchCluster.append(int(line.split(',')[2].strip()))
-    else:
-        patchCluster = range(clusterNum)
-
+    #
     if 'male' in pFilePattern:
         patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['male']))
     else:
-        patchFileList = sorted(glob.glob(pFileLocation+'/ADM_*'))
-        if not patchFileList:
-            patchFileList = sorted(glob.glob(pFileLocation+'/M_*'))
+        patchFileList = sorted(glob.glob(pFileLocation+'/M_*'))
 
     for index, patchFileN in enumerate(patchFileList):
-        clusters[patchCluster[index]]['male'].append(patchFileN)
+        clusters[cList[index]]['male'].append(patchFileN)
 
     if 'female' in pFilePattern:
         patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['female']))
     else:
-        patchFileList = sorted(glob.glob(pFileLocation+'/AF1_*'))
-        if not patchFileList:
-            patchFileList = sorted(glob.glob(pFileLocation+'/F_*'))
+        patchFileList = sorted(glob.glob(pFileLocation+'/F_*'))
 
     for index, patchFileN in enumerate(patchFileList):
-        clusters[patchCluster[index]]['female'].append(patchFileN)
+        clusters[cList[index]]['female'].append(patchFileN)
 
     return clusters
