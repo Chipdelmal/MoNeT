@@ -12,7 +12,7 @@ import MoNeT_MGDrivE as monet
 
 
 def genSingle(n, zeroInflation, landscapeProb, mskMat):
-    (lo, hi, n) = (0, 50, n)
+    (lo, hi, n) = (0, 1225, n)
     # ############################################################################
     # Mosquito biological behaviour
     # ############################################################################
@@ -22,13 +22,15 @@ def genSingle(n, zeroInflation, landscapeProb, mskMat):
     # ############################################################################
     passMkvtest = aux.testMarkovMat(mskMat)
     passMkvtest
+
     # ############################################################################
     # Landscape
     # ############################################################################
     # Creates a random landscape (x,y coordinates) and calculates the distances
     #   matrix.
     # ############################################################################
-    landscape = land.genUniformLandscape(lo, hi, n)
+    #landscape = land.genUniformLandscape(lo, hi, n)
+    landscape = land.genLineLandscape(lo, hi, n)
     distMat = monet.calculateDistanceMatrix(landscape)
 
     # ############################################################################
