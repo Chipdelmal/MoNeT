@@ -5,21 +5,34 @@
 # import aux
 import fun
 import datetime
-import argparse
+import plot
+# import argparse
 import aux
-import numpy as np
+# import numpy as np
 import drive as drv
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import MoNeT_MGDrivE as monet
 plt.rcParams.update({'figure.max_open_warning': 0})
+mpl.rcParams['axes.linewidth'] = .4
+
+
+colors = ['#0038a8', '#ff0098', '#ffffff']  # '#9f00cc']
+cmaps = monet.generateAlphaColorMapFromColorArray(colors)
+STYLE_HLT = {
+        "width": .175, "alpha": .225, "dpi": 500,
+        "legend": True, "aspect": .5,
+        "xRange": [0, 3 * 365], "yRange": [0, 525066.0],
+        "colors": colors
+    }
+STYLE_HLT['aspect'] = monet.scaleAspect(.15, STYLE_HLT)
 
 
 driveID = 'CRISPR'
 (thresholds, NOI, SSPOP, REL_STR) = (
-        [.75, .5, .25],
-        0, 10000, 20
+        [.5], 0, 10000, 20
     )
-style = aux.STYLE_HLT
+style = STYLE_HLT
 ###############################################################################
 # Setting up the experiment analyses
 # -----------------------------------------------------------------------------
@@ -27,18 +40,16 @@ style = aux.STYLE_HLT
 #       --dev:  {0: Desktop, 1: Server  }
 #       --land:  {0: Comoros, 1: STP     }
 ###############################################################################
-# parser = argparse.ArgumentParser(description='Main UCI Analysis routine!')
-# parser.add_argument("--dev", default=0, type=int, help="Device")
-# parser.add_argument("--land", default=0, type=int, help="Landscape")
-# (ROOT, LAND) = fun.experimentSelector(parser.parse_args())
-(ROOT, LAND) = ('/Volumes', 'Comoros')
+(ROOT, LAND) = ('/Volumes', 'STP')
 # Full path ###################################################################
 PATH_ROOT = '{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
 (PATH_IMG, PATH_DATA) = (PATH_ROOT + 'img/', PATH_ROOT + 'out/')
 # Print experiment info to terminal ###########################################
-time = str(datetime.datetime.now())
-fun.printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time)
-
+print(aux.PAD)
+fun.printExperimentHead(
+        PATH_ROOT, PATH_IMG, PATH_DATA,
+        str(datetime.datetime.now())
+    )
 ###############################################################################
 # Selecting drive and get exp dirs
 # -----------------------------------------------------------------------------
@@ -50,15 +61,12 @@ expSetsDirs = monet.listDirectoriesWithPathWithinAPath(PATH_DATA)
 dir = expSetsDirs[0]
 # for loop here
 fldrName = dir.split('/')[-1]
-(pathTraces, pathMean) = (dir + '/GARBAGE/', dir + '/ANALYZED/')
-(dirsTraces, dirsMean) = (
-        monet.listDirectoriesWithPathWithinAPath(pathTraces),
-        monet.listDirectoriesWithPathWithinAPath(pathMean)
-    )
+(pathTraces, pathMean) = [dir + i for i in ('/GARBAGE/', '/ANALYZED/')]
+(dirsTraces, dirsMean) = fun.getTracesAndMeanDirs(pathTraces, pathMean)
 # Experiment Selector #########################################################
 expOutRootPath = PATH_IMG + driveID
-monet.makeFolder(expOutRootPath)
 expOutExpPath = expOutRootPath + '/' + fldrName
+monet.makeFolder(expOutRootPath)
 monet.makeFolder(expOutExpPath)
 # for loop here
 # Create output folder -------------------------------------------------------
@@ -67,6 +75,7 @@ expOutSetPath = expOutExpPath + '/' + dirMean.split('/')[-1]
 monet.makeFolder(expOutSetPath)
 # Mean response --------------------------------------------------------------
 filenames = monet.readExperimentFilenames(dirMean)
+# Terminal msg
 print(aux.PADL)
 print('* Loading mean response data...')
 landscapeData = monet.loadLandscapeData(filenames, male=True, female=True)
@@ -89,13 +98,16 @@ for j in range(len(aggregatedNodesData['landscape'])):
     # Get the info to min pop
     nodePopDict = {}
     nodePopDict["population"] = nodePop
-    minData = fun.getTimeToMinAtAllele(nodePopDict, gIx)
+    minData = fun.getTimeToMinAtAllele(nodePopDict, gIx, safety=.2)
     minTuple.append(minData)
-# Traces ---------------------------------------------------------------------
+###############################################################################
+# Traces
+###############################################################################
 paths = monet.listDirectoriesWithPathWithinAPath(dirTraces + '/')
 print(
-        '* Loading ' + str(len(paths)) + ' traces reps datasets for ' +
-        str(len(aggregatedNodesData['landscape'])) + ' populations...'
+        '* Loading traces reps datasets (' + str(len(paths)) + ') for '
+        + ' populations (' + str(len(aggregatedNodesData['landscape']))
+        + ')...'
     )
 landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
         paths, drvPars.get('HLT'), male=True, female=True
@@ -108,50 +120,65 @@ for i in landscapeReps["landscapes"][0]:
 figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
 for j in range(0, len(figsArray)):
     print(
-            '* Exporting Population Plots: ' +
-            '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
+            '* Exporting Population Plots: '
+            + '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
             end='\r'
         )
-    title = fun.parseTitle(thresholds, prtcDays[j])
-    minTitle = fun.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
+    # title = plot.parseTitle(thresholds, prtcDays[j])
+    title = str(minTuple[j][0]).zfill(4) + " "
+    # minTitle = plot.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
     axTemp = figsArray[j].get_axes()[0]
+    style['xRange'] = (95, 3 * 365)
     style['yRange'] = (0, maxPops[j] * 1.15)
-    style['aspect'] = monet.scaleAspect(.15, style)
-    axTemp = fun.setRange(axTemp, style)
-    # Add labels to the days of threshold-crossing
-    axTemp = fun.printHAxisNumbersAlt(
-            axTemp, chngDays[j], style['xRange'][1],
-            'Gray', relStr=REL_STR
-        )
-    # Min pop prints
-    if(1 - minTuple[j][1] / maxPops[j] >= .05):
-        axTemp = fun.printHAxisNumbers(
-                axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
-                top=True, relStr=REL_STR
-            )
-        # axTemp = fun.printVAxisNumbers(
-        #        axTemp, [minTuple[j][1] / SSPOP],
-        #        style['yRange'][1], 'Red', left=True, rnd=False
-        #    )
-        axTemp = fun.printMinLines(
-                axTemp, (minTuple[j][0], minTuple[j][1] / SSPOP),
-                style, maxPops[j]
-            )
-    # Titles and lines common for both analyses
-    axTemp = fun.printTitle(axTemp, title)
-    # axTemp = fun.printMinTitle(axTemp, minTitle)
-    axTemp = fun.printVLines(axTemp, chngDays[j])
-    # Export to disk
+    style['aspect'] = monet.scaleAspect(.25, style)
+    axTemp = plot.setRange(axTemp, style)
     axTemp.set_aspect(aspect=style["aspect"])
+    axTemp = plot.removeTicksAndLabels(axTemp)
+    axTemp = plot.setAxesColor(axTemp, (0, 0, 0, 0.5))
     expOutStr = expOutSetPath
-    monet.quickSaveFigure(
-            figsArray[j], expOutStr + "/Pop_" + str(j).zfill(3) + ".pdf",
-            dpi=style['dpi'], format='pdf'
+    figsArray[j].savefig(
+            expOutStr + "/Pop_" + str(1 + j).zfill(3) + ".pdf",
+            dpi=style['dpi'], facecolor=None, edgecolor='w',
+            orientation='portrait', papertype=None, format='pdf',
+            transparent=True, bbox_inches='tight', pad_inches=.01
         )
     plt.close('all')
 print(
-        '* Exporting Population Plots: ' +
-        '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
+        '* Exporting population plots: '
+        + '(' + str(j + 1) + '/' + str(len(figsArray)) + ')...',
         end='\n'
+    )
+###############################################################################
+# Full landscape traces
+###############################################################################
+print('* Exporting full population traces plot...')
+mpl.rcParams['axes.linewidth'] = .2
+landscapeRepsFull = monet.sumAggregatedLandscapeDataRepetitionsAlt(
+        paths, drvPars.get('HLT'), male=True, female=True
+    )
+maxPop = landscapeRepsFull['landscapes'][0][0][-1][-1]
+figsArray = monet.plotLandscapeDataRepetitions(landscapeRepsFull, style)
+# axTemp = plot.printMinTitle(axTemp, str(maxPop/2))
+axTemp = figsArray[0].get_axes()[0]
+style['xRange'] = (95, 3 * 365)
+style['yRange'] = (0, maxPop * 1.1)
+style['aspect'] = monet.scaleAspect(.1, style)
+axTemp = plot.removeTicksAndLabels(axTemp)
+axTemp = plot.setRange(axTemp, style)
+axTemp.set_aspect(aspect=style["aspect"])
+axTemp = plot.setAxesColor(axTemp, (0, 0, 0, 0.5))
+figsArray[0].savefig(
+        expOutStr + "/Pop_FULL.pdf", dpi=style['dpi'],
+        facecolor=None, edgecolor='w', orientation='portrait', papertype=None,
+        format='pdf', transparent=True, bbox_inches='tight',
+        pad_inches=.01
+    )
+plt.close('all')
+# Print finished -------------------------------------------------------------
+print('* Finished!')
+print(aux.PADL)
+print(
+        aux.CWHT + 'UCI Experiments Analysis '
+        + '[' + str(datetime.datetime.now()) + ']' + aux.CEND
     )
 print(aux.PAD)

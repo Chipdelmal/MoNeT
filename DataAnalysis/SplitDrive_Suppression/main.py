@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import sys
 import aux as aux
 import drive as drive
@@ -5,39 +8,40 @@ import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
+drivePars = drive.driveSelector('SIT')
+drivePars.get('folder')
 
 ###############################################################################
 # Code for terminal-call: python main.py "srv" "eco"
 ###############################################################################
-if sys.argv[1] != "srv":
-    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'Volumes/')
-else:
-    (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
-# Migration/No Migration terminal selector
-if sys.argv[3] != "mig":
-    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
-else:
-    PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/'
+# if sys.argv[1] != "srv":
+#     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'Volumes/')
+# else:
+#     (ECO, ROOT_PTH) = (sys.argv[2] == 'eco', 'RAID5/')
+# # Migration/No Migration terminal selector
+# if sys.argv[3] != "mig":
+#     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/noMigration/'
+# else:
+#     PATH = '/' + ROOT_PTH + '/marshallShare/SplitDriveSup/Migration/'
 # For testing #################################################################
-# (ECO, PATH) = (False, '/Volumes/marshallShare/SplitDriveSup/')
+(ECO, PATH) = (True, '/Volumes/marshallShare/SplitDriveSup/Migration/')
 ###############################################################################
 # Setup paths and analysis type
 ###############################################################################
 PATH_IMG = PATH + 'img/'
 folders = [
-        'SplitDrive', 'ylinkedXShredder', 'autosomalXShredder',
-        'IIT', 'SIT', 'fsRIDL', 'pgSIT', 'CRISPR'
+        'CRISPR', 'fsRIDL',
+        'pgSIT', 'SplitDrive', 'autosomalXShredder', 'IIT', 'SIT',
+        'SplitDriveIdeal', 'CRISPRIdeal'
     ]
 (expType, style, path, doi) = aux.selectAnalysisType(ECO, PATH_IMG)
 (thresholds, NOI, SSPOP, REL_STR) = (
-        [.95, .9, .75, .5, .25, .1, .05],
-        0, 10000, 20
+        [.95, .9, .75, .5, .25, .1, .05], 0, 10000, 20
     )
 ###############################################################################
 # Iterate through folders
 ###############################################################################
-dir = folders[0]
-for dir in folders:
+for (k, dir) in enumerate(folders):
     # Get drive parameters
     drivePars = drive.driveSelector(dir)
     ###########################################################################
@@ -61,6 +65,8 @@ for dir in folders:
     ###########################################################################
     monet.makeFolder(path + dir)
     (num, drv) = (len(pathExps), drivePars.get(expType))
+    if ECO is False:
+        style['colors'] = aux.COLORS[k]
     for i in range(0, num, 1):
         (pathSample, pathSampleM) = (pathExps[i], pathExpsM[i])
         experimentString = pathSample.split("/")[-1]
@@ -106,52 +112,49 @@ for dir in folders:
                     landscapeReps, lociiScaler=drivePars['loc']
                 )
         # Plot ################################################################
-        figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
+        figsArray = aux.plotLandscapeDataRepetitions(landscapeReps, style)
         for j in range(0, len(figsArray)):
+            axTemp = figsArray[j].get_axes()[0]
             title = aux.parseTitle(thresholds, prtcDays[j])
             minTitle = aux.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
-            axTemp = figsArray[j].get_axes()[0]
-            axTemp = aux.setRange(axTemp, style)
-            # Add labels to the days of threshold-crossing
-            axTemp = aux.printHAxisNumbersAlt(
-                    axTemp, chngDays[j], style['xRange'][1], 'Gray',
-                    relStr=REL_STR
-                )
+            axTemp = monet.setRange(axTemp, style)
+            axTemp = monet.removeTicksAndLabels(axTemp)
             # Min pop prints
-            if(1 - minTuple[j][1] / SSPOP >= .05):
-                axTemp = aux.printHAxisNumbers(
-                        axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
-                        top=False, relStr=REL_STR
-                    )
-                # Pop suppression level
-                if ECO is False:
+            if False:  # ECO is False:
+                if(1 - minTuple[j][1] / SSPOP >= .05):
+                    axTemp = aux.printHAxisNumbers(
+                            axTemp, [minTuple[j][0]], style['xRange'][1],
+                            'Red', top=False, relStr=REL_STR
+                        )
                     axTemp = aux.printVAxisNumbers(
-                            axTemp, [minTuple[j][1]],
-                            style['yRange'][1], 'Red', left=True, rnd=True
+                            axTemp, [minTuple[j][1]], style['yRange'][1],
+                            'Red', left=True, rnd=True
                         )
-                    axTemp = aux.printMinLines(
-                            axTemp, minTuple[j], style, SSPOP
+                    axTemp = monet.printMinLines(
+                            axTemp, minTuple[j], style
                         )
-                else:
-                    axTemp = aux.printVAxisNumbers(
-                            axTemp, [minTuple[j][1] / SSPOP],
-                            style['yRange'][1], 'Red', left=True, rnd=False
+                    axTemp = aux.printTitle(axTemp, title)
+                    axTemp = aux.printMinTitle(axTemp, minTitle)
+                    axTemp = monet.printVLines(axTemp, chngDays[j])
+                    axTemp = aux.printHAxisNumbersAlt(
+                            axTemp, chngDays[j], style['xRange'][1],
+                            'Gray', relStr=REL_STR
                         )
-                    axTemp = aux.printMinLines(
-                            axTemp, (minTuple[j][0], minTuple[j][1] / SSPOP),
-                            style, SSPOP
-                        )
-            # Titles and lines common for both analyses
-            axTemp = aux.printTitle(axTemp, title)
-            axTemp = aux.printMinTitle(axTemp, minTitle)
-            axTemp = aux.printVLines(axTemp, chngDays[j])
+            axTemp = monet.printVLines(
+                    axTemp, list(range(20, 26 * 7, 7)),
+                    alpha=.1, lStyle='--', width=.1
+                )
             # Export to disk
             expOutStr = path + drivePars.get('folder') + '/' + experimentString
-            monet.quickSaveFigure(
-                    figsArray[j], expOutStr + "_N" + str(j) + ".pdf",
-                    dpi=style['dpi'], format='pdf'
+            figsArray[j].savefig(
+                    expOutStr + "_N" + str(j) + ".pdf", dpi=style['dpi'],
+                    bbox_inches='tight', pad_inches=0.025, transparent=True
                 )
         plt.close('all')
+        monet.exportGeneLegend(
+                drv['genotypes'], style['colors'],
+                path + drivePars.get('folder') + '/Swatch.png', 300
+            )
         # Terminal ############################################################
         print(
                 'Exported {0}/{1}: {2}'.format(

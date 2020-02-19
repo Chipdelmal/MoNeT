@@ -4,38 +4,52 @@
 import os
 import aux
 import numpy as np
+import MoNeT_MGDrivE as monet
 
 
-(SUP_COL, MIN_COL) = ('gray', 'red')
+def getSSPopsInLandscape(aggregatedNodesData, ssDay):
+    ssPops = []
+    for node in aggregatedNodesData['landscape']:
+        ssPops.append(node[ssDay - 1][-1])
+    return ssPops
 
 
-def experimentSelector(args):
-    # Device
-    if args.dev == 0:
-        ROOT = '/Volumes'
-    else:
-        ROOT = '/RAID5'
-    # Landscape
-    if args.land == 0:
-        LAND = 'Comoros'
-    else:
-        LAND = 'STP'
-    # Selected IDs
-    return (ROOT, LAND)
-
-
-def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
-    print(aux.PAD)
-    print(
-            aux.CWHT + 'UCI Experiments Analysis ' +
-            '[' + time + ']' + aux.CEND
+def getTracesAndMeanDirs(pathTraces, pathMean):
+    (dirsTraces, dirsMean) = (
+            monet.listDirectoriesWithPathWithinAPath(pathTraces),
+            monet.listDirectoriesWithPathWithinAPath(pathMean)
         )
-    print(aux.PADL)
-    print(aux.CRED + '* Root  PATH: ' + PATH_ROOT + aux.CEND)
-    print(aux.CRED + '* Data  PATH: ' + PATH_DATA + aux.CEND)
-    print(aux.CRED + '* Image PATH: ' + PATH_IMG + aux.CEND)
+    return (dirsTraces, dirsMean)
 
 
+def calcDaysCrosses(aggregatedNodesData, thresholds, ssPops, gIx):
+    chngDays = []
+    for j in range(len(aggregatedNodesData['landscape'])):
+        nodePop = aggregatedNodesData['landscape'][j]
+        thrsBool = monet.comparePopToThresholds(
+                nodePop, gIx, [0, 1], thresholds, refPop=ssPops[j]
+            )
+        chngDays.append(monet.getConditionChangeDays(thrsBool))
+    return chngDays
+
+
+def getTimeToMinAtAllele(aggData, gIx, safety=.1):
+    pop = [row[gIx] for row in aggData['population']]
+    for time in range(len(pop)):
+        popMin = min(pop)
+        if np.isclose(pop[time], popMin, atol=safety):
+            break
+    return (time, popMin)
+
+
+def padListLength(inList, length, pad=0):
+    inList += [pad] * (length - len(inList))
+    return inList
+
+
+###############################################################################
+# Experiment Selection and Terminal
+###############################################################################
 def getExperiments(PATH):
     dirs = sorted(next(os.walk(PATH))[1])
     temp = []
@@ -55,148 +69,54 @@ def selectAnalysisType(ECO, PATH_IMG):
     return (expType, style, path, doi)
 
 
-def printHAxisNumbers(ax, numbers, xRange, color='Black', top=True, relStr=0):
-    (yPos, vAlign) = (-.02, 'top')
-    if top:
-        (yPos, vAlign) = (1.01, 'bottom')
-    # Plot text if the list is longer than one
-    if len(numbers) > 0:
-        for i in numbers:
-            ax.text(
-                    i/xRange, yPos, str(i-relStr), color=color, fontsize=2,
-                    alpha=.5, verticalalignment=vAlign,
-                    horizontalalignment='center', transform=ax.transAxes
-                )
-    return ax
-
-
-def printHAxisNumbersAlt(ax, numbers, xRange, color='Black', relStr=0):
-    if len(numbers) > 0:
-        for (ix, i) in enumerate(numbers):
-            (yPos, vAlign) = (-.05, 'top')
-            # Alternate based on open/close of the threshold cross
-            if ix < len(numbers) / 2:
-                if (ix % 2 == 0):
-                    (yPos, vAlign) = (1.01, 'bottom')
-            else:
-                if (ix % 2 != 0):
-                    (yPos, vAlign) = (1.01, 'bottom')
-            # Plot text
-            ax.text(
-                    i/xRange, yPos, str(i-relStr), color=color, fontsize=2,
-                    alpha=.5, verticalalignment=vAlign,
-                    horizontalalignment='center', transform=ax.transAxes
-                )
-    return ax
-
-
-def printVAxisNumbers(ax, numbers, yRange, color='Black', left=True, rnd=True):
-    (xPos, hAlign) = (-.004, 'right')
-    #
-    if len(numbers) > 0:
-        for i in numbers:
-            if rnd:
-                val = str(int(i))
-            else:
-                val = round(i, 2)
-            #####
-            ax.text(
-                    xPos, i/yRange, val, color=color, fontsize=2,
-                    alpha=.5, verticalalignment='center',
-                    horizontalalignment=hAlign, transform=ax.transAxes
-                )
-    return ax
-
-
-def parseTitle(thresholds, prtcDays):
-    title = '  '.join(['[{}: {}]'.format(
-                str(round(1-x[0], 2)).ljust(4, '0'),
-                str(x[1]).zfill(4)
-            ) for x in zip(thresholds, prtcDays)]
-        )
-    return 'SUP: ' + title
-
-
-def parseMinTitle(minTuple, SSPOP, thrs=.05, relStr=0):
-    if(1 - minTuple[1] / SSPOP >= thrs):
-        title = "MIN: [{}: {}]".format(
-                int(minTuple[0] - relStr),
-                round(1 - minTuple[1]/SSPOP, 2)
-            )
+def experimentSelector(args):
+    # Device
+    if args.dev == 0:
+        ROOT = '/Volumes'
     else:
-        title = "MIN: [0: 0]"
-    return title
+        ROOT = '/RAID5'
+    # Landscape
+    if args.land == 0:
+        LAND = 'Comoros'
+    else:
+        LAND = 'STP'
+    # Selected IDs
+    return (ROOT, LAND)
 
 
-def printTitle(ax, title):
-    ax.text(
-            .999, .05, title, color=SUP_COL, fontsize=2, alpha=.75,
-            verticalalignment='top', horizontalalignment='right',
-            transform=ax.transAxes
+def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
+    print(
+            aux.CWHT + 'UCI Experiments Analysis ' +
+            '[' + time + ']' + aux.CEND
         )
-    return ax
+    print(aux.PADL)
+    print(aux.CRED + '* Root  PATH: ' + PATH_ROOT + aux.CEND)
+    print(aux.CRED + '* Data  PATH: ' + PATH_DATA + aux.CEND)
+    print(aux.CRED + '* Image PATH: ' + PATH_IMG + aux.CEND)
 
 
-def printMinTitle(ax, title):
-    ax.text(
-            .999, .45, title + ' ', color=MIN_COL, fontsize=2, alpha=.5,
-            verticalalignment='bottom', horizontalalignment='right',
-            transform=ax.transAxes
-        )
-    return ax
-
-
-def printVLines(ax, chngDays):
-    for vLine in chngDays:
-        ax.axvline(
-                x=vLine, linewidth=.05,
-                linestyle='--', color=SUP_COL, alpha=.75
-            )
-    return ax
-
-
-def printMinLines(ax, minTuple, style, SSPOP, thrs=.05):
-    (width, alpha) = (.05, .5)
-    if(1 - minTuple[1] / SSPOP >= thrs):
-        ax.axhline(
-                y=minTuple[1], xmin=0, xmax=minTuple[0]/style['xRange'][1],
-                linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
-            )
-        ax.axvline(
-                x=minTuple[0], ymin=0, ymax=1, # minTuple[1]/style['yRange'][1],
-                linewidth=width, linestyle='--', color=MIN_COL, alpha=alpha
-            )
-    return ax
-
-
-def setRange(ax, style):
-    ax.set_xlim(style['xRange'][0], style['xRange'][1])
-    ax.set_ylim(style['yRange'][0], style['yRange'][1])
-    return ax
-
-
-def getTimeToMinAtAllele(
-            aggData,
-            gIx,
-            safety=.1
-        ):
-    """
+###############################################################################
+# Experiment Selection and Terminal
+###############################################################################
+def listDirectoriesWithPathWithinAPath(pathFilename):
+    '''
     Description:
-        * Calculates the point at which the total population reaches
-            its minimum.
+        * Returns a list of folder paths within a given path.
     In:
-        * aggData: Genotypes aggregated data.
-        * gIx: Gene-index of interest (column in the genotypes dictionary).
-        * safety: Envelope of values around the steady state that are
-            considered "stable" (as a proportion of the final total allele
-            composition).
+        * pathFilename: Path to search directories in
     Out:
-        * time: Point in time at which the minimum is reached
-        * popMin: Population size at its minimum
-    """
-    pop = [row[gIx] for row in aggData['population']]
-    for time in range(len(pop)):
-        popMin = min(pop)
-        if np.isclose(pop[time], popMin, atol=safety):
-            break
-    return (time, popMin)
+        * List of folder paths
+    Notes:
+        * NA
+    '''
+    folders = monet.listDirectoriesInPath(pathFilename)
+    for i, folder in enumerate(folders):
+        folders[i] = pathFilename + '/' + folder
+    return folders
+
+
+###############################################################################
+# Style and colors
+###############################################################################
+def rescaleRGBA(colorsTuple, colors=255):
+    return [i/colors for i in colorsTuple]

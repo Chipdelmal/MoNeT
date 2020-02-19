@@ -11,14 +11,16 @@
 #   https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/ERACR/Yorkeys.py
 #   https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/AggregationAndClustering
 ###############################################################################
-import aux
 import glob
 import subprocess
+import auxVideo as aux
+import auxCluster as auxC
 import MoNeT_MGDrivE as monet
 
-BASE_PATH = '/Volumes/marshallShare/VideoDemo/'
-(dataFldr, clstFldr, expName, aggLvl, clstSample) = (
-        'Sim', 'Clustered', 'E_0200_30_20_02_00020', 'C000500', '1'
+BASE_PATH = '/Volumes/marshallShare/UCI/STP/'
+(dataFldr, expName, clstFldr, aggLvl, clstSample) = (
+        'out', 'stp_kernel_elevation_v3_balanced_NRM',
+        'kernels/clustered', 'C0050', '001'
     )
 ###############################################################################
 # Colors and genotypes
@@ -50,11 +52,10 @@ aggDict = {
 ###############################################################################
 (expFolder, extras, expPath, outPath) = (
         BASE_PATH + dataFldr,
-        BASE_PATH + clstFldr + '/' + aggLvl + '/',
-        BASE_PATH + dataFldr + '/ANALYZED/' + expName + '/',
-        BASE_PATH + 'images/'
+        BASE_PATH + clstFldr + '/',
+        BASE_PATH + dataFldr + '/' + expName + '/ANALYZED/0001/',
+        BASE_PATH + 'video/'
     )
-
 ###############################################################################
 # File names parsing
 ###############################################################################
@@ -69,17 +70,18 @@ aggDict = {
         '/c_%06d.png'
     )
 (bgName, originalCoordFile) = (
-        glob.glob(extras + '/*_VBG_' + clstSample + '_*.png')[0],
-        glob.glob(extras + '/*_CLS_' + clstSample + '_*.csv')[0]
+        glob.glob(extras + aggLvl + '_' + clstSample + '*VBG.png')[0],
+        glob.glob(extras + aggLvl + '_' + clstSample + '*I.csv')[0]
     )
-(clusterName, vname, imageLocation) = (
-        glob.glob(extras + '/*_AGCV_' + clstSample + '_*.csv')[0],
-        outPath + 'video/movie.mp4',
+(vname, imageLocation) = (
+        outPath + 'movie.mp4',
         outPath + 'clustercharts/'
     )
 original_corners = aux.get_corners(originalCoordFile)
-coordinates = monet.getClusters(clusterName)
+coordinates = auxC.getClustersNewScheme(originalCoordFile)
 subprocess.Popen(['mkdir', imageLocation])
+
+len(coordinates[0])
 ###############################################################################
 # Create video
 ###############################################################################
@@ -93,3 +95,6 @@ monet.generateClusterGraphs(
     )
 video = monet.generateVideo(vname, bgName, imageLocation, imagePattern)
 video.wait()
+
+coordinates
+expPath

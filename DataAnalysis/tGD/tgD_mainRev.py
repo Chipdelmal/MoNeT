@@ -32,7 +32,7 @@ def quickSaveFigure(
 #   5: tGDCross
 #   6: tGDXCross
 ##############################################################################
-DRIVE = 6
+DRIVE = 3
 TRACES = False
 TRACE_ANIMATION = False
 STACK = True
@@ -42,7 +42,7 @@ TRACES_DATA = False
 FORMAT = ".pdf"
 ##############################################################################
 ##############################################################################
-pathRoot = "/Volumes/marshallShare/tGDSuppression/"
+pathRoot = "/Volumes/marshallShare/tGD/"
 pathExt, aggregationDictionary, yRange = sel.driveSelector(
     DRIVE, pathRoot
 )
