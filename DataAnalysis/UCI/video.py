@@ -12,19 +12,20 @@
 #   https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/AggregationAndClustering
 ###############################################################################
 import glob
+import warnings
 import subprocess
 import numpy as np
 import auxVideo as aux
 import auxCluster as auxC
 import MoNeT_MGDrivE as monet
-
+warnings.filterwarnings("ignore", category=UserWarning)
 
 BASE_PATH = '/Volumes/marshallShare/UCI/STP/'
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
         'out', 'stp_kernel_elevation_v3_balanced_NRM',
-        'kernels/clustered', 'C0050', '001'
+        'kernels/clustered', 'C0002', '001'
     )
-(PAD, DPI) = (.025, 512)
+(PAD, DPI) = (.1, 512)
 ###############################################################################
 # Colors and genotypes
 ###############################################################################
@@ -64,14 +65,14 @@ aggDict = monet.autoGenerateGenotypesDictionary(
 ###############################################################################
 (patchFilePattern, imagePattern) = (
         {'male': '/M_*', 'female': '/F_*'},
-        '/c_%06d.png'
+        'c_%06d.png'
     )
 (bgName, originalCoordFile) = (
         glob.glob(extras + aggLvl + '_' + clstSample + '*VBG.png')[0],
         glob.glob(extras + aggLvl + '_' + clstSample + '*I.csv')[0]
     )
 (vname, imageLocation) = (
-        outPath + 'movie.mp4',
+        outPath + 'STP.mp4',
         outPath + 'clustercharts/'
     )
 original_corners = aux.get_corners(originalCoordFile)
@@ -87,9 +88,13 @@ clusters = auxC.populateClustersFromList(
         clstList, expPath, patchFilePattern
     )
 aggList = monet.aggregateClusters(clusters, aggDict)
+meanPopSize = np.mean([i[100][0] for i in aggList])
 aux.generateClusterGraphs(
+        originalCoordFile,
         aggList, coordinates, imageLocation, colors, original_corners,
-        PAD, DPI, skip=False, countries=True, refPopSize=np.amax(aggList)
+        PAD, DPI, skip=False, countries=True, refPopSize= 750 #np.amax(aggList) * .1
     )
-video = monet.generateVideo(vname, bgName, imageLocation, imagePattern)
-video.wait()
+
+# video = aux.callffmpeg(imageLocation, 'c_%06d.png ', 30, (4096, 2160), vname)
+# video.wait()
+# ffmpeg -r 30 -f image2 -s 4096x2160 -i /Volumes/marshallShare/UCI/STP/video/clustercharts/c_%06d.png  -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -vcodec libx264 -crf 25 -pix_fmt yuv420p /Volumes/marshallShare/UCI/STP/video/STP.mp4
