@@ -64,7 +64,7 @@ aggDict = monet.autoGenerateGenotypesDictionary(
 #   AGCV: Clusters centroids? -> contained now in "_I"
 ###############################################################################
 (patchFilePattern, imagePattern) = (
-        {'male': '/M_*', 'female': '/F_*'},
+        {'male': '/M_*', 'female': ''},
         'c_%06d.png'
     )
 (bgName, originalCoordFile) = (
@@ -87,6 +87,8 @@ subprocess.Popen(['mkdir', imageLocation])
 clusters = auxC.populateClustersFromList(
         clstList, expPath, patchFilePattern
     )
+clusters[0]['male']
+
 aggList = monet.aggregateClusters(clusters, aggDict)
 meanPopSize = np.mean([i[100][0] for i in aggList])
 aux.generateClusterGraphs(

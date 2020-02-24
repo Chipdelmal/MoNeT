@@ -55,7 +55,6 @@ fun.printExperimentHead(
         PATH_ROOT, PATH_IMG, PATH_DATA,
         str(datetime.datetime.now())
     )
-
 ###############################################################################
 # Selecting drive and get exp dirs
 # -----------------------------------------------------------------------------
