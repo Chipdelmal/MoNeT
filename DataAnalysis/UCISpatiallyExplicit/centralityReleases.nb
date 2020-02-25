@@ -1,0 +1,190 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6887,        182]
+NotebookOptionsPosition[      6375,        166]
+NotebookOutlinePosition[      6745,        182]
+CellTagsIndexPosition[      6702,        179]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "SetDirectory", "[", "\"\</Volumes/marshallShare/UCI/STP/kernels/\>\"", 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"ntwFldr", ",", " ", "outFldr"}], "}"}], "=", 
+   RowBox[{"{", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Directory", "[", "]"}], "<>", 
+      "\"\</clusteredForNetworks\>\""}], ",", " ", 
+     RowBox[{
+      RowBox[{"Directory", "[", "]"}], "<>", "\"\</networkAnalysis\>\""}]}], 
+    "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.791556691018559*^9, 3.791556715306261*^9}, {
+  3.791556852420536*^9, 3.7915569156172857`*^9}, {3.7915572485785847`*^9, 
+  3.791557263275672*^9}, {3.791557425846774*^9, 3.791557429812132*^9}},
+ CellLabel->"In[43]:=",ExpressionUUID->"8667fe97-befa-4ab6-903d-dc4b5dfe2d63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"expID", ",", "rep"}], "}"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"\"\<C0010\>\"", ",", "\"\<001\>\""}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"migMatPath", ",", " ", "clsInfoPath"}], "}"}], "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+     "ntwFldr", "<>", "\"\</\>\"", "<>", "expID", "<>", "\"\<_\>\"", "<>", 
+      "rep", "<>", "\"\<_A.csv\>\""}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+     "ntwFldr", "<>", "\"\</\>\"", "<>", "expID", "<>", "\"\<_\>\"", "<>", 
+      "rep", "<>", "\"\<_I.csv\>\""}]}], "\[IndentingNewLine]", "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"migMat", ",", "clstInfo"}], "}"}], "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Import", "[", "migMatPath", "]"}], ",", 
+     RowBox[{
+      RowBox[{"Import", "[", "clsInfoPath", "]"}], "[", 
+      RowBox[{"[", 
+       RowBox[{"2", ";;", "All"}], "]"}], "]"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ptCoords", "=", 
+   RowBox[{"Reverse", "/@", 
+    RowBox[{"clstInfo", "[", 
+     RowBox[{"[", 
+      RowBox[{"All", ",", 
+       RowBox[{"2", ";;", "3"}]}], "]"}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"clstCoords", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"Sort", "[", 
+       RowBox[{"clstInfo", "[", 
+        RowBox[{"[", 
+         RowBox[{"All", ",", 
+          RowBox[{"4", ";;", "All"}]}], "]"}], "]"}], "]"}], "//", 
+      "DeleteDuplicates"}], ")"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", 
+      RowBox[{"2", ";;", "All"}]}], "]"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.791556964694242*^9, 3.7915569905775423`*^9}, {
+  3.7915570308959637`*^9, 3.791557048909298*^9}, {3.791557108648115*^9, 
+  3.791557135510311*^9}, {3.791557171202943*^9, 3.7915572420218763`*^9}, {
+  3.791557272555353*^9, 3.791557272807125*^9}, {3.791557361674055*^9, 
+  3.791557412688196*^9}, {3.7915574446491947`*^9, 3.7915574458459682`*^9}, {
+  3.7915577950378942`*^9, 3.791557838960348*^9}, {3.791558124691131*^9, 
+  3.791558155831805*^9}, {3.79155846542588*^9, 3.7915585242638702`*^9}, {
+  3.7915587850472507`*^9, 3.791558788267069*^9}, {3.7915589918512287`*^9, 
+  3.791559060999783*^9}, {3.791559103821361*^9, 3.791559112979228*^9}, {
+  3.791559261060505*^9, 3.791559261848316*^9}, {3.79156229404065*^9, 
+  3.791562326007522*^9}, {3.7915624503423223`*^9, 3.791562450433138*^9}},
+ CellLabel->
+  "In[309]:=",ExpressionUUID->"4a404b8f-fbd5-4ba3-9699-49c8db881716"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"graph", "=", 
+   RowBox[{"WeightedAdjacencyGraph", "[", 
+    RowBox[{"migMat", ",", 
+     RowBox[{"VertexCoordinates", "\[Rule]", "clstCoords"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"centrality", "=", 
+   RowBox[{"BetweennessCentrality", "[", "graph", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"HighlightGraph", "[", 
+    RowBox[{"graph", ",", 
+     RowBox[{"VertexList", "[", "graph", "]"}], ",", 
+     RowBox[{"VertexSize", "\[Rule]", " ", 
+      RowBox[{"Thread", "[", 
+       RowBox[{
+        RowBox[{"VertexList", "[", "graph", "]"}], "\[Rule]", 
+        RowBox[{"Rescale", "[", 
+         RowBox[{"100", "*", "centrality"}], "]"}]}], "]"}]}]}], "]"}], ";"}],
+   "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pts", "=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{"ptCoords", ",", 
+     RowBox[{"Axes", "\[Rule]", "False"}], ",", 
+     RowBox[{"PlotStyle", "\[Rule]", 
+      RowBox[{"Directive", "[", 
+       RowBox[{
+        RowBox[{"PointSize", "[", ".01", "]"}], ",", "Magenta", ",", 
+        RowBox[{"Opacity", "[", ".25", "]"}]}], "]"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Show", "[", 
+   RowBox[{"pts", ",", "graph", "\[IndentingNewLine]", ",", 
+    RowBox[{"AspectRatio", "\[Rule]", "1.5"}], "\[IndentingNewLine]", ",", 
+    RowBox[{"Frame", "\[Rule]", "True"}], "\[IndentingNewLine]", ",", 
+    RowBox[{"ImageSize", "\[Rule]", "1000"}], "\[IndentingNewLine]", ",", 
+    RowBox[{"PlotRange", "\[Rule]", "All"}]}], "\[IndentingNewLine]", "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.7915582729482193`*^9, 3.791558387202765*^9}, {
+   3.791558529383416*^9, 3.791558530840871*^9}, {3.7915586361414413`*^9, 
+   3.791558660022984*^9}, {3.791558758829239*^9, 3.791558768940378*^9}, {
+   3.7915589079844847`*^9, 3.7915589125063763`*^9}, {3.791559090155583*^9, 
+   3.791559091288583*^9}, {3.791559194768108*^9, 3.791559200633544*^9}, {
+   3.791559269578109*^9, 3.791559404423457*^9}, {3.791559475838152*^9, 
+   3.791559495616891*^9}, {3.791559536997266*^9, 3.791559573846437*^9}, {
+   3.7915596472166357`*^9, 3.791559736750668*^9}, {3.791562338963979*^9, 
+   3.7915623590186872`*^9}, 3.791562431359305*^9, 
+   3.791562475236664*^9},ExpressionUUID->"4a2e2c67-fb02-4c6a-85ed-\
+8c3ec203ebfd"]
+},
+WindowSize->{1283, 1369},
+WindowMargins->{{Automatic, 342}, {Automatic, 0}},
+Magnification:>0.75 Inherited,
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 811, 20, 41, "Input",ExpressionUUID->"8667fe97-befa-4ab6-903d-dc4b5dfe2d63"],
+Cell[1372, 42, 2622, 67, 137, "Input",ExpressionUUID->"4a404b8f-fbd5-4ba3-9699-49c8db881716"],
+Cell[3997, 111, 2374, 53, 185, "Input",ExpressionUUID->"4a2e2c67-fb02-4c6a-85ed-8c3ec203ebfd"]
+}
+]
+*)
+

@@ -7,8 +7,8 @@ import glob
 from operator import itemgetter
 
 
-PAD = '' + 75 * '*' + ''
-PADL = '' + 75 * '-' + ''
+PAD = '' + 79 * '*' + ''
+PADL = '' + 79 * '-' + ''
 (CRED, CWHT, CEND) = ('\033[91m', '\u001b[37m', '\033[0m')
 
 

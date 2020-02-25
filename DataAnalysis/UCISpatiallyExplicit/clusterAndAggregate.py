@@ -41,9 +41,9 @@ print(aux.PAD)
 print(aux.CWHT + 'UCI Clustering ' + '[' + str(tStrt) + ']' + aux.CEND)
 print(aux.PADL)
 print(aux.CRED + '* Root path: \t' + PATH + aux.CEND)
+print(aux.CRED + '* Output: \t' + PATH + OUT + aux.CEND)
 print(aux.CRED + '* Coordinates: \t' + LATLONGS + aux.CEND)
 print(aux.CRED + '* Distances: \t' + DIST + aux.CEND)
-print(aux.CRED + '* Output: \t' + PATH + OUT + aux.CEND)
 print(aux.PAD)
 ###############################################################################
 # Cluster and Export
