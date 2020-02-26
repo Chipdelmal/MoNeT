@@ -1,8 +1,20 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from matplotlib.colors import LinearSegmentedColormap
 (SUP_COL, MIN_COL) = ('gray', 'red')
 
+
+cdict = {
+        'red':   [(0, 0, 0), (0.25, .1, .1), (0.5, .6, .6), (.75, 1, 1), (1.0, .96, .96)],
+        'green': [(0, 0, 0), (0.25, .05, .05), (0.5, .78, .78), (.75,  0.2, 0.2), (1.0,  0, 0)],
+        'blue':  [(0, 0.275, 0.275), (0.25, .75, .75), (0.5, .98, .98), (.75, .78, .78), (1.0, .4, .4)]
+    }
+cm = LinearSegmentedColormap('WB', cdict, N=256)
+
+
+
+[i/255 for i in (245, 0, 100)]
 
 def setAxesColor(axTemp, color):
     axTemp.tick_params(color=color)

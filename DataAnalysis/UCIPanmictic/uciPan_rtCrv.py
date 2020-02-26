@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 (thresholds, NOI, GOI, SSPOP, REL_STRT, filter) = (
         [.1, .5],  # [.05, .10, .25, .50, .75],
         0, 0, 2 * 500000,
-        1, 'E_{}_??_100_0010'
+        1, 'E_???????_{}_100_0010'
     )
 # cm = plt.get_cmap('bwr')
 cm = plot.cm
@@ -35,7 +35,7 @@ PATH_ROOT = '/{}/marshallShare/UCI/{}/{}/'.format(ROOT, LAND, SETTING)
         '{}out/{}/'.format(PATH_ROOT, DRIVE_ID)
     )
 relSizes = list(set([
-        i.split('/')[-1].split('_')[1] for i in
+        i.split('/')[-1].split('_')[2] for i in
         glob.glob(PATH_DATA+'ANALYZED/*')
     ]))
 relSizes.sort()
@@ -79,14 +79,14 @@ for rid in relSizes:
         # Plot
         ax.plot(
                 range(len(trace)), trace,
-                color=cm(gradient[i]), alpha=.2, lw=1
+                color=cm(gradient[i]), alpha=.75, lw=1
             )
     ax.set_xlim(0, xRange)
     ax.set_ylim(0, yRange)
     ax.set_aspect(1000)
     ax.grid(True, alpha=.5, lw=.2, ls='--')
     fig.savefig(
-            '{}S_{}_{}.pdf'.format(PATH_IMG, rid, spltNm[-1]),
+            '{}Z_{}_{}.pdf'.format(PATH_IMG, rid, spltNm[-1]),
             bbox_inches='tight', pad_inches=0, transparent=True
         )
     plt.close('all')
