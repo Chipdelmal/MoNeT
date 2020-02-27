@@ -79,7 +79,7 @@ for rid in relSizes:
         # Plot
         ax.plot(
                 range(len(trace)), trace,
-                color=cm(gradient[i]), alpha=.2, lw=1
+                color=cm(gradient[i]), alpha=.95, lw=.6
             )
     ax.set_xlim(0, xRange)
     ax.set_ylim(0, yRange)
