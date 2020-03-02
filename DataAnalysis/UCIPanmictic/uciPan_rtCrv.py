@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 
 
 (ROOT, LAND, DRIVE_ID, SETTING) = (
-        'Volumes', 'Yoosook',
-        'LDR', 'island'
+        'Volumes', 'Yoosook/yParams',
+        'LDR', 'islandGravidFemales'
     )
 (thresholds, NOI, GOI, SSPOP, REL_STRT, filter) = (
         [.1, .5],  # [.05, .10, .25, .50, .75],
@@ -43,7 +43,7 @@ time = datetime.datetime.now()
 print(aux.PAD)
 fun.printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, str(time))
 expOutRootPath = PATH_IMG
-monet.makeFolder(expOutRootPath)
+# monet.makeFolder(expOutRootPath)
 ###############################################################################
 # Selecting drive and get exp dirs
 ###############################################################################

@@ -12,12 +12,12 @@ import matplotlib.pyplot as plt
 
 
 (ROOT, LAND, DRIVE_ID, SETTING) = (
-        'Volumes', 'Yoosook',
-        'LDR', 'island'
+        'Volumes', 'Yoosook/tParams',
+        'LDR', 'islandGravidFemales'
     )
 (FACT, PLOT) = (False, True)
 (thresholds, NOI, SSPOP, REL_STRT) = (
-        [.1, .5],  # [.05, .10, .25, .50, .75],
+        [.05, .10, .25, .50, .75],
         0, 2 * 500000,
         1
     )
