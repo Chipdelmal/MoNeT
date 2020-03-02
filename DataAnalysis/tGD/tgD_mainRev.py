@@ -49,7 +49,7 @@ pathExt, aggregationDictionary, yRange = sel.driveSelector(
 if (DRIVE == 1) or (DRIVE == 2):
     colors = ["#090446", "#f20060", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
 else:
-    colors = ["#090446", "#7fff3a", "#ffee00", "#ff28d4", "#7692ff", "#c6d8ff"]
+    colors = ["#f20060", "#9bc4f7", "#190bbf", "#000046", "#ff35c7", "#c6d8ff"]
 genes = aggregationDictionary["genotypes"]
 ##############################################################################
 ##############################################################################
@@ -197,4 +197,4 @@ if STACK is True:
         # figA.get_axes()[0].set_xlim(0, xRange)
         # figA.get_axes()[0].set_ylim(0, 2 * yRange)
 
-        plotAndSaveStack(aggData, ssDay, ffString, ffStringH, pathRoot + "/images/stacks/" + str(DRIVE).rjust(2, "0") + "S_" + experimentString + FORMAT)
+        plotAndSaveStack(aggData, ssDay, ffString, ffStringH, pathRoot + "/images/" + str(DRIVE).rjust(2, "0") + "S_" + experimentString + FORMAT)
