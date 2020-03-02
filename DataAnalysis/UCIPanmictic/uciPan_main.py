@@ -13,9 +13,9 @@ import matplotlib.pyplot as plt
 
 (ROOT, LAND, DRIVE_ID, SETTING) = (
         'Volumes', 'Yoosook/tParams',
-        'LDR', 'islandGravidFemales'
+        'LDR', 'island'
     )
-(FACT, PLOT) = (False, True)
+(FACT, PLOT) = (True, False)
 (thresholds, NOI, SSPOP, REL_STRT) = (
         [.05, .10, .25, .50, .75],
         0, 2 * 500000,
