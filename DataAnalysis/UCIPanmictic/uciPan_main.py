@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 import csv
 import datetime
 import uciPan_aux as aux
@@ -12,8 +13,8 @@ import matplotlib.pyplot as plt
 
 
 (ROOT, LAND, DRIVE_ID, SETTING) = (
-        'Volumes', 'Yoosook/tParams',
-        'LDR', 'island'
+        sys.argv[1], 'Yoosook/' + sys.argv[2],
+        'LDR', sys.argv[3]
     )
 (FACT, PLOT) = (True, False)
 (thresholds, NOI, SSPOP, REL_STRT) = (
@@ -114,7 +115,9 @@ for (i, (pathMean, pathTraces)) in enumerate(zip(expDirsMean, expDirsTrac)):
                     transparent=True, bbox_inches='tight', pad_inches=.01
                 )
             plt.close('all')
-fileCSV.close()
+# Close CSV for writing
+if FACT:
+    fileCSV.close()
 time = datetime.datetime.now()
 print(aux.PADL)
 print(aux.CWHT + 'Finished  ' + '[' + str(time) + ']' + aux.CEND)
