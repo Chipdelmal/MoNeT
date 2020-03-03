@@ -97,11 +97,11 @@ for i in landscapeReps["landscapes"][0]:
     maxPops.append(i[REL_STR][-1] * 1)
 # Plot ------------------------------------------------------------------------
 figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
-totalPopsStr = str(len(figsArray)).zfill(4)
+totalPopsStr = str(len(figsArray)).zfill(3)
 for j in range(0, len(figsArray)):
     print(
             '* Exporting population plots ({}/{})...'.format(
-                    str(j + 1).zfill(4), totalPopsStr
+                    str(j + 1).zfill(3), totalPopsStr
                 ), end='\r'
         )
     axTemp = figsArray[j].get_axes()[0]
@@ -120,7 +120,7 @@ for j in range(0, len(figsArray)):
         spine.set_edgecolor((0, 0, 0, 0.5))
     expOutStr = expOutSetPath
     figsArray[j].savefig(
-        expOutStr + "/Pop_" + str(1 + j).zfill(3) + ".pdf", dpi=style['dpi'],
+        expOutStr + "/Pop_" + str(1+j).zfill(3) + ".pdf", dpi=style['dpi'],
         facecolor=None, edgecolor='w', orientation='portrait', papertype=None,
         format='pdf', transparent=True, bbox_inches='tight',
         pad_inches=.01
