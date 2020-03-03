@@ -28,10 +28,11 @@ style = aux.STYLE_HLT
 # Full path ------------------------------------------------------------------
 PATH_ROOT = '/{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
 (PATH_IMG, PATH_DATA) = (PATH_ROOT + 'img/', PATH_ROOT)
+dir = '{}{}/'.format(PATH_ROOT, EXP)
 # Print experiment info to terminal -------------------------------------------
 print(aux.PAD)
 fun.printExperimentHead(
-        PATH_ROOT, PATH_IMG, PATH_DATA,
+        PATH_ROOT, PATH_IMG, dir,
         str(datetime.datetime.now())
     )
 ###############################################################################
@@ -40,9 +41,6 @@ fun.printExperimentHead(
 drvPars = drv.driveSelector(driveID)
 gIx = drvPars['HLT']['genotypes'].index('Other')
 expSetsDirs = monet.listDirectoriesWithPathWithinAPath(PATH_DATA)
-# Kernel Selector -------------------------------------------------------------
-dir = '{}{}'.format(PATH_ROOT, EXP)
-# for loop here
 fldrName = dir.split('/')[-1]
 (pathTraces, pathMean) = [dir + i for i in ('/GARBAGE/', '/ANALYZED/')]
 (dirsTraces, dirsMean) = fun.getTracesAndMeanDirs(pathTraces, pathMean)
@@ -102,9 +100,9 @@ for i in landscapeReps["landscapes"][0]:
 figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
 for j in range(0, len(figsArray)):
     print(
-            '* Exporting Population Plots: ' +
-            '(' + str(j + 1) + '/' + str(len(figsArray)) + ')',
-            end="\r"
+            '* Exporting population plots: ({}/{})'.format(
+                    str(j + 1), str(len(figsArray))
+                ), end='\r'
         )
     title = plot.parseTitle(thresholds, prtcDays[j])
     title = str(minTuple[j][0]).zfill(4) + " "
@@ -131,11 +129,7 @@ for j in range(0, len(figsArray)):
         pad_inches=.01
     )
     plt.close('all')
-print(
-        '* Exporting population plots: ' +
-        '(' + str(j + 1) + '/' + str(len(figsArray)) + ')...',
-        end='\r'
-    )
+print('* Exporting population plots ({})...'.format(len(figsArray)))
 ###############################################################################
 # Full landscape traces
 ###############################################################################
@@ -189,7 +183,8 @@ plt.close('all')
 print('* Finished!')
 print(aux.PADL)
 print(
-        aux.CWHT + 'UCI Experiments Analysis ' +
-        '[' + str(datetime.datetime.now()) + ']' + aux.CEND
+        aux.CWHT +
+        'UCI Experiments Analysis [{}]'.format(str(datetime.datetime.now())) +
+        aux.CEND
     )
 print(aux.PAD)

@@ -91,8 +91,8 @@ def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
         )
     print(aux.PADL)
     print(aux.CRED + '* Root  PATH: ' + PATH_ROOT + aux.CEND)
-    print(aux.CRED + '* Data  PATH: ' + PATH_DATA + aux.CEND)
     print(aux.CRED + '* Image PATH: ' + PATH_IMG + aux.CEND)
+    print(aux.CRED + '* Data  PATH: ' + PATH_DATA + aux.CEND)
 
 
 ###############################################################################
