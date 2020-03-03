@@ -31,7 +31,7 @@ STYLE_HLT['aspect'] = monet.scaleAspect(.15, STYLE_HLT)
 driveID = 'LDR'
 (thresholds, NOI, SSPOP, REL_STR) = (
         [.1, .25, .5, .75, .9],
-        0, 10000, 20
+        0, 10000, 0
     )
 style = STYLE_HLT
 ###############################################################################
@@ -132,7 +132,6 @@ for j in range(0, len(figsArray)):
     title = str(minTuple[j][0]).zfill(4) + " "
     # minTitle = plot.parseMinTitle(minTuple[j], SSPOP, relStr=REL_STR)
     axTemp = figsArray[j].get_axes()[0]
-    style['xRange'] = (95, 3 * 365)
     style['yRange'] = (0, maxPops[j] * 1.15)
     # style['aspect'] = monet.scaleAspect(.25, style)
     # axTemp.set_aspect(aspect=style["aspect"])
@@ -142,31 +141,8 @@ for j in range(0, len(figsArray)):
             axTemp, chngDays[j], style['xRange'][1],
             'Gray', relStr=REL_STR
         )
-    # Min pop prints
-    # if(1 - minTuple[j][1] / maxPops[j] >= .05):
-    #     # axTemp = plot.printHAxisNumbers(
-    #     #         axTemp, [minTuple[j][0]], style['xRange'][1], 'Red',
-    #     #         top=True, relStr=REL_STR
-    #     #     )
-    #     # axTemp = plot.printVAxisNumbers(
-    #     #        axTemp, [minTuple[j][1] / SSPOP],
-    #     #        style['yRange'][1], 'Red', left=True, rnd=False
-    #     #    )
-    #     axTemp = plot.printMinLines(
-    #             axTemp, (minTuple[j][0], minTuple[j][1] / SSPOP),
-    #             style, maxPops[j]
-    #         )
-    # Titles and lines common for both analyses
-    # if(prtcDays[j][0] > REL_STR):
-    #     axTemp = plot.printTitle(axTemp, title)
-    # axTemp = plot.printMinTitle(axTemp, minTitle)
     axTemp = plot.printVLines(axTemp, chngDays[j])
     # Export to disk
-    # axTemp = plot.printMinTitle(axTemp, str(maxPops[j]/2))
-    # axTemp.set_xticklabels([])
-    # axTemp.set_yticklabels([])
-    # axTemp.set_xticks([])
-    # axTemp.set_yticks([])
     axTemp.tick_params(color=(0, 0, 0, 0.5))
     for spine in axTemp.spines.values():
         spine.set_edgecolor((0, 0, 0, 0.5))
@@ -216,7 +192,6 @@ axTemp = plot.printHAxisNumbers(
         axTemp, chngDays[0], style['xRange'][1],
         'Gray', relStr=REL_STR
     )
-style['xRange'] = (95, 3 * 365)
 style['yRange'] = (0, maxPop * 1.25)
 style['aspect'] = monet.scaleAspect(.1, style)
 # axTemp = plot.printMinTitle(axTemp, str(maxPop/2))
@@ -224,7 +199,7 @@ axTemp = plot.setRange(axTemp, style)
 axTemp.set_aspect(aspect=style["aspect"])
 # axTemp.set_xticklabels([])
 # axTemp.set_yticklabels([])
-# axTemp.set_xticks([])
+axTemp.set_xticks(range(0, style["xRange"][1], 100))
 # axTemp.set_yticks([])
 axTemp.tick_params(color=(0, 0, 0, 0.5))
 for spine in axTemp.spines.values():
