@@ -14,30 +14,29 @@ import MoNeT_MGDrivE as monet
 plt.rcParams.update({'figure.max_open_warning': 0})
 mpl.rcParams['axes.linewidth'] = .4
 
-driveID = 'LDR'
-(thresholds, NOI, SSPOP, REL_STR) = (
-        [.1, .25, .5, .75, .9],
-        0, 10000, 0
+
+(thresholds, SSPOP, MALE, FEMALE) = (
+        [.1, .25, .5, .75, .9], 10000, True, True
     )
-style = aux.STYLE_HLT
+(xRange, driveID) = (1095, 'LDR')
 ###############################################################################
 # Setting up the experiment analyses
+#       python kernelsSTP.py "Volumes" "kernel_cluster_10k"
 ###############################################################################
 # (ROOT, LAND, EXP) = ('Volumes', 'kernels', 'kernel_cluster_10k')
 (ROOT, LAND, EXP) = (sys.argv[1], 'kernels', sys.argv[2])
-# Full path ------------------------------------------------------------------
+# Full path -------------------------------------------------------------------
 PATH_ROOT = '/{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
 (PATH_IMG, PATH_DATA) = (PATH_ROOT + 'img/', PATH_ROOT)
 dir = '{}{}/'.format(PATH_ROOT, EXP)
 # Print experiment info to terminal -------------------------------------------
 print(aux.PAD)
-fun.printExperimentHead(
-        PATH_ROOT, PATH_IMG, dir,
-        str(datetime.datetime.now())
-    )
+fun.printExperimentHead(PATH_ROOT, PATH_IMG, dir, str(datetime.datetime.now()))
 ###############################################################################
 # Selecting drive and get exp dirs
 ###############################################################################
+(REL_STR, style) = (0, aux.STYLE_HLT)
+style['xRange'] = (0, xRange)
 drvPars = drv.driveSelector(driveID)
 gIx = drvPars['HLT']['genotypes'].index('Other')
 expSetsDirs = monet.listDirectoriesWithPathWithinAPath(PATH_DATA)
@@ -49,26 +48,25 @@ expOutRootPath = PATH_IMG + driveID
 expOutExpPath = expOutRootPath + '/' + fldrName
 monet.makeFolder(expOutRootPath)
 monet.makeFolder(expOutExpPath)
-# Create output folder -------------------------------------------------------
+# Create output folder --------------------------------------------------------
 (dirTraces, dirMean) = (dirsTraces[0], dirsMean[0])
 expOutSetPath = expOutExpPath + '/' + dirMean.split('/')[-1]
 monet.makeFolder(expOutSetPath)
-# Mean response --------------------------------------------------------------
-filenames = monet.readExperimentFilenames(dirMean)
-# Terminal msg ---------------------------------------------------------------
+# Mean response ---------------------------------------------------------------
 print(aux.PADL)
 print('* Loading mean response data...')
-# Load mean response and aggregate -------------------------------------------
-landscapeData = monet.loadLandscapeData(filenames, male=True, female=True)
+# Load mean response and aggregate --------------------------------------------
+filenames = monet.readExperimentFilenames(dirMean)
+landscapeData = monet.loadLandscapeData(filenames, male=MALE, female=FEMALE)
 aggregatedNodesData = monet.aggregateGenotypesInLandscape(
         landscapeData, drvPars.get('HLT')
     )
-# Get the max range for each node --------------------------------------------
+# Get the max range for each node ---------------------------------------------
 maxPops = []
 for i in aggregatedNodesData["landscape"]:
     maxPops.append(i[REL_STR][-1] * 1)
-# Get the crosses through thresholds -----------------------------------------
-(chngDays, prtcDays, minTuple) = ([], [], [])
+# Get the crosses through thresholds ------------------------------------------
+(chngDays, prtcDays) = ([], [])
 for j in range(len(aggregatedNodesData['landscape'])):
     nodePop = aggregatedNodesData['landscape'][j]
     thrsBool = monet.comparePopToThresholds(
@@ -76,36 +74,31 @@ for j in range(len(aggregatedNodesData['landscape'])):
         )
     chngDays.append(monet.getConditionChangeDays(thrsBool))
     prtcDays.append(monet.countConditionDays(thrsBool))
-    # Get the info to min pop -------------------------------------------------
-    nodePopDict = {}
-    nodePopDict["population"] = nodePop
-    minData = fun.getTimeToMinAtAllele(nodePopDict, gIx, safety=.2)
-    minTuple.append(minData)
 ###############################################################################
 # Individual Nodes Traces
 ###############################################################################
 paths = monet.listDirectoriesWithPathWithinAPath(dirTraces + '/')
 print(
-        '* Loading traces reps datasets (' + str(len(paths)) + ') for ' +
-        ' populations (' + str(len(aggregatedNodesData['landscape'])) + ')...'
+        '* Loading traces reps datasets ({}) for populations ({})...'.format(
+                len(paths), len(aggregatedNodesData['landscape'])
+            )
     )
 landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-        paths, drvPars.get('HLT'), male=True, female=True
+        paths, drvPars.get('HLT'), male=MALE, female=FEMALE
     )
 # Get the max range for each node ---------------------------------------------
 maxPops = []
 for i in landscapeReps["landscapes"][0]:
     maxPops.append(i[REL_STR][-1] * 1)
-# Plot -----------------------------------------------------------------------
+# Plot ------------------------------------------------------------------------
 figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
+totalPopsStr = str(len(figsArray)).zfill(4)
 for j in range(0, len(figsArray)):
     print(
-            '* Exporting population plots: ({}/{})'.format(
-                    str(j + 1), str(len(figsArray))
+            '* Exporting population plots ({}/{})...'.format(
+                    str(j + 1).zfill(4), totalPopsStr
                 ), end='\r'
         )
-    title = plot.parseTitle(thresholds, prtcDays[j])
-    title = str(minTuple[j][0]).zfill(4) + " "
     axTemp = figsArray[j].get_axes()[0]
     style['yRange'] = (0, maxPops[j] * 1.15)
     style['aspect'] = monet.scaleAspect(.15, style)
@@ -113,8 +106,7 @@ for j in range(0, len(figsArray)):
     axTemp = plot.setRange(axTemp, style)
     # Add labels to the days of threshold-crossing ----------------------------
     axTemp = plot.printHAxisNumbers(
-            axTemp, chngDays[j], style['xRange'][1],
-            'Gray', relStr=REL_STR
+            axTemp, chngDays[j], style['xRange'][1], 'Gray', relStr=REL_STR
         )
     axTemp = plot.printVLines(axTemp, chngDays[j])
     # Export to disk ----------------------------------------------------------
@@ -129,38 +121,38 @@ for j in range(0, len(figsArray)):
         pad_inches=.01
     )
     plt.close('all')
-print('* Exporting population plots ({})...'.format(len(figsArray)))
+print(
+        '* Exporting population plots ({}/{})...'.format(
+                totalPopsStr, totalPopsStr
+            )
+    )
 ###############################################################################
 # Full landscape traces
 ###############################################################################
 print('* Exporting full population traces plot...')
 mpl.rcParams['axes.linewidth'] = .2
+# Load landscape traces as a full set -----------------------------------------
 landscapeRepsFull = monet.sumAggregatedLandscapeDataRepetitionsAlt(
-        paths, drvPars.get('HLT'), male=True, female=True
+        paths, drvPars.get('HLT'), male=MALE, female=FEMALE
     )
+# Sum mean landscape into one node --------------------------------------------
 land = aggregatedNodesData["landscape"]
 summedLand = land[0]
 for i in range(1, len(land)):
     summedLand = summedLand + land[i]
 maxPop = np.sum(summedLand[-1][-1])
-(chngDays, prtcDays, minTuple) = ([], [], [])
+(chngDays, prtcDays) = ([], [])
 thrsBool = monet.comparePopToThresholds(
         summedLand, gIx, [0, 1], thresholds, refPop=maxPop
     )
 chngDays.append(monet.getConditionChangeDays(thrsBool))
 prtcDays.append(monet.countConditionDays(thrsBool))
-# Get the info to min pop ----------------------------------------------------
-nodePopDict = {}
-nodePopDict["population"] = summedLand
-minData = fun.getTimeToMinAtAllele(nodePopDict, gIx, safety=.2)
-minTuple.append(minData)
-# Plot -----------------------------------------------------------------------
+# Plot ------------------------------------------------------------------------
 figsArray = monet.plotLandscapeDataRepetitions(landscapeRepsFull, style)
 axTemp = figsArray[0].get_axes()[0]
 axTemp = plot.printVLines(axTemp, chngDays[0])
 axTemp = plot.printHAxisNumbers(
-        axTemp, chngDays[0], style['xRange'][1],
-        'Gray', relStr=REL_STR
+        axTemp, chngDays[0], style['xRange'][1], 'Gray', relStr=REL_STR
     )
 style['yRange'] = (0, maxPop * 1.25)
 style['aspect'] = monet.scaleAspect(.15, style)
