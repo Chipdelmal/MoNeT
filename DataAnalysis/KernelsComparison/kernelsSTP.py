@@ -205,7 +205,7 @@ chngDays.append(monet.getConditionChangeDays(thrsBool))
 prtcDays.append(monet.countConditionDays(thrsBool))
 # Get the info to min pop
 nodePopDict = {}
-nodePopDict["population"] = nodePop
+nodePopDict["population"] = summedLand
 minData = fun.getTimeToMinAtAllele(nodePopDict, gIx, safety=.2)
 minTuple.append(minData)
 # Plot
@@ -219,7 +219,7 @@ axTemp = plot.printHAxisNumbers(
 style['xRange'] = (95, 3 * 365)
 style['yRange'] = (0, maxPop * 1.25)
 style['aspect'] = monet.scaleAspect(.1, style)
-axTemp = plot.printMinTitle(axTemp, str(maxPop/2))
+# axTemp = plot.printMinTitle(axTemp, str(maxPop/2))
 axTemp = plot.setRange(axTemp, style)
 axTemp.set_aspect(aspect=style["aspect"])
 # axTemp.set_xticklabels([])
@@ -244,5 +244,3 @@ print(
         '[' + str(datetime.datetime.now()) + ']' + aux.CEND
     )
 print(aux.PAD)
-
-repsSummed
