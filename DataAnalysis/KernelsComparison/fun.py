@@ -86,7 +86,7 @@ def experimentSelector(args):
 
 def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
     print(
-            aux.CWHT + 'UCI Experiments Analysis '
+            aux.CWHT + '* UCI Experiments Analysis '
             + '[' + time + ']' + aux.CEND
         )
     print(aux.PADL)

@@ -1,6 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+###############################################################################
+# Saõ Tomé and Príncipe Kernels Comparisons
+#   Use Example: python kernelsSTP.py "Volumes" "kernel_cluster_10k"
+###############################################################################
+
 import sys
 import aux
 import fun
@@ -21,14 +26,14 @@ mpl.rcParams['axes.linewidth'] = .4
 (xRange, driveID) = (1095, 'LDR')
 ###############################################################################
 # Setting up the experiment analyses
-#       python kernelsSTP.py "Volumes" "kernel_cluster_10k"
 ###############################################################################
-# (ROOT, LAND, EXP) = ('Volumes', 'kernels', 'kernel_cluster_10k')
+# (ROOT, LAND, EXP) = ('Volumes', 'kernels', 'kernel_cluster_5000')
 (ROOT, LAND, EXP) = (sys.argv[1], 'kernels', sys.argv[2])
 # Full path -------------------------------------------------------------------
 PATH_ROOT = '/{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
-(PATH_IMG, PATH_DATA) = (PATH_ROOT + 'img/', PATH_ROOT)
-dir = '{}{}/'.format(PATH_ROOT, EXP)
+(PATH_IMG, PATH_DATA, dir) = (
+        PATH_ROOT + 'img/', PATH_ROOT, '{}{}/'.format(PATH_ROOT, EXP)
+    )
 # Print experiment info to terminal -------------------------------------------
 print(aux.PAD)
 fun.printExperimentHead(PATH_ROOT, PATH_IMG, dir, str(datetime.datetime.now()))
@@ -50,7 +55,7 @@ monet.makeFolder(expOutRootPath)
 monet.makeFolder(expOutExpPath)
 # Create output folder --------------------------------------------------------
 (dirTraces, dirMean) = (dirsTraces[0], dirsMean[0])
-expOutSetPath = expOutExpPath + '/' + dirMean.split('/')[-1]
+expOutSetPath = expOutExpPath + '/' + EXP + '/'
 monet.makeFolder(expOutSetPath)
 # Mean response ---------------------------------------------------------------
 print(aux.PADL)
