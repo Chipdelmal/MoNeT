@@ -134,7 +134,7 @@ print(
 ###############################################################################
 # Heatmap
 ###############################################################################
-print('* Exporting Heatmap...')
+print('* Exporting heatmap...')
 geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 geneSpatiotemporals_normalized = monet.rescaleGeneSpatiotemporals(
         geneSpatiotemporals
