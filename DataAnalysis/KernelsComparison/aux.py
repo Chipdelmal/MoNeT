@@ -20,7 +20,8 @@ PADL = '' + 79 * '-' + ''
 # #############################################################################
 # Health ----------------------------------------------------------------------
 colors = [(0, .22, .66, .1), (1, 0, .6, .1), (1, 1, 1, 0)]
-cmapsH = monet.generateAlphaColorMapFromColorArray(colors)
+colorsS = [(0, .22, .66, .6), (1, 0, .6, .6), (1, 1, 1, 0)]
+cmapsS = monet.generateAlphaColorMapFromColorArray(colorsS)
 STYLE_HLT = {
         "width": .175, "alpha": .175, "dpi": 500,
         "legend": True, "aspect": .5,

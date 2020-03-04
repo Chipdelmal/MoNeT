@@ -27,8 +27,8 @@ mpl.rcParams['axes.linewidth'] = .4
 ###############################################################################
 # Setting up the experiment analyses
 ###############################################################################
-# (ROOT, LAND, EXP) = ('Volumes', 'kernels', 'kernel_cluster_5000')
-(ROOT, LAND, EXP) = (sys.argv[1], 'kernels', sys.argv[2])
+(ROOT, LAND, EXP) = ('Volumes', 'kernels', 'kernel_cluster_5000')
+# (ROOT, LAND, EXP) = (sys.argv[1], 'kernels', sys.argv[2])
 # Full path -------------------------------------------------------------------
 PATH_ROOT = '/{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
 (PATH_IMG, PATH_DATA, dir) = (
@@ -131,6 +131,25 @@ print(
                 totalPopsStr, totalPopsStr
             )
     )
+###############################################################################
+# Heatmap
+###############################################################################
+geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
+geneSpatiotemporals_normalized = monet.rescaleGeneSpatiotemporals(
+        geneSpatiotemporals
+    )
+overlay = monet.plotGenotypeOverlayFromLandscape(
+    geneSpatiotemporals_normalized,
+    style={"aspect": .25, "cmap": aux.cmapsS},
+    vmax=1
+)
+overlay.savefig(
+    expOutSetPath + "/Heatmap.pdf", dpi=style['dpi'],
+    facecolor=None, edgecolor='w', orientation='portrait', papertype=None,
+    format='pdf', transparent=True, bbox_inches='tight',
+    pad_inches=.01
+)
+plt.close()
 ###############################################################################
 # Full landscape traces
 ###############################################################################
