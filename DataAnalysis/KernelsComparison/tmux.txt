@@ -1,0 +1,6 @@
+tmux attach -t "Kernels"
+conda activate MoNeT; cd /Users/sanchez.hmsc/Documents/GitHub/MoNeT/DataAnalysis/KernelsComparison; clear;
+
+
+python3 kernelsSTP.py "Volumes" "kernel_cluster_2500"
+python3 kernelsSTP.py "Volumes" "kernel_regular_2500"
