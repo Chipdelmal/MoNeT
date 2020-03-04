@@ -23,7 +23,7 @@ mpl.rcParams['axes.linewidth'] = .4
 (thresholds, SSPOP, MALE, FEMALE) = (
         [.1, .25, .5, .75, .9], 10000, True, True
     )
-(xRange, driveID) = (1095, 'LDR')
+(xRange, driveID, burn) = (1095, 'LDR', 150)
 ###############################################################################
 # Setting up the experiment analyses
 ###############################################################################
@@ -69,7 +69,7 @@ aggregatedNodesData = monet.aggregateGenotypesInLandscape(
 # Get the max range for each node ---------------------------------------------
 maxPops = []
 for i in aggregatedNodesData["landscape"]:
-    maxPops.append(i[REL_STR][-1] * 1)
+    maxPops.append(i[burn][-1] * 1)
 # Get the crosses through thresholds ------------------------------------------
 (chngDays, prtcDays) = ([], [])
 for j in range(len(aggregatedNodesData['landscape'])):
@@ -94,14 +94,14 @@ landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
 # Get the max range for each node ---------------------------------------------
 maxPops = []
 for i in landscapeReps["landscapes"][0]:
-    maxPops.append(i[REL_STR][-1] * 1)
+    maxPops.append(i[burn][-1] * 1)
 # Plot ------------------------------------------------------------------------
 figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
 totalPopsStr = str(len(figsArray)).zfill(3)
 for j in range(0, len(figsArray)):
     print(
             '* Exporting population plots ({}/{})...'.format(
-                    str(j + 1).zfill(3), totalPopsStr
+                    str(j+1).zfill(3), totalPopsStr
                 ), end='\r'
         )
     axTemp = figsArray[j].get_axes()[0]
