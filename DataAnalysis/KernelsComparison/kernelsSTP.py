@@ -27,8 +27,8 @@ mpl.rcParams['axes.linewidth'] = .4
 ###############################################################################
 # Setting up the experiment analyses
 ###############################################################################
-(ROOT, LAND, EXP) = ('Volumes', 'kernels', 'kernel_cluster_5000')
-# (ROOT, LAND, EXP) = (sys.argv[1], 'kernels', sys.argv[2])
+# (ROOT, LAND, EXP) = ('Volumes', 'kernels', 'kernel_cluster_5000')
+(ROOT, LAND, EXP) = (sys.argv[1], 'kernels', sys.argv[2])
 # Full path -------------------------------------------------------------------
 PATH_ROOT = '/{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
 (PATH_IMG, PATH_DATA, dir) = (
