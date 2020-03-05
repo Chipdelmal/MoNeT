@@ -20,10 +20,10 @@ import auxCluster as auxC
 import MoNeT_MGDrivE as monet
 warnings.filterwarnings("ignore", category=UserWarning)
 
-BASE_PATH = '/Volumes/marshallShare/UCI/STP/'
+BASE_PATH = '/Volumes/marshallShare/UCI/videoDemo/'
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
-        'out', 'stp_kernel_elevation_v3_balanced_NRM',
-        'kernels/clustered', 'C0002', '001'
+        'sims', 'stp_all_sites_cluster',
+        'clustered', 'C0267', '000'
     )
 (PAD, DPI) = (.1, 512)
 ###############################################################################
@@ -51,7 +51,7 @@ aggDict = monet.autoGenerateGenotypesDictionary(
 (expFolder, extras, expPath, outPath) = (
         BASE_PATH + dataFldr,
         BASE_PATH + clstFldr + '/',
-        BASE_PATH + dataFldr + '/' + expName + '/ANALYZED/0001/',
+        BASE_PATH + dataFldr + '/ANALYZED/0001/',
         BASE_PATH + 'video/'
     )
 ###############################################################################
@@ -64,7 +64,7 @@ aggDict = monet.autoGenerateGenotypesDictionary(
 #   AGCV: Clusters centroids? -> contained now in "_I"
 ###############################################################################
 (patchFilePattern, imagePattern) = (
-        {'male': '/M_*', 'female': ''},
+        {'male': '/M_*', 'female': '/F_*'},
         'c_%06d.png'
     )
 (bgName, originalCoordFile) = (
@@ -84,19 +84,11 @@ subprocess.Popen(['mkdir', imageLocation])
 ###############################################################################
 # Create video
 ###############################################################################
-clusters = auxC.populateClustersFromList(
-        clstList, expPath, patchFilePattern
-    )
-clusters[0]['male']
-
+clusters = auxC.populateClustersFromList(clstList, expPath, patchFilePattern)
 aggList = monet.aggregateClusters(clusters, aggDict)
 meanPopSize = np.mean([i[100][0] for i in aggList])
 aux.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imageLocation, colors, original_corners,
-        PAD, DPI, skip=False, countries=True, refPopSize= 750 #np.amax(aggList) * .1
+        PAD, DPI, skip=True, countries=True, refPopSize= 750 #np.amax(aggList) * .1
     )
-
-# video = aux.callffmpeg(imageLocation, 'c_%06d.png ', 30, (4096, 2160), vname)
-# video.wait()
-# ffmpeg -r 30 -f image2 -s 4096x2160 -i /Volumes/marshallShare/UCI/STP/video/clustercharts/c_%06d.png  -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -vcodec libx264 -crf 25 -pix_fmt yuv420p /Volumes/marshallShare/UCI/STP/video/STP.mp4

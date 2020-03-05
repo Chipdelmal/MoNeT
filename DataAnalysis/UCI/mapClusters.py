@@ -37,11 +37,11 @@ for clusterFile in sorted(glob.glob(pathRoot+'/C*I.csv')):
     if clusterNum == 1:
         if firstRun:
             firstRun = False
-            print(clusterFile)
+            print('* ' + clusterFile, end='\r')
         else:
             continue
     else:
-        print('*'+clusterFile, end='\r')
+        print('* ' + clusterFile, end='\r')
 
     # Read coordinates
     (minLat, maxLat, minLong, maxLong) = (0, 0, 0, 0)

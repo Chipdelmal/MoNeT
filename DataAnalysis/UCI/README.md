@@ -9,6 +9,21 @@
 * [mapClusters](./mapClusters.py): Generates the background layer for the videos.
 
 
+##  Video
+
+To generate the videos for STP follow these steps:
+
+1. [clusterAndAggregate](https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/UCI/clusterAndAggregate.py): Runs the clustering and aggregation routines to group the points for a cleaner visualization.
+2. [mapClusters](https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/UCI/mapClusters.py): Generates a map of the geography, so that it can be used as the background of the video.
+3. [video](https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/UCI/video.py): Exports the frames of the videos.
+4. Finally, run the following **ffmpeg** line:
+
+```
+ffmpeg -r 30 -f image2 -s 4096x2160 -i /Volumes/marshallShare/UCI/videoDemo/video/clustercharts/c_%06d.png  -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -vcodec libx264 -crf 25 -pix_fmt yuv420p /Volumes/marshallShare/UCI/videoDemo/video/STP.mp4
+```
+
+
+
 ##  Auxiliaries
 
 * [fun](./fun.py): Functions definitions for analyses.
@@ -19,7 +34,3 @@
 * [auxCluster](./auxCluster.py): Cluster-related code.
 * [checkArrays](./checkArrays.py): Unknown
 * [normalizeKernel](./normalizeKernel.py): Auxiliary script to make sure the kernel runs from 0 to 1.
-
-```
-ffmpeg -r 30 -f image2 -s 4096x2160 -i c_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p video.mp4
-```
