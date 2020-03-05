@@ -1,11 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import plots
 import os as os
 import csv as csv
 import numpy as np
 import tGD_aux as aux
+import tGD_plots as plots
 import MoNeT_MGDrivE as monet
 
 

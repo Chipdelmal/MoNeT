@@ -70,5 +70,5 @@ for i in range(0, len(pathsRoot)):
     # figA = plots.plotMeanGenotypeTrace(aggData, styleT, ssDay, 2 * yRange)
     # figA.get_axes()[0].set_xlim(0, xRange)
     # figA.get_axes()[0].set_ylim(0, 2 * yRange)
-
     aux.plotAndSaveStack(aggData, ssDay, ffString, ffStringH, pathRoot + "/images/stacks/" + str(DRIVE).rjust(2, "0") + "S_" + experimentString + FORMAT)
+monet.exportGeneLegend(genes, colors, pathRoot + "/images/stacks/Palette" + FORMAT, 500)

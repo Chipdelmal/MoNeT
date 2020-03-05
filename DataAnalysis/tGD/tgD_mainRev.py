@@ -198,3 +198,4 @@ if STACK is True:
         # figA.get_axes()[0].set_ylim(0, 2 * yRange)
 
         plotAndSaveStack(aggData, ssDay, ffString, ffStringH, pathRoot + "/images/" + str(DRIVE).rjust(2, "0") + "S_" + experimentString + FORMAT)
+monet.exportGeneLegend(genes, colors, pathRoot + "/images/stacks/Palette" + FORMAT, 500)
