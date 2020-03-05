@@ -25,7 +25,7 @@ COLORS = [
     ]
 
 ###############################################################################
-pathRoot = "/Volumes/marshallShare/UCI/STP/kernels/clustered"
+pathRoot = '/Volumes/marshallShare/UCI/videoDemo/clustered/'
 firstRun = True
 ###############################################################################
 for clusterFile in sorted(glob.glob(pathRoot+'/C*I.csv')):
@@ -41,7 +41,7 @@ for clusterFile in sorted(glob.glob(pathRoot+'/C*I.csv')):
         else:
             continue
     else:
-        print(clusterFile)
+        print('*'+clusterFile, end='\r')
 
     # Read coordinates
     (minLat, maxLat, minLong, maxLong) = (0, 0, 0, 0)

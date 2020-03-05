@@ -6,23 +6,23 @@
 import time
 import numpy as np
 import auxCluster as aux
-import MoNeT_MGDrivE as monet
+# import MoNeT_MGDrivE as monet
 from sklearn.cluster import KMeans
 
 ###############################################################################
 # Parameters Setup
 ###############################################################################
 (PATH, LATLONGS, DIST, OUT) = (
-    "/Volumes/marshallShare/UCI/STP/kernels/",
-    "stp_all_sites_v3.csv",
+    "/Volumes/marshallShare/UCI/videoDemo/",
+    "stp_all_sites_cluster.csv",
     "stp_kernel_elevation_v3_balanced_NRM.csv",
     "clustered/"
 )
-(CLUSTERS_NO, REPS) = ([1, 2, 10, 25, 50, 75, 100, 250], 10)
+(CLUSTERS_NO, REPS) = ([1, 2, 10, 25, 50, 75, 100, 200, 267], 25)
 ###############################################################################
 # Read latlongs and migration matrix
 ###############################################################################
-migrMat = np.genfromtxt(PATH + DIST, delimiter=',')
+# migrMat = np.genfromtxt(PATH + DIST, delimiter=',')
 latlongs = np.genfromtxt(
     PATH + LATLONGS, skip_header=1,
     delimiter=',', usecols=[0, 1]
@@ -47,15 +47,15 @@ for clst in CLUSTERS_NO:
             clustersObj.labels_,
             clustersObj.cluster_centers_
         )
-        aggrMat = monet.aggregateLandscape(migrMat, clusters)
+        # aggrMat = monet.aggregateLandscape(migrMat, clusters)
         #######################################################################
         # Export
         #######################################################################
         # Define filenames
         placeName = "STP"
-        filenames = outRepPath + "/C" + str(clst).rjust(4, '0') + '_' + str(rep).rjust(3, '0')
+        filenames = outRepPath+"/C"+str(clst).rjust(4, '0')+'_'+str(rep).rjust(3,'0')
         # Export files
-        np.savetxt(filenames + "_A.csv", aggrMat, delimiter=',')
+        # np.savetxt(filenames + "_A.csv", aggrMat, delimiter=',')
         aux.writeLatLongsClustersWithID(
             coordsList, clusters, centroids,
             filenames + "_I.csv"

@@ -50,7 +50,7 @@ def writeLatLongsClustersWithID(latlongs, clusters, centroids, path):
                     row[0],
                     row[1], row[2],
                     clusters[i],
-                    centroids[clusters[i]][0], centroids[clusters[i]][1]
+                    centroids[clusters[i]][1], centroids[clusters[i]][0]
                 ])
         return True
     return False
@@ -93,7 +93,7 @@ def populateClustersFromList(
     (clusterNum, clusters) = (len(set(cList)), [])
     for i in range(clusterNum):
         clusters.append({'male': [], 'female': []})
-    #
+    # Male files clustering
     if 'male' in pFilePattern:
         patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['male']))
     else:
