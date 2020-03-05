@@ -95,6 +95,11 @@ def generateClusterGraphs(
                 return e
         else:
             ax.axis('off')
+            plt.text(
+                    0.5, 0.5, str(tick).zfill(4),
+                    ha='left', va='top',
+                    transform=fig.transFigure
+                )
             fig.savefig(imgFileName,
                         dpi=dpi, orientation='portrait', papertype=None,
                         transparent=False, format="png",

@@ -23,17 +23,13 @@ warnings.filterwarnings("ignore", category=UserWarning)
 BASE_PATH = '/Volumes/marshallShare/UCI/videoDemo/'
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
         'sims', 'stp_all_sites_cluster',
-        'clustered', 'C0267', '000'
+        'clustered', 'C0100', '000'
     )
 (PAD, DPI) = (.1, 512)
 ###############################################################################
 # Colors and genotypes
 ###############################################################################
-colors = [
-        "#090446", "#f20060", "#ff28d4", "#7fff3a", "#c6d8ff", '#6e44ff',
-        '#e56399', '#ee6c4d', '#861657', '#5cf64a', 'yellow', 'magenta',
-        'purple', 'black', 'cyan', 'teal'
-    ]
+colors = ['#090446', '#ff004d', '#7fff3a', '#9037dd', '#ffed38']
 aggDict = monet.autoGenerateGenotypesDictionary(
         ['W', 'H', 'R', 'B'],
         ['WW', 'WH', 'WR', 'WB', 'HH', 'HR', 'HB', 'RR', 'RB', 'BB']
@@ -90,5 +86,6 @@ meanPopSize = np.mean([i[100][0] for i in aggList])
 aux.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imageLocation, colors, original_corners,
-        PAD, DPI, skip=True, countries=True, refPopSize= 750 #np.amax(aggList) * .1
+        PAD, DPI, skip=False, countries=True, refPopSize=750
+        # refPopSize=np.amax(aggList) * .1
     )
