@@ -62,7 +62,7 @@ def generateClusterGraphs(
             clstFile,
             aggList, coordinates, destination, colorList, original_corners,
             padding, dpi, countries=False, skip=False, refPopSize=1,
-            verbose=True, background=False
+            verbose=True, background=False, timeLocation=(.5, .5)
         ):
     time = len(aggList[0])
     # if original_corners:
@@ -96,7 +96,7 @@ def generateClusterGraphs(
         else:
             ax.axis('off')
             plt.text(
-                    0.5, 0.5, str(tick).zfill(4),
+                    timeLocation[0], timeLocation[1], str(tick+1).zfill(4),
                     ha='left', va='top',
                     transform=fig.transFigure
                 )

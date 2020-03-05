@@ -86,6 +86,6 @@ meanPopSize = np.mean([i[100][0] for i in aggList])
 aux.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imageLocation, colors, original_corners,
-        PAD, DPI, skip=False, countries=True, refPopSize=750
+        PAD, DPI, skip=False, countries=True, refPopSize=300
         # refPopSize=np.amax(aggList) * .1
     )
