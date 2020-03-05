@@ -14,13 +14,15 @@
 import glob
 import warnings
 import subprocess
-import numpy as np
 import auxVideo as aux
 import auxCluster as auxC
 import MoNeT_MGDrivE as monet
 warnings.filterwarnings("ignore", category=UserWarning)
 
-BASE_PATH = '/Volumes/marshallShare/UCI/videoDemo/'
+(BASE_PATH, DATA_PATH) = (
+        '/Volumes/marshallShare/UCI/videoDemo/'
+        '/Volumes/marshallShare/UCI/kernels/kernel_cluster_10k/'
+    )
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
         'sims', 'stp_all_sites_cluster',
         'clustered', 'C0100', '000'
@@ -44,10 +46,9 @@ aggDict = monet.autoGenerateGenotypesDictionary(
 #   expPath: Folder nested within the ANALYZED folder for parameters sweeps
 #       (would be equal to expFolder in case it's not existing)
 ###############################################################################
-(expFolder, extras, expPath, outPath) = (
-        BASE_PATH + dataFldr,
+(extras, expPath, outPath) = (
         BASE_PATH + clstFldr + '/',
-        BASE_PATH + dataFldr + '/ANALYZED/0001/',
+        DATA_PATH + '/ANALYZED/0001/',
         BASE_PATH + 'video/'
     )
 ###############################################################################
@@ -60,17 +61,13 @@ aggDict = monet.autoGenerateGenotypesDictionary(
 #   AGCV: Clusters centroids? -> contained now in "_I"
 ###############################################################################
 (patchFilePattern, imagePattern) = (
-        {'male': '/M_*', 'female': '/F_*'},
-        'c_%06d.png'
+        {'male': '/M_*', 'female': '/F_*'}, 'c_%06d.png'
     )
 (bgName, originalCoordFile) = (
         glob.glob(extras + aggLvl + '_' + clstSample + '*VBG.png')[0],
         glob.glob(extras + aggLvl + '_' + clstSample + '*I.csv')[0]
     )
-(vname, imageLocation) = (
-        outPath + 'STP.mp4',
-        outPath + 'clustercharts/'
-    )
+(vname, imageLocation) = (outPath + 'STP.mp4', outPath + 'clustercharts/')
 original_corners = aux.get_corners(originalCoordFile)
 (coordinates, clstList) = (
         auxC.getClustersNewScheme(originalCoordFile),
@@ -82,10 +79,8 @@ subprocess.Popen(['mkdir', imageLocation])
 ###############################################################################
 clusters = auxC.populateClustersFromList(clstList, expPath, patchFilePattern)
 aggList = monet.aggregateClusters(clusters, aggDict)
-meanPopSize = np.mean([i[100][0] for i in aggList])
 aux.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imageLocation, colors, original_corners,
         PAD, DPI, skip=False, countries=True, refPopSize=300
-        # refPopSize=np.amax(aggList) * .1
     )

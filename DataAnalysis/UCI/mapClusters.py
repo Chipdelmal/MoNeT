@@ -5,7 +5,6 @@
 ###############################################################################
 # Video Background Generator
 ###############################################################################
-# import os
 import fun
 import glob
 import matplotlib.pyplot as plt
@@ -33,7 +32,6 @@ for clusterFile in sorted(glob.glob(pathRoot+'/C*I.csv')):
     # getfolder name and ignore the C in front of it to chech for the number
     #   of clusters
     clusterNum = int(clusterstr)
-
     if clusterNum == 1:
         if firstRun:
             firstRun = False

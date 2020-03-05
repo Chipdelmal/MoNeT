@@ -40,11 +40,11 @@ def writeLatLongsClustersWithID(latlongs, clusters, centroids, path):
         with open(path, 'w') as fh:
             writer = csv.writer(fh, delimiter=',')
             writer.writerow([
-                'ID',
-                'Latitude', 'Longitude',
-                'Cluster',
-                'Centroid Latitude', 'Centroid Longitude'
-            ])
+                    'ID',
+                    'Latitude', 'Longitude',
+                    'Cluster',
+                    'Centroid Latitude', 'Centroid Longitude'
+                ])
             for (i, row) in enumerate(latlongs):
                 writer.writerow([
                     row[0],
@@ -98,16 +98,14 @@ def populateClustersFromList(
         patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['male']))
     else:
         patchFileList = sorted(glob.glob(pFileLocation+'/M_*'))
-
     for index, patchFileN in enumerate(patchFileList):
         clusters[cList[index]]['male'].append(patchFileN)
-
+    # Female files clustering
     if 'female' in pFilePattern:
         patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['female']))
     else:
         patchFileList = sorted(glob.glob(pFileLocation+'/F_*'))
-
     for index, patchFileN in enumerate(patchFileList):
         clusters[cList[index]]['female'].append(patchFileN)
-
+    # Return
     return clusters

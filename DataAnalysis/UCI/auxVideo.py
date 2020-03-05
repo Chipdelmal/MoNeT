@@ -200,5 +200,5 @@ def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
         m.scatter(
                 [long], [lat], latlon=True, marker=(6, 0),
                 s=max(6, 0.11 * size), facecolor=colorList[idx],
-                alpha=value, linewidths=.2, edgecolors='White'
+                alpha=value, linewidths=.25, edgecolors='White'
             )
