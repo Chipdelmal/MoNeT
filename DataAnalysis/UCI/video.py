@@ -32,7 +32,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 DATA_PATH = '/Volumes/marshallShare/UCI/kernels/{}/'.format(kernelName)
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
         'sims', 'stp_all_sites_cluster',
-        'clustered', 'C0100', '000'
+        'clustered', 'C0267', '000'
     )
 (PAD, DPI) = (.1, 512)
 ###############################################################################
@@ -106,7 +106,7 @@ ticks = aggList[0].shape[0]
 aux.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imgLocation, colors, original_corners,
-        PAD, DPI, skip=True, countries=True, refPopSize=300
+        PAD, DPI, skip=False, countries=True, refPopSize=300
     )
 print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
 print('* Please run the following command in console:')
