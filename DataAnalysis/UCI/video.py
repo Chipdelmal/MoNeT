@@ -11,18 +11,25 @@
 #   https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/ERACR/Yorkeys.py
 #   https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/AggregationAndClustering
 ###############################################################################
+import sys
 import glob
 import warnings
-import subprocess
+import datetime
 import auxVideo as aux
 import auxCluster as auxC
 import MoNeT_MGDrivE as monet
 warnings.filterwarnings("ignore", category=UserWarning)
 
-(BASE_PATH, DATA_PATH) = (
-        '/Volumes/marshallShare/UCI/videoDemo/'
-        '/Volumes/marshallShare/UCI/kernels/kernel_cluster_10k/'
+
+# (BASE_PATH, kernelName) = (
+#         '/Volumes/marshallShare/UCI/videoDemo/', 'kernel_cluster_2500'
+#
+#     )
+(BASE_PATH, kernelName) = (
+        '/Volumes/marshallShare/UCI/videoDemo/', sys.argv[1]
+
     )
+DATA_PATH = '/Volumes/marshallShare/UCI/kernels/{}/'.format(kernelName)
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
         'sims', 'stp_all_sites_cluster',
         'clustered', 'C0100', '000'
@@ -47,10 +54,11 @@ aggDict = monet.autoGenerateGenotypesDictionary(
 #       (would be equal to expFolder in case it's not existing)
 ###############################################################################
 (extras, expPath, outPath) = (
-        BASE_PATH + clstFldr + '/',
-        DATA_PATH + '/ANALYZED/0001/',
-        BASE_PATH + 'video/'
+        '{}{}/'.format(BASE_PATH, clstFldr),
+        '{}/ANALYZED/0001/'.format(DATA_PATH),
+        '{}video/{}/'.format(BASE_PATH, kernelName)
     )
+monet.makeFolder(outPath)
 ###############################################################################
 # File names parsing
 ###############################################################################
@@ -67,20 +75,63 @@ aggDict = monet.autoGenerateGenotypesDictionary(
         glob.glob(extras + aggLvl + '_' + clstSample + '*VBG.png')[0],
         glob.glob(extras + aggLvl + '_' + clstSample + '*I.csv')[0]
     )
-(vname, imageLocation) = (outPath + 'STP.mp4', outPath + 'clustercharts/')
+(imgLocation, videoLocation) = (
+        outPath,
+        '{}video/{}.mp4'.format(BASE_PATH, kernelName)
+    )
 original_corners = aux.get_corners(originalCoordFile)
 (coordinates, clstList) = (
         auxC.getClustersNewScheme(originalCoordFile),
         auxC.readClustersIDs(originalCoordFile)
     )
-subprocess.Popen(['mkdir', imageLocation])
 ###############################################################################
-# Create video
+# Terminal message
+###############################################################################
+print(aux.PAD)
+print('{}Exporting video [{}]{}'.format(
+            aux.CWHT, str(datetime.datetime.now()), aux.CEND
+        ))
+print(aux.PADL + aux.CRED)
+print('* PATH base: \t{}'.format(BASE_PATH))
+print('* PATH data: \t{}'.format(DATA_PATH))
+print('* PATH imgs: \t{}'.format(imgLocation))
+print('* PATH video: \t{}'.format(videoLocation))
+print(aux.CEND + aux.PADL)
+###############################################################################
+# Export Frames
 ###############################################################################
 clusters = auxC.populateClustersFromList(clstList, expPath, patchFilePattern)
 aggList = monet.aggregateClusters(clusters, aggDict)
+ticks = aggList[0].shape[0]
 aux.generateClusterGraphs(
         originalCoordFile,
-        aggList, coordinates, imageLocation, colors, original_corners,
-        PAD, DPI, skip=False, countries=True, refPopSize=300
+        aggList, coordinates, imgLocation, colors, original_corners,
+        PAD, DPI, skip=True, countries=True, refPopSize=300
     )
+print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
+print('* Please run the following command in console:')
+###############################################################################
+# Generate video
+###############################################################################
+console = [
+            'ffmpeg',
+            '-r', '30',
+            '-f', 'image2',
+            '-s', '4096x2160',
+            '-i', '{}c_%06d.png'.format(imgLocation),
+            '-vf', '"pad=ceil(iw/2)*2:ceil(ih/2)*2"',
+            '-vcodec', 'libx264',
+            '-crf', '25',
+            '-pix_fmt', 'yuv420p', videoLocation
+        ]
+# video = subprocess.Popen(console)
+# video.wait()
+###############################################################################
+# Terminal message
+###############################################################################
+print(aux.CWHT + ' '.join(console) + aux.CEND)
+print(aux.PADL)
+print('{}Exported frames [{}]{}'.format(
+            aux.CWHT, str(datetime.datetime.now()), aux.CEND
+        ))
+print(aux.PAD)

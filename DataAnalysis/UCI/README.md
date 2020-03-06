@@ -19,7 +19,12 @@ To generate the videos for STP follow these steps:
 4. Finally, run the following **ffmpeg** line:
 
 ```
-ffmpeg -r 30 -f image2 -s 4096x2160 -i /Users/sanchez.hmsc/Desktop/clustercharts/c_%06d.png  -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -vcodec libx264 -crf 25 -pix_fmt yuv420p /Users/sanchez.hmsc/Desktop/STP.mp4
+ffmpeg -r 30 -f image2 -s 4096x2160 -i /Volumes/marshallShare/UCI/videoDemo/video/kernel_cluster_2500/c_%06d.png -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -vcodec libx264 -crf 25 -pix_fmt yuv420p /Volumes/marshallShare/UCI/videoDemo/video/kernel_cluster_2500.mp4
+```
+
+```
+conda activate MoNeT; cd /Users/sanchez.hmsc/Documents/GitHub/MoNeT/DataAnalysis/UCI; clear;
+python3 video.py 'kernel_cluster_5000'
 ```
 
 
