@@ -7,6 +7,8 @@
 # In case of:
 #   UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf1
 #   https://github.com/matplotlib/basemap/issues/324
+#       replace all "utf-8" with "latin-1" in shapefile.py, which located in
+#       ~/Library/Python/3.7/lib/python/site-packages/shapefile.py
 # Depends on an obsolete structure (needs to be updated):
 #   https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/ERACR/Yorkeys.py
 #   https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/AggregationAndClustering

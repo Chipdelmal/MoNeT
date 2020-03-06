@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
 import numpy as np
 import MoNeT_MGDrivE as monet
 import tgD_select as sel
 import tGD_plots as plots
 import tGD_aux as aux
 import matplotlib.pyplot as plt
-import os
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 def quickSaveFigure(
