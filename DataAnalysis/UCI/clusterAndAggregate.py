@@ -18,7 +18,7 @@ from sklearn.cluster import KMeans
     "stp_kernel_elevation_v3_balanced_NRM.csv",
     "clustered/"
 )
-(CLUSTERS_NO, REPS) = ([1, 2, 10, 25, 50, 75, 100, 150, 200, 267], 25)
+(CLUSTERS_NO, REPS) = ([1, 2, 10, 25, 50, 75, 100, 150, 200, 267], 10)
 ###############################################################################
 # Read latlongs and migration matrix
 ###############################################################################

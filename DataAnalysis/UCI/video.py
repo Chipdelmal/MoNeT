@@ -34,7 +34,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 DATA_PATH = '/Volumes/marshallShare/UCI/kernels/{}/'.format(kernelName)
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
         'sims', 'stp_all_sites_cluster',
-        'clustered', 'C0267', '000'
+        'clustered', 'C0150', '000'
     )
 (PAD, DPI) = (.1, 512)
 ###############################################################################
@@ -111,7 +111,7 @@ aux.generateClusterGraphs(
         PAD, DPI, skip=False, countries=True, refPopSize=300
     )
 print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
-print('* Please run the following command in console:')
+print('* Please run the following command in the terminal:')
 ###############################################################################
 # Generate video
 ###############################################################################
