@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
     )
 # cm = plt.get_cmap('bwr')
 cm = plot.cm
-(xRange, yRange) = (1000, 1)
+(xRange, yRange) = (150, 1)
 drvPars = drv.driveSelector(DRIVE_ID)
 (STYLE, DRIVE) = (aux.STYLE_HLT, drvPars.get('HLT'))
 ###############################################################################
@@ -78,16 +78,16 @@ for rid in relSizes:
         trace = aggregatedNodesData['landscape'][NOI].T[GOI] / SSPOP
         # Plot
         ax.plot(
-                range(len(trace)), trace,
+                [i/7 for i in range(len(trace))], trace,
                 color=cm(gradient[i]), alpha=.75, lw=1
             )
     ax.set_xlim(0, xRange)
     ax.set_ylim(0, yRange)
-    ax.set_aspect(1000)
+    ax.set_aspect(xRange)
     ax.grid(True, alpha=.5, lw=.2, ls='--')
     fig.savefig(
             '{}Z_{}_{}.pdf'.format(PATH_IMG, rid, spltNm[-1]),
-            bbox_inches='tight', pad_inches=0, transparent=True
+            bbox_inches='tight', pad_inches=0.1, transparent=True
         )
     plt.close('all')
 time = datetime.datetime.now()

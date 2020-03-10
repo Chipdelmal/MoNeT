@@ -1,0 +1,1 @@
+ffmpeg -r 30 -f image2 -s 1920x1080 -i ./STP_%03d.jpeg -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -flags +global_header -vcodec libx264 -crf 10 -pix_fmt yuv420p ./STP.mp4

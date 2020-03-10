@@ -23,13 +23,13 @@ STYLE_ECO = {
         "legend": True, "aspect": .5,
         "xRange": [0, 5 * 365], "yRange": [0, 1],
         "colors": [
-                (255, 100, 100),  # Red
-                (125, 255, 125),  # Light Green
-                (100, 0, 255),  # Purple
-                (230, 0, 255),  # Pink
-                (180, 200, 254),  # Light Green
-                (50, 50, 125),  # Dark Blue
-                (250, 160, 200)   # Light Pink
+                (255, 100, 100),    # Red
+                (125, 255, 125),    # Light Green
+                (100, 0, 255),      # Purple
+                (230, 0, 255),      # Pink
+                (180, 200, 254),    # Light Green
+                (50, 50, 125),      # Dark Blue
+                (250, 160, 200)     # Light Pink
             ]
     }
 STYLE_ECO['aspect'] = monet.scaleAspect(.25, STYLE_ECO)
