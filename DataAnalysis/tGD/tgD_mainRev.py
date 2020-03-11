@@ -1,28 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os
-import numpy as np
+import tGD_fun as fun
 import MoNeT_MGDrivE as monet
 import tgD_select as sel
-import tGD_aux as aux
-import tGD_fun as fun
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
-
-def quickSaveFigure(
-    fig,
-    path,
-    dpi=1024,
-    format=None
-):
-    fig.savefig(
-        path, facecolor='w',
-        edgecolor='w', orientation='portrait',
-        transparent=True, bbox_inches=None,
-        pad_inches=0, frameon=None
-    )
-
 
 ##############################################################################
 # Drive:
@@ -72,11 +55,16 @@ if STACK is True:
     expNum = len(pathsRoot)
     for i in range(0, expNum):
         #####################################################################
-        (aggData, ssDay, experimentString) = fun.getAggDataSSDay(
+        (aggData, ssDay, expStr) = fun.getAggDataSSDay(
                 pathsRoot, i, aggregationDictionary
             )
         (ssDay, popMin) = fun.getTimeToMin(aggData)
-        print('* Exporting ({}/{})'.format(str(i+1).zfill(4), str(expNum).zfill(4)), end='\r')
+        print(
+                '* Exporting ({}/{})'.format(
+                        str(i+1).zfill(4),
+                        str(expNum).zfill(4)
+                    ), end='\r'
+                )
         #####################################################################
         ffString, ffStringH = fun.getFFStrings(aggData, DRIVE)
         aggData = fun.adjustAggDataForDrive(aggData)
@@ -84,9 +72,10 @@ if STACK is True:
         # figA = plots.plotMeanGenotypeTrace(aggData, styleT, ssDay, 2*yRange)
         # figA.get_axes()[0].set_xlim(0, xRange)
         # figA.get_axes()[0].set_ylim(0, 2 * yRange)
+        drvStr = str(DRIVE).zfill(2)
         fun.plotAndSaveStack(
                 aggData, ssDay, ffString, ffStringH,
-                pathRoot + "/images/" + str(DRIVE).rjust(2, "0") + "S_" + experimentString + FORMAT,
+                pathRoot + "/images/" + drvStr + "S_" + expStr + FORMAT,
                 xRange, yRange, styleS
             )
 
@@ -97,11 +86,27 @@ if TRACES is True:
     expNum = len(pathsRoot)
     ssDay = xRange
     for i in range(0, expNum):
-        print('* Exporting ({}/{})'.format(str(i+1).zfill(4), str(expNum).zfill(4)), end='\r')
-        landscapeReps, ssDay, experimentString = fun.getLandscapeReps(i, pathRoot, pathExt, aggregationDictionary)
+        # Print progress
+        print(
+                '* Exporting ({}/{})'.format(
+                        str(i+1).zfill(4),
+                        str(expNum).zfill(4)
+                    ), end='\r'
+                )
+        # Plot and export
+        landscapeReps, ssDay, expStr = fun.getLandscapeReps(
+                i, pathRoot, pathExt, aggregationDictionary
+            )
+        drvStr = str(DRIVE).zfill(2)
         fun.plotAndSaveLandscapeReps(
-                landscapeReps, ssDay, pathRoot + "images/" + str(DRIVE).rjust(2, "0") + "R_" + experimentString + FORMAT,
+                landscapeReps, ssDay,
+                pathRoot + "images/" + drvStr + "R_" + expStr + FORMAT,
                 xRange, yRangeFixed, style
             )
 
-monet.exportGeneLegend(genes, colors, pathRoot + "/images/stacks/Palette" + FORMAT, 500)
+##############################################################################
+# Export the legend
+##############################################################################
+monet.exportGeneLegend(
+        genes, colors, pathRoot + "/images/stacks/Palette" + FORMAT, 500
+    )

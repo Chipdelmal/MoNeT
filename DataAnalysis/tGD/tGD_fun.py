@@ -122,3 +122,17 @@ def getTimeToMin(aggData):
         if np.isclose(pop[time], popMin, atol=.1):
             break
     return (time, popMin)
+
+
+def quickSaveFigure(
+    fig,
+    path,
+    dpi=1024,
+    format=None
+):
+    fig.savefig(
+        path, facecolor='w',
+        edgecolor='w', orientation='portrait',
+        transparent=True, bbox_inches=None,
+        pad_inches=0, frameon=None
+    )
