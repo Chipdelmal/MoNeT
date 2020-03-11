@@ -86,7 +86,6 @@ def writeSummary(
             w.writerow([key, val])
 
 
-
 flatten = lambda l: [item for sublist in l for item in sublist]
 
 

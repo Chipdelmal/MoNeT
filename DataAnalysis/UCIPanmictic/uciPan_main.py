@@ -16,9 +16,9 @@ import matplotlib.pyplot as plt
         sys.argv[1], 'Yoosook/' + sys.argv[2],
         'LDR', sys.argv[3]
     )
-(FACT, PLOT) = (True, False)
+(FACT, PLOT) = (False, True)
 (thresholds, NOI, SSPOP, REL_STRT) = (
-        [.05, .10, .25, .50, .75],
+        [.1, .5],  # [.05, .10, .25, .50, .75],
         0, 2 * 500000,
         1
     )
@@ -69,8 +69,8 @@ for (i, (pathMean, pathTraces)) in enumerate(zip(expDirsMean, expDirsTrac)):
             landscapeData, DRIVE
         )
     # Populations at steady state and crosses through thresholds (node 0 only)
-    ssPops = fun.getSSPopsInLandscape(aggregatedNodesData, REL_STRT)
-    chDy = fun.calcDaysCrosses(aggregatedNodesData, thresholds, ssPops, gIx)
+    ssPops = monet.getSSPopsInLandscape(aggregatedNodesData, REL_STRT)
+    chDy = monet.calcDaysCrosses(aggregatedNodesData, thresholds, ssPops, gIx)
     chDayNode = chDy[0]
     # Print to CSV
     if FACT:
@@ -98,7 +98,7 @@ for (i, (pathMean, pathTraces)) in enumerate(zip(expDirsMean, expDirsTrac)):
             axTemp = plot.removeTicksAndLabels(axTemp)
             axTemp = plot.setAxesColor(axTemp, (0, 0, 0, 0.5))
             axTemp = monet.printVLines(
-                    axTemp, chDy[j], width=.2,
+                    axTemp, chDy[j], width=.35,
                     color='gray', alpha=.75, lStyle='--'
                 )
             axTemp = plot.printHAxisNumbers(

@@ -108,5 +108,5 @@ if TRACES is True:
 # Export the legend
 ##############################################################################
 monet.exportGeneLegend(
-        genes, colors, pathRoot + "/images/stacks/Palette" + FORMAT, 500
+        genes, colors, pathRoot + "/images/Palette" + FORMAT, 500
     )
