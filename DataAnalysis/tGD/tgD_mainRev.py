@@ -60,11 +60,11 @@ if STACK is True:
             )
         (ssDay, popMin) = fun.getTimeToMin(aggData)
         print(
-                '* Exporting ({}/{})'.format(
-                        str(i+1).zfill(4),
-                        str(expNum).zfill(4)
-                    ), end='\r'
-                )
+            '* Exporting ({}/{})'.format(
+                    str(i+1).zfill(4),
+                    str(expNum).zfill(4)
+                ), end='\r'
+            )
         #####################################################################
         ffString, ffStringH = fun.getFFStrings(aggData, DRIVE)
         aggData = fun.adjustAggDataForDrive(aggData)
@@ -88,11 +88,11 @@ if TRACES is True:
     for i in range(0, expNum):
         # Print progress
         print(
-                '* Exporting ({}/{})'.format(
-                        str(i+1).zfill(4),
-                        str(expNum).zfill(4)
-                    ), end='\r'
-                )
+            '* Exporting ({}/{})'.format(
+                    str(i+1).zfill(4),
+                    str(expNum).zfill(4)
+                ), end='\r'
+            )
         # Plot and export
         landscapeReps, ssDay, expStr = fun.getLandscapeReps(
                 i, pathRoot, pathExt, aggregationDictionary
