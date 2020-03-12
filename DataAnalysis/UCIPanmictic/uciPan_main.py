@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+# python3 uciPan_main.py "Volumes" "tParams" "islandMixed"
 
 import sys
 import csv
@@ -18,7 +19,7 @@ import matplotlib.pyplot as plt
     )
 (FACT, PLOT) = (False, True)
 (thresholds, NOI, SSPOP, REL_STRT) = (
-        [.1, .5],  # [.05, .10, .25, .50, .75],
+        [.05, .10, .25, .50, .75],  # [.1, .5],
         0, 2 * 500000,
         1
     )

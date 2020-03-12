@@ -29,6 +29,7 @@ if (DRIVE == 1) or (DRIVE == 2):
     colors = ["#090446", "#f20060", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
 else:
     colors = ["#f20060", "#9bc4f7", "#190bbf", "#000046", "#ff35c7", "#c6d8ff"]
+    # ["WA+WB", "H", "RA", "RB", "G"]
 genes = aggregationDictionary["genotypes"]
 ##############################################################################
 ##############################################################################
@@ -108,5 +109,5 @@ if TRACES is True:
 # Export the legend
 ##############################################################################
 monet.exportGeneLegend(
-        genes, colors, pathRoot + "/images/Palette" + FORMAT, 500
+        genes, colors, pathRoot + "/palette" + FORMAT, 500
     )
