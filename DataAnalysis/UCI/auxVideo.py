@@ -202,15 +202,3 @@ def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
                 s=max(6, 0.11 * size), facecolor=colorList[idx],
                 alpha=value, linewidths=.25, edgecolors='White'
             )
-
-
-# #############################################################################
-# Terminal aesthetics
-# #############################################################################
-PAD = '' + 79 * '*' + ''
-PADL = '' + 79 * '-' + ''
-(CRED, CYEL, CBMA, CBRE, CBBL, CWHT, CEND) = (
-        '\033[91m', '\u001b[33m', '\u001b[35;1m',
-        '\u001b[31;1m', '\u001b[34;1m', '\u001b[37m',
-        '\033[0m'
-    )

@@ -17,8 +17,9 @@ import sys
 import glob
 import warnings
 import datetime
-import auxVideo as aux
-import auxCluster as auxC
+import aux
+# import auxVideo as aux
+# import auxCluster as auxC
 import MoNeT_MGDrivE as monet
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -34,7 +35,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 DATA_PATH = '/Volumes/marshallShare/UCI/kernels/{}/'.format(kernelName)
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
         'sims', 'stp_all_sites_cluster',
-        'clustered', 'C0150', '000'
+        'clustered', 'C0100', '000'
     )
 (PAD, DPI) = (.1, 512)
 ###############################################################################
@@ -81,10 +82,10 @@ monet.makeFolder(outPath)
         outPath,
         '{}video/{}.mp4'.format(BASE_PATH, kernelName)
     )
-original_corners = aux.get_corners(originalCoordFile)
+original_corners = monet.get_corners(originalCoordFile)
 (coordinates, clstList) = (
-        auxC.getClustersNewScheme(originalCoordFile),
-        auxC.readClustersIDs(originalCoordFile)
+        monet.getClustersFromAggFiles(originalCoordFile),
+        monet.readClustersIDs(originalCoordFile)
     )
 ###############################################################################
 # Terminal message
@@ -102,10 +103,10 @@ print(aux.CEND + aux.PADL)
 ###############################################################################
 # Export Frames
 ###############################################################################
-clusters = auxC.populateClustersFromList(clstList, expPath, patchFilePattern)
+clusters = monet.populateClustersFromList(clstList, expPath, patchFilePattern)
 aggList = monet.aggregateClusters(clusters, aggDict)
 ticks = aggList[0].shape[0]
-aux.generateClusterGraphs(
+monet.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imgLocation, colors, original_corners,
         PAD, DPI, skip=False, countries=True, refPopSize=300

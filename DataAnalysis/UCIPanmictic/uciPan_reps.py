@@ -1,25 +1,25 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# python3 uciPan_main.py "Volumes" "tParams" "islandMixed"
 
-import sys
 import csv
 import datetime
 import uciPan_aux as aux
 import uciPan_fun as fun
-import uciPan_plot as plot
 import uciPan_drive as drv
 import MoNeT_MGDrivE as monet
-import matplotlib.pyplot as plt
 
 
+# (ROOT, LAND, DRIVE_ID, SETTING) = (
+#         sys.argv[1], 'Yoosook/' + sys.argv[2],
+#         'LDR', sys.argv[3]
+#     )
 (ROOT, LAND, DRIVE_ID, SETTING) = (
-        sys.argv[1], 'Yoosook/' + sys.argv[2],
-        'LDR', sys.argv[3]
+        'Volumes', 'Yoosook/' + 'yParams',
+        'LDR', 'island'
     )
-(FACT, PLOT) = (False, True)
+(FACT, PLOT) = (True, False)
 (thresholds, NOI, SSPOP, REL_STRT) = (
-        [.05, .10, .25, .50, .75],  # [.1, .5],
+        [.05, .10, .25, .50, .75],
         0, 2 * 500000,
         1
     )
@@ -70,8 +70,8 @@ for (i, (pathMean, pathTraces)) in enumerate(zip(expDirsMean, expDirsTrac)):
             landscapeData, DRIVE
         )
     # Populations at steady state and crosses through thresholds (node 0 only)
-    ssPops = monet.getSSPopsInLandscape(aggregatedNodesData, REL_STRT)
-    chDy = monet.calcDaysCrosses(aggregatedNodesData, thresholds, ssPops, gIx)
+    ssPops = fun.getSSPopsInLandscape(aggregatedNodesData, REL_STRT)
+    chDy = fun.calcDaysCrosses(aggregatedNodesData, thresholds, ssPops, gIx)
     chDayNode = chDy[0]
     # Print to CSV
     if FACT:
@@ -81,41 +81,6 @@ for (i, (pathMean, pathTraces)) in enumerate(zip(expDirsMean, expDirsTrac)):
         chDayNodeSt = [str(i) for i in chDayNode][0:len(thresholds)]
         printList.extend(chDayNodeSt)
         writer.writerow(printList)
-    # Traces -----------------------------------------------------------------
-    if PLOT:
-        # Analyzes node zero only
-        chDy = [[int(i) for i in chDy[0]]]
-        landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-                dirsTraces, DRIVE, male=True, female=True
-            )
-        figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, STYLE)
-        for j in range(len(figsArray)):
-            # Plot style corrections
-            axTemp = figsArray[j].get_axes()[0]
-            STYLE['yRange'] = (0, SSPOP)
-            STYLE['aspect'] = monet.scaleAspect(1, STYLE)
-            axTemp.set_aspect(aspect=STYLE["aspect"])
-            axTemp = plot.setRange(axTemp, STYLE)
-            axTemp = plot.removeTicksAndLabels(axTemp)
-            axTemp = plot.setAxesColor(axTemp, (0, 0, 0, 0.5))
-            axTemp = monet.printVLines(
-                    axTemp, chDy[j], width=.35,
-                    color='gray', alpha=.75, lStyle='--'
-                )
-            axTemp = plot.printHAxisNumbers(
-                    axTemp, chDy[j], STYLE['xRange'][1],
-                    'Gray', relStr=REL_STRT, fntSz=5
-                )
-            # title = plot.parseTitle(thresholds, chngDays)
-            # axTemp = plot.printTitle(axTemp, title, (.999, .99), 2, .75)
-            # Plot save
-            figsArray[j].savefig(
-                    expOutImgPath + expName + '_' + str(1+j).zfill(2) + '.pdf',
-                    dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
-                    orientation='portrait', papertype=None, format='pdf',
-                    transparent=True, bbox_inches='tight', pad_inches=.01
-                )
-            plt.close('all')
 # Close CSV for writing
 if FACT:
     fileCSV.close()
