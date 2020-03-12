@@ -28,7 +28,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 #
 #     )
 (BASE_PATH, kernelName) = (
-        '/Volumes/marshallShare/UCI/videoDemo/', sys.argv[1]
+        '/RAID5/marshallShare/UCI/videoDemo/', sys.argv[1]
 
     )
 DATA_PATH = '/Volumes/marshallShare/UCI/kernels/{}/'.format(kernelName)
