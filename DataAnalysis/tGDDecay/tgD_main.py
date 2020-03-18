@@ -15,13 +15,13 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   4: tGDX
 #   5: tGDCross
 #   6: tGDXCross
+#   7: tGD One Transgene
 ##############################################################################
-DRIVE = 3
-(TRACES, STACK) = (True, False)
-FORMAT = ".pdf"
+DRIVE = 7
+(TRACES, STACK, FORMAT) = (True, False, '.pdf')
 ##############################################################################
 ##############################################################################
-pathRoot = "/Volumes/marshallShare/tGD/"
+pathRoot = '/RAID5/marshallShare/tGD/'  # '/Users/sanchez.hmsc/Desktop/tGD/'
 pathExt, aggregationDictionary, yRange = sel.driveSelector(
     DRIVE, pathRoot
 )
