@@ -17,8 +17,8 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   6: tGDXCross
 #   7: tGD One Transgene
 ##############################################################################
-DRIVE = 7
-(TRACES, STACK, FORMAT) = (True, False, '.pdf')
+DRIVE = 3
+(TRACES, STACK, FORMAT) = (False, True, '.pdf')
 ##############################################################################
 ##############################################################################
 pathRoot = '/RAID5/marshallShare/tGD/'  # '/Users/sanchez.hmsc/Desktop/tGD/'
@@ -59,25 +59,26 @@ if STACK is True:
         (aggData, ssDay, expStr) = fun.getAggDataSSDay(
                 pathsRoot, i, aggregationDictionary
             )
-        (ssDay, popMin) = fun.getTimeToMin(aggData)
+        (ssDay, popMin) = (0, 0) # fun.getTimeToMin(aggData)
         print(
-            '* Exporting ({}/{})'.format(
+            '* Exporting ({}/{}): {}'.format(
                     str(i+1).zfill(4),
-                    str(expNum).zfill(4)
+                    str(expNum).zfill(4),
+	            pathRoot + 'images/'
                 ), end='\r'
             )
         #####################################################################
         ffString, ffStringH = fun.getFFStrings(aggData, DRIVE)
-        aggData = fun.adjustAggDataForDrive(aggData)
+        aggData = fun.adjustAggDataForDrive(aggData, DRIVE)
         #####################################################################
-        # figA = plots.plotMeanGenotypeTrace(aggData, styleT, ssDay, 2*yRange)
+        # figA = plots.plotMeanGenotypeTrace(aggData, styleT, ssDay, yRangeFixed)
         # figA.get_axes()[0].set_xlim(0, xRange)
-        # figA.get_axes()[0].set_ylim(0, 2 * yRange)
+        # figA.get_axes()[0].set_ylim(0, yRangeFixed)
         drvStr = str(DRIVE).zfill(2)
         fun.plotAndSaveStack(
                 aggData, ssDay, ffString, ffStringH,
                 pathRoot + "/images/" + drvStr + "S_" + expStr + FORMAT,
-                xRange, yRange, styleS
+                xRange, yRangeFixed/2, styleS
             )
 
 if TRACES is True:
@@ -111,3 +112,4 @@ if TRACES is True:
 monet.exportGeneLegend(
         genes, colors, pathRoot + "/palette" + FORMAT, 500
     )
+print('* Script finished correctly ({})!{}'.format(len(pathsRoot),' '*20))
