@@ -35,7 +35,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 DATA_PATH = '/RAID5/marshallShare/UCI/R3/{}/'.format(kernelName)
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
         'sims', 'stp_all_sites_cluster',
-        'clustered', 'C0100', '000'
+        'clustered', 'C0267', '000'
     )
 (PAD, DPI) = (.1, 512)
 ###############################################################################
