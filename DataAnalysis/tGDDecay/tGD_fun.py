@@ -78,10 +78,10 @@ def plotAndSaveStack(
     figB = plots.plotMeanGenotypeStack(aggData, styleS, ssDay, 2 * yRange)
     figB.get_axes()[0].set_xlim(0, xRange)
     figB.get_axes()[0].set_ylim(0, 2 * yRange)
-    figB.get_axes()[0].set_title(
-        "[tSS: "+str(ssDay)+"] :: ["+ffString+"] :: ["+ffStringH + "]",
-        fontsize=5
-    )
+    #figB.get_axes()[0].set_title(
+    #    "[tSS: "+str(ssDay)+"] :: ["+ffString+"] :: ["+ffStringH + "]",
+    #    fontsize=5
+    #)
     monet.quickSaveFigure(
         figB,
         path,
