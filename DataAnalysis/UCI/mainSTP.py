@@ -45,7 +45,7 @@ style = STYLE_HLT
 # parser.add_argument("--dev", default=0, type=int, help="Device")
 # parser.add_argument("--land", default=0, type=int, help="Landscape")
 # (ROOT, LAND) = fun.experimentSelector(parser.parse_args())
-(ROOT, LAND) = ('/Volumes', 'STP')
+(ROOT, LAND) = ('/RAID5', 'STP')
 # Full path ###################################################################
 PATH_ROOT = '{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
 (PATH_IMG, PATH_DATA) = (PATH_ROOT + 'img/', PATH_ROOT + 'out/')
