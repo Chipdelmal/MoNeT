@@ -51,7 +51,7 @@ fldrName = dir.split('/')[-1]
 (pathTraces, pathMean) = [dir + i for i in ('/GARBAGE/', '/ANALYZED/')]
 (dirsTraces, dirsMean) = fun.getTracesAndMeanDirs(pathTraces, pathMean)
 # Experiment Selector ---------------------------------------------------------
-expOutRootPath = PATH_IMG + driveID
+expOutRootPath = PATH_IMG # + driveID
 expOutExpPath = expOutRootPath + '/' + fldrName
 monet.makeFolder(expOutRootPath)
 monet.makeFolder(expOutExpPath)
