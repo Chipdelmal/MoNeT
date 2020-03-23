@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import aux
+import SDY_clstAux as aux
 import numpy as np
 import MoNeT_MGDrivE as monet
 
