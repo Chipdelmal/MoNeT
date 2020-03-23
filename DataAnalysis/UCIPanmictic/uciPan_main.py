@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
     )
 (FACT, PLOT) = (False, True)
 (thresholds, NOI, SSPOP, REL_STRT) = (
-        [.05, .10, .25, .50, .75],  # [.1, .5],
+        [.1, .5], #  [.05, .10, .25, .50, .75],
         0, 2 * 500000,
         1
     )
