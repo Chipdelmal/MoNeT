@@ -28,11 +28,11 @@ warnings.filterwarnings("ignore", category=UserWarning)
 #         '/Volumes/marshallShare/UCI/videoDemo/', 'kernel_cluster_2500'
 #
 #     )
-(BASE_PATH, kernelName) = (
-        '/RAID5/marshallShare/UCI/videoDemo/', sys.argv[1]
+(BASE_PATH, fldName, kernelName) = (
+        '/RAID5/marshallShare/UCI/videoDemo/', sys.argv[1], sys.argv[2]
 
     )
-DATA_PATH = '/RAID5/marshallShare/UCI/R3/{}/'.format(kernelName)
+DATA_PATH = '/RAID5/marshallShare/UCI/{}/{}/'.format(fldName, kernelName)
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
         'sims', 'stp_all_sites_cluster',
         'clustered', 'C0267', '000'

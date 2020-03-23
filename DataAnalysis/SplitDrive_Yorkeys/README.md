@@ -4,5 +4,16 @@ These routines are created for the experiments in the future paper to test the _
 
 ##  Files
 
-* [sortClusters.nb](./sortClusters.nb): Clusters the nodes into two groups so that we can separate _Yorkeys Knob_ from _Trinity Park_ and process them easily in the following routines.
-* [selectiveAggregation.py](./selectiveAggregation.py): Performs the "different resolution" aggregation of the landscape (agglomerates all _Trinity Park_ into one node, leaving _Yorkeys Knob_ untouched).
+* [SDY_clstSort.nb](./SDY_clstSort.nb): Clusters the nodes into two groups so that we can separate _Yorkeys Knob_ from _Trinity Park_ and process them easily in the following routines.
+* [SDY_selAgg.py](./SDY_selAgg.py): Performs the "different resolution" aggregation of the landscape (agglomerates all _Trinity Park_ into one node, leaving _Yorkeys Knob_ untouched).
+* [SDY_clstAux.py](./SDY_clstAux.py):
+* [SDY_selAgg.py](./SDY_selAgg.py):
+* [SDY_select.py](./SDY_select.py):
+* [SDY_validation.py](./SDY_validation):
+
+## Paths
+
+### Validation
+
+* `/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/Aggregated`
+* `/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/unAggregated`
