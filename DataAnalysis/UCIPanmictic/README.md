@@ -9,3 +9,15 @@
 * [uciPan_rsCrv.py](./uciPan_rsCrv.py): Response time-series (constant release number, variable ratio).
 * [uciPan_rtCrv.py](./uciPan_rtCrv.py): Response time-series (constant ratio, variable release number).
 * [uciPan_paper.nb](./uciPan_paper.nb): Response surfaces plots for the paper.
+
+
+## Other
+
+### Copy Plots
+
+```bash
+scp -rp  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/UCI/Yoosook/tParams/islandGravidFemales/img/ /home/chipdelmal/Desktop/UCIPan/islandGravidFemales/;\
+scp -rp  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/UCI/Yoosook/tParams/islandMixed/img /home/chipdelmal/Desktop/UCIPan/islandMixed/;\
+scp -rp  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/UCI/Yoosook/tParams/island/img /home/chipdelmal/Desktop/UCIPan/island/;
+
+```
