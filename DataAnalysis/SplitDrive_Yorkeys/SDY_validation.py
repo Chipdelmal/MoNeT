@@ -5,7 +5,10 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
-(VOL, SETS) = ('RAID5', ('unAggregated', 'Aggregated'))
+(VOL, SETS, PLOTS, ERROR) = (
+		'RAID5', ('unAggregated', 'Aggregated'),
+		True, True
+	)
 ###############################################################################
 COLORS = ["#090446", "#f20060", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
 STYLE = {
@@ -17,7 +20,7 @@ STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
 GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 ###############################################################################
-# Get paths
+# Get paths and Create Output Folders
 ###############################################################################
 (XP_NT, XP_NP) = [
 	sorted(monet.listDirectoriesInPath(PATH+exp+'/ANALYZED/'))
@@ -27,13 +30,12 @@ GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 	sorted(monet.listDirectoriesWithPathWithinAPath(PATH+exp+'/ANALYZED/'))
         for exp in SETS
 ]
-for i in range(len(XP_NT)):
-    print(
-		'{}-{}::{}-{}'.format(
-			XP_PT[i], XP_NT[i],
-			XP_PP[i], XP_NP[i]
-		)
-	)
+(xpTest, xpNumb) = (len(XP_NT) == len(XP_NP), len(XP_NT))
+print('Experiments number test: {}'.format(xpTest))
+for i in range(xpNumb):
+    print('{}-{}::{}-{}'.format(XP_PT[i], XP_NT[i],XP_PP[i], XP_NP[i]))
+monet.makeFolder(PATH+'err/')
+monet.makeFolder(PATH+'img/')
 ###############################################################################
 # for DRIVE in [1]:
 #     pathsRoot, aggregationDictionary, prepend, pathO = aux.driveSelector(
