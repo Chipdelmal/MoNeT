@@ -1,3 +1,5 @@
+
+import datetime
 import SDY_aux as aux
 # import SDY_select as sel
 import MoNeT_MGDrivE as monet
@@ -6,9 +8,10 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 
 (VOL, SETS, PLOTS, ERROR) = (
-		'RAID5', ('unAggregated', 'Aggregated'),
-		True, True
+		'RAID5', ('unAggregated', 'Aggregated'), True, True
 	)
+###############################################################################
+# Setting up colors and style
 ###############################################################################
 COLORS = ["#090446", "#f20060", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
 STYLE = {
@@ -20,22 +23,26 @@ STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
 GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 ###############################################################################
-# Get paths and Create Output Folders
+# Get paths and create output folders
 ###############################################################################
-(XP_NT, XP_NP) = [
-	sorted(monet.listDirectoriesInPath(PATH+exp+'/ANALYZED/'))
-	for exp in SETS
-]
-(XP_PT, XP_PP) = [
-	sorted(monet.listDirectoriesWithPathWithinAPath(PATH+exp+'/ANALYZED/'))
-        for exp in SETS
-]
-(xpTest, xpNumb) = (len(XP_NT) == len(XP_NP), len(XP_NT))
-print('Experiments number test: {}'.format(xpTest))
+# Input paths
+(xpSN, xpSAP, xpSGP) = aux.getValidationExperiments(PATH, SETS[0])
+(xpPN, xpPAP, xpPGP) = aux.getValidationExperiments(PATH, SETS[1])
+# Shallow validation
+(xpTest, xpNumb) = (len(xpSN) == len(xpPN), len(xpSN))
 for i in range(xpNumb):
-    print('{}-{}::{}-{}'.format(XP_PT[i], XP_NT[i],XP_PP[i], XP_NP[i]))
-monet.makeFolder(PATH+'err/')
-monet.makeFolder(PATH+'img/')
+    print('{}-{}::{}-{}'.format(xpSN[i], xpPN[i], xpSAP[i], xpPAP[i]))
+# Outputs paths
+(PATH_ERR, PATH_IMG) = (PATH + 'err/', PATH + 'img/')
+monet.makeFolder(PATH_ERR)
+monet.makeFolder(PATH_IMG)
+###############################################################################
+# Print terminal message
+###############################################################################
+tStart = datetime.datetime.now()
+aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, tStart, 'GeoValidation')
+print('Experiments number test passed: {}'.format(xpTest))
+###############################################################################
 ###############################################################################
 # for DRIVE in [1]:
 #     pathsRoot, aggregationDictionary, prepend, pathO = aux.driveSelector(
