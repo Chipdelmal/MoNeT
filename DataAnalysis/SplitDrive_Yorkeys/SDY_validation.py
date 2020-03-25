@@ -17,12 +17,23 @@ STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
 GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 ###############################################################################
-(EXPsT, EXPsP) = [
-		sorted(monet.listDirectoriesInPath(PATH+exp+'/ANALYZED/')) 
-		for exp in SETS
-	]
-for i in zip(EXPsT, EXPsP):
-    print('{} : {}'.format(i[0], i[1]))
+# Get paths
+###############################################################################
+(XP_NT, XP_NP) = [
+	sorted(monet.listDirectoriesInPath(PATH+exp+'/ANALYZED/'))
+	for exp in SETS
+]
+(XP_PT, XP_PP) = [
+	sorted(monet.listDirectoriesWithPathWithinAPath(PATH+exp+'/ANALYZED/'))
+        for exp in SETS
+]
+for i in range(len(XP_NT)):
+    print(
+		'{}-{}::{}-{}'.format(
+			XP_PT[i], XP_NT[i],
+			XP_PP[i], XP_NP[i]
+		)
+	)
 ###############################################################################
 # for DRIVE in [1]:
 #     pathsRoot, aggregationDictionary, prepend, pathO = aux.driveSelector(
