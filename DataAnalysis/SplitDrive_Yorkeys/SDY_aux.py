@@ -1,4 +1,4 @@
-
+import MoNeT_MGDrivE as monet
 
 ###############################################################################
 # Genotypes Selection
@@ -35,12 +35,18 @@ def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time, name):
     print(PADA)
 
 
-def getValidationExperiments(
-        path,
-        setName
-    ):
-    base = PATH + setName
-	names = sorted(monet.listDirectoriesInPath(base+'/ANALYZED/'))
+def printExperimentTail(time, name):
+    print(PADA)
+    print(
+            CWHT + 'Split Drive: ' + name
+            + '[' + time + ']' + CEND
+        )
+    print(PADA)
+
+
+def getValidationExperiments(path,setName):
+    base = path + setName
+    names = sorted(monet.listDirectoriesInPath(base+'/ANALYZED/'))
     pthsA = sorted(monet.listDirectoriesWithPathWithinAPath(base+'/ANALYZED/'))
     pthsB = sorted(monet.listDirectoriesWithPathWithinAPath(base+'/GARBAGE/'))
     return (names, pthsA, pthsB)

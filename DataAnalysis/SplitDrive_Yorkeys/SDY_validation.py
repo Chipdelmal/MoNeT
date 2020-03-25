@@ -40,8 +40,8 @@ monet.makeFolder(PATH_IMG)
 # Print terminal message
 ###############################################################################
 tStart = datetime.datetime.now()
-aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, tStart, 'GeoValidation')
-print('Experiments number test passed: {}'.format(xpTest))
+aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, str(tStart), 'GeoValidation ')
+print('{}Experiments number passed: {}{}'.format(aux.CYEL, xpTest, aux.CEND))
 ###############################################################################
 ###############################################################################
 # for DRIVE in [1]:
@@ -76,3 +76,9 @@ print('Experiments number test passed: {}'.format(xpTest))
 # print('******************************************************************')
 # print('* Finished all drives correctly')
 # print('******************************************************************')
+###############################################################################
+# Print terminal message
+###############################################################################
+tEnd = datetime.datetime.now()
+aux.printExperimentTail(str(tEnd-tStart), 'GeoValidation ')
+
