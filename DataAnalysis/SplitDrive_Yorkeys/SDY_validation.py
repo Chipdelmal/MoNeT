@@ -20,18 +20,19 @@ STYLE = {
         "xRange": [0, 1825], "yRange": [0, 7000]
     }
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
-PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
+# PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
+PATH = '/home/chipdelmal/Desktop/SD/'
 GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 ###############################################################################
 # Get paths and create output folders
 ###############################################################################
 # Input paths
-(xpSN, xpSAP, xpSGP) = aux.getValidationExperiments(PATH, SETS[0])
-(xpPN, xpPAP, xpPGP) = aux.getValidationExperiments(PATH, SETS[1])
+sig = aux.getValidationExperiments(PATH, SETS[0]) # (xpSN, xpSAP, xpSGP)
+prb = aux.getValidationExperiments(PATH, SETS[1]) # (xpPN, xpPAP, xpPGP)
 # Shallow validation
-(xpTest, xpNumb) = (len(xpSN) == len(xpPN), len(xpSN))
-for i in range(xpNumb):
-    print('{}-{}::{}-{}'.format(xpSN[i], xpPN[i], xpSAP[i], xpPAP[i]))
+(xpTest, xpNumb) = (len(sig[0]) == len(prb[0]), len(sig[0]))
+# for i in range(xpNumb):
+#     print('{}-{}::{}-{}'.format(xpSN[i], xpPN[i], xpSAP[i], xpPAP[i]))
 # Outputs paths
 (PATH_ERR, PATH_IMG) = (PATH + 'err/', PATH + 'img/')
 monet.makeFolder(PATH_ERR)
@@ -43,35 +44,20 @@ tStart = datetime.datetime.now()
 aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, str(tStart), 'GeoValidation ')
 print('{}Experiments number passed: {}{}'.format(aux.CYEL, xpTest, aux.CEND))
 ###############################################################################
+# Main analyses
 ###############################################################################
-# for DRIVE in [1]:
-#     pathsRoot, aggregationDictionary, prepend, pathO = aux.driveSelector(
-#         DRIVE, HEALTH, pathRoot
-#     )
-#     pathExport = pathOut + pathO + '/'
-#     ###########################################################################
-#     num = len(pathsRoot)
-#     for i in range(480, num, 1):
-#         pathSample = pathsRoot[i]
-#         experimentString = pathSample.split("/")[-1]
-#         paths = monet.listDirectoriesWithPathWithinAPath(pathSample + "/")
-#         landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
-#                 paths, aggregationDictionary,
-#                 male=False, female=True, dataType=float
-#             )
-#         landscapeReps = funcs.normalizeLandscapeDataRepetitions(
-#                 landscapeReps, totalPopIx=-1
-#             )
-#         figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, style)
-#         for j in range(0, len(figsArray)):
-#             figsArray[j].get_axes()[0].set_xlim(0,style['xRange'][1])
-#             figsArray[j].get_axes()[0].set_ylim(0,style['yRange'][1])
-#             expOutStr = pathExport + prepend + experimentString
-#             monet.quickSaveFigure(
-#                 figsArray[j], expOutStr+"_N"+str(j)+".png", dpi=style['dpi']
-#             )
-#         plt.close('all')
-#         print('\tExported ' + str(i + 1).rjust(4, '0') + '/' + str(num) + ': ' + expOutStr)
+(i, dtSet) = (0, prb)
+# Loop starts here!
+(name, aPath, gPath) = dtSet[i]
+(aFiles, gFiles) = (
+        monet.readExperimentFilenames(aPath),
+        monet.listDirectoriesWithPathWithinAPath(gPath+'/')
+    )
+# Mean response
+print('Loading mean response...', end='\r')
+landData = monet.loadLandscapeData(aFiles, male=True, female=True)
+print('Aggregating mean response...', end='\r')
+aggNodesData = monet.aggregateGenotypesInLandscape(landData, GDICT)
 ###############################################################################
 # Print terminal message
 ###############################################################################

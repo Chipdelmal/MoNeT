@@ -49,4 +49,4 @@ def getValidationExperiments(path,setName):
     names = sorted(monet.listDirectoriesInPath(base+'/ANALYZED/'))
     pthsA = sorted(monet.listDirectoriesWithPathWithinAPath(base+'/ANALYZED/'))
     pthsB = sorted(monet.listDirectoriesWithPathWithinAPath(base+'/GARBAGE/'))
-    return (names, pthsA, pthsB)
+    return (list(zip(names, pthsA, pthsB)))
