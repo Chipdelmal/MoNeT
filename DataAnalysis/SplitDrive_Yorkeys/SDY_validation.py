@@ -72,13 +72,8 @@ print('{}Experiments number passed: {}{}'.format(aux.CYEL, xpTest, aux.CEND))
 #             )
 #         plt.close('all')
 #         print('\tExported ' + str(i + 1).rjust(4, '0') + '/' + str(num) + ': ' + expOutStr)
-# ###############################################################################
-# print('******************************************************************')
-# print('* Finished all drives correctly')
-# print('******************************************************************')
 ###############################################################################
 # Print terminal message
 ###############################################################################
 tEnd = datetime.datetime.now()
-aux.printExperimentTail(str(tEnd-tStart), 'GeoValidation ')
-
+aux.printExperimentTail(str(tEnd-tStart), 'GeoValidation Finished!')
