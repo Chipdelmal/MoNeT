@@ -3,7 +3,12 @@
 
 ###############################################################################
 # Saõ Tomé and Príncipe Kernels Comparisons
-#   Use Example: python kernelsSTP.py "Volumes" "kernels" "kernel_cluster_10k"
+#   Use Example:
+#       python kernelsSTP.py "Volumes" "kernels" "kernel_cluster_10k"
+#       python kernelsSTP.py 'RAID5' 'R3' 'kernel_cluster_2500_2'
+#       python kernelsSTP.py 'RAID5' 'R3' 'kernel_cluster_5000_2'
+#       python kernelsSTP.py 'RAID5' 'R3' 'kernel_cluster_7500_2'
+#       python kernelsSTP.py 'RAID5' 'R3' 'kernel_cluster_10k_2'
 ###############################################################################
 
 import sys
@@ -33,7 +38,7 @@ mpl.rcParams['axes.linewidth'] = .4
 PATH_ROOT = '/{}/marshallShare/UCI/{}/'.format(ROOT, LAND)
 (PATH_IMG, PATH_DATA, dir) = (
         '{}{}/img/'.format(PATH_ROOT, EXP),
-        PATH_ROOT, 
+        PATH_ROOT,
         '{}{}/'.format(PATH_ROOT, EXP)
     )
 # Print experiment info to terminal -------------------------------------------
