@@ -8,8 +8,8 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 
 (VOL, SETS, PLOTS, ERROR) = (
-		'RAID5', ('unAggregated', 'Aggregated'), True, True
-	)
+        'RAID5', ('unAggregated', 'Aggregated'), True, True
+    )
 ###############################################################################
 # Setting up colors and style
 ###############################################################################
