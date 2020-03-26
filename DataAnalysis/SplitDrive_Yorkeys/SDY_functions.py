@@ -33,7 +33,7 @@ def readDataPaths(aPath, gPath):
 
 
 def createFolders(foldersList):
-    for fldr in folderList:
+    for fldr in foldersList:
         monet.makeFolder(fldr)
 
 
@@ -41,10 +41,10 @@ def createFolders(foldersList):
 # Shaping Responses
 ###############################################################################
 def loadSummedMeanResponse(aFiles, GDICT, MALE, FEMALE):
-    print(aux.CBBL, end='\r')
-    print('* Loading mean response...', end='\r')
+    print(aux.CBLU, end='\r')
+    print('* [Loading mean response]'+aux.PADC, end='\r')
     landData = monet.loadLandscapeData(aFiles, male=MALE, female=FEMALE)
-    print('* Aggregating mean response...', end='\r')
+    print('* [Aggregating mean response]'+aux.PADC, end='\r')
     aggDataM = monet.aggregateGenotypesInLandscape(landData, GDICT)
     aggDataM['landscape'] = sum(aggDataM['landscape'])
     print(aux.CEND, end='\r')

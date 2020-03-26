@@ -1,4 +1,5 @@
 
+import sys
 import datetime
 import SDY_aux as aux
 import SDY_functions as fun
@@ -32,21 +33,26 @@ GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 sig = fun.getValidationExperiments(PATH, SETS[0])
 prb = fun.getValidationExperiments(PATH, SETS[1])
 # Shallow validation
-(xpTest, xpNumb) = (len(sig[0]) == len(prb[0]), len(sig[0]))
+(xpTest, xpNumb) = (len(sig) == len(prb), len(sig))
 (PATH_ERR, PATH_IMG) = (PATH + 'err/', PATH + 'img/')
-monet.makeFolder([PATH_ERR, PATH_IMG])
+fun.createFolders([PATH_ERR, PATH_IMG])
 ###############################################################################
 # Print terminal message
 ###############################################################################
 tSrt = datetime.datetime.now()
 aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, str(tSrt), 'GeoValidation ')
-print('{}* Experiments test passed: {}{}'.format(aux.CYEL, xpTest, aux.CEND))
+if xpTest is False:
+    print(aux.CRED+'ERROR: Missmatch in number of experiments!'+ CEND)
+    sys.exit()
 ###############################################################################
 # Main analyses
 ###############################################################################
 i = 0
+aux.printProggress(i, xpNumb, sig)
 (nS, mS, tS) = fun.loadAndCalcResponse(sig[i], GDICT, MALE, FEMALE)
 (nP, mP, tP) = fun.loadAndCalcResponse(prb[i], GDICT, MALE, FEMALE)
+err = fun.rpd(mS['landscape'], mP['landscape'])
+print(err)
 ###############################################################################
 # Print terminal message
 ###############################################################################

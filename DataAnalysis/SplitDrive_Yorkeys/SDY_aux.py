@@ -13,11 +13,11 @@ GENOTYPES = [
 ###############################################################################
 # Terminal
 ###############################################################################
-(PADA, PADB) = ('*' * 79, '-' * 79)
-(CRED, CYEL, CBMA, CBRE, CBBL, CWHT, CEND) = (
+(PADA, PADB, PADC) = ('*' * 79, '-' * 79, ' ' * 20)
+(CRED, CYEL, CBMA, CBRE, CBBL, CWHT, CEND, CBLU, CGRE) = (
         '\033[91m', '\u001b[33m', '\u001b[35;1m',
         '\u001b[31;1m', '\u001b[34;1m', '\u001b[37m',
-        '\033[0m'
+        '\033[0m', '\033[34m', '\033[92m'
     )
 
 
@@ -41,3 +41,11 @@ def printExperimentTail(time, name):
             + '[' + time + ']' + CEND
         )
     print(PADA)
+
+
+def printProggress(i, xpNumb, sig):
+    print(CBBL, end='\r')
+    msgStr = (str(i+1).zfill(2), str(xpNumb).zfill(2), sig[i][0])
+    print('- Working on ({}/{}): {}'.format(msgStr[0], msgStr[1], msgStr[2]))
+    print(CEND, end='\r')
+    return True
