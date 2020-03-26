@@ -43,9 +43,9 @@ def createFolders(foldersList):
 ###############################################################################
 def loadSummedMeanResponse(aFiles, GDICT, MALE, FEMALE):
     print(aux.CBLU, end='\r')
-    print('* [Loading mean response]'+aux.PADC, end='\r')
+    print('- Loading mean response...'+aux.PADC, end='\r')
     landData = monet.loadLandscapeData(aFiles, male=MALE, female=FEMALE)
-    print('* [Aggregating mean response]'+aux.PADC, end='\r')
+    print('- Aggregating mean response...'+aux.PADC, end='\r')
     aggDataM = monet.aggregateGenotypesInLandscape(landData, GDICT)
     aggDataM['landscape'] = sum(aggDataM['landscape'])
     print(aux.CEND, end='\r')
@@ -77,7 +77,7 @@ def loadAndCalcResponse(expSet, GDICT, MALE, FEMALE):
 ###############################################################################
 # Plots
 ###############################################################################
-def exportTracesPlot(tS, STYLE, append=''):
+def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append=''):
     figArr = monet.plotLandscapeDataRepetitions(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
     axTemp.set_aspect(aspect=STYLE["aspect"])

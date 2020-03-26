@@ -57,28 +57,17 @@ for i in range(xpNumb):
     # Load data ---------------------------------------------------------------
     aux.printProggress(i, xpNumb, sig)
     (nS, mS, tS) = fun.loadAndCalcResponse(sig[i], GDICT, MALE, FEMALE)
-    # (nP, mP, tP) = fun.loadAndCalcResponse(prb[i], GDICT, MALE, FEMALE)
+    (nP, mP, tP) = fun.loadAndCalcResponse(prb[i], GDICT, MALE, FEMALE)
     # Calculate and save error  -----------------------------------------------
-    # err = fun.rpd(mS['landscape'], mP['landscape'])
-    # np.savetxt(
-    #         '{}/{}.csv'.format(PATH_ERR, nS), err,
-    #         fmt='%.4e', delimiter=',', header=','.join(mS['genotypes'])
-    #     )
-    # Plots  ------------------------------------------------------------------
-    figArr = monet.plotLandscapeDataRepetitions(tS, STYLE)
-    axTemp = figArr[0].get_axes()[0]
-    axTemp.set_aspect(aspect=STYLE["aspect"])
-    axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
-    axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
-    axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
-    axTemp.tick_params(color=(0, 0, 0, 0.5))
-    figArr[0].savefig(
-            "{}/{}.pdf".format(PATH_IMG, nS),
-            dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
-            orientation='portrait', papertype=None, format='pdf',
-            transparent=True, bbox_inches='tight', pad_inches=.01
+    err = fun.rpd(mS['landscape'], mP['landscape'])
+    np.savetxt(
+            '{}/{}.csv'.format(PATH_ERR, nS), err,
+            fmt='%.4e', delimiter=',', header=','.join(mS['genotypes'])
         )
-    plt.close('all')
+    # Plots  ------------------------------------------------------------------
+    fun.exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='S')
+    fun.exportTracesPlot(tP, nP, STYLE, PATH_IMG, append='P')
+    monet.exportGeneLegend(mS['genotypes'], COLORS, PATH_IMG+"/plt.pdf", 500)
 ###############################################################################
 # Print terminal message
 ###############################################################################
