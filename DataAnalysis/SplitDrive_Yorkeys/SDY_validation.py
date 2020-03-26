@@ -17,15 +17,18 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 # Setting up colors and style
 ###############################################################################
 (MALE, FEMALE) = (True, True)
-COLORS = ["#090446", "#f20060", "#c6d8ff", "#7692ff", "#29339b", "#7fff3a"]
+COLORS = [
+        "#09044620", "#f2006020", "#c6d8ff20",
+        "#7692ff20", "#29339b20", "#7fff3a20"
+    ]
 STYLE = {
         "width": .1, "alpha": .15, "dpi": 2 * 300,
         "legend": True, "aspect": .5, "colors": COLORS,
-        "xRange": [0, 1825], "yRange": [0, 7000]
+        "xRange": [0, 1825], "yRange": [0, 150000]
     }
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
-PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
-# PATH = '/home/chipdelmal/Desktop/SD/'
+# PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
+PATH = '/home/chipdelmal/Desktop/SD/'
 GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 ###############################################################################
 # Get paths and create output folders
@@ -51,14 +54,31 @@ if xpTest is False:
 # Main analyses
 ###############################################################################
 for i in range(xpNumb):
+    # Load data ---------------------------------------------------------------
     aux.printProggress(i, xpNumb, sig)
     (nS, mS, tS) = fun.loadAndCalcResponse(sig[i], GDICT, MALE, FEMALE)
-    (nP, mP, tP) = fun.loadAndCalcResponse(prb[i], GDICT, MALE, FEMALE)
-    err = fun.rpd(mS['landscape'], mP['landscape'])
-    np.savetxt(
-            '{}/{}.csv'.format(PATH_ERR, nS), err,
-            fmt='%.5e', delimiter=',', header=','.join(mS['genotypes'])
+    # (nP, mP, tP) = fun.loadAndCalcResponse(prb[i], GDICT, MALE, FEMALE)
+    # Calculate and save error  -----------------------------------------------
+    # err = fun.rpd(mS['landscape'], mP['landscape'])
+    # np.savetxt(
+    #         '{}/{}.csv'.format(PATH_ERR, nS), err,
+    #         fmt='%.4e', delimiter=',', header=','.join(mS['genotypes'])
+    #     )
+    # Plots  ------------------------------------------------------------------
+    figArr = monet.plotLandscapeDataRepetitions(tS, STYLE)
+    axTemp = figArr[0].get_axes()[0]
+    axTemp.set_aspect(aspect=STYLE["aspect"])
+    axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
+    axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
+    axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
+    axTemp.tick_params(color=(0, 0, 0, 0.5))
+    figArr[0].savefig(
+            "{}/{}.pdf".format(PATH_IMG, nS),
+            dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
+            orientation='portrait', papertype=None, format='pdf',
+            transparent=True, bbox_inches='tight', pad_inches=.01
         )
+    plt.close('all')
 ###############################################################################
 # Print terminal message
 ###############################################################################

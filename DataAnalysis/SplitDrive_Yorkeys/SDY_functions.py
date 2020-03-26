@@ -2,6 +2,7 @@
 import numpy as np
 import SDY_aux as aux
 import MoNeT_MGDrivE as monet
+import matplotlib.pyplot as plt
 np.seterr(divide='ignore', invalid='ignore')
 
 
@@ -71,3 +72,24 @@ def loadAndCalcResponse(expSet, GDICT, MALE, FEMALE):
     (aFiles, gFiles) = readDataPaths(aPath, gPath)
     (aggDtaM, aggDtaT) = calcResponses(aFiles, gFiles, GDICT, MALE, FEMALE)
     return (name, aggDtaM, aggDtaT)
+
+
+###############################################################################
+# Plots
+###############################################################################
+def exportTracesPlot(tS, STYLE, append=''):
+    figArr = monet.plotLandscapeDataRepetitions(tS, STYLE)
+    axTemp = figArr[0].get_axes()[0]
+    axTemp.set_aspect(aspect=STYLE["aspect"])
+    axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
+    axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
+    axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
+    axTemp.tick_params(color=(0, 0, 0, 0.5))
+    figArr[0].savefig(
+            "{}/{}-{}.pdf".format(PATH_IMG, nS, append),
+            dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
+            orientation='portrait', papertype=None, format='pdf',
+            transparent=True, bbox_inches='tight', pad_inches=.01
+        )
+    plt.close('all')
+    return True
