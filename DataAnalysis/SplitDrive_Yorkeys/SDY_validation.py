@@ -1,6 +1,7 @@
 
 import sys
 import datetime
+import numpy as np
 import SDY_aux as aux
 import SDY_functions as fun
 # import SDY_select as sel
@@ -23,15 +24,17 @@ STYLE = {
         "xRange": [0, 1825], "yRange": [0, 7000]
     }
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
-# PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
-PATH = '/home/chipdelmal/Desktop/SD/'
+PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
+# PATH = '/home/chipdelmal/Desktop/SD/'
 GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 ###############################################################################
 # Get paths and create output folders
 ###############################################################################
 # Input paths
-sig = fun.getValidationExperiments(PATH, SETS[0])
-prb = fun.getValidationExperiments(PATH, SETS[1])
+(sig, prb) = (
+        fun.getValidationExperiments(PATH, SETS[0]),
+        fun.getValidationExperiments(PATH, SETS[1])
+    )
 # Shallow validation
 (xpTest, xpNumb) = (len(sig) == len(prb), len(sig))
 (PATH_ERR, PATH_IMG) = (PATH + 'err/', PATH + 'img/')
@@ -42,19 +45,22 @@ fun.createFolders([PATH_ERR, PATH_IMG])
 tSrt = datetime.datetime.now()
 aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, str(tSrt), 'GeoValidation ')
 if xpTest is False:
-    print(aux.CRED+'ERROR: Missmatch in number of experiments!'+ CEND)
+    print(aux.CRED+'ERROR: Missmatch in number of experiments!'+CEND)
     sys.exit()
 ###############################################################################
 # Main analyses
 ###############################################################################
-i = 0
-aux.printProggress(i, xpNumb, sig)
-(nS, mS, tS) = fun.loadAndCalcResponse(sig[i], GDICT, MALE, FEMALE)
-(nP, mP, tP) = fun.loadAndCalcResponse(prb[i], GDICT, MALE, FEMALE)
-err = fun.rpd(mS['landscape'], mP['landscape'])
-print(err)
+for i in range(xpNumb):
+    aux.printProggress(i, xpNumb, sig)
+    (nS, mS, tS) = fun.loadAndCalcResponse(sig[i], GDICT, MALE, FEMALE)
+    (nP, mP, tP) = fun.loadAndCalcResponse(prb[i], GDICT, MALE, FEMALE)
+    err = fun.rpd(mS['landscape'], mP['landscape'])
+    np.savetxt(
+            '{}/{}.csv'.format(PATH_ERR, nS), err,
+            fmt='%.5e', delimiter=',', header=','.join(mS['genotypes'])
+        )
 ###############################################################################
 # Print terminal message
 ###############################################################################
 tEnd = datetime.datetime.now()
-aux.printExperimentTail(str(tEnd-tSrt), 'GeoValidation Finished!')
+aux.printExperimentTail(str(tEnd-tSrt), 'GeoValidation Finished! ')
