@@ -1,4 +1,3 @@
-import MoNeT_MGDrivE as monet
 
 ###############################################################################
 # Genotypes Selection
@@ -42,11 +41,3 @@ def printExperimentTail(time, name):
             + '[' + time + ']' + CEND
         )
     print(PADA)
-
-
-def getValidationExperiments(path,setName):
-    base = path + setName
-    names = sorted(monet.listDirectoriesInPath(base+'/ANALYZED/'))
-    pthsA = sorted(monet.listDirectoriesWithPathWithinAPath(base+'/ANALYZED/'))
-    pthsB = sorted(monet.listDirectoriesWithPathWithinAPath(base+'/GARBAGE/'))
-    return (list(zip(names, pthsA, pthsB)))

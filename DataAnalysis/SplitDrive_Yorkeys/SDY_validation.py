@@ -1,6 +1,7 @@
 
 import datetime
 import SDY_aux as aux
+import SDY_functions as fun
 # import SDY_select as sel
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
@@ -27,8 +28,8 @@ GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 # Get paths and create output folders
 ###############################################################################
 # Input paths
-sig = aux.getValidationExperiments(PATH, SETS[0]) # (xpSN, xpSAP, xpSGP)
-prb = aux.getValidationExperiments(PATH, SETS[1]) # (xpPN, xpPAP, xpPGP)
+sig = fun.getValidationExperiments(PATH, SETS[0]) # (xpSN, xpSAP, xpSGP)
+prb = fun.getValidationExperiments(PATH, SETS[1]) # (xpPN, xpPAP, xpPGP)
 # Shallow validation
 (xpTest, xpNumb) = (len(sig[0]) == len(prb[0]), len(sig[0]))
 # for i in range(xpNumb):
@@ -40,9 +41,9 @@ monet.makeFolder(PATH_IMG)
 ###############################################################################
 # Print terminal message
 ###############################################################################
-tStart = datetime.datetime.now()
-aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, str(tStart), 'GeoValidation ')
-print('{}Experiments number passed: {}{}'.format(aux.CYEL, xpTest, aux.CEND))
+tSrt = datetime.datetime.now()
+aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, str(tSrt), 'GeoValidation ')
+print('{}* Experiments test passed: {}{}'.format(aux.CYEL, xpTest, aux.CEND))
 ###############################################################################
 # Main analyses
 ###############################################################################
@@ -54,12 +55,15 @@ print('{}Experiments number passed: {}{}'.format(aux.CYEL, xpTest, aux.CEND))
         monet.listDirectoriesWithPathWithinAPath(gPath+'/')
     )
 # Mean response
-print('Loading mean response...', end='\r')
+print(aux.CBBL, end='\r')
+print('* Loading mean response...', end='\r')
 landData = monet.loadLandscapeData(aFiles, male=True, female=True)
-print('Aggregating mean response...', end='\r')
-aggNodesData = monet.aggregateGenotypesInLandscape(landData, GDICT)
+print('* Aggregating mean response...', end='\r')
+aggData = monet.aggregateGenotypesInLandscape(landData, GDICT)
+aggData['landscape'] = sum(aggData['landscape'])
+print(aux.CEND, end='\r')
 ###############################################################################
 # Print terminal message
 ###############################################################################
 tEnd = datetime.datetime.now()
-aux.printExperimentTail(str(tEnd-tStart), 'GeoValidation Finished!')
+aux.printExperimentTail(str(tEnd-tSrt), 'GeoValidation Finished!')
