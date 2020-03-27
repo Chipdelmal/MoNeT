@@ -17,3 +17,16 @@ These routines are created for the experiments in the future paper to test the _
 
 * `/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/Aggregated`
 * `/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/unAggregated`
+
+
+## Bash
+
+
+```bash
+scp -rp\
+  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/img/*.pdf\
+  /home/chipdelmal/shared/SDY/img/;
+scp -rp\
+    hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/*.csv\
+    /home/chipdelmal/shared/SDY/err/;
+```
