@@ -109,7 +109,7 @@ ticks = aggList[0].shape[0]
 monet.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imgLocation, colors, original_corners,
-        PAD, DPI, skip=False, countries=True, refPopSize=300
+        PAD, DPI, skip=False, countries=True, refPopSize=1500
     )
 print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
 print('* Please run the following command in the terminal:')

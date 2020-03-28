@@ -27,8 +27,8 @@ STYLE = {
         "xRange": [0, 1825], "yRange": [0, 150000]
     }
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
-# PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
-PATH = '/home/chipdelmal/Desktop/SD/'
+PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/'.format(VOL)
+# PATH = '/home/chipdelmal/Desktop/SD/'
 GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 ###############################################################################
 # Get paths and create output folders
