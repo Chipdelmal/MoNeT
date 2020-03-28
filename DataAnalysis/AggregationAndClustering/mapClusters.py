@@ -9,7 +9,7 @@ import numpy as np
 from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.mplot3d import Axes3D
 
-pathRoot = "/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Uniformly/C000100"
+pathRoot = "/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Uniformly"
 firstRun = True
 
 for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
@@ -42,7 +42,7 @@ for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
         clusters.append(cluster)
 
     (minLat, minLong) = (min(lats), min(longs))
-    (minCluster, maxCluter) = (min(clusters), max(clusters))
+    (minCluster, maxCluster) = (min(clusters), max(clusters))
     (maxLat, maxLong) = (max(lats), max(longs))
 
     fig = plt.figure(figsize=(5, 5))
