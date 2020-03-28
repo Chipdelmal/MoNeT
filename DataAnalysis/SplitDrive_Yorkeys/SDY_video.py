@@ -18,6 +18,7 @@ import glob
 import warnings
 import datetime
 import SDY_aux as aux
+import SDY_select as sel
 import MoNeT_MGDrivE as monet
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -31,18 +32,14 @@ DATA_PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/{}/{}/'.format(
         fldName, kernelName
     )
 (dataFldr, expName, clstFldr, aggLvl, clstSample) = (
-        'geoProof', 'Aggregated',
-        'clustered', 'C000100', '0000'
+        'geoProof', 'Aggregated', 'clustered', 'C000100', '0000'
     )
 (PAD, DPI) = (.1, 512)
 ###############################################################################
 # Colors and genotypes
 ###############################################################################
 colors = ['#090446', '#ff004d', '#7fff3a', '#9037dd', '#ffed38']
-aggDict = monet.autoGenerateGenotypesDictionary(
-        ['W', 'H', 'R', 'B'],
-        ['WW', 'WH', 'WR', 'WB', 'HH', 'HR', 'HB', 'RR', 'RB', 'BB']
-    )
+(_, aggDict, _, _) = sel.driveSelector(1, False, '')
 ###############################################################################
 # File paths
 ###############################################################################
