@@ -9,7 +9,7 @@ import numpy as np
 from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.mplot3d import Axes3D
 
-pathRoot = "/Volumes/marshallShare/ERACR/Yorkeys_Middle/LandAggregated"
+pathRoot = "/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Uniformly/C000100"
 firstRun = True
 
 for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
