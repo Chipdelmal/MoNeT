@@ -42,7 +42,7 @@ for clusterFile in sorted(glob.glob(pathRoot+'/*/Yorkeys*I.csv')):
         clusters.append(cluster)
 
     (minLat, minLong) = (min(lats), min(longs))
-    (minCluster, maxCluter) = (min(clusters), max(clusters))
+    (minCluster, maxCluster) = (min(clusters), max(clusters))
     (maxLat, maxLong) = (max(lats), max(longs))
 
     fig = plt.figure(figsize=(5, 5))
