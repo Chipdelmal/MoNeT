@@ -29,4 +29,7 @@ scp -rp\
 scp -rp\
     hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/*.csv\
     /home/chipdelmal/shared/SDY/err/;
+scp -rp\
+    hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/img/*\
+    /home/chipdelmal/shared/SDY/err/img/;
 ```
