@@ -12,8 +12,8 @@
 ###############################################################################
 
 import sys
-import aux
-import fun
+import k_aux as aux
+import k_fun as fun
 import datetime
 import plot
 import numpy as np

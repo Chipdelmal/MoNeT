@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import aux
+import k_aux as aux
 import numpy as np
 import MoNeT_MGDrivE as monet
 
