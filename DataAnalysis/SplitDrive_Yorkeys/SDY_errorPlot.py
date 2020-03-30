@@ -71,3 +71,4 @@ print(aux.CEND, end='\r')
 ###############################################################################
 tEnd = datetime.datetime.now()
 aux.printExperimentTail(str(tEnd-tSrt), 'GeoValidation Finished! ')
+monet.exportGeneLegend(GDICT['genotypes'], COLORS, PATH_IMG+'plt.pdf', 500)
