@@ -29,7 +29,7 @@ COLORS = [
     ]
 
 ###############################################################################
-pathRoot = '/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Uniformly/C001000/'
+pathRoot = '/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Selective/C000893/'
 firstRun = True
 # print(sorted(glob.glob(pathRoot+'/Y*I.csv')))
 ###############################################################################
