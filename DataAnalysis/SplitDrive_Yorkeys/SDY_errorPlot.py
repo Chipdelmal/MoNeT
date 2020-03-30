@@ -44,6 +44,7 @@ aux.printExperimentHead(PATH, PATH_IMG, PATH, str(tSrt), 'GeoValidation ')
 # ###############################################################################
 for (i, file) in enumerate(filePaths):
     # Print Progress
+    print(aux.CBBL, end='\r')
     (curr, total) = (str(i+1).zfill(3), str(len(filePaths)).zfill(3))
     print('Working on: {}/{}'.format(curr, total), end='\r')
     # Plot
@@ -64,6 +65,7 @@ for (i, file) in enumerate(filePaths):
         )
     plt.close('all')
 print('Finished exporting all the plots!')
+print(aux.CEND, end='\r')
 ###############################################################################
 # Print terminal message
 ###############################################################################
