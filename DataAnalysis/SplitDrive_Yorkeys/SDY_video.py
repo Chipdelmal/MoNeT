@@ -23,16 +23,18 @@ import MoNeT_MGDrivE as monet
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-(BASE_PATH, fldName, kernelName) = (
+# Aggregated: Selective
+# unAggregated: Uniformly
+(BASE_PATH, fldName, expName, clstType, kernelName) = (
         '/RAID5/marshallShare/SplitDrive_Yorkeys/',
-        sys.argv[1], sys.argv[2]
-
+        'geoProof', 'Aggregated', 'Selective', 'E_05_10_025'
+        # sys.argv[1], sys.argv[2]
     )
-DATA_PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/{}/{}/'.format(
-        fldName, kernelName
-    )
-(dataFldr, expName, clstFldr, aggLvl, clstSample) = (
-        'geoProof', 'Aggregated', 'clustered', 'C000100', '0000'
+DATA_PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/{}/'.format(fldName)
+(dataFldr, clstFldr, aggLvl, clstSample) = (
+        fldName,
+        'Landscapes/LandAggregated/{}/'.format(clstType),
+        'C000893', '0001'
     )
 (PAD, DPI) = (.1, 512)
 ###############################################################################
@@ -52,7 +54,7 @@ colors = ['#090446', '#ff004d', '#7fff3a', '#9037dd', '#ffed38']
 ###############################################################################
 (extras, expPath, outPath) = (
         '{}{}/'.format(BASE_PATH, clstFldr),
-        '{}/ANALYZED/0001/'.format(DATA_PATH),
+        '{}/ANALYZED/{}/'.format(DATA_PATH, kernelName),
         '{}video/{}/'.format(BASE_PATH, kernelName)
     )
 monet.makeFolder(outPath)
@@ -69,12 +71,11 @@ monet.makeFolder(outPath)
         {'male': '/M_*', 'female': '/F_*'}, 'c_%06d.png'
     )
 (bgName, originalCoordFile) = (
-        glob.glob(extras + aggLvl + '_' + clstSample + '*VBG.png')[0],
-        glob.glob(extras + aggLvl + '_' + clstSample + '*I.csv')[0]
+        glob.glob(extras+aggLvl+'/Yorkeys01_'+clstSample+'*_VBG.png')[0],
+        glob.glob(extras+aggLvl+'/Yorkeys01_'+clstSample+'*_I.csv')[0]
     )
 (imgLocation, videoLocation) = (
-        outPath,
-        '{}video/{}.mp4'.format(BASE_PATH, kernelName)
+        outPath, '{}video/{}.mp4'.format(BASE_PATH, kernelName)
     )
 original_corners = monet.get_corners(originalCoordFile)
 (coordinates, clstList) = (
