@@ -14,6 +14,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 ###############################################################################
 # Setting up colors and style
 ###############################################################################
+VOL = 'RAID5'
 COLORS = [
         "#090446A0", "#f20060A0", "#c6d8ffA0",
         "#7692ffA0", "#29339bA0", "#7fff3aA0"
@@ -24,7 +25,8 @@ STYLE = {
         "xRange": [0, 1825], "yRange": [-1, +1]
     }
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
-PATH = '/home/chipdelmal/shared/SDY/err/'
+PATH = '/{}/marshallShare/SplitDrive_Yorkeys/geoProof/err/'.format(VOL)
+# PATH = '/home/chipdelmal/shared/SDY/err/'
 GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 ###############################################################################
 # Get paths and create output folders
