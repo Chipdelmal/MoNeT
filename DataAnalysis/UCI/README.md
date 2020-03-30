@@ -45,3 +45,10 @@ python3 video.py 'kernel_cluster_5000'
 * [auxCluster](./auxCluster.py): Cluster-related code.
 * [checkArrays](./checkArrays.py): Unknown
 * [normalizeKernel](./normalizeKernel.py): Auxiliary script to make sure the kernel runs from 0 to 1.
+
+
+## SSH Download
+
+```
+scp -rp  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/UCI/videoDemo/video/*.mp4 ~/Desktop/
+```
