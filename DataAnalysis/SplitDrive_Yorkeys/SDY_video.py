@@ -30,7 +30,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
         'geoProof', 'Aggregated', 'Selective', 'E_05_10_025'
         # sys.argv[1], sys.argv[2]
     )
-DATA_PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/{}/'.format(fldName)
+DATA_PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/{}/{}/'.format(fldName, expName)
 (dataFldr, clstFldr, aggLvl, clstSample) = (
         fldName,
         'Landscapes/LandAggregated/{}/'.format(clstType),
@@ -55,7 +55,7 @@ colors = ['#090446', '#ff004d', '#7fff3a', '#9037dd', '#ffed38']
 (extras, expPath, outPath) = (
         '{}{}/'.format(BASE_PATH, clstFldr),
         '{}/ANALYZED/{}/'.format(DATA_PATH, kernelName),
-        '{}video/{}/'.format(BASE_PATH, kernelName)
+        '{}video/{}/'.format(BASE_PATH, expName)
     )
 monet.makeFolder(outPath)
 ###############################################################################
@@ -75,7 +75,7 @@ monet.makeFolder(outPath)
         glob.glob(extras+aggLvl+'/Yorkeys01_'+clstSample+'*_I.csv')[0]
     )
 (imgLocation, videoLocation) = (
-        outPath, '{}video/{}.mp4'.format(BASE_PATH, kernelName)
+        outPath, '{}video/{}/{}.mp4'.format(BASE_PATH, expName, kernelName)
     )
 original_corners = monet.get_corners(originalCoordFile)
 (coordinates, clstList) = (
@@ -85,19 +85,20 @@ original_corners = monet.get_corners(originalCoordFile)
 ###############################################################################
 # Terminal message
 ###############################################################################
-print(aux.PAD)
+print(aux.PADA)
 print('{}Exporting video [{}]{}'.format(
             aux.CWHT, str(datetime.datetime.now()), aux.CEND
         ))
-print(aux.PADL + aux.CRED)
+print(aux.PADB + aux.CRED)
 print('* PATH base: \t{}'.format(BASE_PATH))
 print('* PATH data: \t{}'.format(DATA_PATH))
 print('* PATH imgs: \t{}'.format(imgLocation))
 print('* PATH video: \t{}'.format(videoLocation))
-print(aux.CEND + aux.PADL)
+print(aux.CEND + aux.PADB)
 ###############################################################################
 # Export Frames
 ###############################################################################
+print(expPath)
 clusters = monet.populateClustersFromList(clstList, expPath, patchFilePattern)
 aggList = monet.aggregateClusters(clusters, aggDict)
 ticks = aggList[0].shape[0]
@@ -128,8 +129,8 @@ console = [
 # Terminal message
 ###############################################################################
 print(aux.CWHT + ' '.join(console) + aux.CEND)
-print(aux.PADL)
+print(aux.PADB)
 print('{}Exported frames [{}]{}'.format(
             aux.CWHT, str(datetime.datetime.now()), aux.CEND
         ))
-print(aux.PAD)
+print(aux.PADA)
