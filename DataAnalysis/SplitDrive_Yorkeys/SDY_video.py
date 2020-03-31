@@ -30,7 +30,9 @@ warnings.filterwarnings("ignore", category=UserWarning)
         'geoProof', 'Aggregated', 'Selective', 'E_05_10_025'
         # sys.argv[1], sys.argv[2]
     )
-DATA_PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/{}/{}/'.format(fldName, expName)
+DATA_PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/{}/{}/'.format(
+        fldName, expName
+    )
 (dataFldr, clstFldr, aggLvl, clstSample) = (
         fldName,
         'Landscapes/LandAggregated/{}/'.format(clstType),
@@ -105,7 +107,7 @@ ticks = aggList[0].shape[0]
 monet.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imgLocation, colors, original_corners,
-        PAD, DPI, skip=False, countries=True, refPopSize=1500
+        PAD, DPI, skip=False, countries=True, refPopSize=100
     )
 print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
 print('* Please run the following command in the terminal:')
