@@ -216,6 +216,6 @@ print(aux.PAD)
 monet.exportGeneLegend(
         ['W', 'H'],
         [(0, .22, .66, .5), (1, 0, .6, .5)], #aux.STYLE_HLT['colors'],
-        '/Users/sanchez.hmsc/Desktop/uciPan',
+        expOutStr + '/plt.pdf',
         500
     )
