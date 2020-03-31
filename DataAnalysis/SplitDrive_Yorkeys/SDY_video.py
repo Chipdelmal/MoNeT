@@ -18,6 +18,7 @@ import glob
 import warnings
 import datetime
 import SDY_aux as aux
+import SDY_functions as fun
 import SDY_select as sel
 import MoNeT_MGDrivE as monet
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -57,7 +58,7 @@ colors = ['#090446', '#ff004d', '#7fff3a', '#9037dd', '#ffed38']
 (extras, expPath, outPath) = (
         '{}{}/'.format(BASE_PATH, clstFldr),
         '{}/ANALYZED/{}/'.format(DATA_PATH, kernelName),
-        '{}video/{}/'.format(BASE_PATH, expName)
+        '{}video/{}/{}/'.format(BASE_PATH, expName, kernelName)
     )
 monet.makeFolder(outPath)
 ###############################################################################
@@ -100,11 +101,11 @@ print(aux.CEND + aux.PADB)
 ###############################################################################
 # Export Frames
 ###############################################################################
-print(expPath)
+# print(expPath)
 clusters = monet.populateClustersFromList(clstList, expPath, patchFilePattern)
 aggList = monet.aggregateClusters(clusters, aggDict)
 ticks = aggList[0].shape[0]
-monet.generateClusterGraphs(
+fun.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imgLocation, colors, original_corners,
         PAD, DPI, skip=False, countries=True, refPopSize=100

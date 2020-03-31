@@ -1,6 +1,9 @@
 
 import os
+import datetime
 import subprocess
+import k_aux as aux
+import k_fun as fun
 
 
 (VOL, expName) = ('RAID5', 'R12_con')
@@ -19,7 +22,7 @@ subfolders = [f.path for f in os.scandir(fldrsPath) if f.is_dir()]
 sp = []
 for (i, kernel) in enumerate(subfolders):
     spLst = ['python', 'kernelsSTP.py', 'RAID5', expName, kernel]
-    sp.extend(subprocess.Popen(spList, shell=True, stderr=subprocess.STDOUT))
+    sp.append(subprocess.Popen(spLst, shell=True, stderr=subprocess.STDOUT))
     print('Subprocess launched ({}/{})'.format(i+1, len(subfolders)), end='\r')
 # Wait for the processes to finish
 print('All subprocesses launched ({}). Please wait!'.format(len(subfolders)))

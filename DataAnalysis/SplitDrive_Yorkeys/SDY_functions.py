@@ -3,6 +3,7 @@ import numpy as np
 import SDY_aux as aux
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
 np.seterr(divide='ignore', invalid='ignore')
 
 
@@ -157,6 +158,7 @@ def generateClusterGraphs(
     """
     time = len(aggList[0])
     timeMax = list(range(time))
+    print(destination)
     for tick in timeMax:
         imgFileName = destination+'/c_'+str(tick).zfill(6)+".png"
         if skip and os.path.isfile(imgFileName):
