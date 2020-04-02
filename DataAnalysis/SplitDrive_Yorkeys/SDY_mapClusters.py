@@ -18,7 +18,7 @@ def rescaleRGBA(colorsTuple, colors=255):
     return [i/colors for i in colorsTuple]
 
 
-PAD = .1
+PAD = .001
 COLORS = [
         rescaleRGBA((47, 28, 191, 255/2.5)),    # 0: Faded navy blue
         rescaleRGBA((255, 0, 152, 255/1)),      # 1: Magenta
@@ -29,7 +29,7 @@ COLORS = [
     ]
 
 ###############################################################################
-pathRoot = '/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Selective/C000893/'
+pathRoot = '/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/LandAggregated/Selective/C000893/'
 firstRun = True
 # print(sorted(glob.glob(pathRoot+'/Y*I.csv')))
 ###############################################################################
@@ -71,16 +71,16 @@ for clusterFile in sorted(glob.glob(pathRoot+'/Y*I.csv')):
     ax = fig.add_subplot(111, label="1")
     m = Basemap(
             projection='merc',
-            llcrnrlat=minLat-0.025, urcrnrlat=maxLat+0.025,
-            llcrnrlon=minLong-0.025, urcrnrlon=maxLong+0.025,
+            llcrnrlat=minLat-PAD, urcrnrlat=maxLat+PAD,
+            llcrnrlon=minLong-PAD, urcrnrlon=maxLong+PAD,
             lat_ts=20, resolution='i', ax=ax
         )
-    m.drawcoastlines(color=COLORS[4], linewidth=5, zorder=-1)
-    m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=-1)
-    m.drawcoastlines(color=COLORS[4], linewidth=.5, zorder=-1)
+    # m.drawcoastlines(color=COLORS[4], linewidth=5, zorder=-1)
+    # m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=-1)
+    # m.drawcoastlines(color=COLORS[4], linewidth=.5, zorder=-1)
     # m.fillcontinents(color=COLORS[3], lake_color='aqua')
     m.scatter(
-            longs, lats, latlon=True, alpha=.1, marker='x', s=1,
+            longs, lats, latlon=True, alpha=.075, marker='x', s=10,
             cmap=plt.get_cmap('winter'), c=clusters,
             vmin=minCluster, vmax=maxCluster
         )

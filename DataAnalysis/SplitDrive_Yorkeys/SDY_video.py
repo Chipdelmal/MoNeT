@@ -13,37 +13,33 @@
 #   https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/ERACR/Yorkeys.py
 #   https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/AggregationAndClustering
 ###############################################################################
-import sys
 import glob
 import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 import datetime
 import SDY_aux as aux
 import SDY_functions as fun
 import SDY_select as sel
 import MoNeT_MGDrivE as monet
-warnings.filterwarnings("ignore", category=UserWarning)
-
 
 # Aggregated: Selective
 # unAggregated: Uniformly
 (BASE_PATH, fldName, expName, clstType, kernelName) = (
-        '/RAID5/marshallShare/SplitDrive_Yorkeys/',
-        'geoProof', 'Aggregated', 'Selective', 'E_05_10_025'
+        '/home/chipdelmal/Desktop/SplitDrive_Yorkeys',
+        'geoProof', 'Aggregated', 'Selective', 'E_15_20_050'
         # sys.argv[1], sys.argv[2]
     )
-DATA_PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/{}/{}/'.format(
-        fldName, expName
-    )
+DATA_PATH = '{}/{}/{}'.format(BASE_PATH, fldName, expName)
 (dataFldr, clstFldr, aggLvl, clstSample) = (
         fldName,
         'Landscapes/LandAggregated/{}/'.format(clstType),
         'C000893', '0001'
     )
-(PAD, DPI) = (.1, 512)
+(PAD, DPI) = (.001, 512)
 ###############################################################################
 # Colors and genotypes
 ###############################################################################
-colors = ['#090446', '#ff004d', '#7fff3a', '#9037dd', '#ffed38']
+colors = ["#09044620", "#f2006020", "#c6d8ff20","#7692ff20", "#29339b20", "#7fff3a20"]
 (_, aggDict, _, _) = sel.driveSelector(1, False, '')
 ###############################################################################
 # File paths
@@ -56,9 +52,9 @@ colors = ['#090446', '#ff004d', '#7fff3a', '#9037dd', '#ffed38']
 #       (would be equal to expFolder in case it's not existing)
 ###############################################################################
 (extras, expPath, outPath) = (
-        '{}{}/'.format(BASE_PATH, clstFldr),
+        '{}/{}/'.format(BASE_PATH, clstFldr),
         '{}/ANALYZED/{}/'.format(DATA_PATH, kernelName),
-        '{}video/{}/{}/'.format(BASE_PATH, expName, kernelName)
+        '{}/video/{}/{}/'.format(BASE_PATH, expName, kernelName)
     )
 monet.makeFolder(outPath)
 ###############################################################################
@@ -78,7 +74,7 @@ monet.makeFolder(outPath)
         glob.glob(extras+aggLvl+'/Yorkeys01_'+clstSample+'*_I.csv')[0]
     )
 (imgLocation, videoLocation) = (
-        outPath, '{}video/{}/{}.mp4'.format(BASE_PATH, expName, kernelName)
+        outPath, '{}/video/{}/{}.mp4'.format(BASE_PATH, expName, kernelName)
     )
 original_corners = monet.get_corners(originalCoordFile)
 (coordinates, clstList) = (
@@ -95,36 +91,36 @@ print('{}Exporting video [{}]{}'.format(
 print(aux.PADB + aux.CRED)
 print('* PATH base: \t{}'.format(BASE_PATH))
 print('* PATH data: \t{}'.format(DATA_PATH))
-print('* PATH imgs: \t{}'.format(imgLocation))
+print('* PATH expr: \t{}'.format(expPath))
 print('* PATH video: \t{}'.format(videoLocation))
 print(aux.CEND + aux.PADB)
 ###############################################################################
 # Export Frames
 ###############################################################################
 # print(expPath)
+print('* Populating clusters list', end='\r')
 clusters = monet.populateClustersFromList(clstList, expPath, patchFilePattern)
+print('* Populating aggregations list', end='\r')
 aggList = monet.aggregateClusters(clusters, aggDict)
+print('* Generating videos frames to folder')
 ticks = aggList[0].shape[0]
 fun.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imgLocation, colors, original_corners,
-        PAD, DPI, skip=False, countries=True, refPopSize=100
+        PAD, DPI, skip=False, countries=False, refPopSize=5
     )
-print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
-print('* Please run the following command in the terminal:')
+len(aggList)
+originalCoordFile
 ###############################################################################
 # Generate video
 ###############################################################################
+print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
+print('* Please run the following command in the terminal:')
 console = [
-            'ffmpeg',
-            '-r', '30',
-            '-f', 'image2',
-            '-s', '4096x2160',
+            'ffmpeg', '-r', '30', '-f', 'image2', '-s', '4096x2160',
             '-i', '{}c_%06d.png'.format(imgLocation),
-            '-vf', '"pad=ceil(iw/2)*2:ceil(ih/2)*2"',
-            '-vcodec', 'libx264',
-            '-crf', '25',
-            '-pix_fmt', 'yuv420p', videoLocation
+            '-vf', '"pad=ceil(iw/2)*2:ceil(ih/2)*2"', '-vcodec', 'libx264',
+            '-crf', '25', '-pix_fmt', 'yuv420p', videoLocation
         ]
 # video = subprocess.Popen(console)
 # video.wait()

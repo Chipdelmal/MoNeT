@@ -1,4 +1,5 @@
 
+import os
 import numpy as np
 import SDY_aux as aux
 import MoNeT_MGDrivE as monet
@@ -20,7 +21,7 @@ def rpd(signal, probe):
 ###############################################################################
 # Paths
 ###############################################################################
-def getValidationExperiments(path,setName):
+def getValidationExperiments(path, setName):
     base = path + setName
     names = sorted(monet.listDirectoriesInPath(base+'/ANALYZED/'))
     pthsA = sorted(monet.listDirectoriesWithPathWithinAPath(base+'/ANALYZED/'))
@@ -109,6 +110,38 @@ COLORS = [
     ]
 
 
+def createFig(coordinates, padding, countries):
+    fig = None
+    ax = None
+    m = None
+    minLat = min(coordinates[0])
+    maxLat = max(coordinates[0])
+    minLong = min(coordinates[1])
+    maxLong = max(coordinates[1])
+    fig, ax = plt.subplots(figsize=(5, 5))
+    ax.tick_params(
+            axis='both',          # changes apply to the both
+            which='both',      # both major and minor ticks are affected
+            bottom=False,      # ticks along the bottom edge are off
+            top=False,         # ticks along the top edge are off
+            left=False,
+            right=False,
+            labelbottom=False,  # labels along the bottom edge are off
+            labelleft=False
+        )
+    m = Basemap(
+            projection='merc',
+            llcrnrlat=minLat-padding, urcrnrlat=maxLat+padding,
+            llcrnrlon=minLong-padding, urcrnrlon=maxLong+padding, lat_ts=20,
+            resolution='i', ax=ax
+        )
+    m.drawcounties(linewidth=0.3)
+    if countries:
+        m.drawcoastlines(linewidth=0.3)
+        m.drawcountries(linewidth=0.3)
+    return (fig, ax, m)
+
+
 def generateClusterGraphs(
             clstFile,
             aggList, coordinates, destination, colorList, original_corners,
@@ -117,21 +150,20 @@ def generateClusterGraphs(
         ):
     time = len(aggList[0])
     timeMax = list(range(time))
-    print(destination)
     for tick in timeMax:
         imgFileName = destination+'/c_'+str(tick).zfill(6)+".png"
         if skip and os.path.isfile(imgFileName):
             continue
 
-        for idx, cData in enumerate(aggList):
+        for (idx, cData) in enumerate(aggList):
             if idx == 0:
-                (fig, ax, m) = createMap(clstFile, COLORS, pad=.025)
+                (fig, ax, m) = createMap(clstFile, COLORS, pad=padding)
             pops = []
             try:
                 pops = cData[tick]
                 alphas, size = monet.getAlphas(pops)
                 if alphas:
-                    monet.draw_dots(
+                    draw_dots(
                             m, alphas, colorList,
                             coordinates[0][idx], coordinates[1][idx],
                             size/refPopSize
@@ -154,11 +186,9 @@ def generateClusterGraphs(
             plt.close(fig)
             plt.close('all')
             if original_corners:
-                fig, ax, m = monet.createFig(
-                        original_corners, padding, countries
-                    )
+                fig, ax, m = createFig(original_corners, padding, countries)
             else:
-                fig, ax, m = monet.createFig(coordinates, padding, countries)
+                fig, ax, m = createFig(coordinates, padding, countries)
         if verbose:
             print(
                     '* Exporting frame ({}/{})'.format(
@@ -195,9 +225,9 @@ def createMap(clusterFile, COLORS, pad=.025):
             llcrnrlon=minLong-pad, urcrnrlon=maxLong+pad,
             lat_ts=20, resolution='i', ax=ax
         )
-    m.drawcoastlines(color=COLORS[1], linewidth=5, zorder=-1)
-    m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=-1)
-    m.drawcoastlines(color=COLORS[1], linewidth=.5, zorder=-1)
+    # m.drawcoastlines(color=COLORS[1], linewidth=5, zorder=-1)
+    # m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=-1)
+    # m.drawcoastlines(color=COLORS[1], linewidth=.5, zorder=-1)
     # m.fillcontinents(color=COLORS[3], lake_color='aqua')
     m.scatter(
             longs, lats, latlon=True, alpha=.1, marker='x', s=1,
@@ -216,3 +246,13 @@ def createMap(clusterFile, COLORS, pad=.025):
         )
     ax.axis('off')
     return (fig, ax, m)
+
+
+def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
+    for idx, value in enumerate(alphas):
+        m.scatter(
+                [long], [lat], latlon=True, marker=(6, 0),
+                s=max(10, 0.11 * size), facecolor=colorList[idx],
+                alpha=value, linewidths=.25, edgecolors='White'
+            )
+    return m
