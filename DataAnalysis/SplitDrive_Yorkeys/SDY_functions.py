@@ -115,47 +115,6 @@ def generateClusterGraphs(
             padding, dpi, countries=False, skip=False, refPopSize=1,
             verbose=True, background=False, timeLocation=(.5, .5)
         ):
-    """Exports the map instance to disk. This contains the scatter coordinates
-            with correct alpha and size.
-
-    Parameters
-    ----------
-    clstFile : filepath
-        "_I".
-    aggList : list
-        Output from the 'aggregateClusters' function.
-    coordinates : list
-        Output from the 'getClustersFromAggFiles' function.
-    destination : filepath
-        Path to export the map to.
-    colorList : list
-        List of RGB (0-1) colors to be used in the map (NEEDS IMPROVEMENT).
-    original_corners : list
-        Output from the 'get_corners' function.
-    padding : float
-        Size of the relief area around the map.
-    dpi : int
-        DPI of the resulting image.
-    countries : bool
-        Boolean to determine if the countries polygons are to be drawn.
-    skip : bool
-        If 'true', no file is exported if a previous export is present
-            (no overwrite), this frame would just be skipped.
-    refPopSize : float
-        Reference population to scale the size of the dots.
-    verbose : bool
-        If 'true', prints the current frame being exported in console.
-    background : NA
-        Unused.
-    timeLocation : list
-        (X, Y) coordinate of the position where the timestamp will be printed.
-
-    Returns
-    -------
-    None
-        Function exports to disk.
-
-    """
     time = len(aggList[0])
     timeMax = list(range(time))
     print(destination)
@@ -210,23 +169,6 @@ def generateClusterGraphs(
 
 
 def createMap(clusterFile, COLORS, pad=.025):
-    """Short summary.
-
-    Parameters
-    ----------
-    clusterFile : type
-        Description of parameter `clusterFile`.
-    COLORS : type
-        Description of parameter `COLORS`.
-    pad : type
-        Description of parameter `pad`.
-
-    Returns
-    -------
-    type
-        Description of returned object.
-
-    """
     (minLat, maxLat, minLong, maxLong) = (0, 0, 0, 0)
     (lats, longs, clusters) = ([], [], [])
     clusterData = open(clusterFile, 'r')
