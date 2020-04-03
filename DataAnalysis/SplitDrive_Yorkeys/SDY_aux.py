@@ -65,11 +65,14 @@ def printVideoHead(BASE_PATH, DATA_PATH, expPath, videoLocation, time):
     print(CEND + PADB)
 
 
-def printVideoTail(tStr, tEnd, console, cPrint=False):
+def printVideoTail(tStr, tEnd, console, videoLocation, cPrint=False):
     if cPrint:
-        print(CWHT + ' '.join(console) + CEND)
+        print(' '.join(console))
     print(PADB)
     print('{}Exported frames [{}]{}'.format(
                 CWHT, str(tEnd - tStr), CEND
             ))
+    print(CWHT, end='\r')
+    print('Video saved to: ' + videoLocation)
+    print(CEND, end='\r')
     print(PADA)

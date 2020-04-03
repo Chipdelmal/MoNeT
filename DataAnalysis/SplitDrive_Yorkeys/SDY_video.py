@@ -16,6 +16,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 #   https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/AggregationAndClustering
 # Example of use:  python SDY_video.py 'dsk' 'E_30_30_100'
 ###############################################################################
+import os
 import sys
 import glob
 import datetime
@@ -121,10 +122,11 @@ console = [
             '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2', '-vcodec', 'libx264',
             '-crf', '25', '-pix_fmt', 'yuv420p', videoLocation
         ]
-video = subprocess.Popen(console)
+FNULL = open(os.devnull, 'w')
+video = subprocess.Popen(console, stdout=FNULL, stderr=subprocess.STDOUT)
 video.wait()
 ###############################################################################
 # Terminal message
 ###############################################################################
 tEnd = datetime.datetime.now()
-aux.printVideoTail(tStr, tEnd, console)
+aux.printVideoTail(tStr, tEnd, console, videoLocation)
