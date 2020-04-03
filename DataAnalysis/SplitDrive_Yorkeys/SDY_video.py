@@ -13,6 +13,7 @@
 #   https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/ERACR/Yorkeys.py
 #   https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/AggregationAndClustering
 ###############################################################################
+import sys
 import glob
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -25,8 +26,9 @@ import MoNeT_MGDrivE as monet
 # Aggregated: Selective
 # unAggregated: Uniformly
 (BASE_PATH, fldName, expName, clstType, kernelName) = (
-        '/home/chipdelmal/Desktop/SplitDrive_Yorkeys',
-        'geoProof', 'Aggregated', 'Selective', 'E_15_20_050'
+        '/RAID5/marshallShare/SplitDrive_Yorkeys',
+        'geoProof', 'Aggregated', 'Selective', sys.argv[1]
+        # 'E_30_30_100'
         # sys.argv[1], sys.argv[2]
     )
 DATA_PATH = '{}/{}/{}'.format(BASE_PATH, fldName, expName)
