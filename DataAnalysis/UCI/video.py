@@ -117,18 +117,18 @@ print('* Please run the following command in the terminal:')
 # Generate video
 ###############################################################################
 console = [
-            'ffmpeg',
+            'ffmpeg', '-y',
             '-r', '30',
             '-f', 'image2',
             '-s', '4096x2160',
             '-i', '{}c_%06d.png'.format(imgLocation),
-            '-vf', '"pad=ceil(iw/2)*2:ceil(ih/2)*2"',
+            '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2',
             '-vcodec', 'libx264',
             '-crf', '25',
             '-pix_fmt', 'yuv420p', videoLocation
         ]
-# video = subprocess.Popen(console)
-# video.wait()
+video = subprocess.Popen(console)
+video.wait()
 ###############################################################################
 # Terminal message
 ###############################################################################
