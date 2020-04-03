@@ -18,7 +18,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   7: tGD One Transgene
 ##############################################################################
 DRIVE = 3
-(TRACES, STACK, FORMAT) = (False, True, '.pdf')
+(TRACES, STACK, FORMAT) = (True, True, '.pdf')
 ##############################################################################
 ##############################################################################
 pathRoot = '/RAID5/marshallShare/tGD/'  # '/Users/sanchez.hmsc/Desktop/tGD/'
@@ -110,6 +110,6 @@ if TRACES is True:
 # Export the legend
 ##############################################################################
 monet.exportGeneLegend(
-        genes, colors, pathRoot + "/palette" + FORMAT, 500
+        genes, colors, pathRoot + "/images/palette" + FORMAT, 500
     )
 print('* Script finished correctly ({})!{}'.format(len(pathsRoot),' '*20))
