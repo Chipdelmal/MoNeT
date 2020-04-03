@@ -126,7 +126,7 @@ fun.generateClusterGraphs(
         PAD, DPI, skip=False, countries=False, refPopSize=2
     )
 print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
-print(aux.CEND)
+print(aux.CEND, end='\r')
 ###############################################################################
 # Generate video
 ###############################################################################
