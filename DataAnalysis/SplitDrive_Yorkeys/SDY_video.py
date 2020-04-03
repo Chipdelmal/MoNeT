@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 ###############################################################################
 # Clustered video routines
 ###############################################################################
@@ -12,12 +14,12 @@
 # Depends on an obsolete structure (needs to be updated):
 #   https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/ERACR/Yorkeys.py
 #   https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/AggregationAndClustering
+# Example of use:  python SDY_video.py 'dsk' 'E_30_30_100'
 ###############################################################################
 import sys
 import glob
-import warnings
-warnings.filterwarnings("ignore", category=UserWarning)
 import datetime
+import subprocess
 import SDY_aux as aux
 import SDY_functions as fun
 import SDY_select as sel
@@ -25,9 +27,17 @@ import MoNeT_MGDrivE as monet
 
 # Aggregated: Selective
 # unAggregated: Uniformly
+if sys.argv[1] == 'srv':
+    VOL = '/RAID5/marshallShare/'
+else:
+    VOL = '/home/chipdelmal/Desktop/'
+HLT = True
+###############################################################################
+# Paths
+###############################################################################
 (BASE_PATH, fldName, expName, clstType, kernelName) = (
-        '/RAID5/marshallShare/SplitDrive_Yorkeys',
-        'geoProof', 'Aggregated', 'Selective', sys.argv[1]
+        '{}SplitDrive_Yorkeys'.format(VOL),
+        'geoProof', 'Aggregated', 'Selective', sys.argv[2]
         # 'E_30_30_100'
         # sys.argv[1], sys.argv[2]
     )
@@ -41,8 +51,7 @@ DATA_PATH = '{}/{}/{}'.format(BASE_PATH, fldName, expName)
 ###############################################################################
 # Colors and genotypes
 ###############################################################################
-colors = ["#09044620", "#f2006020", "#c6d8ff20","#7692ff20", "#29339b20", "#7fff3a20"]
-(_, aggDict, _, _) = sel.driveSelector(1, False, '')
+(_, aggDict, colors, _) = sel.driveSelectorVideo(1, HLT, '')
 ###############################################################################
 # File paths
 ###############################################################################
@@ -99,7 +108,7 @@ print(aux.CEND + aux.PADB)
 ###############################################################################
 # Export Frames
 ###############################################################################
-# print(expPath)
+print(expPath)
 print('* Populating clusters list', end='\r')
 clusters = monet.populateClustersFromList(clstList, expPath, patchFilePattern)
 print('* Populating aggregations list', end='\r')
@@ -109,23 +118,21 @@ ticks = aggList[0].shape[0]
 fun.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imgLocation, colors, original_corners,
-        PAD, DPI, skip=False, countries=False, refPopSize=5
+        PAD, DPI, skip=False, countries=False, refPopSize=2
     )
-len(aggList)
-originalCoordFile
+print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
+print('* Please run the following command in the terminal:')
 ###############################################################################
 # Generate video
 ###############################################################################
-print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
-print('* Please run the following command in the terminal:')
 console = [
-            'ffmpeg', '-r', '30', '-f', 'image2', '-s', '4096x2160',
+            'ffmpeg', '-y', '-r', '30', '-f', 'image2', '-s', '4096x2160',
             '-i', '{}c_%06d.png'.format(imgLocation),
-            '-vf', '"pad=ceil(iw/2)*2:ceil(ih/2)*2"', '-vcodec', 'libx264',
+            '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2', '-vcodec', 'libx264',
             '-crf', '25', '-pix_fmt', 'yuv420p', videoLocation
         ]
-# video = subprocess.Popen(console)
-# video.wait()
+video = subprocess.Popen(console)
+video.wait()
 ###############################################################################
 # Terminal message
 ###############################################################################

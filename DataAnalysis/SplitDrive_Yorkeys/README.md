@@ -40,3 +40,7 @@ scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/Aggregated/ANALYZED
 
 scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/Aggregated/GARBAGE/E_15_20_050/ '~/Desktop/SplitDrive_Yorkeys/geoProof/Aggregated/GARBAGE'
 ```
+
+```bash
+scp -rp lab:'/RAID5/marshallShare/SplitDrive_Yorkeys/video/' '/home/chipdelmal/Desktop/SplitDrive_Yorkeys/'
+```
