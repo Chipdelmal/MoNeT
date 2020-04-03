@@ -95,25 +95,15 @@ original_corners = monet.get_corners(originalCoordFile)
 ###############################################################################
 # Terminal message
 ###############################################################################
-print(aux.PADA)
-print('{}Exporting video [{}]{}'.format(
-            aux.CWHT, str(datetime.datetime.now()), aux.CEND
-        ))
-print(aux.PADB + aux.CRED)
-print('* PATH base: \t{}'.format(BASE_PATH))
-print('* PATH data: \t{}'.format(DATA_PATH))
-print('* PATH expr: \t{}'.format(expPath))
-print('* PATH video: \t{}'.format(videoLocation))
-print(aux.CEND + aux.PADB)
+tStr = datetime.datetime.now()
+aux.printVideoHead(BASE_PATH, DATA_PATH, expPath, videoLocation, tStr)
 ###############################################################################
 # Export Frames
 ###############################################################################
-print(expPath)
-print('* Populating clusters list', end='\r')
-clusters = monet.populateClustersFromList(clstList, expPath, patchFilePattern)
+print(aux.CBBL, end='\r')
 print('* Populating aggregations list', end='\r')
+clusters = monet.populateClustersFromList(clstList, expPath, patchFilePattern)
 aggList = monet.aggregateClusters(clusters, aggDict)
-print('* Generating videos frames to folder')
 ticks = aggList[0].shape[0]
 fun.generateClusterGraphs(
         originalCoordFile,
@@ -121,7 +111,7 @@ fun.generateClusterGraphs(
         PAD, DPI, skip=False, countries=False, refPopSize=2
     )
 print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
-print('* Please run the following command in the terminal:')
+print(aux.CEND)
 ###############################################################################
 # Generate video
 ###############################################################################
@@ -136,9 +126,5 @@ video.wait()
 ###############################################################################
 # Terminal message
 ###############################################################################
-print(aux.CWHT + ' '.join(console) + aux.CEND)
-print(aux.PADB)
-print('{}Exported frames [{}]{}'.format(
-            aux.CWHT, str(datetime.datetime.now()), aux.CEND
-        ))
-print(aux.PADA)
+tEnd = datetime.datetime.now()
+aux.printVideoTail(tStr, tEnd, console)

@@ -191,8 +191,9 @@ def generateClusterGraphs(
                 fig, ax, m = createFig(coordinates, padding, countries)
         if verbose:
             print(
-                    '* Exporting frame ({}/{})'.format(
-                            str(tick+1).zfill(5), str(time).zfill(5)
+                    '* Exporting frame ({}/{}){}'.format(
+                            str(tick+1).zfill(5), str(time).zfill(5),
+                            ' '*20
                     ), end='\r'
                 )
     return None

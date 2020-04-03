@@ -1,3 +1,4 @@
+import datetime
 
 ###############################################################################
 # Genotypes Selection
@@ -49,3 +50,26 @@ def printProggress(i, xpNumb, sig):
     print('- Working on ({}/{}): {}'.format(msgStr[0], msgStr[1], msgStr[2]))
     print(CEND, end='\r')
     return True
+
+
+def printVideoHead(BASE_PATH, DATA_PATH, expPath, videoLocation, time):
+    print(PADA)
+    print('{}Generating video [{}]{}'.format(
+                CWHT, str(time), CEND
+            ))
+    print(PADB + CRED)
+    print('* PATH base: \t{}'.format(BASE_PATH))
+    print('* PATH data: \t{}'.format(DATA_PATH))
+    print('* PATH expr: \t{}'.format(expPath))
+    print('* PATH video: \t{}'.format(videoLocation))
+    print(CEND + PADB)
+
+
+def printVideoTail(tStr, tEnd, console, cPrint=False):
+    if cPrint:
+        print(CWHT + ' '.join(console) + CEND)
+    print(PADB)
+    print('{}Exported frames [{}]{}'.format(
+                CWHT, str(tEnd - tStr), CEND
+            ))
+    print(PADA)
