@@ -17,13 +17,14 @@
 import os
 import sys
 import glob
+import warnings
 import datetime
 import subprocess
 import SDY_aux as aux
 import SDY_functions as fun
 import SDY_select as sel
 import MoNeT_MGDrivE as monet
-
+warnings.filterwarnings("ignore", category=UserWarning)
 
 ###############################################################################
 # Terminal Selections
