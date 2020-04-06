@@ -12,7 +12,8 @@
 # Depends on an obsolete structure (needs to be updated):
 #   https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/ERACR/Yorkeys.py
 #   https://github.com/Chipdelmal/MoNeT/tree/master/DataAnalysis/AggregationAndClustering
-# Example of use:  python SDY_video.py 'dsk' 'E_30_30_100'
+# Example of use:
+#   python SDY_video.py 'srv' 'agg' 'hlt' 'E_30_30_100'
 ###############################################################################
 import os
 import sys
@@ -40,7 +41,7 @@ if sys.argv[2] == 'agg':
 else:
     (FLD, TYP, CLS) = ('unAggregated', 'Uniformly', 'C002195')
 # Health
-if sys.argv[3] == 'HLT':
+if sys.argv[3] == 'hlt':
     HLT = True
 else:
     HLT = False
@@ -50,17 +51,11 @@ else:
 (BASE_PATH, fldName, expName, clstType, kernelName) = (
         '{}SplitDrive_Yorkeys'.format(VOL), 'geoProof',
         FLD, TYP, sys.argv[4]
-        # 'unAggregated', 'Uniformly', sys.argv[2]
-        # 'Aggregated', 'Selective', sys.argv[2]
-        # 'E_30_30_100'
-        # sys.argv[1], sys.argv[2]
     )
 DATA_PATH = '{}/{}/{}'.format(BASE_PATH, fldName, expName)
 (dataFldr, clstFldr, aggLvl, clstSample) = (
-        fldName,
-        'Landscapes/LandAggregated/{}/'.format(clstType),
+        fldName, 'Landscapes/LandAggregated/{}/'.format(clstType),
         CLS, '0001'
-        # 'C000893', '0001'
     )
 (PAD, DPI) = (.001, 512)
 ###############################################################################

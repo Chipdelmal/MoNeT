@@ -42,5 +42,31 @@ scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/Aggregated/GARBAGE/
 ```
 
 ```bash
-scp -rp lab:'/RAID5/marshallShare/SplitDrive_Yorkeys/video/' '/home/chipdelmal/Desktop/SplitDrive_Yorkeys/'
+scp -rp lab:'/RAID5/marshallShare/SplitDrive_Yorkeys/video/Aggregated/*.mp4' '/home/chipdelmal/Desktop/SplitDrive_Yorkeys/video/Aggregated/'
+
+
 ```
+
+## Videos Checklist
+
+
+[E_05_10_025, E_05_20_025, E_05_30_025, E_15_10_025, E_30_30_100]
+[E_15_20_025, E_15_30_025, E_30_10_025, E_30_20_025, E_15_30_100]
+[E_30_30_025, E_05_10_050, E_05_20_050, E_05_30_050, E_30_10_100]
+[E_15_10_050, E_15_20_050, E_15_30_050, E_30_10_050, E_30_20_100]
+[E_30_20_050, E_30_30_050, E_05_10_075, E_05_20_075]
+[E_05_30_075, E_15_10_075, E_15_20_075, E_15_30_075]
+[E_30_10_075, E_30_20_075, E_30_30_075, E_05_10_100]
+[E_05_20_100, E_05_30_100, E_15_10_100, E_15_20_100]
+
+
+python SDY_video.py 'srv' 'agg' 'hlt'
+
+[E_05_10_025, E_05_20_025, E_05_30_025, E_15_10_025, E_30_30_100]
+[E_15_20_025, E_15_30_025, E_30_10_025, E_30_20_025, E_15_30_100]
+[E_30_30_025, E_05_10_050, E_05_20_050, E_05_30_050, E_30_10_100]
+[E_15_10_050, E_15_20_050, E_15_30_050, E_30_10_050, E_30_20_100]
+[, , , ]
+[, , , ]
+[, , , ]
+[, , , ]
