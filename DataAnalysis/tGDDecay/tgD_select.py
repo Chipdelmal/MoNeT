@@ -29,7 +29,7 @@ def driveSelector(DRIVE, pathRoot):
         )
         yRange = 11000
     if DRIVE == 3:
-        pathExt = "tGD/1to2/"
+        pathExt = "tGD/New/"
         aggregationDictionary = monet.generateAggregationDictionary(
             ["WA+WB", "H", "RA", "RB", "G"],
             [

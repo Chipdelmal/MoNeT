@@ -18,7 +18,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 #   7: tGD One Transgene
 ##############################################################################
 DRIVE = 3
-(TRACES, STACK, FORMAT) = (True, True, '.pdf')
+(TRACES, STACK, FORMAT) = (False, True, '.pdf')
 ##############################################################################
 ##############################################################################
 pathRoot = '/RAID5/marshallShare/tGD/'  # '/Users/sanchez.hmsc/Desktop/tGD/'
