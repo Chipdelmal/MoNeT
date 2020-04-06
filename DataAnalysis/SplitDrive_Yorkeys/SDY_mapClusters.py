@@ -1,3 +1,4 @@
+
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -29,7 +30,7 @@ COLORS = [
     ]
 
 ###############################################################################
-pathRoot = '/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/LandAggregated/Selective/C000893/'
+pathRoot = '/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Uniformly/C002195/'
 firstRun = True
 # print(sorted(glob.glob(pathRoot+'/Y*I.csv')))
 ###############################################################################

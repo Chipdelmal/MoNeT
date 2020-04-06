@@ -40,7 +40,7 @@ if sys.argv[2] == 'agg':
 else:
     (FLD, TYP, CLS) = ('unAggregated', 'Uniformly', 'C002195')
 # Health
-if sys.argv[3] == 'HLT':
+if sys.argv[3] == 'hlt':
     HLT = True
 else:
     HLT = False
@@ -66,6 +66,7 @@ DATA_PATH = '{}/{}/{}'.format(BASE_PATH, fldName, expName)
 ###############################################################################
 # Colors and genotypes
 ###############################################################################
+print(HLT)
 (_, aggDict, colors, _) = sel.driveSelectorVideo(1, HLT, '')
 ###############################################################################
 # File paths
