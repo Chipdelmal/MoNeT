@@ -1,0 +1,906 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     43335,        898]
+NotebookOptionsPosition[     41851,        862]
+NotebookOutlinePosition[     42218,        878]
+CellTagsIndexPosition[     42175,        875]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Functions", "Section",
+ CellChangeTimes->{{3.795367827465465*^9, 
+  3.795367831057701*^9}},ExpressionUUID->"b852c9ed-45db-4036-9364-\
+e2e73134bb82"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ReplaceDiagonal", "[", "m_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"mat", "=", "m"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"Scan", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"mat", "[", 
+            RowBox[{"[", 
+             RowBox[{"Sequence", "@@", "#"}], "]"}], "]"}], "=", "0"}], ")"}],
+          "&"}], ",", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"i", ",", "i"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", 
+            RowBox[{"Length", "@", "m"}]}], "}"}]}], "]"}]}], "]"}], ";", 
+      "mat"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"originalColorsValues", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"70", ",", "50", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "100", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"100", ",", "100", ",", "100", ",", "100"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"colorPalette", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"CMYKColor", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"#", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "/", "100"}], ",", 
+       RowBox[{
+        RowBox[{"#", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "/", "100"}], ",", 
+       RowBox[{
+        RowBox[{"#", "[", 
+         RowBox[{"[", "3", "]"}], "]"}], "/", "100"}], ",", 
+       RowBox[{
+        RowBox[{"#", "[", 
+         RowBox[{"[", "4", "]"}], "]"}], "/", "100"}]}], "]"}], "&"}], "/@", 
+    "originalColorsValues"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"hexToRGB", "=", 
+   RowBox[{
+    RowBox[{"RGBColor", "@@", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"IntegerDigits", "[", 
+        RowBox[{
+         RowBox[{"ToExpression", "@", 
+          RowBox[{"StringReplace", "[", 
+           RowBox[{"#", ",", 
+            RowBox[{"\"\<#\>\"", "\[Rule]", "\"\<16^^\>\""}]}], "]"}]}], ",", 
+         "256", ",", "3"}], "]"}], "/", "255."}], ")"}]}], "&"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MapProcess", "[", 
+    RowBox[{
+    "freqs_", ",", " ", "pops_", ",", " ", "latLon_", ",", "max_", ",", 
+     "countryName_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"GeoGraphics", "[", 
+      RowBox[{
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"GeoStyling", "[", 
+          RowBox[{
+           RowBox[{"EdgeForm", "[", 
+            RowBox[{"Directive", "[", 
+             RowBox[{
+              RowBox[{"Opacity", "[", "0", "]"}], ",", 
+              RowBox[{"Thickness", "[", ".05", "]"}], ",", 
+              RowBox[{"Darker", "[", 
+               RowBox[{
+                RowBox[{"colorPalette", "[", 
+                 RowBox[{"[", "5", "]"}], "]"}], ",", ".06"}], "]"}]}], "]"}],
+             "]"}], ",", 
+           RowBox[{"Opacity", "[", "0", "]"}], ",", 
+           RowBox[{"colorPalette", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"CountryData", "[", 
+          RowBox[{"countryName", ",", "\"\<SchematicPolygon\>\""}], "]"}], 
+         ",", "\[IndentingNewLine]", 
+         RowBox[{"GeoStyling", "[", 
+          RowBox[{
+           RowBox[{"EdgeForm", "[", 
+            RowBox[{"Directive", "[", 
+             RowBox[{
+              RowBox[{"Opacity", "[", "0", "]"}], ",", 
+              RowBox[{"Thickness", "[", ".1", "]"}], ",", 
+              RowBox[{"colorPalette", "[", 
+               RowBox[{"[", "5", "]"}], "]"}]}], "]"}], "]"}], ",", 
+           RowBox[{"Opacity", "[", "0", "]"}], ",", 
+           RowBox[{"colorPalette", "[", 
+            RowBox[{"[", "3", "]"}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"CountryData", "[", 
+          RowBox[{"countryName", ",", "\"\<SchematicPolygon\>\""}], "]"}], 
+         ",", "\[IndentingNewLine]", 
+         RowBox[{"GeoStyling", "[", 
+          RowBox[{
+           RowBox[{"EdgeForm", "[", 
+            RowBox[{"Directive", "[", 
+             RowBox[{
+              RowBox[{"Opacity", "[", "0", "]"}], ",", 
+              RowBox[{"Thickness", "[", ".030", "]"}], ",", 
+              RowBox[{"colorPalette", "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "]"}], ",", 
+           RowBox[{"Opacity", "[", "0", "]"}], ",", 
+           RowBox[{"colorPalette", "[", 
+            RowBox[{"[", "5", "]"}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"CountryData", "[", 
+          RowBox[{"countryName", ",", "\"\<Polygon\>\""}], "]"}]}], 
+        "\[IndentingNewLine]", "}"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"AspectRatio", "\[Rule]", "Automatic"}], "\[IndentingNewLine]",
+        ",", 
+       RowBox[{"Axes", "\[Rule]", "False"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"Frame", "\[Rule]", "True"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"FrameStyle", "\[Rule]", 
+        RowBox[{"Directive", "[", 
+         RowBox[{
+          RowBox[{"colorPalette", "[", 
+           RowBox[{"[", "4", "]"}], "]"}], ",", 
+          RowBox[{"Thickness", "[", ".0035", "]"}]}], "]"}]}], 
+       "\[IndentingNewLine]", ",", 
+       RowBox[{"FrameTicks", "\[Rule]", "None"}], "\[IndentingNewLine]", ",", 
+       
+       RowBox[{"FrameTicksStyle", "\[Rule]", "Black"}], "\[IndentingNewLine]",
+        ",", 
+       RowBox[{"GridLines", "\[Rule]", "Automatic"}], "\[IndentingNewLine]", 
+       ",", 
+       RowBox[{"GridLinesStyle", "\[Rule]", 
+        RowBox[{"Directive", "[", 
+         RowBox[{"{", 
+          RowBox[{"Dashed", ",", 
+           RowBox[{"Opacity", "[", ".2", "]"}], ",", 
+           RowBox[{"Thickness", "[", ".00001", "]"}], ",", "Black"}], "}"}], 
+         "]"}]}], "\[IndentingNewLine]", ",", 
+       RowBox[{"ImageSize", "\[Rule]", "1000"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"GeoBackground", "\[Rule]", "None"}], "\[IndentingNewLine]", 
+       ",", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"6.6", ",", "6.75"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0.25", ",", ".4"}], "}"}]}], "}"}]}], 
+       "\[IndentingNewLine]", ",", 
+       RowBox[{"Epilog", "\[Rule]", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{"(*", "PopSize", "*)"}], "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Darker", "[", 
+           RowBox[{
+            RowBox[{"hexToRGB", "[", "\"\<#F20060\>\"", "]"}], ",", ".1"}], 
+           "]"}], ",", 
+          RowBox[{"Opacity", "[", ".015", "]"}], ",", 
+          RowBox[{"EdgeForm", "[", 
+           RowBox[{"Directive", "[", 
+            RowBox[{
+             RowBox[{"Thickness", "[", ".001", "]"}], ",", 
+             RowBox[{"Dashing", "[", ".005", "]"}], ",", 
+             RowBox[{"Opacity", "[", ".1", "]"}], ",", 
+             RowBox[{"Darker", "[", 
+              RowBox[{
+               RowBox[{"hexToRGB", "[", "\"\<#F20060\>\"", "]"}], ",", ".1"}],
+               "]"}]}], "]"}], "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Disk", "[", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], ",", 
+              RowBox[{".001", "+", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}]}], "]"}], "&"}], "/@", 
+           RowBox[{"Transpose", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Reverse", "/@", "latLon"}], ",", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"pops", "/", 
+                  RowBox[{"Max", "[", "pops", "]"}]}], "/", "7500"}], ")"}], 
+               RowBox[{"1", "/", "2"}]]}], "}"}], "]"}]}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(*", "Centrality", "*)"}], "\[IndentingNewLine]", 
+          RowBox[{"hexToRGB", "[", "\"\<#80A1FC\>\"", "]"}], ",", 
+          RowBox[{"Opacity", "[", ".25", "]"}], ",", 
+          RowBox[{"EdgeForm", "[", 
+           RowBox[{"Directive", "[", 
+            RowBox[{
+             RowBox[{"Thickness", "[", ".002", "]"}], ",", 
+             RowBox[{"Dashing", "[", "1", "]"}], ",", 
+             RowBox[{"Opacity", "[", "1", "]"}], ",", 
+             RowBox[{"hexToRGB", "[", "\"\<#80A1FC\>\"", "]"}]}], "]"}], 
+           "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Disk", "[", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], ",", 
+              RowBox[{"#", "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "&"}], "/@", 
+           RowBox[{"Transpose", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Reverse", "/@", "latLon"}], ",", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{"5000", "*", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"pops", "/", 
+                    RowBox[{"Max", "[", "pops", "]"}]}], "/", "7500"}], ")"}],
+                  "*", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"freqs", "/", "max"}], "/", "7500"}], ")"}]}], 
+                ")"}], 
+               RowBox[{"1", "/", "2"}]]}], "}"}], "]"}]}]}], 
+         "\[IndentingNewLine]", "}"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"HistProcess", "[", 
+   RowBox[{"steps_", ",", "max_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Histogram", "[", 
+     RowBox[{"steps", ",", 
+      RowBox[{"migration", "//", "Length"}], "\[IndentingNewLine]", ",", 
+      RowBox[{"AspectRatio", "\[Rule]", ".1"}], "\[IndentingNewLine]", ",", 
+      RowBox[{"Axes", "\[Rule]", "False"}], "\[IndentingNewLine]", ",", 
+      RowBox[{"ChartStyle", "\[Rule]", 
+       RowBox[{"Directive", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"EdgeForm", "[", 
+           RowBox[{"Directive", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"hexToRGB", "[", "\"\<#80A1FC\>\"", "]"}], ",", 
+              RowBox[{"Opacity", "[", "0", "]"}], ",", "Thick"}], "}"}], 
+            "]"}], "]"}], ",", 
+          RowBox[{"Opacity", "[", ".5", "]"}], ",", 
+          RowBox[{"hexToRGB", "[", "\"\<#80A1FC\>\"", "]"}]}], "}"}], "]"}]}],
+       "\[IndentingNewLine]", ",", 
+      RowBox[{"Frame", "\[Rule]", "True"}], "\[IndentingNewLine]", ",", 
+      RowBox[{"FrameStyle", "\[Rule]", 
+       RowBox[{"Directive", "[", 
+        RowBox[{
+         RowBox[{"colorPalette", "[", 
+          RowBox[{"[", "4", "]"}], "]"}], ",", 
+         RowBox[{"Thickness", "[", ".0035", "]"}]}], "]"}]}], 
+      "\[IndentingNewLine]", ",", 
+      RowBox[{"FrameTicks", "\[Rule]", "None"}], "\[IndentingNewLine]", ",", 
+      RowBox[{"ImageSize", "\[Rule]", "1000"}], "\[IndentingNewLine]", ",", 
+      RowBox[{"PlotRange", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"migration", "//", "Length"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "max"}], "}"}]}], "}"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", "]"}]}]}], "Input",\
+
+ CellChangeTimes->{{3.795363937547575*^9, 3.79536394931841*^9}, {
+  3.7953640881982193`*^9, 3.795364104619007*^9}, {3.795367735320448*^9, 
+  3.795367743254055*^9}, {3.795367820057014*^9, 3.795367824325094*^9}, {
+  3.795377642104388*^9, 3.795377645937508*^9}, {3.795380730687224*^9, 
+  3.7953807400192823`*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"3cd9284b-8809-416a-9918-e16787c084da"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Load Data", "Section",
+ CellChangeTimes->{{3.795367834403121*^9, 
+  3.795367837863332*^9}},ExpressionUUID->"e0e0fe40-c61e-4d1f-810d-\
+fb18d5e7570f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bPath", "=", " ", "\"\<./kernels_cluster/\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"lonLatPop", "=", 
+   RowBox[{
+    RowBox[{"Import", "[", 
+     RowBox[{"bPath", "<>", "\"\<stp_cluster_sites_pop.csv\>\""}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"2", ";;", "All"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"migration", "=", 
+    RowBox[{"Import", "[", 
+     RowBox[{"bPath", "<>", "\"\<kernel_cluster_2500_2.csv\>\""}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"latLon", "=", 
+   RowBox[{"Reverse", "/@", 
+    RowBox[{"lonLatPop", "[", 
+     RowBox[{"[", 
+      RowBox[{"All", ",", 
+       RowBox[{"1", ";;", "2"}]}], "]"}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pops", "=", 
+   RowBox[{"lonLatPop", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "3"}], "]"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7953601122980747`*^9, 3.795360118745537*^9}, {
+  3.7953601814200087`*^9, 3.795360281625147*^9}, {3.795360317874412*^9, 
+  3.7953603716506453`*^9}, {3.7953646552714567`*^9, 3.795364712401043*^9}, {
+  3.7953673844553833`*^9, 3.795367384885187*^9}, {3.795373315713558*^9, 
+  3.7953733163534*^9}},
+ CellLabel->
+  "In[794]:=",ExpressionUUID->"f619571b-c8a7-4707-b736-0bf5e8251a3a"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Markov Process", "Section",
+ CellChangeTimes->{{3.7953807632997847`*^9, 
+  3.795380769926614*^9}},ExpressionUUID->"7d0a4ee2-5fa2-46c6-9918-\
+92389b686312"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"sp", ",", "rep"}], "}"}], "=", 
+    RowBox[{"{", 
+     RowBox[{"500", ",", "1000"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", "Simulate", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"initialState", "=", 
+   RowBox[{
+    RowBox[{"ConstantArray", "[", 
+     RowBox[{"0", ",", 
+      RowBox[{"migration", "//", "Length"}]}], "]"}], "//", 
+    RowBox[{
+     RowBox[{"ReplacePart", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{"247", "\[Rule]", "1"}]}], "]"}], "&"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"markov", "=", 
+   RowBox[{"DiscreteMarkovProcess", "[", 
+    RowBox[{"initialState", ",", "migration"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MarkovProcessProperties", "[", 
+    RowBox[{"markov", ",", "\"\<LimitTransitionMatrix\>\""}], "]"}], "[", 
+   RowBox[{"[", "1", "]"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"simTraces", "=", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"RandomFunction", "[", 
+      RowBox[{"markov", ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "sp"}], "}"}], ",", "rep"}], "]"}], "//", 
+     "Normal"}], ")"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"steps", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"#", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "2"}], "]"}], "]"}], "&"}], "/@", "simTraces"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"max", ",", "maxTwo"}], "}"}], "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"Tally", "[", 
+        RowBox[{"steps", "//", "Flatten"}], "]"}], "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "2"}], "]"}], "]"}], "//", "Max"}], ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Tally", "[", 
+        RowBox[{"steps", "//", "Flatten"}], "]"}], "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "2"}], "]"}], "]"}], "//", "Max"}]}], "}"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.7953675235207*^9, 3.795367528320244*^9}, {
+   3.795367619972732*^9, 3.795367665290456*^9}, {3.79536769772675*^9, 
+   3.795367703934533*^9}, {3.795367798589916*^9, 3.795367799688236*^9}, {
+   3.795368450775002*^9, 3.795368453116263*^9}, {3.795368533051334*^9, 
+   3.7953685424691133`*^9}, {3.7953686370247593`*^9, 
+   3.7953686445600853`*^9}, {3.795368716569531*^9, 3.795368719505321*^9}, {
+   3.795368828567979*^9, 3.795368840749836*^9}, {3.795368882524926*^9, 
+   3.795368913272985*^9}, {3.795368944711976*^9, 3.7953689914953203`*^9}, {
+   3.795369131359613*^9, 3.795369175416033*^9}, {3.795369450504478*^9, 
+   3.7953696873082027`*^9}, {3.795369729822093*^9, 3.795369752312851*^9}, {
+   3.795370826491104*^9, 3.7953708449068947`*^9}, {3.795370930347865*^9, 
+   3.795370933150839*^9}, {3.795371042358863*^9, 3.795371066192101*^9}, {
+   3.795372325388735*^9, 3.795372325622861*^9}, {3.795372831700984*^9, 
+   3.795372832456367*^9}, {3.79537286918379*^9, 3.7953728715827923`*^9}, {
+   3.795372945203246*^9, 3.795372955412878*^9}, {3.795373327997246*^9, 
+   3.795373328299612*^9}, {3.795373493797024*^9, 3.7953734948675137`*^9}, {
+   3.79537355429729*^9, 3.795373554400275*^9}, {3.795373720388839*^9, 
+   3.795373758974391*^9}, {3.7953737995597*^9, 3.795373984708187*^9}, {
+   3.7953741528194532`*^9, 3.795374184490809*^9}, {3.7953742659843483`*^9, 
+   3.795374266413781*^9}, 3.795374307353084*^9, {3.7953744451424*^9, 
+   3.795374447954384*^9}, 3.795376200465973*^9, {3.795376251923592*^9, 
+   3.7953762530724363`*^9}, {3.7953768487116823`*^9, 3.795376866369493*^9}, 
+   3.795377546508039*^9},
+ CellLabel->
+  "In[1167]:=",ExpressionUUID->"b0ec245d-2f0b-499d-8966-e17ce4572475"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Export", "Section",
+ CellChangeTimes->{{3.795380772263019*^9, 
+  3.795380775588015*^9}},ExpressionUUID->"d3912785-7607-43f1-81ae-\
+dd6f5b849001"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"freqs", "=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Count", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"steps", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", 
+             RowBox[{"1", ";;", "t"}]}], "]"}], "]"}], "//", "Flatten"}], ",",
+          "#"}], "]"}], "&"}], "/@", 
+      RowBox[{"Range", "[", 
+       RowBox[{"1", ",", 
+        RowBox[{"Length", "[", "migration", "]"}]}], "]"}]}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"(*", "Map", "*)"}], "\[IndentingNewLine]", 
+    RowBox[{
+    "countryName", "=", 
+     "\"\<S\[ATilde]o Tom\[EAcute] and Pr\[IAcute]ncipe\>\""}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"map", "=", 
+     RowBox[{"MapProcess", "[", 
+      RowBox[{
+      "freqs", ",", " ", "pops", ",", " ", "latLon", ",", "max", ",", 
+       "countryName"}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"hst", "=", 
+     RowBox[{"HistProcess", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"steps", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", 
+           RowBox[{"1", ";;", "t"}]}], "]"}], "]"}], "//", "Flatten"}], ",", 
+       "maxTwo"}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"out", "=", 
+     RowBox[{"Grid", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "hst", "}"}], ",", 
+        RowBox[{"{", "map", "}"}]}], "}"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"Export", "[", 
+     RowBox[{
+      RowBox[{"\"\<./img/map\>\"", "<>", 
+       RowBox[{"StringPadLeft", "[", 
+        RowBox[{
+         RowBox[{"t", "//", "ToString"}], ",", "4", ",", "\"\<0\>\""}], "]"}],
+        "<>", "\"\<.png\>\""}], ",", "out"}], "]"}]}], "\[IndentingNewLine]", 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "1", ",", "sp"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7953739365909367`*^9, 3.795373995594677*^9}, {
+  3.795374132690297*^9, 3.795374133267991*^9}, {3.795374195254418*^9, 
+  3.7953741954864683`*^9}, {3.795374670556163*^9, 3.7953746706809473`*^9}, {
+  3.795375456639065*^9, 3.795375481934751*^9}, {3.795375553596468*^9, 
+  3.795375556554677*^9}, {3.795375876179626*^9, 3.795375878624943*^9}, {
+  3.795376869944372*^9, 3.795376985622775*^9}, {3.795377091449502*^9, 
+  3.7953771057037067`*^9}, {3.795377166832988*^9, 3.795377184392929*^9}, {
+  3.795377259521751*^9, 3.795377260109775*^9}, {3.795377523888048*^9, 
+  3.795377526854053*^9}, {3.795378089671671*^9, 3.795378091649781*^9}, {
+  3.795380747284708*^9, 
+  3.79538074909931*^9}},ExpressionUUID->"53e1836b-2f75-4ff7-9daa-\
+952c41f6ebaf"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"./img/map0001.png\"\>", ",", "\<\"./img/map0002.png\"\>", 
+   ",", "\<\"./img/map0003.png\"\>", ",", "\<\"./img/map0004.png\"\>", 
+   ",", "\<\"./img/map0005.png\"\>", ",", "\<\"./img/map0006.png\"\>", 
+   ",", "\<\"./img/map0007.png\"\>", ",", "\<\"./img/map0008.png\"\>", 
+   ",", "\<\"./img/map0009.png\"\>", ",", "\<\"./img/map0010.png\"\>", 
+   ",", "\<\"./img/map0011.png\"\>", ",", "\<\"./img/map0012.png\"\>", 
+   ",", "\<\"./img/map0013.png\"\>", ",", "\<\"./img/map0014.png\"\>", 
+   ",", "\<\"./img/map0015.png\"\>", ",", "\<\"./img/map0016.png\"\>", 
+   ",", "\<\"./img/map0017.png\"\>", ",", "\<\"./img/map0018.png\"\>", 
+   ",", "\<\"./img/map0019.png\"\>", ",", "\<\"./img/map0020.png\"\>", 
+   ",", "\<\"./img/map0021.png\"\>", ",", "\<\"./img/map0022.png\"\>", 
+   ",", "\<\"./img/map0023.png\"\>", ",", "\<\"./img/map0024.png\"\>", 
+   ",", "\<\"./img/map0025.png\"\>", ",", "\<\"./img/map0026.png\"\>", 
+   ",", "\<\"./img/map0027.png\"\>", ",", "\<\"./img/map0028.png\"\>", 
+   ",", "\<\"./img/map0029.png\"\>", ",", "\<\"./img/map0030.png\"\>", 
+   ",", "\<\"./img/map0031.png\"\>", ",", "\<\"./img/map0032.png\"\>", 
+   ",", "\<\"./img/map0033.png\"\>", ",", "\<\"./img/map0034.png\"\>", 
+   ",", "\<\"./img/map0035.png\"\>", ",", "\<\"./img/map0036.png\"\>", 
+   ",", "\<\"./img/map0037.png\"\>", ",", "\<\"./img/map0038.png\"\>", 
+   ",", "\<\"./img/map0039.png\"\>", ",", "\<\"./img/map0040.png\"\>", 
+   ",", "\<\"./img/map0041.png\"\>", ",", "\<\"./img/map0042.png\"\>", 
+   ",", "\<\"./img/map0043.png\"\>", ",", "\<\"./img/map0044.png\"\>", 
+   ",", "\<\"./img/map0045.png\"\>", ",", "\<\"./img/map0046.png\"\>", 
+   ",", "\<\"./img/map0047.png\"\>", ",", "\<\"./img/map0048.png\"\>", 
+   ",", "\<\"./img/map0049.png\"\>", ",", "\<\"./img/map0050.png\"\>", 
+   ",", "\<\"./img/map0051.png\"\>", ",", "\<\"./img/map0052.png\"\>", 
+   ",", "\<\"./img/map0053.png\"\>", ",", "\<\"./img/map0054.png\"\>", 
+   ",", "\<\"./img/map0055.png\"\>", ",", "\<\"./img/map0056.png\"\>", 
+   ",", "\<\"./img/map0057.png\"\>", ",", "\<\"./img/map0058.png\"\>", 
+   ",", "\<\"./img/map0059.png\"\>", ",", "\<\"./img/map0060.png\"\>", 
+   ",", "\<\"./img/map0061.png\"\>", ",", "\<\"./img/map0062.png\"\>", 
+   ",", "\<\"./img/map0063.png\"\>", ",", "\<\"./img/map0064.png\"\>", 
+   ",", "\<\"./img/map0065.png\"\>", ",", "\<\"./img/map0066.png\"\>", 
+   ",", "\<\"./img/map0067.png\"\>", ",", "\<\"./img/map0068.png\"\>", 
+   ",", "\<\"./img/map0069.png\"\>", ",", "\<\"./img/map0070.png\"\>", 
+   ",", "\<\"./img/map0071.png\"\>", ",", "\<\"./img/map0072.png\"\>", 
+   ",", "\<\"./img/map0073.png\"\>", ",", "\<\"./img/map0074.png\"\>", 
+   ",", "\<\"./img/map0075.png\"\>", ",", "\<\"./img/map0076.png\"\>", 
+   ",", "\<\"./img/map0077.png\"\>", ",", "\<\"./img/map0078.png\"\>", 
+   ",", "\<\"./img/map0079.png\"\>", ",", "\<\"./img/map0080.png\"\>", 
+   ",", "\<\"./img/map0081.png\"\>", ",", "\<\"./img/map0082.png\"\>", 
+   ",", "\<\"./img/map0083.png\"\>", ",", "\<\"./img/map0084.png\"\>", 
+   ",", "\<\"./img/map0085.png\"\>", ",", "\<\"./img/map0086.png\"\>", 
+   ",", "\<\"./img/map0087.png\"\>", ",", "\<\"./img/map0088.png\"\>", 
+   ",", "\<\"./img/map0089.png\"\>", ",", "\<\"./img/map0090.png\"\>", 
+   ",", "\<\"./img/map0091.png\"\>", ",", "\<\"./img/map0092.png\"\>", 
+   ",", "\<\"./img/map0093.png\"\>", ",", "\<\"./img/map0094.png\"\>", 
+   ",", "\<\"./img/map0095.png\"\>", ",", "\<\"./img/map0096.png\"\>", 
+   ",", "\<\"./img/map0097.png\"\>", ",", "\<\"./img/map0098.png\"\>", 
+   ",", "\<\"./img/map0099.png\"\>", ",", "\<\"./img/map0100.png\"\>", 
+   ",", "\<\"./img/map0101.png\"\>", ",", "\<\"./img/map0102.png\"\>", 
+   ",", "\<\"./img/map0103.png\"\>", ",", "\<\"./img/map0104.png\"\>", 
+   ",", "\<\"./img/map0105.png\"\>", ",", "\<\"./img/map0106.png\"\>", 
+   ",", "\<\"./img/map0107.png\"\>", ",", "\<\"./img/map0108.png\"\>", 
+   ",", "\<\"./img/map0109.png\"\>", ",", "\<\"./img/map0110.png\"\>", 
+   ",", "\<\"./img/map0111.png\"\>", ",", "\<\"./img/map0112.png\"\>", 
+   ",", "\<\"./img/map0113.png\"\>", ",", "\<\"./img/map0114.png\"\>", 
+   ",", "\<\"./img/map0115.png\"\>", ",", "\<\"./img/map0116.png\"\>", 
+   ",", "\<\"./img/map0117.png\"\>", ",", "\<\"./img/map0118.png\"\>", 
+   ",", "\<\"./img/map0119.png\"\>", ",", "\<\"./img/map0120.png\"\>", 
+   ",", "\<\"./img/map0121.png\"\>", ",", "\<\"./img/map0122.png\"\>", 
+   ",", "\<\"./img/map0123.png\"\>", ",", "\<\"./img/map0124.png\"\>", 
+   ",", "\<\"./img/map0125.png\"\>", ",", "\<\"./img/map0126.png\"\>", 
+   ",", "\<\"./img/map0127.png\"\>", ",", "\<\"./img/map0128.png\"\>", 
+   ",", "\<\"./img/map0129.png\"\>", ",", "\<\"./img/map0130.png\"\>", 
+   ",", "\<\"./img/map0131.png\"\>", ",", "\<\"./img/map0132.png\"\>", 
+   ",", "\<\"./img/map0133.png\"\>", ",", "\<\"./img/map0134.png\"\>", 
+   ",", "\<\"./img/map0135.png\"\>", ",", "\<\"./img/map0136.png\"\>", 
+   ",", "\<\"./img/map0137.png\"\>", ",", "\<\"./img/map0138.png\"\>", 
+   ",", "\<\"./img/map0139.png\"\>", ",", "\<\"./img/map0140.png\"\>", 
+   ",", "\<\"./img/map0141.png\"\>", ",", "\<\"./img/map0142.png\"\>", 
+   ",", "\<\"./img/map0143.png\"\>", ",", "\<\"./img/map0144.png\"\>", 
+   ",", "\<\"./img/map0145.png\"\>", ",", "\<\"./img/map0146.png\"\>", 
+   ",", "\<\"./img/map0147.png\"\>", ",", "\<\"./img/map0148.png\"\>", 
+   ",", "\<\"./img/map0149.png\"\>", ",", "\<\"./img/map0150.png\"\>", 
+   ",", "\<\"./img/map0151.png\"\>", ",", "\<\"./img/map0152.png\"\>", 
+   ",", "\<\"./img/map0153.png\"\>", ",", "\<\"./img/map0154.png\"\>", 
+   ",", "\<\"./img/map0155.png\"\>", ",", "\<\"./img/map0156.png\"\>", 
+   ",", "\<\"./img/map0157.png\"\>", ",", "\<\"./img/map0158.png\"\>", 
+   ",", "\<\"./img/map0159.png\"\>", ",", "\<\"./img/map0160.png\"\>", 
+   ",", "\<\"./img/map0161.png\"\>", ",", "\<\"./img/map0162.png\"\>", 
+   ",", "\<\"./img/map0163.png\"\>", ",", "\<\"./img/map0164.png\"\>", 
+   ",", "\<\"./img/map0165.png\"\>", ",", "\<\"./img/map0166.png\"\>", 
+   ",", "\<\"./img/map0167.png\"\>", ",", "\<\"./img/map0168.png\"\>", 
+   ",", "\<\"./img/map0169.png\"\>", ",", "\<\"./img/map0170.png\"\>", 
+   ",", "\<\"./img/map0171.png\"\>", ",", "\<\"./img/map0172.png\"\>", 
+   ",", "\<\"./img/map0173.png\"\>", ",", "\<\"./img/map0174.png\"\>", 
+   ",", "\<\"./img/map0175.png\"\>", ",", "\<\"./img/map0176.png\"\>", 
+   ",", "\<\"./img/map0177.png\"\>", ",", "\<\"./img/map0178.png\"\>", 
+   ",", "\<\"./img/map0179.png\"\>", ",", "\<\"./img/map0180.png\"\>", 
+   ",", "\<\"./img/map0181.png\"\>", ",", "\<\"./img/map0182.png\"\>", 
+   ",", "\<\"./img/map0183.png\"\>", ",", "\<\"./img/map0184.png\"\>", 
+   ",", "\<\"./img/map0185.png\"\>", ",", "\<\"./img/map0186.png\"\>", 
+   ",", "\<\"./img/map0187.png\"\>", ",", "\<\"./img/map0188.png\"\>", 
+   ",", "\<\"./img/map0189.png\"\>", ",", "\<\"./img/map0190.png\"\>", 
+   ",", "\<\"./img/map0191.png\"\>", ",", "\<\"./img/map0192.png\"\>", 
+   ",", "\<\"./img/map0193.png\"\>", ",", "\<\"./img/map0194.png\"\>", 
+   ",", "\<\"./img/map0195.png\"\>", ",", "\<\"./img/map0196.png\"\>", 
+   ",", "\<\"./img/map0197.png\"\>", ",", "\<\"./img/map0198.png\"\>", 
+   ",", "\<\"./img/map0199.png\"\>", ",", "\<\"./img/map0200.png\"\>", 
+   ",", "\<\"./img/map0201.png\"\>", ",", "\<\"./img/map0202.png\"\>", 
+   ",", "\<\"./img/map0203.png\"\>", ",", "\<\"./img/map0204.png\"\>", 
+   ",", "\<\"./img/map0205.png\"\>", ",", "\<\"./img/map0206.png\"\>", 
+   ",", "\<\"./img/map0207.png\"\>", ",", "\<\"./img/map0208.png\"\>", 
+   ",", "\<\"./img/map0209.png\"\>", ",", "\<\"./img/map0210.png\"\>", 
+   ",", "\<\"./img/map0211.png\"\>", ",", "\<\"./img/map0212.png\"\>", 
+   ",", "\<\"./img/map0213.png\"\>", ",", "\<\"./img/map0214.png\"\>", 
+   ",", "\<\"./img/map0215.png\"\>", ",", "\<\"./img/map0216.png\"\>", 
+   ",", "\<\"./img/map0217.png\"\>", ",", "\<\"./img/map0218.png\"\>", 
+   ",", "\<\"./img/map0219.png\"\>", ",", "\<\"./img/map0220.png\"\>", 
+   ",", "\<\"./img/map0221.png\"\>", ",", "\<\"./img/map0222.png\"\>", 
+   ",", "\<\"./img/map0223.png\"\>", ",", "\<\"./img/map0224.png\"\>", 
+   ",", "\<\"./img/map0225.png\"\>", ",", "\<\"./img/map0226.png\"\>", 
+   ",", "\<\"./img/map0227.png\"\>", ",", "\<\"./img/map0228.png\"\>", 
+   ",", "\<\"./img/map0229.png\"\>", ",", "\<\"./img/map0230.png\"\>", 
+   ",", "\<\"./img/map0231.png\"\>", ",", "\<\"./img/map0232.png\"\>", 
+   ",", "\<\"./img/map0233.png\"\>", ",", "\<\"./img/map0234.png\"\>", 
+   ",", "\<\"./img/map0235.png\"\>", ",", "\<\"./img/map0236.png\"\>", 
+   ",", "\<\"./img/map0237.png\"\>", ",", "\<\"./img/map0238.png\"\>", 
+   ",", "\<\"./img/map0239.png\"\>", ",", "\<\"./img/map0240.png\"\>", 
+   ",", "\<\"./img/map0241.png\"\>", ",", "\<\"./img/map0242.png\"\>", 
+   ",", "\<\"./img/map0243.png\"\>", ",", "\<\"./img/map0244.png\"\>", 
+   ",", "\<\"./img/map0245.png\"\>", ",", "\<\"./img/map0246.png\"\>", 
+   ",", "\<\"./img/map0247.png\"\>", ",", "\<\"./img/map0248.png\"\>", 
+   ",", "\<\"./img/map0249.png\"\>", ",", "\<\"./img/map0250.png\"\>", 
+   ",", "\<\"./img/map0251.png\"\>", ",", "\<\"./img/map0252.png\"\>", 
+   ",", "\<\"./img/map0253.png\"\>", ",", "\<\"./img/map0254.png\"\>", 
+   ",", "\<\"./img/map0255.png\"\>", ",", "\<\"./img/map0256.png\"\>", 
+   ",", "\<\"./img/map0257.png\"\>", ",", "\<\"./img/map0258.png\"\>", 
+   ",", "\<\"./img/map0259.png\"\>", ",", "\<\"./img/map0260.png\"\>", 
+   ",", "\<\"./img/map0261.png\"\>", ",", "\<\"./img/map0262.png\"\>", 
+   ",", "\<\"./img/map0263.png\"\>", ",", "\<\"./img/map0264.png\"\>", 
+   ",", "\<\"./img/map0265.png\"\>", ",", "\<\"./img/map0266.png\"\>", 
+   ",", "\<\"./img/map0267.png\"\>", ",", "\<\"./img/map0268.png\"\>", 
+   ",", "\<\"./img/map0269.png\"\>", ",", "\<\"./img/map0270.png\"\>", 
+   ",", "\<\"./img/map0271.png\"\>", ",", "\<\"./img/map0272.png\"\>", 
+   ",", "\<\"./img/map0273.png\"\>", ",", "\<\"./img/map0274.png\"\>", 
+   ",", "\<\"./img/map0275.png\"\>", ",", "\<\"./img/map0276.png\"\>", 
+   ",", "\<\"./img/map0277.png\"\>", ",", "\<\"./img/map0278.png\"\>", 
+   ",", "\<\"./img/map0279.png\"\>", ",", "\<\"./img/map0280.png\"\>", 
+   ",", "\<\"./img/map0281.png\"\>", ",", "\<\"./img/map0282.png\"\>", 
+   ",", "\<\"./img/map0283.png\"\>", ",", "\<\"./img/map0284.png\"\>", 
+   ",", "\<\"./img/map0285.png\"\>", ",", "\<\"./img/map0286.png\"\>", 
+   ",", "\<\"./img/map0287.png\"\>", ",", "\<\"./img/map0288.png\"\>", 
+   ",", "\<\"./img/map0289.png\"\>", ",", "\<\"./img/map0290.png\"\>", 
+   ",", "\<\"./img/map0291.png\"\>", ",", "\<\"./img/map0292.png\"\>", 
+   ",", "\<\"./img/map0293.png\"\>", ",", "\<\"./img/map0294.png\"\>", 
+   ",", "\<\"./img/map0295.png\"\>", ",", "\<\"./img/map0296.png\"\>", 
+   ",", "\<\"./img/map0297.png\"\>", ",", "\<\"./img/map0298.png\"\>", 
+   ",", "\<\"./img/map0299.png\"\>", ",", "\<\"./img/map0300.png\"\>", 
+   ",", "\<\"./img/map0301.png\"\>", ",", "\<\"./img/map0302.png\"\>", 
+   ",", "\<\"./img/map0303.png\"\>", ",", "\<\"./img/map0304.png\"\>", 
+   ",", "\<\"./img/map0305.png\"\>", ",", "\<\"./img/map0306.png\"\>", 
+   ",", "\<\"./img/map0307.png\"\>", ",", "\<\"./img/map0308.png\"\>", 
+   ",", "\<\"./img/map0309.png\"\>", ",", "\<\"./img/map0310.png\"\>", 
+   ",", "\<\"./img/map0311.png\"\>", ",", "\<\"./img/map0312.png\"\>", 
+   ",", "\<\"./img/map0313.png\"\>", ",", "\<\"./img/map0314.png\"\>", 
+   ",", "\<\"./img/map0315.png\"\>", ",", "\<\"./img/map0316.png\"\>", 
+   ",", "\<\"./img/map0317.png\"\>", ",", "\<\"./img/map0318.png\"\>", 
+   ",", "\<\"./img/map0319.png\"\>", ",", "\<\"./img/map0320.png\"\>", 
+   ",", "\<\"./img/map0321.png\"\>", ",", "\<\"./img/map0322.png\"\>", 
+   ",", "\<\"./img/map0323.png\"\>", ",", "\<\"./img/map0324.png\"\>", 
+   ",", "\<\"./img/map0325.png\"\>", ",", "\<\"./img/map0326.png\"\>", 
+   ",", "\<\"./img/map0327.png\"\>", ",", "\<\"./img/map0328.png\"\>", 
+   ",", "\<\"./img/map0329.png\"\>", ",", "\<\"./img/map0330.png\"\>", 
+   ",", "\<\"./img/map0331.png\"\>", ",", "\<\"./img/map0332.png\"\>", 
+   ",", "\<\"./img/map0333.png\"\>", ",", "\<\"./img/map0334.png\"\>", 
+   ",", "\<\"./img/map0335.png\"\>", ",", "\<\"./img/map0336.png\"\>", 
+   ",", "\<\"./img/map0337.png\"\>", ",", "\<\"./img/map0338.png\"\>", 
+   ",", "\<\"./img/map0339.png\"\>", ",", "\<\"./img/map0340.png\"\>", 
+   ",", "\<\"./img/map0341.png\"\>", ",", "\<\"./img/map0342.png\"\>", 
+   ",", "\<\"./img/map0343.png\"\>", ",", "\<\"./img/map0344.png\"\>", 
+   ",", "\<\"./img/map0345.png\"\>", ",", "\<\"./img/map0346.png\"\>", 
+   ",", "\<\"./img/map0347.png\"\>", ",", "\<\"./img/map0348.png\"\>", 
+   ",", "\<\"./img/map0349.png\"\>", ",", "\<\"./img/map0350.png\"\>", 
+   ",", "\<\"./img/map0351.png\"\>", ",", "\<\"./img/map0352.png\"\>", 
+   ",", "\<\"./img/map0353.png\"\>", ",", "\<\"./img/map0354.png\"\>", 
+   ",", "\<\"./img/map0355.png\"\>", ",", "\<\"./img/map0356.png\"\>", 
+   ",", "\<\"./img/map0357.png\"\>", ",", "\<\"./img/map0358.png\"\>", 
+   ",", "\<\"./img/map0359.png\"\>", ",", "\<\"./img/map0360.png\"\>", 
+   ",", "\<\"./img/map0361.png\"\>", ",", "\<\"./img/map0362.png\"\>", 
+   ",", "\<\"./img/map0363.png\"\>", ",", "\<\"./img/map0364.png\"\>", 
+   ",", "\<\"./img/map0365.png\"\>", ",", "\<\"./img/map0366.png\"\>", 
+   ",", "\<\"./img/map0367.png\"\>", ",", "\<\"./img/map0368.png\"\>", 
+   ",", "\<\"./img/map0369.png\"\>", ",", "\<\"./img/map0370.png\"\>", 
+   ",", "\<\"./img/map0371.png\"\>", ",", "\<\"./img/map0372.png\"\>", 
+   ",", "\<\"./img/map0373.png\"\>", ",", "\<\"./img/map0374.png\"\>", 
+   ",", "\<\"./img/map0375.png\"\>", ",", "\<\"./img/map0376.png\"\>", 
+   ",", "\<\"./img/map0377.png\"\>", ",", "\<\"./img/map0378.png\"\>", 
+   ",", "\<\"./img/map0379.png\"\>", ",", "\<\"./img/map0380.png\"\>", 
+   ",", "\<\"./img/map0381.png\"\>", ",", "\<\"./img/map0382.png\"\>", 
+   ",", "\<\"./img/map0383.png\"\>", ",", "\<\"./img/map0384.png\"\>", 
+   ",", "\<\"./img/map0385.png\"\>", ",", "\<\"./img/map0386.png\"\>", 
+   ",", "\<\"./img/map0387.png\"\>", ",", "\<\"./img/map0388.png\"\>", 
+   ",", "\<\"./img/map0389.png\"\>", ",", "\<\"./img/map0390.png\"\>", 
+   ",", "\<\"./img/map0391.png\"\>", ",", "\<\"./img/map0392.png\"\>", 
+   ",", "\<\"./img/map0393.png\"\>", ",", "\<\"./img/map0394.png\"\>", 
+   ",", "\<\"./img/map0395.png\"\>", ",", "\<\"./img/map0396.png\"\>", 
+   ",", "\<\"./img/map0397.png\"\>", ",", "\<\"./img/map0398.png\"\>", 
+   ",", "\<\"./img/map0399.png\"\>", ",", "\<\"./img/map0400.png\"\>", 
+   ",", "\<\"./img/map0401.png\"\>", ",", "\<\"./img/map0402.png\"\>", 
+   ",", "\<\"./img/map0403.png\"\>", ",", "\<\"./img/map0404.png\"\>", 
+   ",", "\<\"./img/map0405.png\"\>", ",", "\<\"./img/map0406.png\"\>", 
+   ",", "\<\"./img/map0407.png\"\>", ",", "\<\"./img/map0408.png\"\>", 
+   ",", "\<\"./img/map0409.png\"\>", ",", "\<\"./img/map0410.png\"\>", 
+   ",", "\<\"./img/map0411.png\"\>", ",", "\<\"./img/map0412.png\"\>", 
+   ",", "\<\"./img/map0413.png\"\>", ",", "\<\"./img/map0414.png\"\>", 
+   ",", "\<\"./img/map0415.png\"\>", ",", "\<\"./img/map0416.png\"\>", 
+   ",", "\<\"./img/map0417.png\"\>", ",", "\<\"./img/map0418.png\"\>", 
+   ",", "\<\"./img/map0419.png\"\>", ",", "\<\"./img/map0420.png\"\>", 
+   ",", "\<\"./img/map0421.png\"\>", ",", "\<\"./img/map0422.png\"\>", 
+   ",", "\<\"./img/map0423.png\"\>", ",", "\<\"./img/map0424.png\"\>", 
+   ",", "\<\"./img/map0425.png\"\>", ",", "\<\"./img/map0426.png\"\>", 
+   ",", "\<\"./img/map0427.png\"\>", ",", "\<\"./img/map0428.png\"\>", 
+   ",", "\<\"./img/map0429.png\"\>", ",", "\<\"./img/map0430.png\"\>", 
+   ",", "\<\"./img/map0431.png\"\>", ",", "\<\"./img/map0432.png\"\>", 
+   ",", "\<\"./img/map0433.png\"\>", ",", "\<\"./img/map0434.png\"\>", 
+   ",", "\<\"./img/map0435.png\"\>", ",", "\<\"./img/map0436.png\"\>", 
+   ",", "\<\"./img/map0437.png\"\>", ",", "\<\"./img/map0438.png\"\>", 
+   ",", "\<\"./img/map0439.png\"\>", ",", "\<\"./img/map0440.png\"\>", 
+   ",", "\<\"./img/map0441.png\"\>", ",", "\<\"./img/map0442.png\"\>", 
+   ",", "\<\"./img/map0443.png\"\>", ",", "\<\"./img/map0444.png\"\>", 
+   ",", "\<\"./img/map0445.png\"\>", ",", "\<\"./img/map0446.png\"\>", 
+   ",", "\<\"./img/map0447.png\"\>", ",", "\<\"./img/map0448.png\"\>", 
+   ",", "\<\"./img/map0449.png\"\>", ",", "\<\"./img/map0450.png\"\>", 
+   ",", "\<\"./img/map0451.png\"\>", ",", "\<\"./img/map0452.png\"\>", 
+   ",", "\<\"./img/map0453.png\"\>", ",", "\<\"./img/map0454.png\"\>", 
+   ",", "\<\"./img/map0455.png\"\>", ",", "\<\"./img/map0456.png\"\>", 
+   ",", "\<\"./img/map0457.png\"\>", ",", "\<\"./img/map0458.png\"\>", 
+   ",", "\<\"./img/map0459.png\"\>", ",", "\<\"./img/map0460.png\"\>", 
+   ",", "\<\"./img/map0461.png\"\>", ",", "\<\"./img/map0462.png\"\>", 
+   ",", "\<\"./img/map0463.png\"\>", ",", "\<\"./img/map0464.png\"\>", 
+   ",", "\<\"./img/map0465.png\"\>", ",", "\<\"./img/map0466.png\"\>", 
+   ",", "\<\"./img/map0467.png\"\>", ",", "\<\"./img/map0468.png\"\>", 
+   ",", "\<\"./img/map0469.png\"\>", ",", "\<\"./img/map0470.png\"\>", 
+   ",", "\<\"./img/map0471.png\"\>", ",", "\<\"./img/map0472.png\"\>", 
+   ",", "\<\"./img/map0473.png\"\>", ",", "\<\"./img/map0474.png\"\>", 
+   ",", "\<\"./img/map0475.png\"\>", ",", "\<\"./img/map0476.png\"\>", 
+   ",", "\<\"./img/map0477.png\"\>", ",", "\<\"./img/map0478.png\"\>", 
+   ",", "\<\"./img/map0479.png\"\>", ",", "\<\"./img/map0480.png\"\>", 
+   ",", "\<\"./img/map0481.png\"\>", ",", "\<\"./img/map0482.png\"\>", 
+   ",", "\<\"./img/map0483.png\"\>", ",", "\<\"./img/map0484.png\"\>", 
+   ",", "\<\"./img/map0485.png\"\>", ",", "\<\"./img/map0486.png\"\>", 
+   ",", "\<\"./img/map0487.png\"\>", ",", "\<\"./img/map0488.png\"\>", 
+   ",", "\<\"./img/map0489.png\"\>", ",", "\<\"./img/map0490.png\"\>", 
+   ",", "\<\"./img/map0491.png\"\>", ",", "\<\"./img/map0492.png\"\>", 
+   ",", "\<\"./img/map0493.png\"\>", ",", "\<\"./img/map0494.png\"\>", 
+   ",", "\<\"./img/map0495.png\"\>", ",", "\<\"./img/map0496.png\"\>", 
+   ",", "\<\"./img/map0497.png\"\>", ",", "\<\"./img/map0498.png\"\>", 
+   ",", "\<\"./img/map0499.png\"\>", ",", "\<\"./img/map0500.png\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.795374057437147*^9, 3.795374192652492*^9, 3.7953742505499477`*^9, 
+   3.795374421838641*^9, 3.795374566232402*^9, 3.795374646636635*^9, 
+   3.7953752801989603`*^9, 3.795375464254064*^9, 3.795375523287322*^9, {
+   3.7953755660538063`*^9, 3.7953756075111017`*^9}, {3.795375836439826*^9, 
+   3.795375861668373*^9}, 3.795376195250099*^9, 3.795376249629848*^9, 
+   3.795376372321802*^9, {3.7953769392930813`*^9, 3.795376987495488*^9}, 
+   3.795377096359475*^9, {3.795377179033382*^9, 3.7953771891890287`*^9}, 
+   3.795377253193768*^9, {3.7953775209835567`*^9, 3.795377558409931*^9}, 
+   3.795377720323208*^9, 3.79537776281178*^9, 3.795377822134222*^9, {
+   3.795377875757395*^9, 3.795377910410301*^9}, 3.795377940870496*^9, {
+   3.795378004234139*^9, 3.795378028995656*^9}, 3.7953780701889*^9, 
+   3.795378113796195*^9, 3.795378170469514*^9, 3.795378235137507*^9, {
+   3.795378276158724*^9, 3.795378339137436*^9}, 3.795378382568149*^9, {
+   3.79537842654602*^9, 3.795378469820766*^9}, 3.795379166419567*^9},
+ CellLabel->
+  "Out[1241]=",ExpressionUUID->"89a403b1-b48c-4f9a-be5d-c70da8a61ae8"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Tests", "Section",
+ CellChangeTimes->{{3.795380756552993*^9, 
+  3.795380759847559*^9}},ExpressionUUID->"862c8e6c-bbd1-478f-b604-\
+265eaef15a24"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MatrixPlot", "[", 
+   RowBox[{
+    RowBox[{"ReplaceDiagonal", "[", "migration", "]"}], "\[IndentingNewLine]",
+     ",", 
+    RowBox[{"ColorFunction", "\[Rule]", "Automatic"}], "\[IndentingNewLine]", 
+    ",", 
+    RowBox[{"ColorFunctionScaling", "\[Rule]", "True"}], 
+    "\[IndentingNewLine]", ",", 
+    RowBox[{"FrameStyle", "\[Rule]", "Thick"}], "\[IndentingNewLine]", ",", 
+    RowBox[{"FrameTicks", "\[Rule]", "None"}], "\[IndentingNewLine]", ",", 
+    RowBox[{"ImagePadding", "\[Rule]", "0"}]}], "\[IndentingNewLine]", "]"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.795360374624839*^9, 3.795360379539544*^9}, {
+   3.795363682887294*^9, 3.7953636883197937`*^9}, {3.795363746344557*^9, 
+   3.79536376412002*^9}, {3.795363802188279*^9, 3.795363850739324*^9}, {
+   3.7953639409512663`*^9, 3.795363958293548*^9}, 3.795364652103305*^9, 
+   3.7953667906531153`*^9},
+ CellLabel->
+  "In[800]:=",ExpressionUUID->"b5316ab7-6cb0-4354-9980-d6bc27fa8e07"]
+}, Closed]]
+},
+WindowSize->{1311, 827},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>0.75 Inherited,
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 154, 3, 51, "Section",ExpressionUUID->"b852c9ed-45db-4036-9364-e2e73134bb82"],
+Cell[737, 27, 12196, 300, 757, "Input",ExpressionUUID->"3cd9284b-8809-416a-9918-e16787c084da"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[12970, 332, 154, 3, 41, "Section",ExpressionUUID->"e0e0fe40-c61e-4d1f-810d-fb18d5e7570f"],
+Cell[13127, 337, 1519, 41, 121, "Input",ExpressionUUID->"f619571b-c8a7-4707-b736-0bf5e8251a3a"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[14683, 383, 161, 3, 41, "Section",ExpressionUUID->"7d0a4ee2-5fa2-46c6-9918-92389b686312"],
+Cell[14847, 388, 3736, 90, 137, "Input",ExpressionUUID->"b0ec245d-2f0b-499d-8966-e17ce4572475"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[18620, 483, 151, 3, 41, "Section",ExpressionUUID->"d3912785-7607-43f1-81ae-dd6f5b849001"],
+Cell[CellGroupData[{
+Cell[18796, 490, 2687, 67, 169, "Input",ExpressionUUID->"53e1836b-2f75-4ff7-9daa-952c41f6ebaf"],
+Cell[21486, 559, 19163, 269, 812, "Output",ExpressionUUID->"89a403b1-b48c-4f9a-be5d-c70da8a61ae8"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[40698, 834, 150, 3, 41, "Section",ExpressionUUID->"862c8e6c-bbd1-478f-b604-265eaef15a24"],
+Cell[40851, 839, 984, 20, 121, "Input",ExpressionUUID->"b5316ab7-6cb0-4354-9980-d6bc27fa8e07"]
+}, Closed]]
+}
+]
+*)
+
