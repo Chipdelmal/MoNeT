@@ -9,9 +9,10 @@ These routines are created for the experiments in the future paper to test the _
 * [SDY_clstAux.py](./SDY_clstAux.py): Clustering auxiliary functions.
 * [SDY_selAgg.py](./SDY_selAgg.py): Selective aggregation routine for one-node Trinity.
 * [SDY_select.py](./SDY_select.py): Genotypes selectors for dictionaries.
-* [SDY_validation.py](./SDY_validation.py): Export the validation plots
+* [SDY_validation.py](./SDY_validation.py): Generate the validation CSV files and traces plots.
 * [SDY_video.py](./SDY_video.py): Exports frames and compiles video for SDY validation.
 * [SDY_looper.py](./SDY_looper.py): Batch-exports videos in parallel for the aggregation validation.
+* [SDY_ix.py](./SDY_ix.py): Indices for the TP and YK sections of the landscapes for validation.
 
 ## Paths
 
@@ -28,13 +29,13 @@ Copy analyses plots to desktop:
 ```bash
 scp -rp\
   hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/img/*.pdf\
-  /home/chipdelmal/shared/SDY/img/;
+  /home/chipdelmal/Desktop/SplitDrive_Yorkeys/img/;
 scp -rp\
     hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/*.csv\
-    /home/chipdelmal/shared/SDY/err/;
+    /home/chipdelmal/Desktop/SplitDrive_Yorkeys/geoProof/err/;
 scp -rp\
     hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/img/*\
-    /home/chipdelmal/shared/SDY/err/img/;
+    /home/chipdelmal/Desktop/SplitDrive_Yorkeys/geoProof/err/img;
 ```
 Copy an experiment to desktop for debugging:
 
@@ -69,6 +70,7 @@ All the experiments names:
     ['E_30_30_100', 'E_15_30_100', 'E_30_10_100', 'E_30_20_100']
 ]
 ```
+
 Run a single video experiment:
 
 ```bash
@@ -76,7 +78,7 @@ python SDY_video.py 'srv' 'agg' 'hlt' 'E_05_10_025'
 python SDY_video.py 'dsk' 'nag' 'eco' 'E_30_20_075'
 ```
 
-Run the experiment in batch:
+Run the experiment in batch. Change the parameters with *nano* and then run:
 
 ```bash
 python SDY_looper.py

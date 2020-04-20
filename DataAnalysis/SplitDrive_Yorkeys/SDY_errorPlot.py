@@ -32,7 +32,7 @@ GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 # Get paths and create output folders
 ###############################################################################
 # I/O paths
-(filePaths, PATH_IMG) = (glob.glob(PATH + '*.csv'), PATH+'img/')
+(filePaths, PATH_IMG) = (glob.glob(PATH+'*.csv'), PATH+'img/')
 fun.createFolders([PATH_IMG])
 # ###############################################################################
 # # Print terminal message
