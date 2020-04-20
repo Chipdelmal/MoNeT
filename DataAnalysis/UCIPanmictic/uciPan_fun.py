@@ -2,9 +2,30 @@
 # -*- coding: utf-8 -*-
 
 import os
+import csv
 import numpy as np
+import pandas as pd
 import uciPan_aux as aux
 import MoNeT_MGDrivE as monet
+
+
+###############################################################################
+# Experiment Selection and Terminal
+###############################################################################
+def importThresholdsCSV(path, names):
+    fxLst = []
+    with open(path) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            xpID = row[0].split('_')[1:]
+            xpDT = row[1:]
+            xpID.extend(xpDT)
+            fxLst.append(xpID)
+    return pd.DataFrame(fxLst, columns=names)
+
+###############################################################################
+# Crosses and timing
+###############################################################################
 
 
 def getSSPopsInLandscape(aggregatedNodesData, ssDay):

@@ -13,11 +13,28 @@
 
 ## Other
 
-### Copy Plots
+### Copy Files from server
+
+#### Copy images
 
 ```bash
-scp -rp  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/UCI/Yoosook/tParams/islandGravidFemales/img/ /home/chipdelmal/Desktop/UCIPan/islandGravidFemales/;\
-scp -rp  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/UCI/Yoosook/tParams/islandMixed/img /home/chipdelmal/Desktop/UCIPan/islandMixed/;\
-scp -rp  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/UCI/Yoosook/tParams/island/img /home/chipdelmal/Desktop/UCIPan/island/;
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/islandGravidFemales/img/ /home/chipdelmal/Desktop/Panmictic/tParams/islandGravidFemales/;\
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/islandMixed/img/ /home/chipdelmal/Desktop/Panmictic/tParams/islandMixed/;\
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/island/img/ /home/chipdelmal/Desktop/Panmictic/tParams/island/;
 
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/islandGravidFemales/img/ /home/chipdelmal/Desktop/Panmictic/yParams/islandGravidFemales/;\
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/islandMixed/img/ /home/chipdelmal/Desktop/Panmictic/yParams/islandMixed/;\
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/island/img/ /home/chipdelmal/Desktop/Panmictic/yParams/island/;
+```
+
+#### Copy summaries
+
+```bash
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/islandGravidFemales/thresholdCrosses.csv /home/chipdelmal/Desktop/Panmictic/tParams/islandGravidFemales/;\
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/islandMixed/thresholdCrosses.csv /home/chipdelmal/Desktop/Panmictic/tParams/islandMixed/;\
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/island/thresholdCrosses.csv /home/chipdelmal/Desktop/Panmictic/tParams/island/
+
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/islandGravidFemales/thresholdCrosses.csv /home/chipdelmal/Desktop/Panmictic/yParams/islandGravidFemales/;\
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/islandMixed/thresholdCrosses.csv /home/chipdelmal/Desktop/Panmictic/yParams/islandMixed/;\
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/island/thresholdCrosses.csv /home/chipdelmal/Desktop/Panmictic/yParams/island/
 ```
