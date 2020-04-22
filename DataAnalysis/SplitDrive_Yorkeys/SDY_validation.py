@@ -48,7 +48,7 @@ fun.createFolders([PATH_ERR, PATH_IMG])
 tSrt = datetime.datetime.now()
 aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, str(tSrt), 'GeoValidation ')
 if xpTest is False:
-    print(aux.CRED+'ERROR: Missmatch in number of experiments!'+CEND)
+    print(aux.CRED+'ERROR: Missmatch in number of experiments!'+aux.CEND)
     sys.exit()
 ###############################################################################
 # Main analyses
