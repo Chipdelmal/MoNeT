@@ -28,7 +28,7 @@ mpl.rcParams['axes.linewidth'] = .4
 (thresholds, SSPOP, MALE, FEMALE) = (
         [.1, .25, .5, .75, .9], 10000, True, True
     )
-(xRange, driveID, burn) = (1095, 'LDR', 150)
+(xRange, driveID, burn) = (4*365, 'LDR', 0)
 ###############################################################################
 # Setting up the experiment analyses
 ###############################################################################
@@ -216,6 +216,5 @@ print(aux.PAD)
 monet.exportGeneLegend(
         ['W', 'H'],
         [(0, .22, .66, .5), (1, 0, .6, .5)], #aux.STYLE_HLT['colors'],
-        expOutStr + '/plt.pdf',
-        500
+        expOutStr + '/plt.pdf', 500
     )
