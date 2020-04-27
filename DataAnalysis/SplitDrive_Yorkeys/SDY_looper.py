@@ -32,7 +32,7 @@ for xpIx in range(xpLen):
     for sbIx in range(sbLen):
         spLst = [
                 'python', 'SDY_video.py',
-                'srv', 'agg', 'hlt', XP_LSTS[sbIx][xpIx]
+                'srv', 'nag', 'hlt', XP_LSTS[sbIx][xpIx]
             ]
         print('{}* SP {}/{}: {}{}'.format(
                 aux.CBMA,

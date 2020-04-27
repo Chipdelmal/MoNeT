@@ -59,7 +59,7 @@ aggDict = monet.autoGenerateGenotypesDictionary(
 (extras, expPath, outPath) = (
         '{}{}/'.format(BASE_PATH, clstFldr),
         '{}/ANALYZED/0001/'.format(DATA_PATH),
-        '{}video/{}/'.format(BASE_PATH, kernelName)
+        '{}video/{}/'.format(BASE_PATH, fldName + '-' + kernelName)
     )
 monet.makeFolder(outPath)
 ###############################################################################
@@ -80,7 +80,7 @@ monet.makeFolder(outPath)
     )
 (imgLocation, videoLocation) = (
         outPath,
-        '{}video/{}.mp4'.format(BASE_PATH, kernelName)
+        '{}video/{}.mp4'.format(BASE_PATH, fldName + '-' + kernelName)
     )
 original_corners = monet.get_corners(originalCoordFile)
 (coordinates, clstList) = (
