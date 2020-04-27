@@ -18,7 +18,8 @@ import glob
 import warnings
 import datetime
 import aux
-# import auxVideo as aux
+import subprocess
+import auxVideo as auxV
 # import auxCluster as auxC
 import MoNeT_MGDrivE as monet
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -37,7 +38,7 @@ DATA_PATH = '/RAID5/marshallShare/UCI/{}/{}/'.format(fldName, kernelName)
         'sims', 'stp_all_sites_cluster',
         'clustered', 'C0267', '000'
     )
-(PAD, DPI) = (.1, 512)
+(PAD, DPI) = (.025, 512)
 ###############################################################################
 # Colors and genotypes
 ###############################################################################
@@ -82,7 +83,8 @@ monet.makeFolder(outPath)
         outPath,
         '{}video/{}.mp4'.format(BASE_PATH, fldName + '-' + kernelName)
     )
-original_corners = monet.get_corners(originalCoordFile)
+# original_corners = monet.get_corners(originalCoordFile)
+original_corners = [[6.45, 6.77],[-.03, .42]]
 (coordinates, clstList) = (
         monet.getClustersFromAggFiles(originalCoordFile),
         monet.readClustersIDs(originalCoordFile)
@@ -106,10 +108,11 @@ print(aux.CEND + aux.PADL)
 clusters = monet.populateClustersFromList(clstList, expPath, patchFilePattern)
 aggList = monet.aggregateClusters(clusters, aggDict)
 ticks = aggList[0].shape[0]
-monet.generateClusterGraphs(
+auxV.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imgLocation, colors, original_corners,
-        PAD, DPI, skip=False, countries=True, refPopSize=1500
+        PAD, DPI, skip=False, countries=True, refPopSize=250,
+        timeLocation=(.44, .5) 
     )
 print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
 print('* Please run the following command in the terminal:')

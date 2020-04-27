@@ -78,7 +78,7 @@ def generateClusterGraphs(
 
         for idx, cData in enumerate(aggList):
             if idx == 0:
-                (fig, ax, m) = createMap(clstFile, COLORS, pad=.025)
+                (fig, ax, m) = createMap(clstFile, COLORS, padding, original_corners)
             pops = []
             try:
                 pops = cData[tick]
@@ -132,7 +132,7 @@ def generateVideo(name, background, imageLocation, imagePattern):
     return video
 
 
-def createMap(clusterFile, COLORS, pad=.025):
+def createMap(clusterFile, COLORS, pad, original_corners):
     (minLat, maxLat, minLong, maxLong) = (0, 0, 0, 0)
     (lats, longs, clusters) = ([], [], [])
     clusterData = open(clusterFile, 'r')
@@ -147,7 +147,8 @@ def createMap(clusterFile, COLORS, pad=.025):
         clusters.append(cluster)
 
     (minLat, maxLat, minLong, maxLong) = (
-            min(lats), max(lats), min(longs), max(longs)
+            original_corners[1][0], original_corners[1][1], 
+            original_corners[0][0], original_corners[0][1]
         )
     (minCluster, maxCluster) = (min(clusters), max(clusters))
 
@@ -199,6 +200,6 @@ def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
     for idx, value in enumerate(alphas):
         m.scatter(
                 [long], [lat], latlon=True, marker=(6, 0),
-                s=max(6, 0.11 * size), facecolor=colorList[idx],
+                s=max(25, 0.15 * size), facecolor=colorList[idx],
                 alpha=value, linewidths=.25, edgecolors='White'
             )
