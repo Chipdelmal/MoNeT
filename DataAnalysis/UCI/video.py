@@ -84,7 +84,7 @@ monet.makeFolder(outPath)
         '{}video/{}.mp4'.format(BASE_PATH, fldName + '-' + kernelName)
     )
 # original_corners = monet.get_corners(originalCoordFile)
-original_corners = [[6.45, 6.77],[-.03, .42]]
+original_corners = [[6.45, 6.77], [-.03, .42]]
 (coordinates, clstList) = (
         monet.getClustersFromAggFiles(originalCoordFile),
         monet.readClustersIDs(originalCoordFile)
@@ -112,7 +112,7 @@ auxV.generateClusterGraphs(
         originalCoordFile,
         aggList, coordinates, imgLocation, colors, original_corners,
         PAD, DPI, skip=False, countries=True, refPopSize=250,
-        timeLocation=(.44, .5) 
+        timeLocation=(.44, .5)
     )
 print('* Finished exporting frames ({}/{})'.format(ticks, ticks))
 print('* Please run the following command in the terminal:')

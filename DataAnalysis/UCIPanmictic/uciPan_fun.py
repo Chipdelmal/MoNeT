@@ -23,6 +23,13 @@ def importThresholdsCSV(path, names):
             fxLst.append(xpID)
     return pd.DataFrame(fxLst, columns=names)
 
+
+def ammendHeader(xpNames, thsID):
+    thsID = ['W'+i for i in thsID]
+    thsID.reverse()
+    xpNames.extend(thsID)
+    return xpNames
+
 ###############################################################################
 # Crosses and timing
 ###############################################################################

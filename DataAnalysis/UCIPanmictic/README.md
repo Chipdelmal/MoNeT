@@ -11,11 +11,24 @@
 * [uciPan_paper.nb](./uciPan_paper.nb): Response surfaces plots for the paper.
 
 
-## Other
+## Running scripts
 
-### Copy Files from server
+### Exporting plots and factorial summaries (needs nano toggle)
 
-#### Copy images
+```bash
+python uciPan_main.py RAID5 tParams island
+python uciPan_main.py RAID5 tParams islandMixed
+python uciPan_main.py RAID5 tParams islandGravidFemales
+```
+### Images from PDF to PNG
+
+```bash
+mogrify -verbose -density 250 -resize 600 -background white -alpha remove -alpha off -format png ./*.pdf
+```
+
+## Copy Files from server
+
+### Copy images
 
 ```bash
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/islandGravidFemales/img/ /home/chipdelmal/Desktop/Panmictic/tParams/islandGravidFemales/;\
@@ -27,7 +40,7 @@ scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/islandMixed/img/ /home/chi
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/island/img/ /home/chipdelmal/Desktop/Panmictic/yParams/island/;
 ```
 
-#### Copy summaries
+### Copy summaries
 
 ```bash
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/islandGravidFemales/thresholdCrosses.csv /home/chipdelmal/Desktop/Panmictic/tParams/islandGravidFemales/;\

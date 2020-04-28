@@ -14,6 +14,23 @@ These routines are created for the experiments in the future paper to test the _
 * [SDY_looper.py](./SDY_looper.py): Batch-exports videos in parallel for the aggregation validation.
 * [SDY_ix.py](./SDY_ix.py): Indices for the TP and YK sections of the landscapes for validation.
 
+
+## Scripts Order
+
+### Errors:
+
+```bash
+python SDY_validation.py
+python SDY_error.py
+python SDY_errorPlot.py
+```
+
+### Videos
+
+```bash
+python
+```
+
 ## Paths
 
 ### Validation
@@ -27,21 +44,19 @@ These routines are created for the experiments in the future paper to test the _
 Copy analyses plots to desktop:
 
 ```bash
-scp -rp\
-  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/img/*.pdf\
-  /home/chipdelmal/Desktop/SplitDrive_Yorkeys/img/;
-scp -rp\
-    hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/*.csv\
-    /home/chipdelmal/Desktop/SplitDrive_Yorkeys/geoProof/err/;
-scp -rp\
-    hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/img/*\
-    /home/chipdelmal/Desktop/SplitDrive_Yorkeys/geoProof/err/img;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/img/*.pdf /home/chipdelmal/Desktop/SplitDrive_Yorkeys/img/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/*.csv /home/chipdelmal/Desktop/SplitDrive_Yorkeys/geoProof/err/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/img/* /home/chipdelmal/Desktop/SplitDrive_Yorkeys/geoProof/err/img;
 ```
+
+```bash
+mogrify -verbose -density 1000 -resize 2000 -background white -alpha remove -alpha off -format png ./*.pdf
+```
+
 Copy an experiment to desktop for debugging:
 
 ```bash
 scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/Aggregated/ANALYZED/E_15_20_050/ '~/Desktop/SplitDrive_Yorkeys/geoProof/Aggregated/ANALYZED'
-
 scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/Aggregated/GARBAGE/E_15_20_050/ '~/Desktop/SplitDrive_Yorkeys/geoProof/Aggregated/GARBAGE'
 ```
 
@@ -49,7 +64,6 @@ Copy videos from server to desktop:
 
 ```bash
 scp -rp lab:'/RAID5/marshallShare/SplitDrive_Yorkeys/video/Aggregated/*.mp4' '/home/chipdelmal/Desktop/SplitDrive_Yorkeys/video/Aggregated/'
-
 scp -rp lab:'/RAID5/marshallShare/SplitDrive_Yorkeys/video/unAggregated/*.mp4' '/home/chipdelmal/Desktop/SplitDrive_Yorkeys/video/unAggregated/'
 ```
 

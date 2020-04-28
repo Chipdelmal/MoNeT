@@ -16,11 +16,7 @@ To generate the videos for STP follow these steps:
 1. [clusterAndAggregate](https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/UCI/clusterAndAggregate.py): Runs the clustering and aggregation routines to group the points for a cleaner visualization.
 2. [mapClusters](https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/UCI/mapClusters.py): Generates a map of the geography, so that it can be used as the background of the video.
 3. [video](https://github.com/Chipdelmal/MoNeT/blob/master/DataAnalysis/UCI/video.py): Exports the frames of the videos.
-4. Finally, run the following **ffmpeg** line:
 
-```
-ffmpeg -r 30 -f image2 -s 4096x2160 -i /Volumes/marshallShare/UCI/videoDemo/video/kernel_cluster_2500/c_%06d.png -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -vcodec libx264 -crf 25 -pix_fmt yuv420p /Volumes/marshallShare/UCI/videoDemo/video/kernel_cluster_2500.mp4
-```
 
 To setup the **tmux** sessions and run the script:
 
@@ -31,7 +27,13 @@ conda activate MoNeT; cd /Users/sanchez.hmsc/Documents/GitHub/MoNeT/DataAnalysis
 To run the script:
 
 ```
-python3 video.py 'kernel_cluster_5000'
+python video.py DATA_FOLDER_IN_UCI DATA_WITHIN_DATA_FOLDER
+```
+
+For example:
+
+```
+python video.py R2_mit stp_mitigated_kernel
 ```
 
 
@@ -50,5 +52,5 @@ python3 video.py 'kernel_cluster_5000'
 ## SSH Download
 
 ```
-scp -rp  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/UCI/videoDemo/video/*.mp4 ~/Desktop/
+scp -rp  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/UCI/videoDemo/video/*.mp4 ~/Desktop/STP/
 ```
