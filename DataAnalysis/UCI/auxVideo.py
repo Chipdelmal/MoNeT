@@ -160,9 +160,9 @@ def createMap(clusterFile, COLORS, pad, original_corners):
             llcrnrlon=minLong-pad, urcrnrlon=maxLong+pad,
             lat_ts=20, resolution='i', ax=ax
         )
-    m.drawcoastlines(color=COLORS[4], linewidth=5, zorder=-1)
-    m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=-1)
-    m.drawcoastlines(color=COLORS[4], linewidth=.5, zorder=-1)
+    m.drawcoastlines(color=COLORS[4], linewidth=15, zorder=-1)
+    m.drawcoastlines(color=COLORS[0], linewidth=5, zorder=-1)
+    m.drawcoastlines(color=COLORS[3], linewidth=1.5, zorder=-1)
     # m.fillcontinents(color=COLORS[3], lake_color='aqua')
     m.scatter(
             longs, lats, latlon=True, alpha=.1, marker='x', s=1,
