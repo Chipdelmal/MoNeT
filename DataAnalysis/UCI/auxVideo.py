@@ -78,7 +78,10 @@ def generateClusterGraphs(
 
         for idx, cData in enumerate(aggList):
             if idx == 0:
-                (fig, ax, m) = createMap(clstFile, COLORS, padding, original_corners)
+                (fig, ax, m) = createMap(
+                        clstFile, COLORS,
+                        padding, original_corners
+                    )
             pops = []
             try:
                 pops = cData[tick]
@@ -147,7 +150,7 @@ def createMap(clusterFile, COLORS, pad, original_corners):
         clusters.append(cluster)
 
     (minLat, maxLat, minLong, maxLong) = (
-            original_corners[1][0], original_corners[1][1], 
+            original_corners[1][0], original_corners[1][1],
             original_corners[0][0], original_corners[0][1]
         )
     (minCluster, maxCluster) = (min(clusters), max(clusters))
