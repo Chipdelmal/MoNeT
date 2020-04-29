@@ -110,28 +110,32 @@ COLORS = [
     ]
 
 
-def createFig(coordinates, padding, countries, longLats=False):
-    (fig, ax, m) = (None, None, None)
-    # Patch for longlats vs latlongs
-    if longLats:
-        (latIx, lonIx) = (0, 1)
-    else:
-        (latIx, lonIx) = (1, 0)
-    # Bondaries
-    (minLat, maxLat) = (min(coordinates[latIx]), max(coordinates[latIx]))
-    (minLong, maxLong) = (min(coordinates[longIx]), max(coordinates[longIx]))
-    # Figure
+def createFig(coordinates, padding, countries):
+    fig = None
+    ax = None
+    m = None
+    minLat = min(coordinates[0])
+    maxLat = max(coordinates[0])
+    minLong = min(coordinates[1])
+    maxLong = max(coordinates[1])
     fig, ax = plt.subplots(figsize=(5, 5))
     ax.tick_params(
-            axis='both', which='both', labelbottom=False, labelleft=False,
-            bottom=False, top=False, left=False, right=False
+            axis='both',          # changes apply to the both
+            which='both',      # both major and minor ticks are affected
+            bottom=False,      # ticks along the bottom edge are off
+            top=False,         # ticks along the top edge are off
+            left=False,
+            right=False,
+            labelbottom=False,  # labels along the bottom edge are off
+            labelleft=False
         )
     m = Basemap(
             projection='merc',
             llcrnrlat=minLat-padding, urcrnrlat=maxLat+padding,
-            llcrnrlon=minLong-padding, urcrnrlon=maxLong+padding,
-            lat_ts=20, resolution='i', ax=ax
+            llcrnrlon=minLong-padding, urcrnrlon=maxLong+padding, lat_ts=20,
+            resolution='i', ax=ax
         )
+    m.drawcounties(linewidth=0.3)
     if countries:
         m.drawcoastlines(linewidth=0.3)
         m.drawcountries(linewidth=0.3)
@@ -142,8 +146,7 @@ def generateClusterGraphs(
             clstFile,
             aggList, coordinates, destination, colorList, original_corners,
             padding, dpi, countries=False, skip=False, refPopSize=1,
-            verbose=True, background=False, timeLocation=(.5, .5),
-            scaler=(10, .11), longLats=False
+            verbose=True, background=False, timeLocation=(.5, .5)
         ):
     time = len(aggList[0])
     timeMax = list(range(time))
@@ -154,10 +157,7 @@ def generateClusterGraphs(
 
         for (idx, cData) in enumerate(aggList):
             if idx == 0:
-                (fig, ax, m) = createMap(
-                        clstFile, COLORS,
-                        pad=padding, longLats=longLats
-                    )
+                (fig, ax, m) = createMap(clstFile, COLORS, pad=padding)
             pops = []
             try:
                 pops = cData[tick]
@@ -165,8 +165,8 @@ def generateClusterGraphs(
                 if alphas:
                     draw_dots(
                             m, alphas, colorList,
-                            coordinates[latIx][idx], coordinates[lonIx][idx],
-                            size/refPopSize, scaler=scaler
+                            coordinates[0][idx], coordinates[1][idx],
+                            size/refPopSize
                         )
                 else:
                     continue
@@ -186,30 +186,19 @@ def generateClusterGraphs(
             plt.close(fig)
             plt.close('all')
             if original_corners:
-                fig, ax, m = createFig(
-                        original_corners, padding,
-                        countries, longLats=longLats
-                    )
+                fig, ax, m = createFig(original_corners, padding, countries)
             else:
-                fig, ax, m = createFig(
-                        original_corners, padding,
-                        countries, longLats=longLats
-                    )
+                fig, ax, m = createFig(coordinates, padding, countries)
         if verbose:
             print(
-                    '* Exporting frame ({}/{}){}'.format(
-                            str(tick+1).zfill(5), str(time).zfill(5),
-                            ' '*20
+                    '* Exporting frame ({}/{})'.format(
+                            str(tick+1).zfill(5), str(time).zfill(5)
                     ), end='\r'
                 )
     return None
 
 
-def createMap(clusterFile, COLORS, pad=.025, coasts=False, longLats=False):
-    if longLats:
-        (latIx, lonIx) = (2, 1)
-    else:
-        (latIx, lonIx) = (1, 2)
+def createMap(clusterFile, COLORS, pad=.025):
     (minLat, maxLat, minLong, maxLong) = (0, 0, 0, 0)
     (lats, longs, clusters) = ([], [], [])
     clusterData = open(clusterFile, 'r')
@@ -217,7 +206,7 @@ def createMap(clusterFile, COLORS, pad=.025, coasts=False, longLats=False):
     for line in clusterData:
         tokens = line.split(',')
         (long, lat, cluster) = (
-                float(tokens[lonIx]), float(tokens[latIx]), int(tokens[3])
+                float(tokens[1]), float(tokens[2]), int(tokens[3])
             )
         lats.append(lat)
         longs.append(long)
@@ -236,11 +225,10 @@ def createMap(clusterFile, COLORS, pad=.025, coasts=False, longLats=False):
             llcrnrlon=minLong-pad, urcrnrlon=maxLong+pad,
             lat_ts=20, resolution='i', ax=ax
         )
-    if coasts=True:
-        m.drawcoastlines(color=COLORS[1], linewidth=5, zorder=-1)
-        m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=-1)
-        m.drawcoastlines(color=COLORS[1], linewidth=.5, zorder=-1)
-        m.fillcontinents(color=COLORS[3], lake_color='aqua')
+    # m.drawcoastlines(color=COLORS[1], linewidth=5, zorder=-1)
+    # m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=-1)
+    # m.drawcoastlines(color=COLORS[1], linewidth=.5, zorder=-1)
+    # m.fillcontinents(color=COLORS[3], lake_color='aqua')
     m.scatter(
             longs, lats, latlon=True, alpha=.1, marker='x', s=1,
             cmap=plt.get_cmap('winter'), c=clusters,
@@ -260,11 +248,11 @@ def createMap(clusterFile, COLORS, pad=.025, coasts=False, longLats=False):
     return (fig, ax, m)
 
 
-def draw_dots(m, alphas, colorList, long=0, lat=0, size=60, scaler=(10, .11)):
+def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
     for idx, value in enumerate(alphas):
         m.scatter(
                 [long], [lat], latlon=True, marker=(6, 0),
-                s=max(scaler[0], scaler[1] * size), facecolor=colorList[idx],
+                s=max(10, 0.11 * size), facecolor=colorList[idx],
                 alpha=value, linewidths=.25, edgecolors='White'
             )
     return m
