@@ -30,32 +30,20 @@ warnings.filterwarnings("ignore", category=UserWarning)
 ###############################################################################
 # Terminal Selections
 ###############################################################################
-# Drive
-if sys.argv[1] == 'srv':
-    VOL = '/RAID5/marshallShare/'
-else:
-    VOL = '/home/chipdelmal/Desktop/'
-# Landscape
-if sys.argv[2] == 'agg':
-    (FLD, TYP, CLS) = ('Aggregated', 'Selective', 'C000893')
-else:
-    (FLD, TYP, CLS) = ('unAggregated', 'Uniformly', 'C002195')
-# Health
-if sys.argv[3] == 'hlt':
-    HLT = True
-else:
-    HLT = False
+VOL = '/home/chipdelmal/Desktop/'
+(FLD, TYP, CLS) = ('unAggregated', 'Uniformly', 'C002195')
+HLT = True
 ###############################################################################
 # Paths
 ###############################################################################
 (BASE_PATH, fldName, expName, clstType, kernelName) = (
         '{}SplitDrive_Yorkeys'.format(VOL), 'geoProof',
-        FLD, TYP, sys.argv[4]
+        FLD, TYP, 'E_30_30_100_c1'
     )
 DATA_PATH = '{}/{}/{}'.format(BASE_PATH, fldName, expName)
 (dataFldr, clstFldr, aggLvl, clstSample) = (
         fldName, 'Landscapes/LandAggregated/{}/'.format(clstType),
-        CLS, '0001'
+        CLS, '0000'
     )
 (PAD, DPI) = (.001, 512)
 ###############################################################################
