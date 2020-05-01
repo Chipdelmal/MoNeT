@@ -58,8 +58,10 @@ Copy an experiment to desktop for debugging:
 
 ```bash
 scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/Aggregated/ANALYZED/E_15_20_050/ '~/Desktop/SplitDrive_Yorkeys/geoProof/Aggregated/ANALYZED'
-scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/unAggregated/ANALYZED/E_30_30_100_c1/ '~/Desktop/SplitDrive_Yorkeys/geoProof/Aggregated/ANALYZED'
 scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/Aggregated/GARBAGE/E_15_20_050/ '~/Desktop/SplitDrive_Yorkeys/geoProof/Aggregated/GARBAGE'
+
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/unAggregated/ANALYZED/E_30_30_100_c1/ '~/Desktop/SplitDrive_Yorkeys/geoProof/unAggregated/ANALYZED'
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/unAggregated/GARBAGE/E_30_30_100_c1/ '~/Desktop/SplitDrive_Yorkeys/geoProof/unAggregated/GARBAGE'
 ```
 
 Copy videos from server to desktop:
