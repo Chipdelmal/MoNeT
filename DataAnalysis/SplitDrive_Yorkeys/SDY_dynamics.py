@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import glob
 import datetime
 import SDY_aux as aux
 import SDY_functions as fun
@@ -61,13 +62,21 @@ expSet = sig[i]
 (name, aPath, gPath) = expSet
 (aFiles, gFiles) = fun.readDataPaths(aPath, gPath)
 # Filtering (needs loop)
-for (i, x) in enumerate(sectorsIx):
-    faPath = filterFilesByIndex(aFiles, x, MALE, FEMALE)
-    fgPath = filterFilesByIndex(gFiles, x, MALE, FEMALE)
-    fExpSet = (name, faPath, fgPath)
-    (nS, mS, tS) = fun.loadAndCalcResponse(fExpSet, GDICT, MALE, FEMALE)
-    # Plots  ------------------------------------------------------------------
-    fun.exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='D'+str(i))
+# for (i, x) in enumerate(sectorsIx):
+x = sectorsIx[0]
+faPath = filterFilesByIndex(aFiles, x, MALE, FEMALE)
+
+
+m = sorted(glob.glob(gFiles[0] + '/M*.csv'))
+f = sorted(glob.glob(gFiles[0] + '/F*.csv'))
+f
+
+
+fgPath = filterFilesByIndex(gFiles, x, MALE, FEMALE)
+fExpSet = (name, faPath, fgPath)
+(nS, mS, tS) = fun.loadAndCalcResponse(fExpSet, GDICT, MALE, FEMALE)
+# Plots  ------------------------------------------------------------------
+fun.exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='D'+str(i))
 monet.exportGeneLegend(mS['genotypes'], COLORS, PATH_IMG+"/plt.pdf", 500)
 ###############################################################################
 # Print terminal message
