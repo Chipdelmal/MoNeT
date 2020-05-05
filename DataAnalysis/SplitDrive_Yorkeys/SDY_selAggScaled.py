@@ -14,7 +14,7 @@ from sklearn.cluster import KMeans
 #   "/Volumes/marshallShare/SplitDrive_Yorkeys/Landscapes/"
 ###############################################################################
 placeName = 'Yorkeys'
-(CLUSTERS_NO, REPS) = ([10, 50, 100, 150, 200], 10)
+(CLUSTERS_NO, REPS) = ([10, 50, 100, 150, 200, 250, 500], 25)
 (PATH, LATLONGS, DIST, OUT) = (
         "/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/",
         "LandSorted/Yorkeys01_S.csv", "LandSorted/Yorkeys01_M.csv",

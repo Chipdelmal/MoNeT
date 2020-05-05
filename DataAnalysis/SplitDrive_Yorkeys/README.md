@@ -52,6 +52,12 @@ scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandSorted/* /hom
 
 ```
 
+Copy landscapes to server:
+
+```bash
+scp -rp /home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/* lab:/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/
+```
+
 ```bash
 mogrify -verbose -density 1000 -resize 2000 -background white -alpha remove -alpha off -format png ./*.pdf
 ```
