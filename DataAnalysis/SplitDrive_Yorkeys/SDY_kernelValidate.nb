@@ -10,14 +10,20 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     24102,        579]
-NotebookOptionsPosition[     23365,        559]
-NotebookOutlinePosition[     23729,        575]
-CellTagsIndexPosition[     23686,        572]
+NotebookDataLength[     59294,       1203]
+NotebookOptionsPosition[     57365,       1159]
+NotebookOutlinePosition[     57729,       1175]
+CellTagsIndexPosition[     57686,       1172]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
+Cell["Functions", "Section",
+ CellChangeTimes->{{3.79769540124264*^9, 
+  3.7976954147546*^9}},ExpressionUUID->"f7680f80-22dc-4ad6-9ece-6cc7af8dbdbc"],
+
 Cell[BoxData[{
  RowBox[{
   RowBox[{"hexToRGB", "=", 
@@ -85,8 +91,9 @@ Cell[BoxData[{
                  
                  ImageSize->
                   Dynamic[{
-                   Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                    AbsoluteCurrentValue[Magnification]}],
+                   Automatic, 
+                    1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}],
                  PlotRangePadding->None],
                 StyleBox[
                  RowBox[{"RGBColor", "[", 
@@ -141,8 +148,9 @@ Cell[BoxData[{
                  
                  ImageSize->
                   Dynamic[{
-                   Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                    AbsoluteCurrentValue[Magnification]}],
+                   Automatic, 
+                    1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}],
                  PlotRangePadding->None],
                 StyleBox[
                  RowBox[{"RGBColor", "[", 
@@ -197,8 +205,9 @@ Cell[BoxData[{
                 
                 ImageSize->
                  Dynamic[{
-                  Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                   AbsoluteCurrentValue[Magnification]}],
+                  Automatic, 
+                   1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}],
                 PlotRangePadding->None],
                StyleBox[
                 RowBox[{"RGBColor", "[", 
@@ -248,8 +257,9 @@ Cell[BoxData[{
                 
                 ImageSize->
                  Dynamic[{
-                  Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                   AbsoluteCurrentValue[Magnification]}],
+                  Automatic, 
+                   1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}],
                 PlotRangePadding->None],
                StyleBox[
                 RowBox[{"RGBColor", "[", 
@@ -301,8 +311,9 @@ Cell[BoxData[{
                 
                 ImageSize->
                  Dynamic[{
-                  Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                   AbsoluteCurrentValue[Magnification]}],
+                  Automatic, 
+                   1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}],
                 PlotRangePadding->None],
                StyleBox[
                 RowBox[{"RGBColor", "[", 
@@ -352,8 +363,9 @@ Cell[BoxData[{
                 
                 ImageSize->
                  Dynamic[{
-                  Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                   AbsoluteCurrentValue[Magnification]}],
+                  Automatic, 
+                   1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}],
                 PlotRangePadding->None],
                StyleBox[
                 RowBox[{"RGBColor", "[", 
@@ -395,10 +407,19 @@ Cell[BoxData[{
    3.797694243234974*^9, 3.797694272298892*^9}, {3.7976943872765102`*^9, 
    3.7976943933770027`*^9}, {3.797694498460203*^9, 3.79769452625813*^9}, {
    3.797694568678496*^9, 3.797694632238413*^9}, 3.7976946851889887`*^9},
- CellLabel->
-  "In[365]:=",ExpressionUUID->"2517031e-5a22-4189-ac2b-45bb3fa89293"],
+ CellLabel->"In[1]:=",ExpressionUUID->"2517031e-5a22-4189-ac2b-45bb3fa89293"]
+}, Closed]],
 
-Cell[BoxData[
+Cell[CellGroupData[{
+
+Cell["Paths", "Section",
+ CellChangeTimes->{{3.7976954176917553`*^9, 
+  3.7976954238869047`*^9}},ExpressionUUID->"c34166e9-9ec4-42ef-8b00-\
+b5c37caf6cdb"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"{", 
@@ -407,154 +428,733 @@ Cell[BoxData[
     RowBox[{
     "\"\</home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\>\"", ",", 
      "\[IndentingNewLine]", "\"\<LandAggregated/Filtered/\>\""}], 
-    "\[IndentingNewLine]", "}"}]}], ";"}]], "Input",
- CellChangeTimes->{{3.797690027854507*^9, 3.7976901113620663`*^9}, {
-  3.797690322530258*^9, 3.797690376632738*^9}, {3.797690436131859*^9, 
-  3.7976904380046*^9}, {3.79769103104307*^9, 3.797691032288097*^9}},
- CellLabel->"In[83]:=",ExpressionUUID->"6c89b724-e25a-4c72-aee4-aad16aa5930b"],
+    "\[IndentingNewLine]", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"fldrs", "=", 
+  RowBox[{"FileNames", "[", 
+   RowBox[{"path", "<>", "fldrAgg", "<>", "\"\</C*\>\""}], "]"}]}]}], "Input",\
 
-Cell[BoxData[{
- RowBox[{
-  RowBox[{"clst", "=", "\"\<C000500\>\""}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"files", "=", 
-    RowBox[{"FileNames", "[", 
-     RowBox[{
-     "path", "<>", "fldrAgg", "<>", "clst", "<>", "\"\</*_A.csv\>\""}], 
-     "]"}]}], ";"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", 
-   RowBox[{"Read", " ", "file"}], "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"prb", "=", 
-   RowBox[{"files", "[", 
-    RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"raw", "=", 
-   RowBox[{"Import", "[", "prb", "]"}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"{", 
-    RowBox[{"lng", ",", "fnm"}], "}"}], "=", 
-   RowBox[{"{", 
-    RowBox[{
-     RowBox[{"Length", "[", "raw", "]"}], ",", 
-     RowBox[{
-      RowBox[{"StringSplit", "[", 
-       RowBox[{"prb", ",", 
-        RowBox[{"{", 
-         RowBox[{"\"\</\>\"", ",", "\"\<.\>\""}], "}"}]}], "]"}], "[", 
-      RowBox[{"[", 
-       RowBox[{"-", "2"}], "]"}], "]"}]}], "}"}]}], ";"}]}], "Input",
- CellChangeTimes->{{3.7976904394789667`*^9, 3.797690452700605*^9}, {
-   3.7976908068359756`*^9, 3.797690828039339*^9}, {3.797690924804594*^9, 
-   3.797690952384438*^9}, {3.79769103962282*^9, 3.7976910492281923`*^9}, {
-   3.79769112384511*^9, 3.797691180881134*^9}, {3.797691267572592*^9, 
-   3.797691280007436*^9}, {3.797691310728104*^9, 3.797691351064155*^9}, 
-   3.797691619604926*^9, {3.7976917337572803`*^9, 3.797691735293417*^9}, 
-   3.797691811094512*^9, 3.797692053645947*^9, {3.797692696056244*^9, 
-   3.797692696380769*^9}, {3.797694504228434*^9, 3.7976945069779253`*^9}, {
-   3.797694698201353*^9, 3.7976946994145107`*^9}, {3.797694831963642*^9, 
-   3.797694842150238*^9}, {3.797695093985178*^9, 
-   3.7976950958881893`*^9}},ExpressionUUID->"399d1d03-1891-4664-9c2d-\
-c8204b58b8f4"],
+ CellChangeTimes->{{3.797690027854507*^9, 3.7976901113620663`*^9}, {
+   3.797690322530258*^9, 3.797690376632738*^9}, {3.797690436131859*^9, 
+   3.7976904380046*^9}, {3.79769103104307*^9, 3.797691032288097*^9}, {
+   3.797695443442162*^9, 3.797695458901307*^9}, {3.797695704885404*^9, 
+   3.797695705343339*^9}, {3.797695950738304*^9, 3.7976959508222857`*^9}, {
+   3.797697943233412*^9, 3.797697944359511*^9}, {3.797699444297574*^9, 
+   3.797699484947812*^9}, 3.797699721423229*^9, 3.797699759909378*^9, 
+   3.797700609956374*^9, {3.797704177186413*^9, 3.797704177670525*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"6c89b724-e25a-4c72-aee4-aad16aa5930b"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000010\"\>", 
+   ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000050\"\>", 
+   ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000100\"\>", 
+   ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000150\"\>", 
+   ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000200\"\>", 
+   ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000250\"\>", 
+   ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000500\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{{3.797699464999044*^9, 3.797699485225374*^9}, 
+   3.797699721859187*^9, 3.797699802352038*^9, 3.797700610641931*^9, {
+   3.797704174480624*^9, 3.797704178088839*^9}, 3.797716156497952*^9},
+ CellLabel->"Out[6]=",ExpressionUUID->"4c87522d-d0d8-41ae-a101-fc7109fb33f9"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Export Matrix", "Section",
+ CellChangeTimes->{{3.797695426589332*^9, 3.797695431810355*^9}, {
+  3.79769551430587*^9, 
+  3.79769551556602*^9}},ExpressionUUID->"177f214e-85db-47c0-941e-\
+1785d2e38aee"],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{
-  RowBox[{"(*", "Plot", "*)"}], "\[IndentingNewLine]", 
+ RowBox[{"Table", "[", "\[IndentingNewLine]", 
   RowBox[{
    RowBox[{
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"mrk1", ",", "mrk2"}], "}"}], "=", 
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"Rectangle", "[", 
-        RowBox[{
-         RowBox[{"{", 
-          RowBox[{"891", ",", "0"}], "}"}], ",", 
-         RowBox[{"{", 
-          RowBox[{"lng", ",", 
-           RowBox[{"lng", "-", "891"}]}], "}"}]}], "]"}], " ", ",", 
-       RowBox[{"Rectangle", "[", 
-        RowBox[{
-         RowBox[{"{", 
-          RowBox[{"0", ",", 
-           RowBox[{"lng", "-", "891"}]}], "}"}], ",", 
-         RowBox[{"{", 
-          RowBox[{"891", ",", "lng"}], "}"}]}], "]"}]}], "}"}]}], ";"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"mtx", "=", 
-     RowBox[{"MatrixPlot", "[", 
-      RowBox[{"raw", "\[IndentingNewLine]", ",", 
-       RowBox[{"ColorFunction", "\[Rule]", 
-        RowBox[{"(", 
-         RowBox[{
-          RowBox[{"cf1", "[", "#", "]"}], "&"}], ")"}]}], 
-       "\[IndentingNewLine]", ",", 
-       RowBox[{"ColorFunctionScaling", "\[Rule]", "False"}], 
-       "\[IndentingNewLine]", ",", 
-       RowBox[{"FrameStyle", "\[Rule]", 
-        RowBox[{"Thickness", "[", ".007", "]"}]}], "\[IndentingNewLine]", ",", 
-       RowBox[{"FrameTicks", "\[Rule]", "False"}], "\[IndentingNewLine]", ",", 
-       RowBox[{"PlotRangePadding", "\[Rule]", "0"}]}], "\[IndentingNewLine]", 
-      "]"}]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"plt", "=", 
-     RowBox[{"Show", "[", 
-      RowBox[{"mtx", ",", 
-       RowBox[{"style", "[", 
-        RowBox[{
-         RowBox[{
-          RowBox[{"scaleToRaster", "[", 
-           RowBox[{"#", ",", 
-            RowBox[{"Dimensions", "@", "raw"}], ",", "mtx"}], "]"}], "&"}], "/@",
-          "mrk1"}], "]"}], ",", 
-       RowBox[{"style", "[", 
-        RowBox[{
-         RowBox[{
-          RowBox[{"scaleToRaster", "[", 
-           RowBox[{"#", ",", 
-            RowBox[{"Dimensions", "@", "raw"}], ",", "mtx"}], "]"}], "&"}], "/@",
-          "mrk2"}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{"(*", 
-    RowBox[{"Export", " ", "plot", " ", "to", " ", "disk"}], "*)"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{"Export", "[", "\[IndentingNewLine]", 
-    RowBox[{
+    RowBox[{"files", "=", 
+     RowBox[{"FileNames", "[", 
+      RowBox[{"clst", "<>", "\"\</*_A.csv\>\""}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Table", "[", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{"Read", " ", "file"}], "*)"}], "\[IndentingNewLine]", 
      RowBox[{
-     "path", "<>", "fldrAgg", "<>", "\"\<img/\>\"", "<>", "clst", "<>", 
-      "\"\<-\>\"", "<>", "fnm", "<>", "\"\<.png\>\""}], ",", "plt", 
-     "\[IndentingNewLine]", ",", 
-     RowBox[{"ImageResize", "\[Rule]", "1000"}], "\[IndentingNewLine]", ",", 
-     RowBox[{"ImageSize", "\[Rule]", "2500"}]}], "\[IndentingNewLine]", 
-    "]"}]}]}]], "Input",
- CellChangeTimes->CompressedData["
-1:eJxTTMoPSmViYGAQA2IQnWC14EOr9xtHpeL5v0G01t5j4m1AesnnHlkQfan5
-oyaIXlGUZweiH1avdgXRDDu2gukX8rb+INpklS+YZlDwDwfRbrM2x4BoG72G
-BBAtVv0STE+Jzk8F0Uk7T4PpyKxzWSBa70Z1NoiuUbmXD6LVuDc1gOjOBy3t
-YPfsutcBoo1mb+gH0VdSTy4E0bdKwtaDaMt3vIdB9K9Zb4+DaNNttVdB9EqR
-X7dBNNtk2WcgWsH12UsQfSGw4RWI3udl8h5El1zi/gii58j0/QHRjsfWM7aD
-/NGtpwiiDbsclEC0mnWoGojO45FUB9F1nzcZgOisUnMjEM34Ws8MRE9a5hQA
-ogGZ1a2/
-  "],ExpressionUUID->"888377d9-3b9d-48fd-b30b-c7af9b0a433d"],
+      RowBox[{
+       RowBox[{"raw", "=", 
+        RowBox[{"Import", "[", "prb", "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"lng", ",", "fnm"}], "}"}], "=", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Length", "[", "raw", "]"}], ",", 
+          RowBox[{
+           RowBox[{"StringSplit", "[", 
+            RowBox[{"prb", ",", 
+             RowBox[{"{", 
+              RowBox[{"\"\</\>\"", ",", "\"\<.\>\""}], "}"}]}], "]"}], "[", 
+           RowBox[{"[", 
+            RowBox[{"-", "2"}], "]"}], "]"}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", "Plot", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"mrk1", ",", "mrk2"}], "}"}], "=", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Rectangle", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"891", ",", "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"lng", ",", 
+              RowBox[{"lng", "-", "891"}]}], "}"}]}], "]"}], " ", ",", 
+          RowBox[{"Rectangle", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", 
+              RowBox[{"lng", "-", "891"}]}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"891", ",", "lng"}], "}"}]}], "]"}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"mtx", "=", 
+        RowBox[{"MatrixPlot", "[", 
+         RowBox[{"raw", "\[IndentingNewLine]", ",", 
+          RowBox[{"ColorFunction", "\[Rule]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"cf1", "[", "#", "]"}], "&"}], ")"}]}], 
+          "\[IndentingNewLine]", ",", 
+          RowBox[{"ColorFunctionScaling", "\[Rule]", "False"}], 
+          "\[IndentingNewLine]", ",", 
+          RowBox[{"FrameStyle", "\[Rule]", 
+           RowBox[{"Thickness", "[", ".007", "]"}]}], "\[IndentingNewLine]", 
+          ",", 
+          RowBox[{"FrameTicks", "\[Rule]", "False"}], "\[IndentingNewLine]", 
+          ",", 
+          RowBox[{"PlotRangePadding", "\[Rule]", "0"}]}], 
+         "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"plt", "=", 
+        RowBox[{"Show", "[", 
+         RowBox[{"mtx", ",", 
+          RowBox[{"style", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"scaleToRaster", "[", 
+              RowBox[{"#", ",", 
+               RowBox[{"Dimensions", "@", "raw"}], ",", "mtx"}], "]"}], "&"}],
+             "/@", "mrk1"}], "]"}], ",", 
+          RowBox[{"style", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"scaleToRaster", "[", 
+              RowBox[{"#", ",", 
+               RowBox[{"Dimensions", "@", "raw"}], ",", "mtx"}], "]"}], "&"}],
+             "/@", "mrk2"}], "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"Export", " ", "plot", " ", "to", " ", "disk"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"path", "<>", "fldrAgg", "<>", "\"\<img/\>\"", "<>", 
+          RowBox[{
+           RowBox[{"StringSplit", "[", 
+            RowBox[{"clst", ",", "\"\</\>\""}], "]"}], "[", 
+           RowBox[{"[", 
+            RowBox[{"-", "1"}], "]"}], "]"}], "<>", "\"\<-\>\"", "<>", "fnm", 
+          "<>", "\"\<.png\>\""}], ",", "plt", "\[IndentingNewLine]", ",", 
+         RowBox[{"ImageResize", "\[Rule]", "750"}], "\[IndentingNewLine]", 
+         ",", 
+         RowBox[{"ImageSize", "\[Rule]", "2000"}]}], "\[IndentingNewLine]", 
+        "]"}]}], "\[IndentingNewLine]", ",", 
+      RowBox[{"{", 
+       RowBox[{"prb", ",", "files"}], "}"}]}], "]"}]}], "\[IndentingNewLine]",
+    ",", 
+   RowBox[{"{", 
+    RowBox[{"clst", ",", "fldrs"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.797692293007126*^9, 3.7976923809828043`*^9}, {
+   3.7976926062105913`*^9, 3.7976926524047413`*^9}, {3.7976927515473413`*^9, 
+   3.797692915451496*^9}, {3.797692973358872*^9, 3.797692973678711*^9}, {
+   3.797693049910145*^9, 3.7976930504270267`*^9}, {3.7976931144726562`*^9, 
+   3.797693157612582*^9}, {3.797693188005644*^9, 3.797693191296275*^9}, {
+   3.797693227479929*^9, 3.7976932303663797`*^9}, {3.797693270450482*^9, 
+   3.797693275870139*^9}, {3.7976933109419537`*^9, 3.797693445563861*^9}, {
+   3.797693500152409*^9, 3.7976935109602833`*^9}, {3.7976935655189447`*^9, 
+   3.79769371029368*^9}, {3.797693818701764*^9, 3.79769397643533*^9}, {
+   3.797694015425168*^9, 3.797694123928492*^9}, {3.797694175815022*^9, 
+   3.797694256924197*^9}, {3.797694287195938*^9, 3.797694292009987*^9}, {
+   3.797694329634124*^9, 3.79769434436944*^9}, {3.7976944364409924`*^9, 
+   3.797694477492951*^9}, {3.797694729454501*^9, 3.797694738016869*^9}, {
+   3.7976947706634703`*^9, 3.7976947767827673`*^9}, {3.797694853592223*^9, 
+   3.797694865733083*^9}, {3.797694897466187*^9, 3.7976951324496403`*^9}, {
+   3.797695787826015*^9, 3.797695791874695*^9}, {3.797699726793427*^9, 
+   3.797699773786749*^9}, 3.797699818969905*^9, {3.797699854337427*^9, 
+   3.797699874347097*^9}, {3.797699947367281*^9, 3.797699948241102*^9}, {
+   3.7977041926755733`*^9, 3.797704197377898*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"888377d9-3b9d-48fd-b30b-c7af9b0a433d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0000_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0001_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0002_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0003_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0004_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0005_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0006_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0007_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0008_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0009_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0010_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0011_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0012_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0013_A.png\"\>", 
+     ",", \
+"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/LandAggregated/\
+Filtered/img/C000010-Yorkeys01_0014_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0015_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0016_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0017_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0018_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0019_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0020_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0021_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0022_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0023_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000010-Yorkeys01_0024_A.png\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0000_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0001_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0002_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0003_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0004_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0005_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0006_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0007_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0008_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0009_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0010_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0011_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0012_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0013_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0014_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0015_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0016_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0017_A.png\"\>", 
+     ",", \
+"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/LandAggregated/\
+Filtered/img/C000050-Yorkeys01_0018_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0019_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0020_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0021_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0022_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0023_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000050-Yorkeys01_0024_A.png\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0000_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0001_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0002_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0003_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0004_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0005_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0006_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0007_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0008_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0009_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0010_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0011_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0012_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0013_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0014_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0015_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0016_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0017_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0018_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0019_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0020_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0021_A.png\"\>", 
+     ",", \
+"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/LandAggregated/\
+Filtered/img/C000100-Yorkeys01_0022_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0023_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000100-Yorkeys01_0024_A.png\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0000_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0001_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0002_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0003_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0004_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0005_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0006_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0007_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0008_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0009_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0010_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0011_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0012_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0013_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0014_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0015_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0016_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0017_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0018_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0019_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0020_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0021_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0022_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0023_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000150-Yorkeys01_0024_A.png\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0000_A.png\"\>", 
+     ",", \
+"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/LandAggregated/\
+Filtered/img/C000200-Yorkeys01_0001_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0002_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0003_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0004_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0005_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0006_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0007_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0008_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0009_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0010_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0011_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0012_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0013_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0014_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0015_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0016_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0017_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0018_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0019_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0020_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0021_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0022_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0023_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000200-Yorkeys01_0024_A.png\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0000_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0001_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0002_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0003_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0004_A.png\"\>", 
+     ",", \
+"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/LandAggregated/\
+Filtered/img/C000250-Yorkeys01_0005_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0006_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0007_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0008_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0009_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0010_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0011_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0012_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0013_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0014_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0015_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0016_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0017_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0018_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0019_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0020_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0021_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0022_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0023_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000250-Yorkeys01_0024_A.png\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0000_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0001_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0002_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0003_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0004_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0005_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0006_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0007_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0008_A.png\"\>", 
+     ",", \
+"\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/LandAggregated/\
+Filtered/img/C000500-Yorkeys01_0009_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0010_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0011_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0012_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0013_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0014_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0015_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0016_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0017_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0018_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0019_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0020_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0021_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0022_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0023_A.png\"\>", 
+     ",", "\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/img/C000500-Yorkeys01_0024_A.png\"\>"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.797699774434498*^9, 3.7976998374090023`*^9, 
+  3.7976998947273197`*^9, 3.797700603407277*^9, 3.797704189808558*^9, 
+  3.79770682745921*^9},
+ CellLabel->"Out[11]=",ExpressionUUID->"5459907f-d266-40a2-beb1-2b955b5f3a41"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Export Plot", "Section",
+ CellChangeTimes->{{3.797700612513928*^9, 
+  3.79770061733596*^9}},ExpressionUUID->"3680e489-b294-4ffe-b4dd-\
+aa25425b83ad"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"files", "=", 
+     RowBox[{"FileNames", "[", 
+      RowBox[{"clst", "<>", "\"\</*_I.csv\>\""}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Table", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"fnm", "=", 
+        RowBox[{
+         RowBox[{"StringSplit", "[", 
+          RowBox[{"prb", ",", 
+           RowBox[{"{", 
+            RowBox[{"\"\</\>\"", ",", "\"\<.\>\""}], "}"}]}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"-", "2"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"raw", "=", 
+        RowBox[{
+         RowBox[{"Import", "[", "prb", "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ";;", "All"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"clstrs", ",", "nodes"}], "}"}], "=", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"raw", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", 
+             RowBox[{"5", ";;", "All"}]}], "]"}], "]"}], ",", 
+          RowBox[{"raw", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", 
+             RowBox[{"2", ";;", "3"}]}], "]"}], "]"}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"clsXY", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Cases", "[", 
+           RowBox[{"raw", ",", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+              "_", ",", "x_", ",", "y_", ",", "i", ",", "a_", ",", "b_"}], 
+              "}"}], "\[Rule]", 
+             RowBox[{"{", 
+              RowBox[{"x", ",", "y"}], "}"}]}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", 
+            RowBox[{"raw", "[", 
+             RowBox[{"[", 
+              RowBox[{"All", ",", "4"}], "]"}], "]"}]}], "}"}]}], "]"}]}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"plt", "=", 
+        RowBox[{"ListPlot", "[", 
+         RowBox[{
+          RowBox[{"clsXY", "//", "DeleteDuplicates"}], "\[IndentingNewLine]", 
+          ",", 
+          RowBox[{"Frame", "\[Rule]", "True"}], "\[IndentingNewLine]", ",", 
+          RowBox[{"FrameStyle", "\[Rule]", "Thick"}], "\[IndentingNewLine]", 
+          ",", 
+          RowBox[{"FrameTicks", "\[Rule]", "None"}], "\[IndentingNewLine]", 
+          ",", 
+          RowBox[{"GridLines", "\[Rule]", "None"}], "\[IndentingNewLine]", 
+          ",", 
+          RowBox[{"PlotRange", "\[Rule]", "All"}], "\[IndentingNewLine]", ",", 
+          RowBox[{"PlotTheme", "\[Rule]", "\"\<Business\>\""}]}], 
+         "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"ci", "=", 
+          RowBox[{"ListPlot", "[", 
+           RowBox[{
+            RowBox[{"clstrs", "//", "DeleteDuplicates"}], 
+            "\[IndentingNewLine]", ",", 
+            RowBox[{"PlotRange", "\[Rule]", "All"}], "\[IndentingNewLine]", 
+            ",", 
+            RowBox[{"PlotStyle", "\[Rule]", 
+             RowBox[{"Directive", "[", 
+              RowBox[{"{", 
+               RowBox[{"Black", ",", 
+                RowBox[{"PointSize", "[", ".01", "]"}], ",", 
+                RowBox[{"Opacity", "[", ".25", "]"}]}], "}"}], "]"}]}]}], 
+           "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"plt", "=", 
+          RowBox[{"Show", "[", 
+           RowBox[{"ci", ",", "cp", ",", 
+            RowBox[{"Frame", "\[Rule]", "True"}]}], "]"}]}], ";"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"path", "<>", "fldrAgg", "<>", "\"\<img/\>\"", "<>", 
+          RowBox[{
+           RowBox[{"StringSplit", "[", 
+            RowBox[{"clst", ",", "\"\</\>\""}], "]"}], "[", 
+           RowBox[{"[", 
+            RowBox[{"-", "1"}], "]"}], "]"}], "<>", "\"\<-\>\"", "<>", "fnm", 
+          "<>", "\"\<.png\>\""}], ",", "plt", "\[IndentingNewLine]", ",", 
+         RowBox[{"ImageResize", "\[Rule]", "500"}], "\[IndentingNewLine]", 
+         ",", 
+         RowBox[{"ImageSize", "\[Rule]", "1000"}]}], "\[IndentingNewLine]", 
+        "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Print", "[", "prb", "]"}], ";"}], "\[IndentingNewLine]", ",", 
+      
+      RowBox[{"{", 
+       RowBox[{"prb", ",", "files"}], "}"}]}], "]"}]}], "\[IndentingNewLine]",
+    ",", 
+   RowBox[{"{", 
+    RowBox[{"clst", ",", "fldrs"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.797703454326395*^9, 3.797703502376875*^9}, {
+  3.7977044585524273`*^9, 3.797704463268688*^9}, {3.797710728802546*^9, 
+  3.7977107313062773`*^9}, {3.797711043195692*^9, 3.797711064334002*^9}, {
+  3.7977115908877563`*^9, 3.797711627665267*^9}, {3.79771258800847*^9, 
+  3.797712595449325*^9}, {3.79771413082729*^9, 3.797714154889189*^9}, {
+  3.797715045847596*^9, 3.7977150517589617`*^9}, {3.797715191360037*^9, 
+  3.797715204585451*^9}, {3.797715305950461*^9, 3.7977153180846777`*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"23c63822-58ce-4e43-bf4d-559343202c8a"],
+
+Cell[CellGroupData[{
 
 Cell[BoxData["\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
-LandAggregated/Filtered/img/C000500-Yorkeys01_0000_A.png\"\>"], "Output",
- CellChangeTimes->{{3.797693940463244*^9, 3.79769398034492*^9}, {
-   3.7976940208592587`*^9, 3.797694109738552*^9}, {3.797694180938016*^9, 
-   3.797694191087167*^9}, {3.797694238814604*^9, 3.797694296229774*^9}, {
-   3.7976943378939857`*^9, 3.797694348354435*^9}, 3.797694399971224*^9, {
-   3.797694456328771*^9, 3.797694534738337*^9}, {3.79769457540471*^9, 
-   3.797694597186181*^9}, 3.797694639802168*^9, {3.797694693690377*^9, 
-   3.797694723582589*^9}, 3.797694873363843*^9, {3.797694915096073*^9, 
-   3.797694937089583*^9}, {3.797694982346238*^9, 3.797695033151276*^9}, 
-   3.797695064798382*^9},
+LandAggregated/Filtered/C000010/Yorkeys01_0000_I.csv\"\>"], "Print",
+ CellChangeTimes->{3.797711839880064*^9, 3.797712832486888*^9, 
+  3.797714396176828*^9, 3.79771514176484*^9, 3.7977152409717207`*^9, 
+  3.797716197542302*^9},
  CellLabel->
-  "Out[420]=",ExpressionUUID->"e9c6236e-db28-46a5-808a-525db5b7c763"]
+  "During evaluation of \
+In[7]:=",ExpressionUUID->"91215407-7ba1-4289-bdaf-b6c845761550"],
+
+Cell[BoxData["\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000010/Yorkeys01_0001_I.csv\"\>"], "Print",
+ CellChangeTimes->{3.797711839880064*^9, 3.797712832486888*^9, 
+  3.797714396176828*^9, 3.79771514176484*^9, 3.7977152409717207`*^9, 
+  3.797716229940233*^9},
+ CellLabel->
+  "During evaluation of \
+In[7]:=",ExpressionUUID->"c779cdbb-d3d0-4d4a-a88a-ede4641e2491"],
+
+Cell[BoxData["\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000010/Yorkeys01_0002_I.csv\"\>"], "Print",
+ CellChangeTimes->{3.797711839880064*^9, 3.797712832486888*^9, 
+  3.797714396176828*^9, 3.79771514176484*^9, 3.7977152409717207`*^9, 
+  3.797716262886758*^9},
+ CellLabel->
+  "During evaluation of \
+In[7]:=",ExpressionUUID->"d65e41e1-4218-4712-a4b0-98e144d64ea4"],
+
+Cell[BoxData["\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000010/Yorkeys01_0003_I.csv\"\>"], "Print",
+ CellChangeTimes->{3.797711839880064*^9, 3.797712832486888*^9, 
+  3.797714396176828*^9, 3.79771514176484*^9, 3.7977152409717207`*^9, 
+  3.797716296133802*^9},
+ CellLabel->
+  "During evaluation of \
+In[7]:=",ExpressionUUID->"80bd7086-ecaa-422e-88f3-00529116db2d"],
+
+Cell[BoxData["\<\"/home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/\
+LandAggregated/Filtered/C000010/Yorkeys01_0004_I.csv\"\>"], "Print",
+ CellChangeTimes->{3.797711839880064*^9, 3.797712832486888*^9, 
+  3.797714396176828*^9, 3.79771514176484*^9, 3.7977152409717207`*^9, 
+  3.797716328611991*^9},
+ CellLabel->
+  "During evaluation of \
+In[7]:=",ExpressionUUID->"b9a71926-6de2-4865-bbc0-dabf8936c9d4"]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 },
 WindowSize->{928, 1028},
@@ -574,12 +1174,36 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 16319, 378, 211, "Input",ExpressionUUID->"2517031e-5a22-4189-ac2b-45bb3fa89293"],
-Cell[16880, 400, 645, 13, 79, "Input",ExpressionUUID->"6c89b724-e25a-4c72-aee4-aad16aa5930b"],
-Cell[17528, 415, 1844, 44, 115, "Input",ExpressionUUID->"399d1d03-1891-4664-9c2d-c8204b58b8f4"],
 Cell[CellGroupData[{
-Cell[19397, 463, 3116, 79, 295, "Input",ExpressionUUID->"888377d9-3b9d-48fd-b30b-c7af9b0a433d"],
-Cell[22516, 544, 833, 12, 27, "Output",ExpressionUUID->"e9c6236e-db28-46a5-808a-525db5b7c763"]
+Cell[580, 22, 149, 2, 52, "Section",ExpressionUUID->"f7680f80-22dc-4ad6-9ece-6cc7af8dbdbc"],
+Cell[732, 26, 16452, 383, 268, "Input",ExpressionUUID->"2517031e-5a22-4189-ac2b-45bb3fa89293"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[17221, 414, 154, 3, 42, "Section",ExpressionUUID->"c34166e9-9ec4-42ef-8b00-b5c37caf6cdb"],
+Cell[CellGroupData[{
+Cell[17400, 421, 1159, 22, 97, "Input",ExpressionUUID->"6c89b724-e25a-4c72-aee4-aad16aa5930b"],
+Cell[18562, 445, 1098, 19, 70, "Output",ExpressionUUID->"4c87522d-d0d8-41ae-a101-fc7109fb33f9"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[19709, 470, 205, 4, 42, "Section",ExpressionUUID->"177f214e-85db-47c0-941e-1785d2e38aee"],
+Cell[CellGroupData[{
+Cell[19939, 478, 5643, 124, 457, "Input",ExpressionUUID->"888377d9-3b9d-48fd-b30b-c7af9b0a433d"],
+Cell[25585, 604, 24339, 370, 3160, "Output",ExpressionUUID->"5459907f-d266-40a2-beb1-2b955b5f3a41"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[49973, 980, 155, 3, 42, "Section",ExpressionUUID->"3680e489-b294-4ffe-b4dd-aa25425b83ad"],
+Cell[CellGroupData[{
+Cell[50153, 987, 5105, 120, 511, "Input",ExpressionUUID->"23c63822-58ce-4e43-bf4d-559343202c8a"],
+Cell[CellGroupData[{
+Cell[55283, 1111, 406, 7, 19, "Print",ExpressionUUID->"91215407-7ba1-4289-bdaf-b6c845761550"],
+Cell[55692, 1120, 406, 7, 19, "Print",ExpressionUUID->"c779cdbb-d3d0-4d4a-a88a-ede4641e2491"],
+Cell[56101, 1129, 406, 7, 19, "Print",ExpressionUUID->"d65e41e1-4218-4712-a4b0-98e144d64ea4"],
+Cell[56510, 1138, 406, 7, 19, "Print",ExpressionUUID->"80bd7086-ecaa-422e-88f3-00529116db2d"],
+Cell[56919, 1147, 406, 7, 19, "Print",ExpressionUUID->"b9a71926-6de2-4865-bbc0-dabf8936c9d4"]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 }
 ]
