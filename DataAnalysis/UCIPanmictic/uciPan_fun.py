@@ -10,6 +10,26 @@ import MoNeT_MGDrivE as monet
 
 
 ###############################################################################
+# Main Spatial
+###############################################################################
+def printExpTerminal(time, PATH_ROOT, PATH_IMG, PATH_DATA):
+    print(aux.PAD)
+    printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, str(time))
+    expOutRootPath = PATH_IMG
+    monet.makeFolder(expOutRootPath)
+
+
+def getExpPaths(PATH_DATA):
+    (expDirsMean, expDirsTrac) = (
+            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'ANALYZED/'),
+            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'GARBAGE/')
+        )
+    expDirsMean.sort()
+    expDirsTrac.sort()
+    return (expDirsMean, expDirsTrac)
+
+
+###############################################################################
 # Experiment Selection and Terminal
 ###############################################################################
 def importThresholdsCSV(path, names):
@@ -30,11 +50,10 @@ def ammendHeader(xpNames, thsID):
     xpNames.extend(thsID)
     return xpNames
 
+
 ###############################################################################
 # Crosses and timing
 ###############################################################################
-
-
 def getSSPopsInLandscape(aggregatedNodesData, ssDay):
     ssPops = []
     for node in aggregatedNodesData['landscape']:

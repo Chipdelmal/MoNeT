@@ -51,3 +51,9 @@ scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/islandGravidFemales/thresh
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/islandMixed/thresholdCrosses.csv /home/chipdelmal/Desktop/Panmictic/yParams/islandMixed/;\
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/island/thresholdCrosses.csv /home/chipdelmal/Desktop/Panmictic/yParams/island/
 ```
+
+### Copy Experiments
+
+```bash
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/island/out/ /home/chipdelmal/Desktop/Panmictic/tParams/island/out
+```

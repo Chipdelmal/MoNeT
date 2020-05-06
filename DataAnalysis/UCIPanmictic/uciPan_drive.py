@@ -5,8 +5,10 @@ import MoNeT_MGDrivE as monet
 
 
 def driveSelector(id):
-    if(id == drive_LDR.get('id')):   return drive_LDR;
-    if(id == drive_LDS.get('id')):   return drive_LDS;
+    if(id == drive_LDR.get('id')):
+        return drive_LDR
+    if(id == drive_LDS.get('id')):
+        return drive_LDS
 
 
 # #############################################################################
