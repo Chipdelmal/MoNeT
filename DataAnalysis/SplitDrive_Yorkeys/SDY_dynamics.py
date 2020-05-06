@@ -65,11 +65,21 @@ expSet = sig[i]
 # for (i, x) in enumerate(sectorsIx):
 x = sectorsIx[0]
 faPath = filterFilesByIndex(aFiles, x, MALE, FEMALE)
+gPath
 
 
-m = sorted(glob.glob(gFiles[0] + '/M*.csv'))
-f = sorted(glob.glob(gFiles[0] + '/F*.csv'))
-f
+
+landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
+        gFiles, GDICT, male=True, female=True
+    )
+
+j = 0
+repsNumber = len(landscapeReps['landscapes'])
+probe = landscapeReps['landscapes'][j]
+
+figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, STYLE)
+# m = sorted(glob.glob(gFiles[0] + '/M*.csv'))
+# f = sorted(glob.glob(gFiles[0] + '/F*.csv'))
 
 
 fgPath = filterFilesByIndex(gFiles, x, MALE, FEMALE)
