@@ -1,3 +1,4 @@
+import MoNeT_MGDrivE as monet
 
 ###############################################################################
 # Genotypes Selection
@@ -10,6 +11,15 @@ GENOTYPES = [
         'CCHH', 'CCHR', 'CCHB', 'CCRR', 'CCRB', 'CCBB'
     ]
 
+COLORS = [
+        "#09044620", "#f2006020", "#c6d8ff20",
+        "#7692ff20", "#29339b20", "#7fff3a20"
+    ]
+COLORS_MP = [
+        "#090446FF", "#f20060FF", "#c6d8ffFF",
+        "#7692ffFF", "#29339bFF", "#7fff3aFF"
+    ]
+CMAPS = monet.generateAlphaColorMapFromColorArray(COLORS_MP)
 ###############################################################################
 # Terminal
 ###############################################################################

@@ -12,29 +12,6 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
-def filterFilesByIndex(files, ix, male=True, female=True):
-    m = [files['male'][z] for z in ix] if male else []
-    f = [files['female'][z] for z in ix] if male else []
-    ffiles = {'male': m, 'female': f}
-    return ffiles
-
-
-def filterGarbageByIndex(landRepetition, indices):
-    return list(map(landRepetition.__getitem__, indices))
-
-
-def filterAggregateGarbageByIndex(landscapeReps, indices):
-    genes = landscapeReps['genotypes']
-    repsNumber = len(landscapeReps['landscapes'])
-    traces = []
-    for j in range(0, repsNumber):
-        probe = landscapeReps['landscapes'][j]
-        trace = np.sum(filterGarbageByIndex(probe, indices), axis=0)
-        traces.append([trace])
-    filteredLand = {'genotypes': genes, 'landscapes': traces}
-    return filteredLand
-
-
 (SET, TRA, HEA) = ('unAggregated', True, True)
 PATH = '/home/chipdelmal/Desktop/SplitDrive_Yorkeys/geoProof/'
 ###############################################################################
@@ -46,10 +23,7 @@ if SET == 'unAggregated':
 # Setting up colors and style
 ###############################################################################
 (MALE, FEMALE) = (True, True)
-COLORS = [
-        "#09044620", "#f2006020", "#c6d8ff20",
-        "#7692ff20", "#29339b20", "#7fff3a20"
-    ]
+(COLORS, CMAPS) = (aux.COLORS, aux.CMAPS)
 STYLE = {
         "width": .1, "alpha": .15, "dpi": 2 * 300,
         "legend": True, "aspect": .5, "colors": COLORS,
@@ -72,17 +46,21 @@ aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, str(tSrt), 'Gene Dynamics ')
 # Main analyses
 ###############################################################################
 xpNumb = len(sig)
-i = 0
+i = 1
 # Load data ---------------------------------------------------------------
 aux.printProggress(i, xpNumb, sig)
 expSet = sig[i]
 (name, aPath, gPath) = expSet
 (aFiles, gFiles) = fun.readDataPaths(aPath, gPath)
+# Heatmap Analysis --------------------------------------------------------
+landscapeData = monet.loadLandscapeData(aFiles, male=MALE, female=FEMALE)
+aggregatedNodesData = monet.aggregateGenotypesInLandscape(landscapeData, GDICT)
+geneSpatiotemporals = monet.getGenotypeArraysFromLandscape(aggregatedNodesData)
 # Filtering ---------------------------------------------------------------
 # Analysis
 (ykFaPath, tpFaPath) = (
-        filterFilesByIndex(aFiles,  sectorsIx[0], MALE, FEMALE),
-        filterFilesByIndex(aFiles,  sectorsIx[1], MALE, FEMALE)
+        fun.filterFilesByIndex(aFiles,  sectorsIx[1], MALE, FEMALE),
+        fun.filterFilesByIndex(aFiles,  sectorsIx[0], MALE, FEMALE)
     )
 (ykAggData, tpAggData) = (
         fun.loadSummedMeanResponse(ykFaPath, GDICT, True, True),
@@ -93,17 +71,27 @@ landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
         gFiles, GDICT, male=True, female=True
     )
 (ykLand, tpLand) = (
-        filterAggregateGarbageByIndex(landscapeReps, sectorsIx[0]),
-        filterAggregateGarbageByIndex(landscapeReps, sectorsIx[1])
+        fun.filterAggregateGarbageByIndex(landscapeReps, sectorsIx[1]),
+        fun.filterAggregateGarbageByIndex(landscapeReps, sectorsIx[0])
     )
 # Plots  ------------------------------------------------------------------
+geneSpatiotemporalsNorm = monet.rescaleGeneSpatiotemporals(geneSpatiotemporals)
+overlay = monet.plotGenotypeOverlayFromLandscape(
+        geneSpatiotemporalsNorm,
+        style={"aspect": 50 * STYLE['aspect'], "cmap": CMAPS},
+        vmax=.8
+    )
 figsArray = (
         monet.plotLandscapeDataRepetitions(ykLand, STYLE),
         monet.plotLandscapeDataRepetitions(tpLand, STYLE)
     )
-fun.exportTracesPlot(ykLand, name, STYLE, PATH_IMG, append='D'+str(i)+'YK')
-fun.exportTracesPlot(tpLand, name, STYLE, PATH_IMG, append='D'+str(i)+'TP')
-monet.exportGeneLegend(ykLand['genotypes'], COLORS, PATH_IMG+"/plt.pdf", 500)
+fun.exportTracesPlot(ykLand, name, STYLE, PATH_IMG, append='D'+'_YK')
+fun.exportTracesPlot(tpLand, name, STYLE, PATH_IMG, append='D'+'_TP')
+monet.quickSaveFigure(
+        overlay, '{}/{}-{}.pdf'.format(PATH_IMG, name, 'O'),
+        format='pdf'
+    )
+monet.exportGeneLegend(ykLand['genotypes'], COLORS, PATH_IMG+'/plt.pdf', 500)
 ###############################################################################
 # Print terminal message
 ###############################################################################
