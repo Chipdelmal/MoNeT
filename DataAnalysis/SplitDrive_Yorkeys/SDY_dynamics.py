@@ -84,6 +84,10 @@ expSet = sig[i]
         filterFilesByIndex(aFiles,  sectorsIx[0], MALE, FEMALE),
         filterFilesByIndex(aFiles,  sectorsIx[1], MALE, FEMALE)
     )
+(ykAggData, tpAggData) = (
+        fun.loadSummedMeanResponse(ykFaPath, GDICT, True, True),
+        fun.loadSummedMeanResponse(tpFaPath, GDICT, True, True)
+    )
 # Garbage
 landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
         gFiles, GDICT, male=True, female=True
@@ -95,10 +99,11 @@ landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
 # Plots  ------------------------------------------------------------------
 figsArray = (
         monet.plotLandscapeDataRepetitions(ykLand, STYLE),
-        monet.plotLandscapeDataRepetitions(tpLand, STYLE),
+        monet.plotLandscapeDataRepetitions(tpLand, STYLE)
     )
-fun.exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='D'+str(i))
-monet.exportGeneLegend(mS['genotypes'], COLORS, PATH_IMG+"/plt.pdf", 500)
+fun.exportTracesPlot(ykLand, name, STYLE, PATH_IMG, append='D'+str(i)+'YK')
+fun.exportTracesPlot(ykLand, name, STYLE, PATH_IMG, append='D'+str(i)+'TP')
+monet.exportGeneLegend(ykLand['genotypes'], COLORS, PATH_IMG+"/plt.pdf", 500)
 ###############################################################################
 # Print terminal message
 ###############################################################################
