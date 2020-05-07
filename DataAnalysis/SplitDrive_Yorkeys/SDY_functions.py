@@ -71,9 +71,9 @@ def createFolders(foldersList):
 ###############################################################################
 def loadSummedMeanResponse(aFiles, GDICT, MALE, FEMALE):
     print(aux.CBLU, end='\r')
-    print('\t Loading mean response...'+aux.PADC, end='\r')
+    # print('\t Loading mean response...'+aux.PADC, end='\r')
     landData = monet.loadLandscapeData(aFiles, male=MALE, female=FEMALE)
-    print('\t Aggregating mean response...'+aux.PADC, end='\r')
+    # print('\t Aggregating mean response...'+aux.PADC, end='\r')
     aggDataM = monet.aggregateGenotypesInLandscape(landData, GDICT)
     aggDataM['landscape'] = sum(aggDataM['landscape'])
     print(aux.CEND, end='\r')
