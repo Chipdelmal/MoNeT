@@ -78,38 +78,25 @@ aux.printProggress(i, xpNumb, sig)
 expSet = sig[i]
 (name, aPath, gPath) = expSet
 (aFiles, gFiles) = fun.readDataPaths(aPath, gPath)
-# Filtering (needs loop)
-# for (i, x) in enumerate(sectorsIx):
-x = sectorsIx[0]
-faPath = filterFilesByIndex(aFiles, x, MALE, FEMALE)
+# Filtering ---------------------------------------------------------------
+# Analysis
+(ykFaPath, tpFaPath) = (
+        filterFilesByIndex(aFiles,  sectorsIx[0], MALE, FEMALE),
+        filterFilesByIndex(aFiles,  sectorsIx[1], MALE, FEMALE)
+    )
+# Garbage
 landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
         gFiles, GDICT, male=True, female=True
     )
-
-
-genes = landscapeReps['genotypes']
-repsNumber = len(landscapeReps['landscapes'])
-# Get one rep and split it
-for j in range(0, repsNumber):
-    probe = landscapeReps['landscapes'][j]
-    (ykReps, tpReps) = ([], [])
-    (ykTrace, tpTrace) = (
-            np.sum(filterGarbageByIndex(probe, sectorsIx[0]), axis=0),
-            np.sum(filterGarbageByIndex(probe, sectorsIx[1]), axis=0)
-        )
-    ykReps.append([ykTrace])
-    tpReps.append([tpTrace])
-
-ykReps = {'genotypes': genes, 'landscapes': ykReps}
-ykTrace
-
-figsArray = monet.plotLandscapeDataRepetitions(ykReps, STYLE)
-
-
-fgPath = filterFilesByIndex(gFiles, x, MALE, FEMALE)
-fExpSet = (name, faPath, fgPath)
-(nS, mS, tS) = fun.loadAndCalcResponse(fExpSet, GDICT, MALE, FEMALE)
+(ykLand, tpLand) = (
+        filterAggregateGarbageByIndes(landscapeReps, sectorsIx[0]),
+        filterAggregateGarbageByIndes(landscapeReps, sectorsIx[1])
+    )
 # Plots  ------------------------------------------------------------------
+figsArray = (
+        monet.plotLandscapeDataRepetitions(ykLand, STYLE),
+        monet.plotLandscapeDataRepetitions(tpLand, STYLE),
+    )
 fun.exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='D'+str(i))
 monet.exportGeneLegend(mS['genotypes'], COLORS, PATH_IMG+"/plt.pdf", 500)
 ###############################################################################
