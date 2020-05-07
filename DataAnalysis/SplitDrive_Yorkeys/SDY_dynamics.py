@@ -23,13 +23,13 @@ def filterGarbageByIndex(landRepetition, indices):
     return list(map(landRepetition.__getitem__, indices))
 
 
-def filterAggregateGarbageByIndes(landscapeReps, indices):
+def filterAggregateGarbageByIndex(landscapeReps, indices):
     genes = landscapeReps['genotypes']
     repsNumber = len(landscapeReps['landscapes'])
     traces = []
     for j in range(0, repsNumber):
         probe = landscapeReps['landscapes'][j]
-        trace = np.sum(filterGarbageByIndex(probe, sectorsIx[0]), axis=0)
+        trace = np.sum(filterGarbageByIndex(probe, indices), axis=0)
         traces.append([trace])
     filteredLand = {'genotypes': genes, 'landscapes': traces}
     return filteredLand
@@ -93,8 +93,8 @@ landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
         gFiles, GDICT, male=True, female=True
     )
 (ykLand, tpLand) = (
-        filterAggregateGarbageByIndes(landscapeReps, sectorsIx[0]),
-        filterAggregateGarbageByIndes(landscapeReps, sectorsIx[1])
+        filterAggregateGarbageByIndex(landscapeReps, sectorsIx[0]),
+        filterAggregateGarbageByIndex(landscapeReps, sectorsIx[1])
     )
 # Plots  ------------------------------------------------------------------
 figsArray = (
@@ -102,7 +102,7 @@ figsArray = (
         monet.plotLandscapeDataRepetitions(tpLand, STYLE)
     )
 fun.exportTracesPlot(ykLand, name, STYLE, PATH_IMG, append='D'+str(i)+'YK')
-fun.exportTracesPlot(ykLand, name, STYLE, PATH_IMG, append='D'+str(i)+'TP')
+fun.exportTracesPlot(tpLand, name, STYLE, PATH_IMG, append='D'+str(i)+'TP')
 monet.exportGeneLegend(ykLand['genotypes'], COLORS, PATH_IMG+"/plt.pdf", 500)
 ###############################################################################
 # Print terminal message
