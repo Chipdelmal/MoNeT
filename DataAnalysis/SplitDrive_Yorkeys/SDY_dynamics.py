@@ -3,9 +3,10 @@
 
 import glob
 import datetime
+import numpy as np
+import SDY_ix as ix
 import SDY_aux as aux
 import SDY_functions as fun
-import SDY_ix as ix
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
@@ -16,6 +17,22 @@ def filterFilesByIndex(files, ix, male=True, female=True):
     f = [files['female'][z] for z in ix] if male else []
     ffiles = {'male': m, 'female': f}
     return ffiles
+
+
+def filterGarbageByIndex(landRepetition, indices):
+    return list(map(landRepetition.__getitem__, indices))
+
+
+def filterAggregateGarbageByIndes(landscapeReps, indices):
+    genes = landscapeReps['genotypes']
+    repsNumber = len(landscapeReps['landscapes'])
+    traces = []
+    for j in range(0, repsNumber):
+        probe = landscapeReps['landscapes'][j]
+        trace = np.sum(filterGarbageByIndex(probe, sectorsIx[0]), axis=0)
+        traces.append([trace])
+    filteredLand = {'genotypes': genes, 'landscapes': traces}
+    return filteredLand
 
 
 (SET, TRA, HEA) = ('unAggregated', True, True)
@@ -65,21 +82,28 @@ expSet = sig[i]
 # for (i, x) in enumerate(sectorsIx):
 x = sectorsIx[0]
 faPath = filterFilesByIndex(aFiles, x, MALE, FEMALE)
-gPath
-
-
-
 landscapeReps = monet.loadAndAggregateLandscapeDataRepetitions(
         gFiles, GDICT, male=True, female=True
     )
 
-j = 0
-repsNumber = len(landscapeReps['landscapes'])
-probe = landscapeReps['landscapes'][j]
 
-figsArray = monet.plotLandscapeDataRepetitions(landscapeReps, STYLE)
-# m = sorted(glob.glob(gFiles[0] + '/M*.csv'))
-# f = sorted(glob.glob(gFiles[0] + '/F*.csv'))
+genes = landscapeReps['genotypes']
+repsNumber = len(landscapeReps['landscapes'])
+# Get one rep and split it
+for j in range(0, repsNumber):
+    probe = landscapeReps['landscapes'][j]
+    (ykReps, tpReps) = ([], [])
+    (ykTrace, tpTrace) = (
+            np.sum(filterGarbageByIndex(probe, sectorsIx[0]), axis=0),
+            np.sum(filterGarbageByIndex(probe, sectorsIx[1]), axis=0)
+        )
+    ykReps.append([ykTrace])
+    tpReps.append([tpTrace])
+
+ykReps = {'genotypes': genes, 'landscapes': ykReps}
+ykTrace
+
+figsArray = monet.plotLandscapeDataRepetitions(ykReps, STYLE)
 
 
 fgPath = filterFilesByIndex(gFiles, x, MALE, FEMALE)
