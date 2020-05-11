@@ -2,16 +2,16 @@
 # -*- coding: utf-8 -*-
 # python3 uciPan_main.py "Volumes" "tParams" "islandMixed"
 
-import sys
-import csv
+# import sys
+# import csv
 import datetime
 import uciPan_aux as aux
 import uciPan_fun as fun
-import uciPan_plot as plot
+# import uciPan_plot as plot
 import uciPan_drive as drv
 import uciSTP_indices as ix
 import MoNeT_MGDrivE as monet
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 # (ROOT, LAND, DRIVE_ID, SETTING) = (
@@ -19,18 +19,18 @@ import matplotlib.pyplot as plt
 #         'LDR', sys.argv[3]
 #     )
 
-(USR, ROOT, LAND, DRIVE_ID, SETTING) = (
+(USR, ROOT, LAND, DRIVE_ID, SETTING, STP) = (
         'dsk', '/home/chipdelmal/Desktop/Panmictic',
-        'tParams', 'LDR', 'island'
+        'tParams', 'LDR', 'island', False
     )
-
 (FACT, PLOT, MF) = (True, True, (True, True))
-(thresholds, NOI, REL_STRT) = (
-        [.05, .10, .25, .50, .75],
-        [0], 1
-    )
+(thresholds, REL_STRT) = ([.05, .10, .25, .50, .75], 1)
 drvPars = drv.driveSelector(DRIVE_ID)
-(STYLE, DRIVE) = (aux.STYLE_HLT, drvPars.get('HLT'))
+(STYLE, DRV, NOI) = (
+        aux.STYLE_HLT,
+        drvPars.get('HLT'),
+        ix.STP if (STP) else ix.PAN
+    )
 ###############################################################################
 # Setting up paths and directories
 ###############################################################################
@@ -56,16 +56,17 @@ expNum = len(expDirsMean)
 ###############################################################################
 # Analyze data
 ###############################################################################
-i = 0
+exIx = 0
 # Setup paths -------------------------------------------------------------
-print('* Analyzing ({}/{})'.format(str(i + 1), str(expNum)), end='\r')
-(pathMean, pathTraces) = (expDirsMean[i], expDirsTrac[i])
+print('* Analyzing ({}/{})'.format(str(exIx + 1), str(expNum)), end='\r')
+(pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx])
 expName = pathMean.split('/')[-1]
 (dirsMean, dirsTraces) = (
         pathMean, fun.listDirectoriesWithPathWithinAPath(pathTraces)
     )
-filenames = monet.readExperimentFilenames(pathMean)
+files = monet.readExperimentFilenames(pathMean)
+filesList = [fun.filterFilesByIndex(files, ix) for ix in NOI]
 # Load data ----------------------------------------------------------------
-landData = monet.loadLandscapeData(filenames, MF[0], MF[1])
-aggData = monet.aggregateGenotypesInLandscape(landData, DRIVE)
+sumData = monet.sumLandscapePopulationsFromFiles(files, MF[0], MF[1])
+aggData = monet.loadAndAggregateLandscapeData(files, DRV, MF[0], MF[1])
 geneSpaTemp = monet.getGenotypeArraysFromLandscape(aggData)
