@@ -9,6 +9,7 @@ import uciPan_aux as aux
 import uciPan_fun as fun
 import uciPan_plot as plot
 import uciPan_drive as drv
+import uciSTP_indices as ix
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
@@ -51,5 +52,20 @@ fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
 ###############################################################################
 gIx = drvPars['HLT']['genotypes'].index('Other')
 (expDirsMean, expDirsTrac) = fun.getExpPaths(PATH_DATA)
-expDirsMean[0]
-expDirsTrac[0]
+expNum = len(expDirsMean)
+###############################################################################
+# Analyze data
+###############################################################################
+i = 0
+# Setup paths -------------------------------------------------------------
+print('* Analyzing ({}/{})'.format(str(i + 1), str(expNum)), end='\r')
+(pathMean, pathTraces) = (expDirsMean[i], expDirsTrac[i])
+expName = pathMean.split('/')[-1]
+(dirsMean, dirsTraces) = (
+        pathMean, fun.listDirectoriesWithPathWithinAPath(pathTraces)
+    )
+filenames = monet.readExperimentFilenames(pathMean)
+# Load data ----------------------------------------------------------------
+landData = monet.loadLandscapeData(filenames, MF[0], MF[1])
+aggData = monet.aggregateGenotypesInLandscape(landData, DRIVE)
+geneSpaTemp = monet.getGenotypeArraysFromLandscape(aggData)
