@@ -89,7 +89,7 @@ for i in range(0, xpNumb):
     overlay = monet.plotGenotypeOverlayFromLandscape(
             geneSpatiotemporalsNorm,
             style={"aspect": 50 * STYLE['aspect'], "cmap": CMAPS},
-            vmax=.8
+            vmax=1  # 50
         )
     figsArray = (
             monet.plotLandscapeDataRepetitions(ykLand, STYLE),
