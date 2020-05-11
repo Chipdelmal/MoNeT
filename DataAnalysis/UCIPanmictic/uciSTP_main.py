@@ -51,3 +51,5 @@ fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
 ###############################################################################
 gIx = drvPars['HLT']['genotypes'].index('Other')
 (expDirsMean, expDirsTrac) = fun.getExpPaths(PATH_DATA)
+expDirsMean[0]
+expDirsTrac[0]

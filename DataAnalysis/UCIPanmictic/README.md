@@ -55,5 +55,5 @@ scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/island/thresholdCrosses.cs
 ### Copy Experiments
 
 ```bash
-scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/island/out/ /home/chipdelmal/Desktop/Panmictic/tParams/island/out
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/island/out/LDR/ANALYZED/ /home/chipdelmal/Desktop/Panmictic/tParams/island/out/LDR/ANALYZED/
 ```
