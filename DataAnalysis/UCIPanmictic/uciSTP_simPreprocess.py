@@ -14,7 +14,7 @@ import uciSTP_indices as ix
 import MoNeT_MGDrivE as monet
 # import matplotlib.pyplot as plt
 
-USR = 'dsk'
+USR = 'srv'
 (LAND, DRIVE_ID, SET, STP, AOI, MF) = (
         'tParams', 'LDR', 'island', False, 'HLT', (True, True)
     )
@@ -30,7 +30,7 @@ drvPars = drv.driveSelector(DRIVE_ID)
 ###############################################################################
 # Select form server/desktop
 if USR == 'srv':
-    PATH_ROOT = '/RAID5/marshallShare/UCI/Yoosook/{}/'.format(LAND, SET)
+    PATH_ROOT = '/RAID5/marshallShare/UCI/Yoosook/{}/{}/'.format(LAND, SET)
 else:
     PATH_ROOT = '/home/chipdelmal/Desktop/Panmictic/{}/{}/'.format(LAND, SET)
 # Setting paths
@@ -54,7 +54,10 @@ expNum = len(expDirsMean)
 ###############################################################################
 for exIx in range(0, expNum):
     # Setup paths -------------------------------------------------------------
-    print('* Analyzing ({}/{})'.format(str(exIx + 1), str(expNum)), end='\r')
+    print('* Analyzing ({}/{})'.format(
+            str(exIx+1).zfill(len(str(expNum))), 
+            str(expNum)), end='\r'
+        )
     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx])
     expName = pathMean.split('/')[-1]
     (dirsMean, dirsTraces) = (
