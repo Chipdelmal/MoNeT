@@ -12,6 +12,7 @@ import uciPan_fun as fun
 import uciPan_drive as drv
 import uciSTP_indices as ix
 import MoNeT_MGDrivE as monet
+from compress_pickle import dump, load
 # import matplotlib.pyplot as plt
 
 USR = 'srv'
@@ -54,10 +55,8 @@ expNum = len(expDirsMean)
 ###############################################################################
 for exIx in range(0, expNum):
     # Setup paths -------------------------------------------------------------
-    print('* Analyzing ({}/{})'.format(
-            str(exIx+1).zfill(len(str(expNum))), 
-            str(expNum)), end='\r'
-        )
+    strInt = str(exIx+1).zfill(len(str(expNum)))
+    print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx])
     expName = pathMean.split('/')[-1]
     (dirsMean, dirsTraces) = (
@@ -79,9 +78,9 @@ for exIx in range(0, expNum):
             'spa': geneSpaTemp, 'rep': landReps
         }
     # Dump to serialized file -------------------------------------------------
-    fout = open('{}/{}_{}.pkl'.format(PATH_OUT, expName, AOI), 'wb')
-    pkl.dump(preData, fout)
-    fout.close()
+    fName = '{}/{}_{}.pkl'.format(PATH_OUT, expName, AOI)
+    with open(fName, 'wb') as fout:
+        dump(preData, fName, compression="lzma")
 tE = datetime.datetime.now()
 print(aux.PADL)
 print('Finished [{}]'.format(tE-tS))
