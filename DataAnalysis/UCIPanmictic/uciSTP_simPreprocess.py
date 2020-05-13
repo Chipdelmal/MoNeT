@@ -5,7 +5,7 @@
 # import sys
 # import csv
 import datetime
-import pickle as pkl
+# import pickle as pkl
 import uciPan_aux as aux
 import uciPan_fun as fun
 # import uciPan_plot as plot
@@ -15,7 +15,7 @@ import MoNeT_MGDrivE as monet
 from compress_pickle import dump, load
 # import matplotlib.pyplot as plt
 
-USR = 'srv'
+USR = 'dsk'
 (LAND, DRIVE_ID, SET, STP, AOI, MF) = (
         'tParams', 'LDR', 'island', False, 'HLT', (True, True)
     )
@@ -53,7 +53,7 @@ expNum = len(expDirsMean)
 ###############################################################################
 # Analyze data
 ###############################################################################
-for exIx in range(0, expNum):
+for exIx in range(0, 10):
     # Setup paths -------------------------------------------------------------
     strInt = str(exIx+1).zfill(len(str(expNum)))
     print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
@@ -78,9 +78,9 @@ for exIx in range(0, expNum):
             'spa': geneSpaTemp, 'rep': landReps
         }
     # Dump to serialized file -------------------------------------------------
-    fName = '{}/{}_{}.pkl'.format(PATH_OUT, expName, AOI)
+    fName = '{}/{}_{}.gz'.format(PATH_OUT, expName, AOI)
     with open(fName, 'wb') as fout:
-        dump(preData, fName, compression="lzma")
+        dump(preData, fName, compression="gzip", set_default_extension=False)
 tE = datetime.datetime.now()
 print(aux.PADL)
 print('Finished [{}]'.format(tE-tS))
