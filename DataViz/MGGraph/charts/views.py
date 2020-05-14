@@ -297,27 +297,14 @@ def graph(request, csv):
 
     bar_source.change.emit();
 
-    """       
-
-    # bar_selected_csv = bar_csv[bar_data['selected_csv']];
-    
-    # console.log("Selected csv:");
-    # console.log(bar_selected_csv);
+    """
 
     callback = CustomJS(args=dict(source=source, slider=slider, timeList=timeList, _x=_x, bar_source=bar_source), code=code)
     slider.js_on_change('value', callback)
 
-        ## Select
+    ## Select
     select = Select(title="csv File:", value=csvList[0], options=csvList)
 
-    # def update(source=data_pie, select=select, window=None):
-    #     console.log("Original Data:")
-    #     console.log(source.data_pie)
-    #     data = source.data_pie
-    #     t_select = select.value
-
-    #     console.log("Select List:")
-    #     console.log(t_select)    
 
     #Select Code
     select_code="""
@@ -377,136 +364,8 @@ def graph(request, csv):
     bar_source.change.emit();
     
     """
-    # console.log(typeof data_pie);
-
-    # var obj = JSON.parse(data_pie);
-    # console.log("Value Data:");
-    # console.log(obj.gene);
-    #  console.log(typeof obj);
-
-    # console.log("Value Specific Data:");
-    # console.log(obj.gene[1]);
-
-    # var gene = obj.gene;
-    # obj.gene = ["1", "2"]
-    # console.log("Value Changed Data:");
-    # console.log(obj.gene[1]);
-
-    # data_pie = obj;
-    # console.log("New Data:");
-    # console.log(data_pie);
-
-    # const data = data_pie;
-    # const t_select = select.value;
-
-    # console.log("Select List:");
-    # console.log(t_select);
-    #"""
     select_callback = CustomJS(args=dict(select=select, bar_source=bar_source), code=select_code)
     select.js_on_change('value', select_callback)
-
-        
-    
-    # ##Pie Chart
-    # # Get Column List
-    # col_list = list(df)
-    # col_list.remove('id')
-    # col_list.remove('coordY')
-    # col_list.remove('coordX')
-    # col_list.remove('csvName')
-    # col_list.remove('Time')
-    # col_list.remove('sumTime')
-    
-    # # Get df for first csv
-    # csv_col = df.loc[df['id'] == 1]
-    # pie_col = list(col_list)
-
-    # # Get column sum of csv_col
-    # pie_csv = csv_col[col_list].sum(axis=0, skipna = True)
-    # pie_val = list(pie_csv)
-
-    # # Generate pie source (dictionary)
-    # pie_Dict = { pie_col[i] : pie_val[i] for i in range(len(pie_col)) }
-    # del pie_Dict['Unnamed: 0']
-
-    # data_pie = pd.Series(pie_Dict).reset_index(name='value').rename(columns={'index':'gene'})
-    # data_pie['angle'] = data_pie['value']/data_pie['value'].sum() * 2 * pi
-    # data_pie['color'] = inferno(len(pie_Dict))
-
-    # print(type(data_pie))
-
-    # # source_pie = data.to_frame()
-
-    # source_pie = ColumnDataSource(dict(
-    #     value=data_pie["value"],
-    #     gene=data_pie["gene"],
-    #     angle=data_pie["angle"],
-    #     color=data_pie["color"],
-    # ))   
-
-
-    # pie = figure(plot_height=500, title="Pie Chart", toolbar_location=None,
-    #             tools="hover", tooltips="@gene: @value", x_range=(-0.5, 1.0))
-
-    # pie.wedge(x=0, y=1, radius=0.4,
-    #         start_angle=cumsum('angle', include_zero=True), end_angle=cumsum('angle'),
-    #         line_color="white", fill_color='color', legend='gene', source=data_pie)
-
-    # pie.axis.axis_label=None
-    # pie.axis.visible=False
-    # pie.grid.grid_line_color = None
-
-    # ## Select
-    # select = Select(title="csv File:", value=csvList[0], options=csvList)
-
-    # # def update(source=data_pie, select=select, window=None):
-    # #     console.log("Original Data:")
-    # #     console.log(source.data_pie)
-    # #     data = source.data_pie
-    # #     t_select = select.value
-
-    # #     console.log("Select List:")
-    # #     console.log(t_select)    
-
-    # #Select Code
-    # select_code="""
-    # console.log("Select List:");
-    # console.log(select);
-    # console.log("Original Data:");
-    # console.log(source_pie);
-
-    # console.log(source_pie["value"]);
-
-    # value = source_pie["value"];
-    # console.log(value[1]);
-    # """
-    # # console.log(typeof data_pie);
-
-    # # var obj = JSON.parse(data_pie);
-    # # console.log("Value Data:");
-    # # console.log(obj.gene);
-    # #  console.log(typeof obj);
-
-    # # console.log("Value Specific Data:");
-    # # console.log(obj.gene[1]);
-
-    # # var gene = obj.gene;
-    # # obj.gene = ["1", "2"]
-    # # console.log("Value Changed Data:");
-    # # console.log(obj.gene[1]);
-
-    # # data_pie = obj;
-    # # console.log("New Data:");
-    # # console.log(data_pie);
-
-    # # const data = data_pie;
-    # # const t_select = select.value;
-
-    # # console.log("Select List:");
-    # # console.log(t_select);
-    # #"""
-    # select_callback = CustomJS(args=dict(source_pie=source_pie, select=select), code=select_code)
-    # select.js_on_change('value', select_callback)
     
 
 
@@ -735,27 +594,13 @@ def graph_2(request, csv, csv_2):
 
     bar_source.change.emit();
 
-    """       
-
-    # bar_selected_csv = bar_csv[bar_data['selected_csv']];
-    
-    # console.log("Selected csv:");
-    # console.log(bar_selected_csv);
+    """
 
     callback = CustomJS(args=dict(source=source, slider=slider, timeList=timeList, _x=_x, bar_source=bar_source), code=code)
     slider.js_on_change('value', callback)
 
-        ## Select
-    select = Select(title="csv File:", value=csvList[0], options=csvList)
-
-    # def update(source=data_pie, select=select, window=None):
-    #     console.log("Original Data:")
-    #     console.log(source.data_pie)
-    #     data = source.data_pie
-    #     t_select = select.value
-
-    #     console.log("Select List:")
-    #     console.log(t_select)    
+    ## Select
+    select = Select(title="csv File:", value=csvList[0], options=csvList)    
 
     #Select Code
     select_code="""
@@ -1040,17 +885,8 @@ def graph_2(request, csv, csv_2):
     callback_2 = CustomJS(args=dict(source=source_2, slider=slider_2, timeList=timeList_2, _x=_x_2, bar_source=bar_source_2), code=code_2)
     slider_2.js_on_change('value', callback_2)
 
-        ## Select
+    ## Select
     select_2 = Select(title="csv File:", value=csvList_2[0], options=csvList_2)
-
-    # def update(source=data_pie, select=select, window=None):
-    #     console.log("Original Data:")
-    #     console.log(source.data_pie)
-    #     data = source.data_pie
-    #     t_select = select.value
-
-    #     console.log("Select List:")
-    #     console.log(t_select)    
 
     #Select Code
     select_code_2="""
@@ -1129,123 +965,3 @@ def graph_2(request, csv, csv_2):
     
     # Return to Django with Components sent as arguments which will then de displayed
     return render_to_response('pages/base.html', {'script' : script, 'div' : div} )
-
-
-
-
-
-# def index(request):
-    
-#     start = timeit.default_timer()
-
-#     # Declare models
-#     experimentModel = Experiment()    
-
-#     errors = False
-#     li = []
-#     today = date.today()    
-
-#     # Declare template
-#     template = 'pages/index.html'    
-
-#     # Check that the request is POST type
-#     if request.method == 'POST':
-#         # Experiment data
-#         experimentModel.nombre = request.POST.get('experiment')
-#         experimentModel.comentarios = request.POST.get('comments')
-#         experimentModel.fecha = today
-#         experimentModel.save()
-#         _experiment = Experiment.objects.get(nombre=experimentModel.nombre)
-
-#         # Loop through all file list
-#         csv_files = request.FILES.getlist('csvFile')
-#         for csv in csv_files:
-            
-#             # Check if it is a csv file
-#             if not csv.name.endswith('.csv'):
-#                 errors = True
-#                 messages.error(request, 'One of the file uploaded is not a cvs file: ' + csv.name)
-#                 continue
-
-#             # CsvFile data
-#             csvFileModel = CsvFile()       
-#             csvFileModel.nombre = csv.name
-#             csvFileModel.id_experimento = _experiment
-#             csvFileModel.save()
-#             _csvFile = CsvFile.objects.get(nombre=csv.name, id_experimento=_experiment)
-
-#             # DataFrame
-#             df = pd.DataFrame(pd.read_csv(csv))
-            
-#             # Loop csv columns
-#             csvCol_array = []
-#             i = 0   
-#             for col in df.columns:
-#                 # Check is not Time column
-#                 if col == 'Time':
-#                     continue
-
-#                 # CsvFile_Col data 
-#                 csvFile_ColModel = CsvFile_Col()
-#                 csvFile_ColModel.nombre = col
-#                 csvFile_ColModel.id_csvFile = _csvFile
-#                 csvFile_ColModel.save()
-
-#                 csvCol_array.append(col)
-#                 i = i + 1 
-
-#             # Loop csv
-#             for row in range(len(df)):                
-#                 for column in range(len(csvCol_array)):                    
-                    
-#                     # Record data
-#                     recordModel = Record()                    
-#                     if column == (len(csvCol_array) + 1):
-#                         _csvFile_Col = CsvFile_Col.objects.get(id_csvFile=_csvFile, nombre=str(csvCol_array[column]))
-#                         recordModel.id_csvFile_Col = _csvFile_Col
-#                         recordModel.tiempo = df.iat[row, 0]
-#                         recordModel.valor = df.iat[row, column]
-#                         recordModel.save()                        
-
-#                     _csvFile_Col = CsvFile_Col.objects.get(id_csvFile=_csvFile, nombre=str(csvCol_array[column]))
-#                     recordModel.id_csvFile_Col = _csvFile_Col
-#                     recordModel.tiempo = df.iat[row, 0]
-#                     recordModel.valor = df.iat[row, (column + 1)]
-#                     recordModel.save()                                        
-                
-#                 # if row == 2:
-#                 #     break
-            
-#             # print(str(df.iat[0,0]))
-#             # # 1
-#             # print(str(df.iat[0,1]))
-#             # # 520.38
-#             # print(str(df.iat[1,0]))
-#             # # 2            
-
-#         # Check if errors exist in the upload
-#         if errors == True:
-#             return render(request, template)
-        
-#         # Get csv coordenate file
-#         csv_coordenate = request.FILES['csvCoordenate']
-#         df = pd.DataFrame(pd.read_csv(csv_coordenate))
-
-#         i = 0
-
-#         csvList = CsvFile.objects.filter(id_experimento=_experiment)        
-#         coordenateModel = Coordenate()
-#         for csvF in csvList:
-#             coordenateModel.id_csvFile = csvF
-#             coordenateModel.puntoX = df.iat[i,0]
-#             coordenateModel.puntoY = df.iat[i,1]
-#             coordenateModel.save()
-#             i = i + 1
-
-#         stop = timeit.default_timer()
-#         print('Time: ', stop - start) 
-
-#         return redirect('graph', id=_experiment.id)
-    
-#     # If request is not POST refresh view
-#     return render(request, template)
