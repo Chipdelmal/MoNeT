@@ -13,7 +13,7 @@ import compress_pickle as pkl
 
 USR = 'dsk'
 (LAND, DRIVE_ID, SET, STP, AOI, MF) = (
-        'tParams', 'LDR', 'island', False, 'HLT', (True, True)
+        'tParams', 'LDR', 'islandMixed', False, 'HLT', (True, True)
     )
 (thresholds, REL_STRT) = ([.05, .10, .25, .50, .75], 1)
 drvPars = drv.driveSelector(DRIVE_ID)
@@ -48,5 +48,8 @@ fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
 gIx = drvPars[AOI]['genotypes'].index('Other')
 dtaFldr = PATH_DATA + 'PREPROCESS/'
 expFiles = glob.glob(dtaFldr + '*.lzma')
+
 file = expFiles[0]
 expData = pkl.load(file, compression="lzma")
+expData.keys()
+expData['rep']['landscapes']
