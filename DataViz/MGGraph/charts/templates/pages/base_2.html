@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Bokeh CSS -->
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-1.3.4.min.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.3.4.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Bokeh JS -->
+    <script src="http://cdn.pydata.org/bokeh/release/bokeh-1.3.4.min.js"></script>
+    <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.3.4.min.js"></script>
+    {{ script | safe }}
+    </head>
+    <body>
+        <p> Compare Graphics </p>
+        <!-- Bokeh Div-->
+        {{ div | safe }}
+    </body>
+</html>
