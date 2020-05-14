@@ -15,9 +15,9 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 # import matplotlib.pyplot as plt
 
-USR = 'dsk'
-(LAND, DRIVE_ID, SET, STP, AOI, MF) = (
-        'tParams', 'LDR', 'island', False, 'HLT', (True, True)
+(USR, SET) = ('srv', 'islandGravidFemales')
+(LAND, DRIVE_ID, STP, AOI, MF) = (
+        'tParams', 'LDR', False, 'HLT', (True, True)
     )
 (thresholds, REL_STRT) = ([.05, .10, .25, .50, .75], 1)
 drvPars = drv.driveSelector(DRIVE_ID)
@@ -53,7 +53,7 @@ gIx = drvPars[AOI]['genotypes'].index('Other')
 ###############################################################################
 # Analyze data
 ###############################################################################
-for exIx in range(0, 1):
+for exIx in range(0, expNum):
     # Setup paths -------------------------------------------------------------
     strInt = str(exIx+1).zfill(len(str(expNum)))
     print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
