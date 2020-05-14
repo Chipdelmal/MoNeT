@@ -4,6 +4,7 @@
 
 # import sys
 # import csv
+import glob
 import datetime
 # import pickle as pkl
 import uciPan_aux as aux
@@ -15,9 +16,9 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 # import matplotlib.pyplot as plt
 
-(USR, SET) = ('srv', 'islandGravidFemales')
-(LAND, DRIVE_ID, STP, AOI, MF) = (
-        'tParams', 'LDR', False, 'HLT', (True, True)
+(USR, SET) = ('srv', 'island')
+(LAND, DRIVE_ID, STP, AOI, MF, SKP) = (
+        'tParams', 'LDR', False, 'HLT', (True, True), True
     )
 (thresholds, REL_STRT) = ([.05, .10, .25, .50, .75], 1)
 drvPars = drv.driveSelector(DRIVE_ID)
@@ -50,6 +51,8 @@ fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
 gIx = drvPars[AOI]['genotypes'].index('Other')
 (expDirsMean, expDirsTrac) = fun.getExpPaths(PATH_DATA)
 (expNum, nodeDigits) = (len(expDirsMean), len(str(NOI)))
+outNames = [i.split('/')[-1].split('-')[0] for i in glob.glob(PATH_OUT+'*')]
+outExpNames = set(outNames)
 ###############################################################################
 # Analyze data
 ###############################################################################
@@ -59,6 +62,8 @@ for exIx in range(0, expNum):
     print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx])
     expName = pathMean.split('/')[-1]
+    if (expName in outExpNames) and (SKP):
+        continue
     (dirsMean, dirsTraces) = (
             pathMean, fun.listDirectoriesWithPathWithinAPath(pathTraces)
         )
@@ -80,7 +85,7 @@ for exIx in range(0, expNum):
                 'spa': geneSpaTemp, 'rep': fLandReps
             }
         # Dump to serialized file ---------------------------------------------
-        fName = '{}/{}_{}-{}.lzma'.format(
+        fName = '{}/{}-{}_{}.lzma'.format(
                 PATH_OUT, expName, AOI, str(pIx).zfill(nodeDigits)
             )
         with open(fName, 'wb') as fout:
