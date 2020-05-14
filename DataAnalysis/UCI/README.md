@@ -1,4 +1,4 @@
-# UCI Scripts (Winter 2020)
+# UCI Scripts (Winter 2020 - Summer 2020)
 
 ##  Main Scripts
 
@@ -51,6 +51,13 @@ python video.py R2_mit stp_mitigated_kernel
 
 ## SSH Download
 
+Videos
+
 ```
 scp -rp  hector@marshall-lab-cal.berkeley.edu:/RAID5/marshallShare/UCI/videoDemo/video/*.mp4 ~/Desktop/STP/
+```
+
+
+```
+scp -rp lab:/RAID5/marshallShare/UCI/Yoosook/tParams/island/out/LDR/PREPROCESS/*.lzma /media/chipdelmal/cache/Sims/Panmictic/tParams/island/out/LDR/PREPROCESS/
 ```

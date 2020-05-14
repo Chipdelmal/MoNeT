@@ -12,7 +12,7 @@ import uciPan_fun as fun
 import uciPan_drive as drv
 import uciSTP_indices as ix
 import MoNeT_MGDrivE as monet
-from compress_pickle import dump, load
+import compress_pickle as pkl
 # import matplotlib.pyplot as plt
 
 USR = 'dsk'
@@ -33,7 +33,7 @@ drvPars = drv.driveSelector(DRIVE_ID)
 if USR == 'srv':
     PATH_ROOT = '/RAID5/marshallShare/UCI/Yoosook/{}/{}/'.format(LAND, SET)
 else:
-    PATH_ROOT = '/home/chipdelmal/Desktop/Panmictic/{}/{}/'.format(LAND, SET)
+    PATH_ROOT = '/media/chipdelmal/cache/Sims/{}/{}/'.format(LAND, SET)
 # Setting paths
 (PATH_IMG, PATH_DATA) = (
         '{}img/'.format(PATH_ROOT),
@@ -78,9 +78,9 @@ for exIx in range(0, 10):
             'spa': geneSpaTemp, 'rep': landReps
         }
     # Dump to serialized file -------------------------------------------------
-    fName = '{}/{}_{}.gz'.format(PATH_OUT, expName, AOI)
+    fName = '{}/{}_{}.lzma'.format(PATH_OUT, expName, AOI)
     with open(fName, 'wb') as fout:
-        dump(preData, fName, compression="gzip", set_default_extension=False)
+        pkl.dump(preData, fName, compression="lzma")
 tE = datetime.datetime.now()
 print(aux.PADL)
 print('Finished [{}]'.format(tE-tS))
