@@ -50,7 +50,9 @@ def index(request):
             if not csv.name.endswith('.csv'):
                 errors = True
                 messages.error(
-                    request, 'One of the file uploaded is not a cvs file: ' + csv.name)
+                    request,
+                    'One of the file uploaded is not a cvs file: ' +
+                    csv.name)
                 continue
 
             # DataFrame csv
@@ -128,8 +130,8 @@ def graph(request, csv):
     N = len(sumtime['sumTime'])
     _x = np.random.random(size=N) * 100
     color_count = np.asarray(countList)
-    colors = [
-        "#%02x%02x%02x" % (int(r), int(g), 150) for r, g in zip(50 + 2 * _x, (30 + 2 * (color_count / 100)))]
+    colors = ["#%02x%02x%02x" % (int(r), int(g), 150) for r, g in zip(
+        50 + 2 * _x, (30 + 2 * (color_count / 100)))]
 
     # Data Source
     source = ColumnDataSource(dict(
@@ -209,8 +211,14 @@ def graph(request, csv):
 
     bar = figure(x_range=col_list, plot_height=600, plot_width=800,
                  toolbar_location=None, title="Gene Counts", tools=[hover])
-    bar.vbar(x='col_list', top='counts', width=0.9, source=bar_source, legend="col_list",
-             line_color='white', fill_color='bar_colors')
+    bar.vbar(
+        x='col_list',
+        top='counts',
+        width=0.9,
+        source=bar_source,
+        legend="col_list",
+        line_color='white',
+        fill_color='bar_colors')
 
     bar.xgrid.grid_line_color = None
     bar.y_range.start = 0
@@ -247,7 +255,7 @@ def graph(request, csv):
         g = g.toString(16);
         g = g.substring(0, 2);
 
-        
+
         b = (150).toString(16);
 
         s = "#" + r + " " + g + " " + b;
@@ -299,8 +307,14 @@ def graph(request, csv):
 
     """
 
-    callback = CustomJS(args=dict(source=source, slider=slider,
-                                  timeList=timeList, _x=_x, bar_source=bar_source), code=code)
+    callback = CustomJS(
+        args=dict(
+            source=source,
+            slider=slider,
+            timeList=timeList,
+            _x=_x,
+            bar_source=bar_source),
+        code=code)
     slider.js_on_change('value', callback)
 
     # Select
@@ -340,7 +354,7 @@ def graph(request, csv):
     console.log(bar_csv);
 
     time = bar_data['selected_time'];
-    time = time[0];    
+    time = time[0];
     console.log("time: ");
     console.log(time);
 
@@ -361,15 +375,15 @@ def graph(request, csv):
     console.log(bar_source.data);
 
     bar_source.change.emit();
-    
+
     """
     select_callback = CustomJS(
         args=dict(select=select, bar_source=bar_source), code=select_code)
     select.js_on_change('value', select_callback)
 
     # Create grid for graphics
-    grid = gridplot([[column(slider, p, width=800), column(select, bar, width=800)]],
-                    toolbar_location=None)
+    grid = gridplot([[column(slider, p, width=800), column(
+        select, bar, width=800)]], toolbar_location=None)
 
     # Store components
     script, div = components(grid)
@@ -378,8 +392,10 @@ def graph(request, csv):
     print()
     print('Time: ', stop - start)
 
-    # Return to Django with Components sent as arguments which will then de displayed
-    return render_to_response('pages/base.html', {'script': script, 'div': div})
+    # Return to Django with Components sent as arguments which will then de
+    # displayed
+    return render_to_response(
+        'pages/base.html', {'script': script, 'div': div})
 
 
 def graph_2(request, csv, csv_2):
@@ -421,8 +437,8 @@ def graph_2(request, csv, csv_2):
     N = len(sumtime['sumTime'])
     _x = np.random.random(size=N) * 100
     color_count = np.asarray(countList)
-    colors = [
-        "#%02x%02x%02x" % (int(r), int(g), 150) for r, g in zip(50 + 2 * _x, (30 + 2 * (color_count / 100)))]
+    colors = ["#%02x%02x%02x" % (int(r), int(g), 150) for r, g in zip(
+        50 + 2 * _x, (30 + 2 * (color_count / 100)))]
 
     # Data Source
     source = ColumnDataSource(dict(
@@ -502,8 +518,14 @@ def graph_2(request, csv, csv_2):
 
     bar = figure(x_range=col_list, plot_height=600, plot_width=800,
                  toolbar_location=None, title="Gene Counts", tools=[hover])
-    bar.vbar(x='col_list', top='counts', width=0.9, source=bar_source, legend="col_list",
-             line_color='white', fill_color='bar_colors')
+    bar.vbar(
+        x='col_list',
+        top='counts',
+        width=0.9,
+        source=bar_source,
+        legend="col_list",
+        line_color='white',
+        fill_color='bar_colors')
 
     bar.xgrid.grid_line_color = None
     bar.y_range.start = 0
@@ -540,7 +562,7 @@ def graph_2(request, csv, csv_2):
         g = g.toString(16);
         g = g.substring(0, 2);
 
-        
+
         b = (150).toString(16);
 
         s = "#" + r + " " + g + " " + b;
@@ -592,8 +614,14 @@ def graph_2(request, csv, csv_2):
 
     """
 
-    callback = CustomJS(args=dict(source=source, slider=slider,
-                                  timeList=timeList, _x=_x, bar_source=bar_source), code=code)
+    callback = CustomJS(
+        args=dict(
+            source=source,
+            slider=slider,
+            timeList=timeList,
+            _x=_x,
+            bar_source=bar_source),
+        code=code)
     slider.js_on_change('value', callback)
 
     # Select
@@ -634,7 +662,7 @@ def graph_2(request, csv, csv_2):
     console.log(bar_csv);
 
     time = bar_data['selected_time'];
-    time = time[0];    
+    time = time[0];
     console.log("time: ");
     console.log(time);
 
@@ -655,7 +683,7 @@ def graph_2(request, csv, csv_2):
     console.log(bar_source.data);
 
     bar_source.change.emit();
-    
+
     """
 
     select_callback = CustomJS(
@@ -697,8 +725,8 @@ def graph_2(request, csv, csv_2):
     N_2 = len(sumtime_2['sumTime'])
     _x_2 = np.random.random(size=N_2) * 100
     color_count_2 = np.asarray(countList_2)
-    colors_2 = [
-        "#%02x%02x%02x" % (int(r), 150, int(g)) for r, g in zip(50 + 2 * _x_2, (30 + 2 * (color_count_2 / 100)))]
+    colors_2 = ["#%02x%02x%02x" % (int(r), 150, int(g)) for r, g in zip(
+        50 + 2 * _x_2, (30 + 2 * (color_count_2 / 100)))]
 
     # Data Source
     source_2 = ColumnDataSource(dict(
@@ -778,8 +806,14 @@ def graph_2(request, csv, csv_2):
 
     bar_2 = figure(x_range=col_list_2, plot_height=600, plot_width=800,
                    toolbar_location=None, title="Gene Counts", tools=[hover_2])
-    bar_2.vbar(x='col_list', top='counts', width=0.9, source=bar_source_2, legend="col_list",
-               line_color='white', fill_color='bar_colors')
+    bar_2.vbar(
+        x='col_list',
+        top='counts',
+        width=0.9,
+        source=bar_source_2,
+        legend="col_list",
+        line_color='white',
+        fill_color='bar_colors')
 
     bar_2.xgrid.grid_line_color = None
     bar_2.y_range.start = 0
@@ -816,7 +850,7 @@ def graph_2(request, csv, csv_2):
         g = g.toString(16);
         g = g.substring(0, 2);
 
-        
+
         b = (150).toString(16);
 
         s = "#" + r + " " + g + " " + b;
@@ -873,8 +907,14 @@ def graph_2(request, csv, csv_2):
     # console.log("Selected csv:");
     # console.log(bar_selected_csv);
 
-    callback_2 = CustomJS(args=dict(source=source_2, slider=slider_2,
-                                    timeList=timeList_2, _x=_x_2, bar_source=bar_source_2), code=code_2)
+    callback_2 = CustomJS(
+        args=dict(
+            source=source_2,
+            slider=slider_2,
+            timeList=timeList_2,
+            _x=_x_2,
+            bar_source=bar_source_2),
+        code=code_2)
     slider_2.js_on_change('value', callback_2)
 
     # Select
@@ -915,7 +955,7 @@ def graph_2(request, csv, csv_2):
     console.log(bar_csv);
 
     time = bar_data['selected_time'];
-    time = time[0];    
+    time = time[0];
     console.log("time: ");
     console.log(time);
 
@@ -936,16 +976,19 @@ def graph_2(request, csv, csv_2):
     console.log(bar_source.data);
 
     bar_source.change.emit();
-    
+
     """
 
     select_callback_2 = CustomJS(
-        args=dict(select=select_2, bar_source=bar_source_2), code=select_code_2)
+        args=dict(
+            select=select_2,
+            bar_source=bar_source_2),
+        code=select_code_2)
     select_2.js_on_change('value', select_callback_2)
 
     # Create grid for graphics
-    grid = gridplot([[column(slider, p, slider_2, p_2, width=800), column(select, bar, select_2, bar_2, width=800)]],
-                    toolbar_location=None)
+    grid = gridplot([[column(slider, p, slider_2, p_2, width=800), column(
+        select, bar, select_2, bar_2, width=800)]], toolbar_location=None)
 
     # Store components
     script, div = components(grid)
@@ -954,5 +997,7 @@ def graph_2(request, csv, csv_2):
     print()
     print('Time: ', stop - start)
 
-    # Return to Django with Components sent as arguments which will then de displayed
-    return render_to_response('pages/base.html', {'script': script, 'div': div})
+    # Return to Django with Components sent as arguments which will then de
+    # displayed
+    return render_to_response(
+        'pages/base.html', {'script': script, 'div': div})
