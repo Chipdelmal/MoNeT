@@ -15,9 +15,9 @@ import MoNeT_MGDrivE as monet
 from compress_pickle import dump, load
 # import matplotlib.pyplot as plt
 
-USR = 'dsk'
+USR = 'srv'
 (LAND, DRIVE_ID, SET, STP, AOI, MF) = (
-        'tParams', 'LDR', 'island', False, 'HLT', (True, True)
+        'tParams', 'LDR', 'islandGravidFemales', False, 'HLT', (True, True)
     )
 (thresholds, REL_STRT) = ([.05, .10, .25, .50, .75], 1)
 drvPars = drv.driveSelector(DRIVE_ID)
@@ -53,7 +53,7 @@ expNum = len(expDirsMean)
 ###############################################################################
 # Analyze data
 ###############################################################################
-for exIx in range(0, 10):
+for exIx in range(0, expNum):
     # Setup paths -------------------------------------------------------------
     strInt = str(exIx+1).zfill(len(str(expNum)))
     print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
@@ -78,9 +78,9 @@ for exIx in range(0, 10):
             'spa': geneSpaTemp, 'rep': landReps
         }
     # Dump to serialized file -------------------------------------------------
-    fName = '{}/{}_{}.gz'.format(PATH_OUT, expName, AOI)
+    fName = '{}/{}_{}.lzma'.format(PATH_OUT, expName, AOI)
     with open(fName, 'wb') as fout:
-        dump(preData, fName, compression="gzip", set_default_extension=False)
+        dump(preData, fName, compression="lzma", set_default_extension=False)
 tE = datetime.datetime.now()
 print(aux.PADL)
 print('Finished [{}]'.format(tE-tS))
