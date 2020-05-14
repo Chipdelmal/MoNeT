@@ -52,4 +52,9 @@ expFiles = glob.glob(dtaFldr + '*.lzma')
 file = expFiles[0]
 expData = pkl.load(file, compression="lzma")
 expData.keys()
-expData['rep']['landscapes']
+prb = expData['agg']['landscape']
+
+
+expData['sum']
+
+expData['agg']

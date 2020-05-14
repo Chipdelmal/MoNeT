@@ -18,7 +18,7 @@ import compress_pickle as pkl
 
 (USR, SET) = ('srv', 'island')
 (LAND, DRIVE_ID, STP, AOI, MF, SKP) = (
-        'tParams', 'LDR', False, 'HLT', (True, True), True
+        'tParams', 'LDR', False, 'HLT', (True, True), False
     )
 (thresholds, REL_STRT) = ([.05, .10, .25, .50, .75], 1)
 drvPars = drv.driveSelector(DRIVE_ID)
@@ -80,9 +80,12 @@ for exIx in range(0, expNum):
         geneSpaTemp = monet.getGenotypeArraysFromLandscape(aggData)
         fLandReps = fun.filterAggregateGarbageByIndex(landReps, NOI[pIx])
         # PLACE OTHER PROCESSING OPERATIONS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        fRepsSum = [sum(i) for i in fLandReps['landscapes']]
+        fRepsDict = {'genotypes': fLandReps['genotypes'], 'landscapes': fRepsSum}
+        # Arrange the output dictionary
         preData = {
-                'sum': sumAgg, 'agg': aggData,
-                'spa': geneSpaTemp, 'rep': fLandReps
+                'sum': sumAgg, 'agg': aggData, 'spa': geneSpaTemp,
+                'srp': fRepsSum, 'rep': fLandReps
             }
         # Dump to serialized file ---------------------------------------------
         fName = '{}/{}-{}_{}.lzma'.format(
