@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # python3 uciPan_main.py "Volumes" "tParams" "islandMixed"
 
-# import sys
+import sys
 # import csv
 import glob
 import datetime
@@ -16,10 +16,11 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 # import matplotlib.pyplot as plt
 
-(USR, SET) = ('srv', 'island')
-(LAND, DRIVE_ID, STP, AOI, MF, SKP) = (
-        'tParams', 'LDR', False, 'HLT', (True, True), False
+(USR, SET) = ('srv', sys.argv[1])
+(LAND, DRIVE_ID, STP, AOI, MF, SKP, FMT) = (
+        'tParams', 'LDR', False, 'HLT', (True, True), False, '.lzma'
     )
+(SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 (thresholds, REL_STRT) = ([.05, .10, .25, .50, .75], 1)
 drvPars = drv.driveSelector(DRIVE_ID)
 (STYLE, DRV, NOI) = (
@@ -73,26 +74,30 @@ for exIx in range(0, expNum):
             dirsTraces, DRV, MF[0], MF[1]
         )
     for (pIx, pop) in enumerate(filesList):
-        # Load data -----------------------------------------------------------
-        sumData = monet.sumLandscapePopulationsFromFiles(pop, MF[0], MF[1])
-        sumAgg = monet.aggregateGenotypesInNode(sumData, DRV)
-        aggData = monet.loadAndAggregateLandscapeData(pop, DRV, MF[0], MF[1])
-        geneSpaTemp = monet.getGenotypeArraysFromLandscape(aggData)
-        fLandReps = fun.filterAggregateGarbageByIndex(landReps, NOI[pIx])
-        # PLACE OTHER PROCESSING OPERATIONS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        fRepsSum = [sum(i) for i in fLandReps['landscapes']]
-        fRepsDict = {'genotypes': fLandReps['genotypes'], 'landscapes': fRepsSum}
-        # Arrange the output dictionary
-        preData = {
-                'sum': sumAgg, 'agg': aggData, 'spa': geneSpaTemp,
-                'srp': fRepsSum, 'rep': fLandReps
-            }
-        # Dump to serialized file ---------------------------------------------
-        fName = '{}/{}-{}_{}.lzma'.format(
+        fName = '{}/{}-{}_{}'.format(
                 PATH_OUT, expName, AOI, str(pIx).zfill(nodeDigits)
             )
-        with open(fName, 'wb') as fout:
-            pkl.dump(preData, fName, compression="lzma")
+        # Load data -----------------------------------------------------------
+        if SUM:
+            sumData = monet.sumLandscapePopulationsFromFiles(pop, MF[0], MF[1])
+            sumAgg = monet.aggregateGenotypesInNode(sumData, DRV)
+            pkl.dump(sumAgg, fName+'_sum'+FMT, compression="lzma")
+        if AGG:
+            aggData = monet.loadAndAggregateLandscapeData(pop, DRV, MF[0], MF[1])
+            pkl.dump(aggData, fName+'_agg'+FMT, compression="lzma")
+        if SPA:
+            geneSpaTemp = monet.getGenotypeArraysFromLandscape(aggData)
+            pkl.dump(geneSpaTemp, fName+'_spa'+FMT, compression="lzma")
+        if REP:
+            fLandReps = fun.filterAggregateGarbageByIndex(landReps, NOI[pIx])
+            pkl.dump(fLandReps, fName+'_rep'+FMT, compression="lzma")
+        if SRP:
+            fRepsSum = [sum(i) for i in fLandReps['landscapes']]
+            fRepsDict = {
+                    'genotypes': fLandReps['genotypes'],
+                    'landscapes': fRepsSum
+                }
+            pkl.dump(fRepsDict, fName+'_srp'+FMT, compression="lzma")
 tE = datetime.datetime.now()
 print(aux.PADL)
 print('Finished [{}]'.format(tE-tS))

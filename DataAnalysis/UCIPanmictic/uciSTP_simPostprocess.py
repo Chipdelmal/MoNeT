@@ -48,13 +48,3 @@ fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
 gIx = drvPars[AOI]['genotypes'].index('Other')
 dtaFldr = PATH_DATA + 'PREPROCESS/'
 expFiles = glob.glob(dtaFldr + '*.lzma')
-
-file = expFiles[0]
-expData = pkl.load(file, compression="lzma")
-expData.keys()
-prb = expData['agg']['landscape']
-
-
-expData['sum']
-
-expData['agg']
