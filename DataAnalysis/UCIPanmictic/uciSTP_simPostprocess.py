@@ -15,6 +15,11 @@ USR = 'dsk'
 (LAND, DRIVE_ID, SET, STP, AOI, MF) = (
         'tParams', 'LDR', 'islandMixed', False, 'HLT', (True, True)
     )
+setsBools = (
+        ('sum', True), ('srp', True), ('spa', False),
+        ('rep', True), ('agg', False)
+    )
+
 (thresholds, REL_STRT) = ([.05, .10, .25, .50, .75], 1)
 drvPars = drv.driveSelector(DRIVE_ID)
 (STYLE, DRV, NOI) = (
@@ -47,4 +52,11 @@ fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
 ###############################################################################
 gIx = drvPars[AOI]['genotypes'].index('Other')
 dtaFldr = PATH_DATA + 'PREPROCESS/'
-expFiles = glob.glob(dtaFldr + '*.lzma')
+expNames = fun.splitExpNames(dtaFldr)
+###############################################################################
+# Load datasets
+###############################################################################
+expName = expNames[0]
+expPath = '{}{}*.lzma'.format(dtaFldr, expName)
+expSet = glob.glob(expPath)
+dta = [fun.loadDataset(expSet, i[0], i[1]) for i in setsBools]

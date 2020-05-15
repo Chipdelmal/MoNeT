@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # python3 uciPan_main.py "Volumes" "tParams" "islandMixed"
 
-import sys
+# import sys
 # import csv
 import glob
 import datetime
@@ -16,12 +16,12 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 # import matplotlib.pyplot as plt
 
-(USR, SET) = ('srv', sys.argv[1])
+(USR, SET) = ('dsk', 'island')  # sys.argv[1])
 (LAND, DRIVE_ID, STP, AOI, MF, SKP, FMT) = (
         'tParams', 'LDR', False, 'HLT', (True, True), False, '.lzma'
     )
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-(thresholds, REL_STRT) = ([.05, .10, .25, .50, .75], 1)
+(thresholds, REL_STRT, WARM) = ([.05, .10, .25, .50, .75], 2, 2)
 drvPars = drv.driveSelector(DRIVE_ID)
 (STYLE, DRV, NOI) = (
         aux.STYLE_HLT,
@@ -52,8 +52,9 @@ fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
 gIx = drvPars[AOI]['genotypes'].index('Other')
 (expDirsMean, expDirsTrac) = fun.getExpPaths(PATH_DATA)
 (expNum, nodeDigits) = (len(expDirsMean), len(str(NOI)))
-outNames = [i.split('/')[-1].split('-')[0] for i in glob.glob(PATH_OUT+'*')]
+outNames = fun.splitExpNames(PATH_OUT)
 outExpNames = set(outNames)
+outNames
 ###############################################################################
 # Analyze data
 ###############################################################################
@@ -69,7 +70,7 @@ for exIx in range(0, expNum):
             pathMean, fun.listDirectoriesWithPathWithinAPath(pathTraces)
         )
     files = monet.readExperimentFilenames(pathMean)
-    filesList = [fun.filterFilesByIndex(files, ix) for ix in NOI]
+    filesList = [monet.filterFilesByIndex(files, ix) for ix in NOI]
     landReps = monet.loadAndAggregateLandscapeDataRepetitions(
             dirsTraces, DRV, MF[0], MF[1]
         )
@@ -89,7 +90,7 @@ for exIx in range(0, expNum):
             geneSpaTemp = monet.getGenotypeArraysFromLandscape(aggData)
             pkl.dump(geneSpaTemp, fName+'_spa'+FMT, compression="lzma")
         if REP:
-            fLandReps = fun.filterAggregateGarbageByIndex(landReps, NOI[pIx])
+            fLandReps = monet.filterAggregateGarbageByIndex(landReps, NOI[pIx])
             pkl.dump(fLandReps, fName+'_rep'+FMT, compression="lzma")
         if SRP:
             fRepsSum = [sum(i) for i in fLandReps['landscapes']]

@@ -3,10 +3,25 @@
 
 import os
 import csv
+from glob import glob
 import numpy as np
 import pandas as pd
 import uciPan_aux as aux
 import MoNeT_MGDrivE as monet
+import compress_pickle as pkl
+
+
+def loadDataset(expSet, fileCode, fileBool):
+    dta = None
+    fltr = list(filter(lambda x: fileCode in x, expSet))
+    if (len(fltr) > 0) and (fileBool):
+        dta = pkl.load(fltr[0], compression="lzma")
+    return dta
+
+
+def splitExpNames(PATH_OUT):
+    out = [i.split('/')[-1].split('-')[0] for i in glob(PATH_OUT+'*.lzma')]
+    return sorted(list(set(out)))
 
 
 ###############################################################################
