@@ -3,9 +3,10 @@
 
 import os
 import csv
-from glob import glob
 import numpy as np
 import pandas as pd
+import operator as op
+from glob import glob
 import uciPan_aux as aux
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
@@ -23,6 +24,23 @@ def splitExpNames(PATH_OUT):
     out = [i.split('/')[-1].split('-')[0] for i in glob(PATH_OUT+'*.lzma')]
     return sorted(list(set(out)))
 
+
+###############################################################################
+# Pops Thresholds
+###############################################################################
+def comparePopToThresholds(ratioOI, thresholds, cmprOp=op.lt):
+    flagsArray = np.empty((len(ratioOI), len(thresholds)), dtype=bool)
+    for (i, dayData) in enumerate(ratioOI):
+        closeFlags = [cmprOp(dayData, i) for i in thresholds]
+        flagsArray[i] = closeFlags
+    return flagsArray
+
+
+def getPopRatio(prbPop, refPop, gIx):
+    (a, b) = (prbPop, refPop)
+    ratio = np.divide(a, b, out=np.zeros_like(a), where=b != 0)
+    ratioOI = [row[gIx] for row in ratio]
+    return ratioOI
 
 ###############################################################################
 # Dynamics
