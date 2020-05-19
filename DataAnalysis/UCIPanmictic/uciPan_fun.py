@@ -42,6 +42,22 @@ def getPopRatio(prbPop, refPop, gIx):
     ratioOI = [row[gIx] for row in ratio]
     return ratioOI
 
+
+def trueIndices(boolList):
+    trueIx = [i for (i, x) in enumerate(boolList) if x == 1]
+    return trueIx
+
+
+def thresholdMet(thsArray):
+    thsNum = len(thsArray[0])
+    thrsMet = [None] * thsNum
+    for col in range(thsNum):
+        boolCol = [i[col] for i in thsArray]
+        daysAbove = trueIndices(boolCol)
+        thrsMet[col] = daysAbove
+    return thrsMet
+
+
 ###############################################################################
 # Dynamics
 ###############################################################################

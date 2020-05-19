@@ -12,11 +12,11 @@ import MoNeT_MGDrivE as monet
 
 USR = 'dsk'
 (LAND, DRIVE_ID, SET, STP, AOI, MF) = (
-        'tParams', 'LDR', 'islandMixed', False, 'HLT', (True, True)
+        'tParams', 'LDR', 'island', False, 'HLT', (True, True)
     )
 setsBools = (
         ('sum', True), ('agg', True),
-        ('spa', False), ('rep', True), ('srp', True)
+        ('spa', False), ('rep', False), ('srp', False)
     )
 
 (thresholds, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
@@ -51,14 +51,14 @@ expNames = fun.splitExpNames(dtaFldr)
 # Load Reference Population
 ###############################################################################
 expName = expNames[0]
-expPath = '{}{}*sum.lzma'.format(dtaFldr, expName)
+expPath = '{}{}*.lzma'.format(dtaFldr, expName)
 expSet = glob.glob(expPath)
 dtaRef = [fun.loadDataset(expSet, i[0], i[1]) for i in setsBools]
 ###############################################################################
 # Process Experiments
 ###############################################################################
 expName = expNames[10]
-expPath = '{}{}*sum.lzma'.format(dtaFldr, expName)
+expPath = '{}{}*.lzma'.format(dtaFldr, expName)
 expSet = glob.glob(expPath)
 dtaPrb = [fun.loadDataset(expSet, i[0], i[1]) for i in setsBools]
 # Sum data analyses -----------------------------------------------------------
@@ -66,7 +66,4 @@ dtaPrb = [fun.loadDataset(expSet, i[0], i[1]) for i in setsBools]
 (meanRef, meanPrb) = (dtaRef[0], dtaPrb[0])
 ratioOI = fun.getPopRatio(meanPrb['population'], meanRef['population'], gIx)
 thsArray = fun.comparePopToThresholds(ratioOI, thresholds)
-
-
-boolCol = [i[0] for i in thsArray].index(True)
-[i for i,x in enumerate(boolCol) if x == 1]
+fun.thresholdMet(thsArray)
