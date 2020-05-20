@@ -3,6 +3,7 @@ from bokeh.models import HoverTool
 from bokeh.models.widgets import Select
 from bokeh.models.callbacks import CustomJS
 
+
 def mg_bar(col_list, bar_source):
     hover = HoverTool(tooltips=[
         ('gene', '@col_list'),
@@ -28,13 +29,13 @@ def mg_bar(col_list, bar_source):
 
     return bar
 
-def mg_select(csvList, bar_source):
-    select = Select(title="csv File:", value=csvList[0], options=csvList)
+def mg_select(csvList, bar_source, status):
+    select = Select(title="csv File:", value=csvList[0], options=[*enumerate(csvList)])
     # Select Code
     with open('./charts/select.js', 'r') as select_file:
         select_code = select_file.read()
 
     select_callback = CustomJS(
-        args=dict(select=select, bar_source=bar_source), code=select_code)
+        args=dict(select=select, bar_source=bar_source, status=status), code=select_code)
     select.js_on_change('value', select_callback)
     return select

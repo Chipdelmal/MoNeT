@@ -114,13 +114,9 @@ def one_experiment(csv):
     # Get cvs time values in x Time
     timeList = []
     for i in range((len(time))):
-        aux = i
-        l = df.loc[df['Time'] == aux]
+        l = df.loc[df['Time'] == i]
         lList = list(l['sumTime'])
         timeList.append(lList)
-
-    # Slider
-    slider = Slider(start=1, end=len(time), value=1, step=1, title="Time")
 
     # Scatter Graphic:
     # Colors
@@ -135,22 +131,19 @@ def one_experiment(csv):
         x=x,
         y=y,
         csv=csvList,
-        t_hover=countList,
-        colors=colors,
-        aux_color=_x,
-        color_values=color_count))
+        count=countList,
+        colors=colors))
 
     # Hover
     hover = HoverTool(tooltips=[
         ('csv', '@csv'),
-        ('Total', '@t_hover')
+        ('Total', '@count')
     ])
 
     scatter = figure(tools=[hover])
 
-    scatter.scatter(x='x', y='y', size=15, source=source,
-              fill_color='colors', fill_alpha=0.6,
-              line_color=None)
+    scatter.scatter(x='x', y='y', size=16, source=source,
+              fill_color='colors', fill_alpha=0.7)
 
     # Bar Graph
     # Get Column List
@@ -186,7 +179,6 @@ def one_experiment(csv):
 
     # Get data for graph
     counts = csv_selected[0]
-    print(counts)
 
     # Get colors
     bar_colors = cividis(len(col_list))
@@ -195,11 +187,17 @@ def one_experiment(csv):
         col_list=col_list,
         counts=counts,
         bar_colors=bar_colors,
-        gene_list=gene_list,
-        selected_csv=[0, 0],
-        selected_time=[1, 0]))
+        gene_list=gene_list))
+
+    status = ColumnDataSource(data={
+        'time': [1],
+        'csv': [0]
+    })
 
     bar = mg_bar(col_list, bar_source)
+
+    # Slider
+    slider = Slider(start=1, end=len(time), value=1, step=1, title="Time")
 
     with open('./charts/slider.js', 'r') as slider_file:
         slider_code = slider_file.read()
@@ -210,12 +208,13 @@ def one_experiment(csv):
             slider=slider,
             timeList=timeList,
             _x=_x,
-            bar_source=bar_source),
+            bar_source=bar_source,
+            status=status),
         code=slider_code)
     slider.js_on_change('value', callback)
 
     # Select
-    select = mg_select(csvList, bar_source)
+    select = mg_select(csvList, bar_source, status)
     return scatter, bar, slider, select
 
 

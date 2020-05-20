@@ -1,74 +1,67 @@
-console.log("Original Data:")
-console.log(source.data)
-const data = source.data;
-const t_slider = slider.value;
+// Bar
+const csv = status.data.csv[0];
+status.data.time[0] = slider.value;
+const time = slider.value - 1;
 
-console.log("Time List:")
-console.log(timeList[t_slider])
+const bar_data = bar_source.data;
 
-const t_hover = data['t_hover'];
-const x = data['x']
-const colors = data['colors']
-const aux_color = data['aux_color']
-const color_values = data['color_values']
-const _timeList = timeList[t_slider];
-
-for (var i = 0; i < t_hover.length; i++) {
-    t_hover[i] = _timeList[i];
-    r = (50 + 2 * aux_color[i]);
-    r = r.toString(16);
-    r = r.substring(0, 2);
-
-    g = _timeList[i];
-    g = (30 + 2 * (g / 100));
-    g = g.toString(16);
-    g = g.substring(0, 2);
-
-
-    b = (150).toString(16);
-
-    s = "#" + r + " " + g + " " + b;
-    s = s.replace(" ", "");
-    colors[i] = s.replace(" ", "");
-}
-console.log("New Data:")
-console.log(source.data)
-source.change.emit()
-
-bar_data = bar_source.data;
-console.log("BarChart data:");
-console.log(bar_source.data);
-
-bar_csv = bar_data['gene_list'];
-console.log("bar_csv");
-console.log(bar_csv);
-
-selected_csv = bar_data['selected_csv'];
-selected_csv = selected_csv[0];
-console.log("selected_csv index");
-console.log(selected_csv);
-
-bar_csv = bar_csv[selected_csv];
-console.log("selected_csv");
-console.log(bar_csv);
-
-time = slider.value;
-console.log("slider value:");
-console.log(time);
-
-time = time - 1;
-
-bar_csv = bar_csv[time];
-console.log("final data");
-console.log(bar_csv);
-
-bar_counts = bar_data['counts'];
-
-for (var i = 0; i < bar_counts.length; i++) {
-    bar_counts[i] = bar_csv[i];
-}
-
-console.log("BarChart New data:");
-console.log(bar_source.data);
+const time_series = bar_data['gene_list'];
+bar_data['counts'] = time_series[csv][time];
 
 bar_source.change.emit();
+// End bar
+
+// Scatter
+const scatter_data = source.data;
+
+const colors = scatter_data['colors'];
+
+console.log(scatter_data.count);
+scatter_data.count = timeList[time];
+
+
+let min = Infinity, max = -Infinity;
+scatter_data.count.forEach(element => {
+    if (element < min) {
+        min = element;
+    } else if (element > max) {
+        max = element;
+    }
+});
+
+const hslToRgb = (h, s, l) => {
+    let r, g, b;
+
+    if (s == 0) {
+        r = g = b = l; // achromatic
+    } else {
+        function hue2rgb(p, q, t) {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        }
+
+        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        var p = 2 * l - q;
+
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+    }
+
+    return [r * 255, g * 255, b * 255];
+};
+
+
+scatter_data.colors = scatter_data.count.map(e => {
+    const val = (e - min) / (max - min);
+    const rgb = hslToRgb(0.7, 0.5, 1 - val).map(c => Math.round(c).toString(16));
+    const [r, g, b] = rgb;
+    return '#' + r + g + b;
+});
+
+source.change.emit()
+// End scatter
