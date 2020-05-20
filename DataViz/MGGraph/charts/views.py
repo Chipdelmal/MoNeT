@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from bokeh.models import ColumnDataSource, Plot, Grid, HoverTool
-from bokeh.models.widgets import Select, Slider
+from bokeh.models.widgets import Slider
 from bokeh.models.callbacks import CustomJS
 from bokeh.plotting import figure
 from bokeh.layouts import column, gridplot
@@ -16,7 +16,7 @@ from numpy.random import random
 from datetime import date
 import timeit
 from math import pi
-from .mgcharts import mg_bar
+from .mgcharts import mg_bar, mg_select
 
 def time_function(function):
     def wrapper(*args, **kwargs):
@@ -216,14 +216,7 @@ def graph(request, csv):
     slider.js_on_change('value', callback)
 
     # Select
-    select = Select(title="csv File:", value=csvList[0], options=csvList)
-    # Select Code
-    with open('./charts/select.js', 'r') as select_file:
-        select_code = select_file.read()
-
-    select_callback = CustomJS(
-        args=dict(select=select, bar_source=bar_source), code=select_code)
-    select.js_on_change('value', select_callback)
+    select = mg_select(csvList, bar_source)
 
     # Create grid for graphics
     grid = gridplot([[column(slider, scatter, width=800), column(
@@ -362,15 +355,8 @@ def graph_2(request, csv, csv_2):
     slider.js_on_change('value', callback)
 
     # Select
-    select = Select(title="csv File:", value=csvList[0], options=csvList)
+    select = mg_select(csvList, bar_source)
 
-    # Select Code
-    with open('./charts/select.js', 'r') as select_file:
-        select_code = select_file.read()
-
-    select_callback = CustomJS(
-        args=dict(select=select, bar_source=bar_source), code=select_code)
-    select.js_on_change('value', select_callback)
     # 2 Graphs
     # Get csv
     df_2 = pd.read_csv(csv_2)
@@ -491,14 +477,7 @@ def graph_2(request, csv, csv_2):
     slider_2.js_on_change('value', callback_2)
 
     # Select
-    select_2 = Select(title="csv File:", value=csvList_2[0], options=csvList_2)
-
-    select_callback_2 = CustomJS(
-        args=dict(
-            select=select_2,
-            bar_source=bar_source_2),
-        code=select_code)
-    select_2.js_on_change('value', select_callback_2)
+    select_2 = mg_select(csvList_2, bar_source_2)
 
     # Create grid for graphics
     grid = gridplot([[column(slider, scatter, slider_2, p_2, width=800), column(
