@@ -12,6 +12,7 @@ from bokeh.palettes import inferno, viridis, cividis
 
 import pandas as pd
 import numpy as np
+from numpy.random import random
 from datetime import date
 import timeit
 from math import pi
@@ -45,10 +46,8 @@ def index(request):
         # Loop through all file list
         csv_files = request.FILES.getlist('csvFile')
         for csv in csv_files:
-
             # Check if it is a csv file
             if not csv.name.endswith('.csv'):
-                errors = True
                 messages.error(
                     request,
                     'One of the file uploaded is not a cvs file: ' +
@@ -126,9 +125,8 @@ def graph(request, csv):
 
     # Scatter Graphic:
     # Colors
-    color_values = sumtime['sumTime']
     N = len(sumtime['sumTime'])
-    _x = np.random.random(size=N) * 100
+    _x = random(size=N) * 100
     color_count = np.asarray(countList)
     colors = ["#%02x%02x%02x" % (int(r), int(g), 150) for r, g in zip(
         50 + 2 * _x, (30 + 2 * (color_count / 100)))]
@@ -226,86 +224,8 @@ def graph(request, csv):
     bar.legend.orientation = "horizontal"
     bar.legend.location = "top_center"
 
-    # Slider Code
-    code = """
-    console.log("Original Data:")
-    console.log(source.data)
-    const data = source.data;
-    const t_slider = slider.value;
-
-    console.log("Time List:")
-    console.log(timeList[t_slider])
-
-    const t_hover = data['t_hover'];
-    const x = data['x']
-    const colors = data['colors']
-    const aux_color = data['aux_color']
-    const color_values = data['color_values']
-    const _timeList = timeList[t_slider];
-
-    for(var i = 0; i < t_hover.length; i++)
-    {
-        t_hover[i] = _timeList[i];
-        r = (50 + 2 * aux_color[i]);
-        r = r.toString(16);
-        r = r.substring(0, 2);
-
-        g = _timeList[i];
-        g = (30 + 2 *(g / 100));
-        g = g.toString(16);
-        g = g.substring(0, 2);
-
-
-        b = (150).toString(16);
-
-        s = "#" + r + " " + g + " " + b;
-        s = s.replace(" ", "");
-        colors[i] = s.replace(" ", "");
-    }
-    console.log("New Data:")
-    console.log(source.data)
-    source.change.emit()
-
-    bar_data = bar_source.data;
-    console.log("BarChart data:");
-    console.log(bar_source.data);
-
-    bar_csv = bar_data['gene_list'];
-    console.log("bar_csv");
-    console.log(bar_csv);
-
-    selected_csv = bar_data['selected_csv'];
-    selected_csv = selected_csv[0];
-    console.log("selected_csv index");
-    console.log(selected_csv);
-
-    bar_csv = bar_csv[selected_csv];
-    console.log("selected_csv");
-    console.log(bar_csv);
-
-    time = slider.value;
-    console.log("slider value:");
-    console.log(time);
-
-    time = time - 1;
-
-    bar_csv = bar_csv[time];
-    console.log("final data");
-    console.log(bar_csv);
-
-    bar_counts = bar_data['counts'];
-
-    for(var i = 0; i < bar_counts.length; i++)
-    {
-        bar_counts[i] = bar_csv[i];
-    }
-
-    console.log("BarChart New data:");
-    console.log(bar_source.data);
-
-    bar_source.change.emit();
-
-    """
+    with open('slider.js', 'r') as slider_file:
+        slider_code = slider_file.read()
 
     callback = CustomJS(
         args=dict(
@@ -314,71 +234,17 @@ def graph(request, csv):
             timeList=timeList,
             _x=_x,
             bar_source=bar_source),
-        code=code)
+        code=slider_code)
     slider.js_on_change('value', callback)
 
     # Select
     select = Select(title="csv File:", value=csvList[0], options=csvList)
     # Select Code
-    select_code = """
-    console.log("Select List:");
-    console.log(select.value);
-    console.log(select.options);
-    select_opt = select.options;
-    var index = 0;
-    for(var i = 0; i < select_opt.length; i++)
-    {
-        if(select_opt[i] == select.value)
-        {
-            index = i;
-        }
-    }
-    console.log("Index Value");
-    console.log(index);
+    with open('select.js', 'r') as select_file:
+        select_code = select_file.read()
 
-    bar_data = bar_source.data;
-    console.log("BarChart data:");
-    console.log(bar_source.data);
-
-    bar_csv = bar_data['gene_list'];
-    console.log("bar_csv");
-    console.log(bar_csv);
-
-    selected_csv = bar_data['selected_csv'];
-    selected_csv = selected_csv[index];
-    console.log("selected_csv index");
-    console.log(selected_csv);
-
-    bar_csv = bar_csv[index];
-    console.log("selected_csv");
-    console.log(bar_csv);
-
-    time = bar_data['selected_time'];
-    time = time[0];
-    console.log("time: ");
-    console.log(time);
-
-    time = time - 1;
-
-    bar_csv = bar_csv[time];
-    console.log("final data");
-    console.log(bar_csv);
-
-    bar_counts = bar_data['counts'];
-
-    for(var i = 0; i < bar_counts.length; i++)
-    {
-        bar_counts[i] = bar_csv[i];
-    }
-
-    console.log("BarChart New data:");
-    console.log(bar_source.data);
-
-    bar_source.change.emit();
-
-    """
     select_callback = CustomJS(
-        args=dict(select=select, source=bar_source), code=select_code)
+        args=dict(select=select, bar_source=bar_source), code=select_code)
     select.js_on_change('value', select_callback)
 
     # Create grid for graphics
@@ -433,9 +299,8 @@ def graph_2(request, csv, csv_2):
 
     # Scatter Graphic:
     # Colors
-    color_values = sumtime['sumTime']
     N = len(sumtime['sumTime'])
-    _x = np.random.random(size=N) * 100
+    _x = random(size=N) * 100
     color_count = np.asarray(countList)
     colors = ["#%02x%02x%02x" % (int(r), int(g), 150) for r, g in zip(
         50 + 2 * _x, (30 + 2 * (color_count / 100)))]
@@ -534,85 +399,8 @@ def graph_2(request, csv, csv_2):
     bar.legend.location = "top_center"
 
     # Slider Code
-    code = """
-    console.log("Original Data:")
-    console.log(source.data)
-    const data = source.data;
-    const t_slider = slider.value;
-
-    console.log("Time List:")
-    console.log(timeList[t_slider])
-
-    const t_hover = data['t_hover'];
-    const x = data['x']
-    const colors = data['colors']
-    const aux_color = data['aux_color']
-    const color_values = data['color_values']
-    const _timeList = timeList[t_slider];
-
-    for(var i = 0; i < t_hover.length; i++)
-    {
-        t_hover[i] = _timeList[i];
-        r = (50 + 2 * aux_color[i]);
-        r = r.toString(16);
-        r = r.substring(0, 2);
-
-        g = _timeList[i];
-        g = (30 + 2 *(g / 100));
-        g = g.toString(16);
-        g = g.substring(0, 2);
-
-
-        b = (150).toString(16);
-
-        s = "#" + r + " " + g + " " + b;
-        s = s.replace(" ", "");
-        colors[i] = s.replace(" ", "");
-    }
-    console.log("New Data:")
-    console.log(source.data)
-    source.change.emit()
-
-    bar_data = bar_source.data;
-    console.log("BarChart data:");
-    console.log(bar_source.data);
-
-    bar_csv = bar_data['gene_list'];
-    console.log("bar_csv");
-    console.log(bar_csv);
-
-    selected_csv = bar_data['selected_csv'];
-    selected_csv = selected_csv[0];
-    console.log("selected_csv index");
-    console.log(selected_csv);
-
-    bar_csv = bar_csv[selected_csv];
-    console.log("selected_csv");
-    console.log(bar_csv);
-
-    time = slider.value;
-    console.log("slider value:");
-    console.log(time);
-
-    time = time - 1;
-
-    bar_csv = bar_csv[time];
-    console.log("final data");
-    console.log(bar_csv);
-
-    bar_counts = bar_data['counts'];
-
-    for(var i = 0; i < bar_counts.length; i++)
-    {
-        bar_counts[i] = bar_csv[i];
-    }
-
-    console.log("BarChart New data:");
-    console.log(bar_source.data);
-
-    bar_source.change.emit();
-
-    """
+    with open('slider.js', 'r') as slider_file:
+        slider_code = slider_file.read()
 
     callback = CustomJS(
         args=dict(
@@ -621,70 +409,15 @@ def graph_2(request, csv, csv_2):
             timeList=timeList,
             _x=_x,
             bar_source=bar_source),
-        code=code)
+        code=slider_code)
     slider.js_on_change('value', callback)
 
     # Select
     select = Select(title="csv File:", value=csvList[0], options=csvList)
 
     # Select Code
-    select_code = """
-    console.log("Select List:");
-    console.log(select.value);
-    console.log(select.options);
-    select_opt = select.options;
-    var index = 0;
-    for(var i = 0; i < select_opt.length; i++)
-    {
-        if(select_opt[i] == select.value)
-        {
-            index = i;
-        }
-    }
-    console.log("Index Value");
-    console.log(index);
-
-    bar_data = bar_source.data;
-    console.log("BarChart data:");
-    console.log(bar_source.data);
-
-    bar_csv = bar_data['gene_list'];
-    console.log("bar_csv");
-    console.log(bar_csv);
-
-    selected_csv = bar_data['selected_csv'];
-    selected_csv = selected_csv[index];
-    console.log("selected_csv index");
-    console.log(selected_csv);
-
-    bar_csv = bar_csv[index];
-    console.log("selected_csv");
-    console.log(bar_csv);
-
-    time = bar_data['selected_time'];
-    time = time[0];
-    console.log("time: ");
-    console.log(time);
-
-    time = time - 1;
-
-    bar_csv = bar_csv[time];
-    console.log("final data");
-    console.log(bar_csv);
-
-    bar_counts = bar_data['counts'];
-
-    for(var i = 0; i < bar_counts.length; i++)
-    {
-        bar_counts[i] = bar_csv[i];
-    }
-
-    console.log("BarChart New data:");
-    console.log(bar_source.data);
-
-    bar_source.change.emit();
-
-    """
+    with open('select.js', 'r') as select_file:
+        select_code = select_file.read()
 
     select_callback = CustomJS(
         args=dict(select=select, bar_source=bar_source), code=select_code)
@@ -721,9 +454,8 @@ def graph_2(request, csv, csv_2):
 
     # Scatter Graphic:
     # Colors
-    color_values_2 = sumtime_2['sumTime']
     N_2 = len(sumtime_2['sumTime'])
-    _x_2 = np.random.random(size=N_2) * 100
+    _x_2 = random(size=N_2) * 100
     color_count_2 = np.asarray(countList_2)
     colors_2 = ["#%02x%02x%02x" % (int(r), 150, int(g)) for r, g in zip(
         50 + 2 * _x_2, (30 + 2 * (color_count_2 / 100)))]
@@ -920,70 +652,11 @@ def graph_2(request, csv, csv_2):
     # Select
     select_2 = Select(title="csv File:", value=csvList_2[0], options=csvList_2)
 
-    # Select Code
-    select_code_2 = """
-    console.log("Select List:");
-    console.log(select.value);
-    console.log(select.options);
-    select_opt = select.options;
-    var index = 0;
-    for(var i = 0; i < select_opt.length; i++)
-    {
-        if(select_opt[i] == select.value)
-        {
-            index = i;
-        }
-    }
-    console.log("Index Value");
-    console.log(index);
-
-    bar_data = bar_source.data;
-    console.log("BarChart data:");
-    console.log(bar_source.data);
-
-    bar_csv = bar_data['gene_list'];
-    console.log("bar_csv");
-    console.log(bar_csv);
-
-    selected_csv = bar_data['selected_csv'];
-    selected_csv = selected_csv[index];
-    console.log("selected_csv index");
-    console.log(selected_csv);
-
-    bar_csv = bar_csv[index];
-    console.log("selected_csv");
-    console.log(bar_csv);
-
-    time = bar_data['selected_time'];
-    time = time[0];
-    console.log("time: ");
-    console.log(time);
-
-    time = time - 1;
-
-    bar_csv = bar_csv[time];
-    console.log("final data");
-    console.log(bar_csv);
-
-    bar_counts = bar_data['counts'];
-
-    for(var i = 0; i < bar_counts.length; i++)
-    {
-        bar_counts[i] = bar_csv[i];
-    }
-
-    console.log("BarChart New data:");
-    console.log(bar_source.data);
-
-    bar_source.change.emit();
-
-    """
-
     select_callback_2 = CustomJS(
         args=dict(
             select=select_2,
             bar_source=bar_source_2),
-        code=select_code_2)
+        code=select_code)
     select_2.js_on_change('value', select_callback_2)
 
     # Create grid for graphics
