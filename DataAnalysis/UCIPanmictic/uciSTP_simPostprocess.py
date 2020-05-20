@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import re
 import datetime
 from glob import glob
 import uciPan_aux as aux
@@ -12,7 +11,7 @@ import MoNeT_MGDrivE as monet
 
 
 USR = 'dsk'
-(LAND, DRIVE_ID, SET, STP, AOI, MF) = (
+(LND, DRV, SET, STP, AOI, MFS) = (
         'tParams', 'LDR', 'island', False, 'HLT', (True, True)
     )
 setsBools = (
@@ -20,46 +19,36 @@ setsBools = (
         ('spa', True), ('rep', True), ('srp', True)
     )
 
+
 (thresholds, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
-drvPars = drv.driveSelector(DRIVE_ID)
-(STYLE, DRV, NOI, gIx) = (
+drvPars = drv.driveSelector(DRV)
+(STYLE, drive, NOI, gIx) = (
         aux.STYLE_HLT, drvPars.get('HLT'), ix.STP if (STP) else ix.PAN,
         drvPars[AOI]['genotypes'].index('Other')
     )
 ###############################################################################
 # Setting up paths and directories
 ###############################################################################
-# Select form server/desktop --------------------------------------------------
-if USR == 'srv':
-    PATH_ROOT = '/RAID5/marshallShare/UCI/Yoosook/{}/{}/'.format(LAND, SET)
-else:
-    PATH_ROOT = '/media/chipdelmal/cache/Sims/Panmictic/{}/{}/'.format(
-            LAND, SET
-        )
-# Setting paths ---------------------------------------------------------------
-(PATH_IMG, PATH_DATA) = (
-        '{}img/'.format(PATH_ROOT), '{}out/{}/'.format(PATH_ROOT, DRIVE_ID)
-    )
-PATH_OUT = PATH_DATA+'POSTPROCESS/'
-monet.makeFolder(PATH_OUT)
+(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, LND, SET, DRV)
+monet.makeFolder(PT_OUT)
 # Setting up experiments data and paths ---------------------------------------
-dtaFldr = PATH_DATA+'PREPROCESS/'
-expNames = fun.splitExpNames(dtaFldr)
+expNames = fun.splitExpNames(PT_PRE)
 # Print terminal info and create folder ---------------------------------------
 tS = datetime.datetime.now()
-fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
+fun.printExpTerminal(tS, PT_ROT, PT_IMG, PT_DTA)
 ###############################################################################
 # Load Reference Population
 ###############################################################################
 expName = expNames[0]
-expPath = '{}{}*.lzma'.format(dtaFldr, expName)
+expPath = '{}{}*.lzma'.format(PT_PRE, expName)
 expSet = glob(expPath)
+expSet
 dtaRef = {i[0]: fun.loadDataset(expSet, i[0], i[1]) for i in setsBools}
 ###############################################################################
 # Process Experiments
 ###############################################################################
 expName = expNames[10]
-expPath = '{}{}*.lzma'.format(dtaFldr, expName)
+expPath = '{}{}*.lzma'.format(PT_PRE, expName)
 expSet = glob(expPath)
 dtaPrb = {i[0]: fun.loadDataset(expSet, i[0], i[1]) for i in setsBools}
 # Sum data analyses -----------------------------------------------------------
@@ -67,7 +56,7 @@ dtaPrb = {i[0]: fun.loadDataset(expSet, i[0], i[1]) for i in setsBools}
 (meanPrb, srpPrb, meanRef) = (dtaPrb['sum'], dtaPrb['srp'], dtaRef['sum'])
 ttiAn = fun.calcMeanTTI(meanPrb, meanRef, thresholds, gIx)
 ttiQt = fun.calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.5)
+ttiQt
 
-
-ids = fun.getExperimentsIDSets(PATH_DATA+'PREPROCESS/', skip=-1)
+ids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
 ids

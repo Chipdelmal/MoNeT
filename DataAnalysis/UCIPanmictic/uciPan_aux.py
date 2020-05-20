@@ -3,10 +3,26 @@
 
 import MoNeT_MGDrivE as monet
 
-CSV_PAD = 5 * 365
+
+def selectPath(USR, LAND, SET, DRIVE_ID):
+    if USR == 'srv':
+        PATH_ROOT = '/RAID5/marshallShare/UCI/Yoosook/{}/{}/'.format(LAND, SET)
+    else:
+        PATH_ROOT = '/media/chipdelmal/cache/Sims/Panmictic/{}/{}/'.format(
+                LAND, SET
+            )
+    (PATH_IMG, PATH_DATA) = (
+            '{}img/'.format(PATH_ROOT), '{}out/{}/'.format(PATH_ROOT, DRIVE_ID)
+        )
+    PATH_PRE = PATH_DATA+'PREPROCESS/'
+    PATH_OUT = PATH_DATA + 'POSTPROCESS/'
+    return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
+
+
 # #############################################################################
 # Terminal aesthetics
 # #############################################################################
+CSV_PAD = 5 * 365
 PAD = '' + 75 * '*' + ''
 PADL = '' + 75 * '-' + ''
 (CRED, CYEL, CBMA, CBRE, CBBL, CWHT, CEND) = (
