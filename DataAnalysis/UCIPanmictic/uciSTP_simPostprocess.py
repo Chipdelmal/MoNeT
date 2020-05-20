@@ -3,6 +3,7 @@
 
 import glob
 import datetime
+import numpy as np
 import uciPan_aux as aux
 import uciPan_fun as fun
 import uciPan_drive as drv
@@ -16,7 +17,7 @@ USR = 'dsk'
     )
 setsBools = (
         ('sum', True), ('agg', True),
-        ('spa', False), ('rep', False), ('srp', False)
+        ('spa', True), ('rep', True), ('srp', True)
     )
 
 (thresholds, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
@@ -63,7 +64,20 @@ expSet = glob.glob(expPath)
 dtaPrb = [fun.loadDataset(expSet, i[0], i[1]) for i in setsBools]
 # Sum data analyses -----------------------------------------------------------
 # if dta[0] is not None:
+# Mean response TTI
 (meanRef, meanPrb) = (dtaRef[0], dtaPrb[0])
 ratioOI = fun.getPopRatio(meanPrb['population'], meanRef['population'], gIx)
 thsArray = fun.comparePopToThresholds(ratioOI, thresholds)
-fun.thresholdMet(thsArray)
+thsDays = fun.thresholdMet(thsArray)
+ttiAn = [i[0] for i in thsDays]
+# Traces TTI
+prb = dtaPrb[4]['landscapes']
+smpNum = len(prb)
+ttiArr = np.empty((smpNum, len(thresholds)))
+for s in range(smpNum):
+    refPop = meanRef['population']
+    ratioOI = fun.getPopRatio(prb[s], refPop, gIx)
+    thsArray = fun.comparePopToThresholds(ratioOI, thresholds)
+    thsDays = fun.thresholdMet(thsArray)
+    ttiArr[s] = [i[0] for i in thsDays]
+ttiArr

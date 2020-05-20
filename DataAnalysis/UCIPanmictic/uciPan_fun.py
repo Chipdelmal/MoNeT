@@ -45,7 +45,10 @@ def getPopRatio(prbPop, refPop, gIx):
 
 def trueIndices(boolList):
     trueIx = [i for (i, x) in enumerate(boolList) if x == 1]
-    return trueIx
+    if len(trueIx) > 0:
+        return trueIx
+    else:
+        return [np.nan]
 
 
 def thresholdMet(thsArray):
