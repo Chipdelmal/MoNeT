@@ -37,5 +37,4 @@ def mg_select(csvList, bar_source):
     select_callback = CustomJS(
         args=dict(select=select, bar_source=bar_source), code=select_code)
     select.js_on_change('value', select_callback)
-
     return select

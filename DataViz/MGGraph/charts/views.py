@@ -92,8 +92,7 @@ def index(request):
 
     return render(request, template)
 
-@time_function
-def graph(request, csv):
+def one_experiment(csv):
     # Get csv
     df = pd.read_csv(csv)
 
@@ -217,6 +216,12 @@ def graph(request, csv):
 
     # Select
     select = mg_select(csvList, bar_source)
+    return scatter, bar, slider, select
+
+
+@time_function
+def graph(request, csv):
+    scatter, bar, slider, select = one_experiment(csv)
 
     # Create grid for graphics
     grid = gridplot([[column(slider, scatter, width=800), column(
@@ -232,255 +237,12 @@ def graph(request, csv):
 
 @time_function
 def graph_2(request, csv, csv_2):
-    # Get csv
-    df = pd.read_csv(csv)
+    scatter, bar, slider, select = one_experiment(csv)
 
-    # Get Data
-    # Coordenates
-    x = df['coordX'].unique()
-    y = df['coordY'].unique()
-
-    # csvList
-    csvList = list(df['csvName'].unique())
-
-    # Get csv Count q
-    sumtime = df.loc[df['Time'] == 1]
-    countList = list(sumtime['sumTime'])
-
-    # Get time Count
-    time = df.loc[df['id'] == 1]
-
-    # Get cvs time values in x Time
-    timeList = []
-    for i in range((len(time))):
-        aux = i
-        l = df.loc[df['Time'] == aux]
-        lList = list(l['sumTime'])
-        timeList.append(lList)
-
-    # Slider
-    slider = Slider(start=1, end=len(time), value=1, step=1, title="Time")
-
-    # Scatter Graphic:
-    # Colors
-    N = len(sumtime['sumTime'])
-    _x = random(size=N) * 100
-    color_count = np.asarray(countList)
-    colors = ["#%02x%02x%02x" % (int(r), int(g), 150) for r, g in zip(
-        50 + 2 * _x, (30 + 2 * (color_count / 100)))]
-
-    # Data Source
-    source = ColumnDataSource(dict(
-        x=x,
-        y=y,
-        csv=csvList,
-        t_hover=countList,
-        colors=colors,
-        aux_color=_x,
-        color_values=color_count))
-
-    # Hover
-    hover = HoverTool(tooltips=[
-        ('csv', '@csv'),
-        ('Total', '@t_hover')
-    ])
-
-    scatter = figure(tools=[hover])
-
-    scatter.scatter(x='x', y='y', size=15, source=source,
-              fill_color='colors', fill_alpha=0.6,
-              line_color=None)
-
-    # Bar Graph
-    # Get Column List
-    col_list = list(df)
-    col_list.remove('id')
-    col_list.remove('coordY')
-    col_list.remove('coordX')
-    col_list.remove('csvName')
-    col_list.remove('Time')
-    col_list.remove('sumTime')
-    col_list.remove('Unnamed: 0')
-
-    # Get df for first csv
-    bar_initial = df.loc[df['id'] == 0]
-    bar_initial = bar_initial[col_list]
-
-    gene_list = []
-    # Get list of gene values
-    count_csv = len(df['id'].unique())
-    for i in range(count_csv):
-
-        # Get gene values for a single csv
-        bar_initial = df.loc[df['id'] == i]
-        bar_initial = bar_initial[col_list]
-        aux_gene = []
-        for rows in bar_initial.itertuples(index=False):
-            x = list(rows)
-            aux_gene.append(x)
-
-        gene_list.append(aux_gene)
-
-    csv_selected = gene_list[0]
-
-    # Get data for graph
-    counts = csv_selected[0]
-    print(counts)
-
-    # Get colors
-    bar_colors = cividis(len(col_list))
-
-    bar_source = ColumnDataSource(data=dict(
-        col_list=col_list,
-        counts=counts,
-        bar_colors=bar_colors,
-        gene_list=gene_list,
-        selected_csv=[0, 0],
-        selected_time=[1, 0]))
-
-    bar = mg_bar(col_list, bar_source)
-
-    # Slider Code
-    with open('./charts/slider.js', 'r') as slider_file:
-        slider_code = slider_file.read()
-
-    callback = CustomJS(
-        args=dict(
-            source=source,
-            slider=slider,
-            timeList=timeList,
-            _x=_x,
-            bar_source=bar_source),
-        code=slider_code)
-    slider.js_on_change('value', callback)
-
-    # Select
-    select = mg_select(csvList, bar_source)
-
-    # 2 Graphs
-    # Get csv
-    df_2 = pd.read_csv(csv_2)
-
-    # Get Data
-    # Coordenates
-    x_2 = df_2['coordX'].unique()
-    y_2 = df_2['coordY'].unique()
-
-    # csvList
-    csvList_2 = list(df_2['csvName'].unique())
-
-    # Get csv Count
-    sumtime_2 = df_2.loc[df_2['Time'] == 1]
-    countList_2 = list(sumtime_2['sumTime'])
-
-    # Get time Count
-    time_2 = df_2.loc[df_2['id'] == 1]
-
-    # Get cvs time values in x Time
-    timeList_2 = []
-    for i in range((len(time_2))):
-        aux_2 = i
-        l_2 = df_2.loc[df_2['Time'] == aux_2]
-        lList_2 = list(l_2['sumTime'])
-        timeList_2.append(lList_2)
-
-    # Slider
-    slider_2 = Slider(start=1, end=len(time_2), value=1, step=1, title="Time")
-
-    # Scatter Graphic:
-    # Colors
-    N_2 = len(sumtime_2['sumTime'])
-    _x_2 = random(size=N_2) * 100
-    color_count_2 = np.asarray(countList_2)
-    colors_2 = ["#%02x%02x%02x" % (int(r), 150, int(g)) for r, g in zip(
-        50 + 2 * _x_2, (30 + 2 * (color_count_2 / 100)))]
-
-    # Data Source
-    source_2 = ColumnDataSource(dict(
-        x=x_2,
-        y=y_2,
-        csv=csvList_2,
-        t_hover=countList_2,
-        colors=colors_2,
-        aux_color=_x_2,
-        color_values=color_count_2))
-
-    # Hover
-    hover_2 = HoverTool(tooltips=[
-        ('csv', '@csv'),
-        ('Total', '@t_hover')
-    ])
-
-    p_2 = figure(tools=[hover_2])
-
-    p_2.scatter(x='x', y='y', size=15, source=source_2,
-                fill_color='colors', fill_alpha=0.6,
-                line_color=None)
-
-    # Bar Graph
-    # Get Column List
-    col_list_2 = list(df_2)
-    col_list_2.remove('id')
-    col_list_2.remove('coordY')
-    col_list_2.remove('coordX')
-    col_list_2.remove('csvName')
-    col_list_2.remove('Time')
-    col_list_2.remove('sumTime')
-    col_list_2.remove('Unnamed: 0')
-
-    # Get df for first csv
-    bar_initial_2 = df_2.loc[df_2['id'] == 0]
-    bar_initial_2 = bar_initial_2[col_list_2]
-
-    gene_list_2 = []
-    # Get list of gene values
-    count_csv_2 = len(df_2['id'].unique())
-    for i in range(count_csv_2):
-
-        # Get gene values for a single csv
-        bar_initial_2 = df_2.loc[df_2['id'] == i]
-        bar_initial_2 = bar_initial_2[col_list_2]
-        aux_gene_2 = []
-        for rows in bar_initial_2.itertuples(index=False):
-            x_2 = list(rows)
-            aux_gene_2.append(x_2)
-
-        gene_list_2.append(aux_gene_2)
-
-    csv_selected_2 = gene_list_2[0]
-
-    # Get data for graph
-    counts_2 = csv_selected_2[0]
-    print(counts_2)
-
-    # Get colors
-    bar_colors_2 = viridis(len(col_list_2))
-
-    bar_source_2 = ColumnDataSource(data=dict(
-        col_list=col_list_2,
-        counts=counts_2,
-        bar_colors=bar_colors_2,
-        gene_list=gene_list_2,
-        selected_csv=[0, 0],
-        selected_time=[1, 0]))
-
-    bar_2 = mg_bar(col_list_2, bar_source_2)
-
-    callback_2 = CustomJS(
-        args=dict(
-            source=source_2,
-            slider=slider_2,
-            timeList=timeList_2,
-            _x=_x_2,
-            bar_source=bar_source_2),
-        code=slider_code)
-    slider_2.js_on_change('value', callback_2)
-
-    # Select
-    select_2 = mg_select(csvList_2, bar_source_2)
+    scatter_2, bar_2, slider_2, select_2 = one_experiment(csv)
 
     # Create grid for graphics
-    grid = gridplot([[column(slider, scatter, slider_2, p_2, width=800), column(
+    grid = gridplot([[column(slider, scatter, slider_2, scatter_2, width=800), column(
         select, bar, select_2, bar_2, width=800)]], toolbar_location=None)
 
     # Store components
