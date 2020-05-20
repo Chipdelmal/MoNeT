@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import glob
+import re
 import datetime
-import numpy as np
+from glob import glob
 import uciPan_aux as aux
 import uciPan_fun as fun
 import uciPan_drive as drv
@@ -22,8 +22,9 @@ setsBools = (
 
 (thresholds, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
 drvPars = drv.driveSelector(DRIVE_ID)
-(STYLE, DRV, NOI) = (
-        aux.STYLE_HLT, drvPars.get('HLT'), ix.STP if (STP) else ix.PAN
+(STYLE, DRV, NOI, gIx) = (
+        aux.STYLE_HLT, drvPars.get('HLT'), ix.STP if (STP) else ix.PAN,
+        drvPars[AOI]['genotypes'].index('Other')
     )
 ###############################################################################
 # Setting up paths and directories
@@ -35,53 +36,38 @@ else:
     PATH_ROOT = '/media/chipdelmal/cache/Sims/Panmictic/{}/{}/'.format(
             LAND, SET
         )
-# Setting paths
+# Setting paths ---------------------------------------------------------------
 (PATH_IMG, PATH_DATA) = (
         '{}img/'.format(PATH_ROOT), '{}out/{}/'.format(PATH_ROOT, DRIVE_ID)
     )
-PATH_OUT = PATH_DATA + 'POSTPROCESS/'
+PATH_OUT = PATH_DATA+'POSTPROCESS/'
 monet.makeFolder(PATH_OUT)
+# Setting up experiments data and paths ---------------------------------------
+dtaFldr = PATH_DATA+'PREPROCESS/'
+expNames = fun.splitExpNames(dtaFldr)
 # Print terminal info and create folder ---------------------------------------
 tS = datetime.datetime.now()
 fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
-# Setting up experiments data and paths ---------------------------------------
-gIx = drvPars[AOI]['genotypes'].index('Other')
-dtaFldr = PATH_DATA + 'PREPROCESS/'
-expNames = fun.splitExpNames(dtaFldr)
 ###############################################################################
 # Load Reference Population
 ###############################################################################
 expName = expNames[0]
 expPath = '{}{}*.lzma'.format(dtaFldr, expName)
-expSet = glob.glob(expPath)
-dtaRef = [fun.loadDataset(expSet, i[0], i[1]) for i in setsBools]
+expSet = glob(expPath)
+dtaRef = {i[0]: fun.loadDataset(expSet, i[0], i[1]) for i in setsBools}
 ###############################################################################
 # Process Experiments
 ###############################################################################
 expName = expNames[10]
 expPath = '{}{}*.lzma'.format(dtaFldr, expName)
-expSet = glob.glob(expPath)
-dtaPrb = [fun.loadDataset(expSet, i[0], i[1]) for i in setsBools]
+expSet = glob(expPath)
+dtaPrb = {i[0]: fun.loadDataset(expSet, i[0], i[1]) for i in setsBools}
 # Sum data analyses -----------------------------------------------------------
 # if dta[0] is not None:
-# Mean response TTI
-(meanRef, meanPrb) = (dtaRef[0], dtaPrb[0])
-ratioOI = fun.getPopRatio(meanPrb['population'], meanRef['population'], gIx)
-thsArray = fun.comparePopToThresholds(ratioOI, thresholds)
-thsDays = fun.thresholdMet(thsArray)
-ttiAn = [i[0] for i in thsDays]
-# Traces TTI
-prb = dtaPrb[4]['landscapes']
-smpNum = len(prb)
-ttiArr = np.empty((smpNum, len(thresholds)))
-for s in range(smpNum):
-    refPop = meanRef['population']
-    ratioOI = fun.getPopRatio(prb[s], refPop, gIx)
-    thsArray = fun.comparePopToThresholds(ratioOI, thresholds)
-    thsDays = fun.thresholdMet(thsArray)
-    ttiArr[s] = [i[0] for i in thsDays]
+(meanPrb, srpPrb, meanRef) = (dtaPrb['sum'], dtaPrb['srp'], dtaRef['sum'])
+ttiAn = fun.calcMeanTTI(meanPrb, meanRef, thresholds, gIx)
+ttiQt = fun.calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.5)
 
-(mttiArr, qttiArr) = (
-        np.nanmean(ttiArr, axis=0),
-        np.nanquantile(ttiArr, 0.95, axis=0)
-    )
+
+ids = fun.getExperimentsIDSets(PATH_DATA+'PREPROCESS/', skip=-1)
+ids

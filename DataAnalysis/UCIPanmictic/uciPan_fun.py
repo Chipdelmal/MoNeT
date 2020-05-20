@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import re
 import os
 import csv
 import numpy as np
@@ -23,6 +24,17 @@ def loadDataset(expSet, fileCode, fileBool):
 def splitExpNames(PATH_OUT):
     out = [i.split('/')[-1].split('-')[0] for i in glob(PATH_OUT+'*.lzma')]
     return sorted(list(set(out)))
+
+
+def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
+    filesList = glob(PATH_EXP+'*'+ext)
+    fileNames = [i.split('/')[-1].split('.')[-2] for i in filesList]
+    splitFilenames = [re.split('_|-', i)[:skip] for i in fileNames]
+    ids = []
+    for c in range(len(splitFilenames[0])):
+        colSet = set([i[c] for i in splitFilenames])
+        ids.append(sorted(list(colSet)))
+    return ids
 
 
 ###############################################################################
@@ -59,6 +71,28 @@ def thresholdMet(thsArray):
         daysAbove = trueIndices(boolCol)
         thrsMet[col] = daysAbove
     return thrsMet
+
+
+def calcMeanTTI(meanPrb, meanRef, thresholds, gIx):
+    ratioOI = getPopRatio(meanPrb['population'], meanRef['population'], gIx)
+    thsArray = comparePopToThresholds(ratioOI, thresholds)
+    thsDays = thresholdMet(thsArray)
+    ttiAn = [i[0] for i in thsDays]
+    return ttiAn
+
+
+def calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.95):
+    prb = srpPrb['landscapes']
+    smpNum = len(prb)
+    ttiArr = np.empty((smpNum, len(thresholds)))
+    for s in range(smpNum):
+        refPop = meanRef['population']
+        ratioOI = getPopRatio(prb[s], refPop, gIx)
+        thsArray = comparePopToThresholds(ratioOI, thresholds)
+        thsDays = thresholdMet(thsArray)
+        ttiArr[s] = [i[0] for i in thsDays]
+    quant = np.nanquantile(ttiArr, quantile, axis=0)
+    return quant
 
 
 ###############################################################################
