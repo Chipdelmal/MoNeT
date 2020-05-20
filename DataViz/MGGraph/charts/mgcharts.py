@@ -1,6 +1,11 @@
 from bokeh.plotting import figure
 
-def mg_bar(col_list, bar_source, hover):
+def mg_bar(col_list, bar_source):
+    hover = HoverTool(tooltips=[
+        ('gene', '@col_list'),
+        ('Total', '@counts')
+    ])
+
     bar = figure(x_range=col_list, plot_height=600, plot_width=800,
                  toolbar_location=None, title="Gene Counts", tools=[hover])
     bar.vbar(

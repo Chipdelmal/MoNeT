@@ -18,12 +18,20 @@ import timeit
 from math import pi
 from .mgcharts import mg_bar
 
+def time_function(function):
+    def wrapper(*args, **kwargs):
+        print(function.__name__, 'starting...')
+        start = timeit.default_timer()
+        result = function(*args, **kwargs)
+        stop = timeit.default_timer()
+        print(function.__name__, 'took:', stop - start, 'seconds')
+        return result
+    return wrapper
 
+@time_function
 def index(request):
     # Check that the request is POST type
     if request.method == 'POST':
-        start = timeit.default_timer()
-
         # Declare variables
         count = 0
         df_csv = pd.DataFrame()
@@ -80,18 +88,12 @@ def index(request):
             'experiment') + '_' + str(date.today()) + '.csv'
         df_csv.to_csv(csv_name)
 
-        stop = timeit.default_timer()
-        print('Time: ', stop - start)
-
         return redirect('graph', csv=csv_name)
 
     return render(request, template)
 
-
+@time_function
 def graph(request, csv):
-
-    start = timeit.default_timer()
-
     # Get csv
     df = pd.read_csv(csv)
 
@@ -189,7 +191,6 @@ def graph(request, csv):
 
     # Get colors
     bar_colors = cividis(len(col_list))
-    print(bar_colors)
 
     bar_source = ColumnDataSource(data=dict(
         col_list=col_list,
@@ -199,13 +200,7 @@ def graph(request, csv):
         selected_csv=[0, 0],
         selected_time=[1, 0]))
 
-    # Hover
-    hover = HoverTool(tooltips=[
-        ('gene', '@col_list'),
-        ('Total', '@counts')
-    ])
-
-    bar = mg_bar(col_list, bar_source, hover)
+    bar = mg_bar(col_list, bar_source)
 
     with open('./charts/slider.js', 'r') as slider_file:
         slider_code = slider_file.read()
@@ -237,20 +232,13 @@ def graph(request, csv):
     # Store components
     script, div = components(grid)
 
-    stop = timeit.default_timer()
-    print()
-    print('Time: ', stop - start)
-
     # Return to Django with Components sent as arguments which will then de
     # displayed
     return render(request,
         'pages/base.html', {'script': script, 'div': div})
 
-
+@time_function
 def graph_2(request, csv, csv_2):
-
-    start = timeit.default_timer()
-
     # Get csv
     df = pd.read_csv(csv)
 
@@ -348,7 +336,6 @@ def graph_2(request, csv, csv_2):
 
     # Get colors
     bar_colors = cividis(len(col_list))
-    print(bar_colors)
 
     bar_source = ColumnDataSource(data=dict(
         col_list=col_list,
@@ -358,13 +345,7 @@ def graph_2(request, csv, csv_2):
         selected_csv=[0, 0],
         selected_time=[1, 0]))
 
-    # Hover
-    hover = HoverTool(tooltips=[
-        ('gene', '@col_list'),
-        ('Total', '@counts')
-    ])
-
-    bar = mg_bar(col_list, bar_source, hover)
+    bar = mg_bar(col_list, bar_source)
 
     # Slider Code
     with open('./charts/slider.js', 'r') as slider_file:
@@ -488,7 +469,6 @@ def graph_2(request, csv, csv_2):
 
     # Get colors
     bar_colors_2 = viridis(len(col_list_2))
-    print(bar_colors_2)
 
     bar_source_2 = ColumnDataSource(data=dict(
         col_list=col_list_2,
@@ -498,13 +478,7 @@ def graph_2(request, csv, csv_2):
         selected_csv=[0, 0],
         selected_time=[1, 0]))
 
-    # Hover
-    hover_2 = HoverTool(tooltips=[
-        ('gene', '@col_list'),
-        ('Total', '@counts')
-    ])
-
-    bar_2 = mg_bar(col_list_2, bar_source_2, hover_2)
+    bar_2 = mg_bar(col_list_2, bar_source_2)
 
     callback_2 = CustomJS(
         args=dict(
@@ -532,10 +506,6 @@ def graph_2(request, csv, csv_2):
 
     # Store components
     script, div = components(grid)
-
-    stop = timeit.default_timer()
-    print()
-    print('Time: ', stop - start)
 
     # Return to Django with Components sent as arguments which will then de
     # displayed
