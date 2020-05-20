@@ -113,8 +113,8 @@ def one_experiment(csv):
 
     # Get cvs time values in x Time
     timeList = []
-    for i in range((len(time))):
-        l = df.loc[df['Time'] == i]
+    for i in range(len(time)):
+        l = df.loc[df['Time'] == i + 1]
         lList = list(l['sumTime'])
         timeList.append(lList)
 
