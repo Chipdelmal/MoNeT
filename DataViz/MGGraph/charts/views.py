@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from bokeh.models import ColumnDataSource, Plot, Grid, HoverTool
@@ -378,7 +378,7 @@ def graph(request, csv):
 
     """
     select_callback = CustomJS(
-        args=dict(select=select, bar_source=bar_source), code=select_code)
+        args=dict(select=select, source=bar_source), code=select_code)
     select.js_on_change('value', select_callback)
 
     # Create grid for graphics
@@ -394,7 +394,7 @@ def graph(request, csv):
 
     # Return to Django with Components sent as arguments which will then de
     # displayed
-    return render_to_response(
+    return render(request,
         'pages/base.html', {'script': script, 'div': div})
 
 
@@ -999,5 +999,5 @@ def graph_2(request, csv, csv_2):
 
     # Return to Django with Components sent as arguments which will then de
     # displayed
-    return render_to_response(
+    return render(request,
         'pages/base.html', {'script': script, 'div': div})
