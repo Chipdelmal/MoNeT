@@ -16,7 +16,7 @@ from numpy.random import random
 from datetime import date
 import timeit
 from math import pi
-from .mgcharts import mg_bar, mg_select
+from .mgcharts import mg_bar, mg_select, mg_slider
 
 def time_function(function):
     def wrapper(*args, **kwargs):
@@ -36,8 +36,6 @@ def index(request):
         count = 0
         df_csv = pd.DataFrame()
 
-        # Declare template
-        template = 'pages/index.html'
         # Check that is compare charts
         if 'compare_charts' in request.POST:
             _list = []
@@ -90,6 +88,7 @@ def index(request):
 
         return redirect('graph', csv=csv_name)
 
+    template = 'pages/index.html'
     return render(request, template)
 
 def one_experiment(csv):
@@ -197,21 +196,7 @@ def one_experiment(csv):
     bar = mg_bar(col_list, bar_source)
 
     # Slider
-    slider = Slider(start=1, end=len(time), value=1, step=1, title="Time")
-
-    with open('./charts/slider.js', 'r') as slider_file:
-        slider_code = slider_file.read()
-
-    callback = CustomJS(
-        args=dict(
-            source=source,
-            slider=slider,
-            timeList=timeList,
-            _x=_x,
-            bar_source=bar_source,
-            status=status),
-        code=slider_code)
-    slider.js_on_change('value', callback)
+    slider = mg_slider(source, timeList, time, bar_source, status)
 
     # Select
     select = mg_select(csvList, bar_source, status)

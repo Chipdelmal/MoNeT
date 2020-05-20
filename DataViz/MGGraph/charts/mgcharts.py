@@ -1,6 +1,6 @@
 from bokeh.plotting import figure
 from bokeh.models import HoverTool
-from bokeh.models.widgets import Select
+from bokeh.models.widgets import Select, Slider
 from bokeh.models.callbacks import CustomJS
 
 
@@ -39,3 +39,20 @@ def mg_select(csvList, bar_source, status):
         args=dict(select=select, bar_source=bar_source, status=status), code=select_code)
     select.js_on_change('value', select_callback)
     return select
+
+def mg_slider(source, timeList, time, bar_source, status):
+    slider = Slider(start=1, end=len(time), value=1, step=1, title="Time")
+
+    with open('./charts/slider.js', 'r') as slider_file:
+        slider_code = slider_file.read()
+
+    callback = CustomJS(
+        args=dict(
+            source=source,
+            slider=slider,
+            timeList=timeList,
+            bar_source=bar_source,
+            status=status),
+        code=slider_code)
+    slider.js_on_change('value', callback)
+    return slider
