@@ -16,22 +16,20 @@ from numpy.random import random
 from datetime import date
 import timeit
 from math import pi
+from .mgcharts import mg_bar
 
 
 def index(request):
-
-    start = timeit.default_timer()
-
-    # Declare variables
-    count = 0
-    df_csv = pd.DataFrame()
-
-    # Declare template
-    template = 'pages/index.html'
-
     # Check that the request is POST type
     if request.method == 'POST':
+        start = timeit.default_timer()
 
+        # Declare variables
+        count = 0
+        df_csv = pd.DataFrame()
+
+        # Declare template
+        template = 'pages/index.html'
         # Check that is compare charts
         if 'compare_charts' in request.POST:
             _list = []
@@ -147,9 +145,9 @@ def graph(request, csv):
         ('Total', '@t_hover')
     ])
 
-    p = figure(tools=[hover])
+    scatter = figure(tools=[hover])
 
-    p.scatter(x='x', y='y', size=15, source=source,
+    scatter.scatter(x='x', y='y', size=15, source=source,
               fill_color='colors', fill_alpha=0.6,
               line_color=None)
 
@@ -207,22 +205,7 @@ def graph(request, csv):
         ('Total', '@counts')
     ])
 
-    bar = figure(x_range=col_list, plot_height=600, plot_width=800,
-                 toolbar_location=None, title="Gene Counts", tools=[hover])
-    bar.vbar(
-        x='col_list',
-        top='counts',
-        width=0.9,
-        source=bar_source,
-        legend="col_list",
-        line_color='white',
-        fill_color='bar_colors')
-
-    bar.xgrid.grid_line_color = None
-    bar.y_range.start = 0
-    bar.y_range.end = 700
-    bar.legend.orientation = "horizontal"
-    bar.legend.location = "top_center"
+    bar = mg_bar(col_list, bar_source, hover)
 
     with open('./charts/slider.js', 'r') as slider_file:
         slider_code = slider_file.read()
@@ -248,7 +231,7 @@ def graph(request, csv):
     select.js_on_change('value', select_callback)
 
     # Create grid for graphics
-    grid = gridplot([[column(slider, p, width=800), column(
+    grid = gridplot([[column(slider, scatter, width=800), column(
         select, bar, width=800)]], toolbar_location=None)
 
     # Store components
@@ -321,9 +304,9 @@ def graph_2(request, csv, csv_2):
         ('Total', '@t_hover')
     ])
 
-    p = figure(tools=[hover])
+    scatter = figure(tools=[hover])
 
-    p.scatter(x='x', y='y', size=15, source=source,
+    scatter.scatter(x='x', y='y', size=15, source=source,
               fill_color='colors', fill_alpha=0.6,
               line_color=None)
 
@@ -381,22 +364,7 @@ def graph_2(request, csv, csv_2):
         ('Total', '@counts')
     ])
 
-    bar = figure(x_range=col_list, plot_height=600, plot_width=800,
-                 toolbar_location=None, title="Gene Counts", tools=[hover])
-    bar.vbar(
-        x='col_list',
-        top='counts',
-        width=0.9,
-        source=bar_source,
-        legend="col_list",
-        line_color='white',
-        fill_color='bar_colors')
-
-    bar.xgrid.grid_line_color = None
-    bar.y_range.start = 0
-    bar.y_range.end = 700
-    bar.legend.orientation = "horizontal"
-    bar.legend.location = "top_center"
+    bar = mg_bar(col_list, bar_source, hover)
 
     # Slider Code
     with open('./charts/slider.js', 'r') as slider_file:
@@ -536,27 +504,7 @@ def graph_2(request, csv, csv_2):
         ('Total', '@counts')
     ])
 
-    bar_2 = figure(x_range=col_list_2, plot_height=600, plot_width=800,
-                   toolbar_location=None, title="Gene Counts", tools=[hover_2])
-    bar_2.vbar(
-        x='col_list',
-        top='counts',
-        width=0.9,
-        source=bar_source_2,
-        legend="col_list",
-        line_color='white',
-        fill_color='bar_colors')
-
-    bar_2.xgrid.grid_line_color = None
-    bar_2.y_range.start = 0
-    bar_2.y_range.end = 700
-    bar_2.legend.orientation = "horizontal"
-    bar_2.legend.location = "top_center"
-
-    # bar_selected_csv = bar_csv[bar_data['selected_csv']];
-
-    # console.log("Selected csv:");
-    # console.log(bar_selected_csv);
+    bar_2 = mg_bar(col_list_2, bar_source_2, hover_2)
 
     callback_2 = CustomJS(
         args=dict(
@@ -579,7 +527,7 @@ def graph_2(request, csv, csv_2):
     select_2.js_on_change('value', select_callback_2)
 
     # Create grid for graphics
-    grid = gridplot([[column(slider, p, slider_2, p_2, width=800), column(
+    grid = gridplot([[column(slider, scatter, slider_2, p_2, width=800), column(
         select, bar, select_2, bar_2, width=800)]], toolbar_location=None)
 
     # Store components
