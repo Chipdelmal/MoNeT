@@ -80,4 +80,8 @@ for s in range(smpNum):
     thsArray = fun.comparePopToThresholds(ratioOI, thresholds)
     thsDays = fun.thresholdMet(thsArray)
     ttiArr[s] = [i[0] for i in thsDays]
-ttiArr
+
+(mttiArr, qttiArr) = (
+        np.nanmean(ttiArr, axis=0),
+        np.nanquantile(ttiArr, 0.95, axis=0)
+    )
