@@ -56,7 +56,6 @@ dtaPrb = {i[0]: fun.loadDataset(expSet, i[0], i[1]) for i in setsBools}
 (meanPrb, srpPrb, meanRef) = (dtaPrb['sum'], dtaPrb['srp'], dtaRef['sum'])
 ttiAn = fun.calcMeanTTI(meanPrb, meanRef, thresholds, gIx)
 ttiQt = fun.calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.5)
-ttiQt
 
 ids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
 ids

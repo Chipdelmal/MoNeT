@@ -55,7 +55,9 @@ scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandSorted/* /hom
 Copy landscapes to server:
 
 ```bash
-scp -rp /home/chipdelmal/Desktop/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/* lab:/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/
+scp -rp /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/* lab:/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/
+
+scp -rp /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/C000001/* lab:/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/
 ```
 
 ```bash

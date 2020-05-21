@@ -14,7 +14,7 @@ def selectPath(USR, LAND, SET, DRIVE_ID):
     (PATH_IMG, PATH_DATA) = (
             '{}img/'.format(PATH_ROOT), '{}out/{}/'.format(PATH_ROOT, DRIVE_ID)
         )
-    PATH_PRE = PATH_DATA+'PREPROCESS/'
+    PATH_PRE = PATH_DATA + 'PREPROCESS/'
     PATH_OUT = PATH_DATA + 'POSTPROCESS/'
     return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
 
