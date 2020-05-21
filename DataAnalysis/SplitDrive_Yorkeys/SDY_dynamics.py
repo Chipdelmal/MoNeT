@@ -13,7 +13,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 
 (SET, TRA, HEA) = ('unAggregated', True, True)
-PATH = '/home/chipdelmal/Desktop/SplitDrive_Yorkeys/geoProof/'
+PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
 ###############################################################################
 # Experiment selection parameters
 ###############################################################################

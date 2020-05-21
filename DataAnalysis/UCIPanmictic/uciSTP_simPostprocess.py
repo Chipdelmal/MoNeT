@@ -86,7 +86,8 @@ for pairIx in range(len(pbFiles)):
     xpId = [int(splitXpId[i]) for i in idIx]
     (meanRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
     tmp = list(fun.calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.5))
-    thCuts.append(xpId.extend(tmp))
+    xpId.extend(tmp)
+    thCuts.append(xpId)
 
 thCuts
 
