@@ -73,24 +73,21 @@ bsPat = aux.XP_NPAT.format('*', '00', '*', '*', AOI, '*', 'sum')
 bsFiles = sorted(glob(PT_PRE+bsPat))
 
 # Probe experiments
-rnIt = 1
-pbPat = aux.XP_NPAT.format('*', rnm[rnIt], '*', '*', AOI, '*', 'srp')
-pbFiles = sorted(glob(PT_PRE+pbPat))
-
-
-# Cycle to iterate through files with matching release number (rnIt)
-thCuts = []
-for pairIx in range(len(pbFiles)):
-    # Get pair of files and generate the experiment ID
-    (bFile, pFile) = (bsFiles[pairIx], pbFiles[pairIx])
-    splitXpId = re.split('_|-', pFile.split('/')[-1].split('.')[-2])
-    xpId = [int(splitXpId[i]) for i in idIx]
-    (meanRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
-    tmp = list(fun.calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.5))
-    xpId.extend(tmp)
-    thCuts.append(xpId)
-
-with open(PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'.csv', 'w', newline='') as myfile:
-     wr = csv.writer(myfile)
-     for row in thCuts:
-         wr.writerow(row)
+for rnIt in range(1, int(rnm[-1])):
+    pbPat = aux.XP_NPAT.format('*', rnm[rnIt], '*', '*', AOI, '*', 'srp')
+    pbFiles = sorted(glob(PT_PRE+pbPat))
+s    # Cycle to iterate through files with matching release number (rnIt)
+    thCuts = []
+    for pairIx in range(len(pbFiles)):
+        # Get pair of files and generate the experiment ID
+        (bFile, pFile) = (bsFiles[pairIx], pbFiles[pairIx])
+        splitXpId = re.split('_|-', pFile.split('/')[-1].split('.')[-2])
+        xpId = [int(splitXpId[i]) for i in idIx]
+        (meanRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
+        tmp = list(fun.calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.5))
+        xpId.extend(tmp)
+        thCuts.append(xpId)
+    with open(PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'.csv', 'w', newline='') as myfile:
+        wr = csv.writer(myfile)
+        for row in thCuts:
+            wr.writerow(row)
