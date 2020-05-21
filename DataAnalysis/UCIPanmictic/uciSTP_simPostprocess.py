@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import re
 import datetime
 from glob import glob
 import uciPan_aux as aux
@@ -8,7 +9,7 @@ import uciPan_fun as fun
 import uciPan_drive as drv
 import uciSTP_indices as ix
 import MoNeT_MGDrivE as monet
-
+import compress_pickle as pkl
 
 USR = 'dsk'
 (LND, DRV, SET, STP, AOI, MFS) = (
@@ -23,7 +24,7 @@ setsBools = (
 (thresholds, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
 drvPars = drv.driveSelector(DRV)
 (STYLE, drive, NOI, gIx) = (
-        aux.STYLE_HLT, drvPars.get('HLT'), ix.STP if (STP) else ix.PAN,
+        aux.STYLE_HLT, drvPars.get(AOI), ix.STP if (STP) else ix.PAN,
         drvPars[AOI]['genotypes'].index('Other')
     )
 ###############################################################################
@@ -57,5 +58,38 @@ dtaPrb = {i[0]: fun.loadDataset(expSet, i[0], i[1]) for i in setsBools}
 ttiAn = fun.calcMeanTTI(meanPrb, meanRef, thresholds, gIx)
 ttiQt = fun.calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.5)
 
+###############################################################################
+# Dev
+###############################################################################
+# Getting the experiments' unique IDs
+# E_0000100_00_100_0001-HLT_000000_agg
+idIx = [1, 2, 3, 4, 6]
 ids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
-ids
+(rrt, rnm, fit, svr, gne, grp) = ids[1:]
+
+# Base experiments
+bsPat = aux.XP_NPAT.format('*', '00', '*', '*', AOI, '*', 'sum')
+bsFiles = sorted(glob(PT_PRE+bsPat))
+
+# Probe experiments
+rnIt = 1
+pbPat = aux.XP_NPAT.format('*', rnm[rnIt], '*', '*', AOI, '*', 'srp')
+pbFiles = sorted(glob(PT_PRE+pbPat))
+
+
+# Cycle to iterate through files with matching release number (rnIt)
+thCuts = []
+for pairIx in range(len(pbFiles)):
+    # Get pair of files and generate the experiment ID
+    (bFile, pFile) = (bsFiles[pairIx], pbFiles[pairIx])
+    splitXpId = re.split('_|-', pbFiles[0].split('/')[-1].split('.')[-2])
+    xpId = [int(splitXpId[i]) for i in idIx]
+    (meanRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
+    tmp = list(fun.calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.5))
+    thCuts.append(xpId.extend(tmp))
+
+thCuts
+
+
+
+splitXpId

@@ -4,6 +4,9 @@
 import MoNeT_MGDrivE as monet
 
 
+XP_NPAT = 'E_{}_{}_{}_{}-{}_{}_{}.lzma'
+
+
 def selectPath(USR, LAND, SET, DRIVE_ID):
     if USR == 'srv':
         PATH_ROOT = '/RAID5/marshallShare/UCI/Yoosook/{}/{}/'.format(LAND, SET)
