@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import re
+import csv
 import MoNeT_MGDrivE as monet
 
 
@@ -20,6 +22,19 @@ def selectPath(USR, LAND, SET, DRIVE_ID):
     PATH_PRE = PATH_DATA + 'PREPROCESS/'
     PATH_OUT = PATH_DATA + 'POSTPROCESS/'
     return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
+
+
+def writeListToCSV(fileName, inList):
+    with open(fileName, 'w', newline='') as myfile:
+        wr = csv.writer(myfile)
+        for row in inList:
+            wr.writerow(row)
+
+
+def getXpId(pFile, idIx):
+    splitXpId = re.split('_|-', pFile.split('/')[-1].split('.')[-2])
+    xpId = [int(splitXpId[i]) for i in idIx]
+    return xpId
 
 
 # #############################################################################
