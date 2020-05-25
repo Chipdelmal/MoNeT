@@ -10,7 +10,7 @@ def mg_bar(col_list, bar_source):
         ('Total', '@counts')
     ])
 
-    bar = figure(x_range=col_list, plot_height=600, plot_width=800,
+    bar = figure(x_range=col_list,
                  toolbar_location=None, title="Gene Counts", tools=[hover])
     bar.vbar(
         x='col_list',

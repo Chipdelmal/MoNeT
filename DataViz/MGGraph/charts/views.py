@@ -3,11 +3,12 @@ from django.contrib import messages
 
 from bokeh.transform import transform
 from bokeh.models import (ColumnDataSource, Plot,
-                          Grid, HoverTool, LinearColorMapper)
+                          Grid, HoverTool, LinearColorMapper, BasicTicker,
+                          ColorBar, PrintfTickFormatter)
 from bokeh.models.widgets import Slider
 from bokeh.models.callbacks import CustomJS
 from bokeh.plotting import figure
-from bokeh.layouts import column, gridplot
+from bokeh.layouts import gridplot, layout, column, row
 from bokeh.embed import components
 from bokeh.transform import cumsum
 from bokeh.palettes import inferno, viridis, cividis
@@ -181,7 +182,6 @@ def one_experiment(csv):
 
     heatmap_data = np.array(gene_list).sum(axis=0).T
 
-    print(heatmap_data.shape)
     heatmap_genes = ('WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
                      'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB')
     heatmap_df = pd.DataFrame(data=heatmap_data, index=heatmap_genes)
@@ -199,8 +199,6 @@ def one_experiment(csv):
                                high=heatmap_data.value.max())
 
     heatmap = figure(
-        plot_width=800,
-        plot_height=300,
         title="Heatmap",
         x_range=list(heatmap_df.columns.astype('str')),
         y_range=heatmap_genes,
@@ -210,6 +208,15 @@ def one_experiment(csv):
 
     heatmap.rect(x="time", y="gene", width=1, height=1, source=heatmap_source,
                  line_color=None, fill_color=transform('value', mapper))
+
+    color_bar = ColorBar(color_mapper=mapper, location=(0, 0),
+                     ticker=BasicTicker(desired_num_ticks=len(colors)),
+                     formatter=PrintfTickFormatter(format="%d"))
+
+    heatmap.add_layout(color_bar, 'right')
+
+    heatmap.axis.axis_line_color = None
+    heatmap.axis.major_tick_line_color = None
 
     csv_selected = gene_list[0]
 
@@ -237,16 +244,20 @@ def one_experiment(csv):
 
     # Select
     select = mg_select(csvList, bar_source, status)
-    return heatmap, bar, slider, select
+    return scatter, bar, heatmap, slider, select
 
 
 @time_function
 def graph(request, csv):
-    heatmap, bar, slider, select = one_experiment(csv)
+    scatter, bar, heatmap, slider, select = one_experiment(csv)
 
+    controls = row(slider, select)
     # Create grid for graphics
-    grid = gridplot([[column(slider, heatmap, width=800), column(
-        select, bar, width=800)]], toolbar_location=None)
+    grid = layout([
+        [heatmap],
+        [controls],
+        [scatter, bar]
+    ], sizing_mode="stretch_width")
 
     # Store components
     script, div = components(grid)
@@ -259,14 +270,21 @@ def graph(request, csv):
 
 @time_function
 def graph_2(request, csv, csv_2):
-    scatter, bar, slider, select = one_experiment(csv)
+    scatter, bar, heatmap, slider, select = one_experiment(csv)
 
-    scatter_2, bar_2, slider_2, select_2 = one_experiment(csv)
+    scatter_2, bar_2, heatmap_2, slider_2, select_2 = one_experiment(csv)
 
+    controls = row(slider, select)
+    controls_2 = row(slider_2, select_2)
     # Create grid for graphics
-    grid = gridplot([[column(slider, scatter, slider_2, scatter_2, width=800),
-                      column(select, bar, select_2, bar_2, width=800)]],
-                    toolbar_location=None)
+    grid = layout([
+        [heatmap],
+        [controls],
+        [scatter, bar],
+        [heatmap_2],
+        [controls_2],
+        [scatter_2, bar_2]
+    ], sizing_mode="stretch_width")
 
     # Store components
     script, div = components(grid)
