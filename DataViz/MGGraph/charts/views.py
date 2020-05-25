@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from bokeh.models import ColumnDataSource, Plot, Grid, HoverTool
+from bokeh.transform import transform
+from bokeh.models import (ColumnDataSource, Plot,
+                          Grid, HoverTool, LinearColorMapper)
 from bokeh.models.widgets import Slider
 from bokeh.models.callbacks import CustomJS
 from bokeh.plotting import figure
@@ -18,6 +20,7 @@ import timeit
 from math import pi
 from .mgcharts import mg_bar, mg_select, mg_slider
 
+
 def time_function(function):
     def wrapper(*args, **kwargs):
         print(function.__name__, 'starting...')
@@ -27,6 +30,7 @@ def time_function(function):
         print(function.__name__, 'took:', stop - start, 'seconds')
         return result
     return wrapper
+
 
 @time_function
 def index(request):
@@ -91,6 +95,7 @@ def index(request):
     template = 'pages/index.html'
     return render(request, template)
 
+
 def one_experiment(csv):
     # Get csv
     df = pd.read_csv(csv)
@@ -142,7 +147,7 @@ def one_experiment(csv):
     scatter = figure(tools=[hover])
 
     scatter.scatter(x='x', y='y', size=16, source=source,
-              fill_color='colors', fill_alpha=0.7)
+                    fill_color='colors', fill_alpha=0.7)
 
     # Bar Graph
     # Get Column List
@@ -174,6 +179,38 @@ def one_experiment(csv):
 
         gene_list.append(aux_gene)
 
+    heatmap_data = np.array(gene_list).sum(axis=0).T
+
+    print(heatmap_data.shape)
+    heatmap_genes = ('WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
+                     'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB')
+    heatmap_df = pd.DataFrame(data=heatmap_data, index=heatmap_genes)
+    heatmap_df.columns.name = 'time'
+    heatmap_df.index.name = 'gene'
+    heatmap_data = pd.DataFrame(heatmap_df.stack(),
+                                columns=['value']).reset_index()
+    heatmap_source = ColumnDataSource(heatmap_data)
+
+    # Heatmap
+    heatmap_colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2",
+                      "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
+    mapper = LinearColorMapper(palette=heatmap_colors,
+                               low=heatmap_data.value.min(),
+                               high=heatmap_data.value.max())
+
+    heatmap = figure(
+        plot_width=800,
+        plot_height=300,
+        title="Heatmap",
+        x_range=list(heatmap_df.columns.astype('str')),
+        y_range=heatmap_genes,
+        toolbar_location=None,
+        tools=""
+    )
+
+    heatmap.rect(x="time", y="gene", width=1, height=1, source=heatmap_source,
+                 line_color=None, fill_color=transform('value', mapper))
+
     csv_selected = gene_list[0]
 
     # Get data for graph
@@ -200,15 +237,15 @@ def one_experiment(csv):
 
     # Select
     select = mg_select(csvList, bar_source, status)
-    return scatter, bar, slider, select
+    return heatmap, bar, slider, select
 
 
 @time_function
 def graph(request, csv):
-    scatter, bar, slider, select = one_experiment(csv)
+    heatmap, bar, slider, select = one_experiment(csv)
 
     # Create grid for graphics
-    grid = gridplot([[column(slider, scatter, width=800), column(
+    grid = gridplot([[column(slider, heatmap, width=800), column(
         select, bar, width=800)]], toolbar_location=None)
 
     # Store components
@@ -217,7 +254,8 @@ def graph(request, csv):
     # Return to Django with Components sent as arguments which will then de
     # displayed
     return render(request,
-        'pages/base.html', {'script': script, 'div': div})
+                  'pages/base.html', {'script': script, 'div': div})
+
 
 @time_function
 def graph_2(request, csv, csv_2):
@@ -226,8 +264,9 @@ def graph_2(request, csv, csv_2):
     scatter_2, bar_2, slider_2, select_2 = one_experiment(csv)
 
     # Create grid for graphics
-    grid = gridplot([[column(slider, scatter, slider_2, scatter_2, width=800), column(
-        select, bar, select_2, bar_2, width=800)]], toolbar_location=None)
+    grid = gridplot([[column(slider, scatter, slider_2, scatter_2, width=800),
+                      column(select, bar, select_2, bar_2, width=800)]],
+                    toolbar_location=None)
 
     # Store components
     script, div = components(grid)
@@ -235,4 +274,4 @@ def graph_2(request, csv, csv_2):
     # Return to Django with Components sent as arguments which will then de
     # displayed
     return render(request,
-        'pages/base.html', {'script': script, 'div': div})
+                  'pages/base.html', {'script': script, 'div': div})
