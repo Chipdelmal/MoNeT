@@ -119,8 +119,8 @@ def one_experiment(csv):
     # Get cvs time values in x Time
     timeList = []
     for i in range(len(time)):
-        l = df.loc[df['Time'] == i + 1]
-        lList = list(l['sumTime'])
+        res = df.loc[df['Time'] == i + 1]
+        lList = list(res['sumTime'])
         timeList.append(lList)
 
     # Scatter Graphic:
@@ -209,9 +209,11 @@ def one_experiment(csv):
     heatmap.rect(x="time", y="gene", width=1, height=1, source=heatmap_source,
                  line_color=None, fill_color=transform('value', mapper))
 
-    color_bar = ColorBar(color_mapper=mapper, location=(0, 0),
-                     ticker=BasicTicker(desired_num_ticks=len(colors)),
-                     formatter=PrintfTickFormatter(format="%d"))
+    color_bar = ColorBar(
+        color_mapper=mapper, location=(0, 0),
+        ticker=BasicTicker(desired_num_ticks=len(heatmap_colors)),
+        formatter=PrintfTickFormatter(format="%d")
+    )
 
     heatmap.add_layout(color_bar, 'right')
 
