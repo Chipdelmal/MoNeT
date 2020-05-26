@@ -16,7 +16,6 @@ const scatter_data = source.data;
 
 const colors = scatter_data['colors'];
 
-console.warn(timeList[0][0]);
 scatter_data.count = timeList[time];
 
 
