@@ -1,6 +1,7 @@
 
 import os
 import numpy as np
+from glob import glob
 import SDY_aux as aux
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
@@ -282,3 +283,39 @@ def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
                 alpha=value, linewidths=.25, edgecolors='White'
             )
     return m
+
+
+###############################################################################
+# New
+###############################################################################
+def splitExpNames(PATH_OUT):
+    out = [i.split('/')[-1].split('-')[0] for i in glob(PATH_OUT+'*.lzma')]
+    return sorted(list(set(out)))
+
+
+def getExpPaths(PATH_DATA):
+    (expDirsMean, expDirsTrac) = (
+            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'ANALYZED/'),
+            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'GARBAGE/')
+        )
+    expDirsMean.sort()
+    expDirsTrac.sort()
+    return (expDirsMean, expDirsTrac)
+
+
+def printExpTerminal(time, PATH_ROOT, PATH_IMG, PATH_DATA):
+    print(aux.PADA)
+    printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, str(time))
+    expOutRootPath = PATH_IMG
+    monet.makeFolder(expOutRootPath)
+
+
+def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
+    print(
+            aux.CWHT + 'SDY Experiments Analysis '
+            + '[' + time + ']' + aux.CEND
+        )
+    print(aux.PADB)
+    print(aux.CRED + '* Root  PATH: ' + PATH_ROOT + aux.CEND)
+    print(aux.CRED + '* Data  PATH: ' + PATH_DATA + aux.CEND)
+    print(aux.CRED + '* Image PATH: ' + PATH_IMG + aux.CEND)

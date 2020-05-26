@@ -21,7 +21,6 @@ import compress_pickle as pkl
         'tParams', 'LDR', False, 'HLT', (True, True), False, '.lzma'
     )
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-(thresholds, REL_STRT, WARM) = ([.05, .10, .25, .50, .75], 2, 2)
 drvPars = drv.driveSelector(DRIVE_ID)
 (STYLE, DRV, NOI) = (
         aux.STYLE_HLT,
