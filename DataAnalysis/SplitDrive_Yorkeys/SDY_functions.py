@@ -13,7 +13,7 @@ np.seterr(divide='ignore', invalid='ignore')
 ###############################################################################
 def filterFilesByIndex(files, ix, male=True, female=True):
     m = [files['male'][z] for z in ix] if male else []
-    f = [files['female'][z] for z in ix] if male else []
+    f = [files['female'][z] for z in ix] if female else []
     ffiles = {'male': m, 'female': f}
     return ffiles
 
