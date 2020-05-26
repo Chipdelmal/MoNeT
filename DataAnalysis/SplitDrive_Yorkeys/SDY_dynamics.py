@@ -18,7 +18,9 @@ PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
 # Experiment selection parameters
 ###############################################################################
 if SET == 'unAggregated':
-    sectorsIx = ix.NAGIX
+    (sectorsIx, pp) = (ix.NAGIX, 'UA')
+else:
+    (sectorsIx, pp) = (ix.AGGIX, 'AA')
 ###############################################################################
 # Setting up colors and style
 ###############################################################################
@@ -95,10 +97,10 @@ for i in range(0, xpNumb):
             monet.plotLandscapeDataRepetitions(ykLand, STYLE),
             monet.plotLandscapeDataRepetitions(tpLand, STYLE)
         )
-    fun.exportTracesPlot(ykLand, name, STYLE, PATH_IMG, append='D'+'_YK')
-    fun.exportTracesPlot(tpLand, name, STYLE, PATH_IMG, append='D'+'_TP')
+    fun.exportTracesPlot(ykLand, name, STYLE, PATH_IMG, append='D'+'_YK_'+pp)
+    fun.exportTracesPlot(tpLand, name, STYLE, PATH_IMG, append='D'+'_TP_'+pp)
     monet.quickSaveFigure(
-            overlay, '{}/{}-{}.pdf'.format(PATH_IMG, name, 'O'),
+            overlay, '{}/{}-{}.pdf'.format(PATH_IMG, name, 'O_'+pp),
             format='pdf'
         )
 monet.exportGeneLegend(ykLand['genotypes'], COLORS, PATH_IMG+'/plt.pdf', 500)

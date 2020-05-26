@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import re
-import csv
 import datetime
 from glob import glob
 import uciPan_aux as aux
@@ -14,16 +12,9 @@ import compress_pickle as pkl
 
 USR = 'dsk'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
-        'tParams', 'LDR', 'island',
-        False, 'HLT', (True, True),
-        [.5, .9, .95], True
+        'tParams', 'LDR', 'island', False,
+        'HLT', (True, True), [.5, .9, .95], False
     )
-setsBools = (
-        ('sum', True), ('agg', True),
-        ('spa', True), ('rep', True), ('srp', True)
-    )
-
-
 (thr, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
 drvPars = drv.driveSelector(DRV)
 (STYLE, drive, NOI, gIx) = (
@@ -71,7 +62,7 @@ for qnt in QNT:
             ))
         (thCuts, fNum) = ([], len(pbFiles))
         for pairIx in range(fNum):
-            print('{}- File {}/{}'.format(
+            print('{}+ File: {}/{}'.format(
                     monet.CBBL, str(pairIx+1).zfill(len(str(fNum))),
                     fNum, monet.CEND
                 ), end='\r')
@@ -88,6 +79,10 @@ for qnt in QNT:
 ###############################################################################
 # Load Reference Population
 ###############################################################################
+# setsBools = (
+#         ('sum', True), ('agg', True),
+#         ('spa', True), ('rep', True), ('srp', True)
+#     )
 # expName = expNames[0]
 # expPath = '{}{}*.lzma'.format(PT_PRE, expName)
 # expSet = glob(expPath)
