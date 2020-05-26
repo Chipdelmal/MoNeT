@@ -57,7 +57,7 @@ expsDone = set(outNames)
 for exIx in range(0, expNum):
     # Setup paths -------------------------------------------------------------
     strInt = str(exIx+1).zfill(len(str(expNum)))
-    print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
+    print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\n')
     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
     expName = pathMean.split('/')[-1]
     if (expName in expsDone) and (SKP):
@@ -68,6 +68,7 @@ for exIx in range(0, expNum):
     files = monet.readExperimentFilenames(pathMean)
     filesList = [monet.filterFilesByIndex(files, ix) for ix in NOI]
     # Process data
+    print(aux.CBLU + '+ Land repetitions...             ' + aux.CEND, end='\r')
     landReps = monet.loadAndAggregateLandscapeDataRepetitions(
             dirsTraces, DRV, MF[0], MF[1]
         )
@@ -77,24 +78,24 @@ for exIx in range(0, expNum):
             )
         # Load data -----------------------------------------------------------
         if SUM:
-            print(aux.CBLU + '+ SUM...         ' + aux.CEND, end='\r')
+            print(aux.CBLU + '+ Summed landscape...     ' + aux.CEND, end='\r')
             sumData = monet.sumLandscapePopulationsFromFiles(pop, MF[0], MF[1])
             sumAgg = monet.aggregateGenotypesInNode(sumData, DRV)
             pkl.dump(sumAgg, fName+'_sum'+FMT, compression="lzma")
         if AGG:
-            print(aux.CBLU + '+ AGG...         ' + aux.CEND, end='\r')
+            print(aux.CBLU + '+ Aggregated landscape... ' + aux.CEND, end='\r')
             aggData = monet.loadAndAggregateLandscapeData(pop, DRV, MF[0], MF[1])
             pkl.dump(aggData, fName+'_agg'+FMT, compression="lzma")
         if SPA:
-            print(aux.CBLU + '+ SPA...         ' + aux.CEND, end='\r')
+            print(aux.CBLU + '+ Spatial landscape...    ' + aux.CEND, end='\r')
             geneSpaTemp = monet.getGenotypeArraysFromLandscape(aggData)
             pkl.dump(geneSpaTemp, fName+'_spa'+FMT, compression="lzma")
         if REP:
-            print(aux.CBLU + '+ REP...         ' + aux.CEND, end='\r')
+            print(aux.CBLU + '+ Repetitions...          ' + aux.CEND, end='\r')
             fLandReps = monet.filterAggregateGarbageByIndex(landReps, NOI[pIx])
             pkl.dump(fLandReps, fName+'_rep'+FMT, compression="lzma")
         if SRP:
-            print(aux.CBLU + '+ SRP...         ' + aux.CEND, end='\r')
+            print(aux.CBLU + '+ Summed repetitions...   ' + aux.CEND, end='\r')
             fRepsSum = [sum(i) for i in fLandReps['landscapes']]
             fRepsDict = {
                     'genotypes': fLandReps['genotypes'],
