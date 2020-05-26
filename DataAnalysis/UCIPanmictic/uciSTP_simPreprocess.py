@@ -54,7 +54,6 @@ gIx = drvPars[AOI]['genotypes'].index('Other')
 (expNum, nodeDigits) = (len(expDirsMean), len(str(NOI)))
 outNames = fun.splitExpNames(PATH_OUT)
 outExpNames = set(outNames)
-outNames
 ###############################################################################
 # Analyze data
 ###############################################################################

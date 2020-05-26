@@ -26,6 +26,8 @@ else:
 # Setting up colors and style
 ###############################################################################
 (MALE, FEMALE) = (True, True)
+(SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
+FMT = '.lzma'
 (COLORS, CMAPS) = (aux.COLORS, aux.CMAPS)
 STYLE = {
         "width": .1, "alpha": .15, "dpi": 2 * 300,
@@ -38,13 +40,15 @@ GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 # Get paths and create output folders
 ###############################################################################
 sig = fun.getValidationExperiments(PATH, SET)
-(PATH_ERR, PATH_IMG, PATH_PRE) = (PATH+'err/', PATH+'img/', PATH+'pre/')
+(PATH_ERR, PATH_IMG, PATH_PRE) = (
+        PATH+'err/'+SET+'/', PATH+'img/'+SET+'/', PATH+'pre/'+SET+'/'
+    )
 monet.makeFolders([PATH_ERR, PATH_IMG, PATH_PRE])
 ###############################################################################
 # Print terminal message
 ###############################################################################
 tSrt = datetime.datetime.now()
-aux.printExperimentHead(PATH, PATH_IMG, PATH_ERR, str(tSrt), 'Gene Dynamics ')
+aux.printExperimentHead(PATH, PATH_IMG, PATH_PRE, str(tSrt), 'Gene Dynamics ')
 ###############################################################################
 # Main analyses
 ###############################################################################
@@ -84,27 +88,12 @@ for i in range(0, xpNumb):
             monet.filterAggregateGarbageByIndex(landscapeReps, sectorsIx[1]),
             monet.filterAggregateGarbageByIndex(landscapeReps, sectorsIx[0])
         )
-    # Plots  ------------------------------------------------------------------
-    print(aux.CBLU+'- Plotting...'+aux.PADC, end='\r')
-    geneSpatiotemporalsNorm = monet.rescaleGeneSpatiotemporals(
-            geneSpatiotemporals
-        )
-    overlay = monet.plotGenotypeOverlayFromLandscape(
-            geneSpatiotemporalsNorm,
-            style={"aspect": 50 * STYLE['aspect'], "cmap": CMAPS},
-            vmax=1  # 50
-        )
-    figsArray = (
-            monet.plotLandscapeDataRepetitions(ykLand, STYLE),
-            monet.plotLandscapeDataRepetitions(tpLand, STYLE)
-        )
-    fun.exportTracesPlot(ykLand, name, STYLE, PATH_IMG, append='D'+'_YK_'+pp)
-    fun.exportTracesPlot(tpLand, name, STYLE, PATH_IMG, append='D'+'_TP_'+pp)
-    monet.quickSaveFigure(
-            overlay, '{}/{}-{}.pdf'.format(PATH_IMG, name, 'O_'+pp),
-            format='pdf'
-        )
-monet.exportGeneLegend(ykLand['genotypes'], COLORS, PATH_IMG+'/plt.pdf', 500)
+    # Dump --------------------------------------------------------------------
+    fNameAL = '{}/{}-{}_{}'.format(PATH_PRE, name, SET, 'AL')
+    fNameYK = '{}/{}-{}_{}'.format(PATH_PRE, name, SET, 'YK')
+    fNameTP = '{}/{}-{}_{}'.format(PATH_PRE, name, SET, 'TP')
+    if SPA:
+        pkl.dump(geneSpatiotemporals, fNameAL+'_spa'+FMT, compression="lzma")
 ###############################################################################
 # Print terminal message
 ###############################################################################
