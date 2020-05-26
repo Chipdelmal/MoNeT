@@ -207,7 +207,7 @@ def one_experiment(csv):
     )
 
     heatmap.rect(x="time", y="gene", width=1, height=1, source=heatmap_source,
-                 line_color=None, fill_color=transform('value', mapper))
+                 line_color=None, fill_color=transform('value', mapper), dilate=True)
 
     color_bar = ColorBar(
         color_mapper=mapper, location=(0, 0),
