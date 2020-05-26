@@ -13,11 +13,16 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
-(USR, SET) = ('dsk', 'C000001')
+(USR, SET) = ('dsk', 'C001303')
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-
-YKR = 891 + 1
-NOI = (list(range(0, YKR)), list(range(YKR, YKR+int(SET[1:]))))
+if (SET == 'C000001') or (SET == 'C001303'):
+    if SET == 'C000001':
+        NOI = sdix.AGGIX
+    if SET == 'C001303':
+        NOI = sdix.NAGIX
+else:
+    YKR = 891 + 1
+    NOI = (list(range(0, YKR)), list(range(YKR, YKR+int(SET[1:]))))
 ###############################################################################
 # Experiment selection parameters
 ###############################################################################
