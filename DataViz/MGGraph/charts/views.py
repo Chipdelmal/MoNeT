@@ -3,15 +3,15 @@ from django.contrib import messages
 
 from bokeh.transform import transform
 from bokeh.models import (ColumnDataSource, Plot,
-                          Grid, HoverTool, LinearColorMapper, BasicTicker,
-                          ColorBar, PrintfTickFormatter)
+                          Grid, HoverTool, LogColorMapper, LogTicker,
+                          ColorBar, PrintfTickFormatter, LinearAxis)
 from bokeh.models.widgets import Slider
 from bokeh.models.callbacks import CustomJS
 from bokeh.plotting import figure
 from bokeh.layouts import gridplot, layout, column, row
 from bokeh.embed import components
 from bokeh.transform import cumsum
-from bokeh.palettes import inferno, viridis, cividis
+from bokeh.palettes import inferno, viridis, cividis, Viridis256
 
 import pandas as pd
 import numpy as np
@@ -192,33 +192,32 @@ def one_experiment(csv):
     heatmap_source = ColumnDataSource(heatmap_data)
 
     # Heatmap
-    heatmap_colors = ["#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2",
-                      "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"]
-    mapper = LinearColorMapper(palette=heatmap_colors,
-                               low=heatmap_data.value.min(),
-                               high=heatmap_data.value.max())
+    hm_max = heatmap_data.value.max()
+
+    # Using 0 as low prevents it from using LogTicker
+    mapper = LogColorMapper(palette=Viridis256,
+                               low=1,
+                               high=hm_max)
 
     heatmap = figure(
         title="Heatmap",
         x_range=list(heatmap_df.columns.astype('str')),
         y_range=heatmap_genes,
-        toolbar_location=None,
-        tools=""
+        tools="save,pan,box_zoom,reset,wheel_zoom"
     )
 
     heatmap.rect(x="time", y="gene", width=1, height=1, source=heatmap_source,
                  line_color=None, fill_color=transform('value', mapper), dilate=True)
 
     color_bar = ColorBar(
-        color_mapper=mapper, location=(0, 0),
-        ticker=BasicTicker(desired_num_ticks=len(heatmap_colors)),
-        formatter=PrintfTickFormatter(format="%d")
+        color_mapper=mapper,
+        location=(0, 0),
+        ticker=LogTicker(),
+        formatter=PrintfTickFormatter(format="%d"),
+        orientation='horizontal'
     )
 
-    heatmap.add_layout(color_bar, 'right')
-
-    heatmap.axis.axis_line_color = None
-    heatmap.axis.major_tick_line_color = None
+    heatmap.add_layout(color_bar, 'below')
 
     csv_selected = gene_list[0]
 
