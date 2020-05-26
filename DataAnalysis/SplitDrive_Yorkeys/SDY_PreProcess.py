@@ -1,58 +1,56 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# python3 uciPan_main.py "Volumes" "tParams" "islandMixed"
 
-# import sys
-# import csv
 import glob
 import datetime
-# import pickle as pkl
-import uciPan_aux as aux
-import uciPan_fun as fun
-# import uciPan_plot as plot
-import uciPan_drive as drv
-import uciSTP_indices as ix
+import numpy as np
+import SDY_ix as sdix
+import SDY_aux as aux
+import SDY_functions as fun
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+plt.rcParams.update({'figure.max_open_warning': 0})
 
-(USR, SET) = ('dsk', 'island')  # sys.argv[1])
-(LAND, DRIVE_ID, STP, AOI, MF, SKP, FMT) = (
-        'tParams', 'LDR', False, 'HLT', (True, True), False, '.lzma'
-    )
+
+(USR, SET) = ('dsk', 'C001303')
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-drvPars = drv.driveSelector(DRIVE_ID)
-(STYLE, DRV, NOI) = (
-        aux.STYLE_HLT,
-        drvPars.get('HLT'),
-        ix.STP if (STP) else ix.PAN
-    )
+if (SET == 'C000001') or (SET == 'C001303'):
+    if SET == 'C000001':
+        NOI = sdix.AGGIX
+    if SET == 'C001303':
+        NOI = sdix.NAGIX
+else:
+    YKR = 891 + 1
+    NOI = (list(range(0, YKR)), list(range(YKR, YKR+int(SET[1:]))))
 ###############################################################################
-# Setting up paths and directories
+# Experiment selection parameters
 ###############################################################################
+(MF, SKP, FMT) = ((True, True), True, '.lzma')
+DRV = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 # Select form server/desktop
 if USR == 'srv':
-    PATH_ROOT = '/RAID5/marshallShare/UCI/Yoosook/{}/{}/'.format(LAND, SET)
+    PTH_ROOT = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
 else:
-    PATH_ROOT = '/media/chipdelmal/cache/Sims/Panmictic/{}/{}/'.format(LAND, SET)
-# Setting paths
-(PATH_IMG, PATH_DATA) = (
-        '{}img/'.format(PATH_ROOT),
-        '{}out/{}/'.format(PATH_ROOT, DRIVE_ID)
+    PTH_ROOT = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
+# Setup paths and create folders
+(PTH_IMG, PTH_DTA, PTH_PRE) = (
+        '{}img/{}/'.format(PTH_ROOT, SET),
+        '{}{}/'.format(PTH_ROOT, SET),
+        '{}pre/{}/'.format(PTH_ROOT, SET),
+
     )
-PATH_OUT = PATH_DATA + '/PREPROCESS/'
-monet.makeFolder(PATH_OUT)
+monet.makeFolders([PTH_IMG, PTH_PRE])
 # Print terminal info and create folder
 tS = datetime.datetime.now()
-fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
+fun.printExpTerminal(tS, PTH_DTA, PTH_IMG, PTH_PRE)
 ###############################################################################
 # Setting up paths and directories
 ###############################################################################
-gIx = drvPars[AOI]['genotypes'].index('Other')
-(expDirsMean, expDirsTrac) = fun.getExpPaths(PATH_DATA)
-(expNum, nodeDigits) = (len(expDirsMean), len(str(NOI)))
-outNames = fun.splitExpNames(PATH_OUT)
-outExpNames = set(outNames)
+(expDirsMean, expDirsTrac) = fun.getExpPaths(PTH_DTA)
+(expNum, nodeDigits) = (len(expDirsMean), 6)
+outNames = fun.splitExpNames(PTH_PRE)
+expsDone = set(outNames)
 ###############################################################################
 # Analyze data
 ###############################################################################
@@ -60,21 +58,22 @@ for exIx in range(0, expNum):
     # Setup paths -------------------------------------------------------------
     strInt = str(exIx+1).zfill(len(str(expNum)))
     print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
-    (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx])
+    (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
     expName = pathMean.split('/')[-1]
-    if (expName in outExpNames) and (SKP):
-        continue
+    # if (expName in expsDone) and (SKP):
+    #     continue
     (dirsMean, dirsTraces) = (
-            pathMean, fun.listDirectoriesWithPathWithinAPath(pathTraces)
+            pathMean, monet.listDirectoriesWithPathWithinAPath(pathTraces)
         )
     files = monet.readExperimentFilenames(pathMean)
     filesList = [monet.filterFilesByIndex(files, ix) for ix in NOI]
+    # Process data
     landReps = monet.loadAndAggregateLandscapeDataRepetitions(
             dirsTraces, DRV, MF[0], MF[1]
         )
     for (pIx, pop) in enumerate(filesList):
         fName = '{}/{}-{}_{}'.format(
-                PATH_OUT, expName, AOI, str(pIx).zfill(nodeDigits)
+                PTH_PRE, expName, 'GEN', str(pIx).zfill(nodeDigits)
             )
         # Load data -----------------------------------------------------------
         if SUM:
@@ -97,7 +96,3 @@ for exIx in range(0, expNum):
                     'landscapes': fRepsSum
                 }
             pkl.dump(fRepsDict, fName+'_srp'+FMT, compression="lzma")
-tE = datetime.datetime.now()
-print(aux.PADL)
-print('Finished [{}]'.format(tE-tS))
-print(aux.PAD)

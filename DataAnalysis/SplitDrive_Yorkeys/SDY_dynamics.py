@@ -8,6 +8,7 @@ import SDY_ix as ix
 import SDY_aux as aux
 import SDY_functions as fun
 import MoNeT_MGDrivE as monet
+import compress_pickle as pkl
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
@@ -37,8 +38,8 @@ GDICT = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 # Get paths and create output folders
 ###############################################################################
 sig = fun.getValidationExperiments(PATH, SET)
-(PATH_ERR, PATH_IMG) = (PATH + 'err/', PATH + 'img/')
-fun.createFolders([PATH_ERR, PATH_IMG])
+(PATH_ERR, PATH_IMG, PATH_PRE) = (PATH+'err/', PATH+'img/', PATH+'pre/')
+monet.makeFolders([PATH_ERR, PATH_IMG, PATH_PRE])
 ###############################################################################
 # Print terminal message
 ###############################################################################
@@ -67,12 +68,12 @@ for i in range(0, xpNumb):
     # Analysis
     print(aux.CBLU+'- Loading mean...        '+aux.PADC, end='\r')
     (ykFaPath, tpFaPath) = (
-            fun.filterFilesByIndex(aFiles,  sectorsIx[1], MALE, FEMALE),
-            fun.filterFilesByIndex(aFiles,  sectorsIx[0], MALE, FEMALE)
+            monet.filterFilesByIndex(aFiles,  sectorsIx[1], MALE, FEMALE),
+            monet.filterFilesByIndex(aFiles,  sectorsIx[0], MALE, FEMALE)
         )
     (ykAggData, tpAggData) = (
-            fun.loadSummedMeanResponse(ykFaPath, GDICT, True, True),
-            fun.loadSummedMeanResponse(tpFaPath, GDICT, True, True)
+            monet.loadSummedMeanResponse(ykFaPath, GDICT, True, True),
+            monet.loadSummedMeanResponse(tpFaPath, GDICT, True, True)
         )
     # Garbage
     print(aux.CBLU+'- Loading traces...      '+aux.PADC, end='\r')
@@ -80,8 +81,8 @@ for i in range(0, xpNumb):
             gFiles, GDICT, male=True, female=True
         )
     (ykLand, tpLand) = (
-            fun.filterAggregateGarbageByIndex(landscapeReps, sectorsIx[1]),
-            fun.filterAggregateGarbageByIndex(landscapeReps, sectorsIx[0])
+            monet.filterAggregateGarbageByIndex(landscapeReps, sectorsIx[1]),
+            monet.filterAggregateGarbageByIndex(landscapeReps, sectorsIx[0])
         )
     # Plots  ------------------------------------------------------------------
     print(aux.CBLU+'- Plotting...'+aux.PADC, end='\r')

@@ -24,9 +24,11 @@ def selectPath(USR, LAND, SET, DRIVE_ID):
     return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
 
 
-def writeListToCSV(fileName, inList):
+def writeListToCSV(fileName, inList, header=None):
     with open(fileName, 'w', newline='') as myfile:
         wr = csv.writer(myfile)
+        if header is not None:
+            wr.writerow(header)
         for row in inList:
             wr.writerow(row)
 
