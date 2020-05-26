@@ -307,6 +307,7 @@ def printExpTerminal(time, PATH_ROOT, PATH_IMG, PATH_DATA):
     print(aux.PADA)
     printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, str(time))
     expOutRootPath = PATH_IMG
+    print(aux.PADA)
     monet.makeFolder(expOutRootPath)
 
 

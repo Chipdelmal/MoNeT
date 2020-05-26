@@ -13,12 +13,12 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
-(USR, SET) = ('dsk', 'C001303')
+(USR, SET) = ('srv', 'Aggregated')
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-if (SET == 'C000001') or (SET == 'C001303'):
-    if SET == 'C000001':
+if (SET == 'unAggregated') or (SET == 'Aggregated'):
+    if SET == 'Aggregated':
         NOI = sdix.AGGIX
-    if SET == 'C001303':
+    if SET == 'unAggregated':
         NOI = sdix.NAGIX
 else:
     YKR = 891 + 1
@@ -60,8 +60,8 @@ for exIx in range(0, expNum):
     print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
     expName = pathMean.split('/')[-1]
-    # if (expName in expsDone) and (SKP):
-    #     continue
+    if (expName in expsDone) and (SKP):
+        continue
     (dirsMean, dirsTraces) = (
             pathMean, monet.listDirectoriesWithPathWithinAPath(pathTraces)
         )
