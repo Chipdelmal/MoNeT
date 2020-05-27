@@ -14,4 +14,4 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 
 (SET, TRA, HEA) = ('Aggregated', True, True)
-PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
+PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof'

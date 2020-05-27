@@ -80,6 +80,13 @@ scp -rp lab:'/RAID5/marshallShare/SplitDrive_Yorkeys/video/Aggregated/*.mp4' '/h
 scp -rp lab:'/RAID5/marshallShare/SplitDrive_Yorkeys/video/unAggregated/*.mp4' '/home/chipdelmal/Desktop/SplitDrive_Yorkeys/video/unAggregated/'
 ```
 
+Copy preprocessed datasets:
+
+```bash
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/pre/ /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/pre/
+```
+
+
 ## Videos Checklist
 
 All the experiments names:
