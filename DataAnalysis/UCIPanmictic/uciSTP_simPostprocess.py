@@ -10,7 +10,7 @@ import uciSTP_indices as ix
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
-USR = 'dsk'
+USR = 'srv'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
         'tParams', 'LDR', 'island', False,
         'HLT', (True, True), [.5, .9, .95], False
