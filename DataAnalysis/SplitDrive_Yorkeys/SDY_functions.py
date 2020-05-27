@@ -13,9 +13,9 @@ np.seterr(divide='ignore', invalid='ignore')
 # PreProcessed
 ###############################################################################
 def getPreProcessedExperiments(path, type, ext='.lzma'):
-    fList = sorted(glob(path + '*' + type + ext))
-    names = [st.split('/')[-1].split('.')[-2][:-4] for st in fList]
-    return list(zip(fList, names))
+    files = sorted(glob(path + '*' + type + ext))
+    names = [st.split('/')[-1].split('.')[-2][:-4] for st in files]
+    return list(zip(names, files))
 
 
 ###############################################################################
