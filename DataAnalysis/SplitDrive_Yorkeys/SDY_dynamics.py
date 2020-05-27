@@ -104,6 +104,7 @@ for i in range(0, xpNumb):
             overlay, '{}/{}-{}.pdf'.format(PATH_IMG, name, 'O_'+pp),
             format='pdf'
         )
+    plt.close('all')
 monet.exportGeneLegend(ykLand['genotypes'], COLORS, PATH_IMG+'/plt.pdf', 500)
 ###############################################################################
 # Print terminal message
