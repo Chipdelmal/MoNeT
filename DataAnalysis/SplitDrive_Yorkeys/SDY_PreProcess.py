@@ -57,7 +57,7 @@ expsDone = set(outNames)
 for exIx in range(0, expNum):
     # Setup paths -------------------------------------------------------------
     strInt = str(exIx+1).zfill(len(str(expNum)))
-    print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\n')
+    print('* Analyzing ({}/{})         '.format(strInt, str(expNum)), end='\n')
     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
     expName = pathMean.split('/')[-1]
     if (expName in expsDone) and (SKP):

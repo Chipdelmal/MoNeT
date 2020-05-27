@@ -15,6 +15,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 (SET, TRA, HEA) = ('unAggregated', True, True)
 PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
+# PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof'
 ###############################################################################
 # Experiment selection parameters
 ###############################################################################
@@ -104,6 +105,7 @@ for i in range(0, xpNumb):
             overlay, '{}/{}-{}.pdf'.format(PATH_IMG, name, 'O_'+pp),
             format='pdf'
         )
+    plt.close('all')
 monet.exportGeneLegend(ykLand['genotypes'], COLORS, PATH_IMG+'/plt.pdf', 500)
 ###############################################################################
 # Print terminal message
