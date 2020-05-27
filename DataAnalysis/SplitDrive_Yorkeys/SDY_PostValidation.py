@@ -12,18 +12,24 @@ PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
 ###############################################################################
 # Loading the signal files
 pth = PATH + 'pre/' + SIG + '/'
-sigFiles = fun.getPreProcessedExperiments(pth, 'sum')
-
+sigFiles = fun.getPreProcessedExperiments(pth, 'agg')
 # Loading the paths for the probes
 prbExpPths = [PATH + 'pre/' + st + '/' for st in PRB]
-prbFiles = fun.getPreProcessedExperiments(prbExpPths[0], 'sum')
+prbFiles = fun.getPreProcessedExperiments(prbExpPths[0], 'agg')
 
 
 i = 0
 
-(namS, pthS) = sigFiles[0]
-(namP, pthP) = prbFiles[0]
-# Load probe data
-data = pkl.load(pthP)
-(genes, pop) = (data['genotypes'], data['population'])
-fun.rpd(pop, pop)
+(namS, pthS) = sigFiles[i]
+(namP, pthP) = prbFiles[i]
+# Load data
+dataS = pkl.load(pthS)
+dataP = pkl.load(pthP)
+(genes, popS) = (dataS['genotypes'], dataS['population'])
+(genes, popP) = (dataP['genotypes'], dataP['population'])
+err = fun.rpd(popS, popP)
+
+namS
+
+dataP
+dataS
