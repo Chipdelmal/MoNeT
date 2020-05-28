@@ -20,6 +20,15 @@ These routines are created for the experiments in the future paper to test the _
 ### Errors:
 
 ```bash
+python SDY_PreProcess.py
+python SDY_PostValidation.py
+python SDY_PostPlot.py
+```
+
+
+### Errors (outdated):
+
+```bash
 python SDY_validation.py
 python SDY_error.py
 python SDY_errorPlot.py
