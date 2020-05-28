@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
-(USR, SET) = ('srv', 'Aggregated')
+(USR, SET) = ('srv', 'unAggregated')
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 if (SET == 'unAggregated') or (SET == 'Aggregated'):
     if SET == 'Aggregated':

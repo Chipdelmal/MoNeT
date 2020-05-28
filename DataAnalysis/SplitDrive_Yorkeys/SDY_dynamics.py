@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
-(SET, TRA, HEA) = ('Aggregated', True, True)
+(SET, TRA, HEA) = ('unAggregated', True, True)
 PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
 # PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof'
 ###############################################################################
@@ -73,8 +73,8 @@ for i in range(0, xpNumb):
             monet.filterFilesByIndex(aFiles,  sectorsIx[0], MALE, FEMALE)
         )
     (ykAggData, tpAggData) = (
-            monet.loadSummedMeanResponse(ykFaPath, GDICT, True, True),
-            monet.loadSummedMeanResponse(tpFaPath, GDICT, True, True)
+            fun.loadSummedMeanResponse(ykFaPath, GDICT, True, True),
+            fun.loadSummedMeanResponse(tpFaPath, GDICT, True, True)
         )
     # Garbage
     print(aux.CBLU+'- Loading traces...      '+aux.PADC, end='\r')
