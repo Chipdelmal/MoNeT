@@ -20,16 +20,19 @@ pathPre = '{}pre/{}/'.format(PATH, SET)
 ###############################################################################
 # Setup paths
 ###############################################################################
-(COLORS, CMAPS) = (aux.COLORS, aux.CMAPS)
+(CLR, CMAPS) = (aux.COLORS, aux.CMAPS)
 STYLE = {
-        "width": .1, "alpha": .15, "dpi": 2 * 300,
-        "legend": True, "aspect": .5, "colors": COLORS,
-        "xRange": [0, 1825], "yRange": [0, 150000]
+        "width": .1, "alpha": .15, "dpi": 2 * 300, "legend": True,
+        "aspect": .5, "colors": CLR, "xRange": [0, 1825], "yRange": [0, 150000]
     }
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 ###############################################################################
-# Load preprocessed files
+# Load preprocessed files lists
 ###############################################################################
 typTag = ('sum', 'spa')
-fLists = [sorted(glob(pathPre+'*'+tp+EXT)) for tp in typTag]
-(sumFList, spaFList) = fLists
+fLists = list(zip(*[sorted(glob(pathPre+'*'+tp+EXT)) for tp in typTag]))
+###############################################################################
+# Load preprocessed files lists
+###############################################################################
+i = 0
+(sumDta, spaDta) = [pkl.load(file) for file in (fLists[i])]
