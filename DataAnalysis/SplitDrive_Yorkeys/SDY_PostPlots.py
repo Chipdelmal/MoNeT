@@ -54,4 +54,5 @@ for i in range(0, xpNum):
         )
     monet.exportGeneLegend(sumDta['genotypes'], CLR, pathImg+'/plt.pdf', 500)
 tEnd = datetime.now()
+print('* Analyzed ({}/{})     '.format(xpNum, xpNum), end='\r')
 aux.printExperimentTail(str(tEnd-tSrt), 'Plotting')
