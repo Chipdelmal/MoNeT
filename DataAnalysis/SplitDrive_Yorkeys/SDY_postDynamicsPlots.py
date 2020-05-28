@@ -14,9 +14,11 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
-(SET, TRA, HEA, EXT) = ('Aggregated', True, True, '.lzma')
+(SET, TRA, HEA, EXT) = ('unAggregated', True, True, '.lzma')
 PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
 pathPre = '{}pre/{}/'.format(PATH, SET)
+pathImg = '{}img/{}/'.format(PATH, SET)
+monet.makeFolder(pathImg)
 ###############################################################################
 # Setup paths
 ###############################################################################
@@ -29,10 +31,27 @@ STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 ###############################################################################
 # Load preprocessed files lists
 ###############################################################################
-typTag = ('sum', 'spa')
+typTag = ('sum', 'spa', 'rep')
 fLists = list(zip(*[sorted(glob(pathPre+'*'+tp+EXT)) for tp in typTag]))
 ###############################################################################
 # Load preprocessed files lists
 ###############################################################################
-i = 0
-(sumDta, spaDta) = [pkl.load(file) for file in (fLists[i])]
+for i in range(0, len(fLists)):
+    (sumDta, spaDta, repDta) = [pkl.load(file) for file in (fLists[i])]
+    name = fLists[i][0].split('/')[-1].split('.')[-2][:-4]
+
+    spaDtaNorm = monet.rescaleGeneSpatiotemporals(spaDta)
+    overlay = monet.plotGenotypeOverlayFromLandscape(
+            spaDtaNorm, vmax=1,
+            style={"aspect": 50 * STYLE['aspect'], "cmap": CMAPS},
+        )
+    # Export plots
+    fun.exportTracesPlot(repDta, name, STYLE, pathImg, append='TRA')
+    monet.quickSaveFigure(
+            overlay,
+            '{}/{}-{}.pdf'.format(pathImg, name, 'OVR'), format='pdf'
+        )
+    monet.exportGeneLegend(
+            sumDta['genotypes'], CLR,
+            pathImg+'/plt.pdf', 500
+        )
