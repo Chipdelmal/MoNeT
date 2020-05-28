@@ -42,7 +42,7 @@ def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time, name):
     print(CRED + '* Data  PATH: ' + PATH_DATA + CEND)
     print(CRED + '* Image PATH: ' + PATH_IMG + CEND)
     print(PADA)
-    print(PADA)
+    # print(PADA)
 
 
 def printExperimentTail(time, name):
