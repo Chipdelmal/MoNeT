@@ -1,10 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+# https://stackoverflow.com/questions/23913151/log-log-lmplot-with-seaborn
+# https://seaborn.pydata.org/generated/seaborn.heatmap.html
 
 import datetime
 import pandas as pd
 from glob import glob
+import seaborn as sns
 import uciPan_drive as drv
+import matplotlib.pyplot as plt
 
 
 USR = 'dsk'
@@ -14,7 +18,7 @@ USR = 'dsk'
     )
 header = ['ratio', 'releases', 'fitness', 'sv', 'group']
 (thr, REL_STRT, WRM) = (
-        [int((1-i) * 100) for i in [.05, .10, .25, .50, .75]],
+        [str(int((1-i) * 100)) for i in [.05, .10, .25, .50, .75]],
         1, 0
     )
 header.extend(thr)
@@ -30,12 +34,23 @@ else:
         LND, SET)
 PATH_DATA = '{}out/LDR/POSTPROCESS/'.format(PATH_ROOT)
 
-ci = QNT[2]
-fNames = sorted(glob('{}*{}.csv'.format(PATH_DATA, str(int(ci*100)))))
-raw = pd.read_csv(
-        fNames[10], header=None,
-        names=header
-    )
+ci = QNT[0]
 
+i = 0
+fNames = sorted(glob('{}*{}.csv'.format(PATH_DATA, str(int(ci*100)))))
+raw = pd.read_csv(fNames[i], header=None, names=header)
 filter = (raw['group'] == 0) & (raw['sv'] == 1)
-raw[filter]
+df = raw[filter]
+
+for i in range(1, len(fNames)):
+    fNames = sorted(glob('{}*{}.csv'.format(PATH_DATA, str(int(ci*100)))))
+    raw = pd.read_csv(fNames[i], header=None, names=header)
+    filter = (raw['group'] == 0) & (raw['sv'] == 1)
+    df = df.append(raw[filter])
+
+piv = df.pivot('releases', 'ratio', '95')
+
+f, ax = plt.subplots(figsize=(7, 7))
+ax.set(xscale="log", yscale="linear")
+ax.invert_xaxis()
+ax = sns.heatmap(piv, cmap="Blues")
