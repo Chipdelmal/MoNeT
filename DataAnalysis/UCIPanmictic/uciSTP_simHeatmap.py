@@ -17,12 +17,14 @@ USR = 'dsk'
         'HLT', (True, True), [.5, .9, .95], False
     )
 header = ['ratio', 'releases', 'fitness', 'sv', 'group']
-(thr, REL_STRT, WRM) = (
-        [str(int((1-i) * 100)) for i in [.05, .10, .25, .50, .75]],
+(thr, sVar, REL_STRT, WRM) = (
+        [int((1-i) * 100) for i in [.05, .10, .25, .50, .75]],
+        [1, 5, 10, 50, 100, 500, 1000],
         1, 0
     )
 header.extend(thr)
 drvPars = drv.driveSelector(DRV)
+ci = QNT[2]
 ###############################################################################
 # Setting up paths and directories
 ###############################################################################
@@ -33,24 +35,35 @@ else:
     PATH_ROOT = '/media/chipdelmal/cache/Sims/Panmictic/{}/{}/'.format(
         LND, SET)
 PATH_DATA = '{}out/LDR/POSTPROCESS/'.format(PATH_ROOT)
-
-ci = QNT[0]
-
-i = 0
-fNames = sorted(glob('{}*{}.csv'.format(PATH_DATA, str(int(ci*100)))))
-raw = pd.read_csv(fNames[i], header=None, names=header)
-filter = (raw['group'] == 0) & (raw['sv'] == 1)
-df = raw[filter]
-
-for i in range(1, len(fNames)):
-    fNames = sorted(glob('{}*{}.csv'.format(PATH_DATA, str(int(ci*100)))))
-    raw = pd.read_csv(fNames[i], header=None, names=header)
-    filter = (raw['group'] == 0) & (raw['sv'] == 1)
-    df = df.append(raw[filter])
-
-piv = df.pivot('releases', 'ratio', '95')
-
-f, ax = plt.subplots(figsize=(7, 7))
-ax.set(xscale="log", yscale="linear")
-ax.invert_xaxis()
-ax = sns.heatmap(piv, cmap="Blues")
+###############################################################################
+# Analyzes
+###############################################################################
+for group in [0]:
+    for sv in sVar:
+        for level in thr:
+            # Loading filenames
+            fNames = sorted(glob('{}*_{}.csv'.format(PATH_DATA, str(int(ci*100)))))
+            raw = pd.read_csv(fNames[0], header=None, names=header)
+            # Seeding dataframe
+            filter = (raw['group'] == group) & (raw['sv'] == sv)
+            df = raw[filter]
+            # Appending elements
+            for i in range(1, len(fNames)):
+                fNames = sorted(glob('{}*{}.csv'.format(PATH_DATA, str(int(ci*100)))))
+                raw = pd.read_csv(fNames[i], header=None, names=header)
+                df = df.append(raw[filter])
+            # Pivot the table
+            piv = df.pivot('releases', 'ratio', level)
+            piv.to_csv(
+                    '{}RES-{}-{}-{}.csv'.format(
+                            PATH_DATA, str(level).zfill(3),
+                            str(sv).zfill(4), str(group).zfill(3)
+                    )
+                )
+###############################################################################
+# Heatmap
+###############################################################################
+# f, ax = plt.subplots(figsize=(7, 7))
+# ax.set(xscale="log", yscale="linear")
+# ax.invert_yaxis()
+# ax = sns.heatmap(piv, cmap="Blues")
