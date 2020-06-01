@@ -74,29 +74,3 @@ for qnt in QNT:
             xpId.extend(qt)
             thCuts.append(xpId)
         aux.writeListToCSV(fName, thCuts)
-
-
-###############################################################################
-# Load Reference Population
-###############################################################################
-# setsBools = (
-#         ('sum', True), ('agg', True),
-#         ('spa', True), ('rep', True), ('srp', True)
-#     )
-# expName = expNames[0]
-# expPath = '{}{}*.lzma'.format(PT_PRE, expName)
-# expSet = glob(expPath)
-# expSet
-# dtaRef = {i[0]: fun.loadDataset(expSet, i[0], i[1]) for i in setsBools}
-###############################################################################
-# Process Experiments
-###############################################################################
-# expName = expNames[10]
-# expPath = '{}{}*.lzma'.format(PT_PRE, expName)
-# expSet = glob(expPath)
-# dtaPrb = {i[0]: fun.loadDataset(expSet, i[0], i[1]) for i in setsBools}
-# # Sum data analyses ---------------------------------------------------------
-# # if dta[0] is not None:
-# (meanPrb, srpPrb, meanRef) = (dtaPrb['sum'], dtaPrb['srp'], dtaRef['sum'])
-# ttiAn = fun.calcMeanTTI(meanPrb, meanRef, thresholds, gIx)
-# ttiQt = fun.calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.5)

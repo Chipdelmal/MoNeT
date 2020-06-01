@@ -1,9 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import glob
 import datetime
-import numpy as np
 import SDY_ix as sdix
 import SDY_aux as aux
 import SDY_functions as fun

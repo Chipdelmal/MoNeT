@@ -37,8 +37,7 @@ for i in range(0, len(sigFiles)):
     (namS, pthS) = sigFiles[i]
     (namP, pthP) = prbFiles[i]
     # Load data
-    dataS = pkl.load(pthS)
-    dataP = pkl.load(pthP)
+    (dataS, dataP) = (pkl.load(pthS), pkl.load(pthP))
     (genes, popS) = (dataS['genotypes'], dataS['population'])
     (genes, popP) = (dataP['genotypes'], dataP['population'])
     # Calculate error
