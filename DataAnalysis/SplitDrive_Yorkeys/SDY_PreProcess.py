@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
-(USR, SET) = ('srv', 'unAggregated')
+(USR, SET) = ('srv', 'Aggregated')
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 if (SET == 'unAggregated') or (SET == 'Aggregated'):
     if SET == 'Aggregated':
@@ -24,7 +24,7 @@ else:
 ###############################################################################
 # Experiment selection parameters
 ###############################################################################
-(MF, SKP, FMT) = ((True, True), True, '.lzma')
+(MF, SKP, FMT) = ((True, True), False, '.lzma')
 DRV = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 # Select form server/desktop
 if USR == 'srv':
