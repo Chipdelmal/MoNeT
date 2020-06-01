@@ -12,8 +12,8 @@ import compress_pickle as pkl
 
 USR = 'srv'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
-        'tParams', 'LDR', 'island', False,
-        'HLT', (True, True), [.5, .9, .95], False
+        'gravidRleases', 'LDR', sys.argv[1],
+	False, 'HLT', (True, True), [.5, .9, .95], False
     )
 (thr, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
 drvPars = drv.driveSelector(DRV)
