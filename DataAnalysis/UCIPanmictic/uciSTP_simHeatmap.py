@@ -3,12 +3,12 @@
 # https://stackoverflow.com/questions/23913151/log-log-lmplot-with-seaborn
 # https://seaborn.pydata.org/generated/seaborn.heatmap.html
 
-import datetime
+# import datetime
 import pandas as pd
 from glob import glob
-import seaborn as sns
+# import seaborn as sns
 import uciPan_drive as drv
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 USR = 'dsk'
@@ -42,14 +42,18 @@ for group in [0]:
     for sv in sVar:
         for level in thr:
             # Loading filenames
-            fNames = sorted(glob('{}*_{}.csv'.format(PATH_DATA, str(int(ci*100)))))
+            fNames = sorted(glob('{}*_{}.csv'.format(
+                    PATH_DATA, str(int(ci*100))))
+                )
             raw = pd.read_csv(fNames[0], header=None, names=header)
             # Seeding dataframe
             filter = (raw['group'] == group) & (raw['sv'] == sv)
             df = raw[filter]
             # Appending elements
             for i in range(1, len(fNames)):
-                fNames = sorted(glob('{}*{}.csv'.format(PATH_DATA, str(int(ci*100)))))
+                fNames = sorted(glob('{}*{}.csv'.format(
+                        PATH_DATA, str(int(ci*100))))
+                    )
                 raw = pd.read_csv(fNames[i], header=None, names=header)
                 df = df.append(raw[filter])
             # Pivot the table

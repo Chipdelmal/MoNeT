@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 from glob import glob
 import SDY_aux as aux
 import SDY_functions as fun
@@ -10,15 +11,20 @@ import compress_pickle as pkl
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-
-(SET, TRA, HEA, EXT) = ('Aggregated', True, True, '.lzma')
-PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
-pathPre = '{}pre/{}/'.format(PATH, SET)
-pathImg = '{}img/{}/'.format(PATH, SET)
-monet.makeFolder(pathImg)
+(USR, SET) = ('srv', sys.argv[1])  # 'Aggregated')
+(TRA, HEA, EXT) = (True, True, '.lzma')
 ###############################################################################
 # Setup paths
 ###############################################################################
+# Select form server/desktop
+if USR == 'srv':
+    PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
+else:
+    PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
+pathPre = '{}pre/{}/'.format(PATH, SET)
+pathImg = '{}img/{}/'.format(PATH, SET)
+monet.makeFolder(pathImg)
+# Colors
 (CLR, CMAPS) = (aux.COLORS, aux.CMAPS)
 STYLE = {
         "width": .1, "alpha": .15, "dpi": 2 * 300, "legend": True,
