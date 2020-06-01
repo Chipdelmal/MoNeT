@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+    <title>MGGraph</title>
+    <!-- Bokeh JS -->
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.0.2.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.0.2.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.0.2.min.js"></script>
+    {{ script | safe }}
+    </head>
+    <body>
+        <h2 style="text-align: center;">MGGraph</h2>
+        <p> Graphic:  </p>
+        <div class="container" style="width: 100%;">
+            <!-- Bokeh Div-->
+            {{ div | safe }}
+        </div>
+    </body>
+</html>
