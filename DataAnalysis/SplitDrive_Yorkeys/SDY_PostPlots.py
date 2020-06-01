@@ -41,7 +41,7 @@ fLists = list(zip(*[sorted(glob(pathPre+'*'+tp+EXT)) for tp in typTag]))
 ###############################################################################
 # Load preprocessed files lists
 ###############################################################################
-(xpNum, digs) = monet.lenAndDigits(fLists)
+(xpNum, digs) = fun.lenAndDigits(fLists)
 for i in range(0, xpNum):
     print('* Analyzing ({}/{})'.format(str(i).zfill(digs), xpNum), end='\r')
     (sumDta, spaDta, repDta) = [pkl.load(file) for file in (fLists[i])]

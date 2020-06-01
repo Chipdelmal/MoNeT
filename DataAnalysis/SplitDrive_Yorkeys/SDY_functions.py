@@ -303,3 +303,16 @@ def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
     print(aux.CRED + '* Root  PATH: ' + PATH_ROOT + aux.CEND)
     print(aux.CRED + '* Data  PATH: ' + PATH_DATA + aux.CEND)
     print(aux.CRED + '* Image PATH: ' + PATH_IMG + aux.CEND)
+
+
+def lenAndDigits(collection):
+    """Returns the length of a list and the number of digits for z-padding
+    Args:
+        collection (list): Collection of elements with the "len" method
+            implemented.
+    Returns:
+        tuple: (number of elements in the collection, required digits)
+    """
+    length = len(collection)
+    digs = len(str(length))
+    return (length, digs)
