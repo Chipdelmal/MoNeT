@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # python3 uciPan_main.py "Volumes" "tParams" "islandMixed"
 
-# import sys
+import sys
 # import csv
 import glob
 import datetime
@@ -16,9 +16,9 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 # import matplotlib.pyplot as plt
 
-(USR, SET) = ('dsk', 'island')  # sys.argv[1])
+(USR, SET) = ('srv', sys.argv[1])
 (LAND, DRIVE_ID, STP, AOI, MF, SKP, FMT) = (
-        'tParams', 'LDR', False, 'HLT', (True, True), False, '.lzma'
+        'gravidReleases', 'LDR', False, 'HLT', (True, True), False, '.lzma'
     )
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 drvPars = drv.driveSelector(DRIVE_ID)
