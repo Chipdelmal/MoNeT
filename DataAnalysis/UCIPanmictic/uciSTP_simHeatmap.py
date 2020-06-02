@@ -75,11 +75,13 @@ for group in [0]:
 (x, y, z) = (df['releases'], df['ratio'], df[level])
 (x, y, z) = (
         np.array([int(i) for i in x]),
-        np.array([int(i) for i in y]),
+        np.array([float(i/1000000) for i in y]),
         np.array([float(i) for i in z])
     )
-(grid_x, grid_y) = np.mgrid[0:52:100j, 0:1000000:200j]
+(a, b) = (max(x), max(y))
+(grid_x, grid_y) = np.mgrid[0:a:100j, 0:b:200j]
 grid = griddata((x, y), z, (grid_x, grid_y), method='nearest')
 ax = plt.subplot(222)
-plt.imshow(grid.T, extent=(0, 52, 0, 1000000), origin='lower')
-ax.set_aspect(1/20000)
+plt.imshow(grid.T, extent=(0, a, 0, b), origin='lower')
+ax.set_aspect(52/1)
+ax.set(xscale="linear", yscale="linear")
