@@ -40,6 +40,12 @@ scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/islandMixed/img/ /home/chi
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/island/img/ /home/chipdelmal/Desktop/Panmictic/yParams/island/;
 ```
 
+Copy all dynamics plots:
+
+```bash
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/img/ /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/
+```
+
 ### Copy summaries
 
 ```bash
