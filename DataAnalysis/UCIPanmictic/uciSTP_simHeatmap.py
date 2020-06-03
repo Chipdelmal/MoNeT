@@ -4,12 +4,13 @@
 # https://seaborn.pydata.org/generated/seaborn.heatmap.html
 
 # import datetime
+import numpy as np
 import pandas as pd
 from glob import glob
 # import seaborn as sns
 import uciPan_drive as drv
-# import matplotlib.pyplot as plt
-
+import matplotlib.pyplot as plt
+from scipy.interpolate import griddata
 
 USR = 'dsk'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
@@ -71,3 +72,16 @@ for group in [0]:
 # ax.set(xscale="log", yscale="linear")
 # ax.invert_yaxis()
 # ax = sns.heatmap(piv, cmap="Blues")
+(x, y, z) = (df['releases'], df['ratio'], df[level])
+(x, y, z) = (
+        np.array([int(i) for i in x]),
+        np.array([float(i/1000000) for i in y]),
+        np.array([float(i) for i in z])
+    )
+(a, b) = (max(x), max(y))
+(grid_x, grid_y) = np.mgrid[0:a:100j, 0:b:200j]
+grid = griddata((x, y), z, (grid_x, grid_y), method='nearest')
+ax = plt.subplot(222)
+plt.imshow(grid.T, extent=(0, a, 0, b), origin='lower')
+ax.set_aspect(52/1)
+ax.set(xscale="linear", yscale="linear")
