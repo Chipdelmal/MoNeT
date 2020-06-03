@@ -16,9 +16,9 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 # import matplotlib.pyplot as plt
 
-(USR, SET) = ('srv', sys.argv[1])
-(LAND, DRIVE_ID, STP, AOI, MF, SKP, FMT) = (
-        'gravidReleases', 'LDR', False, 'HLT', (True, True), False, '.lzma'
+(USR, XPM, SET, LAND) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
+(DRIVE_ID, STP, AOI, MF, SKP, FMT) = (
+         'LDR', False, 'HLT', (True, True), False, '.lzma'
     )
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 drvPars = drv.driveSelector(DRIVE_ID)
@@ -32,9 +32,9 @@ drvPars = drv.driveSelector(DRIVE_ID)
 ###############################################################################
 # Select form server/desktop
 if USR == 'srv':
-    PATH_ROOT = '/RAID5/marshallShare/UCI/Yoosook/{}/{}/'.format(LAND, SET)
+    PATH_ROOT = '/RAID5/marshallShare/UCI/{}/{}/{}/'.format(XPM, LAND, SET)
 else:
-    PATH_ROOT = '/media/chipdelmal/cache/Sims/Panmictic/{}/{}/'.format(LAND, SET)
+    PATH_ROOT = '/media/chipdelmal/cache/Sims/{}/{}/{}/'.format(XPM, LAND, SET)
 # Setting paths
 (PATH_IMG, PATH_DATA) = (
         '{}img/'.format(PATH_ROOT),
