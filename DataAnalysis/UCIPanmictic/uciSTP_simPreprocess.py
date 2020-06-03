@@ -1,22 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# python3 uciPan_main.py "Volumes" "tParams" "islandMixed"
+# python uciSTP_simPreprocess.py Tomas tParams kernel_1
 
 import sys
-# import csv
-import glob
 import datetime
-# import pickle as pkl
 import uciPan_aux as aux
 import uciPan_fun as fun
-# import uciPan_plot as plot
 import uciPan_drive as drv
 import uciSTP_indices as ix
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
-# import matplotlib.pyplot as plt
 
-(USR, XPM, SET, LAND) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
+(USR, XPM, LAND, SET) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
 (DRIVE_ID, STP, AOI, MF, SKP, FMT) = (
          'LDR', False, 'HLT', (True, True), False, '.lzma'
     )

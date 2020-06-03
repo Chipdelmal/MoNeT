@@ -1,12 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import datetime
 import SDY_functions as fun
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 import matplotlib.pyplot as plt
 
-(VOL, SIG, PRB) = ('RAID5', 'unAggregated', ('Aggregated',))
+(VOL, SIG, PRB) = ('RAID5', 'unAggregated', ('Aggregated', 'C000010'))
 PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
 pthOut = PATH + 'err/'
 pthImg = pthOut + 'img/'
@@ -23,6 +24,8 @@ STYLE = {
         "xRange": [0, 1825], "yRange": [-1.25, +1.25]
     }
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
+tS = datetime.datetime.now()
+fun.printExpTerminal(tS, PATH, pthImg, pthOut)
 ###############################################################################
 # Main Routine
 ###############################################################################
@@ -30,30 +33,40 @@ STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 pth = PATH + 'pre/' + SIG + '/'
 sigFiles = fun.getPreProcessedExperiments(pth, 'sum')
 # Loading the paths for the probes --------------------------------------------
-prbExpPths = [PATH + 'pre/' + st + '/' for st in PRB]
-prbFiles = fun.getPreProcessedExperiments(prbExpPths[0], 'sum')
-# Cycling through file pairs --------------------------------------------------
-for i in range(0, len(sigFiles)):
-    (namS, pthS) = sigFiles[i]
-    (namP, pthP) = prbFiles[i]
-    # Load data
-    (dataS, dataP) = (pkl.load(pthS), pkl.load(pthP))
-    (genes, popS) = (dataS['genotypes'], dataS['population'])
-    (genes, popP) = (dataP['genotypes'], dataP['population'])
-    # Calculate error
-    err = fun.rpd(popS, popP)
-    # Plot
-    pop = {'genotypes': genes, 'population': err}
-    plot = monet.plotMeanGenotypeTrace(pop, STYLE)
-    axTemp = plot.get_axes()[0]
-    axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
-    axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
-    # Write to disk
-    monet.writeListToCSV(pthOut+namP+'.csv', err, genes)
-    plot.savefig(
-            "{}/{}.pdf".format(pthImg, namP),
-            dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
-            orientation='portrait', papertype=None, format='pdf',
-            transparent=True, bbox_inches='tight', pad_inches=.01
-        )
-    plt.close('all')
+for i in range(0, len(PRB)):
+    strInt = str(i+1).zfill(len(str(len(PRB))))
+    print('* Analyzing ({}/{})       '.format(strInt, str(len(PRB))), end='\r')
+    prbExpPths = PATH + 'pre/' + PRB[i] + '/'
+    prbFiles = fun.getPreProcessedExperiments(prbExpPths, 'sum')
+    oPth = pthOut + PRB[i] + '/'
+    iPth = oPth + '/img/'
+    monet.makeFolder(oPth)
+    monet.makeFolder(iPth)
+    # Cycling through file pairs ---------------------------------------------
+    for i in range(0, len(sigFiles)):
+        (namS, pthS) = sigFiles[i]
+        (namP, pthP) = prbFiles[i]
+        # Load data
+        (dataS, dataP) = (pkl.load(pthS), pkl.load(pthP))
+        (genes, popS) = (dataS['genotypes'], dataS['population'])
+        (genes, popP) = (dataP['genotypes'], dataP['population'])
+        # Calculate error
+        err = fun.rpd(popS, popP)
+        # Plot
+        pop = {'genotypes': genes, 'population': err}
+        plot = monet.plotMeanGenotypeTrace(pop, STYLE)
+        axTemp = plot.get_axes()[0]
+        axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
+        axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
+        # Write to disk
+        monet.writeListToCSV(oPth+namP+'.csv', err, genes)
+        plot.savefig(
+                "{}/{}.png".format(iPth, namP),
+                dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
+                orientation='portrait', papertype=None, format='png',
+                transparent=True, bbox_inches='tight', pad_inches=.01
+            )
+        plt.close('all')
+tEnd = datetime.datetime.now()
+print('* Analyzed ({}/{})         '.format(strInt, str(len(PRB))), end='\n')
+fun.printExperimentTail(str(tEnd-tSrt), 'Plotting')
