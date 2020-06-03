@@ -67,6 +67,6 @@ for i in range(0, len(PRB)):
                 transparent=True, bbox_inches='tight', pad_inches=.01
             )
         plt.close('all')
-tEnd = datetime.datetime.now()
+tE = datetime.datetime.now()
 print('* Analyzed ({}/{})         '.format(strInt, str(len(PRB))), end='\n')
-fun.printExperimentTail(str(tEnd-tSrt), 'Plotting')
+fun.printExperimentTail(str(tE-tS), 'Plotting')
