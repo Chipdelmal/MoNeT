@@ -22,8 +22,16 @@ python uciPan_main.py RAID5 tParams islandGravidFemales
 ```
 ### Images from PDF to PNG
 
+Convert all
+
 ```bash
-mogrify -verbose -density 250 -resize 600 -background white -alpha remove -alpha off -format png ./*.pdf
+mogrify -verbose -density 300 -resize 1000 -background white -alpha remove -alpha off -format png ./*.pdf
+```
+
+```bash
+rm *-OVR.pdf;
+mogrify -verbose -density 1000 -resize 5000 -background white -alpha remove -alpha off -format png ./*.pdf;
+rm *.pdf;
 ```
 
 ## Copy Files from server
