@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 import datetime
 import SDY_ix as sdix
 import SDY_aux as aux
@@ -11,7 +12,7 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 
-(USR, SET) = ('srv', 'Aggregated')
+(USR, SET) = ('srv', sys.argv[1]) # 'Aggregated')
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 if (SET == 'unAggregated') or (SET == 'Aggregated'):
     if SET == 'Aggregated':
