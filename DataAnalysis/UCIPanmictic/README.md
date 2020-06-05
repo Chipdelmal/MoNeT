@@ -82,6 +82,8 @@ scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/island/out/LDR/PREPROCESS/
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/islandMixed/out/LDR/PREPROCESS/*.lzma /media/chipdelmal/cache/Sims/Panmictic/tParams/islandMixed/out/LDR/PREPROCESS
 
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/islandGravidFemales/out/LDR/PREPROCESS/*.lzma /media/chipdelmal/cache/Sims/Panmictic/tParams/islandGravidFemales/out/LDR/PREPROCESS
+
+scp -rp  lab:/RAID5/marshallShare/UCI/Tomas/tParams/kernel_1/out/LDR/PREPROCESS/*.lzma /media/chipdelmal/cache/Sims/Tomas/tParams/kernel_1/out/LDR/PREPROCESS
 ```
 
 #### Postprocessed data
