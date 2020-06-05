@@ -297,3 +297,16 @@ def listDirectoriesWithPathWithinAPath(pathFilename):
 ###############################################################################
 def rescaleRGBA(colorsTuple, colors=255):
     return [i/colors for i in colorsTuple]
+
+
+def lenAndDigits(collection):
+    """Returns the length of a list and the number of digits for z-padding
+    Args:
+        collection (list): Collection of elements with the "len" method
+            implemented.
+    Returns:
+        tuple: (number of elements in the collection, required digits)
+    """
+    length = len(collection)
+    digs = len(str(length))
+    return (length, digs)
