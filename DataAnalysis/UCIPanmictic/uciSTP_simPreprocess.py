@@ -13,7 +13,7 @@ import compress_pickle as pkl
 
 (USR, XPM, LAND, SET) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
 (DRIVE_ID, STP, AOI, MF, SKP, FMT) = (
-         'LDR', False, 'HLT', (True, True), False, '.lzma'
+         'LDR', True, 'HLT', (True, True), False, '.lzma'
     )
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 drvPars = drv.driveSelector(DRIVE_ID)
@@ -45,7 +45,7 @@ fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
 ###############################################################################
 gIx = drvPars[AOI]['genotypes'].index('Other')
 (expDirsMean, expDirsTrac) = fun.getExpPaths(PATH_DATA)
-(expNum, nodeDigits) = (len(expDirsMean), len(str(NOI)))
+(expNum, nodeDigits) = (len(expDirsMean), len(str(len(NOI)))+1)
 outNames = fun.splitExpNames(PATH_OUT)
 outExpNames = set(outNames)
 ###############################################################################

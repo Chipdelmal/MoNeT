@@ -3,9 +3,9 @@
 
 # Setting up node indices (from R and 0-index shifting)
 # STP = (
-#         [i-1 for i in range(29, 268)],  # Sao Tome
-#         [i-1 for i in range(1, 28)]     # Principe
-#     )
+#        [i-1 for i in range(29, 268)],  # Sao Tome
+#        [i-1 for i in range(1, 28)]     # Principe
+#    )
 
 # Panmictic
 PAN = ([0], )
@@ -43,6 +43,6 @@ STP = (
         ], [
             210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222,
             223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235,
-            236, 237, 238, 239, 240
+           236, 237, 238, 239, 240
         ], [i-1 for i in range(29, 268)]
     )
