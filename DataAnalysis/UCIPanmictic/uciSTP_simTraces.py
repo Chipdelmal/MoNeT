@@ -14,7 +14,8 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
 # (USR, XPM, LAND, SET) = ('dsk', sys.argv[1], sys.argv[2], sys.argv[3])
-(USR, XPM, LAND, SET) = ('dsk', 'Tomas', 'tParams', 'kernel_1')
+# (USR, XPM, LAND, SET) = ('dsk', 'Tomas', 'tParams', 'kernel_1')
+(USR, XPM, LAND, SET) = ('dsk', 'Panmictic', 'tParams', 'island')
 (DRIVE_ID, STP, SKP, FMT) = ('LDR', True, False, '.lzma')
 ###############################################################################
 # Setting up paths and directories
@@ -30,7 +31,6 @@ else:
         '{}out/{}/'.format(PATH_ROOT, DRIVE_ID)
     )
 PATH_OUT = PATH_DATA + '/PREPROCESS/'
-monet.makeFolder(PATH_OUT)
 # Print terminal info and create folder
 tS = datetime.now()
 fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
@@ -42,9 +42,9 @@ print(monet.PADL)
 (CLR, CMAPS) = (aux.colorsH, aux.cmapsH)
 STYLE = {
         "width": .1, "alpha": .15, "dpi": 2*300, "legend": True, "aspect": .5,
-        "colors": CLR, "xRange": [0, 1825], "yRange": [0, 30*150000]
+        "colors": CLR, "xRange": [0, 1825], "yRange": [0, 10 * 100000]
     }
-STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
+STYLE['aspect'] = monet.scaleAspect(1, STYLE)
 ###############################################################################
 # Load preprocessed files lists
 ###############################################################################

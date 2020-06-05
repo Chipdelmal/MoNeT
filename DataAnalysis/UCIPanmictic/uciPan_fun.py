@@ -127,7 +127,7 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append=''):
     axTemp.set_aspect(aspect=STYLE["aspect"])
     axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
     axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
-    axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
+    # axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
     axTemp.tick_params(color=(0, 0, 0, 0.5))
     figArr[0].savefig(
             "{}/{}-{}.png".format(PATH_IMG, nS, append),
