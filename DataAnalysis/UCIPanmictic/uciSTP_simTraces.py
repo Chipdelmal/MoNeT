@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# import sys
+import sys
 from glob import glob
 import uciPan_fun as fun
 import uciPan_aux as aux
@@ -13,9 +13,9 @@ import compress_pickle as pkl
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-# (USR, XPM, LAND, SET) = ('dsk', sys.argv[1], sys.argv[2], sys.argv[3])
+(USR, XPM, LAND, SET) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, XPM, LAND, SET) = ('dsk', 'Tomas', 'tParams', 'kernel_1')
-(USR, XPM, LAND, SET) = ('dsk', 'Panmictic', 'tParams', 'island')
+# (USR, XPM, LAND, SET) = ('dsk', 'Panmictic', 'tParams', 'island')
 (DRIVE_ID, STP, SKP, FMT) = ('LDR', True, False, '.lzma')
 ###############################################################################
 # Setting up paths and directories
@@ -53,7 +53,7 @@ fLists = list(zip(*[sorted(glob(PATH_OUT+'*'+tp+FMT)) for tp in typTag]))
 ###############################################################################
 # Load preprocessed files lists
 ###############################################################################
-(xpNum, digs) = monet.lenAndDigits(fLists)
+(xpNum, digs) = fun.lenAndDigits(fLists)
 for i in range(0, xpNum):
     print('* Analyzing ({}/{})'.format(str(i+1).zfill(digs), xpNum), end='\r')
     (sumDta, repDta) = [pkl.load(file) for file in (fLists[i])]
