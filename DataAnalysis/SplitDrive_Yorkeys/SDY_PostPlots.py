@@ -13,7 +13,6 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 (USR, SET) = ('dsk', sys.argv[1])  # 'Aggregated')
 (TRA, HEA, EXT) = (True, True, '.lzma')
-(thr, REL_STRT, WRM, QNT) = ([.05, .50], 1, 0, .95)
 ###############################################################################
 # Setup paths
 ###############################################################################
