@@ -54,7 +54,7 @@ python
 Copy analyses plots to desktop:
 
 ```bash
-scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/img/*.pdf /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/img/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/img/ /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/;
 scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/*.csv /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/;
 scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/img/* /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/img;
 scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandSorted/* /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/LandSorted/;

@@ -11,8 +11,9 @@ import compress_pickle as pkl
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-(USR, SET) = ('srv', sys.argv[1])  # 'Aggregated')
+(USR, SET) = ('dsk', sys.argv[1])  # 'Aggregated')
 (TRA, HEA, EXT) = (True, True, '.lzma')
+(thr, REL_STRT, WRM, QNT) = ([.05, .50], 1, 0, .95)
 ###############################################################################
 # Setup paths
 ###############################################################################
@@ -34,17 +35,18 @@ STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 tSrt = datetime.now()
 aux.printExperimentHead(PATH, pathImg, pathPre, str(tSrt), 'Plotting ')
 ###############################################################################
-# Load preprocessed files lists
+# List preprocessed files lists
 ###############################################################################
-typTag = ('sum', 'spa', 'rep')
+typTag = ('sum', 'spa', 'rep')  # 'srp')
 fLists = list(zip(*[sorted(glob(pathPre+'*'+tp+EXT)) for tp in typTag]))
 ###############################################################################
 # Load preprocessed files lists
 ###############################################################################
 (xpNum, digs) = fun.lenAndDigits(fLists)
+msg = '* Analyzing ({}/{})'
 for i in range(0, xpNum):
-    print('* Analyzing ({}/{})'.format(str(i).zfill(digs), xpNum), end='\r')
-    (sumDta, spaDta, repDta) = [pkl.load(file) for file in (fLists[i])]
+    print(msg.format(str(i+1).zfill(digs), str(xpNum).zfill(digs)), end='\r')
+    (sumDta, spaDta, repDta, srpDta) = [pkl.load(file) for file in (fLists[i])]
     name = fLists[i][0].split('/')[-1].split('.')[-2][:-4]
     # Process data ------------------------------------------------------------
     spaDtaNorm = monet.rescaleGeneSpatiotemporals(spaDta)
@@ -60,5 +62,5 @@ for i in range(0, xpNum):
         )
     monet.exportGeneLegend(sumDta['genotypes'], CLR, pathImg+'/plt.pdf', 500)
 tEnd = datetime.now()
-print('* Analyzed ({}/{})     '.format(xpNum, xpNum), end='\r')
+print('* Analyzed ({}/{})     '.format(xpNum, xpNum), end='\n')
 aux.printExperimentTail(str(tEnd-tSrt), 'Plotting')

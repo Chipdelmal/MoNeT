@@ -10,6 +10,63 @@ np.seterr(divide='ignore', invalid='ignore')
 
 
 ###############################################################################
+# Pops Thresholds
+###############################################################################
+def comparePopToThresholds(ratioOI, thresholds, cmprOp=op.lt):
+    flagsArray = np.empty((len(ratioOI), len(thresholds)), dtype=bool)
+    for (i, dayData) in enumerate(ratioOI):
+        closeFlags = [cmprOp(dayData, i) for i in thresholds]
+        flagsArray[i] = closeFlags
+    return flagsArray
+
+
+def getPopRatio(prbPop, refPop, gIx):
+    (a, b) = (prbPop, refPop)
+    ratio = np.divide(a, b, out=np.zeros_like(a), where=b != 0)
+    ratioOI = [row[gIx] for row in ratio]
+    return ratioOI
+
+
+def trueIndices(boolList):
+    trueIx = [i for (i, x) in enumerate(boolList) if x == 1]
+    if len(trueIx) > 0:
+        return trueIx
+    else:
+        return [np.nan]
+
+
+def thresholdMet(thsArray):
+    thsNum = len(thsArray[0])
+    thrsMet = [None] * thsNum
+    for col in range(thsNum):
+        boolCol = [i[col] for i in thsArray]
+        daysAbove = trueIndices(boolCol)
+        thrsMet[col] = daysAbove
+    return thrsMet
+
+
+def calcMeanTTI(meanPrb, meanRef, thresholds, gIx):
+    ratioOI = getPopRatio(meanPrb['population'], meanRef['population'], gIx)
+    thsArray = comparePopToThresholds(ratioOI, thresholds)
+    thsDays = thresholdMet(thsArray)
+    ttiAn = [i[0] for i in thsDays]
+    return ttiAn
+
+
+def calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.95):
+    prb = srpPrb['landscapes']
+    smpNum = len(prb)
+    ttiArr = np.empty((smpNum, len(thresholds)))
+    for s in range(smpNum):
+        refPop = meanRef['population']
+        ratioOI = getPopRatio(prb[s], refPop, gIx)
+        thsArray = comparePopToThresholds(ratioOI, thresholds)
+        thsDays = thresholdMet(thsArray)
+        ttiArr[s] = [i[0] for i in thsDays]
+    quant = np.nanquantile(ttiArr, quantile, axis=0)
+    return quant
+
+###############################################################################
 # PreProcessed
 ###############################################################################
 def getPreProcessedExperiments(path, type, ext='.lzma'):
