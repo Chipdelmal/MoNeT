@@ -18,7 +18,7 @@ from scipy.interpolate import griddata
 
 USR = 'dsk'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
-        'tParams', 'LDR', 'island', False,
+        'gravidReleases', 'LDR', 'island', False,
         'HLT', (True, True), [.5, .9, .95], False
     )
 header = ['ratio', 'releases', 'fitness', 'sv', 'group']
