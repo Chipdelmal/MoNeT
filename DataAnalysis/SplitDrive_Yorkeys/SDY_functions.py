@@ -1,5 +1,6 @@
 
 import os
+import operator as op
 import numpy as np
 from glob import glob
 import SDY_aux as aux

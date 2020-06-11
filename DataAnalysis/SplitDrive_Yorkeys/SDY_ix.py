@@ -263,4 +263,4 @@ AYKix = [
         868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879,
         880, 881, 882, 883, 884, 885, 886, 887, 888, 889, 890, 891
     ]
-(NAGIX, AGGIX) = ([NTPix, NYKix], [ATPix, AYKix])
+(NAGIX, AGGIX) = ([NYKix, NTPix], [ATPix, AYKix])
