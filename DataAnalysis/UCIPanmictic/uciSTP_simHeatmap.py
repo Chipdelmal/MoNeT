@@ -15,6 +15,8 @@ import MoNeT_MGDrivE as monet
 import uciPan_drive as drv
 import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
+from matplotlib.colors import LinearSegmentedColormap
+
 
 USR = 'dsk'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
@@ -30,6 +32,7 @@ header.extend(thr)
 drvPars = drv.driveSelector(DRV)
 ci = QNT[2]
 months = list(range(0, 12*4, 6))
+(ngridx, ngridy) = (1000, 1000)
 ###############################################################################
 # Setting up paths and directories
 ###############################################################################
@@ -70,7 +73,7 @@ for group in [0]:
                     str(sv).zfill(4), str(group).zfill(3)
                 )
             piv.to_csv(PATH_DATA+fName+'.csv')
-            # Plot
+            # Plot ------------------------------------------------------------
             (x, y, z) = (df['ratio'], df['releases'], df[level])
             (x, y, z) = (
                     np.array([float(i/1000000) for i in x]),
@@ -78,17 +81,29 @@ for group in [0]:
                     np.array([float(i) for i in z])
                 )
             (a, b) = (max(x), max(y))
+            (xi, yi) = (np.linspace(0, a, ngridx), np.linspace(0, b, ngridy))
+            zi = griddata(
+                    (x, y), z, (xi[None, :], yi[:, None]),
+                    method='linear'
+                )
             fig, ax = plt.subplots()
-            ax.tricontourf(
-                    x, y, z,
+            ax.plot(x, y, 'ko', ms=.5, alpha=.2)
+            ax.contour(
+                    xi, yi, zi,
                     levels=[4*i for i in months],
-                    cmap="PuBu"
+                    linewidths=1, colors='k'
+                )
+            ax.contourf(
+                    xi, yi, zi,
+                    levels=[4*i for i in months],
+                    cmap='Purples' # monet.cmaps[2]
                 )
             ax.set(xscale="log", yscale="linear")
             fig.set_size_inches(
                     fig.get_size_inches()[0],
                     1*fig.get_size_inches()[0]
                 )
+            plt.xlim(10**-4, 1)
             plt.savefig(
                     PATH_IMG+fName+'.png',
                     dpi=400, facecolor=None, edgecolor='w',
@@ -108,7 +123,7 @@ for group in [0]:
 #         np.array([float(i/1000000) for i in y]),
 #         np.array([float(i) for i in z])
 #     )
-#(ngridx, ngridy) = (1000, 1000)
+# (ngridx, ngridy) = (1000, 1000)
 # (grid_x, grid_y) = np.mgrid[0:a:100j, 0:b:200j]
 # grid = griddata((x, y), z, (grid_x, grid_y), method='nearest')
 # fig, ax = plt.subplots()
@@ -116,6 +131,7 @@ for group in [0]:
 # ax.set(xscale="log", yscale="linear")
 # xmin, xmax = ax.get_xbound()
 # ymin, ymax = ax.get_ybound()
+
 # data_aspect = (
 #     math.log(ymax)-math.log(ymin))/(math.log(xmax)-math.log(xmin)
 #     )
@@ -125,10 +141,12 @@ for group in [0]:
 #
 #
 #
+
 # (xi, yi) = (np.linspace(0, a, ngridx), np.linspace(0, b, ngridy))
 # fig, ax = plt.subplots()
-# zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='linear')
-# ax.contour(xi, yi, zi, levels=14, linewidths=1, colors='k')
+# zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='nearest')
+# ax.contour(xi, yi, zi, levels=[4*i for i in months], linewidths=1, colors='k')
 # ax.set(xscale="log", yscale="linear")
-# cntr1 = ax.contourf(xi, yi, zi, levels=14, cmap="RdBu_r")
-# fig.set_size_inches(fig.get_size_inches()[0], fig_ratio*fig.get_size_inches()[0])
+# plt.xlim(10**-4, 1)
+# cntr1 = ax.contourf(xi, yi, zi, levels=[4*i for i in months], cmap="RdBu_r")
+# fig.set_size_inches(fig.get_size_inches()[0], 1*fig.get_size_inches()[0])
