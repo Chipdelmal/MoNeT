@@ -49,7 +49,7 @@ def printExperimentTail(time, name):
     print(PADA)
     print(
             CWHT + 'Split Drive: ' + name
-            + '[' + time + ']' + CEND
+            + ' [' + time + ']' + CEND
         )
     print(PADA)
 
