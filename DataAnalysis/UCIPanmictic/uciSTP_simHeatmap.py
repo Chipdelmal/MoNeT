@@ -31,7 +31,7 @@ header = ['ratio', 'releases', 'fitness', 'sv', 'group']
 header.extend(thr)
 drvPars = drv.driveSelector(DRV)
 ci = QNT[2]
-months = list(range(0, 12*4, 6))
+months = list(range(0, 20*4, 6))
 (ngridx, ngridy) = (1000, 1000)
 ###############################################################################
 # Setting up paths and directories
@@ -111,42 +111,3 @@ for group in [0]:
                     transparent=True, bbox_inches='tight', pad_inches=.01
                 )
             plt.close('all')
-
-
-
-###############################################################################
-# Heatmap
-###############################################################################
-# (x, y, z) = (df['releases'], df['ratio'], df[level])
-# (x, y, z) = (
-#         np.array([int(i) for i in x]),
-#         np.array([float(i/1000000) for i in y]),
-#         np.array([float(i) for i in z])
-#     )
-# (ngridx, ngridy) = (1000, 1000)
-# (grid_x, grid_y) = np.mgrid[0:a:100j, 0:b:200j]
-# grid = griddata((x, y), z, (grid_x, grid_y), method='nearest')
-# fig, ax = plt.subplots()
-# ax.tricontourf(x, y, z, levels=10, cmap="RdBu_r")
-# ax.set(xscale="log", yscale="linear")
-# xmin, xmax = ax.get_xbound()
-# ymin, ymax = ax.get_ybound()
-
-# data_aspect = (
-#     math.log(ymax)-math.log(ymin))/(math.log(xmax)-math.log(xmin)
-#     )
-# # ax.set_aspect(1./data_aspect)
-# fig_ratio=1
-# fig.set_size_inches(fig.get_size_inches()[0], fig_ratio*fig.get_size_inches()[0])
-#
-#
-#
-
-# (xi, yi) = (np.linspace(0, a, ngridx), np.linspace(0, b, ngridy))
-# fig, ax = plt.subplots()
-# zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='nearest')
-# ax.contour(xi, yi, zi, levels=[4*i for i in months], linewidths=1, colors='k')
-# ax.set(xscale="log", yscale="linear")
-# plt.xlim(10**-4, 1)
-# cntr1 = ax.contourf(xi, yi, zi, levels=[4*i for i in months], cmap="RdBu_r")
-# fig.set_size_inches(fig.get_size_inches()[0], 1*fig.get_size_inches()[0])
