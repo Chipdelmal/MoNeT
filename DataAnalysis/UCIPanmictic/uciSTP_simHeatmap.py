@@ -20,8 +20,8 @@ from matplotlib.colors import LinearSegmentedColormap
 
 USR = 'dsk'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
-        'tParams', 'LDR', 'island', False,
-        'HLT', (True, True), [.5, .9, .95], False
+        'gravidReleases', 'LDR', 'islandnonGravid', False,
+        'HLT', (True, True), [.5, .95], False
     )
 header = ['ratio', 'releases', 'fitness', 'sv', 'group']
 (thr, sVar, REL_STRT, WRM) = (
@@ -30,8 +30,8 @@ header = ['ratio', 'releases', 'fitness', 'sv', 'group']
     )
 header.extend(thr)
 drvPars = drv.driveSelector(DRV)
-ci = QNT[2]
-months = list(range(0, 20*4, 6))
+ci = QNT[1]
+months = list(range(0, 78*4, 4))
 (ngridx, ngridy) = (1000, 1000)
 ###############################################################################
 # Setting up paths and directories
@@ -81,7 +81,10 @@ for group in [0]:
                     np.array([float(i) for i in z])
                 )
             (a, b) = (max(x), max(y))
-            (xi, yi) = (np.linspace(0, a, ngridx), np.linspace(0, b, ngridy))
+            (xi, yi) = (
+                    np.linspace(10**-4, a, ngridx),
+                    np.linspace(10**-4, b, ngridy)
+                )
             zi = griddata(
                     (x, y), z, (xi[None, :], yi[:, None]),
                     method='linear'
@@ -90,13 +93,13 @@ for group in [0]:
             ax.plot(x, y, 'ko', ms=.5, alpha=.2)
             ax.contour(
                     xi, yi, zi,
-                    levels=[4*i for i in months],
-                    linewidths=1, colors='k'
+                    levels=[4*i for i in [0, 8, 12, 24, 52, 78]],
+                    linewidths=2, colors='k', alpha=.9
                 )
             ax.contourf(
                     xi, yi, zi,
-                    levels=[4*i for i in months],
-                    cmap='Purples' # monet.cmaps[2]
+                    levels=[4*i for i in [0, 8, 12, 24, 52, 78]],
+                    cmap='Purples'  # monet.cmaps[2]
                 )
             ax.set(xscale="log", yscale="linear")
             fig.set_size_inches(

@@ -96,6 +96,28 @@ def calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.95):
     return quant
 
 
+def calcMeanWOP(meanPrb, meanRef, thresholds, gIx):
+    ratioOI = getPopRatio(meanPrb['population'], meanRef['population'], gIx)
+    thsArray = comparePopToThresholds(ratioOI, thresholds)
+    thsDays = thresholdMet(thsArray)
+    ttiAn = [len(i) for i in thsDays]
+    return ttiAn
+
+
+def calcQuantWOP(srpPrb, meanRef, thresholds, gIx, quantile=.95):
+    prb = srpPrb['landscapes']
+    smpNum = len(prb)
+    ttiArr = np.empty((smpNum, len(thresholds)))
+    for s in range(smpNum):
+        refPop = meanRef['population']
+        ratioOI = getPopRatio(prb[s], refPop, gIx)
+        thsArray = comparePopToThresholds(ratioOI, thresholds)
+        thsDays = thresholdMet(thsArray)
+        ttiArr[s] = [len(i) for i in thsDays]
+    quant = np.nanquantile(ttiArr, quantile, axis=0)
+    return quant
+
+
 ###############################################################################
 # Dynamics
 ###############################################################################

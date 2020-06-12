@@ -14,7 +14,7 @@ import compress_pickle as pkl
 USR = 'dsk'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
         'gravidReleases', 'LDR', sys.argv[1],
-        False, 'HLT', (True, True), [.5, .9, .95], True
+        False, 'HLT', (True, True), [.5, .95], True
     )
 (thr, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
 drvPars = drv.driveSelector(DRV)
@@ -70,7 +70,7 @@ for qnt in QNT:
             # Get pair of files and generate the experiment ID
             (bFile, pFile) = (bsFiles[pairIx], pbFiles[pairIx])
             (mnRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
-            qt = list(fun.calcQuantTTI(srpPrb, mnRef, thr, gIx, quantile=qnt))
+            qt = list(monet.calcQuantTTI(srpPrb, mnRef, thr, gIx, quantile=qnt))
             xpId = aux.getXpId(pFile, [1, 2, 3, 4, 6])
             xpId.extend(qt)
             thCuts.append(xpId)
