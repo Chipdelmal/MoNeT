@@ -13,7 +13,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 
 
 (USR, SET) = ('srv', sys.argv[1]) # 'Aggregated')
-(SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
+(SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 if (SET == 'unAggregated') or (SET == 'Aggregated'):
     if SET == 'Aggregated':
         NOI = sdix.AGGIX

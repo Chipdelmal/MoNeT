@@ -36,8 +36,8 @@ aux.printExperimentHead(PATH, pathImg, pathPre, str(tSrt), 'Plotting ')
 ###############################################################################
 # List preprocessed files lists
 ###############################################################################
-# typTag = ('sum', 'spa', 'rep')  # 'srp')
-typTag = ('sum', 'rep')
+typTag = ('sum', 'spa', 'rep')  # 'srp')
+# typTag = ('sum', 'rep')
 fLists = list(zip(*[sorted(glob(pathPre+'*'+tp+EXT)) for tp in typTag]))
 ###############################################################################
 # Load preprocessed files lists
@@ -46,21 +46,21 @@ fLists = list(zip(*[sorted(glob(pathPre+'*'+tp+EXT)) for tp in typTag]))
 msg = '* Analyzing ({}/{})'
 for i in range(0, xpNum):
     print(msg.format(str(i+1).zfill(digs), str(xpNum).zfill(digs)), end='\r')
-    # (sumDta, spaDta, repDta, srpDta) = [pkl.load(file) for file in (fLists[i])]
-    (sumDta, repDta) = [pkl.load(file) for file in (fLists[i])]
+    (sumDta, spaDta, repDta, srpDta) = [pkl.load(file) for file in (fLists[i])]
+    # (sumDta, repDta) = [pkl.load(file) for file in (fLists[i])]
     name = fLists[i][0].split('/')[-1].split('.')[-2][:-4]
     # Process data ------------------------------------------------------------
-    # spaDtaNorm = monet.rescaleGeneSpatiotemporals(spaDta)
-    # overlay = monet.plotGenotypeOverlayFromLandscape(
-    #         spaDtaNorm, vmax=1,
-    #         style={"aspect": 50 * STYLE['aspect'], "cmap": CMAPS},
-    #     )
+    spaDtaNorm = monet.rescaleGeneSpatiotemporals(spaDta)
+    overlay = monet.plotGenotypeOverlayFromLandscape(
+            spaDtaNorm, vmax=1,
+            style={"aspect": 50 * STYLE['aspect'], "cmap": CMAPS},
+         )
     # Export plots ------------------------------------------------------------
     fun.exportTracesPlot(repDta, name, STYLE, pathImg, append='TRA')
-    # monet.quickSaveFigure(
-    #         overlay,
-    #         '{}/{}-{}.pdf'.format(pathImg, name, 'OVR'), format='pdf'
-    #     )
+    monet.quickSaveFigure(
+            overlay,
+            '{}/{}-{}.pdf'.format(pathImg, name, 'OVR'), format='pdf'
+         )
     monet.exportGeneLegend(sumDta['genotypes'], CLR, pathImg+'/plt.pdf', 500)
 tEnd = datetime.now()
 print('* Analyzed ({}/{})     '.format(xpNum, xpNum), end='\n')

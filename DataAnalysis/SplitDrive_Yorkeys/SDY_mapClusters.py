@@ -30,7 +30,7 @@ COLORS = [
     ]
 
 ###############################################################################
-pathRoot = '/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandAggregated/Uniformly/C002195/'
+pathRoot = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/C001303/'
 firstRun = True
 # print(sorted(glob.glob(pathRoot+'/Y*I.csv')))
 ###############################################################################
@@ -81,8 +81,8 @@ for clusterFile in sorted(glob.glob(pathRoot+'/Y*I.csv')):
     # m.drawcoastlines(color=COLORS[4], linewidth=.5, zorder=-1)
     # m.fillcontinents(color=COLORS[3], lake_color='aqua')
     m.scatter(
-            longs, lats, latlon=True, alpha=.075, marker='x', s=10,
-            cmap=plt.get_cmap('winter'), c=clusters,
+            longs, lats, latlon=True, alpha=.25, marker='o', s=3.5,
+            cmap=plt.get_cmap('hsv'), c=clusters,
             vmin=minCluster, vmax=maxCluster
         )
     ax.tick_params(

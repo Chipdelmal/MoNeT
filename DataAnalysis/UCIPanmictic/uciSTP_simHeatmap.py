@@ -27,7 +27,7 @@ from scipy.interpolate import griddata
 
 USR = 'dsk'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
-        'gravidReleases', 'LDR', 'island', False,
+        'gravidReleases', 'LDR', 'islandnonGravid', False,
         'HLT', (True, True), [.5, .95], False
     )
 header = ['ratio', 'releases', 'fitness', 'sv', 'group']
@@ -37,7 +37,7 @@ header = ['ratio', 'releases', 'fitness', 'sv', 'group']
     )
 header.extend(thr)
 drvPars = drv.driveSelector(DRV)
-ci = QNT[1]
+ci = QNT[0]
 months = list(range(0, 78*4, 4))
 (ngdx, ngdy) = (1000, 1000)
 (xmin, xmax, ymin) = (10**-4, 1, 1)

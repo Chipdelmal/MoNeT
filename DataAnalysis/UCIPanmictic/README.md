@@ -46,6 +46,10 @@ scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/island/img/ /home/chipdelm
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/islandGravidFemales/img/ /home/chipdelmal/Desktop/Panmictic/yParams/islandGravidFemales/;\
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/islandMixed/img/ /home/chipdelmal/Desktop/Panmictic/yParams/islandMixed/;\
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/yParams/island/img/ /home/chipdelmal/Desktop/Panmictic/yParams/island/;
+
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/island/img/ /media/chipdelmal/cache/Sims/Panmictic/gravidReleases/island/
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/islandGravid/img/ /media/chipdelmal/cache/Sims/Panmictic/gravidReleases/islandGravid/
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/islandnonGravid/img/ /media/chipdelmal/cache/Sims/Panmictic/gravidReleases/islandnonGravid/
 ```
 
 Copy all dynamics plots:
@@ -86,11 +90,11 @@ scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/islandGravidFemales/out/LD
 scp -rp  lab:/RAID5/marshallShare/UCI/Tomas/tParams/kernel_1/out/LDR/PREPROCESS/*.lzma /media/chipdelmal/cache/Sims/Tomas/tParams/kernel_1/out/LDR/PREPROCESS
 
 
-scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/island/out/LDR/PREPROCESS/*.lzma /media/chipdelmal/cache/Sims/Panmictic/gravidReleases/island/out/LDR/PREPROCESS
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/islandnonGravid/out/LDR/PREPROCESS/*.lzma /media/chipdelmal/cache/Sims/Panmictic/gravidReleases/islandnonGravid/out/LDR/PREPROCESS
 ```
 
 #### Postprocessed data
 
 ```bash
-scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/tParams/island/out/LDR/POSTPROCESS/ /media/chipdelmal/cache/Sims/Panmictic/tParams/island/out/LDR/
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/islandnonGravid/out/LDR/POSTPROCESS/ /media/chipdelmal/cache/Sims/Panmictic/gravidReleases/islandnonGravid/out/LDR/
 ```
