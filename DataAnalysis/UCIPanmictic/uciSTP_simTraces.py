@@ -13,7 +13,7 @@ import compress_pickle as pkl
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-(USR, XPM, LAND, SET) = ('dsk', sys.argv[1], sys.argv[2], sys.argv[3])
+(USR, XPM, LAND, SET) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, XPM, LAND, SET) = ('dsk', 'Tomas', 'tParams', 'kernel_1')
 # (USR, XPM, LAND, SET) = ('dsk', 'Panmictic', 'tParams', 'island')
 (DRIVE_ID, STP, SKP, FMT) = ('LDR', True, False, '.lzma')
