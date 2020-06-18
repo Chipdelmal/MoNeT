@@ -3,6 +3,7 @@
 
 from glob import glob
 import MoNeT_MGDrivE as monet
+import matplotlib.pyplot as plt
 
 
 def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time, title):
@@ -29,3 +30,21 @@ def getExpPaths(PATH_DATA):
 def splitExpNames(PATH_OUT, ext='lzma'):
     out = [i.split('/')[-1].split('-')[0] for i in glob(PATH_OUT+'*.'+ext)]
     return sorted(list(set(out)))
+
+
+def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append=''):
+    figArr = monet.plotLandscapeDataRepetitions(tS, STYLE)
+    axTemp = figArr[0].get_axes()[0]
+    axTemp.set_aspect(aspect=STYLE["aspect"])
+    axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
+    axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
+    # axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
+    axTemp.tick_params(color=(0, 0, 0, 0.5))
+    figArr[0].savefig(
+            "{}/{}-{}.png".format(PATH_IMG, nS, append),
+            dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
+            orientation='portrait', papertype=None, format='png',
+            transparent=True, bbox_inches='tight', pad_inches=.01
+        )
+    plt.close('all')
+    return True
