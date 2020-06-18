@@ -43,7 +43,7 @@ print(monet.PADL)
 (CLR, CMAPS) = (aux.colorsH, aux.cmapsH)
 STYLE = {
         "width": .1, "alpha": .15, "dpi": 2*300, "legend": True, "aspect": .5,
-        "colors": CLR, "xRange": [0, 1825], "yRange": [0, 10 * 100000]
+        "colors": CLR, "xRange": [0, 1825], "yRange": [0, 20 * 100000]
     }
 STYLE['aspect'] = monet.scaleAspect(1, STYLE)
 ###############################################################################
@@ -51,6 +51,7 @@ STYLE['aspect'] = monet.scaleAspect(1, STYLE)
 ###############################################################################
 tyTag = ('sum', 'rep')
 fLists = list(zip(*[sorted(glob(PATH_OUT+'*'+tp+FMT)) for tp in tyTag]))
+fLists.reverse()
 ###############################################################################
 # Process files
 ###############################################################################
