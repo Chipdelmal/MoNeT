@@ -22,7 +22,7 @@ COLEM = monet.generateAlphaColorMapFromColorArray(COLEO)
 ###############################################################################
 # Linked Drive Replacement ----------------------------------------------------
 drive_LDR = {
-        'id': 'LDR', 'folder': 'LDR', 'loc': 1,
+        'id': 'Replacement', 'folder': 'LDR', 'loc': 1,
         'HLT': {
             'gDict': monet.generateAggregationDictionary(
                     ["H", "Other", "Total"],
