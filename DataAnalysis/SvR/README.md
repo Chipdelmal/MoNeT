@@ -21,5 +21,5 @@ scp -rp  lab:/RAID5/marshallShare/SvR/sim/ /media/chipdelmal/cache/Sims/SvR/
 Preprocessed Data:
 
 ```bash
-scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/PREPROCESS/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/PREPROCES/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/
 ```

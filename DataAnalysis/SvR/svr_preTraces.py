@@ -39,7 +39,7 @@ msg = '* Analyzing ({}/{})'
 for i in range(0, xpNum):
     print(msg.format(str(i+1).zfill(digs), str(xpNum).zfill(digs)), end='\r')
     (sumDta, repDta) = [pkl.load(file) for file in (fLists[i])]
-    name = fLists[i][0].split('/')[-1].split('.')[-3][:-4]
+    name = fLists[i][0].split('/')[-1].split('.')[0][:-4]
     # Export plots ------------------------------------------------------------
     fun.exportTracesPlot(repDta, name, STYLE, PT_IMG, append='TRA')
     cl = [i[:-2]+'cc' for i in CLR]

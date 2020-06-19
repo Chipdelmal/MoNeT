@@ -3,6 +3,7 @@
 
 import re
 from glob import glob
+import compress_pickle as pkl
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
@@ -60,3 +61,85 @@ def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
         colSet = set([i[c] for i in splitFilenames])
         ids.append(sorted(list(colSet)))
     return ids
+
+
+###############################################################################
+# Preprocess Data
+###############################################################################
+def preProcessSubLandscape(
+            pop, landReps,
+            fName, drive,
+            nodesAggLst, nodeAggIx,
+            MF=(True, True), cmpr='bz2',
+            SUM=True, AGG=True, SPA=True, REP=True, SRP=True
+        ):
+    if SUM:
+        sumData = monet.sumLandscapePopulationsFromFiles(pop, MF[0], MF[1])
+        sumAgg = monet.aggregateGenotypesInNode(sumData, drive)
+        pkl.dump(sumAgg, fName+'_sum', compression=cmpr)
+    if AGG:
+        aggData = monet.loadAndAggregateLandscapeData(pop, drive, MF[0], MF[1])
+        pkl.dump(aggData, fName+'_agg', compression=cmpr)
+    if SPA:
+        geneSpaTemp = monet.getGenotypeArraysFromLandscape(aggData)
+        pkl.dump(geneSpaTemp, fName+'_spa', compression=cmpr)
+    if REP:
+        fLandReps = monet.filterAggregateGarbageByIndex(
+                landReps, nodesAggLst[nodeAggIx]
+            )
+        pkl.dump(fLandReps, fName+'_rep', compression=cmpr)
+    if SRP:
+        fRepsSum = [sum(i) for i in fLandReps['landscapes']]
+        fRepsDict = {
+                'genotypes': fLandReps['genotypes'],
+                'landscapes': fRepsSum
+            }
+        pkl.dump(fRepsDict, fName+'_srp', compression=cmpr)
+    return True
+
+
+def preProcessLandscape(
+            pathMean, pathTraces, expName, drive,
+            prePath='./',
+            nodesAggLst=[[0]], analysisOI='HLT', fNameFmt='{}/{}-{}_',
+            MF=(True, True), cmpr='bz2', nodeDigits=4,
+            SUM=True, AGG=True, SPA=True, REP=True, SRP=True
+        ):
+    dirsTraces = monet.listDirectoriesWithPathWithinAPath(pathTraces)
+    files = monet.readExperimentFilenames(pathMean)
+    filesList = [monet.filterFilesByIndex(files, ix) for ix in nodesAggLst]
+    landReps = monet.loadAndAggregateLandscapeDataRepetitions(
+            dirsTraces, drive, MF[0], MF[1]
+        )
+    for (nodeAggIx, pop) in enumerate(filesList):
+        fName = fNameFmt + str(nodeAggIx).zfill(nodeDigits)
+        preProcessSubLandscape(
+                    pop, landReps, fName, drive,
+                    nodesAggLst, nodeAggIx,
+                    MF=MF, cmpr=cmpr,
+                    SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
+                )
+
+
+def preProcess(
+            exIx, expNum, expDirsMean, expDirsTrac,
+            expName, drive, analysisOI='HLT', prePath='./',
+            nodesAggLst=[[0]], outExpNames={},
+            fNameFmt='{}/{}-{}_', OVW=True,
+            MF=(True, True), cmpr='bz2', nodeDigits=4,
+            SUM=True, AGG=True, SPA=True, REP=True, SRP=True
+        ):
+    # Setup paths -------------------------------------------------------------
+    strInt = str(exIx+1).zfill(len(str(expNum)))
+    print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
+    (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
+    expName = pathMean.split('/')[-1]
+    if not((expName in outExpNames) and (OVW)):
+        fNameFmt = '{}/{}-{}_'.format(prePath, expName, analysisOI)
+        preProcessLandscape(
+                    pathMean, pathTraces,
+                    fNameFmt, expName, analysisOI,
+                    drive, prePath, nodesAggLst,
+                    MF=(True, True), cmpr='bz2', nodeDigits=4,
+                    SUM=True, AGG=True, SPA=True, REP=True, SRP=True
+                )

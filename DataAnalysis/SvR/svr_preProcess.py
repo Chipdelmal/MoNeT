@@ -6,10 +6,10 @@ import svr_gene as drv
 import svr_functions as fun
 from datetime import datetime
 import MoNeT_MGDrivE as monet
-import compress_pickle as pkl
+from joblib import Parallel, delayed
 
 
-(USR, DRV, AOI) = ('srv', 'replacement', 'HLT')
+(USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
 (FMT, SKP, MF) = ('bz2', False, (True, True))
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################
@@ -45,36 +45,10 @@ for exIx in range(0, expNum):
     expName = pathMean.split('/')[-1]
     if (expName in outExpNames) and (SKP):
         continue
-    (dirsMean, dirsTraces) = (
-            pathMean, monet.listDirectoriesWithPathWithinAPath(pathTraces)
-        )
-    files = monet.readExperimentFilenames(pathMean)
-    filesList = [monet.filterFilesByIndex(files, ix) for ix in NOI]
-    landReps = monet.loadAndAggregateLandscapeDataRepetitions(
-            dirsTraces, DVP, MF[0], MF[1]
-        )
-    for (pIx, pop) in enumerate(filesList):
-        fName = '{}/{}-{}_{}'.format(
-                PT_PRE, expName, AOI, str(pIx).zfill(nodeDigits)
+    fNameFmt = '{}/{}-{}_'.format(PT_PRE, expName, AOI)
+    fun.preProcessLandscape(
+                pathMean, pathTraces, fNameFmt, expName, AOI,
+                DVP, PT_PRE, NOI,
+                MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
+                SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
             )
-        # Load data -----------------------------------------------------------
-        if SUM:
-            sumData = monet.sumLandscapePopulationsFromFiles(pop, MF[0], MF[1])
-            sumAgg = monet.aggregateGenotypesInNode(sumData, DVP)
-            pkl.dump(sumAgg, fName+'_sum', compression=FMT)
-        if AGG:
-            aggData = monet.loadAndAggregateLandscapeData(pop, DVP, MF[0], MF[1])
-            pkl.dump(aggData, fName+'_agg', compression=FMT)
-        if SPA:
-            geneSpaTemp = monet.getGenotypeArraysFromLandscape(aggData)
-            pkl.dump(geneSpaTemp, fName+'_spa', compression=FMT)
-        if REP:
-            fLandReps = monet.filterAggregateGarbageByIndex(landReps, NOI[pIx])
-            pkl.dump(fLandReps, fName+'_rep', compression=FMT)
-        if SRP:
-            fRepsSum = [sum(i) for i in fLandReps['landscapes']]
-            fRepsDict = {
-                    'genotypes': fLandReps['genotypes'],
-                    'landscapes': fRepsSum
-                }
-            pkl.dump(fRepsDict, fName+'_srp', compression=FMT)
