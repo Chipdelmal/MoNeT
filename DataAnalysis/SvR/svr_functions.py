@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import re
 from glob import glob
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
@@ -48,3 +49,14 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append=''):
         )
     plt.close('all')
     return True
+
+
+def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
+    filesList = glob(PATH_EXP+'E*')
+    fileNames = [i.split('/')[-1].split('.')[-3] for i in filesList]
+    splitFilenames = [re.split('_|-', i)[:skip] for i in fileNames]
+    ids = []
+    for c in range(len(splitFilenames[0])):
+        colSet = set([i[c] for i in splitFilenames])
+        ids.append(sorted(list(colSet)))
+    return ids

@@ -20,7 +20,7 @@ import compress_pickle as pkl
 (CLR, CMAPS) = (drv.COLHN, drv.COLHM)
 STYLE = {
         "width": .1, "alpha": .15, "dpi": 2*300, "legend": True, "aspect": .5,
-        "colors": CLR, "xRange": [0, 1825], "yRange": [0, 100 * 12500]
+        "colors": CLR, "xRange": [0, 365 * 10], "yRange": [0, 100 * 12000]
     }
 STYLE['aspect'] = monet.scaleAspect(1, STYLE)
 tS = datetime.now()
