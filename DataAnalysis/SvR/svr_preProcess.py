@@ -37,22 +37,6 @@ outExpNames = set(outNames)
 ###############################################################################
 # Analyze data
 ###############################################################################
-# for exIx in range(0, expNum):
-#     # Setup paths -------------------------------------------------------------
-#     strInt = str(exIx+1).zfill(len(str(expNum)))
-#     print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
-#     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
-#     expName = pathMean.split('/')[-1]
-#     if (expName in outExpNames) and (OVW):
-#         continue
-#     fNameFmt = '{}/{}-{}_'.format(PT_PRE, expName, AOI)
-#     fun.preProcessLandscape(
-#                 pathMean, pathTraces, expName, DVP, PT_PRE,
-#                 analysisOI=AOI, nodesAggLst=NOI, fNameFmt=fNameFmt,
-#                 MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
-#                 SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
-#             )
-
 Parallel(n_jobs=JOB)(
         delayed(fun.preProcess)(
                 exIx, expNum, expDirsMean, expDirsTrac, DVP,
