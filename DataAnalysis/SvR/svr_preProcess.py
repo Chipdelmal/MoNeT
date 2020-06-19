@@ -5,12 +5,12 @@ import svr_aux as aux
 import svr_gene as drv
 import svr_functions as fun
 from datetime import datetime
-import MoNeT_MGDrivE as monet
+# import MoNeT_MGDrivE as monet
 from joblib import Parallel, delayed
 
 
 (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
-(FMT, OVW, MF) = ('bz2', True, (True, True))
+(FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 8)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################
 # Setting up paths and style
@@ -37,23 +37,23 @@ outExpNames = set(outNames)
 ###############################################################################
 # Analyze data
 ###############################################################################
-for exIx in range(0, expNum):
-    # Setup paths -------------------------------------------------------------
-    strInt = str(exIx+1).zfill(len(str(expNum)))
-    print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
-    (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
-    expName = pathMean.split('/')[-1]
-    if (expName in outExpNames) and (OVW):
-        continue
-    fNameFmt = '{}/{}-{}_'.format(PT_PRE, expName, AOI)
-    fun.preProcessLandscape(
-                pathMean, pathTraces, expName, DVP, PT_PRE,
-                analysisOI=AOI, nodesAggLst=NOI, fNameFmt=fNameFmt,
-                MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
-                SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
-            )
+# for exIx in range(0, expNum):
+#     # Setup paths -------------------------------------------------------------
+#     strInt = str(exIx+1).zfill(len(str(expNum)))
+#     print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
+#     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
+#     expName = pathMean.split('/')[-1]
+#     if (expName in outExpNames) and (OVW):
+#         continue
+#     fNameFmt = '{}/{}-{}_'.format(PT_PRE, expName, AOI)
+#     fun.preProcessLandscape(
+#                 pathMean, pathTraces, expName, DVP, PT_PRE,
+#                 analysisOI=AOI, nodesAggLst=NOI, fNameFmt=fNameFmt,
+#                 MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
+#                 SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
+#             )
 
-Parallel(n_jobs=1)(
+Parallel(n_jobs=JOB)(
         delayed(fun.preProcess)(
                 exIx, expNum, expDirsMean, expDirsTrac, DVP,
                 analysisOI=AOI, prePath=PT_PRE, nodesAggLst=NOI,
@@ -62,13 +62,3 @@ Parallel(n_jobs=1)(
                 SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
             )  for exIx in range(0, expNum)
     )
-
-
-
-
-from math import sqrt
-Parallel(n_jobs=1)(
-        delayed(sqrt)(i**2) for i in range(10)
-    )
-
-NOI

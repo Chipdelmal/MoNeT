@@ -138,7 +138,6 @@ def preProcess(
         preProcessLandscape(
                     pathMean, pathTraces, expName, drive, prePath,
                     analysisOI=analysisOI, nodesAggLst=nodesAggLst,
-                    fNameFmt=fNameFmt,
-                    MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
+                    fNameFmt=fNameFmt, MF=MF, cmpr=cmpr, nodeDigits=nodeDigits,
                     SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
                 )
