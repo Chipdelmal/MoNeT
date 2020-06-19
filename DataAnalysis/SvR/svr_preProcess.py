@@ -10,7 +10,7 @@ from joblib import Parallel, delayed
 
 
 (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
-(FMT, SKP, MF) = ('bz2', False, (True, True))
+(FMT, OVW, MF) = ('bz2', True, (True, True))
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################
 # Setting up paths and style
@@ -43,12 +43,32 @@ for exIx in range(0, expNum):
     print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
     expName = pathMean.split('/')[-1]
-    if (expName in outExpNames) and (SKP):
+    if (expName in outExpNames) and (OVW):
         continue
     fNameFmt = '{}/{}-{}_'.format(PT_PRE, expName, AOI)
     fun.preProcessLandscape(
-                pathMean, pathTraces, fNameFmt, expName, AOI,
-                DVP, PT_PRE, NOI,
+                pathMean, pathTraces, expName, DVP, PT_PRE,
+                analysisOI=AOI, nodesAggLst=NOI, fNameFmt=fNameFmt,
                 MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
                 SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
             )
+
+Parallel(n_jobs=1)(
+        delayed(fun.preProcess)(
+                exIx, expNum, expDirsMean, expDirsTrac, DVP,
+                analysisOI=AOI, prePath=PT_PRE, nodesAggLst=NOI,
+                outExpNames=outExpNames, fNameFmt='{}/{}-{}_', OVW=OVW,
+                MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
+                SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
+            )  for exIx in range(0, expNum)
+    )
+
+
+
+
+from math import sqrt
+Parallel(n_jobs=1)(
+        delayed(sqrt)(i**2) for i in range(10)
+    )
+
+NOI

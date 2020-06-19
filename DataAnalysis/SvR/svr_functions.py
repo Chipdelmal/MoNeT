@@ -99,8 +99,7 @@ def preProcessSubLandscape(
 
 
 def preProcessLandscape(
-            pathMean, pathTraces, expName, drive,
-            prePath='./',
+            pathMean, pathTraces, expName, drive, prePath='./',
             nodesAggLst=[[0]], analysisOI='HLT', fNameFmt='{}/{}-{}_',
             MF=(True, True), cmpr='bz2', nodeDigits=4,
             SUM=True, AGG=True, SPA=True, REP=True, SRP=True
@@ -123,7 +122,7 @@ def preProcessLandscape(
 
 def preProcess(
             exIx, expNum, expDirsMean, expDirsTrac,
-            expName, drive, analysisOI='HLT', prePath='./',
+            drive, analysisOI='HLT', prePath='./',
             nodesAggLst=[[0]], outExpNames={},
             fNameFmt='{}/{}-{}_', OVW=True,
             MF=(True, True), cmpr='bz2', nodeDigits=4,
@@ -137,9 +136,9 @@ def preProcess(
     if not((expName in outExpNames) and (OVW)):
         fNameFmt = '{}/{}-{}_'.format(prePath, expName, analysisOI)
         preProcessLandscape(
-                    pathMean, pathTraces,
-                    fNameFmt, expName, analysisOI,
-                    drive, prePath, nodesAggLst,
-                    MF=(True, True), cmpr='bz2', nodeDigits=4,
-                    SUM=True, AGG=True, SPA=True, REP=True, SRP=True
+                    pathMean, pathTraces, expName, drive, prePath,
+                    analysisOI=analysisOI, nodesAggLst=nodesAggLst,
+                    fNameFmt=fNameFmt,
+                    MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
+                    SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
                 )
