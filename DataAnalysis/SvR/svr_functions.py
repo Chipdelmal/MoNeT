@@ -73,6 +73,27 @@ def preProcessSubLandscape(
             MF=(True, True), cmpr='bz2',
             SUM=True, AGG=True, SPA=True, REP=True, SRP=True
         ):
+    """
+    Preprocesses a subset of the landscape
+    Args:
+        pop (list): Files list element aggregated by landscape subset
+        landReps (dict): Landscape repetitions
+                (spatial from monet.loadAndAggregateLandscapeDataRepetitions)
+        fName (str): Filename (including path)
+        drive (dict): Gene-drive dictionary
+        nodesAggLst (lst): List of lists containing the indices of the nodes
+                to be aggregated together
+        nodeAggIx (int): Current list to process (from the nodeAggLst)
+        MF (bool tuple): Male and Female boolean selectors
+        cmpr (str): Compression algorithm to be used by compress-python
+        SUM (bool):
+        AGG (bool):
+        SPA (bool):
+        REP (bool):
+        SRP (bool):
+    Returns:
+        None
+    """
     if SUM:
         sumData = monet.sumLandscapePopulationsFromFiles(pop, MF[0], MF[1])
         sumAgg = monet.aggregateGenotypesInNode(sumData, drive)
@@ -95,7 +116,7 @@ def preProcessSubLandscape(
                 'landscapes': fRepsSum
             }
         pkl.dump(fRepsDict, fName+'_srp', compression=cmpr)
-    return True
+    return None
 
 
 def preProcessLandscape(
@@ -107,9 +128,11 @@ def preProcessLandscape(
     dirsTraces = monet.listDirectoriesWithPathWithinAPath(pathTraces)
     files = monet.readExperimentFilenames(pathMean)
     filesList = [monet.filterFilesByIndex(files, ix) for ix in nodesAggLst]
-    landReps = monet.loadAndAggregateLandscapeDataRepetitions(
-            dirsTraces, drive, MF[0], MF[1]
-        )
+    landReps = None
+    if REP:
+        landReps = monet.loadAndAggregateLandscapeDataRepetitions(
+                dirsTraces, drive, MF[0], MF[1]
+            )
     for (nodeAggIx, pop) in enumerate(filesList):
         fName = fNameFmt + str(nodeAggIx).zfill(nodeDigits)
         preProcessSubLandscape(
@@ -118,6 +141,7 @@ def preProcessLandscape(
                     MF=MF, cmpr=cmpr,
                     SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
                 )
+    return None
 
 
 def preProcess(
@@ -141,3 +165,4 @@ def preProcess(
                     fNameFmt=fNameFmt, MF=MF, cmpr=cmpr, nodeDigits=nodeDigits,
                     SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
                 )
+    return None
