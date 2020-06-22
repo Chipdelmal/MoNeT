@@ -12,10 +12,10 @@ import MoNeT_MGDrivE as monet
 # import compress_pickle as pkl
 from joblib import Parallel, delayed
 
-JOB = 8
-(USR, XPM, LAND, SET) = ('dsk', sys.argv[1], sys.argv[2], sys.argv[3])
+JOB = 20
+(USR, XPM, LAND, SET) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
 (DRIVE_ID, STP, AOI, MF, OVW, FMT) = (
-         'LDR', False, 'HLT', (True, True), False, '.lzma'
+         'LDR', False, 'HLT', (True, True), False, 'lzma'
     )
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 drvPars = drv.driveSelector(DRIVE_ID)
@@ -55,7 +55,7 @@ outExpNames = set(outNames)
 ###############################################################################
 Parallel(n_jobs=JOB)(
         delayed(monet.preProcess)(
-                exIx, expNum, expDirsMean, expDirsTrac, drvPars,
+                exIx, expNum, expDirsMean, expDirsTrac, drvPars[AOI],
                 analysisOI=AOI, prePath=PATH_OUT, nodesAggLst=NOI,
                 outExpNames=outExpNames, fNameFmt='{}/{}-{}_', OVW=OVW,
                 MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
