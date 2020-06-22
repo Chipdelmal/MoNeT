@@ -67,8 +67,7 @@ def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
 # Preprocess Data
 ###############################################################################
 def preProcessSubLandscape(
-            pop, landReps,
-            fName, drive,
+            pop, landReps, fName, drive,
             nodesAggLst, nodeAggIx,
             MF=(True, True), cmpr='bz2',
             SUM=True, AGG=True, SPA=True, REP=True, SRP=True
@@ -86,11 +85,11 @@ def preProcessSubLandscape(
         nodeAggIx (int): Current list to process (from the nodeAggLst)
         MF (bool tuple): Male and Female boolean selectors
         cmpr (str): Compression algorithm to be used by compress-python
-        SUM (bool):
-        AGG (bool):
-        SPA (bool):
-        REP (bool):
-        SRP (bool):
+        SUM (bool): Population summed and gene-aggregated into one node
+        AGG (bool): Population gene-aggregated in their own nodes
+        SPA (bool): Genetic landscape (gene-aggregated)
+        REP (bool): Garbage gene-aggregated data
+        SRP (bool): Summed into one garbage gene-aggregated data
     Returns:
         None
     """
@@ -104,7 +103,7 @@ def preProcessSubLandscape(
     if SPA:
         geneSpaTemp = monet.getGenotypeArraysFromLandscape(aggData)
         pkl.dump(geneSpaTemp, fName+'_spa', compression=cmpr)
-    if REP:
+    if REP or SRP:
         fLandReps = monet.filterAggregateGarbageByIndex(
                 landReps, nodesAggLst[nodeAggIx]
             )
@@ -125,6 +124,29 @@ def preProcessLandscape(
             MF=(True, True), cmpr='bz2', nodeDigits=4,
             SUM=True, AGG=True, SPA=True, REP=True, SRP=True
         ):
+    """
+    Preprocesses a subset of the landscape
+    Args:
+        pathMean (str): Files list element aggregated by landscape subset
+        pathTraces (str): Landscape repetitions
+                (spatial from monet.loadAndAggregateLandscapeDataRepetitions)
+        expName (str): Filename (including path)
+        drive (dict): Gene-drive dictionary
+        prePath (str): Preprocess path for export
+        nodesAggLst (int): Current list to process (from the nodeAggLst)
+        analysisOI (str): ID for type of analysis (HLT or ECO for now)
+        fNameFmt (str): Format string for the experiments (prePath+expName+AOI)
+        MF (bool tuple): Male and Female boolean selectors
+        nodeDigits
+        cmpr (str): Compression algorithm to be used by compress-python
+        SUM (bool): Population summed and gene-aggregated into one node
+        AGG (bool): Population gene-aggregated in their own nodes
+        SPA (bool): Genetic landscape (gene-aggregated)
+        REP (bool): Garbage gene-aggregated data
+        SRP (bool): Summed into one garbage gene-aggregated data
+    Returns:
+        None
+    """
     dirsTraces = monet.listDirectoriesWithPathWithinAPath(pathTraces)
     files = monet.readExperimentFilenames(pathMean)
     filesList = [monet.filterFilesByIndex(files, ix) for ix in nodesAggLst]
@@ -152,6 +174,31 @@ def preProcess(
             MF=(True, True), cmpr='bz2', nodeDigits=4,
             SUM=True, AGG=True, SPA=True, REP=True, SRP=True
         ):
+    """
+    Preprocesses a subset of the landscape
+    Args:
+        exIx (str): Files list element aggregated by landscape subset
+        expNum (str):
+        expDirsMean (str): Path to the ANALYZED folder
+        expDirsTrac (str): Path to the GARBAGE folder
+        drive (dict): Gene-drive dictionary
+        analysisOI (str): ID for type of analysis (HLT or ECO for now)
+        prePath (str): Preprocess path for export
+        outExpNames (set): Experiments names already preprocessed
+        nodesAggLst (int): Current list to process (from the nodeAggLst)
+        fNameFmt (str): Format string for the experiments (prePath+expName+AOI)
+        MF (bool tuple): Male and Female boolean selectors
+        nodeDigits (int): Number of digits to be used for nodes padding
+        OVW (bool): Overwrite existing experiments (in outExpNames)
+        cmpr (str): Compression algorithm to be used by compress-python
+        SUM (bool): Population summed and gene-aggregated into one node
+        AGG (bool): Population gene-aggregated in their own nodes
+        SPA (bool): Genetic landscape (gene-aggregated)
+        REP (bool): Garbage gene-aggregated data
+        SRP (bool): Summed into one garbage gene-aggregated data
+    Returns:
+        None
+    """
     # Setup paths -------------------------------------------------------------
     strInt = str(exIx+1).zfill(len(str(expNum)))
     print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
