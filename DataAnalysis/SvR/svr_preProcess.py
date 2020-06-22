@@ -44,5 +44,5 @@ Parallel(n_jobs=JOB)(
                 outExpNames=outExpNames, fNameFmt='{}/{}-{}_', OVW=OVW,
                 MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
                 SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
-            )  for exIx in range(0, expNum)
+            ) for exIx in range(0, expNum)
     )
