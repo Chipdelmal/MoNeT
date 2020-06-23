@@ -9,7 +9,7 @@ from datetime import datetime
 from joblib import Parallel, delayed
 
 
-(USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
+(USR, DRV, AOI) = ('dsk', 'replacement', 'ECO')
 (FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 8)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################
@@ -20,10 +20,10 @@ drive = drv.driveSelector(DRV)
 (xRange, yRange) = ((0, 5*365), (0, 1000000))
 (STYLE, DVP, NOI) = (
         aux.getStyle(drv.COLHN, .1, xRange, yRange),
-        drive.get('HLT').get('gDict'),
+        drive.get(AOI).get('gDict'),
         [[0]]
     )
-gIx = drive[AOI]['gDict']['genotypes'].index('Other')
+# gIx = drive[AOI]['gDict']['genotypes'].index('Other')
 # Time and head ---------------------------------------------------------------
 tS = datetime.now()
 fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess')

@@ -12,8 +12,8 @@ COLHO = [i[:-2]+'FF' for i in COLHN]
 COLHM = monet.generateAlphaColorMapFromColorArray(COLHO)
 # Ecology ---------------------------------------------------------------------
 COLEN = [
-        "#09044620", "#f2006020", "#c6d8ff20",
-        "#7692ff20", "#29339b20", "#7fff3a20"
+        "#1500ff10", "#ff1d1d10", "#66FF0010",
+        "#ff004d10", "#09044610", "#7fff3a10"
     ]
 COLEO = [i[:-2]+'FF' for i in COLEN]
 COLEM = monet.generateAlphaColorMapFromColorArray(COLEO)
@@ -43,8 +43,8 @@ drive_LDR = {
                         [2, 5, 7, 7, 8],
                         [0, 0, 1, 2, 3],
                         [
-                            1, 4, 4, 5, 6, 3, 6, 8, 9, 9,
-                            2, 5, 7, 7, 8, 0, 0, 1, 2, 3
+                            0, 0, 1, 1, 2, 2, 3, 3, 4, 4,
+                            5, 5, 6, 6, 7, 7, 8, 8, 9, 9
                         ]
                     ]
                 ),
@@ -73,10 +73,7 @@ drive_LDS = {
                         [3, 6, 8, 9, 9],
                         [2, 5, 7, 7, 8],
                         [0, 0, 1, 2, 3],
-                        [
-                            1, 4, 4, 5, 6, 3, 6, 8, 9, 9,
-                            2, 5, 7, 7, 8, 0, 0, 1, 2, 3
-                        ]
+                        [1, 4, 5, 6, 0, 2, 3, 7, 8, 9]
                     ]
                 ),
             'color': [COLEN, COLEO, COLEM]
