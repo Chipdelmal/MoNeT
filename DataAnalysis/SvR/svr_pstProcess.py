@@ -7,7 +7,7 @@ import svr_gene as drv
 import svr_functions as fun
 from datetime import datetime
 import MoNeT_MGDrivE as monet
-import compress_pickle as pkl
+# import compress_pickle as pkl
 
 
 (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
@@ -19,8 +19,8 @@ import compress_pickle as pkl
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 (CLR, CMAPS) = (drv.COLHN, drv.COLHM)
 STYLE = {
-        "width": .1, "alpha": .15, "dpi": 2*300, "legend": True, "aspect": .5,
-        "colors": CLR, "xRange": [0, 1825], "yRange": [0, 100 * 12500]
+        "width": .05, "alpha": .15, "dpi": 2*300, "legend": True, "aspect": .5,
+        "colors": CLR, "xRange": [0, 15*365], "yRange": [0, 100 * 12500]
     }
 STYLE['aspect'] = monet.scaleAspect(1, STYLE)
 tS = datetime.now()

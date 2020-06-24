@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 from glob import glob
 import svr_aux as aux
 import svr_gene as drv
@@ -10,18 +11,22 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 
-(USR, DRV, AOI) = ('dsk', 'replacement', 'ECO')
+(USR, DRV, AOI) = ('dsk', 'replacement', sys.argv[1])
 (FMT, SKP, MF) = ('bz2', False, (True, True))
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
-(CLR, CMAPS) = (drv.COLEN, drv.COLHM)
+if (AOI == 'ECO'):
+    (CLR, CMAPS, YRAN) = (drv.COLEN, drv.COLEM, [0, 200 * 12000])
+else:
+    (CLR, CMAPS, YRAN) = (drv.COLHN, drv.COLHM, [0, 100 * 12000])
 STYLE = {
         "width": .5, "alpha": .15, "dpi": 2*300, "legend": True, "aspect": .25,
-        "colors": CLR, "xRange": [0, 365 * 10], "yRange": [0, 200 * 12000]
+        "colors": CLR, "xRange": [0, 365 * 10], "yRange": YRAN
     }
+
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 tS = datetime.now()
 fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces')
@@ -29,8 +34,9 @@ fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces')
 # Load preprocessed files lists
 ###############################################################################
 tyTag = ('sum', 'rep')
-fLists = list(zip(*[sorted(glob(PT_PRE+'*'+tp+'*')) for tp in tyTag]))
+fLists = list(zip(*[sorted(glob(PT_PRE+'*'+AOI+'*'+tp+'*')) for tp in tyTag]))
 fLists.reverse()
+fLists
 ###############################################################################
 # Process files
 ###############################################################################

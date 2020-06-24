@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 import svr_aux as aux
 import svr_gene as drv
 import svr_functions as fun
@@ -9,7 +10,7 @@ from datetime import datetime
 from joblib import Parallel, delayed
 
 
-(USR, DRV, AOI) = ('dsk', 'replacement', 'ECO')
+(USR, DRV, AOI) = ('dsk', 'replacement', sys.argv[1])
 (FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 8)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################

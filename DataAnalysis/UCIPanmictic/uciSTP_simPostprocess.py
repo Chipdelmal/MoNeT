@@ -13,7 +13,7 @@ import compress_pickle as pkl
 
 USR = 'dsk'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
-        'gravidReleases', 'LDR', sys.argv[1], #'islandnonGravid',
+        'gravidReleases', 'LDR', sys.argv[1], #'islandnonGravid', #
         False, 'HLT', (True, True), [.5, .95], True
     )
 (thr, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
