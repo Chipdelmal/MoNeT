@@ -54,7 +54,7 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append=''):
 
 def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
     filesList = glob(PATH_EXP+'E*')
-    fileNames = [i.split('/')[-1].split('.')[-3] for i in filesList]
+    fileNames = [i.split('/')[-1].split('.')[-2] for i in filesList]
     splitFilenames = [re.split('_|-', i)[:skip] for i in fileNames]
     ids = []
     for c in range(len(splitFilenames[0])):

@@ -49,7 +49,9 @@ for i in range(0, xpNum):
     # Export plots ------------------------------------------------------------
     fun.exportTracesPlot(repDta, name, STYLE, PT_IMG, append='TRA')
     cl = [i[:-2]+'cc' for i in CLR]
-monet.exportGeneLegend(sumDta['genotypes'], cl, PT_IMG+'/plt.png', 500)
+monet.exportGeneLegend(
+        sumDta['genotypes'], cl, PT_IMG+'/plt_{}.png'.format(AOI), 500
+    )
 tE = datetime.now()
 print('* Analyzed ({}/{})                    '.format(xpNum, xpNum), end='\n')
 print(monet.PAD)

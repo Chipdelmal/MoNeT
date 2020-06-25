@@ -11,7 +11,7 @@ COLHO = [i[:-2]+'FF' for i in COLHN]
 COLHM = monet.generateAlphaColorMapFromColorArray(COLHO)
 # Ecology ---------------------------------------------------------------------
 COLEN = [
-        "#ff004d10", "#ff1d1d10", "#66FF0010",
+        "#ff004d10", "#FFFB2810", "#66FF0010",
         "#0055ff10", "#09044610", "#7fff3a10"
     ]
 COLEO = [i[:-2]+'FF' for i in COLEN]
