@@ -37,7 +37,7 @@ header = ['ratio', 'releases', 'fitness', 'sv', 'group']
     )
 header.extend(thr)
 drvPars = drv.driveSelector(DRV)
-ci = QNT[0]
+ci = QNT[1]
 months = list(range(0, 78*4, 4))
 (ngdx, ngdy) = (1000, 1000)
 (xmin, xmax, ymin) = (10**-4, 1, 1)
