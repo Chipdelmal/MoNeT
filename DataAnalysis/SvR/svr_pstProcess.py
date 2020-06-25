@@ -31,41 +31,38 @@ fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'PostProcess')
 # Quantiles calculation for experiments
 ###############################################################################
 uids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
-(rrt, rgn, fit, svr, gne, grp) = uids[1:]
+(rrt, rnm, rgn, fit, svr, gne, grp) = uids[1:]
 # Base experiments
-bsPat = aux.XP_NPAT.format('*', '00', '*', '*', AOI, '*', 'sum', FMT)
+bsPat = aux.XP_NPAT.format('*', '00', '*', '*', '*', AOI, '*', 'sum', FMT)
 bsFiles = sorted(glob(PT_PRE+bsPat))
 existing = glob(PT_OUT+'*')
-digs = len(str(len(rgn)))
+digs = len(str(len(rnm)))
 # Quantiles -------------------------------------------------------------------
-qnt = QNT[0]
-# Probe experiments
-i = 0
-rgi = rgn[i]
-# Cycle --------------------------------------------------------------------
-pbPat = aux.XP_NPAT.format('*', rgi, '*', '*', AOI, '*', 'srp', FMT)
-pbFiles = sorted(glob(PT_PRE+pbPat))
-fName = PT_OUT+str(i).zfill(2)+'_'+AOI+'_'+str(int(qnt*100))+'.csv'
-#if (fName in existing) and (OVW is False):
-#        continue
-print('{}* [{}/{}] {}{}'.format(
-        monet.CWHT,
-        str(i+1).zfill(digs), len(rgn),
-        fName.split('/')[-1], monet.CEND
-    ))
-(thCuts, fNum) = ([], len(pbFiles))
-
-# Cycle --------------------------------------------------------------------
-pairIx = 0
-print('{}+ File: {}/{}'.format(
-        monet.CBBL, str(pairIx+1).zfill(len(str(fNum))),
-        fNum, monet.CEND
-    ), end='\r')
-(bFile, pFile) = (bsFiles[pairIx], pbFiles[pairIx])
-(mnRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
-qt = list(monet.calcQuantWOP(srpPrb, mnRef, thr, gIx, quantile=qnt))
-xpId = aux.getXpId(pFile, [1, 2, 3, 4, 6])
-xpId.extend(qt)
-thCuts.append(xpId)
-
-mnRef
+for qnt in QNT:
+    # Probe experiments
+    # for rnIt in range(1, int(rnm[-1])):
+    rnIt = 1
+    # Cycle ---------------------------------------------------------------
+    pbPat = aux.XP_NPAT.format('*', '01', '*',  '*', '*', AOI, '*', 'srp', FMT)
+    pbFiles = sorted(glob(PT_PRE+pbPat))
+    fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(qnt*100))+'.csv'
+    # if (fName in existing) and (OVW is False):
+    #     continue
+    print('{}* [{}/{}] {}{}'.format(
+            monet.CWHT,
+            str(rnIt).zfill(digs), len(QNT),
+            fName.split('/')[-1], monet.CEND
+        ))
+    (thCuts, fNum) = ([], len(pbFiles))
+    for pairIx in range(fNum):
+        print('{}+ File: {}/{}'.format(
+                monet.CBBL, str(pairIx+1).zfill(len(str(fNum))),
+                fNum, monet.CEND
+            ), end='\r')
+        (bFile, pFile) = (bsFiles[pairIx], pbFiles[pairIx])
+        (mnRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
+        qt = list(monet.calcQuantWOP(srpPrb, mnRef, thr, gIx, quantile=qnt))
+        xpId = fun.getXpId(pFile, [1, 3, 4, 5, 7])
+        xpId.extend(qt)
+        thCuts.append(xpId)
+    monet.writeListToCSV(fName, thCuts)

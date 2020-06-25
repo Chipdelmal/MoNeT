@@ -8,6 +8,12 @@ import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
 
+def getXpId(pFile, idIx):
+    splitXpId = re.split('_|-', pFile.split('/')[-1].split('.')[-2])
+    xpId = [int(splitXpId[i]) for i in idIx]
+    return xpId
+
+
 def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time, title):
     print(monet.PAD)
     (cred, cwht, cend) = (monet.CRED, monet.CWHT, monet.CEND)
