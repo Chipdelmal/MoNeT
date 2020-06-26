@@ -26,10 +26,14 @@ months = list(range(0, 78*4, 4))
 ###############################################################################
 # Analyzes
 ###############################################################################
-fPtrn = '{}/*{}.csv'.format(PT_OUT, str(int(ci*100)))
+fPtrn = '{}/*{}*{}.csv'.format(PT_OUT, AOI, str(int(ci*100)))
 fName = sorted(glob(fPtrn))[0]
 df = pd.read_csv(fName, header=None, names=header)
-xpHdrSets = [list(df[i].unique()) for i in header[:5]]
+(ratR, resR, fitR, svrR, grpP) = [list(df[i].unique()) for i in header[:5]]
+
+filter = (df['ratio'] == ratR[0]) & (df['group'] == 0) & (df['sv'] == svrR[0]) & (df['fitness'] == fitR[0]) & (df['resistance'] == resR[1])
+dff = df[filter]
+dff
 
 # for sv in sVar:
 #     for level in thr:

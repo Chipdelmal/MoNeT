@@ -30,7 +30,7 @@ COLORS = [
     ]
 
 ###############################################################################
-pathRoot = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/C001303/'
+pathRoot = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/Landscapes/LandAggregated/Filtered/C000001/'
 firstRun = True
 # print(sorted(glob.glob(pathRoot+'/Y*I.csv')))
 ###############################################################################

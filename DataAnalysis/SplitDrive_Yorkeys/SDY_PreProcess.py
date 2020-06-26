@@ -7,7 +7,7 @@ import SDY_ix as sdix
 import SDY_aux as aux
 import SDY_functions as fun
 import MoNeT_MGDrivE as monet
-import compress_pickle as pkl
+# import compress_pickle as pkl
 import matplotlib.pyplot as plt
 from joblib import Parallel, delayed
 plt.rcParams.update({'figure.max_open_warning': 0})
