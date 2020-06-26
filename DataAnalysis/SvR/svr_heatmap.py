@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# from glob import glob
+import pandas as pd
+from glob import glob
 import svr_aux as aux
 import svr_gene as drv
 # import svr_functions as fun
@@ -15,7 +16,8 @@ import MoNeT_MGDrivE as monet
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
-header = ('ratio', 'resistance', 'fitness', 'sv', 'group')
+header = ['ratio', 'resistance', 'fitness', 'sv', 'group']
+header.extend(thr)
 drvPars = drv.driveSelector(DRV)
 monet.makeFolder(PT_IMG)
 months = list(range(0, 78*4, 4))
@@ -24,7 +26,10 @@ months = list(range(0, 78*4, 4))
 ###############################################################################
 # Analyzes
 ###############################################################################
-group = 0
+fPtrn = '{}/*{}.csv'.format(PT_OUT, str(int(ci*100)))
+fName = sorted(glob(fPtrn))[0]
+df = pd.read_csv(fName, header=None, names=header)
+xpHdrSets = [list(df[i].unique()) for i in header[:5]]
 
 # for sv in sVar:
 #     for level in thr:
