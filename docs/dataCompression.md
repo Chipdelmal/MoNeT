@@ -21,9 +21,7 @@ Plots:
 
 <center>
 
-<img src="./media/CompressionAlg_03.png" width="65%" align="middle">
-
-<img src="./media/CompressionAlg_04.png" width="65%" align="middle">
+<img src="./media/CompressionAlg_03.png" width="65%" align="middle"> <img src="./media/CompressionAlg_04.png" width="65%" align="middle">
 
 <img src="./media/CompressionAlg_05.png" width="65%" align="middle">
 
