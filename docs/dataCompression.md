@@ -8,7 +8,7 @@ Here are the steps to the following experiment:
 1. Load in the data from the appropriate directory
 2. Clean the data to ensure data is consistent & usable
 3. Convert cleaned data into a dictionary where it follows this format: {header : array of column values}
-4. For each compression algorithim we will complete the following steps
+4. For each compression algorithm we will complete the following steps
   - Start a timer
   - Pickle and compress the data.  Note: For the Zip compression algorithm, we skipt this step
   - Record the time
@@ -21,9 +21,17 @@ Plots:
 
 <center>
 
-<img src="./media/CompressionAlg_03.png" width="65%" align="middle"> <img src="./media/CompressionAlg_04.png" width="65%" align="middle">
+<img src="./media/CompressionAlg_03.png" width="65%" align="middle">
+
+<img src="./media/CompressionAlg_04.png" width="65%" align="middle">
 
 <img src="./media/CompressionAlg_05.png" width="65%" align="middle">
+
+<img src="./media/CompressionAlg_02.png" width="65%" align="middle">
+
+<img src="./media/CompressionAlg_01.png" width="65%" align="middle">
+
+
 
 </center>
 
