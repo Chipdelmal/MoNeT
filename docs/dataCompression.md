@@ -20,7 +20,7 @@ After collecting this data, we generated the following plots to assist us with o
 Plots:
 
 <center>
-<img src="./media/CompressionAlg_01.png" align="middle">
+<img src="./media/CompressionAlg_03.png" width="50%" align="middle"> <img src="./media/CompressionAlg_04.png" width="50%" align="middle">
 </center>
 
 
