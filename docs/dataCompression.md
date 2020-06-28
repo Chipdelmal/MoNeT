@@ -4,7 +4,7 @@ To decide which Compression algorithm would be best for our use, we ran a benchm
 We want a compression algorithm that is lossless and is easily utilized in Python.
 This criteria led us to the following compression algorithms: zip, lzma, gzip and bz2.
 
-* Here are the steps to the following experiment:
+Here are the steps to the following experiment:
 1. Load in the data from the appropriate directory
 2. Clean the data to ensure data is consistent & usable
 3. Convert cleaned data into a dictionary where it follows this format: {header : array of column values}
@@ -18,6 +18,11 @@ This criteria led us to the following compression algorithms: zip, lzma, gzip an
 After collecting this data, we generated the following plots to assist us with our analysis.
 
 Plots:
+
+<center>
+<img src="./media/CompressionAlg_01.png" align="middle">
+</center>
+
 
 
 
