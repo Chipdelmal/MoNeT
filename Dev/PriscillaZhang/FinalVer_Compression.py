@@ -10,6 +10,7 @@ import gzip
 import bz2
 import zipfile
 import zlib
+import newFunction newfunc
 
 input_directory = r'C:\Users\prisc\Desktop\Marshall Lab Data\Marshall Lab Data'
 output_directory = r'C:\Users\prisc\Desktop\Compressed Files + Analysis'
@@ -88,6 +89,9 @@ for alg in all_compression_algs:
     end = alg2end[alg2name[alg]]
     for filename in filename2dict.keys():
         dict = filename2dict[filename]
+
+        # newfunc.newFunction(alg, dict,all_data)
+
         start_time = time.time()
         pickled_dict = pickle.dumps(dict)
 
