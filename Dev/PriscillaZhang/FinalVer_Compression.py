@@ -139,9 +139,9 @@ for filename in os.listdir(input_directory):
     convert to csv in output_directory file """
 df = pd.DataFrame.from_dict(all_data)
 
-df.to_csv(output_directory+'\Analysis.csv')
-
 df['LZMA Compression Ratio'] = np.array(all_data['initial_filesizes']) / np.array(all_data['lzma_compressed_filesize'])
 df['gzip Compression Ratio'] = np.array(all_data['initial_filesizes']) / np.array(all_data['gzip_compressed_filesize'])
 df['bz2 Compression Ratio'] = np.array(all_data['initial_filesizes']) / np.array(all_data['bz2_compressed_filesize'])
 df['zip Compression Ratio'] = np.array(all_data['initial_filesizes']) / np.array(all_data['zip_compressed_filesize'])
+
+df.to_csv(output_directory+'\Analysis.csv')
