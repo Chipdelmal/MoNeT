@@ -90,26 +90,7 @@ for alg in all_compression_algs:
     end = alg2end[alg2name[alg]]
     for filename in filename2dict.keys():
         dict = filename2dict[filename]
-
         newfunc.newFunction(alg, dict, type_alg, filename+end, all_data, output_directory)
-
-
-        # start_time = time.time()
-        # pickled_dict = pickle.dumps(dict)
-        #
-        # compressed_data = alg(pickled_dict)
-        #
-        # input = filename+end
-        #
-        # all_data[type_alg + '_compressedData_Time'].append(str(time.time() - start_time))
-        #
-        # with open(os.path.join(output_directory, filename+end), 'wb') as f:
-        #     f.write(compressed_data)
-        #     f.close()
-        #
-        # recorded_time = str(time.time() - start_time)
-        # all_data[type_alg+'_compression_time'].append(recorded_time)
-
 
 # Get the compressed file sizes to calculate compression ratio later
 for file in os.listdir(output_directory):
