@@ -32,7 +32,6 @@ Plots:
 <img src="./media/CompressionAlg_10.png" width="65%" align="middle">
 
 
-
 </center>
 
 
