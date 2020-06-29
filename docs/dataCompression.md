@@ -21,15 +21,15 @@ Plots:
 
 <center>
 
-<img src="./media/CompressionAlg_03.png" width="65%" align="middle">
+<img src="./media/CompressionAlg_06.png" width="65%" align="middle">
 
-<img src="./media/CompressionAlg_04.png" width="65%" align="middle">
+<img src="./media/CompressionAlg_07.png" width="65%" align="middle">
 
-<img src="./media/CompressionAlg_05.png" width="65%" align="middle">
+<img src="./media/CompressionAlg_08.png" width="65%" align="middle">
 
-<img src="./media/CompressionAlg_02.png" width="65%" align="middle">
+<img src="./media/CompressionAlg_09.png" width="65%" align="middle">
 
-<img src="./media/CompressionAlg_01.png" width="65%" align="middle">
+<img src="./media/CompressionAlg_10.png" width="65%" align="middle">
 
 
 
