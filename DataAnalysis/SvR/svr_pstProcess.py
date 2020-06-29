@@ -38,14 +38,45 @@ bsFiles = sorted(glob(PT_PRE+bsPat))
 existing = glob(PT_OUT+'*')
 digs = len(str(len(rnm)))
 # Quantiles -------------------------------------------------------------------
+# for qnt in QNT:
+#     # Probe experiments
+#     # for rnIt in range(1, int(rnm[-1])):
+#     rnIt = 1
+#     # Cycle ---------------------------------------------------------------
+#     pbPat = aux.XP_NPAT.format('*', '01', '*',  '*', '*', AOI, '*', 'srp', FMT)
+#     pbFiles = sorted(glob(PT_PRE+pbPat))
+#     fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(qnt*100))+'.csv'
+#     # if (fName in existing) and (OVW is False):
+#     #     continue
+#     print('{}* [{}/{}] {}{}'.format(
+#             monet.CWHT,
+#             str(rnIt).zfill(digs), len(QNT),
+#             fName.split('/')[-1], monet.CEND
+#         ))
+#     (thCuts, fNum) = ([], len(pbFiles))
+#     for pairIx in range(fNum):
+#         print('{}+ File: {}/{}'.format(
+#                 monet.CBBL, str(pairIx+1).zfill(len(str(fNum))),
+#                 fNum, monet.CEND
+#             ), end='\r')
+#         (bFile, pFile) = (bsFiles[pairIx], pbFiles[pairIx])
+#         (mnRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
+#         qt = list(monet.calcQuantWOP(srpPrb, mnRef, thr, gIx, quantile=qnt))
+#         xpId = fun.getXpId(pFile, [1, 3, 4, 5, 7])
+#         xpId.extend(qt)
+#         thCuts.append(xpId)
+#     monet.writeListToCSV(fName, thCuts)
+
+
+# /////////////////////////////////////////////////////////////////////////////
+# /////////////////////////////////////////////////////////////////////////////
+
 for qnt in QNT:
-    # Probe experiments
-    # for rnIt in range(1, int(rnm[-1])):
     rnIt = 1
     # Cycle ---------------------------------------------------------------
     pbPat = aux.XP_NPAT.format('*', '01', '*',  '*', '*', AOI, '*', 'srp', FMT)
     pbFiles = sorted(glob(PT_PRE+pbPat))
-    fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(qnt*100))+'.csv'
+    fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(qnt*100))
     # if (fName in existing) and (OVW is False):
     #     continue
     print('{}* [{}/{}] {}{}'.format(
@@ -53,7 +84,8 @@ for qnt in QNT:
             str(rnIt).zfill(digs), len(QNT),
             fName.split('/')[-1], monet.CEND
         ))
-    (thCuts, fNum) = ([], len(pbFiles))
+    fNum = len(pbFiles)
+    (wopL, mnCuts, mxCuts) = [[None] * fNum for i in range(3)]
     for pairIx in range(fNum):
         print('{}+ File: {}/{}'.format(
                 monet.CBBL, str(pairIx+1).zfill(len(str(fNum))),
@@ -61,8 +93,15 @@ for qnt in QNT:
             ), end='\r')
         (bFile, pFile) = (bsFiles[pairIx], pbFiles[pairIx])
         (mnRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
-        qt = list(monet.calcQuantWOP(srpPrb, mnRef, thr, gIx, quantile=qnt))
+        (wop, tti, tto) = [
+                list(i) for i in fun.calcQuantWOP(
+                        srpPrb, mnRef, thr, gIx, quantile=qnt
+                    )
+            ]
         xpId = fun.getXpId(pFile, [1, 3, 4, 5, 7])
-        xpId.extend(qt)
-        thCuts.append(xpId)
-    monet.writeListToCSV(fName, thCuts)
+        wopL[pairIx] = xpId+wop
+        mnCuts[pairIx] = xpId+tti
+        mxCuts[pairIx] = xpId+tto
+    monet.writeListToCSV(fName+'-WOP.csv', wopL)
+    monet.writeListToCSV(fName+'-TTI.csv', mnCuts)
+    monet.writeListToCSV(fName+'-TTO.csv', mxCuts)
