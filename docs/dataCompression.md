@@ -20,15 +20,15 @@ After collecting this data, we generated the following plots to assist us with o
 
 <center>
 
-<img src="./media/CompressionAlg_06.png" width="65%" align="middle">
+<img src="./media/Compression_06.png" width="65%" align="middle">
 
-<img src="./media/CompressionAlg_07.png" width="65%" align="middle">
+<img src="./media/Compression_07.png" width="65%" align="middle">
 
-<img src="./media/CompressionAlg_08.png" width="65%" align="middle">
+<img src="./media/Compression_08.png" width="65%" align="middle">
 
-<img src="./media/CompressionAlg_09.png" width="65%" align="middle">
+<img src="./media/Compression_09.png" width="65%" align="middle">
 
-<img src="./media/CompressionAlg_10.png" width="65%" align="middle">
+<img src="./media/Compression_10.png" width="65%" align="middle">
 
 </center>
 
