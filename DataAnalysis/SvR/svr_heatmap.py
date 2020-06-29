@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 
 (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.5, .90, .95], True)
+(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.5, .95], True)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
 threshold = thr[0]
@@ -61,9 +61,11 @@ ax.contour(
 ax.contourf(
         xi, yi, zi,
         # levels=[4*i for i in [0, 8, 12, 24, 52, 78]],
-        cmap='Purples'  # monet.cmaps[2]
+        cmap='RdPu_r'  # monet.cmaps[2]
     )
 ax.set(xscale="linear", yscale="linear")
+ax.set_xlabel('R Generation', fontsize=22.5)
+ax.set_ylabel('Fitness Cost', fontsize=22.5)
 sz = fig.get_size_inches()[0]
 fig.set_size_inches(sz, 1*sz)
 plt.xlim(a[0], a[1])
