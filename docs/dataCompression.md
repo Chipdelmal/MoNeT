@@ -9,15 +9,14 @@ Here are the steps to the following experiment:
 2. Clean the data to ensure data is consistent & usable
 3. Convert cleaned data into a dictionary where it follows this format: {header : array of column values}
 4. For each compression algorithm we will complete the following steps
-  - Start a timer
-  - Pickle and compress the data.  Note: For the Zip compression algorithm, we skipped this step
-  - Record the time
-  - Open output directory & write compressed data into the appropriate (.zip, .xz, .gz, .gz2)
-  - Record the time
+  - Start a timer.
+  - Pickle and compress the data.
+  - Record the time. (Note: For the Zip compression algorithm, we skipped this step)
+  - Open output directory & write compressed data into the appropriate (.zip, .xz, .gz, .gz2).
+  - Record the time.
 
 After collecting this data, we generated the following plots to assist us with our analysis.
 
-Plots:
 
 <center>
 
@@ -30,7 +29,6 @@ Plots:
 <img src="./media/CompressionAlg_09.png" width="65%" align="middle">
 
 <img src="./media/CompressionAlg_10.png" width="65%" align="middle">
-
 
 </center>
 
