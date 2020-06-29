@@ -7,7 +7,13 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 import matplotlib.pyplot as plt
 
-(VOL, SIG, PRB) = ('RAID5', 'unAggregated', ('Aggregated', 'C000010', 'C000050', 'C000100'))
+(VOL, SIG, PRB) = (
+        'RAID5', 'C000001',
+        (
+            'C000001', 'C000010', 'C000050', 'C000100',
+            'C000150', 'C000200', 'C000250', 'C001303'
+        )
+    )
 # PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
 PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
 pthOut = PATH + 'err/'
