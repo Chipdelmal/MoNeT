@@ -69,7 +69,10 @@ scp -rp /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/Landscapes/LandAggregate
 ```
 
 ```bash
-mogrify -verbose -density 1000 -resize 2000 -background white -alpha remove -alpha off -format png ./*.pdf
+rm *OVR.pdf
+mogrify -density 1000 -resize 2000 -background white -alpha remove -alpha off -format png ./*.pdf
+rm *.pdf
+
 ```
 
 Copy an experiment to desktop for debugging:
