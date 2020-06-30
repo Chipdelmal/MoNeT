@@ -44,6 +44,8 @@ Here was our thought process:
 
 Notes on the experiment:
 - This experiment was conducted using 17 csv files, each ranged from 126KB - 132KB
+- Code for this experiment can be found here:
+https://github.com/Chipdelmal/MoNeT/blob/master/Dev/PriscillaZhang/Compression.py
 
 
 
