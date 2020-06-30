@@ -20,11 +20,10 @@ from scipy.interpolate import griddata
 (threshold, lvls) = (thr[0], 7)
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
-header = ['ratio', 'resistance', 'fitness', 'sv', 'group']
+header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
 header.extend(thr)
 drvPars = drv.driveSelector(DRV)
 monet.makeFolder(PT_IMG)
-months = list(range(0, 78*4, 4))
 (ngdx, ngdy) = (1000, 1000)
 ###############################################################################
 # Analyzes
@@ -33,11 +32,11 @@ for threshold in thr:
     fPtrn = '{}/*{}*{}-WOP.csv'.format(PT_OUT, AOI, str(int(ci*100)))
     fName = sorted(glob(fPtrn))[0]
     df = pd.read_csv(fName, header=None, names=header)
-    (ratR, resR, fitR, svrR, grpP) = [list(df[i].unique()) for i in header[:5]]
+    (ratR, rnm, resR, fitR, svrR, grpP) = [list(df[i].unique()) for i in header[:6]]
     for svr in svrR:
         # Filters -------------------------------------------------------------
         (grpF, ratF) = ((df['group'] == 0), (df['ratio'] == ratR[0]))
-        svrF = (df['sv'] == svr)
+        (svrF, relF) = ((df['sv'] == svr), df['releases'] == 1)
         filter = grpF & ratF & svrF
         dff = df[filter]
         # Surfaces ------------------------------------------------------------
