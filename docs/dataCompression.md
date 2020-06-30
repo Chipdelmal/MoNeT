@@ -32,7 +32,7 @@ After collecting this data, we generated the following plots to assist us with o
 
 </center>
 
-<h5>Conclusion: </h5>
+<h4>Conclusion: </h4>
 <p>
 After our analysis, we decided to proceed forward with the bz2 compression algorithm.
 
