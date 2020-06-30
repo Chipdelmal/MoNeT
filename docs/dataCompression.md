@@ -32,14 +32,15 @@ After collecting this data, we generated the following plots to assist us with o
 
 </center>
 
-Conclusion:
+<h5>Conclusion: </h5>
+<p>
 After our analysis, we decided to proceed forward with the bz2 compression algorithm.
 
 Here was our thought process:
 - Looking at the final compression ratios, it was clear that lzma & bz2 gave the best compression ratios.
 - bz2 was chosen over lzma because our experiments showed that bz2's compression time was faster than lzma's.
 
-
+</p>
 
 Notes on the experiment:
 - This experiment was conducted using 17 csv files, each ranged from 126KB - 132KB
