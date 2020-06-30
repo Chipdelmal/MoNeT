@@ -14,7 +14,7 @@ import compress_pickle as pkl
 
 (USR, DRV, AOI) = ('dsk', 'replacement', sys.argv[1])
 (FMT, SKP, MF) = ('bz', False, (True, True))
-(QNT, THR, GRP) = ('95', [.05, .10, .25, .50, .75], 0)
+(QNT, THR, GRP) = ('05', [.05, .10, .25, .50, .75], 0)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 thPlt = [.05, .5]
 ###############################################################################
@@ -60,10 +60,15 @@ for i in range(0, xpNum):
     WOPfls = [glob(ptrn.format(PT_OUT, QNT, i))[0] for i in PST_TYP]
     WOPpds = [pd.read_csv(i, names=header) for i in WOPfls]
     fltr = fun.filterFromName(WOPpds[0], id, header)
-    WOPval = [list(df[fltr][thPlt].values[0]) for df in WOPpds]
+    WOPval = [len(df[fltr][thPlt].values) for df in WOPpds]
+    bools = ([i > 0 for i in WOPval])
+    if all(bools):
+        WOPval = [list(df[fltr][thPlt].values[0]) for df in WOPpds]
+    else:
+        WOPval = [[0], [0], [0]]
     # Export plots ------------------------------------------------------------
     fun.exportTracesPlot(
-            repDta, name, STYLE, PT_IMG, append='TRA',
+            repDta, name+'_'+QNT, STYLE, PT_IMG, append='TRA',
             vLines=fun.flatten(WOPval[1:])
         )
     cl = [i[:-2]+'cc' for i in CLR]

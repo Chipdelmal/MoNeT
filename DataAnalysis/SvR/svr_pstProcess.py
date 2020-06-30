@@ -11,7 +11,7 @@ import compress_pickle as pkl
 
 
 (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.5, .95], True)
+(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .50, .95], True)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 (thr, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
 gIx = 1
@@ -40,12 +40,12 @@ bsFiles = sorted(glob(PT_PRE+bsPat))
 existing = glob(PT_OUT+'*')
 digs = len(str(len(rnm)))
 # Quantiles -------------------------------------------------------------------
-for qnt in QNT: 
+for qnt in QNT:
     rnIt = 1
     # Cycle ---------------------------------------------------------------
     pbPat = aux.XP_NPAT.format('*', '01', '*',  '*', '*', AOI, '*', 'srp', FMT)
     pbFiles = sorted(glob(PT_PRE+pbPat))
-    fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(qnt*100))
+    fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(qnt*100)).zfill(2)
     # if (fName in existing) and (OVW is False):
     #     continue
     print('{}* [{}/{}] {}{}'.format(
