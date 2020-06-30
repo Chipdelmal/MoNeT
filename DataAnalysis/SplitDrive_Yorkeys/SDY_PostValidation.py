@@ -7,9 +7,15 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 import matplotlib.pyplot as plt
 
-(VOL, SIG, PRB) = ('RAID5', 'unAggregated', ('Aggregated', 'C000010', 'C000050', 'C000100'))
-# PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
-PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
+(VOL, SIG, PRB) = (
+        'RAID5', 'C001303',
+        (
+            'C000001', 'C000010', 'C000050', 'C000100',
+            'C000150', 'C000200', 'C000250', 'C001303'
+        )
+    )
+PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
+# PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
 pthOut = PATH + 'err/'
 pthImg = pthOut + 'img/'
 ###############################################################################
@@ -34,12 +40,12 @@ fun.printExpTerminal(tS, PATH, pthImg, pthOut)
 pth = PATH + 'pre/' + SIG + '/'
 sigFiles = fun.getPreProcessedExperiments(pth, 'sum')
 # Loading the paths for the probes --------------------------------------------
-for i in range(0, len(PRB)):
-    strInt = str(i+1).zfill(len(str(len(PRB))))
+for j in range(0, len(PRB)):
+    strInt = str(j+1).zfill(len(str(len(PRB))))
     print('* Analyzing ({}/{})       '.format(strInt, str(len(PRB))), end='\r')
-    prbExpPths = PATH + 'pre/' + PRB[i] + '/'
+    prbExpPths = PATH + 'pre/' + PRB[j] + '/'
     prbFiles = fun.getPreProcessedExperiments(prbExpPths, 'sum')
-    oPth = pthOut + PRB[i] + '/'
+    oPth = pthOut + PRB[j] + '/'
     iPth = oPth + '/img/'
     monet.makeFolder(oPth)
     monet.makeFolder(iPth)
@@ -62,7 +68,7 @@ for i in range(0, len(PRB)):
         # Write to disk
         monet.writeListToCSV(oPth+namP+'.csv', err, genes)
         plot.savefig(
-                "{}/{}.png".format(iPth, namP),
+                "{}/{}-{}.png".format(iPth, PRB[i] namP),
                 dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
                 orientation='portrait', papertype=None, format='png',
                 transparent=True, bbox_inches='tight', pad_inches=.01

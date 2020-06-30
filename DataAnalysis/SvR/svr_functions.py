@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import re
+import numpy as np
+import operator as op
 from glob import glob
 import compress_pickle as pkl
 import MoNeT_MGDrivE as monet
@@ -219,3 +221,41 @@ def preProcess(
                     SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
                 )
     return None
+
+
+###############################################################################
+# Preprocess Data
+###############################################################################
+def calcQuantWOP(srpPrb, meanRef, thresholds, gIx, quantile=.95):
+    """
+    Calculates the mean window of protection for the quantile response of two
+        populations.
+    Args:
+        srpPrb (dict): SRP population of the probe population.
+        meanRef (np.array): Mean population of the reference population
+        thresholds (list): List of ratios to use as thresholds.
+        gIx (int): Index of the genotype of interest's location
+        quantile (float): Quantile for the thresholds calculation
+        cmprOp(function): Operation to compare against (less than, greater
+            than, etcetera).
+    Returns:
+        list: Returns the time at which the condition is met at a given
+            quantile level.
+    """
+    prb = srpPrb['landscapes']
+    smpNum = len(prb)
+    (wopArr, ttiArr, ttoArr) = [
+            np.empty((smpNum, len(thresholds))) for i in range(3)
+        ]
+    for s in range(smpNum):
+        refPop = meanRef['population']
+        ratioOI = monet.getPopRatio(prb[s], refPop, gIx)
+        thsArray = monet.comparePopToThresh(ratioOI, thresholds, cmprOp=op.lt)
+        thsDays = monet.thresholdMet(thsArray)
+        wopArr[s] = [len(i) for i in thsDays]
+        ttiArr[s] = [min(i) for i in thsDays]
+        ttoArr[s] = [max(i) for i in thsDays]
+    (quantWOP, quantTTI, quantTTO) = [
+            np.nanquantile(i, quantile, axis=0) for i in [wopArr, ttiArr, ttoArr]
+        ]
+    return (quantWOP, quantTTI, quantTTO)
