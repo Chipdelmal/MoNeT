@@ -25,7 +25,7 @@ scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/PREPROCESS/ /media
 ```
 
 
-Traces plots:
+Plots:
 
 ```bash
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/img/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/

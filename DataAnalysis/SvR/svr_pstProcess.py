@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 from glob import glob
 import svr_aux as aux
 import svr_gene as drv
@@ -8,13 +9,14 @@ import svr_functions as fun
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
+# from joblib import Parallel, delayed
 
 
-(USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
+# (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
+(USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .50, .95], True)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-(thr, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
-gIx = 1
+(thr, REL_STRT, WRM, gIx) = ([.05, .10, .25, .50, .75], 1, 0, 1)
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
@@ -57,16 +59,16 @@ for qnt in QNT:
     (wopL, mnCuts, mxCuts) = [[None] * fNum for i in range(3)]
     for pairIx in range(fNum):
         print('{}+ File: {}/{}'.format(
-                monet.CBBL, str(pairIx+1).zfill(len(str(fNum))),
-                fNum, monet.CEND
-            ), end='\r')
+                 monet.CBBL, str(pairIx+1).zfill(len(str(fNum))),
+                 fNum, monet.CEND
+             ), end='\r')
         (bFile, pFile) = (bsFiles[pairIx], pbFiles[pairIx])
         (mnRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
         (wop, tti, tto) = [
-                list(i) for i in fun.calcQuantWOP(
-                        srpPrb, mnRef, thr, gIx, quantile=qnt
-                    )
-            ]
+                 list(i) for i in fun.calcQuantWOP(
+                         srpPrb, mnRef, thr, gIx, quantile=qnt
+                     )
+             ]
         xpId = fun.getXpId(pFile, [1, 2, 3, 4, 5, 7])
         wopL[pairIx] = xpId+wop
         mnCuts[pairIx] = xpId+tti
