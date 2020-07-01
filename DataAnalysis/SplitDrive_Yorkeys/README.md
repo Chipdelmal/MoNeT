@@ -51,6 +51,18 @@ python
 
 ## Bash
 
+```bash
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/C000001 /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/C000010 /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/C000050 /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/C000100 /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/C000150 /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/C000200 /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/C000250 /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/C001303 /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/;
+
+```
+
 Copy analyses plots to desktop:
 
 ```bash
