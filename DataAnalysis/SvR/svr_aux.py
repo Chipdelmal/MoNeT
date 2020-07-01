@@ -26,7 +26,7 @@ def getStyle(colors, aspectR, xRange, yRange):
 # #############################################################################
 def selectPath(USR, DRV):
     if USR == 'srv':
-        PATH_ROOT = '/RAID5/marshallShare/SvR/simLocal/{}/out/LDR/'.format(DRV)
+        PATH_ROOT = '/RAID5/marshallShare/SvR/sim/{}/out/LDR/'.format(DRV)
     else:
         PATH_ROOT = '/media/chipdelmal/cache/Sims/SvR/simLocal/{}/out/LDR/'.format(DRV)
     # monet.makeFolder('{}/'.format(PATH_ROOT))

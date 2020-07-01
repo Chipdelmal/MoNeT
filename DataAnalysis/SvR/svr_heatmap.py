@@ -13,10 +13,10 @@ import matplotlib.pyplot as plt
 # import compress_pickle as pkl
 from scipy.interpolate import griddata
 
-(USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.5, .95], True)
+(USR, DRV, AOI) = ('srv', 'replacement', 'HLT')
+(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05], True)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
+(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
 (threshold, lvls) = (thr[0], 7)
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
@@ -43,12 +43,12 @@ for threshold in thr:
         (x, y, z) = (df['resistance'], df['fitness'], df[threshold])
         (x, y, z) = (
                 np.array([float(i/1000000) for i in x]),
-                np.array([float(i/100) for i in y]),
+                np.array([float(i/1000000) for i in y]),
                 np.array([float(i) for i in z])
             )
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
         (xi, yi) = (np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy))
-        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='linear')
+        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='cubic')
         # Plots
         fig, ax = plt.subplots()
         ax.plot(x, y, 'ko', ms=.5, alpha=.2)
@@ -72,7 +72,7 @@ for threshold in thr:
         fig.savefig(
                 "{}/HT-{}-{}.png".format(
                         PT_IMG, str(int(threshold*100)).zfill(3),
-                        str(svr).zfill(4)
+                        str(svr).zfill(10)
                     ),
                 dpi=250, facecolor=None, edgecolor='w',
                 orientation='portrait', papertype=None, format='png',

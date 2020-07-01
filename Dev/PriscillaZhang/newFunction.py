@@ -1,6 +1,10 @@
+import numpy as np
 import pickle
 import time
 import os
+import pandas as pd
+import directories as directory
+import Constants as constants
 
 
 output_directory = r'C:\Users\prisc\Desktop\Compressed Files + Analysis'
@@ -14,8 +18,9 @@ all_data: dictionary, name of list: list
 
 """
 
-def newFunction(algorithm, dict, type_alg, filename_end, all_data, output_directory):
 
+#Perform Compression Experiment
+def newFunction(algorithm, dict, type_alg, filename_end, all_data, output_directory):
     start_time = time.time()
     pickled_dict = pickle.dumps(dict)
     compressed_data = algorithm(pickled_dict)
@@ -26,4 +31,28 @@ def newFunction(algorithm, dict, type_alg, filename_end, all_data, output_direct
         f.close()
 
     recorded_time = str(time.time() - start_time)
-    all_data[type_alg+'_compression_time'].append(recorded_time)
+    return all_data[type_alg+'_compression_time'].append(recorded_time)
+
+
+def data2dict():
+    for filename in os.listdir(directory.input_directory):
+        data = pd.read_csv(directory.input_directory + '\\' + filename)
+        constants.initial_filesize.append(os.path.getsize(directory.input_directory + '\\' + filename))
+
+        headers = []
+        for col in data.columns:
+            headers.append(col)
+
+        headers_list = list(data.columns)[1:]
+
+        """Create a Dictionary
+           First element is the header (genotype)
+           Second element are the counts stored in a np array
+        """
+        data_dict = {}
+        for header in headers_list:
+            dic_val = np.array(data[header])
+            data_dict[header] = dic_val
+        constants.filename2dict[filename[:-4]] = data_dict
+
+    return constants.filename2dict
