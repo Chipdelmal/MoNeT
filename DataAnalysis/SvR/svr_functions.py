@@ -63,7 +63,7 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0]):
     axTemp.vlines(
             vLines, 0, 1,
             transform=axTemp.get_xaxis_transform(),
-            colors=(1, 0, 0, .5),
+            colors='#FF007FA0',
             linestyles='dashed', linewidth=.25
         )
     # axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
