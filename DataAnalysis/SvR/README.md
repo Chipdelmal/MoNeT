@@ -36,5 +36,5 @@ scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/img/ /media/chipde
 Heatmaps:
 
 ```bash
-scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/img/htm/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/img
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/img/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/img
 ```

@@ -30,7 +30,7 @@ STYLE = {
     }
 STYLE['aspect'] = monet.scaleAspect(1, STYLE)
 tS = datetime.now()
-fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'PostProcess')
+fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'PostProcess ' + AOI)
 ###############################################################################
 # Quantiles calculation for experiments
 ###############################################################################

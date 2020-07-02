@@ -11,7 +11,7 @@ from joblib import Parallel, delayed
 
 
 (USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
-(FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 8)
+(FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 20)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################
 # Setting up paths and style
@@ -27,7 +27,7 @@ drive = drv.driveSelector(DRV)
 # gIx = drive[AOI]['gDict']['genotypes'].index('Other')
 # Time and head ---------------------------------------------------------------
 tS = datetime.now()
-fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess')
+fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess ' + AOI)
 ###############################################################################
 # Load folders
 ###############################################################################
