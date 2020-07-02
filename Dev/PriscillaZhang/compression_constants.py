@@ -5,9 +5,6 @@ import zipfile
 import zlib
 import compression_directories as directory
 
-
-input_directory = directory.input_directory
-output_directory = directory.output_directory
 zipfolder = zipfile.ZipFile(directory.output_directory + "\Zip Compression file.zip", mode='w')
 
 list_recorded_times = []
