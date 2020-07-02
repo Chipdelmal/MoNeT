@@ -66,7 +66,7 @@ for threshold in thr:
         ax.set_ylabel('Fitness Cost', fontsize=22.5)
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, 1*sz)
-        plt.xlim(.001, a[1])
+        plt.xlim(0.000001, a[1])
         plt.ylim(b[0], b[1])
         plt.title(
                 str(int((1-threshold)*100))+'% window of protection\n',
