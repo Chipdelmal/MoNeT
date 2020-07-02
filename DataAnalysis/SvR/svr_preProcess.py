@@ -10,7 +10,7 @@ from datetime import datetime
 from joblib import Parallel, delayed
 
 
-(USR, DRV, AOI) = ('dsk', 'replacement', sys.argv[1])
+(USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
 (FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 8)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################

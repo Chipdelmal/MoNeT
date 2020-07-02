@@ -11,7 +11,7 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 
-(USR, DRV, AOI) = ('dsk', 'replacement', sys.argv[1])
+(USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
 (FMT, SKP, MF) = ('bz2', False, (True, True))
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################

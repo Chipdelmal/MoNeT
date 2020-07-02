@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 import numpy as np
 import pandas as pd
 from glob import glob
@@ -13,7 +14,7 @@ import matplotlib.pyplot as plt
 # import compress_pickle as pkl
 from scipy.interpolate import griddata
 
-(USR, DRV, AOI) = ('srv', 'replacement', 'HLT')
+(USR, DRV, AOI) = (sys.argv[1], 'replacement', 'HLT')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05], True)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
@@ -48,21 +49,21 @@ for threshold in thr:
             )
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
         (xi, yi) = (np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy))
-        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='cubic')
+        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='nearest')
         # Plots
         fig, ax = plt.subplots()
-        ax.plot(x, y, 'ko', ms=.5, alpha=.2)
+        ax.plot(x, y, 'ko', ms=.1, alpha=.2, marker=',')
         ax.contour(
                 xi, yi, zi, levels=lvls,
                 linewidths=2, colors='k', alpha=.9
             )
         htmp = ax.contourf(xi, yi, zi, levels=lvls, cmap='Purples')
-        ax.set(xscale="linear", yscale="linear")
+        ax.set(xscale="log", yscale="linear")
         ax.set_xlabel('R Generation', fontsize=22.5)
         ax.set_ylabel('Fitness Cost', fontsize=22.5)
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, 1*sz)
-        plt.xlim(a[0], a[1])
+        plt.xlim(.001, a[1])
         plt.ylim(b[0], b[1])
         plt.title(
                 str(int((1-threshold)*100))+'% window of protection\n',

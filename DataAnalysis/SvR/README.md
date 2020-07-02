@@ -6,8 +6,11 @@ Scripts to run the analyses for the BioEssay paper comparing population suppress
 ## Workflow
 
 ```bash
-python svr_preProcess.py
-python svr_preTraces.py
+python svr_preProcess.py USR AOI
+python svr_preTraces.py USR AOI
+python svr_pstProcess.py USR HLT
+python svr_pstTraces.py USR AOI
+python svr_pstHeatmap.py USR AOI
 ```
 
 ## Copy Experiments Results
@@ -24,9 +27,14 @@ Preprocessed Data:
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/PREPROCESS/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/
 ```
 
-
-Plots:
+Traces Plots:
 
 ```bash
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/img/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/
+```
+
+Heatmaps:
+
+```bash
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/img/htm/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/img
 ```
