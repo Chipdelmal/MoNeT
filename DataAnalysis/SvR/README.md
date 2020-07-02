@@ -24,9 +24,14 @@ Preprocessed Data:
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/PREPROCESS/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/
 ```
 
-
-Plots:
+Traces Plots:
 
 ```bash
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/img/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/
+```
+
+Heatmaps:
+
+```bash
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/img/htm/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/img
 ```
