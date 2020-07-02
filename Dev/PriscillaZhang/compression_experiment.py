@@ -57,7 +57,6 @@ for filename in constants.filename2dict.keys():
 for filename in os.listdir(directory.input_directory):
     constants.all_data['initial_filesizes'] = os.path.getsize(directory.input_directory + '\\' + filename)
 
-"""Create a dataframe, put data into it then
-    convert to csv in output_directory file """
+"""Create a dataframe, & output it as a csv in output_directory file """
 df = pd.DataFrame.from_dict(constants.all_data)
 df.to_csv(directory.output_directory+'\Analysis.csv')
