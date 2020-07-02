@@ -15,7 +15,7 @@ import compress_pickle as pkl
 # (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
 (USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .50, .95], True)
-(SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
+(SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, gIx) = ([.05, .10, .25, .50, .75], 1, 0, 1)
 ###############################################################################
 # Setting up paths and style
@@ -30,7 +30,7 @@ STYLE = {
     }
 STYLE['aspect'] = monet.scaleAspect(1, STYLE)
 tS = datetime.now()
-fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'PostProcess ' + AOI)
+fun.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PostProcess ' + AOI)
 ###############################################################################
 # Quantiles calculation for experiments
 ###############################################################################

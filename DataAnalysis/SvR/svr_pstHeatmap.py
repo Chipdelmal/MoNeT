@@ -17,7 +17,7 @@ from scipy.interpolate import griddata
 
 (USR, DRV, AOI) = (sys.argv[1], 'replacement', 'HLT')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05], True)
-(SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
+(SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
 (threshold, lvls) = (thr[0], 7)
 ###############################################################################
