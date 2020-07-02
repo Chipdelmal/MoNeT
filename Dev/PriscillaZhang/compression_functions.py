@@ -3,8 +3,8 @@ import pickle
 import time
 import os
 import pandas as pd
-import directories as directory
-import Constants as constants
+import compression_directories as directory
+import compression_constants as constants
 import zipfile
 import zlib
 

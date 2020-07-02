@@ -3,7 +3,7 @@ import gzip
 import bz2
 import zipfile
 import zlib
-import directories as directory
+import compression_directories as directory
 
 
 

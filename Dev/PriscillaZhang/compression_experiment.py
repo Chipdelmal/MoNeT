@@ -3,10 +3,10 @@ import numpy as np
 import sys
 import os
 import csv
-import newFunction as newfunc
-import Constants as constants
-import directories as directory
-import Compression_Algorithms as all_algs
+import compression_functions as compression_funcs
+import compression_constants as constants
+import compression_directories as directory
+import compression_algorithms as all_algs
 
 """Create a new directory if one doesn't already exist """
 if not os.path.exists(directory.output_directory):
@@ -32,11 +32,11 @@ for alg in all_algs.all_compression_algs:
     end = constants.alg2end[constants.alg2name[alg]]
     for filename in constants.filename2dict.keys():
         dict = constants.filename2dict[filename]
-        times = newfunc.getCompressionTimes(alg, dict, type_alg, filename+end, constants.all_data, directory.output_directory)
+        times = compression_funcs.getCompressionTimes(alg, dict, type_alg, filename+end, constants.all_data, directory.output_directory)
         constants.all_data[type_alg + '_compressedData_Time'].append(times[0])
         constants.all_data[type_alg + '_compression_time'].append(times[1])
 for filename in constants.filename2dict.keys():
-    recorded_time = newfunc.getZipCompressionTime(filename)
+    recorded_time = compression_funcs.getZipCompressionTime(filename)
     constants.all_data['zip_compression_time'].append(recorded_time)
 constants.zipfolder.close()
 
