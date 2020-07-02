@@ -20,6 +20,8 @@ COLEM = monet.generateAlphaColorMapFromColorArray(COLEO)
 # Gene-Dictionaries
 ###############################################################################
 # Linked Drive Replacement ----------------------------------------------------
+# 0: WW, 1: WH, 2: WR, 3: WB, 4: HH,
+# 5: HR, 6: HB, 7: RR, 8: RB, 9: BB
 drive_LDR = {
         'id': 'Replacement', 'folder': 'LDR', 'loc': 1,
         'HLT': {

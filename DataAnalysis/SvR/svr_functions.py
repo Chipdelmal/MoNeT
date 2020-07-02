@@ -274,25 +274,3 @@ def calcQuantWOP(srpPrb, meanRef, thresholds, gIx, quantile=.95):
             np.nanquantile(i, quantile, axis=0) for i in [wopArr, ttiArr, ttoArr]
         ]
     return (quantWOP, quantTTI, quantTTO)
-
-
-# def pstProcess(
-#             pairIx, bsFiles, pbFiles, wopL, mnCuts, mxCuts, fNum,
-#             thr, gIx, qnt, idIx=[1, 2, 3, 4, 5, 7]
-#         ):
-#     print('{}+ File: {}/{}'.format(
-#             monet.CBBL, str(pairIx+1).zfill(len(str(fNum))),
-#             fNum, monet.CEND
-#         ), end='\r')
-#     (bFile, pFile) = (bsFiles[pairIx], pbFiles[pairIx])
-#     (mnRef, srpPrb) = [pkl.load(file) for file in (bFile, pFile)]
-#     (wop, tti, tto) = [
-#             list(i) for i in calcQuantWOP(
-#                     srpPrb, mnRef, thr, gIx, quantile=qnt
-#                 )
-#         ]
-#     xpId = getXpId(pFile, idIx)
-#     wopL[pairIx] = xpId+wop
-#     mnCuts[pairIx] = xpId+tti
-#     mxCuts[pairIx] = xpId+tto
-#     return (wopL, mnCuts, mxCuts)
