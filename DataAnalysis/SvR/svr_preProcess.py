@@ -27,7 +27,7 @@ drive = drv.driveSelector(DRV)
 # gIx = drive[AOI]['gDict']['genotypes'].index('Other')
 # Time and head ---------------------------------------------------------------
 tS = datetime.now()
-fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess')
+fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess ' + AOI)
 ###############################################################################
 # Load folders
 ###############################################################################
@@ -35,7 +35,6 @@ fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess')
 (expNum, nodeDigits) = (len(expDirsMean), len(str(NOI))+1)
 outNames = fun.splitExpNames(PT_OUT)
 outExpNames = set(outNames)
-# print(expDirsMean)
 ###############################################################################
 # Analyze data
 ###############################################################################

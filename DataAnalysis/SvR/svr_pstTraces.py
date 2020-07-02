@@ -37,7 +37,7 @@ STYLE = {
     }
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 tS = datetime.now()
-fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces')
+fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces ' + AOI)
 ###############################################################################
 # Load preprocessed files lists
 ###############################################################################

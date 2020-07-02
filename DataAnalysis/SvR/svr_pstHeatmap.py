@@ -7,8 +7,9 @@ import pandas as pd
 from glob import glob
 import svr_aux as aux
 import svr_gene as drv
+import svr_functions as fun
 # import svr_functions as fun
-# from datetime import datetime
+from datetime import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 # import compress_pickle as pkl
@@ -26,6 +27,8 @@ header.extend(thr)
 drvPars = drv.driveSelector(DRV)
 monet.makeFolder(PT_IMG)
 (ngdx, ngdy) = (1000, 1000)
+tS = datetime.now()
+fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Heatmap ' + AOI)
 ###############################################################################
 # Analyzes
 ###############################################################################
