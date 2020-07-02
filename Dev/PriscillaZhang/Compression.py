@@ -1,29 +1,45 @@
 import pandas as pd
 import numpy as np
 import sys
-import time
 import os
-import pickle
 import csv
-import zipfile
-import zlib
 import newFunction as newfunc
 import Constants as constants
 import directories as directory
 import Compression_Algorithms as all_algs
 
+# If an output directory doesn't exist, make one
 if not os.path.exists(directory.output_directory):
     os.mkdir(directory.output_directory)
 
-filename2dict = newfunc.data2dict()
+#Get the initial file sizes to later calculate compression ratio
+for filename in os.listdir(directory.input_directory):
+    data = pd.read_csv(directory.input_directory + '\\' + filename)
+    constants.initial_filesize.append(os.path.getsize(directory.input_directory + '\\' + filename))
+    headers = []
+    for col in data.columns:
+        headers.append(col)
+    headers_list = list(data.columns)[1:]
+
+    """Create a Dictionary for each csv file
+       First element is the header (genotype)
+       Second element are the counts stored in a np array
+    """
+    data_dict = {}
+    for header in headers_list:
+        dic_val = np.array(data[header])
+        data_dict[header] = dic_val
+    constants.filename2dict[filename[:-4]] = data_dict
 
 """Begin Compression Experiment"""
 for alg in all_algs.all_compression_algs:
     type_alg = constants.alg2name[alg]
     end = constants.alg2end[constants.alg2name[alg]]
-    for filename in filename2dict.keys():
-        dict = filename2dict[filename]
-        newfunc.newFunction(alg, dict, type_alg, filename+end, constants.all_data, directory.output_directory)
+    for filename in constants.filename2dict.keys():
+        dict = constants.filename2dict[filename]
+        times = newfunc.getCompressionTimes(alg, dict, type_alg, filename+end, constants.all_data, directory.output_directory)
+        constants.all_data[type_alg + '_compressedData_Time'].append(times[0])
+        constants.all_data[type_alg + '_compression_time'].append(times[1])
 
 # Get the compressed file sizes to calculate compression ratio later
 for file in os.listdir(directory.output_directory):
@@ -34,22 +50,16 @@ for file in os.listdir(directory.output_directory):
     if file.endswith(".xz"):
         constants.all_data['lzma_compressed_filesize'].append(os.path.getsize(directory.output_directory + '\\' + file ))
 
-
 """ ZIP Compression"""
-zf = zipfile.ZipFile(directory.output_directory + "\Zip Compression file.zip", mode='w')
-for filename in filename2dict.keys():
-    dict = filename2dict[filename]
-    pickled_dict= pickle.dumps(dict)
-    start_time = time.time()
-    zf.write(directory.input_directory + '\\' + filename + '.csv', filename, compress_type = zipfile.ZIP_DEFLATED)
-    recorded_time = str(time.time() - start_time)
+for filename in constants.filename2dict.keys():
+    recorded_time = newfunc.getZipCompressionTime(filename)
     constants.all_data['zip_compression_time'].append(recorded_time)
-zf.close()
+constants.zipfolder.close()
 
-for filename in filename2dict.keys():
-    k = zf.getinfo(filename)
+"""Get the file compressed zip file sizes """
+for filename in constants.filename2dict.keys():
+    k = constants.zipfolder.getinfo(filename)
     constants.all_data['zip_compressed_filesize'].append(k.compress_size)
-
 
 """Get initial file sizes """
 for filename in os.listdir(directory.input_directory):

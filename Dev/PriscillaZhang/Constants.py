@@ -1,10 +1,16 @@
 import lzma
 import gzip
 import bz2
+import zipfile
+import zlib
+import directories as directory
+
 
 
 input_directory = r'C:\Users\prisc\Desktop\Marshall Lab Data\Marshall Lab Data'
 output_directory = r'C:\Users\prisc\Desktop\Compressed Files + Analysis'
+zipfolder = zipfile.ZipFile(directory.output_directory + "\Zip Compression file.zip", mode='w')
+
 list_recorded_times = []
 initial_filesize = []
 filename2dict = {}
