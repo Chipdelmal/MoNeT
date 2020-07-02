@@ -71,7 +71,7 @@ for threshold in thr:
             )
         cbar = plt.colorbar(htmp, pad=0.01)
         fig.savefig(
-                "{}/htm/HT-{}-{}.png".format(
+                "{}/HT-{}-{}.png".format(
                         PT_IMG, str(int(threshold*100)).zfill(3),
                         str(svr).zfill(10)
                     ),
