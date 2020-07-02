@@ -46,8 +46,8 @@ for threshold in thr:
         # Surfaces ------------------------------------------------------------
         (x, y, z) = (df['resistance'], df['fitness'], df[threshold])
         (x, y, z) = (
-                np.array([float(i/1000000) for i in x]),
-                np.array([float(i/1000000) for i in y]),
+                np.array([float(i/100000000) for i in x]),
+                np.array([float(i/100000000) for i in y]),
                 np.array([float(i) for i in z])
             )
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
