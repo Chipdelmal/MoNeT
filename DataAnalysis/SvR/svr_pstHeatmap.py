@@ -49,10 +49,10 @@ for threshold in thr:
             )
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
         (xi, yi) = (np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy))
-        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='nearest')
+        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='linear')
         # Plots
         fig, ax = plt.subplots()
-        ax.plot(x, y, 'ko', ms=.1, alpha=.2, marker=',')
+        ax.plot(x, y, 'ko', ms=1, alpha=.5, marker='x')
         ax.contour(
                 xi, yi, zi, levels=lvls,
                 linewidths=2, colors='k', alpha=.9

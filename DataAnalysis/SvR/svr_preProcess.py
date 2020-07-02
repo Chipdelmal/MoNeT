@@ -11,7 +11,7 @@ from joblib import Parallel, delayed
 
 
 (USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
-(FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 8)
+(FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 20)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################
 # Setting up paths and style
@@ -35,6 +35,7 @@ fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess')
 (expNum, nodeDigits) = (len(expDirsMean), len(str(NOI))+1)
 outNames = fun.splitExpNames(PT_OUT)
 outExpNames = set(outNames)
+# print(expDirsMean)
 ###############################################################################
 # Analyze data
 ###############################################################################
