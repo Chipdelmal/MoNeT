@@ -12,7 +12,7 @@ from joblib import Parallel, delayed
 
 (USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
 (FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 20)
-(SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
+(SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 ###############################################################################
 # Setting up paths and style
 ###############################################################################

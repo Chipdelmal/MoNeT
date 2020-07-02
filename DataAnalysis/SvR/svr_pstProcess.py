@@ -14,7 +14,7 @@ import compress_pickle as pkl
 
 # (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
 (USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .50, .95], True)
+(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.5], True)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 (thr, REL_STRT, WRM, gIx) = ([.05, .10, .25, .50, .75], 1, 0, 1)
 ###############################################################################
