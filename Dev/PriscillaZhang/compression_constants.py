@@ -6,8 +6,8 @@ import zlib
 import compression_directories as directory
 
 
-input_directory = r'C:\Users\prisc\Desktop\Marshall Lab Data\Marshall Lab Data'
-output_directory = r'C:\Users\prisc\Desktop\Compressed Files + Analysis'
+input_directory = directory.input_directory
+output_directory = directory.output_directory
 zipfolder = zipfile.ZipFile(directory.output_directory + "\Zip Compression file.zip", mode='w')
 
 list_recorded_times = []
