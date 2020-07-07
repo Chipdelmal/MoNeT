@@ -11,10 +11,10 @@ import matplotlib.pyplot as plt
         'RAID5', 'C001303',
         (
             'C000001', 'C000010', 'C000050', 'C000100',
-            'C000150', 'C000200', 'C000250', 'C001303'
+            'C000150', 'C000200', 'C001303'
         )
     )
-PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
+PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/batchProof/'
 # PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
 pthOut = PATH + 'err/'
 pthImg = pthOut + 'img/'
@@ -68,7 +68,7 @@ for j in range(0, len(PRB)):
         # Write to disk
         monet.writeListToCSV(oPth+namP+'.csv', err, genes)
         plot.savefig(
-                "{}/{}-{}.png".format(iPth, PRB[i] namP),
+                "{}/{}-{}.png".format(iPth, PRB[j], namP),
                 dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
                 orientation='portrait', papertype=None, format='png',
                 transparent=True, bbox_inches='tight', pad_inches=.01
