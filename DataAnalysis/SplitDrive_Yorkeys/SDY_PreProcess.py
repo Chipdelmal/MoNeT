@@ -30,7 +30,7 @@ else:
 DRV = monet.autoGenerateGenotypesDictionary(aux.GENES, aux.GENOTYPES)
 # Select form server/desktop
 if USR == 'srv':
-    PTH_ROOT = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
+    PTH_ROOT = '/RAID5/marshallShare/SplitDrive_Yorkeys/batchProof/'
 else:
     PTH_ROOT = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
 # Setup paths and create folders
@@ -55,7 +55,7 @@ expsDone = set(outNames)
 # Analyze data
 ###############################################################################
 Parallel(n_jobs=JOB)(
-        delayed(fun.preProcess)(
+        delayed(monet.preProcess)(
                 exIx, expNum, expDirsMean, expDirsTrac, DRV,
                 analysisOI='GEN', prePath=PTH_PRE, nodesAggLst=NOI,
                 outExpNames=expsDone, fNameFmt='{}/{}-{}_', OVW=True,

@@ -18,7 +18,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 ###############################################################################
 # Select form server/desktop
 if USR == 'srv':
-    PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
+    PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/batchProof/'
 else:
     PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
 pathPre = '{}pre/{}/'.format(PATH, SET)
@@ -36,7 +36,7 @@ aux.printExperimentHead(PATH, pathImg, pathPre, str(tSrt), 'Plotting ')
 ###############################################################################
 # List preprocessed files lists
 ###############################################################################
-typTag = ('sum', 'spa', 'rep')  # 'srp')
+typTag = ('sum', 'spa', 'rep', 'srp')
 # typTag = ('sum', 'rep')
 fLists = list(zip(*[sorted(glob(pathPre+'*'+tp+EXT)) for tp in typTag]))
 ###############################################################################
