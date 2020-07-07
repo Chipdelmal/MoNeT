@@ -18,15 +18,15 @@ from scipy.interpolate import griddata
 (USR, DRV, AOI) = (sys.argv[1], 'replacement', 'HLT')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .5, .95], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
-(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
-(threshold, lvls) = (thr[1], 7)
+(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
+(threshold, lvls) = (thr[1], 20)
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
 header.extend(thr)
 drvPars = drv.driveSelector(DRV)
 monet.makeFolder(PT_IMG)
-(ngdx, ngdy) = (1000, 1000)
+(ngdx, ngdy) = (2000, 2000)
 tS = datetime.now()
 fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Heatmap ' + AOI)
 ###############################################################################
@@ -52,13 +52,13 @@ for threshold in thr:
             )
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
         (xi, yi) = (np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy))
-        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='linear')
+        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='nearest')
         # Plots
         fig, ax = plt.subplots()
         ax.plot(x, y, 'ko', ms=1, alpha=.5, marker='x')
         ax.contour(
                 xi, yi, zi, levels=lvls,
-                linewidths=2, colors='k', alpha=.9
+                linewidths=.5, colors='k', alpha=.25
             )
         htmp = ax.contourf(xi, yi, zi, levels=lvls, cmap='Purples')
         ax.set(xscale="log", yscale="linear")
