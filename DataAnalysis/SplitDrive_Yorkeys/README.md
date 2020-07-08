@@ -71,6 +71,9 @@ scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/*.csv /media/ch
 scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/err/img/* /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/err/img;
 scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/Landscapes/LandSorted/* /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/LandSorted/;
 
+
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/batchProof/img/ /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/batchProof/;
+scp -rp lab:/RAID5/marshallShare/SplitDrive_Yorkeys/batchProof/err/img/* /media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/batchProof/err/img/*;
 ```
 
 Copy landscapes to server:

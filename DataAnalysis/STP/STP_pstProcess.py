@@ -4,10 +4,10 @@
 import sys
 import datetime
 from glob import glob
-import uciPan_aux as aux
-import uciPan_fun as fun
-import uciPan_drive as drv
-import uciSTP_indices as ix
+import STP_aux as aux
+import STP_fun as fun
+import STP_drive as drv
+import STP_indices as ix
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 

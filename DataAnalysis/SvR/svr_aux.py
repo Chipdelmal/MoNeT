@@ -58,11 +58,11 @@ def float_to_str(f):
 # https://stackoverflow.com/questions/32784047/numbers-logarithmically-spaced-between-two-floats-in-numpy
 # #############################################################################
 N = 20
-(lo, hi) = (.000001, 1)
+(lo, hi) = (.0000001, 1)
 y = np.zeros(N)
 x1 = np.geomspace(lo, hi, num=N)
 # fig, ax = plt.subplots()
 # ax.plot(x1, y, 'o')
 # ax.set(xscale="log", yscale="linear")
-stry = ', '.join([float_to_str(i)[:8] for i in x1])
+stry = ', '.join([float_to_str(i)[:9] for i in x1])
 'c(0.0, {})'.format(stry)
