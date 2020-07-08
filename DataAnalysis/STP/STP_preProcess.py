@@ -9,46 +9,33 @@ import STP_fun as fun
 import STP_drive as drv
 import STP_indices as ix
 import MoNeT_MGDrivE as monet
-# import compress_pickle as pkl
 from joblib import Parallel, delayed
 
-JOB = 20
-(USR, XPM, LAND, SET) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
-(DRIVE_ID, STP, AOI, MF, OVW, FMT) = (
+JOB = 8
+# (USR, XPM, LAND, SET) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
+(USR, XPM, LAND, SET) = ('dsk', 'Panmictic', 'tParams', 'island')
+(DRID, STP, AOI, MF, OVW, FMT) = (
          'LDR', False, 'HLT', (True, True), False, 'lzma'
     )
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-drvPars = drv.driveSelector(DRIVE_ID)
+drvPars = drv.driveSelector(DRID)
 (STYLE, DRV, NOI) = (
-        aux.STYLE_HLT,
-        drvPars.get('HLT'),
-        ix.STP if (STP) else ix.PAN
+        aux.STYLE_HLT, drvPars.get('HLT'), ix.STP if (STP) else ix.PAN
     )
 ###############################################################################
 # Setting up paths and directories
 ###############################################################################
-# Select form server/desktop
-if USR == 'srv':
-    PATH_ROOT = '/RAID5/marshallShare/UCI/{}/{}/{}/'.format(XPM, LAND, SET)
-else:
-    PATH_ROOT = '/media/chipdelmal/cache/Sims/{}/{}/{}/'.format(XPM, LAND, SET)
-# Setting paths
-(PATH_IMG, PATH_DATA) = (
-        '{}img/'.format(PATH_ROOT),
-        '{}out/{}/'.format(PATH_ROOT, DRIVE_ID)
-    )
-PATH_OUT = PATH_DATA + '/PREPROCESS/'
-monet.makeFolder(PATH_OUT)
-# Print terminal info and create folder
+(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, LAND, SET, DRID)
+monet.makeFolder(PT_PRE)
 tS = datetime.datetime.now()
-fun.printExpTerminal(tS, PATH_ROOT, PATH_IMG, PATH_DATA)
+fun.printExpTerminal(tS, PT_ROT, PT_IMG, PT_DTA)
 ###############################################################################
 # Setting up paths and directories
 ###############################################################################
 gIx = drvPars[AOI]['genotypes'].index('Other')
-(expDirsMean, expDirsTrac) = fun.getExpPaths(PATH_DATA)
+(expDirsMean, expDirsTrac) = fun.getExpPaths(PT_DTA)
 (expNum, nodeDigits) = (len(expDirsMean), len(str(len(NOI)))+1)
-outNames = fun.splitExpNames(PATH_OUT)
+outNames = fun.splitExpNames(PT_PRE)
 outExpNames = set(outNames)
 ###############################################################################
 # Analyze data
@@ -56,7 +43,7 @@ outExpNames = set(outNames)
 Parallel(n_jobs=JOB)(
         delayed(monet.preProcess)(
                 exIx, expNum, expDirsMean, expDirsTrac, drvPars[AOI],
-                analysisOI=AOI, prePath=PATH_OUT, nodesAggLst=NOI,
+                analysisOI=AOI, prePath=PT_PRE, nodesAggLst=NOI,
                 outExpNames=outExpNames, fNameFmt='{}/{}-{}_', OVW=OVW,
                 MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
                 SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP

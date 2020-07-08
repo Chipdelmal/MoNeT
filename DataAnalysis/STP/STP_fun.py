@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import operator as op
 from glob import glob
-import uciPan_aux as aux
+import STP_aux as aux
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 import matplotlib.pyplot as plt
@@ -121,28 +121,6 @@ def calcQuantWOP(srpPrb, meanRef, thresholds, gIx, quantile=.95):
 ###############################################################################
 # Dynamics
 ###############################################################################
-# def filterFilesByIndex(files, ix, male=True, female=True):
-#     m = [files['male'][z] for z in ix] if male else []
-#     f = [files['female'][z] for z in ix] if female else []
-#     ffiles = {'male': m, 'female': f}
-#     return ffiles
-#
-#
-# def filterGarbageByIndex(landRepetition, indices):
-#     return list(map(landRepetition.__getitem__, indices))
-#
-#
-# def filterAggregateGarbageByIndex(landscapeReps, indices):
-#     genes = landscapeReps['genotypes']
-#     repsNumber = len(landscapeReps['landscapes'])
-#     traces = []
-#     for j in range(0, repsNumber):
-#         probe = landscapeReps['landscapes'][j]
-#         trace = np.sum(filterGarbageByIndex(probe, indices), axis=0)
-#         traces.append([trace])
-#     filteredLand = {'genotypes': genes, 'landscapes': traces}
-#     return filteredLand
-
 def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append=''):
     figArr = monet.plotLandscapeDataRepetitions(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
@@ -298,16 +276,6 @@ def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time):
 # Experiment Selection and Terminal
 ###############################################################################
 def listDirectoriesWithPathWithinAPath(pathFilename):
-    '''
-    Description:
-        * Returns a list of folder paths within a given path.
-    In:
-        * pathFilename: Path to search directories in
-    Out:
-        * List of folder paths
-    Notes:
-        * NA
-    '''
     folders = monet.listDirectoriesInPath(pathFilename)
     for i, folder in enumerate(folders):
         folders[i] = pathFilename + '/' + folder
@@ -322,13 +290,6 @@ def rescaleRGBA(colorsTuple, colors=255):
 
 
 def lenAndDigits(collection):
-    """Returns the length of a list and the number of digits for z-padding
-    Args:
-        collection (list): Collection of elements with the "len" method
-            implemented.
-    Returns:
-        tuple: (number of elements in the collection, required digits)
-    """
     length = len(collection)
     digs = len(str(length))
     return (length, digs)
