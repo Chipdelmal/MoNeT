@@ -145,6 +145,7 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append=''):
 def printExpTerminal(time, PATH_ROOT, PATH_IMG, PATH_DATA):
     print(aux.PAD)
     printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, str(time))
+    print(aux.PAD)
     expOutRootPath = PATH_IMG
     monet.makeFolder(expOutRootPath)
 

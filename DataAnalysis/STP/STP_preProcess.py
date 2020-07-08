@@ -12,10 +12,10 @@ import MoNeT_MGDrivE as monet
 from joblib import Parallel, delayed
 
 JOB = 8
-# (USR, XPM, LAND, SET) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
-(USR, XPM, LAND, SET) = ('dsk', 'Panmictic', 'tParams', 'island')
+(USR, LAND, SET) = (sys.argv[1], sys.argv[2], sys.argv[3])
+# (USR, XPM, LAND, SET) = ('dsk', 'Panmictic', 'tParams', 'island')
 (DRID, STP, AOI, MF, OVW, FMT) = (
-         'LDR', False, 'HLT', (True, True), False, 'lzma'
+         'LDR', False, 'HLT', (True, True), False, 'bz2'
     )
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 drvPars = drv.driveSelector(DRID)
