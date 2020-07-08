@@ -155,10 +155,12 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append=''):
     axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
     axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
     axTemp.tick_params(color=(0, 0, 0, 0.5))
+    axTemp.axhline(y=50000, linewidth=.25, ls='dashed',  color=(0,0,0,.25))
+    axTemp.axhline(y=100000, linewidth=.25, ls='dashed', color=(0,0,0,.25))
     figArr[0].savefig(
-            "{}/{}-{}.pdf".format(PATH_IMG, nS, append),
+            "{}/{}-{}.png".format(PATH_IMG, nS, append),
             dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
-            orientation='portrait', papertype=None, format='pdf',
+            orientation='portrait', papertype=None, format='png',
             transparent=True, bbox_inches='tight', pad_inches=.01
         )
     plt.close('all')
