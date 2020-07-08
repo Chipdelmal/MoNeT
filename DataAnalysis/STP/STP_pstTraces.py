@@ -11,9 +11,9 @@ import compress_pickle as pkl
 import matplotlib.pyplot as plt
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-(USR, XPM, LAND, SET) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
+# (USR, XPM, LAND, SET) = ('srv', sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, XPM, LAND, SET) = ('dsk', 'Tomas', 'tParams', 'kernel_1')
-# (USR, XPM, LAND, SET) = ('dsk', 'Panmictic', 'tParams', 'island')
+(USR, XPM, LAND, SET) = ('dsk', 'Panmictic', 'gravidReleases', 'island')
 (DRIVE_ID, STP, SKP, FMT) = ('LDR', True, False, '.lzma')
 (thr, REL_STRT, WRM, QNT) = ([.05, .50], 0, 0, .95)
 ###############################################################################
