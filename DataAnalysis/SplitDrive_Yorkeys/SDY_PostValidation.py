@@ -28,7 +28,7 @@ COLORS = [
 STYLE = {
         "width": 1, "alpha": .15, "dpi": 2 * 300,
         "legend": False, "aspect": .5, "colors": COLORS,
-        "xRange": [0, 1825], "yRange": [-1.25, +1.25]
+        "xRange": [0, 1825], "yRange": [-1, +1]
     }
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 tS = datetime.datetime.now()
@@ -63,6 +63,8 @@ for j in range(0, len(PRB)):
         pop = {'genotypes': genes, 'population': err}
         plot = monet.plotMeanGenotypeTrace(pop, STYLE)
         axTemp = plot.get_axes()[0]
+        for yix in (-1, -.75, -.5, -.25, .25, .5, .75, 1):
+            axTemp.axhline(y=yix, color=(0,0,0,.25), linewidth=.2, ls='dashed')
         axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
         axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
         # Write to disk
