@@ -14,7 +14,7 @@ import compress_pickle as pkl
 
 USR = sys.argv[1]
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
-        'gravidReleases', 'LDR', sys.argv[2],   # 'islandnonGravid',
+        'gravidReleases', 'LDR', sys.argv[2],
         False, 'HLT', (True, True), [.5, .95], True
     )
 (FMT, SKP, MF) = ('bz', False, (True, True))

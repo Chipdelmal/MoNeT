@@ -15,7 +15,8 @@ import matplotlib.pyplot as plt
 # import compress_pickle as pkl
 from scipy.interpolate import griddata
 
-(USR, DRV, AOI) = (sys.argv[1], 'replacement', 'HLT')
+(USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
+# (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .5, .95], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
@@ -41,10 +42,10 @@ for threshold in thr:
         # Filters -------------------------------------------------------------
         (grpF, ratF) = ((df['group'] == 0), (df['ratio'] == ratR[0]))
         (svrF, relF) = ((df['sv'] == svr), df['releases'] == 1)
-        filter = grpF & ratF & svrF
+        filter = grpF & ratF & svrF & relF
         dff = df[filter]
         # Surfaces ------------------------------------------------------------
-        (x, y, z) = (df['resistance'], df['fitness'], df[threshold])
+        (x, y, z) = (dff['resistance'], dff['fitness'], dff[threshold])
         (x, y, z) = (
                 np.array([float(i/100000000) for i in x]),
                 np.array([float(i/100000000) for i in y]),
@@ -52,7 +53,7 @@ for threshold in thr:
             )
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
         (xi, yi) = (np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy))
-        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='nearest')
+        zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method='cubic')
         # Plots
         fig, ax = plt.subplots()
         ax.plot(x, y, 'ko', ms=1, alpha=.5, marker='x')
@@ -60,7 +61,7 @@ for threshold in thr:
                 xi, yi, zi, levels=lvls,
                 linewidths=.5, colors='k', alpha=.25
             )
-        htmp = ax.contourf(xi, yi, zi, levels=lvls, cmap='Purples')
+        htmp = ax.contourf(xi, yi, zi, levels=lvls, cmap='Purples_r')
         ax.set(xscale="log", yscale="linear")
         ax.set_xlabel('R Generation', fontsize=22.5)
         ax.set_ylabel('Fitness Cost', fontsize=22.5)
@@ -74,12 +75,12 @@ for threshold in thr:
             )
         cbar = plt.colorbar(htmp, pad=0.01)
         fig.savefig(
-                "{}/HT-{}-{}.png".format(
-                        PT_IMG, str(int(threshold*100)).zfill(3),
-                        str(svr).zfill(10)
-                    ),
-                dpi=250, facecolor=None, edgecolor='w',
-                orientation='portrait', papertype=None, format='png',
-                transparent=True, bbox_inches='tight', pad_inches=.01
-            )
+             "{}/HT-{}-{}.png".format(
+                     PT_IMG, str(int(threshold*100)).zfill(3),
+                     str(svr).zfill(10)
+                 ),
+             dpi=250, facecolor=None, edgecolor='w',
+             orientation='portrait', papertype=None, format='png',
+             transparent=True, bbox_inches='tight', pad_inches=.01
+         )
         plt.close('all')

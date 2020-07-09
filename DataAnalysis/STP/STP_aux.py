@@ -27,7 +27,7 @@ def selectPath(USR, LAND, SET, DRIVE_ID):
 def writeListToCSV(fileName, inList, header=None):
     with open(fileName, 'w', newline='') as myfile:
         wr = csv.writer(myfile)
-        if header is not None:
+        if header is not None: 
             wr.writerow(header)
         for row in inList:
             wr.writerow(row)
