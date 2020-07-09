@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import decimal
+import matplotlib
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import MoNeT_MGDrivE as monet
 
 
@@ -66,3 +67,29 @@ x1 = np.geomspace(lo, hi, num=N)
 # ax.set(xscale="log", yscale="linear")
 stry = ', '.join([float_to_str(i)[:9] for i in x1])
 'c(0.0, {})'.format(stry)
+
+
+# #############################################################################
+# Color Palette
+# #############################################################################
+[i/255 for i in (255, 0, 77)]
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.1, 0.1), (1.0, 0.0, 0.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.6, 0.6), (1.0, 0.0, 0.0)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 1.0, 1.0), (1.0, 0.3, 0.3))
+    }
+cmapB = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.0, 0.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.3, 0.3)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 1.0, 1.0))
+    }
+cmapC = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 1.0, 1.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.0, 0.0)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.3, 0.3))
+    }
+cmapM = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
