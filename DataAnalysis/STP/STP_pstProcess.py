@@ -13,7 +13,7 @@ import compress_pickle as pkl
 
 USR = sys.argv[1]
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
-        'gravidReleases', 'LDR', sys.argv[2],   # 'islandnonGravid',
+        'gravidReleases', 'LDR', sys.argv[2],
         False, 'HLT', (True, True), [.5, .95], True
     )
 (thr, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
@@ -32,7 +32,6 @@ expNames = fun.splitExpNames(PT_PRE)
 # Print terminal info and create folder ---------------------------------------
 tS = datetime.datetime.now()
 fun.printExpTerminal(tS, PT_ROT, PT_IMG, PT_DTA)
-print(monet.PAD)
 ###############################################################################
 # Quantiles calculation for experiments
 ###############################################################################
@@ -74,4 +73,4 @@ for qnt in QNT:
             xpId = aux.getXpId(pFile, [1, 2, 3, 4, 6])
             xpId.extend(qt)
             thCuts.append(xpId)
-        aux.writeListToCSV(fName, thCuts)
+        aux.writeListToCSV(fName+'-TTI.csv', thCuts)

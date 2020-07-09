@@ -121,13 +121,18 @@ def calcQuantWOP(srpPrb, meanRef, thresholds, gIx, quantile=.95):
 ###############################################################################
 # Dynamics
 ###############################################################################
-def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append=''):
+def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0]):
     figArr = monet.plotLandscapeDataRepetitions(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
     axTemp.set_aspect(aspect=STYLE["aspect"])
     axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
     axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
-    # axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
+    axTemp.vlines(
+            vLines, 0, 1,
+            transform=axTemp.get_xaxis_transform(),
+            colors='#FF007FA5',
+            linestyles='dashed', linewidth=.25
+        )
     axTemp.tick_params(color=(0, 0, 0, 0.5))
     figArr[0].savefig(
             "{}/{}-{}.png".format(PATH_IMG, nS, append),
