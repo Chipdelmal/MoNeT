@@ -21,7 +21,7 @@ from scipy.interpolate import griddata
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .5, .95], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
-(threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'nearest', 0.00001, 'linear')
+(threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'cubic', 0.00001, 'log')
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
@@ -36,11 +36,11 @@ fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Heatmap ' + AOI)
 ###############################################################################
 msg = '* Analyzing ({}/{})'
 for (i, threshold) in enumerate(thr):
+    print(msg.format(i+1, len(thr)), end='\r')
     fPtrn = '{}/*{}*{}-WOP.csv'.format(PT_OUT, AOI, str(int(ci*100)))
     fName = sorted(glob(fPtrn))[0]
     df = pd.read_csv(fName, header=None, names=header)
     (ratR, rnm, resR, fitR, svrR, grpP) = [list(df[i].unique()) for i in header[:6]]
-    print(msg.format(i+1, len(thr)), end='\r')
     for svr in svrR:
         # Filters -------------------------------------------------------------
         (grpF, ratF) = ((df['group'] == 0), (df['ratio'] == ratR[0]))
