@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import math
 import decimal
 import matplotlib
 import numpy as np
@@ -60,23 +61,22 @@ def float_to_str(f):
 # #############################################################################
 N = 20
 (lo, hi) = (10E-6, 1)
-y = np.zeros(N)
-x1 = np.geomspace(lo, hi, num=N)
-# fig, ax = plt.subplots()
-# ax.plot(x1, y, 'o')
-# ax.set(xscale="log", yscale="linear")
+yStep = .05
+y1 = np.arange(yStep/2, 1, yStep)
+x1 = np.geomspace(lo-10E-6/10, hi, num=N)
 stry = ', '.join([float_to_str(i)[:9] for i in x1])
 'c(0.0, {})'.format(stry)
 
+1E-4
 
 # #############################################################################
 # Color Palette
 # #############################################################################
-[i/255 for i in (255, 0, 77)]
+[i/255 for i in (70, 80, 255)]
 cdict = {
-        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.1, 0.1), (1.0, 0.0, 0.0)),
-        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.6, 0.6), (1.0, 0.0, 0.0)),
-        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 1.0, 1.0), (1.0, 0.3, 0.3))
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.25, 0.25), (1.0, 0.0, 0.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.3, 0.3), (1.0, 0.0, 0.0)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 1.0, 1.0), (1.0, 0.25, 0.25))
     }
 cmapB = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
 

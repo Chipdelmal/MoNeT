@@ -21,7 +21,7 @@ from scipy.interpolate import griddata
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .5, .95], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
-(threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'cubic', 0.00001, 'log')
+(threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'linear', 0.00001, 'log')
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
@@ -57,9 +57,9 @@ for (i, threshold) in enumerate(thr):
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
         (xi, yi) = (np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy))
         zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method=mthd)
-        # Plots
+        # Plots ---------------------------------------------------------------
         fig, ax = plt.subplots()
-        ax.plot(x, y, 'ko', ms=1, alpha=.5, marker='x')
+        ax.plot(x, y, 'k.', ms=.1, alpha=1, marker='o')
         ax.contour(
                 xi, yi, zi, levels=lvls,
                 linewidths=.5, colors='k', alpha=.5
@@ -72,6 +72,12 @@ for (i, threshold) in enumerate(thr):
         fig.set_size_inches(sz, 1*sz)
         plt.xlim(loR, a[1])
         plt.ylim(b[0], b[1])
+        # Axes
+        # ax.set_xticks(aux.x1, minor=True)
+        # ax.set_xticklabels([], minor=True)
+        # ax.set_yticks(aux.y1, minor=True)
+        # ax.set_yticklabels([], minor=True)
+        # ax.grid(which='minor', lw=.1)
         plt.title(
                 str(int((1-threshold)*100))+'% window of protection\n',
                 fontsize=30
