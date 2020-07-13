@@ -32,7 +32,7 @@ if (AOI == 'ECO'):
 else:
     (CLR, CMAPS, YRAN) = (drv.COLHN, drv.COLHM, [0, 100 * 12000])
 STYLE = {
-        "width": .5, "alpha": .15, "dpi": 250, "legend": True,
+        "width": .5, "alpha": .2, "dpi": 250, "legend": True,
         "aspect": .25, "colors": CLR,
         "xRange": [0, 365 * 5], "yRange": YRAN
     }
