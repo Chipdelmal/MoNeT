@@ -22,6 +22,7 @@ from scipy.interpolate import griddata
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
 (threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'linear', 0.00001, 'log')
+mapLevels = [0, 300, 600, 900, 1200, 1500]
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
@@ -61,10 +62,10 @@ for (i, threshold) in enumerate(thr):
         fig, ax = plt.subplots()
         ax.plot(x, y, 'k.', ms=.1, alpha=1, marker='o')
         ax.contour(
-                xi, yi, zi, levels=lvls,
+                xi, yi, zi, levels=mapLevels,
                 linewidths=.5, colors='k', alpha=.5
             )
-        htmp = ax.contourf(xi, yi, zi, levels=lvls, cmap=aux.cmapB)
+        htmp = ax.contourf(xi, yi, zi, levels=mapLevels, cmap=aux.cmapB)
         ax.set(xscale=xSca, yscale="linear")
         ax.set_xlabel('R Generation', fontsize=22.5)
         ax.set_ylabel('Fitness Cost', fontsize=22.5)
