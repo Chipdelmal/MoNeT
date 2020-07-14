@@ -16,13 +16,13 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 
 
-# (USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
-(USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
+(USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
+# (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .5, .95], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
-(threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'nearest', 0.00001, 'log')
-# mapLevels = [0, 300, 600, 900, 1200, 1500]
+(threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'nearest', 0.000001, 'log')
+mapLevels = [0, 300, 600, 900, 1200, 1500]
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
@@ -62,11 +62,11 @@ for (i, threshold) in enumerate(thr):
         fig, ax = plt.subplots()
         ax.plot(x, y, 'k.', ms=.1, alpha=1, marker='o')
         ax.contour(
-                xi, yi, zi, levels=lvls,
+                xi, yi, zi, levels=mapLevels,
                 linewidths=.5, colors='k', alpha=.5,
             )
         htmp = ax.contourf(
-                xi, yi, zi, levels=lvls,
+                xi, yi, zi, levels=mapLevels,
                 cmap=aux.cmapB, extend='max'
             )
         htmp.cmap.set_over('#090446')

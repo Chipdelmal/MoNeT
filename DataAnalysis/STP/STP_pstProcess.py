@@ -50,7 +50,7 @@ for qnt in QNT:
         pbPat = aux.XP_NPAT.format('*', rnm[rnIt], '*', '*', AOI, '*', 'srp')
         pbFiles = sorted(glob(PT_PRE+pbPat))
         # Cycle to iterate through files with matching release number (rnIt)
-        fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(qnt*100))+'.csv'
+        fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(qnt*100))
         # Skip if existing
         if (fName in existing) and (OVW is False):
             continue
