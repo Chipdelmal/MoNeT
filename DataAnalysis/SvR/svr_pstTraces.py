@@ -12,7 +12,7 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 
-(USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
+(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
 (FMT, SKP, MF, FZ) = ('bz', False, (True, True), True)
 (QNT, THR, GRP) = ('50', [.05, .10, .25, .50, .75], 0)

@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 
 
-(USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
+(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .5, .95], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)

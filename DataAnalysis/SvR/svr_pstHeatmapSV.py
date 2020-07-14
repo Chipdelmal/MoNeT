@@ -16,12 +16,12 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 
 
-# (USR, DRV, AOI) = (sys.argv[1], 'replacement', sys.argv[2])
-(USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.1, .5], True)
+(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+# (USR, DRV, AOI) = ('dsk', 'HH', 'HLT')
+(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .1, .5], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
-(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
-(threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'nearest', 0.000001, 'log')
+(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
+(threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'nearest', 0.0000001, 'log')
 mapLevels = [0, 300, 600, 900, 1200, 1500]
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
