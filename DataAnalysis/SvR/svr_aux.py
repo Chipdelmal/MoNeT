@@ -33,7 +33,7 @@ def selectPath(USR, DRV):
     if USR == 'srv':
         PATH_ROOT = '/RAID5/marshallShare/SvR/sim/{}/out/LDR/'.format(DRV)
     else:
-        PATH_ROOT = '/media/chipdelmal/cache/Sims/SvR/simLocal/{}/out/LDR/'.format(DRV)
+        PATH_ROOT = '/media/chipdelmal/cache/Sims/SvR/simNew/{}/out/LDR/'.format(DRV)
     # monet.makeFolder('{}/'.format(PATH_ROOT))
     (PATH_IMG, PATH_DATA) = (
             '{}img/'.format(PATH_ROOT), '{}'.format(PATH_ROOT)
@@ -60,14 +60,12 @@ def float_to_str(f):
 # https://stackoverflow.com/questions/32784047/numbers-logarithmically-spaced-between-two-floats-in-numpy
 # #############################################################################
 N = 20
-(lo, hi) = (10E-6, 1)
+(lo, hi) = (10E-6, .01)
 yStep = .05
 y1 = np.arange(yStep/2, 1, yStep)
 x1 = np.geomspace(lo-10E-6/10, hi, num=N)
 stry = ', '.join([float_to_str(i)[:9] for i in x1])
 'c(0.0, {})'.format(stry)
-
-1E-4
 
 # #############################################################################
 # Color Palette
