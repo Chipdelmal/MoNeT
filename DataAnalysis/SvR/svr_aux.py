@@ -60,9 +60,9 @@ def float_to_str(f):
 # https://stackoverflow.com/questions/32784047/numbers-logarithmically-spaced-between-two-floats-in-numpy
 # #############################################################################
 N = 25
-(lo, hi) = (10E-7, .01)
-yStep = .05
-y1 = np.arange(yStep/2, 1, yStep)
+(lo, hi) = (10E-6, .1)
+yStep = .02
+y1 = np.arange(yStep, 1, yStep)
 x1 = np.geomspace(lo-10E-7/10, hi, num=N)
 stry = ', '.join([float_to_str(i)[:9] for i in x1])
 'c(0.0, {})'.format(stry)

@@ -21,8 +21,8 @@ from scipy.interpolate import griddata
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .1, .5], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
-(threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'nearest', 0.0000001, 'log')
-mapLevels = [0, 300, 600, 900, 1200, 1500]
+(threshold, lvls, mthd, xSca) = (thr[1], 10, 'nearest', 'log')
+mapLevels = np.arange(0, 4*365, 200)
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
@@ -60,7 +60,7 @@ for (i, threshold) in enumerate(thr):
         zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method=mthd)
         # Plots ---------------------------------------------------------------
         fig, ax = plt.subplots()
-        ax.plot(x, y, 'k.', ms=.1, alpha=1, marker='o')
+        ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
         ax.contour(
                 xi, yi, zi, levels=mapLevels,
                 linewidths=.5, colors='k', alpha=.5,
@@ -75,14 +75,16 @@ for (i, threshold) in enumerate(thr):
         ax.set_ylabel('Fitness Cost', fontsize=22.5)
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, 1*sz)
-        plt.xlim(loR, a[1])
-        plt.ylim(b[0], b[1])
         # Axes
-        # ax.set_xticks(aux.x1, minor=True)
-        # ax.set_xticklabels([], minor=True)
-        # ax.set_yticks(aux.y1, minor=True)
-        # ax.set_yticklabels([], minor=True)
-        # ax.grid(which='minor', lw=.1)
+        ax.set_xticks(aux.x1, minor=True)
+        ax.set_xticklabels([], minor=True)
+        ax.set_yticks(aux.y1, minor=True)
+        ax.set_yticklabels([], minor=True)
+        ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
+        ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
+        # Limits
+        plt.xlim(1E-6, 1E-2)
+        plt.ylim(b[0], b[1])
         plt.title(
                 str(int((1-threshold)*100))+'% window of protection\n',
                 fontsize=30
@@ -93,10 +95,10 @@ for (i, threshold) in enumerate(thr):
                      PT_IMG, str(int(threshold*100)).zfill(3),
                      str(res).zfill(10)
                  ),
-             dpi=250, facecolor=None, edgecolor='w',
+             dpi=500, facecolor=None, edgecolor='w',
              orientation='portrait', papertype=None, format='png',
              transparent=True, bbox_inches='tight', pad_inches=.01
          )
         plt.close('all')
-print('* Analyzed ({}/{})      '.format(len(thr), len(thr)))
+print('* Analyzed ({}/{})                         '.format(len(thr), len(thr)))
 print(monet.PAD)

@@ -6,12 +6,12 @@ import svr_aux as aux
 import svr_gene as drv
 import svr_functions as fun
 from datetime import datetime
-# import MoNeT_MGDrivE as monet
+import MoNeT_MGDrivE as monet
 from joblib import Parallel, delayed
 
 
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 20)
+(FMT, OVW, MF, JOB) = ('bz2', True, (True, True), 8)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 ###############################################################################
 # Setting up paths and style
