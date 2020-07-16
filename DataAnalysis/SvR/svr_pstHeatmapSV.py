@@ -71,8 +71,8 @@ for (i, threshold) in enumerate(thr):
             )
         htmp.cmap.set_over('#090446')
         ax.set(xscale=xSca, yscale="linear")
-        ax.set_xlabel('Standing Variation', fontsize=22.5)
-        ax.set_ylabel('Fitness Cost', fontsize=22.5)
+        # ax.set_xlabel('Standing Variation', fontsize=22.5)
+        # ax.set_ylabel('Fitness Cost', fontsize=22.5)
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, 1*sz)
         # Axes
@@ -85,10 +85,10 @@ for (i, threshold) in enumerate(thr):
         # Limits
         plt.xlim(1E-6, 1E-2)
         plt.ylim(b[0], b[1])
-        plt.title(
-                str(int((1-threshold)*100))+'% window of protection\n',
-                fontsize=30
-            )
+        # plt.title(
+        #         str(int((1-threshold)*100))+'% window of protection\n',
+        #         fontsize=30
+        #     )
         cbar = plt.colorbar(htmp, pad=0.01)
         fig.savefig(
              "{}/HS-{}-{}.png".format(

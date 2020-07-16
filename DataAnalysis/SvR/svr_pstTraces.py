@@ -28,15 +28,15 @@ ptrn = '{}*{}*{}.csv'
 # Paths -----------------------------------------------------------------------
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 if (AOI == 'ECO'):
-    (CLR, CMAPS, YRAN) = (drv.COLEN, drv.COLEM, [0, 200 * 12000])
+    (CLR, CMAPS, YRAN) = (drv.COLEN, drv.COLEM, [0, 1000000])
 else:
-    (CLR, CMAPS, YRAN) = (drv.COLHN, drv.COLHM, [0, 100 * 12000])
+    (CLR, CMAPS, YRAN) = (drv.COLHN, drv.COLHM, [0, 1000000/2])
 STYLE = {
         "width": .5, "alpha": .2, "dpi": 250, "legend": True,
         "aspect": .25, "colors": CLR,
         "xRange": [0, 365 * 5], "yRange": YRAN
     }
-STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
+STYLE['aspect'] = monet.scaleAspect(1, STYLE)
 tS = datetime.now()
 fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces ' + AOI)
 ###############################################################################

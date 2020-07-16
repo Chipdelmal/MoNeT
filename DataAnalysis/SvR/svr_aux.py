@@ -59,8 +59,8 @@ def float_to_str(f):
 # Sampling evenly through log-scale
 # https://stackoverflow.com/questions/32784047/numbers-logarithmically-spaced-between-two-floats-in-numpy
 # #############################################################################
-N = 25
-(lo, hi) = (10E-6, .1)
+N = 10
+(lo, hi) = (10E-7, .1)
 yStep = .02
 y1 = np.arange(yStep, 1, yStep)
 x1 = np.geomspace(lo-10E-7/10, hi, num=N)
