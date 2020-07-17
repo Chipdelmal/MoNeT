@@ -76,9 +76,9 @@ for (i, threshold) in enumerate(thr):
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, 1*sz)
         # Axes
-        ax.set_xticks(aux.x1, minor=True)
+        ax.set_xticks(list(set(x)), minor=True)
         ax.set_xticklabels([], minor=True)
-        ax.set_yticks(aux.y1, minor=True)
+        ax.set_yticks(list(set(y)), minor=True)
         ax.set_yticklabels([], minor=True)
         ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
         ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))

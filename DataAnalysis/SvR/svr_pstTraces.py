@@ -15,7 +15,7 @@ import compress_pickle as pkl
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
 (FMT, SKP, MF, FZ) = ('bz', False, (True, True), True)
-(QNT, THR, GRP) = ('50', [.05, .10, .25, .50, .75], 0)
+(QNT, THR, GRP) = ('05', [.05, .10, .25, .50, .75], 0)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 thPlt = [.05, .50]
 ###############################################################################
@@ -32,7 +32,7 @@ if (AOI == 'ECO'):
 else:
     (CLR, CMAPS, YRAN) = (drv.COLHN, drv.COLHM, [0, 1000000/2])
 STYLE = {
-        "width": .5, "alpha": .2, "dpi": 250, "legend": True,
+        "width": .1, "alpha": 1, "dpi": 1000, "legend": True,
         "aspect": .25, "colors": CLR,
         "xRange": [0, 365 * 5], "yRange": YRAN
     }
