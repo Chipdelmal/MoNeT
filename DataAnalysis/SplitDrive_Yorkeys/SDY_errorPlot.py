@@ -57,6 +57,7 @@ for (i, file) in enumerate(filePaths):
     axTemp = plot.get_axes()[0]
     axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
     axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
+    axTemp.axhlines(range(0, 1, .1), colors=(0,0,0,.25), linewidth=.2, ls='dashed')
     plot.savefig(
             "{}/{}-{}.pdf".format(PATH_IMG, name, 'E'),
             dpi=STYLE['dpi'], facecolor=None, edgecolor='w',

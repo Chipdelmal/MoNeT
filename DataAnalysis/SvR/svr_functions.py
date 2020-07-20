@@ -11,6 +11,13 @@ import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 
 
+def getFilteredFiles(filterGlobPattern, unfilteredGlobPattern):
+    filterSet = set(glob(filterGlobPattern))
+    fullSet = set(glob(unfilteredGlobPattern))
+    filteredList = sorted(list(fullSet - filterSet))
+    return filteredList
+
+
 def flatten(l):
     return reduce(lambda x, y: x+y, l)
 

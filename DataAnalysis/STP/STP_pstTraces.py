@@ -12,46 +12,42 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
-(FMT, SKP, MF, FZ) = ('bz', False, (True, True), True)
-(QNT, THR, GRP) = ('05', [.05, .10, .25, .50, .75], 0)
+USR = sys.argv[1]
+(LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
+        'gravidReleases', 'LDR', sys.argv[2],
+        False, 'HLT', (True, True), [.5, .95], True
+    )
+(FMT, SKP, MF) = ('bz', False, (True, True))
+(QNT, THR, GRP) = ('50', [.05, .10, .25, .50, .75], 0)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 thPlt = [.05, .50]
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
-PST_TYP = ('WOP', 'TTI', 'TTO')
+PST_TYP = ('TTI')
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
 header.extend(THR)
 ptrn = '{}*{}*{}.csv'
 # Paths -----------------------------------------------------------------------
-(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
+(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, LND, SET, DRV)
 if (AOI == 'ECO'):
-    (CLR, CMAPS, YRAN) = (drv.COLEN, drv.COLEM, [0, 1000000])
+    (CLR, CMAPS, YRAN) = (drv.COLEN, drv.COLEM, [0, 200 * 12000])
 else:
-    (CLR, CMAPS, YRAN) = (drv.COLHN, drv.COLHM, [0, 1000000/2])
+    (CLR, CMAPS, YRAN) = (drv.COLHN, drv.COLHM, [0, 100 * 12000])
 STYLE = {
-        "width": .1, "alpha": 1, "dpi": 1000, "legend": True,
+        "width": .5, "alpha": .15, "dpi": 250, "legend": True,
         "aspect": .25, "colors": CLR,
         "xRange": [0, 365 * 5], "yRange": YRAN
     }
-STYLE['aspect'] = monet.scaleAspect(1, STYLE)
+STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 tS = datetime.now()
 fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces ' + AOI)
 ###############################################################################
 # Load preprocessed files lists
 ###############################################################################
 tyTag = ('sum', 'rep')
-if FZ:
-    fLists = list(zip(*[fun.getFilteredFiles(
-            PT_PRE+'*_00_*'+AOI+'*'+tp+'*',
-            PT_PRE+'*'+AOI+'*'+tp+'*') for tp in tyTag]
-        ))
-else:
-    fLists = list(zip(
-            *[sorted(glob(PT_PRE+'*'+AOI+'*'+tp+'*')) for tp in tyTag]
-        ))
+fLists = list(zip(*[sorted(glob(PT_PRE+'*'+AOI+'*'+tp+'*')) for tp in tyTag]))
+fLists.reverse()
 ###############################################################################
 # Process files
 ###############################################################################

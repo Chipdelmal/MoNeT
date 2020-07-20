@@ -4,16 +4,16 @@
 import sys
 import datetime
 from glob import glob
-import uciPan_aux as aux
-import uciPan_fun as fun
-import uciPan_drive as drv
-import uciSTP_indices as ix
+import STP_aux as aux
+import STP_fun as fun
+import STP_drive as drv
+import STP_indices as ix
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 USR = sys.argv[1]
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
-        'gravidReleases', 'LDR', sys.argv[2],   # 'islandnonGravid',
+ 	sys.argv[2], 'LDR', sys.argv[3],   # 'islandnonGravid',
         False, 'HLT', (True, True), [.5, .95], True
     )
 (thr, REL_STRT, WRM) = ([.05, .10, .25, .50, .75], 1, 0)
@@ -32,7 +32,6 @@ expNames = fun.splitExpNames(PT_PRE)
 # Print terminal info and create folder ---------------------------------------
 tS = datetime.datetime.now()
 fun.printExpTerminal(tS, PT_ROT, PT_IMG, PT_DTA)
-print(monet.PAD)
 ###############################################################################
 # Quantiles calculation for experiments
 ###############################################################################
@@ -51,7 +50,7 @@ for qnt in QNT:
         pbPat = aux.XP_NPAT.format('*', rnm[rnIt], '*', '*', AOI, '*', 'srp')
         pbFiles = sorted(glob(PT_PRE+pbPat))
         # Cycle to iterate through files with matching release number (rnIt)
-        fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(qnt*100))+'.csv'
+        fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(qnt*100))
         # Skip if existing
         if (fName in existing) and (OVW is False):
             continue
@@ -74,4 +73,4 @@ for qnt in QNT:
             xpId = aux.getXpId(pFile, [1, 2, 3, 4, 6])
             xpId.extend(qt)
             thCuts.append(xpId)
-        aux.writeListToCSV(fName, thCuts)
+        aux.writeListToCSV(fName+'-TTI.csv', thCuts)

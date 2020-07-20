@@ -11,10 +11,10 @@ import matplotlib.pyplot as plt
         'RAID5', 'C001303',
         (
             'C000001', 'C000010', 'C000050', 'C000100',
-            'C000150', 'C000200', 'C000250', 'C001303'
+            'C000150', 'C000200', 'C001303'
         )
     )
-PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
+PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/batchProof/'
 # PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
 pthOut = PATH + 'err/'
 pthImg = pthOut + 'img/'
@@ -28,7 +28,7 @@ COLORS = [
 STYLE = {
         "width": 1, "alpha": .15, "dpi": 2 * 300,
         "legend": False, "aspect": .5, "colors": COLORS,
-        "xRange": [0, 1825], "yRange": [-1.25, +1.25]
+        "xRange": [0, 1825], "yRange": [-1, +1]
     }
 STYLE['aspect'] = monet.scaleAspect(.2, STYLE)
 tS = datetime.datetime.now()
@@ -63,12 +63,14 @@ for j in range(0, len(PRB)):
         pop = {'genotypes': genes, 'population': err}
         plot = monet.plotMeanGenotypeTrace(pop, STYLE)
         axTemp = plot.get_axes()[0]
+        for yix in (-1, -.75, -.5, -.25, .25, .5, .75, 1):
+            axTemp.axhline(y=yix, color=(0,0,0,.25), linewidth=.2, ls='dashed')
         axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
         axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
         # Write to disk
         monet.writeListToCSV(oPth+namP+'.csv', err, genes)
         plot.savefig(
-                "{}/{}-{}.png".format(iPth, PRB[i] namP),
+                "{}/{}-{}.png".format(iPth, PRB[j], namP),
                 dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
                 orientation='portrait', papertype=None, format='png',
                 transparent=True, bbox_inches='tight', pad_inches=.01

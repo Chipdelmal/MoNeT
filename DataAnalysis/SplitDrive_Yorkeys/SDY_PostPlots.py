@@ -18,7 +18,7 @@ plt.rcParams.update({'figure.max_open_warning': 0})
 ###############################################################################
 # Select form server/desktop
 if USR == 'srv':
-    PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/geoProof/'
+    PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/batchProof/'
 else:
     PATH = '/media/chipdelmal/cache/Sims/SplitDrive_Yorkeys/geoProof/'
 pathPre = '{}pre/{}/'.format(PATH, SET)
@@ -36,7 +36,7 @@ aux.printExperimentHead(PATH, pathImg, pathPre, str(tSrt), 'Plotting ')
 ###############################################################################
 # List preprocessed files lists
 ###############################################################################
-typTag = ('sum', 'spa', 'rep')  # 'srp')
+typTag = ('sum', 'spa', 'rep', 'srp')
 # typTag = ('sum', 'rep')
 fLists = list(zip(*[sorted(glob(pathPre+'*'+tp+EXT)) for tp in typTag]))
 ###############################################################################
@@ -50,18 +50,18 @@ for i in range(0, xpNum):
     # (sumDta, repDta) = [pkl.load(file) for file in (fLists[i])]
     name = fLists[i][0].split('/')[-1].split('.')[-2][:-4]
     # Process data ------------------------------------------------------------
-    spaDtaNorm = monet.rescaleGeneSpatiotemporals(spaDta)
-    overlay = monet.plotGenotypeOverlayFromLandscape(
-            spaDtaNorm, vmax=1,
-            style={"aspect": 50 * STYLE['aspect'], "cmap": CMAPS},
-         )
+    # spaDtaNorm = monet.rescaleGeneSpatiotemporals(spaDta)
+    # overlay = monet.plotGenotypeOverlayFromLandscape(
+    #        spaDtaNorm, vmax=1,
+    #        style={"aspect": 50 * STYLE['aspect'], "cmap": CMAPS},
+    #     )
     # Export plots ------------------------------------------------------------
     fun.exportTracesPlot(repDta, name, STYLE, pathImg, append='TRA')
-    monet.quickSaveFigure(
-            overlay,
-            '{}/{}-{}.pdf'.format(pathImg, name, 'OVR'), format='pdf'
-         )
-    monet.exportGeneLegend(sumDta['genotypes'], CLR, pathImg+'/plt.pdf', 500)
+    # monet.quickSaveFigure(
+    #         overlay,
+    #         '{}/{}-{}.png'.format(pathImg, name, 'OVR'), format='png'
+    #      )
+    monet.exportGeneLegend(sumDta['genotypes'], CLR, pathImg+'/plt.png', 500)
 tEnd = datetime.now()
 print('* Analyzed ({}/{})     '.format(xpNum, xpNum), end='\n')
 aux.printExperimentTail(str(tEnd-tSrt), 'Plotting')

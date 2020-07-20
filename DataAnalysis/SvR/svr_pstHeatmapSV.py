@@ -17,12 +17,12 @@ from scipy.interpolate import griddata
 
 
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (True, True), [.05, .5, .95], True)
+# (USR, DRV, AOI) = ('dsk', 'HH', 'HLT')
+(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
-(threshold, lvls, mthd, loR, xSca) = (thr[1], 10, 'nearest', 0.00001, 'log')
-mapLevels = [0, 300, 600, 900, 1200, 1500]
+(threshold, lvls, mthd, xSca) = (thr[1], 10, 'nearest', 'log')
+mapLevels = np.arange(0, 4*365, 200)
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
@@ -42,14 +42,14 @@ for (i, threshold) in enumerate(thr):
     fName = sorted(glob(fPtrn))[0]
     df = pd.read_csv(fName, header=None, names=header)
     (ratR, rnm, resR, fitR, svrR, grpP) = [list(df[i].unique()) for i in header[:6]]
-    for svr in svrR:
+    for res in resR:
         # Filters -------------------------------------------------------------
         (grpF, ratF) = ((df['group'] == 0), (df['ratio'] == ratR[0]))
-        (svrF, relF) = ((df['sv'] == svr), df['releases'] == 1)
-        filter = grpF & ratF & svrF & relF
+        (resF, relF) = ((df['resistance'] == res), df['releases'] == 1)
+        filter = grpF & ratF & resF & relF
         dff = df[filter]
         # Surfaces ------------------------------------------------------------
-        (x, y, z) = (dff['resistance'], dff['fitness'], dff[threshold])
+        (x, y, z) = (dff['sv'], dff['fitness'], dff[threshold])
         (x, y, z) = (
                 np.array([float(i/100000000) for i in x]),
                 np.array([float(i/100000000) for i in y]),
@@ -60,44 +60,45 @@ for (i, threshold) in enumerate(thr):
         zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method=mthd)
         # Plots ---------------------------------------------------------------
         fig, ax = plt.subplots()
-        ax.plot(x, y, 'k.', ms=.1, alpha=1, marker='o')
+        ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
         ax.contour(
                 xi, yi, zi, levels=mapLevels,
                 linewidths=.5, colors='k', alpha=.5,
-                vmax=mapLevels[-1]
             )
         htmp = ax.contourf(
                 xi, yi, zi, levels=mapLevels,
-                cmap=aux.cmapB, vmax=1500, extend='max'
+                cmap=aux.cmapB, extend='max'
             )
         htmp.cmap.set_over('#090446')
         ax.set(xscale=xSca, yscale="linear")
-        ax.set_xlabel('R Generation', fontsize=22.5)
-        ax.set_ylabel('Fitness Cost', fontsize=22.5)
+        # ax.set_xlabel('Standing Variation', fontsize=22.5)
+        # ax.set_ylabel('Fitness Cost', fontsize=22.5)
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, 1*sz)
-        plt.xlim(loR, a[1])
-        plt.ylim(b[0], b[1])
         # Axes
-        # ax.set_xticks(aux.x1, minor=True)
-        # ax.set_xticklabels([], minor=True)
-        # ax.set_yticks(aux.y1, minor=True)
-        # ax.set_yticklabels([], minor=True)
-        # ax.grid(which='minor', lw=.1)
-        plt.title(
-                str(int((1-threshold)*100))+'% window of protection\n',
-                fontsize=30
-            )
+        ax.set_xticks(list(set(x)), minor=True)
+        ax.set_xticklabels([], minor=True)
+        ax.set_yticks(list(set(y)), minor=True)
+        ax.set_yticklabels([], minor=True)
+        ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
+        ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
+        # Limits
+        plt.xlim(1E-6, 1E-2)
+        plt.ylim(b[0], b[1])
+        # plt.title(
+        #         str(int((1-threshold)*100))+'% window of protection\n',
+        #         fontsize=30
+        #     )
         cbar = plt.colorbar(htmp, pad=0.01)
         fig.savefig(
-             "{}/HT-{}-{}.png".format(
+             "{}/HS-{}-{}.png".format(
                      PT_IMG, str(int(threshold*100)).zfill(3),
-                     str(svr).zfill(10)
+                     str(res).zfill(10)
                  ),
-             dpi=250, facecolor=None, edgecolor='w',
+             dpi=500, facecolor=None, edgecolor='w',
              orientation='portrait', papertype=None, format='png',
              transparent=True, bbox_inches='tight', pad_inches=.01
          )
         plt.close('all')
-print('* Analyzed ({}/{})      '.format(len(thr), len(thr)))
+print('* Analyzed ({}/{})                         '.format(len(thr), len(thr)))
 print(monet.PAD)

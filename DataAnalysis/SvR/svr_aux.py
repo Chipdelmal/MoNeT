@@ -1,6 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import math
+import decimal
+import matplotlib
+import numpy as np
+# import matplotlib.pyplot as plt
 import MoNeT_MGDrivE as monet
 
 
@@ -26,9 +31,9 @@ def getStyle(colors, aspectR, xRange, yRange):
 # #############################################################################
 def selectPath(USR, DRV):
     if USR == 'srv':
-        PATH_ROOT = '/RAID5/marshallShare/SvR/sim/{}/out/LDR/'.format(DRV)
+        PATH_ROOT = '/RAID5/marshallShare/SvR/sim/{}/'.format(DRV)
     else:
-        PATH_ROOT = '/media/chipdelmal/cache/Sims/SvR/simLocal/{}/out/LDR/'.format(DRV)
+        PATH_ROOT = '/media/chipdelmal/cache/Sims/SvR/simNew/{}/'.format(DRV)
     # monet.makeFolder('{}/'.format(PATH_ROOT))
     (PATH_IMG, PATH_DATA) = (
             '{}img/'.format(PATH_ROOT), '{}'.format(PATH_ROOT)
@@ -38,3 +43,51 @@ def selectPath(USR, DRV):
     fldrList = [PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT]
     [monet.makeFolder(i) for i in fldrList]
     return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
+
+
+def float_to_str(f):
+    """
+    Convert the given float to a string,
+    without resorting to scientific notation
+    """
+    ctx = decimal.Context()
+    d1 = ctx.create_decimal(repr(f))
+    return format(d1, 'f')
+
+
+# #############################################################################
+# Sampling evenly through log-scale
+# https://stackoverflow.com/questions/32784047/numbers-logarithmically-spaced-between-two-floats-in-numpy
+# #############################################################################
+N = 25
+(lo, hi) = (10E-7, .1)
+yStep = .025
+y1 = np.arange(yStep, 1, yStep)
+x1 = np.geomspace(lo-10E-7/10, hi, num=N)
+stry = ', '.join([float_to_str(i)[:9] for i in x1])
+'c(0.0, {})'.format(stry)
+
+# #############################################################################
+# Color Palette
+# #############################################################################
+[i/255 for i in (70, 80, 255)]
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.25, 0.25), (1.0, 0.0, 0.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.3, 0.3), (1.0, 0.0, 0.0)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 1.0, 1.0), (1.0, 0.25, 0.25))
+    }
+cmapB = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.0, 0.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.3, 0.3)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 1.0, 1.0))
+    }
+cmapC = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 1.0, 1.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.0, 0.0)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.3, 0.3))
+    }
+cmapM = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
