@@ -58,6 +58,50 @@ for (i, threshold) in enumerate(thr):
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
         (xi, yi) = (np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy))
         zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method=mthd)
+        # Plots Label ---------------------------------------------------------
+        fig, ax = plt.subplots()
+        ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
+        ax.contour(
+                xi, yi, zi, levels=mapLevels,
+                linewidths=.5, colors='k', alpha=.5,
+            )
+        htmp = ax.contourf(
+                xi, yi, zi, levels=mapLevels,
+                cmap=aux.cmapB, extend='max'
+            )
+        htmp.cmap.set_over('#090446')
+        ax.set(xscale=xSca, yscale="linear")
+        ax.set_xlabel('Standing Variation', fontsize=22.5)
+        ax.set_ylabel('Fitness Cost', fontsize=22.5)
+        sz = fig.get_size_inches()[0]
+        fig.set_size_inches(sz, 1*sz)
+        # Axes
+        ax.set_xticks(list(set(x)), minor=True)
+        ax.set_xticklabels([], minor=True)
+        ax.set_yticks(list(set(y)), minor=True)
+        ax.set_yticklabels([], minor=True)
+        ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
+        ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
+        # Limits
+        plt.xlim(1E-6, 1E-2)
+        plt.ylim(b[0], b[1])
+        plt.title(
+                '{}% window of protection \nR: {:.2e}\n'.format(
+                        int((1-threshold)*100), res / 100000000
+                    ),
+                fontsize=20
+            )
+        cbar = plt.colorbar(htmp, pad=0.01)
+        fig.savefig(
+             "{}/HL-{}-{}.png".format(
+                     PT_IMG, str(int(threshold*100)).zfill(3),
+                     str(res).zfill(10)
+                 ),
+             dpi=500, facecolor=None, edgecolor='w',
+             orientation='portrait', papertype=None, format='png',
+             transparent=True, bbox_inches='tight', pad_inches=.01
+         )
+        plt.close('all')
         # Plots NL-------------------------------------------------------------
         fig, ax = plt.subplots()
         ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
@@ -71,25 +115,18 @@ for (i, threshold) in enumerate(thr):
             )
         htmp.cmap.set_over('#090446')
         ax.set(xscale=xSca, yscale="linear")
-        # ax.set_xlabel('Standing Variation', fontsize=22.5)
-        # ax.set_ylabel('Fitness Cost', fontsize=22.5)
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, 1*sz)
         # Axes
         ax.set_xticks(list(set(x)), minor=True)
-        ax.set_xticklabels([], minor=True)
         ax.set_yticks(list(set(y)), minor=True)
-        ax.set_yticklabels([], minor=True)
+        ax.axes.xaxis.set_ticklabels([])
+        ax.axes.yaxis.set_ticklabels([])
         ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
         ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
         # Limits
         plt.xlim(1E-6, 1E-2)
         plt.ylim(b[0], b[1])
-        # plt.title(
-        #         str(int((1-threshold)*100))+'% window of protection\n',
-        #         fontsize=30
-        #     )
-        # cbar = plt.colorbar(htmp, pad=0.01)
         fig.savefig(
              "{}/HS-{}-{}.png".format(
                      PT_IMG, str(int(threshold*100)).zfill(3),
