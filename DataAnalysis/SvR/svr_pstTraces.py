@@ -17,7 +17,7 @@ import compress_pickle as pkl
 (FMT, SKP, MF, FZ) = ('bz', False, (True, True), True)
 (QNT, THR, GRP) = ('05', [.05, .10, .25, .50, .75], 0)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-thPlt = [.05, .50]
+thPlt = [.05]
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
@@ -32,7 +32,7 @@ if (AOI == 'ECO'):
 else:
     (CLR, CMAPS, YRAN) = (drv.COLHN, drv.COLHM, [0, 1000000/2])
 STYLE = {
-        "width": .1, "alpha": 1, "dpi": 1000, "legend": True,
+        "width": 3, "alpha": .85, "dpi": 500, "legend": True,
         "aspect": .25, "colors": CLR,
         "xRange": [0, 365 * 5], "yRange": YRAN
     }

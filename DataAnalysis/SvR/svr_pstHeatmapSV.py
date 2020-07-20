@@ -58,7 +58,7 @@ for (i, threshold) in enumerate(thr):
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
         (xi, yi) = (np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy))
         zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method=mthd)
-        # Plots ---------------------------------------------------------------
+        # Plots NL-------------------------------------------------------------
         fig, ax = plt.subplots()
         ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
         ax.contour(
@@ -89,7 +89,7 @@ for (i, threshold) in enumerate(thr):
         #         str(int((1-threshold)*100))+'% window of protection\n',
         #         fontsize=30
         #     )
-        cbar = plt.colorbar(htmp, pad=0.01)
+        # cbar = plt.colorbar(htmp, pad=0.01)
         fig.savefig(
              "{}/HS-{}-{}.png".format(
                      PT_IMG, str(int(threshold*100)).zfill(3),
