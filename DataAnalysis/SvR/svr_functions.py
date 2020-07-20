@@ -76,6 +76,8 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0]):
     axTemp.yaxis.set_tick_params(width=1)
     axTemp.xaxis.set_ticks(np.arange(0, 5*365, 365))
     axTemp.yaxis.set_ticks(np.arange(0, 500000, 500000/4))
+    axTemp.grid(which='major', axis='y', lw=.75, alpha=0.25, color=(0, 0, 0))
+    axTemp.grid(which='major', axis='x', lw=.75, alpha=0.25, color=(0, 0, 0))
     axTemp.vlines(
             vLines, 0, 1,
             transform=axTemp.get_xaxis_transform(),
