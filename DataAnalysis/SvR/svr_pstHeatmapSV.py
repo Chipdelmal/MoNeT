@@ -122,6 +122,8 @@ for (i, threshold) in enumerate(thr):
         ax.set_yticks(list(set(y)), minor=True)
         ax.axes.xaxis.set_ticklabels([])
         ax.axes.yaxis.set_ticklabels([])
+        ax.axes.xaxis.set_ticklabels([], minor=True)
+        ax.axes.yaxis.set_ticklabels([], minor=True)
         ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
         ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
         # Limits
