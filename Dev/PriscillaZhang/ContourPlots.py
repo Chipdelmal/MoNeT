@@ -12,7 +12,6 @@ csv_path = r"C:\Users\prisc\Desktop\Marshall Lab\Marshall Lab Data\Contour Plot 
 
 headers = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group', .05, .10, .25, .50, .75]
 
-
 data_dict = {}
 for header in headers:
     data_dict[header] = []
@@ -25,19 +24,18 @@ for filename in glob.glob(path):
     df.columns = headers
     all_data = pd.concat([df, all_data])
 
-
-filtered_df = all_data[all_data['resistance'] > 0].dropna()
+filtered_df = all_data[all_data['resistance'] > 0].dropna().interpolate(method='nearest')
 filtered_df
 
-threshold = .25
-sv = 10
+threshold = .05
+sv = 0
 filtered_values = {'sv': sv}
 
 def generate_plot(dataframe, threshold, filter_dict):
     for key in filter_dict:
         val = filter_dict[key]
         dataframe = dataframe[dataframe[key] == val]
-    xlist = np.array(dataframe['resistance']) / 1000000000
+    xlist = np.log(np.array(dataframe['resistance']))
     ylist = np.array(dataframe['fitness']) / 100000000
     zlist = np.array(dataframe[threshold])
 
