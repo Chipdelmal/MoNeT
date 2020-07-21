@@ -33,14 +33,14 @@ Postprocessed Data:
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/POSTPROCESS/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/
 ```
 
-Traces Plots:
-
-```bash
-scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/img/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/
-```
-
 Heatmaps:
 
 ```bash
-scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/img/H* /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/img
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/HX/img/H* /media/chipdelmal/cache/Sims/SvR/sim/HX/
+```
+
+Traces:
+
+```bash
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/HX/img/E* /media/chipdelmal/cache/Sims/SvR/sim/HX/img/
 ```

@@ -9,6 +9,9 @@ import compress_pickle as pkl
 from functools import reduce
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+mpl.rcParams['axes.linewidth'] = 1
 
 
 def getFilteredFiles(filterGlobPattern, unfilteredGlobPattern):
@@ -67,11 +70,19 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0]):
     axTemp.set_aspect(aspect=STYLE["aspect"])
     axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
     axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
+    axTemp.axes.xaxis.set_ticklabels([])
+    axTemp.axes.yaxis.set_ticklabels([])
+    axTemp.xaxis.set_tick_params(width=1)
+    axTemp.yaxis.set_tick_params(width=1)
+    axTemp.xaxis.set_ticks(np.arange(0, 5*365, 365))
+    axTemp.yaxis.set_ticks(np.arange(0, 500000, 500000/4))
+    axTemp.grid(which='major', axis='y', lw=.75, alpha=0.25, color=(0, 0, 0))
+    axTemp.grid(which='major', axis='x', lw=.75, alpha=0.25, color=(0, 0, 0))
     axTemp.vlines(
             vLines, 0, 1,
             transform=axTemp.get_xaxis_transform(),
-            colors='#FF007FA5',
-            linestyles='dashed', linewidth=.25
+            colors='#000000A5',  # '#FF007FA5'
+            linestyles='dashed', linewidth=1, zorder=5
         )
     # axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
     axTemp.tick_params(color=(0, 0, 0, 0.5))
@@ -79,7 +90,7 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0]):
             "{}/{}-{}.png".format(PATH_IMG, nS, append),
             dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
             orientation='portrait', papertype=None, format='png',
-            transparent=True, bbox_inches='tight', pad_inches=.01
+            transparent=True, bbox_inches='tight', pad_inches=.05
         )
     plt.close('all')
     return True

@@ -5,14 +5,14 @@ import MoNeT_MGDrivE as monet
 ###############################################################################
 # Health ----------------------------------------------------------------------
 COLHN = [
-        "#f2006020", "#c6d8ff20", "#09044620"
+        "#FF006E30", "#8338EC30", "#0C488730"
     ]
 COLHO = [i[:-2]+'FF' for i in COLHN]
 COLHM = monet.generateAlphaColorMapFromColorArray(COLHO)
 # Ecology ---------------------------------------------------------------------
 COLEN = [
-        "#ff004d10", "#FFFB2810", "#66FF0010",
-        "#c6d8ff10", "#09044610", "#7fff3a10"
+        "#ff004d", "#FFFB28", "#66FF00",
+        "#c6d8ff", "#090446", "#7fff3a"
     ]
 COLEO = [i[:-2]+'FF' for i in COLEN]
 COLEM = monet.generateAlphaColorMapFromColorArray(COLEO)
