@@ -14,14 +14,14 @@ headers = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group', .05, .10
 
 threshold = .05
 sv = 0
-filtered_values = {'sv': sv}
+filtered_values = {}
 
 
 def generate_plot(dataframe, threshold, filter_dict, title):
     for key in filter_dict:
         val = filter_dict[key]
         dataframe = dataframe[dataframe[key] == val]
-    xlist = np.log(np.array(dataframe['resistance'] ))
+    xlist = (np.array(dataframe['sv'] /100000000 ))
     ylist = np.array(dataframe['fitness']) / 100000000
     zlist = np.array(dataframe[threshold])
     fig1, ax1 = plt.subplots()
@@ -29,7 +29,7 @@ def generate_plot(dataframe, threshold, filter_dict, title):
     plt.tricontour(xlist,ylist,zlist, colors='k')
     fig1.colorbar(tcf)
     plt.title(title + ' Threshold:' + str(threshold) )
-    plt.xlabel('Resistance')
+    plt.xlabel('SV')
     plt.ylabel('Fitness')
     plt.show()
 
