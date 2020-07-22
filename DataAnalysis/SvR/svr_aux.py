@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import math
-import decimal
 import matplotlib
 import numpy as np
 # import matplotlib.pyplot as plt
@@ -44,28 +43,6 @@ def selectPath(USR, DRV):
     [monet.makeFolder(i) for i in fldrList]
     return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
 
-
-def float_to_str(f):
-    """
-    Convert the given float to a string,
-    without resorting to scientific notation
-    """
-    ctx = decimal.Context()
-    d1 = ctx.create_decimal(repr(f))
-    return format(d1, 'f')
-
-
-# #############################################################################
-# Sampling evenly through log-scale
-# https://stackoverflow.com/questions/32784047/numbers-logarithmically-spaced-between-two-floats-in-numpy
-# #############################################################################
-N = 25
-(lo, hi) = (10E-7, .1)
-yStep = .025
-y1 = np.arange(yStep, 1, yStep)
-x1 = np.geomspace(lo-10E-7/10, hi, num=N)
-stry = ', '.join([float_to_str(i)[:9] for i in x1])
-'c(0.0, {})'.format(stry)
 
 # #############################################################################
 # Color Palette

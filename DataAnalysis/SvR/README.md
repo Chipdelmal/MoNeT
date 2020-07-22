@@ -30,7 +30,7 @@ scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/PREPROCESS/ /media
 Postprocessed Data:
 
 ```bash
-scp -rp  lab:/RAID5/marshallShare/SvR/sim/replacement/out/LDR/POSTPROCESS/ /media/chipdelmal/cache/Sims/SvR/sim/replacement/out/LDR/
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/HX/POSTPROCESS/ /media/chipdelmal/cache/Sims/SvR/sim/HX/
 ```
 
 Heatmaps:
@@ -43,4 +43,12 @@ Traces:
 
 ```bash
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/HX/img/E* /media/chipdelmal/cache/Sims/SvR/sim/HX/img/
+```
+
+Compress data:
+
+```bash
+tar c ./ANALYZED | lbzip2 -n 16 > ANALYZED.tar.bz2
+tar c ./GARBAGE | lbzip2 -n 16 > GARBAGE.tar.bz2
+tar c ./RAW | lbzip2 -n 16 > RAW.tar.bz2
 ```
