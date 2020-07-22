@@ -32,9 +32,9 @@ if (AOI == 'ECO'):
 else:
     (CLR, CMAPS, YRAN) = (drv.COLHN, drv.COLHM, [0, 1000000/2])
 STYLE = {
-        "width": .5, "alpha": 0, "dpi": 500, "legend": True,
+        "width": 2, "alpha": 0, "dpi": 500, "legend": True,
         "aspect": .25, "colors": CLR,
-        "xRange": [0, 365 * 5], "yRange": YRAN
+        "xRange": [0, 365 * 4], "yRange": YRAN
     }
 STYLE['aspect'] = monet.scaleAspect(1, STYLE)
 tS = datetime.now()

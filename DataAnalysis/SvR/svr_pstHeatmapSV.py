@@ -97,7 +97,7 @@ for (i, threshold) in enumerate(thr):
                      PT_IMG, str(int(threshold*100)).zfill(3),
                      str(res).zfill(10)
                  ),
-             dpi=500, facecolor=None, edgecolor='w',
+             dpi=750, facecolor=None, edgecolor='w',
              orientation='portrait', papertype=None, format='png',
              transparent=True, bbox_inches='tight', pad_inches=.01
          )
@@ -134,7 +134,7 @@ for (i, threshold) in enumerate(thr):
                      PT_IMG, str(int(threshold*100)).zfill(3),
                      str(res).zfill(10)
                  ),
-             dpi=500, facecolor=None, edgecolor='w',
+             dpi=750, facecolor=None, edgecolor='w',
              orientation='portrait', papertype=None, format='png',
              transparent=True, bbox_inches='tight', pad_inches=.01
          )
