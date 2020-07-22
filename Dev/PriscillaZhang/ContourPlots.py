@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib import cm
 
-path = r"C:\Users\prisc\Desktop\Marshall Lab\Marshall Lab Data\Contour Plot Data\data\*.csv"
+path = r"C:\Users\prisc\Desktop\Marshall Lab\Marshall Lab Data\Contour Plot Data\ultrafine_data\*.csv"
 csv_path = r"C:\Users\prisc\Desktop\Marshall Lab\Marshall Lab Data\Contour Plot Data\data\01_HLT_05-WOP.csv"
 
 headers = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group', .05, .10, .25, .50, .75]
@@ -16,11 +16,6 @@ threshold = .05
 sv = 0
 filtered_values = {'sv': sv}
 
-# data_dict = {}
-# for header in headers:
-#     data_dict[header] = []
-
-# all_data = pd.DataFrame.from_dict(data_dict)
 
 def generate_plot(dataframe, threshold, filter_dict, title):
     for key in filter_dict:
