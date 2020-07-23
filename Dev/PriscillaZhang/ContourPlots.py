@@ -21,7 +21,7 @@ def generate_plot(dataframe, threshold, filter_dict, title):
     for key in filter_dict:
         val = filter_dict[key]
         dataframe = dataframe[dataframe[key] == val]
-    xlist = (np.array(dataframe['sv'] /100000000 ))
+    xlist = np.log(np.array(dataframe['sv'] / 100000000))
     ylist = np.array(dataframe['fitness']) / 100000000
     zlist = np.array(dataframe[threshold])
     fig1, ax1 = plt.subplots()
@@ -29,8 +29,8 @@ def generate_plot(dataframe, threshold, filter_dict, title):
     plt.tricontour(xlist,ylist,zlist, colors='k')
     fig1.colorbar(tcf)
     plt.title(title + ' Threshold:' + str(threshold) )
-    plt.xlabel('SV')
-    plt.ylabel('Fitness')
+    plt.xlabel('Standing Variation')
+    plt.ylabel('Fitness Cost')
     plt.show()
 
 #Open up the csv files and concatenate the dataframes
@@ -40,5 +40,5 @@ for pathname in glob.glob(path):
     df.columns = headers
 
     #Need to figure out what we want, dropping Nan & interpolating?
-    df = df[df['resistance'] > 0].dropna().interpolate()
+    df = df[df['sv'] > 0].fillna(0).interpolate()
     generate_plot(df, threshold, filtered_values, filename)
