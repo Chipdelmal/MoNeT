@@ -37,3 +37,9 @@ y1 = np.arange(yStep, 1, yStep)
 x1 = np.geomspace(lo-10E-7/10, hi, num=N)
 stry = ', '.join([float_to_str(i)[:9] for i in x1])
 'c(0.0, {})'.format(stry)
+
+
+(929880/60)
+15498*100
+
+1400/365
