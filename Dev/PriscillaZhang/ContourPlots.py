@@ -45,8 +45,7 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         zi = griddata((x,y), z, (xi[None,:], yi[:, None]), method='nearest')
 
         fig, ax = plt.subplots()
-        ax.plot(x,y,'k.', ms=1, alpha=.25, marker='.')
-        ax.contour(xi, yi, zi, levels=mapLevels, linewidths=.5, colors='k', alpha=.5)
+        ax.contour(xi, yi, zi, levels=mapLevels, linewidths=.5, colors='k')
         htmp = ax.contourf(xi, yi, zi, levels=mapLevels, extend='max', cmap=plt.cm.Purples)
 
         ax.set(xscale='log', yscale="linear")
@@ -59,7 +58,7 @@ def generate_plot(dataframe, threshold, filter_dict, title):
 
 
 #Open up the csv files and concatenate the dataframes
-for pathname in glob.glob(csv_path):
+for pathname in glob.glob(path):
     filename = pathname.split("\\")[-1][:-4]
     df = pd.read_csv(pathname)
     df.columns = headers
