@@ -1,3 +1,5 @@
+import numpy as np
+
 
 #headers = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group', .05, .10, .25, .50, .75]
 
@@ -12,5 +14,6 @@ threshold = .05
 
 filter_values = {
     'resistance' : 0
-
 }
+
+mapLevels = np.arange(0, 4*365, 200)
