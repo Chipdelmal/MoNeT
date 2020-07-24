@@ -46,7 +46,7 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         plt.show()
 
 #Open up the csv files and concatenate the dataframes
-for pathname in glob.glob(directories.csv_path):
+for pathname in glob.glob(directories.path):
     filename = pathname.split("\\")[-1][:-4]
     df = pd.read_csv(pathname)
     df.columns = headers
