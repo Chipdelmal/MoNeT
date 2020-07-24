@@ -57,7 +57,6 @@ scp -rp  lab:/RAID5/marshallShare/SvR/sim/HX/img/Full/E* /media/chipdelmal/cache
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/HY/img/Full/E* /media/chipdelmal/cache/Sims/SvR/sim/HY/imgFull/
 ```
 
-
 Compress data:
 
 ```bash

@@ -1,102 +1,71 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import numpy as np
-import os as os
-import csv as csv
+
+# import os as os
+# import csv as csv
+import matplotlib
+# import numpy as np
+import MoNeT_MGDrivE as monet
 
 
-def reachedSteadtStateAtDay(
-    aggData,
-    safety=.025,
-    finalFrame=-1
-):
-    finalFrame = aggData["population"][finalFrame]
-    tolerance = round(sum(finalFrame) * safety)
-    toleranceUp = finalFrame + tolerance
-    toleranceDown = finalFrame - tolerance
-
-    daysMax = len(aggData["population"])
-    for i in range(0, daysMax):
-        steadyStateReach = daysMax
-        testFrame = aggData["population"][i]
-
-        boolsUp = testFrame < toleranceUp
-        boolsDown = testFrame > toleranceDown
-        zeros = testFrame <= 1
-
-        if (all(boolsUp) and all(boolsDown)) or all(zeros):
-            steadyStateReach = i
-            break
-
-    return steadyStateReach
+XP_NPAT = 'E_{}_{}_{}_{}_{}-{}_{}_{}.{}'
 
 
-def quickSaveTraceAggData(
-    aggData,
-    filename,
-    fmt="%.10d"
-):
-    np.savetxt(
-        filename,
-        aggData["population"],
-        header=(",".join(aggData["genotypes"])),
-        delimiter=",",
-        fmt='%.10f',
-        comments=''
-    )
+# #############################################################################
+# Paths
+# #############################################################################
+def selectPath(USR, DRV):
+    if USR == 'srv':
+        PATH_ROOT = '/RAID5/marshallShare/tGD/fullSweep/{}/'.format(DRV)
+    else:
+        PATH_ROOT = '/media/chipdelmal/cache/Sims/tGD/fS/{}/'.format(DRV)
+    # monet.makeFolder('{}/'.format(PATH_ROOT))
+    (PATH_IMG, PATH_DATA) = (
+            '{}img/'.format(PATH_ROOT), '{}'.format(PATH_ROOT)
+        )
+    PATH_PRE = PATH_DATA + 'PREPROCESS/'
+    PATH_OUT = PATH_DATA + 'POSTPROCESS/'
+    fldrList = [PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT]
+    [monet.makeFolder(i) for i in fldrList]
+    return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
 
 
-def quickSaveRepsAggData(
-    landscapeReps,
-    foldername,
-    fmt="%.10d",
-    padNumb=5
-):
-    if not os.path.exists(foldername):
-        try:
-            os.mkdir(foldername)
-        except:
-            raise OSError("Can't create destination directory (%s)!" %
-                          (foldername))
-
-    repsNumber = len(landscapeReps["landscapes"])
-    for i in range(0, repsNumber):
-        nodesNumber = len(landscapeReps["landscapes"][0])
-        for j in range(0, nodesNumber):
-            aggData = {
-                "genotypes": landscapeReps["genotypes"],
-                "population": (landscapeReps["landscapes"][i][j])
-            }
-            quickSaveTraceAggData(
-                aggData,
-                foldername + "/N" + str(j).rjust(5, "0") +
-                "_R" + str(i).rjust(5, "0") + ".csv",
-                fmt=fmt
-            )
+# #############################################################################
+# Style
+# #############################################################################
+def getStyle(colors, aspectR, xRange, yRange):
+    style = {
+            "width": .1, "alpha": .1, "dpi": 500,
+            "legend": True, "aspect": .5,
+            "xRange": xRange, "yRange": yRange,
+            "colors": colors
+        }
+    style['aspect'] = monet.scaleAspect(aspectR, style)
+    return style
 
 
-def writeSummary(
-    path,
-    summaryDict
-):
-    with open(path, "w") as csvfile:
-        w = csv.writer(csvfile)
-        for key, val in summaryDict.items():
-            w.writerow([key, val])
+# #############################################################################
+# Color Palette
+# #############################################################################
+[i/255 for i in (70, 80, 255)]
+cdict = {
+        'red':  ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.25, 0.25), (1.0, 0.0, 0.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.3, 0.3), (1.0, 0.0, 0.0)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 1.0, 1.0), (1.0, 0.25, 0.25))
+    }
+cmapB = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
 
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.0, 0.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.3, 0.3)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 1.0, 1.0))
+    }
+cmapC = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
 
-flatten = lambda l: [item for sublist in l for item in sublist]
-
-
-def getRatiosAtEnd(aggData, groupingsList, finalFrame):
-    finalFramePop = aggData["population"][finalFrame]
-    outList = [None] * len(groupingsList)
-    for i, grouping in enumerate(groupingsList):
-        total = sum(finalFramePop[grouping])
-        if sum(finalFramePop) > 0:
-            ratios = total / sum(finalFramePop)
-        else:
-            ratios = 0
-        outList[i] = [ratios] # [total, ratios]
-    return flatten(outList)
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 1.0, 1.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.0, 0.0)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.3, 0.3))
+    }
+cmapM = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
