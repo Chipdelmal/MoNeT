@@ -37,13 +37,26 @@ Heatmaps:
 
 ```bash
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/HX/img/H* /media/chipdelmal/cache/Sims/SvR/sim/HX/
+
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/HY/img/H* /media/chipdelmal/cache/Sims/SvR/sim/HY/
 ```
 
 Traces:
 
 ```bash
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/HX/img/E* /media/chipdelmal/cache/Sims/SvR/sim/HX/img/
+
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/HY/img/E* /media/chipdelmal/cache/Sims/SvR/sim/HY/img/
 ```
+
+Traces Full:
+
+```bash
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/HX/img/Full/E* /media/chipdelmal/cache/Sims/SvR/sim/HX/imgFull/
+
+scp -rp  lab:/RAID5/marshallShare/SvR/sim/HY/img/Full/E* /media/chipdelmal/cache/Sims/SvR/sim/HY/imgFull/
+```
+
 
 Compress data:
 
