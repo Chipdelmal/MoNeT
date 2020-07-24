@@ -9,23 +9,15 @@ from matplotlib import cm
 from scipy.interpolate import griddata
 import sys
 import ContourPlots_FilterVariables as filter_variables
-
-path = r"C:\Users\prisc\Desktop\Marshall Lab\Marshall Lab Data\Contour Plot Data\ultrafine_data\*.csv"
-csv_path = r"C:\Users\prisc\Desktop\Marshall Lab\Marshall Lab Data\Contour Plot Data\ultrafine_data\01_HLT_05-WOP.csv"
+import ContourPlots_directories as directories
 
 headers = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group', .05, .10, .25, .50, .75]
+
 (ngdx, ngdy) = (1000, 1000)
 mapLevels = np.arange(0, 4*365, 200)
 
-threshold = .05
-sv = 0
-resistance = 0
-
 filter_values = filter_variables.filter_values
 threshold = filter_variables.threshold
-
-print(filter_values, threshold)
-
 
 def generate_plot(dataframe, threshold, filter_dict, title):
     for key in filter_dict:
@@ -62,9 +54,8 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         cbar = plt.colorbar(htmp)
         plt.show()
 
-
 #Open up the csv files and concatenate the dataframes
-for pathname in glob.glob(csv_path):
+for pathname in glob.glob(directories.csv_path):
     filename = pathname.split("\\")[-1][:-4]
     df = pd.read_csv(pathname)
     df.columns = headers
