@@ -32,7 +32,6 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         #Parameters: start, stop, number of samples to generate
         (xi, yi) = (np.linspace(xminmax[0], xminmax[1], 1000), np.linspace(yminmax[0], yminmax[1], 1000))
         zi = griddata((x,y), z, (xi[None,:], yi[:, None]), method='nearest')
-
         fig, ax = plt.subplots()
         ax.contour(xi, yi, zi, levels=filter_variables.mapLevels, linewidths=.5, colors='k', alpha=.5)
         htmp = ax.contourf(xi, yi, zi, levels=filter_variables.mapLevels, extend='max', cmap=plt.cm.Purples)
