@@ -83,7 +83,7 @@ for (i, threshold) in enumerate(thr):
         ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
         ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
         # Limits
-        plt.xlim(1E-6, 1E-2)
+        plt.xlim(1E-6, 1E-1)
         plt.ylim(b[0], b[1])
         plt.title(
                 '{}% window of protection \nR: {:.2e}\n'.format(
@@ -127,7 +127,7 @@ for (i, threshold) in enumerate(thr):
         ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
         ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
         # Limits
-        plt.xlim(1E-6, 1E-2)
+        plt.xlim(1E-6, 1E-1)
         plt.ylim(b[0], b[1])
         fig.savefig(
              "{}/HS-{}-{}.png".format(
