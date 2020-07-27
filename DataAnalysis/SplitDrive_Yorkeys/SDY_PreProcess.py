@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from joblib import Parallel, delayed
 plt.rcParams.update({'figure.max_open_warning': 0})
 
-JOB = 20
+JOB = 4
 (USR, SET) = ('srv', sys.argv[1]) # 'Aggregated')
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 if (SET == 'unAggregated') or (SET == 'Aggregated'):

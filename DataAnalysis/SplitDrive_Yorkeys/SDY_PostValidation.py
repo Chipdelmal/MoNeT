@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
         'RAID5', 'C001303',
         (
             'C000001', 'C000010', 'C000050', 'C000100',
-            'C000150', 'C000200', 'C001303'
+            'C000150', 'C000200', 'C000250', 'C000500', 'C001303'
         )
     )
 PATH = '/RAID5/marshallShare/SplitDrive_Yorkeys/batchProof/'
