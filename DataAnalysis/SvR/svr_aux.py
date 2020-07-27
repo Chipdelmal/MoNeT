@@ -32,7 +32,7 @@ def selectPath(USR, DRV):
     if USR == 'srv':
         PATH_ROOT = '/RAID5/marshallShare/SvR/sim/{}/'.format(DRV)
     else:
-        PATH_ROOT = '/media/chipdelmal/cache/Sims/SvR/simNew/{}/'.format(DRV)
+        PATH_ROOT = '/media/chipdelmal/cache/Sims/SvR/sim/{}/'.format(DRV)
     # monet.makeFolder('{}/'.format(PATH_ROOT))
     (PATH_IMG, PATH_DATA) = (
             '{}img/'.format(PATH_ROOT), '{}'.format(PATH_ROOT)
