@@ -22,12 +22,13 @@ from scipy.interpolate import griddata
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
 (threshold, lvls, mthd, xSca) = (thr[1], 10, 'nearest', 'log')
-mapLevels = np.arange(0, 4*365, 200)
+mapLevels = np.arange(0, 3*365, 50)
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
 header.extend(thr)
 drvPars = drv.driveSelector(DRV)
+PT_IMG = PT_IMG[:-5] + '/htmps/'
 monet.makeFolder(PT_IMG)
 (ngdx, ngdy) = (1000, 1000)
 tS = datetime.now()
@@ -38,7 +39,7 @@ fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Heatmap ' + AOI)
 msg = '* Analyzing ({}/{})'
 for (i, threshold) in enumerate(thr):
     print(msg.format(i+1, len(thr)), end='\r')
-    fPtrn = '{}/*{}*{}-'+WLA+'.csv'.format(PT_OUT, AOI, str(int(ci*100)))
+    fPtrn = '{}/*{}*{}-{}.csv'.format(PT_OUT, AOI, str(int(ci*100)), WLA)
     fName = sorted(glob(fPtrn))[0]
     df = pd.read_csv(fName, header=None, names=header)
     (ratR, rnm, resR, fitR, svrR, grpP) = [list(df[i].unique()) for i in header[:6]]
@@ -93,8 +94,8 @@ for (i, threshold) in enumerate(thr):
             )
         cbar = plt.colorbar(htmp, pad=0.01)
         fig.savefig(
-             "{}/HL-{}-{}.png".format(
-                     PT_IMG, str(int(threshold*100)).zfill(3),
+             "{}/HL-{}-{}-{}.png".format(
+                     PT_IMG, WLA, str(int(threshold*100)).zfill(3),
                      str(res).zfill(10)
                  ),
              dpi=750, facecolor=None, edgecolor='w',
