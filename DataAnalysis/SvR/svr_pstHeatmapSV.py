@@ -20,9 +20,11 @@ from scipy.interpolate import griddata
 # (USR, DRV, AOI) = ('dsk', 'HH', 'HLT')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
-(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
+(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
 (threshold, lvls, mthd, xSca) = (thr[1], 10, 'nearest', 'log')
 mapLevels = np.arange(0, 4*365, 200)
+xRan = (1E-6, 1E-1)
+fNScaler = 100000000
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
@@ -51,8 +53,8 @@ for (i, threshold) in enumerate(thr):
         # Surfaces ------------------------------------------------------------
         (x, y, z) = (dff['sv'], dff['fitness'], dff[threshold])
         (x, y, z) = (
-                np.array([float(i/100000000) for i in x]),
-                np.array([float(i/100000000) for i in y]),
+                np.array([float(i/fNScaler) for i in x]),
+                np.array([float(i/fNScaler) for i in y]),
                 np.array([float(i) for i in z])
             )
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
@@ -83,24 +85,19 @@ for (i, threshold) in enumerate(thr):
         ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
         ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
         # Limits
-        plt.xlim(1E-6, 1E-1)
+        plt.xlim(xRan[0], xRan[1])
         plt.ylim(b[0], b[1])
         plt.title(
                 '{}% window of protection \nR: {:.2e}\n'.format(
-                        int((1-threshold)*100), res / 100000000
+                        int((1-threshold)*100), res / fNScaler
                     ),
                 fontsize=20
             )
         cbar = plt.colorbar(htmp, pad=0.01)
-        fig.savefig(
-             "{}/HL-{}-{}.png".format(
-                     PT_IMG, str(int(threshold*100)).zfill(3),
-                     str(res).zfill(10)
-                 ),
-             dpi=750, facecolor=None, edgecolor='w',
-             orientation='portrait', papertype=None, format='png',
-             transparent=True, bbox_inches='tight', pad_inches=.01
-         )
+        fName = "{}/HL-{}-{}.png".format(
+                PT_IMG, str(int(threshold*100)).zfill(3), str(res).zfill(10)
+            )
+        fun.quickSaveFig(fName, fig)
         plt.close('all')
         # Plots NL-------------------------------------------------------------
         fig, ax = plt.subplots()
@@ -127,17 +124,12 @@ for (i, threshold) in enumerate(thr):
         ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
         ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
         # Limits
-        plt.xlim(1E-6, 1E-1)
+        plt.xlim(xRan[0], xRan[1])
         plt.ylim(b[0], b[1])
-        fig.savefig(
-             "{}/HS-{}-{}.png".format(
-                     PT_IMG, str(int(threshold*100)).zfill(3),
-                     str(res).zfill(10)
-                 ),
-             dpi=750, facecolor=None, edgecolor='w',
-             orientation='portrait', papertype=None, format='png',
-             transparent=True, bbox_inches='tight', pad_inches=.01
-         )
+        fName = "{}/HS-{}-{}.png".format(
+                PT_IMG, str(int(threshold*100)).zfill(3), str(res).zfill(10)
+            )
+        fun.quickSaveFig(fName, fig)
         plt.close('all')
 print('* Analyzed ({}/{})                         '.format(len(thr), len(thr)))
 print(monet.PAD)
