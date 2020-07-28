@@ -16,4 +16,4 @@ filter_values = {
     'resistance' : 0
 }
 
-mapLevels = np.arange(0, 4*365, 200)
+# mapLevels = np.arange(0, 4*365, 200)
