@@ -23,7 +23,7 @@ def generate_plot(dataframe, threshold, filter_dict, title):
 
         x = np.array([(i/100000000) for i in filtered_df['sv']])
         y = np.array([(i/100000000) for i in filtered_df['fitness']])
-        z = np.array([(i) for i in filtered_df[threshold]])
+        z = np.array(filtered_df[threshold])
 
         xmin = min(x)
         xmax = max(x)
