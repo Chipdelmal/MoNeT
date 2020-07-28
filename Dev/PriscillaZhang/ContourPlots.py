@@ -32,10 +32,10 @@ def generate_plot(dataframe, threshold, filter_dict, title):
 
         # np.linspace --> Return evenly spaced numbers over a specified interval.
         #Parameters: start, stop, number of samples to generate
-        (xi, yi) = (np.linspace(xmin, xmax, 1000), np.linspace(ymin, ymax, 1000))
+        (xi, yi) = (np.linspace(xmin, xmax, 500), np.linspace(ymin, ymax, 500))
         zi = griddata((x,y), z, (xi[None,:], yi[:, None]), method='nearest')
         fig, ax = plt.subplots()
-        ax.contour(xi, yi, zi, levels=filter_variables.mapLevels, linewidths=.5, colors='k', alpha=.5)
+        ax.contour(xi, yi, zi, levels=filter_variables.mapLevels, linewidths=.5, colors='k')
         heatmap = ax.contourf(xi, yi, zi, levels=filter_variables.mapLevels, extend='max', cmap=plt.cm.Purples)
         ax.set(xscale='log')
         ax.set_xlabel('Standing Variation')
