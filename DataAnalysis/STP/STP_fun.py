@@ -39,6 +39,14 @@ def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
 
 
 ###############################################################################
+# Factorial
+###############################################################################
+def readResDF(PPST, LVL, SVA, GRP, ptrnMtch='{}RES-{}-{}-{}.csv*'):
+    fMtch = glob(ptrnMtch.format(PPST, LVL, SVA, GRP))[0]
+    return pd.read_csv(fMtch)
+
+
+###############################################################################
 # Pops Thresholds
 ###############################################################################
 def comparePopToThresholds(ratioOI, thresholds, cmprOp=op.lt):
