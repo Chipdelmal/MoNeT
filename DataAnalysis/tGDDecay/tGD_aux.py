@@ -15,11 +15,11 @@ XP_NPAT = 'E_{}_{}_{}_{}_{}-{}_{}_{}.{}'
 # #############################################################################
 # Paths
 # #############################################################################
-def selectPath(USR, DRV):
+def selectPath(USR, DRV, EXP):
     if USR == 'srv':
-        PATH_ROOT = '/RAID5/marshallShare/tGD/fullSweep/{}/'.format(DRV)
+        PATH_ROOT = '/RAID5/marshallShare/tGD/fullSweep/{}/{}/'.format(DRV, EXP)
     else:
-        PATH_ROOT = '/media/chipdelmal/cache/Sims/tGD/fS/{}/'.format(DRV)
+        PATH_ROOT = '/media/chipdelmal/cache/Sims/tGD/fS/{}/{}/'.format(DRV, EXP)
     # monet.makeFolder('{}/'.format(PATH_ROOT))
     (PATH_IMG, PATH_DATA) = (
             '{}img/'.format(PATH_ROOT), '{}'.format(PATH_ROOT)

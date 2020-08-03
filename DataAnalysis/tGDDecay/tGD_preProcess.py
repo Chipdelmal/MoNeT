@@ -12,19 +12,15 @@ from joblib import Parallel, delayed
 ###############################################################################
 # Drives: LinkedDrive, splitDrive, tGD
 ###############################################################################
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+(USR, DRV, EXP, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 (FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 8)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
-(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
+(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, EXP)
 drive = drv.driveSelector(DRV)
-(xRange, yRange) = ((0, 5*365), (0, 1000000))
-(STYLE, DVP, NOI) = (
-        aux.getStyle(drv.COLHN, .1, xRange, yRange),
-        drive.get(AOI).get('gDict'), [[0], [1]]
-    )
+(DVP, NOI) = (drive.get(AOI).get('gDict'), [[0], [1]])
 # Time and head ---------------------------------------------------------------
 tS = datetime.now()
 fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess ' + AOI)

@@ -57,7 +57,9 @@ for (i, threshold) in enumerate(thr):
                 np.array([float(i) for i in z])
             )
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
-        (xi, yi) = (np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy))
+        (xi, yi) = (
+                np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy)
+            )
         zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method=mthd)
         # Plots Label ---------------------------------------------------------
         fig, ax = plt.subplots()

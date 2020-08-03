@@ -293,3 +293,15 @@ def calcQuantWOP(srpPrb, meanRef, thresholds, gIx, quantile=.95):
             np.nanquantile(i, quantile, axis=0) for i in [wopArr, ttiArr, ttoArr]
         ]
     return (quantWOP, quantTTI, quantTTO)
+
+
+###############################################################################
+# Save Figure
+###############################################################################
+def quickSaveFig(filename, fig):
+    fig.savefig(
+         filename,
+         dpi=750, facecolor=None, edgecolor='w',
+         orientation='portrait', papertype=None, format='png',
+         transparent=True, bbox_inches='tight', pad_inches=.01
+     )

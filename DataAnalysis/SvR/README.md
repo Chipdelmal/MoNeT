@@ -37,7 +37,6 @@ Heatmaps:
 
 ```bash
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/HX/img/H* /media/chipdelmal/cache/Sims/SvR/sim/HX/
-
 scp -rp  lab:/RAID5/marshallShare/SvR/sim/HY/img/H* /media/chipdelmal/cache/Sims/SvR/sim/HY/
 ```
 
