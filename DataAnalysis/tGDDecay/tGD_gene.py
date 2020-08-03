@@ -1,8 +1,8 @@
 import MoNeT_MGDrivE as monet
 
 
-def driveSelector(DRIVE, pathRoot):
-    if DRIVE == 1:
+def driveSelector(DRIVE):
+    if DRIVE == 'linkedDrive':
         pathExt = "LinkedDrive/"
         aggregationDictionary = monet.generateAggregationDictionary(
             ["W", "H", "R", "B", "G"],
@@ -15,7 +15,7 @@ def driveSelector(DRIVE, pathRoot):
             ]
         )
         yRange = 11000
-    if DRIVE == 2:
+    if DRIVE == 'splitDrive':
         pathExt = "splitDrive/"
         aggregationDictionary = monet.generateAggregationDictionary(
             ["W", "H", "R", "B", "Y"],
@@ -28,7 +28,7 @@ def driveSelector(DRIVE, pathRoot):
             ]
         )
         yRange = 11000
-    if DRIVE == 3:
+    if DRIVE == 'tGD':
         pathExt = "tGD/"
         aggregationDictionary = monet.generateAggregationDictionary(
             ["WA+WB", "H", "RA", "RB", "G"],
@@ -112,4 +112,4 @@ def driveSelector(DRIVE, pathRoot):
             ]
         )
         yRange = 11000
-    return [pathExt, aggregationDictionary, yRange]
+    return [aggregationDictionary, yRange]

@@ -4,7 +4,7 @@
 import sys
 import tGD_aux as aux
 import tGD_gene as drv
-import tGd_functions as fun
+import tGD_fun as fun
 from datetime import datetime
 # import MoNeT_MGDrivE as monet
 from joblib import Parallel, delayed
