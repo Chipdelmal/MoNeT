@@ -20,7 +20,7 @@ from joblib import Parallel, delayed
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, EXP)
 drive = drv.driveSelector(DRV)
-(DVP, NOI) = (drive.get(AOI).get('gDict'), [[0], [1]])
+(DVP, NOI) = (drive.get('gDict'), [[0], [1]])
 # Time and head ---------------------------------------------------------------
 tS = datetime.now()
 fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess ' + AOI)

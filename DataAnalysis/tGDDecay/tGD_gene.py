@@ -102,4 +102,4 @@ def driveSelector(DRIVE):
             ]
         )
         yRange = 11000
-    return [aggregationDictionary, yRange]
+    return {'gDict': aggregationDictionary, 'yRange': yRange}
