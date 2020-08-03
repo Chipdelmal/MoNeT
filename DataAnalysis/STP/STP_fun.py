@@ -43,7 +43,7 @@ def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
 ###############################################################################
 def readResDF(PPST, LVL, SVA, GRP, ptrnMtch='{}RES-{}-{}-{}.csv*'):
     fMtch = glob(ptrnMtch.format(PPST, LVL, SVA, GRP))[0]
-    return pd.read_csv(fMtch)
+    return pd.read_csv(fMtch, index_col=0)
 
 
 ###############################################################################

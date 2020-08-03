@@ -7,7 +7,7 @@ import STP_fun as fun
 from glob import glob
 
 
-(SIG, PRB) = ('island', 'islandGravid')
+(SIG, PRB) = ('island', 'islandnonGravid')
 (LVL, SVA, GRP) = ('090', '1000', '000')
 ###############################################################################
 (USR, XPM, LAND) = ('dsk', 'Panmictic', 'gravidReleases')
@@ -24,3 +24,5 @@ sig = fun.readResDF(PPST, LVL, SVA, GRP, ptrnMtch=ptrnMtch)
 (PBAS, PIMG, POUT, PPRE, PPST) = aux.selectPath(USR, LAND, PRB, DRV)
 prb = fun.readResDF(PPST, LVL, SVA, GRP, ptrnMtch=ptrnMtch)
 ###############################################################################
+diff = sig.subtract(prb)
+diff
