@@ -12,14 +12,14 @@ import pandas as pd
 from glob import glob
 import MoNeT_MGDrivE as monet
 # import seaborn as sns
-import uciPan_drive as drv
+import STP_drive as drv
 import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 # from matplotlib.colors import LinearSegmentedColormap
 
 USR = 'dsk'
 (LND, DRV, SET, STP, AOI, MFS, QNT, OVW) = (
-        'gravidReleases', 'LDR', 'islandnonGravid', False,
+        'wfu', 'LDR', 'island', False,
         'HLT', (True, True), [.5, .95], False
     )
 header = ['ratio', 'releases', 'fitness', 'sv', 'group']
@@ -45,6 +45,10 @@ else:
 PATH_DATA = '{}out/LDR/POSTPROCESS/'.format(PATH_ROOT)
 PATH_IMG = PATH_DATA + 'img/'
 monet.makeFolder(PATH_IMG)
+fNames = sorted(glob('{}*_{}-TTI.csv'.format(
+                PATH_DATA, str(int(ci*100)))))
+fNames
+
 ###############################################################################
 # Analyzes
 ###############################################################################
@@ -52,7 +56,7 @@ for group in [0]:
     for sv in sVar:
         for level in thr:
             # Loading filenames
-            fNames = sorted(glob('{}*_{}.csv'.format(
+            fNames = sorted(glob('{}*_{}-TTI.csv'.format(
                     PATH_DATA, str(int(ci*100))))
                 )
             raw = pd.read_csv(fNames[0], header=None, names=header)

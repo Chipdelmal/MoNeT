@@ -1,48 +1,46 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# python uciSTP_simPreprocess.py Tomas tParams kernel_1
 
 import sys
-import datetime
 import STP_aux as aux
-import STP_fun as fun
-import STP_drive as drv
-import STP_indices as ix
-import MoNeT_MGDrivE as monet
+import STP_gene as drv
+import STP_functions as fun
+from datetime import datetime
+# import MoNeT_MGDrivE as monet
 from joblib import Parallel, delayed
 
-JOB = 8
-(USR, LAND, SET) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, XPM, LAND, SET) = ('dsk', 'Panmictic', 'tParams', 'island')
-(DRID, STP, AOI, MF, OVW, FMT) = (
-         'LDR', False, 'HLT', (True, True), False, 'bz2'
+
+(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+(FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 20)
+(SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
+###############################################################################
+# Setting up paths and style
+###############################################################################
+(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
+drive = drv.driveSelector(DRV)
+(xRange, yRange) = ((0, 5*365), (0, 1000000))
+(STYLE, DVP, NOI) = (
+        aux.getStyle(drv.COLHN, .1, xRange, yRange),
+        drive.get(AOI).get('gDict'),
+        [[0]]
     )
-(SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-drvPars = drv.driveSelector(DRID)
-(STYLE, DRV, NOI) = (
-        aux.STYLE_HLT, drvPars.get('HLT'), ix.STP if (STP) else ix.PAN
-    )
+# gIx = drive[AOI]['gDict']['genotypes'].index('Other')
+# Time and head ---------------------------------------------------------------
+tS = datetime.now()
+fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess ' + AOI)
 ###############################################################################
-# Setting up paths and directories
+# Load folders
 ###############################################################################
-(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, LAND, SET, DRID)
-monet.makeFolder(PT_PRE)
-tS = datetime.datetime.now()
-fun.printExpTerminal(tS, PT_ROT, PT_IMG, PT_DTA)
-###############################################################################
-# Setting up paths and directories
-###############################################################################
-gIx = drvPars[AOI]['genotypes'].index('Other')
 (expDirsMean, expDirsTrac) = fun.getExpPaths(PT_DTA)
-(expNum, nodeDigits) = (len(expDirsMean), len(str(len(NOI)))+1)
-outNames = fun.splitExpNames(PT_PRE)
+(expNum, nodeDigits) = (len(expDirsMean), len(str(NOI))+1)
+outNames = fun.splitExpNames(PT_OUT)
 outExpNames = set(outNames)
 ###############################################################################
 # Analyze data
 ###############################################################################
 Parallel(n_jobs=JOB)(
-        delayed(monet.preProcess)(
-                exIx, expNum, expDirsMean, expDirsTrac, drvPars[AOI],
+        delayed(fun.preProcess)(
+                exIx, expNum, expDirsMean, expDirsTrac, DVP,
                 analysisOI=AOI, prePath=PT_PRE, nodesAggLst=NOI,
                 outExpNames=outExpNames, fNameFmt='{}/{}-{}_', OVW=OVW,
                 MF=MF, cmpr=FMT, nodeDigits=nodeDigits,

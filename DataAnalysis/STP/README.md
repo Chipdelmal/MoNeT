@@ -52,5 +52,9 @@ rm *.pdf;
 #### Postprocessed data
 
 ```bash
-scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/islandnonGravid/out/LDR/POSTPROCESS/ /media/chipdelmal/cache/Sims/Panmictic/gravidDev/islandnonGravid/out/LDR/
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/island/out/LDR/POSTPROCESS/ /media/chipdelmal/cache/Sims/Panmictic/wfu/island/out/LDR/
+
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/islandGravid/out/LDR/POSTPROCESS/ /media/chipdelmal/cache/Sims/Panmictic/wfu/islandGravid/out/LDR/
+
+scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/islandnonGravid/out/LDR/POSTPROCESS/ /media/chipdelmal/cache/Sims/Panmictic/wfu/islandnonGravid/out/LDR/
 ```

@@ -10,7 +10,7 @@ from glob import glob
 (SIG, PRB) = ('island', 'islandnonGravid')
 (LVL, SVA, GRP) = ('090', '1000', '000')
 ###############################################################################
-(USR, XPM, LAND) = ('dsk', 'Panmictic', 'gravidReleases')
+(USR, XPM, LAND) = ('dsk', 'wfu', 'gravidReleases')
 (DRV, STP, SKP, FMT) = ('LDR', True, False, '.lzma')
 (THR, QNT) = ([.05, .50], .95)
 ptrnMtch = '{}RES-{}-{}-{}.csv*'
@@ -26,3 +26,6 @@ prb = fun.readResDF(PPST, LVL, SVA, GRP, ptrnMtch=ptrnMtch)
 ###############################################################################
 diff = sig.subtract(prb)
 diff
+
+
+POUT
