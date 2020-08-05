@@ -41,4 +41,4 @@ hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 wGenes = (('W', allGeneIx), ('R', allGeneIx), ('B', allGeneIx), ('C', allGeneIx))
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
-SD_HLT = (hPos, wPos - hPos, wPos | hPos)
+SD_HLT = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]

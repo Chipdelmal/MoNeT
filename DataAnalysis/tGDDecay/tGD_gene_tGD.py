@@ -62,4 +62,4 @@ hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 wGenes = (('W', (0, 2)), ('R', (0, 2)), ('B', (0, 2)))
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
-TGD_HLT = (hPos, wPos - hPos, wPos | hPos)
+TGD_HLT = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
