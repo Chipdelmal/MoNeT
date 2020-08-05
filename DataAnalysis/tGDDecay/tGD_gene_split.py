@@ -9,7 +9,6 @@ genotypes = [
         'CCRR', 'CCRB', 'CCBB'
     ]
 
-len(genotypes)
 
 ###############################################################################
 # Ecology genotype counts
@@ -30,7 +29,7 @@ rBPos = aux.aggregateGeneAppearances(genotypes, rBGenes)
 gGenes = (('G', (1, 3)), )
 gPos = aux.aggregateGeneAppearances(genotypes, gGenes)
 # Full set --------------------------------------------------------------------
-tGD_ECO = (wPos, hPos, rAPos, rBPos, gPos)
+sd_ECO = (wPos, hPos, rAPos, rBPos, gPos)
 
 
 ###############################################################################
@@ -43,4 +42,4 @@ hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 wGenes = (('W', (0, 2)), ('R', (0, 2)), ('B', (0, 2)))
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
-tGD_HLT = (hPos, wPos - hPos, wPos | hPos)
+sd_HLT = (hPos, wPos - hPos, wPos | hPos)
