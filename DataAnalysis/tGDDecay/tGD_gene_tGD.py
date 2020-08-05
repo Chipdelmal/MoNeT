@@ -59,7 +59,7 @@ tGD_ECO = (wPos, hPos, rAPos, rBPos, gPos)
 hGenes = (('P', (0, 2)), ('M', (0, 2)))
 hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 # W ---------------------------------------------------------------------------
-wGenes = (('W', (0, )), ('W', (1, )))
+wGenes = (('W', (0, 2)), ('R', (0, 2)), ('B', (0, 2)))
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
-tGD_HLT = (wPos, hPos)
+tGD_HLT = (hPos, wPos - hPos, wPos | hPos)
