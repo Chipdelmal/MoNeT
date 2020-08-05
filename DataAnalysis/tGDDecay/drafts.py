@@ -1,3 +1,28 @@
+import re
+
+
+def countGeneAppearances(genotypes, gene, pos):
+    # Split genotypes
+    splitGenotypes = [list(genes) for genes in genotypes]
+    # Count
+    appearances = []
+    for p in pos:
+        slot = [gene[p] for gene in splitGenotypes]
+        matches = re.finditer(gene, ''.join(slot))
+        appearances.extend([match.start() for match in matches])
+    appearances.sort()
+    return appearances
+
+
+flatten = lambda l: [item for sublist in l for item in sublist]
+
+
+def aggregateGeneAppearances(genotypes, genes):
+    gcnt = [countGeneAppearances(genotypes, gn[0], gn[1]) for gn in genes]
+    return sorted(flatten(gcnt))
+
+
+
 genotypes = ["WWWW","PWWW","MWWW","RWWW","BWWW","WGWW","PGWW","MGWW","RGWW",
                  "BGWW","WRWW","PRWW","MRWW","RRWW","BRWW","WBWW","PBWW","MBWW",
                  "RBWW","BBWW","PWPW","MWPW","PWRW","BWPW","PWWG","PGPW","MGPW",
@@ -24,57 +49,18 @@ genotypes = ["WWWW","PWWW","MWWW","RWWW","BWWW","WGWW","PGWW","MGWW","RGWW",
                  "RBRB","BBRB","BBBB"]
 
 
-genes = (('R', 'B'), ('R'))
-
-prb = 'RBWR'
-(lA, lB) = (prb[:2], prb[2:])
-(lAs, lBs) = (
-        sum([lA.count(i) for i in genes[0]]),
-        sum([lB.count(i) for i in genes[1]])
-    )
-lociiCount = lAs + lBs
-
-
-# def lociCountGenes(genotype, genesList):
-#     (lA, lB) = (genotype[:2], genotype[2:])
-#     (lAs, lBs) = (
-#             sum([lA.count(i) for i in genesList[0]]),
-#             sum([lB.count(i) for i in genesList[1]])
-#         )
-#     lociCount = lAs + lBs
-#     return lociCount
-
-list(prb)
-
-
-def lociCountGenes(genotype, genesList):
-    alleles = list(genotype)
-    lociCount = []
-    for (i, gene) in enumerate(genesList):
-        lociCount.extend(alleles[i].count(gene))
-    return lociCount
-
-
-lociCountGenes(prb, (('W'), (), ('W'), ()))
-
-
-def countGenesTwoLoci(genotypes, genes):
-    geneClst = []
-    for (i, genotype) in enumerate(genotypes):
-        geneClst.extend([i] * lociCountGenes(genotype, genes))
-    geneClst.sort()
-    return geneClst
-
-
-genes = (('G'), ('G'))
-geneClst = []
-for (i, genotype) in enumerate(genotypes):
-    geneClst.extend([i] * lociCountGenes(genotype, genes))
-geneClst.sort()
-geneClst
-
-
-genes = [
-        (('G'), ('G'))
-    ]
-countGenesTwoLoci(genotypes, genes)
+# W ---------------------------------------------------------------------------
+wGenes = (('W', (0, 2)), ('W', (1, 3)))
+wPos = aggregateGeneAppearances(genotypes, wGenes)
+# H ---------------------------------------------------------------------------
+hGenes = (('P', (0, 2)), ('M', (0, 2)))
+hPos = aggregateGeneAppearances(genotypes, hGenes)
+# RA --------------------------------------------------------------------------
+rAGenes = (('R', (0, 2)), ('B', (0, 2)))
+rAPos = aggregateGeneAppearances(genotypes, rAGenes)
+# RB --------------------------------------------------------------------------
+rBGenes = (('R', (1, 3)), ('B', (1, 3)))
+rBPos = aggregateGeneAppearances(genotypes, rBGenes)
+# G ---------------------------------------------------------------------------
+gGenes = (('G', (1, 3)), )
+gPos = aggregateGeneAppearances(genotypes, gGenes)
