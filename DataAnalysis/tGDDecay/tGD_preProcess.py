@@ -20,7 +20,7 @@ EXP = ('000', '001', '005', '010', '100')
 ###############################################################################
 for exp in EXP:
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, exp)
-    drive = drv.driveSelector(DRV)
+    drive = drv.driveSelector(DRV, AOI)
     (DVP, NOI) = (drive.get('gDict'), [[0], [1]])
     # Time and head -----------------------------------------------------------
     tS = datetime.now()
