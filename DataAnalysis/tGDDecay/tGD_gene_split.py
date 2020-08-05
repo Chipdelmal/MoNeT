@@ -8,38 +8,37 @@ genotypes = [
         'WCRB', 'WCBB', 'CCWW', 'CCWH', 'CCWR', 'CCWB', 'CCHH', 'CCHR', 'CCHB',
         'CCRR', 'CCRB', 'CCBB'
     ]
-
+allGeneIx = list(range(len(genotypes[0])))
 
 ###############################################################################
 # Ecology genotype counts
 ###############################################################################
 # W ---------------------------------------------------------------------------
-wGenes = (('W', (0, 2)), ('W', (1, 3)))
+wGenes = (('W', allGeneIx), )
 wPos = aux.aggregateGeneAppearances(genotypes, wGenes)
 # H ---------------------------------------------------------------------------
-hGenes = (('P', (0, 2)), ('M', (0, 2)))
+hGenes = (('H', allGeneIx), )
 hPos = aux.aggregateGeneAppearances(genotypes, hGenes)
 # RA --------------------------------------------------------------------------
-rAGenes = (('R', (0, 2)), ('B', (0, 2)))
-rAPos = aux.aggregateGeneAppearances(genotypes, rAGenes)
+rGenes = (('R', allGeneIx), )
+rPos = aux.aggregateGeneAppearances(genotypes, rGenes)
 # RB --------------------------------------------------------------------------
-rBGenes = (('R', (1, 3)), ('B', (1, 3)))
-rBPos = aux.aggregateGeneAppearances(genotypes, rBGenes)
+bGenes = (('B', allGeneIx), )
+bPos = aux.aggregateGeneAppearances(genotypes, bGenes)
 # G ---------------------------------------------------------------------------
-gGenes = (('G', (1, 3)), )
-gPos = aux.aggregateGeneAppearances(genotypes, gGenes)
+cGenes = (('C', allGeneIx), )
+cPos = aux.aggregateGeneAppearances(genotypes, cGenes)
 # Full set --------------------------------------------------------------------
-sd_ECO = (wPos, hPos, rAPos, rBPos, gPos)
-
+SD_ECO = (wPos, hPos, rPos, bPos, cPos)
 
 ###############################################################################
 # Health genotype counts
 ###############################################################################
 # H ---------------------------------------------------------------------------
-hGenes = (('P', (0, 2)), ('M', (0, 2)))
+hGenes = (('H', allGeneIx), )
 hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 # W ---------------------------------------------------------------------------
-wGenes = (('W', (0, 2)), ('R', (0, 2)), ('B', (0, 2)))
+wGenes = (('W', allGeneIx), ('R', allGeneIx), ('B', allGeneIx), ('C', allGeneIx))
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
-sd_HLT = (hPos, wPos - hPos, wPos | hPos)
+SD_HLT = (hPos, wPos - hPos, wPos | hPos)

@@ -1,60 +1,42 @@
-import MoNeT_MGDrivE as monet
+
 import tGD_gene_tGD as gtGd
+import tGD_gene_split as gsd
 import tGD_gene_linked as gld
+import MoNeT_MGDrivE as monet
 
 
 def driveSelector(DRIVE, TYPE):
-    # Linked Drive ------------------------------------------------------------
+    ###########################################################################
+    # Linked Drive
+    ###########################################################################
     if DRIVE == 'linkedDrive':
         if TYPE == 'ECO':
-            aggregationDictionary = monet.generateAggregationDictionary(
-                    ["W", "H", "R", "B"], gld.ld_ECO
-                )
+            aggD = monet.generateAggregationDictionary(["W", "H", "R", "B"], gld.LD_ECO)
             yRange = 11000
         elif TYPE == 'HLT':
-            aggregationDictionary = monet.generateAggregationDictionary(
-                    ["H*", "O-", "Total"], gld.ld_HLT
-                )
+            aggD = monet.generateAggregationDictionary(["H*", "O-", "Total"], gld.LD_HLT)
             yRange = 11000
-    # Split Drive -------------------------------------------------------------
+    ###########################################################################
+    # Split Drive
+    ###########################################################################
     if DRIVE == 'splitDrive':
         if TYPE == 'ECO':
-            aggregationDictionary = monet.generateAggregationDictionary(
-                    ["W", "H", "R", "B", "Y"],
-                    [
-                        [0, 0, 1, 2, 3, 4, 4, 8, 11, 13],
-                        [1, 5, 5, 6, 7, 8],
-                        [2, 6, 9, 9, 10, 11],
-                        [3, 7, 10, 12, 12, 13],
-                        []
-                    ]
-                )
+            aggD = monet.generateAggregationDictionary(["W", "H", "R", "B", "Y"], gsd.SD_ECO)
             yRange = 11000
         elif TYPE == 'HLT':
-            aggregationDictionary = monet.generateAggregationDictionary(
-                    ["H*", "O-", "Total"],
-                    [
-                        [0, 0, 1, 2, 3, 4, 4, 8, 11, 13],
-                        [1, 5, 5, 6, 7, 8],
-                        [2, 6, 9, 9, 10, 11],
-                        [3, 7, 10, 12, 12, 13],
-                        []
-                    ]
-                )
+            aggD = monet.generateAggregationDictionary(["H*", "O-", "Total"], gsd.SD_HLT)
             yRange = 11000
-    # tGD Drive ---------------------------------------------------------------
+    ###########################################################################
+    # tGD Drive
+    ###########################################################################
     if DRIVE == 'tGD':
         if TYPE == 'ECO':
-            aggregationDictionary = monet.generateAggregationDictionary(
-                    ["WA+WB", "H", "RA", "RB", "G"], gtGd.tGD_ECO
-                )
+            aggD = monet.generateAggDregationDictionary(["WA+WB", "H", "RA", "RB", "G"], gtGd.TGD_ECO)
             yRange = 11000
         elif TYPE == 'HLT':
-            aggregationDictionary = monet.generateAggregationDictionary(
-                    ["H*", "O-", "Total"], gtGd.tGD_HLT
-                )
+            aggD = monet.generateAggregationDictionary(["H*", "O-", "Total"], gtGd.TGD_HLT)
             yRange = 11000
-    return {'gDict': aggregationDictionary, 'yRange': yRange}
-
-
-driveSelector('tGD')
+    ###########################################################################
+    # Return values
+    ###########################################################################
+    return {'gDict': aggD, 'yRange': yRange}

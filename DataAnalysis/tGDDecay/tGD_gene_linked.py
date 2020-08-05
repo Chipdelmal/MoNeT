@@ -21,7 +21,7 @@ rPos = aux.aggregateGeneAppearances(genotypes, rGenes)
 bGenes = (('B', (0, 1)), )
 bPos = aux.aggregateGeneAppearances(genotypes, bGenes)
 # Full set --------------------------------------------------------------------
-ld_ECO = (wPos, hPos, rPos, bPos)
+LD_ECO = (wPos, hPos, rPos, bPos)
 
 ###############################################################################
 # Health genotype counts
@@ -33,4 +33,4 @@ hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 wGenes = (('W', (0, 1)), ('R', (0, 1)), ('B', (0, 1)))
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
-ld_HLT = (hPos, wPos - hPos, wPos | hPos)
+LD_HLT = (hPos, wPos - hPos, wPos | hPos)
