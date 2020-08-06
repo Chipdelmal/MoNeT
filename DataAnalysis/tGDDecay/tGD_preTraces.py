@@ -13,7 +13,7 @@ import compress_pickle as pkl
 
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'ECO')
-(FMT, SKP, MF) = ('bz2', False, (True, True))
+(FMT, SKP, MF, FZ) = ('bz2', False, (True, True), True)
 EXP = ('000', '001', '005', '010', '100')
 ###############################################################################
 # Setting up paths and style
@@ -32,8 +32,15 @@ fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces')
 # Load preprocessed files lists
 ###############################################################################
 tyTag = ('sum', 'rep')
-fLists = list(zip(*[sorted(glob(PT_PRE+'*'+AOI+'*'+tp+'*')) for tp in tyTag]))
-fLists.reverse()
+if FZ:
+    fLists = list(zip(*[fun.getFilteredFiles(
+            PT_PRE+'*_00_*'+AOI+'*'+tp+'*',
+            PT_PRE+'*'+AOI+'*'+tp+'*') for tp in tyTag]
+        ))
+else:
+    fLists = list(zip(
+            *[sorted(glob(PT_PRE+'*'+AOI+'*'+tp+'*')) for tp in tyTag]
+        ))
 ###############################################################################
 # Process files
 ###############################################################################
