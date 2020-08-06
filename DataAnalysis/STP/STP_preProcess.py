@@ -11,13 +11,13 @@ from datetime import datetime
 from joblib import Parallel, delayed
 
 
-(USR, DRV, AOI, LND) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+(USR, DRV, AOI, LND) = (sys.argv[1], 'LDR', sys.argv[2], sys.argv[3])
 (FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 20)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
-(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
+(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, LND)
 (drive, land) = (drv.driveSelector(DRV), lnd.landSelector(LND))
 gene = drive.get(AOI).get('gDict')
 # Time and head ---------------------------------------------------------------
