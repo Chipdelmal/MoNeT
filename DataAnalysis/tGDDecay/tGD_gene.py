@@ -1,5 +1,5 @@
 
-import tGD_gene_tGD as gtGd
+import tGD_gene_tGD as gtgd
 import tGD_gene_split as gsd
 import tGD_gene_linked as gld
 import MoNeT_MGDrivE as monet
@@ -21,11 +21,16 @@ COLHN = ["#FF006E", "#8338EC", "#0C4887"]
 COLHN = [c+'2A' for c in COLHN]
 COLHO = [i[:-2]+'FF' for i in COLHN]
 COLHM = monet.generateAlphaColorMapFromColorArray(COLHO)
+# Trash ----------------------------------------------------------------------
+COLTN = ["#00a2fe", "#8338EC", "#0C4887"]
+COLTN = [c+'2A' for c in COLTN]
+COLTO = [i[:-2]+'FF' for i in COLTN]
+COLTM = monet.generateAlphaColorMapFromColorArray(COLTO)
+
+
 ###############################################################################
 # Drive
 ###############################################################################
-
-
 def driveSelector(DRIVE, TYPE):
     # Linked Drive -###########################################################
     if DRIVE == 'linkedDrive':
@@ -41,13 +46,19 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000/2
             colors = COLHN
+        elif TYPE == 'TRS':
+            aggD = monet.generateAggregationDictionary(
+                    ["H*", "O-", "Total"], gld.LD_HLT
+                )
+            yRange = 11000/2
+            colors = COLTN
     # Split Drive #############################################################
     if DRIVE == 'splitDrive':
         if TYPE == 'ECO':
             aggD = monet.generateAggregationDictionary(
-                    ["W", "H", "R", "B", "C"], gsd.SD_ECO
+                    ["WA", "H", "R", "B", "C", "WB"], gsd.SD_ECO
                 )
-            yRange = 21000
+            yRange = 11000
             colors = COLEN
         elif TYPE == 'HLT':
             aggD = monet.generateAggregationDictionary(
@@ -55,19 +66,31 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000/2
             colors = COLHN
+        elif TYPE == 'TRS':
+            aggD = monet.generateAggregationDictionary(
+                    ["C*", "O-", "Total"], gld.SD_TRS
+                )
+            yRange = 11000/2
+            colors = COLTN
     # tGD Drive ###############################################################
     if DRIVE == 'tGD':
         if TYPE == 'ECO':
             aggD = monet.generateAggregationDictionary(
-                    ["WA+WB", "H", "RA", "RB", "G"], gtGd.TGD_ECO
+                    ["WA", "H", "RA", "RB", "G", "WB"], gtgd.TGD_ECO
                 )
-            yRange = 21000
+            yRange = 11000
             colors = COLEN
         elif TYPE == 'HLT':
             aggD = monet.generateAggregationDictionary(
-                    ["H*", "O-", "Total"], gtGd.TGD_HLT
+                    ["H*", "O-", "Total"], gtgd.TGD_HLT
                 )
             yRange = 11000/2
             colors = COLHN
+        elif TYPE == 'TRS':
+            aggD = monet.generateAggregationDictionary(
+                    ["G*", "O-", "Total"], gtgd.TGD_TRS
+                )
+            yRange = 11000/2
+            colors = COLTN
     # Return values ###########################################################
     return {'gDict': aggD, 'yRange': yRange, 'colors': colors}

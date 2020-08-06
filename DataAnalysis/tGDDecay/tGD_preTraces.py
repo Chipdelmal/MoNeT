@@ -20,8 +20,8 @@ EXP = ('000', '001', '005', '010', '100')
 ###############################################################################
 for exp in EXP:
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, exp)
-    DRV = drv.driveSelector(DRV, AOI)
-    (CLR, YRAN) = (DRV.get('colors'), (0, DRV.get('yRange')))
+    drive = drv.driveSelector(DRV, AOI)
+    (CLR, YRAN) = (drive.get('colors'), (0, drive.get('yRange')))
     STYLE = {
             "width": .5, "alpha": .15, "dpi": 1*200, "legend": True,
             "aspect": .25, "colors": CLR, "xRange": [0, (365*5)/2],

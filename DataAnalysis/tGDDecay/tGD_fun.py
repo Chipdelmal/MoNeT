@@ -112,21 +112,6 @@ def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
 # Postprocess Data
 ###############################################################################
 def calcQuantWOP(srpPrb, meanRef, thresholds, gIx, quantile=.95):
-    """
-    Calculates the mean window of protection for the quantile response of two
-        populations.
-    Args:
-        srpPrb (dict): SRP population of the probe population.
-        meanRef (np.array): Mean population of the reference population
-        thresholds (list): List of ratios to use as thresholds.
-        gIx (int): Index of the genotype of interest's location
-        quantile (float): Quantile for the thresholds calculation
-        cmprOp(function): Operation to compare against (less than, greater
-            than, etcetera).
-    Returns:
-        list: Returns the time at which the condition is met at a given
-            quantile level.
-    """
     prb = srpPrb['landscapes']
     smpNum = len(prb)
     (wopArr, ttiArr, ttoArr) = [

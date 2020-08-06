@@ -23,12 +23,6 @@ import compress_pickle as pkl
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
 header.extend(thr)
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
-(CLR, CMAPS) = (drv.COLHN, drv.COLHM)
-STYLE = {
-        "width": .05, "alpha": .15, "dpi": 2*300, "legend": True, "aspect": .5,
-        "colors": CLR, "xRange": [0, 15*365], "yRange": [0, 100 * 12500]
-    }
-STYLE['aspect'] = monet.scaleAspect(1, STYLE)
 tS = datetime.now()
 fun.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PostProcess ' + AOI)
 ###############################################################################

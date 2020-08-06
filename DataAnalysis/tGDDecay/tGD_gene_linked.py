@@ -34,3 +34,16 @@ wGenes = (('W', (0, 1)), ('R', (0, 1)), ('B', (0, 1)))
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
 LD_HLT = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
+
+
+###############################################################################
+# Trash genotype counts
+###############################################################################
+# H ---------------------------------------------------------------------------
+hGenes = (('H', (0, 1)), )
+hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
+# W ---------------------------------------------------------------------------
+wGenes = (('W', (0, 1)), ('R', (0, 1)), ('B', (0, 1)))
+wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
+# Full set --------------------------------------------------------------------
+LD_TRS = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
