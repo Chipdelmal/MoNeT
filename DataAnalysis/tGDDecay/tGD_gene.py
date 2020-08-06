@@ -43,7 +43,7 @@ def driveSelector(DRIVE, TYPE):
             colors = COLEN
         elif TYPE == 'HLT':
             aggD = monet.generateAggregationDictionary(["H*", "O-", "Total"], gsd.SD_HLT)
-            yRange = 11000
+            yRange = 11000/2
             colors = COLHN
     # tGD Drive ###############################################################
     if DRIVE == 'tGD':
@@ -53,7 +53,7 @@ def driveSelector(DRIVE, TYPE):
             colors = COLEN
         elif TYPE == 'HLT':
             aggD = monet.generateAggregationDictionary(["H*", "O-", "Total"], gtGd.TGD_HLT)
-            yRange = 11000
+            yRange = 11000/2
             colors = COLHN
     # Return values ###########################################################
     return {'gDict': aggD, 'yRange': yRange, 'colors': colors}
