@@ -64,7 +64,7 @@ def splitExpNames(PATH_OUT, ext='lzma'):
     return sorted(list(set(out)))
 
 
-def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0]):
+def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0]):
     figArr = monet.plotLandscapeDataRepetitions(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
     axTemp.set_aspect(aspect=STYLE["aspect"])
