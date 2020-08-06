@@ -12,7 +12,7 @@ import compress_pickle as pkl
 
 
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
+# (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'ECO')
 (FMT, SKP, MF) = ('bz2', False, (True, True))
 EXP = ('000', '001', '005', '010', '100')
 ###############################################################################
