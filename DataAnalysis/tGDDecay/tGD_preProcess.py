@@ -6,6 +6,7 @@ import tGD_aux as aux
 import tGD_gene as drv
 import tGD_fun as fun
 from datetime import datetime
+import MoNeT_MGDrivE as monet
 from joblib import Parallel, delayed
 
 ###############################################################################
@@ -36,7 +37,7 @@ for exp in EXP:
     # Analyze data
     ###########################################################################
     Parallel(n_jobs=JOB)(
-            delayed(fun.preProcess)(
+            delayed(monet.preProcess)(
                     exIx, expNum, expDirsMean, expDirsTrac, DVP,
                     analysisOI=AOI, prePath=PT_PRE, nodesAggLst=NOI,
                     outExpNames=outExpNames, fNameFmt='{}/{}-{}_', OVW=OVW,

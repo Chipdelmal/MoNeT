@@ -47,6 +47,7 @@ rm *.pdf;
 #### Preprocessed data
 
 ```bash
+scp -rp  lab:/RAID5/marshallShare/STP/sim/mixed  /media/chipdelmal/cache/Sims/STP/sim/
 ```
 
 #### Postprocessed data
