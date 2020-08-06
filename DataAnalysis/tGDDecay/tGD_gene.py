@@ -31,7 +31,7 @@ def driveSelector(DRIVE, TYPE):
     ###########################################################################
     if DRIVE == 'tGD':
         if TYPE == 'ECO':
-            aggD = monet.generateAggDregationDictionary(["WA+WB", "H", "RA", "RB", "G"], gtGd.TGD_ECO)
+            aggD = monet.generateAggregationDictionary(["WA+WB", "H", "RA", "RB", "G"], gtGd.TGD_ECO)
             yRange = 11000
         elif TYPE == 'HLT':
             aggD = monet.generateAggregationDictionary(["H*", "O-", "Total"], gtGd.TGD_HLT)
