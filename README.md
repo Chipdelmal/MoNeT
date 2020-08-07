@@ -1,4 +1,4 @@
-# MoNeT: Mosquito Networks Taskforce
+# MoNeT: Mosquito Networks Toolbox
 
 Please go to: https://chipdelmal.github.io/MoNeT/ for more information about the project!
 
