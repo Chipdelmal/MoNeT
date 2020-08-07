@@ -48,16 +48,16 @@ Another point of interest in these studies is how the availability of resources 
 Finally, once our routines have been tested independently, we will perform factorial combination experiments and data analysis to look for non-linear interactions of the heterogeneity components in an effort to enhance our understanding of these complex processes and to optimize our use of resources when performing gene-drive releases in the field.
 
 <center><img src="./media/habitat04.png" width="60%" align="middle"></center> -->
-
+<!--
 <hr>
 
 ##  [Gene-Drive Data Analysis and Visualization Python Module (Sarafina Smith)](https://chipdelmal.github.io/MoNeT/PythonModule.html)
 
 This module was created to accompany the [*MGDrivE*](https://marshalllab.github.io/MGDrivE/) project, although its codebase is totally independent to allow as much modularity as possible. This is not only convenient in terms of the code, but it also provides a clear-cut separation between designing and running experiments, and analyzing the results.
 
-<center><img src="./media/E_065_000_010_005_01C.png" width="100%" align="middle"></center>
+<center><img src="./media/E_065_000_010_005_01C.png" width="100%" align="middle"></center> -->
 
-<!--
+
 <hr>
 
 ## Other bits and pieces
@@ -97,7 +97,7 @@ Targeted vector control interventions are usually applied on the field without t
 ### [Households Distances Analysis](./HouseholdDistances.html)
 
 The distance between households is thought to be an important metric in terms of the analysis of mosquito populations mixing and gene-drive flow. This is particularly true in the case of the _Aedes aegypti_ species, which is know for being a weak flyer that lives in close vicinity to human houses. This auxiliary workflow is aimed towards calculating the distances between the centroids of the households so that we can characterize the impact of these distances in terms of gene-flows.
--->
+
 
 <hr>
 

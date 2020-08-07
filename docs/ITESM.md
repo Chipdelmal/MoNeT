@@ -6,7 +6,7 @@ This project was created to facilitate the creation of tools to be used as part 
 
 <hr>
 
-## 1) Crowd sourcing tool for gathering data on mosquitoes _(AT, HMSC)_
+##  Crowd sourcing tool for gathering data on mosquitoes _(AT, HMSC)_
 
 Generate a tool that allows people (civilians or health services workers) to report information of mosquito presence, species, pictures?
 
@@ -35,7 +35,7 @@ Currently the system generates several .csv files that contain the population of
 
 _Related areas of interest: Graphics, Data Visualization, Data Analysis, Statistical Programming, R language._ -->
 
-## 2) Standalone animation generator _(AT, HMSC)_
+##  Standalone mosquito movement animation generator _(BV, AT, HMSC)_
 
 Currently the system generates several .csv files that contain the population of each node across the time steps of each node. Check the output ADM and AFs .csv files generated. Lab members are interested in animated visualizations of simulation, however current animations are created by hand and take several hours to make, an example of such animations can be found in the project's <a href="https://www.youtube.com/playlist?list=PLRzY6w7pvIWqFJi94ZfhPkSVnazlUylpN">youtube playlist</a>. A tool is needed to parse the .csv files and generate useful visualizations and animations of the simulation in an automatic and efficient way. The difference between the previous project and this ones is that this is expected to be a standalone a tool with more interesting visualizations.
 
@@ -75,6 +75,8 @@ _Related areas of interest: GIS, Machine Learning_
 * Moisés Montaño Copca:	Water bodies detection with satellite image processing using TensorFlow
 
 <hr> -->
+
+<hr>
 
 ## Collaborators
 

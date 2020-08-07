@@ -43,4 +43,4 @@ _This project was funded by <a href="https://citris-uc.org/">CITRIS</a>_, and  <
 
 ## Collaborators
 
- <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a>, <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a>
+ <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a>, <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a>, <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar E. Vallejo</a>, <a href="http://homepage.cem.itesm.mx/mgonza/">Miguel Gonzalez Mendoza</a>
