@@ -30,7 +30,7 @@ for exp in EXP:
     # Load folders
     ###########################################################################
     (expDirsMean, expDirsTrac) = fun.getExpPaths(PT_DTA)
-    (expNum, nodeDigits) = (len(expDirsMean), len(str(NOI))+1)
+    (expNum, nodeDigits) = (len(expDirsMean), len(str(len(NOI)))+1)
     outNames = fun.splitExpNames(PT_OUT)
     outExpNames = set(outNames)
     ###########################################################################
