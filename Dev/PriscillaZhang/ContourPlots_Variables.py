@@ -1,7 +1,7 @@
 import numpy as np
 
 
-#headers = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group', .05, .10, .25, .50, .75]
+headers = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group', .05, .10, .25, .50, .75]
 
 #Please Mofidy these variabled as you wish
 sv = 0
