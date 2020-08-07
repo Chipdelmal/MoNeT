@@ -32,7 +32,7 @@ def selectPath(USR, LND):
     if USR == 'srv':
         PATH_ROOT = '/RAID5/marshallShare/STP/sim/{}/'.format(LND)
     else:
-        PATH_ROOT = '/home/chipdelmal/Desktop/STPTemp/{}/'.format(LND)
+        PATH_ROOT = '/media/chipdelmal/cache/Sims/STP/sim/{}/'.format(LND)
         # PATH_ROOT = '/media/chipdelmal/cache/Sims/SvR/simAlt/{}/'.format(DRV)
     # monet.makeFolder('{}/'.format(PATH_ROOT))
     (PATH_IMG, PATH_DATA) = (
