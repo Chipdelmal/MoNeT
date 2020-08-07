@@ -11,7 +11,6 @@ import sys
 import ContourPlots_FilterVariables as filter_variables
 import ContourPlots_directories as directories
 from joblib import Parallel, delayed
-from math import sqrt
 
 headers = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group', .05, .10, .25, .50, .75]
 
