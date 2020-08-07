@@ -10,7 +10,6 @@ from scipy.interpolate import griddata
 import sys
 import ContourPlots_Variables as variables
 import ContourPlots_directories as directories
-import ContourPlots_functions as functions
 from joblib import Parallel, delayed
 
 
@@ -49,6 +48,6 @@ def read_generate(pathname):
     df = pd.read_csv(pathname)
     df.columns = variables.headers
     filename = pathname.split("\\")[-1][:-4]
-    contourplot.generate_plot(df, threshold, filter_values, filename)
+    generate_plot(df, threshold, filter_values, filename)
 
 Parallel(n_jobs=4)(delayed(read_generate)(pathname) for pathname in glob.glob(directories.path))
