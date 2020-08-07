@@ -20,7 +20,6 @@ Given the information of the two separate networks we can detect sinks/bridges/s
 
 Sinks correspond to the clusters which mosquitoes enter more often than the exit, bridges represent the ones that mosquitoes enter/exit at a similar ratio, and sources the ones that mosquitoes get out of more often than they come into.
 
-### Relevance
 
 ### Authors
 
