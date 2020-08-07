@@ -1,5 +1,5 @@
 ---
-title: MoNeT (Mosquito Networks Taskforce)
+title: MoNeT (Mosquito Networks Toolbox)
 layout: default
 ---
 
@@ -20,14 +20,14 @@ Click on each on the corresponding images to learn more about our projects!
 
 <hr>
 
-# Authors
+# Team
 
 <p style="font-size:12px">
   <b>Lead:</b> <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]<br>
-  <b>Active Dev/Research</b>: Gillian Chu [UCB], Maya Shen [UCB], Yunwen Ji [McGill], Marco Luna [ITESM]<br>
-  <b>Former Dev/Research:</b> Victor Ferman [UCB], Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Sabrina Wong [UCB]<br>
-  <b>Former participant students: </b> Martín Alejandro Molinero Morales [ITESM], Christian Ricardo Solís Cortés [ITESM], Salomón Olivera Abud [ITESM], Esteban Quintana Cueto [ITESM], Moisés Montaño Copca [ITESM]<br>
-  <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM], András Takacs  [ITESM]<br>
+  <b>Active Dev/Research</b>: Priscilla Zhang [UCB], Chris De León [UCB]<br>
+  <b>Former Research:</b> Gillian Chu [UCB], Maya Shen [UCB], Yunwen Ji [McGill], Victor Ferman [UCB], Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Sabrina Wong [UCB]<br>
+  <b>Former Software: </b> Marco Luna [ITESM], Martín Alejandro Molinero Morales [ITESM], Christian Ricardo Solís Cortés [ITESM], Salomón Olivera Abud [ITESM], Esteban Quintana Cueto [ITESM], Moisés Montaño Copca [ITESM]<br>
+  <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM]<br>
   <b>PI's:</b> <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]
 </p>
 
