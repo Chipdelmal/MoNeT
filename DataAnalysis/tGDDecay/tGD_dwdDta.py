@@ -16,7 +16,8 @@ EXPS = ('000', '001', '005', '010', '100')
 for (i, exp) in enumerate(EXPS):
     (fm, to) = [pth+drive+'/'+exp+'/' for pth in (LAB_BASE, DSK_BASE)]
     cmd = 'scp -rp '+fm+download+' '+to
-    print('Downloading {} part {}/{}... '.format(drive, i+1, len(EXPS)))
+    print('* Downloading {} part {}/{}... '.format(drive, i+1, len(EXPS)))
+    print('\t'+cmd)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     p.wait()
 print('Finished!')
