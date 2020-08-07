@@ -42,7 +42,7 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         ax.set(xscale='log')
         ax.set_xlabel('Standing Variation')
         ax.set_ylabel('Fitness Cost')
-        plt.title(title.split("\\")[-1][:-4])
+        plt.title(title)
         plt.xlim(1E-6, 1E-2)
         plt.ylim(ymin, ymax)
         cbar = plt.colorbar(heatmap)
@@ -59,7 +59,7 @@ def generate_plot(dataframe, threshold, filter_dict, title):
 def read_generate(pathname):
     df = pd.read_csv(pathname)
     df.columns = headers
-    filename = pathname
+    filename = pathname.split("\\")[-1][:-4]
     generate_plot(df, threshold, filter_values, filename)
 
 Parallel(n_jobs=2)(delayed(read_generate)(pathname) for pathname in glob.glob(directories.path))
