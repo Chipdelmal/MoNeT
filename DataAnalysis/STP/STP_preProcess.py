@@ -11,8 +11,8 @@ import MoNeT_MGDrivE as monet
 from joblib import Parallel, delayed
 
 
-# (USR, DRV, AOI, LND) = (sys.argv[1], 'LDR', sys.argv[2], sys.argv[3])
-(USR, DRV, AOI, REL, LND) = ('dsk', 'LDR', 'HLT', 'mixed', 'PAN')
+(USR, DRV, AOI, REL, LND) = (sys.argv[1], 'LDR', sys.argv[2], sys.argv[3], sys.argv[4])
+# (USR, DRV, AOI, REL, LND) = ('dsk', 'LDR', 'HLT', 'mixed', 'PAN')
 (FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 2)
 (SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
 ###############################################################################
