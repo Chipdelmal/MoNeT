@@ -10,6 +10,7 @@ from scipy.interpolate import griddata
 import sys
 import ContourPlots_FilterVariables as filter_variables
 import ContourPlots_directories as directories
+from joblib import Parallel, delayed
 
 headers = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group', .05, .10, .25, .50, .75]
 
@@ -30,8 +31,6 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         ymin = min(y)
         ymax = max(y)
 
-        # np.linspace --> Return evenly spaced numbers over a specified interval.
-        #Parameters: start, stop, number of samples to generate
         (xi, yi) = (np.linspace(xmin, xmax, 500), np.linspace(ymin, ymax, 500))
         zi = griddata((x,y), z, (xi[None,:], yi[:, None]), method='nearest')
         fig, ax = plt.subplots()
@@ -40,15 +39,23 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         ax.set(xscale='log')
         ax.set_xlabel('Standing Variation')
         ax.set_ylabel('Fitness Cost')
-        plt.title(filename)
+        plt.title(title)
         plt.xlim(1E-6, 1E-2)
         plt.ylim(ymin, ymax)
         cbar = plt.colorbar(heatmap)
         plt.show()
 
 #Open up the csv files and concatenate the dataframes
-for pathname in glob.glob(directories.path):
-    filename = pathname.split("\\")[-1][:-4]
+# for pathname in glob.glob(directories.path):
+#     filename = pathname.split("\\")[-1][:-4]
+#     df = pd.read_csv(pathname)
+#     df.columns = headers
+#     generate_plot(df, threshold, filter_values, filename)
+
+def read_generate(pathname):
     df = pd.read_csv(pathname)
     df.columns = headers
+    filename = pathname.split("\\")[-1][:-4]
     generate_plot(df, threshold, filter_values, filename)
+
+Parallel(n_jobs=2)(delayed(read_generate)(pathname) for pathname in glob.glob(directories.path))
