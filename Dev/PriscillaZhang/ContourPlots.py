@@ -31,8 +31,6 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         ymin = min(y)
         ymax = max(y)
 
-        # np.linspace --> Return evenly spaced numbers over a specified interval.
-        #Parameters: start, stop, number of samples to generate
         (xi, yi) = (np.linspace(xmin, xmax, 500), np.linspace(ymin, ymax, 500))
         zi = griddata((x,y), z, (xi[None,:], yi[:, None]), method='nearest')
         fig, ax = plt.subplots()
@@ -46,7 +44,6 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         plt.ylim(ymin, ymax)
         cbar = plt.colorbar(heatmap)
         plt.show()
-
 
 #Open up the csv files and concatenate the dataframes
 # for pathname in glob.glob(directories.path):
