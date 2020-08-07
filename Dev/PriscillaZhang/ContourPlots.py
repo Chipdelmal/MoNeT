@@ -45,4 +45,10 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         cbar = plt.colorbar(heatmap)
         plt.savefig(directories.plots_path  + '/' + title)
 
-Parallel(n_jobs=4)(delayed(functions.read_generate)(pathname) for pathname in glob.glob(directories.path))
+def read_generate(pathname):
+    df = pd.read_csv(pathname)
+    df.columns = variables.headers
+    filename = pathname.split("\\")[-1][:-4]
+    contourplot.generate_plot(df, threshold, filter_values, filename)
+
+Parallel(n_jobs=4)(delayed(read_generate)(pathname) for pathname in glob.glob(directories.path))
