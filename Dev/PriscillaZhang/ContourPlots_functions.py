@@ -42,6 +42,8 @@ def generate_plot(dataframe, threshold, filter_dict, title):
         plt.ylim(ymin, ymax)
         cbar = plt.colorbar(heatmap)
         plt.savefig(directories.plots_path  + '/' + title)
+        plt.close(fig)
+        
 
 def read_generate(pathname):
     df = pd.read_csv(pathname)
