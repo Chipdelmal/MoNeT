@@ -111,13 +111,18 @@ def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
 ###############################################################################
 # Postprocess Data
 ###############################################################################
-def calcQuantWOP(srpPrb, meanRef, thresholds, gIx, quantile=.95):
+def calcQuantMetrics(
+            srpPrb, meanRef, ssRef,
+            thresholds, gIx, quantile=.95, ssTolerance=.05
+        ):
     prb = srpPrb['landscapes']
     smpNum = len(prb)
-    (wopArr, ttiArr, ttoArr) = [
-            np.empty((smpNum, len(thresholds))) for i in range(3)
+    (wopArr, ttiArr, ttoArr, ttsArr) = [
+            np.empty((smpNum, len(thresholds))) for i in range(4)
         ]
+    ttsArr = np.empty((smpNum, 1))
     for s in range(smpNum):
+        # TTI, TTO, WOP -------------------------------------------------------
         refPop = meanRef['population']
         ratioOI = monet.getPopRatio(prb[s], refPop, gIx)
         thsArray = monet.comparePopToThresh(ratioOI, thresholds, cmprOp=op.lt)
@@ -125,7 +130,19 @@ def calcQuantWOP(srpPrb, meanRef, thresholds, gIx, quantile=.95):
         wopArr[s] = [len(i) for i in thsDays]
         ttiArr[s] = [min(i) for i in thsDays]
         ttoArr[s] = [max(i) for i in thsDays]
-    (quantWOP, quantTTI, quantTTO) = [
-            np.nanquantile(i, quantile, axis=0) for i in [wopArr, ttiArr, ttoArr]
+        # TTS -----------------------------------------------------------------
+        for i in range(len(prb)):
+            pIx = [i[gIx] for i in prb[i]]
+            ssVal = ssRef['population'][-1][gIx]
+            tolPop = refPop[0][gIx]*(ssTolerance)
+            lThan = monet.comparePopToThresh(pIx, [ssVal+tolPop], cmprOp=op.lt)
+            gThan = monet.comparePopToThresh(pIx, [ssVal-tolPop], cmprOp=op.gt)
+            ssDays = [(i[0] and i[1]) for i in zip(lThan, gThan)]
+            ssFirst = [min(i) for i in monet.thresholdMet(ssDays)]
+            ttsArr[i] = ssFirst
+            outArr = [wopArr, ttiArr, ttoArr, ttsArr]
+    (quantWOP, quantTTI, quantTTO, quantTTS) = [
+            np.nanquantile(i, quantile, axis=0) for i in outArr
         ]
-    return (quantWOP, quantTTI, quantTTO)
+    quantTTS = [np.nanquantile(ttsArr, quantile)]
+    return (quantWOP, quantTTI, quantTTO, quantTTS)
