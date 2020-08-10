@@ -1,5 +1,6 @@
 import sys
 import subprocess
+import MoNeT_MGDrivE as monet
 
 
 (drive, download) = (sys.argv[1], sys.argv[2])
@@ -15,6 +16,7 @@ EXPS = ('000', '001', '005', '010', '100')
 # Download loop
 for (i, exp) in enumerate(EXPS):
     (fm, to) = [pth+drive+'/'+exp+'/' for pth in (LAB_BASE, DSK_BASE)]
+    monet.makeFolder(to)
     cmd = 'scp -rp '+fm+download+' '+to
     print('* Downloading {} part {}/{}... '.format(drive, i+1, len(EXPS)))
     print('\t'+cmd)
