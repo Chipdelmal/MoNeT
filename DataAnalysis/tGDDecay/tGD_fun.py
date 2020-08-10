@@ -132,17 +132,34 @@ def calcQuantMetrics(
         ttoArr[s] = [max(i) for i in thsDays]
         # TTS -----------------------------------------------------------------
         for i in range(len(prb)):
+            # Get the population to analyze and its final value from the mean
             pIx = [i[gIx] for i in prb[i]]
             ssVal = ssRef['population'][-1][gIx]
+            # Calculate the tolerance from the total population
             tolPop = refPop[0][gIx]*(ssTolerance)
+            # Calculate the envelope
             lThan = monet.comparePopToThresh(pIx, [ssVal+tolPop], cmprOp=op.lt)
             gThan = monet.comparePopToThresh(pIx, [ssVal-tolPop], cmprOp=op.gt)
             ssDays = [(i[0] and i[1]) for i in zip(lThan, gThan)]
-            ssFirst = [min(i) for i in monet.thresholdMet(ssDays)]
+            # Get the first break of the envelope (Beware!)
+            ssDaysIx = monet.thresholdMet(ssDays)
+            ssFirst = [longConsecutive(i)[0] for i in monet.thresholdMet(ssDays)]
             ttsArr[i] = ssFirst
-            outArr = [wopArr, ttiArr, ttoArr, ttsArr]
+    outArr = [wopArr, ttiArr, ttoArr, ttsArr]
+    # Return arrays -----------------------------------------------------------
     (quantWOP, quantTTI, quantTTO, quantTTS) = [
             np.nanquantile(i, quantile, axis=0) for i in outArr
         ]
     quantTTS = [np.nanquantile(ttsArr, quantile)]
     return (quantWOP, quantTTI, quantTTO, quantTTS)
+
+
+def longConsecutive(s):
+    rl = {}
+    best_range = range(0)
+    for x in s:
+        run = rl[x] = rl.get(x-1, 0) + 1
+        r = range(x-run+1, x+1)
+        if len(r) > len(best_range):
+            best_range = r
+    return list(best_range)
