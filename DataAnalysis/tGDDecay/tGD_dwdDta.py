@@ -13,6 +13,7 @@ EXPS = ('000', '001', '005', '010', '100')
         'lab:/RAID5/marshallShare/tGD/fullSweep/',
         '/media/chipdelmal/cache/Sims/tGD/fS/'
     )
+monet.makeFolder(DSK_BASE+drive)
 # Download loop
 for (i, exp) in enumerate(EXPS):
     (fm, to) = [pth+drive+'/'+exp+'/' for pth in (LAB_BASE, DSK_BASE)]
