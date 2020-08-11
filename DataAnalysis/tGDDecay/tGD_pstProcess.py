@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
+import sys
 from glob import glob
 import tGD_aux as aux
 import tGD_fun as fun
@@ -11,8 +11,8 @@ import compress_pickle as pkl
 # from joblib import Parallel, delayed
 
 
-(USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
-# (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+# (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
+(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), .10, True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, gIx) = ([.05, .10, .50], 1)
