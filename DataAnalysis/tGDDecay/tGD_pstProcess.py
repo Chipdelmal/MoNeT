@@ -43,29 +43,31 @@ for EXP in EXPS:
         fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(QNT*100)).zfill(2)
         print('{}* [{}/{}] {}{}'.format(
                 monet.CWHT,
-                str(rnIt).zfill(3), '001',
+                str(rnIt+1).zfill(3), str(len(ren)).zfill(3),
                 fName.split('/')[-1], monet.CEND
             ))
         fNum = len(pbFiles)
         (wopL, mnCuts, mxCuts, tsCuts) = [[None] * fNum for i in range(4)]
-        for pairIx in range(fNum):
+        for pIx in range(fNum):
             print('{}+ File: {}/{}'.format(
-                     monet.CBBL, str(pairIx+1).zfill(len(str(fNum))),
+                     monet.CBBL, str(pIx+1).zfill(len(str(fNum))),
                      fNum, monet.CEND
                  ), end='\r')
-            (bFile, pFile, sFile) = (bsFiles[pairIx], pbFiles[pairIx], psFiles[pairIx])
-            (mnRef, srpPrb, ssRef) = [pkl.load(file) for file in (bFile, pFile, sFile)]
+            (bFile, pFile, sFile) = (bsFiles[pIx], pbFiles[pIx], psFiles[pIx])
+            (mnRef, srpPrb, ssRef) = [
+                    pkl.load(file) for file in (bFile, pFile, sFile)
+                ]
             (wop, tti, tto, tts) = [
                      list(i) for i in fun.calcQuantMetrics(
                              srpPrb, mnRef, ssRef, thr, gIx, quantile=QNT
                          )
                  ]
             xpId = fun.getXpId(pFile, [1, 2, 3, 4, 5, 6])
-            wopL[pairIx] = xpId+wop
-            mnCuts[pairIx] = xpId+tti
-            mxCuts[pairIx] = xpId+tto
-            tsCuts[pairIx] = xpId+tts
-        monet.writeListToCSV(fName+'-WOP.csv', wopL)  # , header=header)
-        monet.writeListToCSV(fName+'-TTI.csv', mnCuts)  # , header=header)
-        monet.writeListToCSV(fName+'-TTO.csv', mxCuts)  # , header=header)
+            wopL[pIx] = xpId+wop
+            mnCuts[pIx] = xpId+tti
+            mxCuts[pIx] = xpId+tto
+            tsCuts[pIx] = xpId+tts
+        monet.writeListToCSV(fName+'-WOP.csv', wopL)
+        monet.writeListToCSV(fName+'-TTI.csv', mnCuts)
+        monet.writeListToCSV(fName+'-TTO.csv', mxCuts)
         monet.writeListToCSV(fName+'-TTS.csv', tsCuts)

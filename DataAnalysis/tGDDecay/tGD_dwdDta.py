@@ -23,4 +23,3 @@ for (i, exp) in enumerate(EXPS):
     print('\t'+cmd)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     p.wait()
-print('Finished!')
