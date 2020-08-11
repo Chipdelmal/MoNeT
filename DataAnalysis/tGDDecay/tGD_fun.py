@@ -142,8 +142,9 @@ def calcQuantMetrics(
             gThan = monet.comparePopToThresh(pIx, [ssVal-tolPop], cmprOp=op.gt)
             ssDays = [(i[0] and i[1]) for i in zip(lThan, gThan)]
             # Get the first break of the envelope (Beware!)
-            ssDaysIx = monet.thresholdMet(ssDays)
-            ssFirst = [longConsecutive(i)[0] for i in monet.thresholdMet(ssDays)]
+            ssDaysIx = monet.thresholdMet(ssDays)[0]
+            ssDaysIx.reverse()
+            ssFirst = [fstNonConsecutive(ssDaysIx)]
             ttsArr[i] = ssFirst
     outArr = [wopArr, ttiArr, ttoArr, ttsArr]
     # Return arrays -----------------------------------------------------------
@@ -163,3 +164,23 @@ def longConsecutive(s):
         if len(r) > len(best_range):
             best_range = r
     return list(best_range)
+
+
+def first_consecutive(lst):
+    day = lst[0]
+    for (i, j) in enumerate(lst, lst[0]):
+        if (day-i) != j:
+            return j
+
+
+def fstNonConsecutive(arr):
+    seed = arr.pop(0)
+    for num in arr:
+        seed = seed - 1
+        if num != seed:
+            return seed + 1
+    return 0
+
+
+# lst = [8, 7, 6, 5, 1, 5, 6]
+# first_non_consecutive(lst)
