@@ -3,7 +3,7 @@ import subprocess
 import MoNeT_MGDrivE as monet
 
 
-(drive, download) = (sys.argv[1], sys.argv[2])
+(drive, download, pattern) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (drive, download) = ('linkedDrive', 'img')
 
 # Experiments names (folders)
@@ -17,8 +17,10 @@ monet.makeFolder(DSK_BASE+drive)
 # Download loop
 for (i, exp) in enumerate(EXPS):
     (fm, to) = [pth+drive+'/'+exp+'/' for pth in (LAB_BASE, DSK_BASE)]
+    fullTo = to+download+'/'
     monet.makeFolder(to)
-    cmd = 'scp -rp '+fm+download+' '+to
+    monet.makeFolder(fullTo)
+    cmd = 'scp -rp '+fm+download+'/'+pattern+' '+fullTo
     print('* Downloading {} part {}/{}... '.format(drive, i+1, len(EXPS)))
     print('\t'+cmd)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)

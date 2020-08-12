@@ -25,7 +25,8 @@ def flatten(l):
     return reduce(lambda x, y: x+y, l)
 
 
-def filterFromName(df, id, header):
+def filterFromName(df, id):
+    header = list(df.columns)
     fltr = [True] * len(df)
     for ix in range(len(id)):
         fltr = fltr & (df[header[ix]] == id[ix])
@@ -88,7 +89,7 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0]):
     # axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
     axTemp.tick_params(color=(0, 0, 0, 0.5))
     figArr[0].savefig(
-            "{}/{}-{}.png".format(PATH_IMG, nS, append),
+            "{}/{}.png".format(PATH_IMG, nS),
             dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
             orientation='portrait', papertype=None, format='png',
             transparent=True, bbox_inches='tight', pad_inches=.05
