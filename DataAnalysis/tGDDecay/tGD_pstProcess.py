@@ -22,7 +22,6 @@ for EXP in EXPS:
     # Setting up paths and style
     ###########################################################################
     header = ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
-    header.extend(thr)
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, EXP)
     tS = datetime.now()
     fun.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PostProcess ' + AOI)
