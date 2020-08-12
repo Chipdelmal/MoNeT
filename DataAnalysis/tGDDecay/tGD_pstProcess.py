@@ -11,8 +11,8 @@ import compress_pickle as pkl
 # from joblib import Parallel, delayed
 
 
-(USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
-# (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+# (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
+(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), .10, True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, gIx) = ([.05, .10, .50], 1)
@@ -70,4 +70,4 @@ for EXP in EXPS:
         monet.writeListToCSV(fName+'-WOP.csv', wopL, header=header+thr)
         monet.writeListToCSV(fName+'-TTI.csv', mnCuts, header=header+thr)
         monet.writeListToCSV(fName+'-TTO.csv', mxCuts, header=header+thr)
-        monet.writeListToCSV(fName+'-TTS.csv', tsCuts, header=header+'sd')
+        monet.writeListToCSV(fName+'-TTS.csv', tsCuts, header=header+['sd'])
