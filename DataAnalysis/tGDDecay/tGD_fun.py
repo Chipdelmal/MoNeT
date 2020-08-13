@@ -114,14 +114,15 @@ def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
 ###############################################################################
 def calcQuantMetrics(
             srpPrb, meanRef, ssRef,
-            thresholds, gIx, quantile=.95, ssTolerance=.05
+            thresholds, gIx, hIx,
+            quantile=.95, ssTolerance=.05
         ):
     prb = srpPrb['landscapes']
     smpNum = len(prb)
     (wopArr, ttiArr, ttoArr, ttsArr) = [
             np.empty((smpNum, len(thresholds))) for i in range(4)
         ]
-    ttsArr = np.empty((smpNum, 1))
+    (ttsArr, qasArr) = (np.empty((smpNum, 1)), np.empty((smpNum, 1)))
     for s in range(smpNum):
         # TTI, TTO, WOP -------------------------------------------------------
         refPop = meanRef['population']
@@ -135,24 +136,29 @@ def calcQuantMetrics(
         for i in range(len(prb)):
             # Get the population to analyze and its final value from the mean
             pIx = [i[gIx] for i in prb[i]]
+            hLast = prb[i][-1][hIx]
             ssVal = ssRef['population'][-1][gIx]
             # Calculate the tolerance from the total population
-            tolPop = refPop[0][gIx]*(ssTolerance)
+            tolPop = refPop[-1][-1]*(ssTolerance)
             # Calculate the envelope
             lThan = monet.comparePopToThresh(pIx, [ssVal+tolPop], cmprOp=op.lt)
             gThan = monet.comparePopToThresh(pIx, [ssVal-tolPop], cmprOp=op.gt)
             ssDays = [(i[0] and i[1]) for i in zip(lThan, gThan)]
             # Get the first break of the envelope (Beware!)
-            ssDaysIx = monet.thresholdMet(ssDays)[0]
-            ssDaysIx.reverse()
-            ssFirst = [fstNonConsecutive(ssDaysIx)]
+            ssDaysIx = monet.thresholdMet(ssDays)[-1]
+            # ssDaysIx.reverse()
+            ssFirst = [ssDaysIx[0]]     # [fstNonConsecutive(ssDaysIx)]
             ttsArr[i] = ssFirst
-    outArr = [wopArr, ttiArr, ttoArr, ttsArr]
+            qasArr[i] = hLast
+    # print('{}:{} '.format(ssDaysIx, ssFirst))
+    outArr = [wopArr, ttiArr, ttoArr]
     # Return arrays -----------------------------------------------------------
-    (quantWOP, quantTTI, quantTTO, quantTTS) = [
+    (quantWOP, quantTTI, quantTTO) = [
             np.nanquantile(i, quantile, axis=0) for i in outArr
         ]
-    quantTTS = [np.nanquantile(ttsArr, quantile)]
+    quantTTS = [
+            np.nanquantile(ttsArr, quantile), np.nanquantile(qasArr, quantile)
+        ]
     return (quantWOP, quantTTI, quantTTO, quantTTS)
 
 

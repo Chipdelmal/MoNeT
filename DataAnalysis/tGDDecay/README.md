@@ -69,3 +69,25 @@ rm -R /RAID5/marshallShare/tGD/fullSweep/tGD/005/img;
 rm -R /RAID5/marshallShare/tGD/fullSweep/tGD/010/img;
 rm -R /RAID5/marshallShare/tGD/fullSweep/tGD/100/img;
 ```
+
+Wipe PostProcess folders:
+
+```bash
+rm -R /RAID5/marshallShare/tGD/fullSweep/linkedDrive/000/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/linkedDrive/001/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/linkedDrive/005/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/linkedDrive/010/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/linkedDrive/100/POSTPROCESS;
+
+rm -R /RAID5/marshallShare/tGD/fullSweep/splitDrive/000/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/splitDrive/001/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/splitDrive/005/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/splitDrive/010/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/splitDrive/100/POSTPROCESS;
+
+rm -R /RAID5/marshallShare/tGD/fullSweep/tGD/000/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/tGD/001/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/tGD/005/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/tGD/010/POSTPROCESS;
+rm -R /RAID5/marshallShare/tGD/fullSweep/tGD/100/POSTPROCESS;
+```

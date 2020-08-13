@@ -11,11 +11,11 @@ import compress_pickle as pkl
 # from joblib import Parallel, delayed
 
 
-# (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
+# (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), .10, True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
-(thr, gIx) = ([.05, .10, .50], 1)
+(thr, gIx, hIx) = ([.05, .10, .50], 1, 0)
 EXPS = ('000', '001', '005', '010', '100')
 for EXP in EXPS:
     ###########################################################################
@@ -31,13 +31,19 @@ for EXP in EXPS:
     uids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
     (hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
     # Base experiments
-    bsPat = aux.XP_NPAT.format('*', '*', '*', '*', '00', '*', AOI, '*', 'sum', FMT)
+    bsPat = aux.XP_NPAT.format(
+            '*', '*', '*', '*', '00', '*', AOI, '*', 'sum', FMT
+        )
     bsFiles = sorted(glob(PT_PRE+bsPat))
     existing = glob(PT_OUT+'*')
-    for rnIt in ren:
-        pbPat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'srp', FMT)
+    for rnIt in ren[1:]:
+        pbPat = aux.XP_NPAT.format(
+                '*', '*', '*', '*', rnIt, '*', AOI, '*', 'srp', FMT
+            )
         pbFiles = sorted(glob(PT_PRE+pbPat))
-        psPat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'sum', FMT)
+        psPat = aux.XP_NPAT.format(
+                '*', '*', '*', '*', rnIt, '*', AOI, '*', 'sum', FMT
+            )
         psFiles = sorted(glob(PT_PRE+psPat))
         fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(QNT*100)).zfill(2)
         print('{}* [{}/{}] {}{}'.format(
@@ -58,7 +64,8 @@ for EXP in EXPS:
                 ]
             (wop, tti, tto, tts) = [
                      list(i) for i in fun.calcQuantMetrics(
-                             srpPrb, mnRef, ssRef, thr, gIx, quantile=QNT
+                             srpPrb, mnRef, ssRef,
+                             thr, gIx, hIx, quantile=QNT
                          )
                  ]
             xpId = fun.getXpId(pFile, [1, 2, 3, 4, 5, 6, 8])
@@ -69,4 +76,4 @@ for EXP in EXPS:
         monet.writeListToCSV(fName+'-WOP.csv', wopL, header=header+thr)
         monet.writeListToCSV(fName+'-TTI.csv', mnCuts, header=header+thr)
         monet.writeListToCSV(fName+'-TTO.csv', mxCuts, header=header+thr)
-        monet.writeListToCSV(fName+'-TTS.csv', tsCuts, header=header+['sd'])
+        monet.writeListToCSV(fName+'-TTS.csv', tsCuts, header=header+['ssd', 'ssv'])
