@@ -36,7 +36,7 @@ for EXP in EXPS:
         )
     bsFiles = sorted(glob(PT_PRE+bsPat))
     existing = glob(PT_OUT+'*')
-    for rnIt in ren[1:]:
+    for rnIt in ren:
         pbPat = aux.XP_NPAT.format(
                 '*', '*', '*', '*', rnIt, '*', AOI, '*', 'srp', FMT
             )
