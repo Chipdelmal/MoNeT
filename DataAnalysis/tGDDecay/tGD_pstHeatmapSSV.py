@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 from glob import glob
 import tGD_aux as aux
-import tGD_gene as drv
 import tGD_fun as fun
 from itertools import product
 # import svr_functions as fun
@@ -24,10 +23,9 @@ from scipy.interpolate import griddata
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
 (thrs, lvls, mthd, xSca) = (thr[1], 10, 'nearest', 'log')
 EXPS = ('000', '001', '005', '010', '100')
+(HD_IND, HD_DEP, IND_RAN) = (['ren', 'frc'], 'ssv', 7)
+# ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
 ###############################################################################
-#  mapLevels = np.arange(0, (365*5)/2, 200)
-xRan = (1E-6, 1E-1)
-fNScaler = 100000000
 ###############################################################################
 exp = EXPS[0]
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, exp)
@@ -47,9 +45,19 @@ df = pd.read_csv(fName[0])
 for filename in fName[1:3]:
     df = df.append(pd.read_csv(filename))
 header = list(df.columns)
-# Get the unique values for each independent-variable column of the dataframe
-uniqueValues = [list(df[i].unique()) for i in header[:7]]
-idTuples = list(product(*uniqueValues))
-
-
-idTuples
+headerInd = header[:IND_RAN]
+# Filter the dataframe --------------------------------------------------------
+# Get the unique values for each indep-var column of the dataframe
+uniqueValues = {i: list(df[i].unique()) for i in headerInd}
+idTuplesAll = list(product(*uniqueValues))
+# Filtering all the experiments of the non-free columns
+headFree = [col for col in headerInd if col not in HD_IND]
+# Get the unique IDs of the experiments
+uniqueIds = [uniqueValues.get(head) for head in headFree]
+idTuples = list(product(*uniqueIds))
+# Filter the dataframe
+xpId = idTuples[0]
+# Loop here
+indepFltrs = [list(df[hId[1]] == hId[0]) for hId in zip(xpId, headFree)]
+fullFilter = list(map(all, zip(*indepFltrs)))
+df[fullFilter]
