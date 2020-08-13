@@ -37,6 +37,7 @@ for EXP in EXPS:
     bsFiles = sorted(glob(PT_PRE+bsPat))
     existing = glob(PT_OUT+'*')
     for rnIt in ren:
+        # Load repetitions and summed data
         pbPat = aux.XP_NPAT.format(
                 '*', '*', '*', '*', rnIt, '*', AOI, '*', 'srp', FMT
             )
@@ -52,22 +53,26 @@ for EXP in EXPS:
                 fName.split('/')[-1], monet.CEND
             ))
         fNum = len(pbFiles)
+        # Calculate metrics ---------------------------------------------------
         (wopL, mnCuts, mxCuts, tsCuts) = [[None] * fNum for i in range(4)]
         for pIx in range(fNum):
             print('{}+ File: {}/{}'.format(
                      monet.CBBL, str(pIx+1).zfill(len(str(fNum))),
                      fNum, monet.CEND
                  ), end='\r')
+            # Load required files (b; base, p: probe, s: steady)
             (bFile, pFile, sFile) = (bsFiles[pIx], pbFiles[pIx], psFiles[pIx])
             (mnRef, srpPrb, ssRef) = [
                     pkl.load(file) for file in (bFile, pFile, sFile)
                 ]
+            # Do the metrics calculations
             (wop, tti, tto, tts) = [
                      list(i) for i in fun.calcQuantMetrics(
                              srpPrb, mnRef, ssRef,
                              thr, gIx, hIx, quantile=QNT
                          )
                  ]
+            # Assign in list for export
             xpId = fun.getXpId(pFile, [1, 2, 3, 4, 5, 6, 8])
             wopL[pIx] = xpId+wop
             mnCuts[pIx] = xpId+tti
