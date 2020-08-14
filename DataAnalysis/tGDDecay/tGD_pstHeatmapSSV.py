@@ -22,12 +22,12 @@ from scipy.interpolate import griddata
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
 (thr, REL_STRT, WRM, ci) = (.05, 1, 0, QNT[1])
 (lvls, mthd, xSca, ySca) = (
-        100,
-        'nearest', 'linear', 'linear'
+        [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
+        'linear', 'linear', 'linear'
     )
 # Select surface variables ----------------------------------------------------
-(HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], 'ssv', 7)
-scalers = (1, 100, 1)
+(HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], 'ssd', 7)
+scalers = (1, 100, 300)
 (ngdx, ngdy) = (1000, 1000)
 # Spatial settings to sweep through -------------------------------------------
 EXPS = ('000', '001', '005', '010', '100')
@@ -60,7 +60,7 @@ headFree = [col for col in headerInd if col not in HD_IND]
 uniqueIds = [uniqueValues.get(head) for head in headFree]
 idTuples = list(product(*uniqueIds))
 # Filter the dataframe --------------------------------------------------------
-xpId = idTuples[10]
+xpId = idTuples[4]
 # Loop here
 indepFltrs = [list(df[hId[1]] == hId[0]) for hId in zip(xpId, headFree)]
 fullFilter = list(map(all, zip(*indepFltrs)))
@@ -69,7 +69,7 @@ dfSrf = df[fullFilter]
 # Plot
 ###############################################################################
 # Prepare the response surface ------------------------------------------------
-(x, y, z) = (dfSrf[HD_IND[0]], dfSrf[HD_IND[1]], dfSrf[HD_DEP]/scalers[2])
+(x, y, z) = (dfSrf[HD_IND[0]], dfSrf[HD_IND[1]], dfSrf[HD_DEP])
 (xN, yN, zN) = (
         np.array([float(i/scalers[0]) for i in x]),
         np.array([float(i/scalers[1]) for i in y]),
@@ -80,7 +80,7 @@ dfSrf = df[fullFilter]
         np.linspace(xRan[0], xRan[1], ngdx),
         np.linspace(yRan[0], yRan[1], ngdy)
     )
-zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method=mthd)
+zi = griddata((xN, yN), zN, (xi[None, :], yi[:, None]), method=mthd)
 # Plot the response surface ---------------------------------------------------
 fig, ax = plt.subplots()
 ax.plot(xN, yN, 'k.', ms=1, alpha=.25, marker='.')
@@ -94,11 +94,3 @@ htmp = ax.contourf(
     )
 sz = fig.get_size_inches()[0]
 fig.set_size_inches(sz, 1*sz)
-
-dfSrf[dfSrf['ren'] == 4]
-
-# plt.xlim(xRan[0], xRan[1])
-# plt.ylim(yRan[0], yRan[1])
-
-
-z
