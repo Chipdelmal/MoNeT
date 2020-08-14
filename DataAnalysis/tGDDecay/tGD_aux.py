@@ -70,6 +70,10 @@ def getStyle(colors, aspectR, xRange, yRange):
     return style
 
 
+def axisRange(x):
+    return (min(x), max(x))
+
+
 # #############################################################################
 # Color Palette
 # #############################################################################
