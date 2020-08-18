@@ -20,7 +20,10 @@ for (i, exp) in enumerate(EXPS):
     fullTo = to+download+'/'
     monet.makeFolder(to)
     monet.makeFolder(fullTo)
-    cmd = 'scp -rp '+fm+download+'/'+pattern+' '+fullTo
+    if pattern == 'None':
+        cmd = 'scp -rp '+fm+download+' '+fullTo
+    else:
+        cmd = 'scp -rp '+fm+download+'/'+pattern+' '+fullTo
     print('* Downloading {} part {}/{}... '.format(drive, i+1, len(EXPS)))
     print('\t'+cmd)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)

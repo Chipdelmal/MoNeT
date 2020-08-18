@@ -19,8 +19,8 @@ warnings.filterwarnings("ignore")
 # ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
 
 
-(USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-# (USR, DRV, AOI, MOI) = ('dsk', 'splitDrive', 'HLT', 'WOP')
+# (USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+(USR, DRV, AOI, MOI) = ('dsk', 'tGD', 'HLT', 'WOP')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
 (REL_STRT, WRM, ci) = (1, 0, QNT[1])
 (lvls, mthd, xSca, ySca) = (
@@ -33,10 +33,15 @@ scalers = (1, 100, round(2.5*365))
 (ngdx, ngdy) = (1000, 1000)
 # Spatial settings to sweep through -------------------------------------------
 EXPS = ('000', '001', '005', '010', '100')
+# Select colormap -------------------------------------------------------------
+if AOI == 'HLT':
+    cmap = aux.cmapB
+else:
+    cmap = aux.cmapM
+###############################################################################
+# Loop through the experiments
+###############################################################################
 for exp in EXPS:
-    ###########################################################################
-    # Loop through the experiments
-    ###########################################################################
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, exp)
     PT_IMG = PT_IMG[:-1]+'Pst/'
     fldrName = '{}_{}/'.format(*HD_IND)
@@ -100,7 +105,7 @@ for exp in EXPS:
         cc = ax.contour(
                 xi, yi, zi, levels=lvls, colors='w', linewidths=1, alpha=.5
             )
-        cs = ax.contourf(xi, yi, zi, levels=lvls, cmap=aux.cmapB, extend='max')
+        cs = ax.contourf(xi, yi, zi, levels=lvls, cmap=cmap, extend='max')
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, .85*sz)
         # Colorbar
