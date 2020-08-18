@@ -19,8 +19,8 @@ warnings.filterwarnings("ignore")
 # ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
 
 
-# (USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-(USR, DRV, AOI, MOI) = ('dsk', 'tGD', 'HLT', 'WOP')
+(USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+# (USR, DRV, AOI, MOI) = ('dsk', 'linkedDrive', 'HLT', 'TTS')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
 (REL_STRT, WRM, ci) = (1, 0, QNT[1])
 (lvls, mthd, xSca, ySca) = (
@@ -28,8 +28,12 @@ warnings.filterwarnings("ignore")
         'linear', 'linear', 'linear'
     )
 # Select surface variables ----------------------------------------------------
-(HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], '0.5', 7)
-scalers = (1, 100, round(2.5*365))
+if (MOI == 'WOP') or (MOI == 'TTI') or (MOI == 'TTO'):
+    scalers = (1, 100, round(2.5*365))
+    (HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], '0.5', 7)
+else:
+    scalers = (1, 100, 5000)
+    (HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], 'ssv', 7)
 (ngdx, ngdy) = (1000, 1000)
 # Spatial settings to sweep through -------------------------------------------
 EXPS = ('000', '001', '005', '010', '100')
@@ -99,6 +103,7 @@ for exp in EXPS:
                 np.linspace(yRan[0], yRan[1], ngdy)
             )
         zi = griddata((xN, yN), zN, (xi[None, :], yi[:, None]), method=mthd)
+        # print(zi)
         # Plot the response surface -------------------------------------------
         fig, ax = plt.subplots()
         xy = ax.plot(xN, yN, 'k.', ms=3, alpha=.25, marker='.')

@@ -21,7 +21,7 @@ for (i, exp) in enumerate(EXPS):
     monet.makeFolder(to)
     monet.makeFolder(fullTo)
     if pattern == 'None':
-        cmd = 'scp -rp '+fm+download+' '+fullTo
+        cmd = 'scp -rp '+fm+download+'*'+' '+fullTo
     else:
         cmd = 'scp -rp '+fm+download+'/'+pattern+' '+fullTo
     print('* Downloading {} part {}/{}... '.format(drive, i+1, len(EXPS)))
