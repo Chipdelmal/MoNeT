@@ -19,24 +19,24 @@ warnings.filterwarnings("ignore")
 # ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
 
 
-# (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(USR, DRV, AOI, MOI) = ('dsk', 'splitDrive', 'HLT', 'WOP')
+(USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+# (USR, DRV, AOI, MOI) = ('dsk', 'splitDrive', 'HLT', 'WOP')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
-(thr, REL_STRT, WRM, ci) = (.05, 1, 0, QNT[1])
+(REL_STRT, WRM, ci) = (1, 0, QNT[1])
 (lvls, mthd, xSca, ySca) = (
         [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
         'linear', 'linear', 'linear'
     )
 # Select surface variables ----------------------------------------------------
-(HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], '0.5', 7)
+(HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], '0.1', 7)
 scalers = (1, 100, round(2.5*365))
 (ngdx, ngdy) = (1000, 1000)
 # Spatial settings to sweep through -------------------------------------------
 EXPS = ('000', '001', '005', '010', '100')
 for exp in EXPS:
-    ###############################################################################
+    ###########################################################################
     # Loop through the experiments
-    ###############################################################################
+    ###########################################################################
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, exp)
     PT_IMG = PT_IMG[:-1]+'Pst/'
     fldrName = '{}_{}/'.format(*HD_IND)
@@ -45,9 +45,9 @@ for exp in EXPS:
     monet.makeFolder(PT_IMG_XP)
     tS = datetime.now()
     fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Heatmap ' + AOI)
-    ###############################################################################
+    ###########################################################################
     # Analyzes
-    ###############################################################################
+    ###########################################################################
     # Load files into dataframe
     fPtrn = '{}/*{}*{}-{}.csv'.format(PT_OUT, AOI, str(int(ci*100)), MOI)
     fName = sorted(glob(fPtrn))
@@ -56,7 +56,7 @@ for exp in EXPS:
         df = df.append(pd.read_csv(filename))
     header = list(df.columns)
     headerInd = header[:IND_RAN]
-    # Filter the dataframe --------------------------------------------------------
+    # Filter the dataframe ----------------------------------------------------
     # Get the unique values for each indep-var column of the dataframe
     uniqueValues = {i: list(df[i].unique()) for i in headerInd}
     idTuplesAll = list(product(*uniqueValues.values()))
