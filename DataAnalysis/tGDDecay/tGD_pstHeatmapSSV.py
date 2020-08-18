@@ -18,16 +18,16 @@ from scipy.interpolate import griddata
 
 
 # (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(USR, DRV, AOI, MOI) = ('dsk', 'tGD', 'HLT', 'TTS')
+(USR, DRV, AOI, MOI) = ('dsk', 'tGD', 'TRS', 'WOP')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
 (thr, REL_STRT, WRM, ci) = (.05, 1, 0, QNT[1])
 (lvls, mthd, xSca, ySca) = (
         [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
-        'linear', 'linear', 'linear'
+        'cubic', 'linear', 'linear'
     )
 # Select surface variables ----------------------------------------------------
-(HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], 'ssd', 7)
-scalers = (1, 100, 300)
+(HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], '0.5', 7)
+scalers = (1, 100,365)
 (ngdx, ngdy) = (1000, 1000)
 # Spatial settings to sweep through -------------------------------------------
 EXPS = ('000', '001', '005', '010', '100')
@@ -60,7 +60,7 @@ headFree = [col for col in headerInd if col not in HD_IND]
 uniqueIds = [uniqueValues.get(head) for head in headFree]
 idTuples = list(product(*uniqueIds))
 # Filter the dataframe --------------------------------------------------------
-xpId = idTuples[4]
+xpId = idTuples[0]
 # Loop here
 indepFltrs = [list(df[hId[1]] == hId[0]) for hId in zip(xpId, headFree)]
 fullFilter = list(map(all, zip(*indepFltrs)))
