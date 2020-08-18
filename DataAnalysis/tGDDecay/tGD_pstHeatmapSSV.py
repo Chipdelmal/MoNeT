@@ -28,7 +28,7 @@ warnings.filterwarnings("ignore")
         'linear', 'linear', 'linear'
     )
 # Select surface variables ----------------------------------------------------
-(HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], '0.1', 7)
+(HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], '0.5', 7)
 scalers = (1, 100, round(2.5*365))
 (ngdx, ngdy) = (1000, 1000)
 # Spatial settings to sweep through -------------------------------------------
