@@ -188,6 +188,13 @@ def fstNonConsecutive(arr):
             return seed + 1
     return 0
 
-
-# lst = [8, 7, 6, 5, 1, 5, 6]
-# first_non_consecutive(lst)
+###############################################################################
+# Save Figure
+###############################################################################
+def quickSaveFig(filename, fig):
+    fig.savefig(
+         filename,
+         dpi=750, facecolor=None, edgecolor='w',
+         orientation='portrait', papertype=None, format='png',
+         transparent=True, bbox_inches='tight', pad_inches=.01
+     )
