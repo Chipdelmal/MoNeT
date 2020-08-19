@@ -14,8 +14,8 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 
-# (USR, DRV, AOI() = (sys.argv[1], sys.argv[2], sys.argv[3])
-(USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
+(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+# (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
 (FMT, SKP, MF, FZ) = ('bz', False, (True, True), True)
 (QNT, THR) = ('10', [.05, .10, .25, .50, .75])
 thPlt = '0.5'
