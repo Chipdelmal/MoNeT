@@ -8,10 +8,6 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 from joblib import Parallel, delayed
 
-global sumDta
-
-
-
 sys.path.append('C:/Users/prisc/Documents/GitHub/MoNeT2/DataAnalysis/tGDDecay/')
 import tGD_aux as aux
 import tGD_gene as drv
