@@ -22,26 +22,17 @@ warnings.filterwarnings("ignore")
 (USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 # (USR, DRV, AOI, MOI) = ('dsk', 'linkedDrive', 'HLT', 'TTS')
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
-(REL_STRT, WRM, ci) = (1, 0, QNT[1])
+ci = QNT[1]
+# Select surface variables ----------------------------------------------------
+HD_IND = ['ren', 'hnf']
+(scalers, HD_DEP, IND_RAN, cmap) = aux.selectDepVars(MOI, AOI)
+(ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
         [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
         'linear', 'linear', 'linear'
     )
-# Select surface variables ----------------------------------------------------
-if (MOI == 'WOP') or (MOI == 'TTI') or (MOI == 'TTO'):
-    scalers = (1, 100, round(2.5*365))
-    (HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], '0.5', 7)
-else:
-    scalers = (1, 100, 5000)
-    (HD_IND, HD_DEP, IND_RAN) = (['ren', 'hnf'], 'ssv', 7)
-(ngdx, ngdy) = (1000, 1000)
 # Spatial settings to sweep through -------------------------------------------
 EXPS = ('000', '001', '005', '010', '100')
-# Select colormap -------------------------------------------------------------
-if AOI == 'HLT':
-    cmap = aux.cmapB
-else:
-    cmap = aux.cmapM
 ###############################################################################
 # Loop through the experiments
 ###############################################################################
@@ -106,6 +97,7 @@ for exp in EXPS:
         # print(zi)
         # Plot the response surface -------------------------------------------
         fig, ax = plt.subplots()
+        # Experiment points, contour lines, resposne surface
         xy = ax.plot(xN, yN, 'k.', ms=3, alpha=.25, marker='.')
         cc = ax.contour(
                 xi, yi, zi, levels=lvls, colors='w', linewidths=1, alpha=.5

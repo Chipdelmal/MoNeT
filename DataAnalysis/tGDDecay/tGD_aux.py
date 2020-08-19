@@ -38,7 +38,7 @@ def aggregateGeneAppearances(genotypes, genes):
 
 
 # #############################################################################
-# Paths
+# Paths and Style
 # #############################################################################
 def selectPath(USR, DRV, EXP):
     if USR == 'srv':
@@ -54,6 +54,22 @@ def selectPath(USR, DRV, EXP):
     fldrList = [PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT]
     [monet.makeFolder(i) for i in fldrList]
     return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
+
+
+def selectIndepVars(MOI, AOI):
+    # Select ranges and dependent variable
+    if (MOI == 'WOP') or (MOI == 'TTI') or (MOI == 'TTO'):
+        scalers = (1, 100, round(2.5*365))
+        (HD_DEP, IND_RAN) = ('0.5', 7)
+    else:
+        scalers = (1, 100, 5000)
+        (HD_DEP, IND_RAN) = (['ren', 'hnf'], 'ssv', 7)
+    # Color Mapping
+    if AOI == 'HLT':
+        cmap = cmapB
+    else:
+        cmap = cmapM
+    return (scalers, HD_DEP, IND_RAN, cmap)
 
 
 # #############################################################################

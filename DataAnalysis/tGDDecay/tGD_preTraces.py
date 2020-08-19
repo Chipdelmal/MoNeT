@@ -4,15 +4,16 @@
 import sys
 from glob import glob
 import tGD_aux as aux
-import tGD_gene as drv
 import tGD_fun as fun
+import tGD_gene as drv
+import tGD_plots as plots
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'ECO')
+# (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+(USR, DRV, AOI) = ('dsk', 'linkedDrive', 'ECO')
 (FMT, SKP, MF, FZ) = ('bz2', False, (True, True), True)
 EXP = ('000', '001', '005', '010', '100')
 ###############################################################################
@@ -53,7 +54,7 @@ for exp in EXP:
         (sumDta, repDta) = [pkl.load(file) for file in (fLists[i])]
         name = fLists[i][0].split('/')[-1].split('.')[0][:-4]
         # Export plots --------------------------------------------------------
-        fun.exportTracesPlot(repDta, name, STYLE, PT_IMG, append='TRA')
+        plots.exportTracesPlot(repDta, name, STYLE, PT_IMG, append='TRA')
         cl = [i[:-2]+'cc' for i in CLR]
     monet.exportGeneLegend(
             sumDta['genotypes'], cl, PT_IMG+'/plt_{}.png'.format(AOI), 500
