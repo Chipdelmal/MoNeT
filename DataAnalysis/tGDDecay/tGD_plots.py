@@ -23,13 +23,8 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[
     axTemp.axhline(
             hLines, alpha=1, zorder=0, ls='--', lw=.5, color='m'
         )
-    axTemp.axvlines(
-            vLines, 0, 1, alpha=0,
-            transform=axTemp.get_xaxis_transform(),
-            colors='#3687ff',  # '#FF007FA5'
-            linestyles='-', linewidth=1, zorder=0
-        )
-    # axTemp.set_xticks(range(0, STYLE["xRange"][1], 150))
+    for vline in vLines:
+        axTemp.axvline(vline, alpha=1, zorder=0, ls='--', lw=.5, color='#3687ff')
     axTemp.tick_params(color=(0, 0, 0, 0.5))
     figArr[0].savefig(
             "{}/{}.png".format(PATH_IMG, nS),
