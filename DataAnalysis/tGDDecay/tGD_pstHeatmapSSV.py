@@ -3,18 +3,14 @@
 
 import sys
 import warnings
-import numpy as np
 import pandas as pd
 from glob import glob
 import tGD_aux as aux
 import tGD_fun as fun
 from itertools import product
-# import svr_functions as fun
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
-# import compress_pickle as pkl
-from scipy.interpolate import griddata
 warnings.filterwarnings("ignore")
 # ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
 
@@ -24,7 +20,7 @@ warnings.filterwarnings("ignore")
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
 ci = QNT[1]
 # Select surface variables ----------------------------------------------------
-HD_IND = ['ren', 'hnf']
+HD_IND = ['res', 'hnf']
 (scalers, HD_DEP, IND_RAN, cmap) = aux.selectDepVars(MOI, AOI)
 (ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
@@ -44,7 +40,7 @@ for exp in EXPS:
     monet.makeFolder(PT_IMG)
     monet.makeFolder(PT_IMG_XP)
     tS = datetime.now()
-    fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Heatmap ' + AOI)
+    aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Heatmap ' + AOI)
     ###########################################################################
     # Analyzes
     ###########################################################################
@@ -61,9 +57,9 @@ for exp in EXPS:
     uniqueValues = {i: list(df[i].unique()) for i in headerInd}
     idTuplesAll = list(product(*uniqueValues.values()))
     # Filtering all the experiments of the non-free columns
-    headFree = [col for col in headerInd if col not in HD_IND]
+    hdFree = [col for col in headerInd if col not in HD_IND]
     # Get the unique IDs of the experiments
-    uniqueIds = [uniqueValues.get(head) for head in headFree]
+    uniqueIds = [uniqueValues.get(head) for head in hdFree]
     idTuples = list(product(*uniqueIds))
     # Loop here xpId = idTuples[0]
     xpNum = len(idTuples)
@@ -75,7 +71,7 @@ for exp in EXPS:
         #######################################################################
         # Filter
         #######################################################################
-        indepFltrs = [list(df[hId[1]] == hId[0]) for hId in zip(xpId, headFree)]
+        indepFltrs = [list(df[hId[1]] == hId[0]) for hId in zip(xpId, hdFree)]
         fullFilter = list(map(all, zip(*indepFltrs)))
         dfSrf = df[fullFilter]
         #######################################################################
@@ -83,41 +79,28 @@ for exp in EXPS:
         #######################################################################
         # Prepare the response surface ----------------------------------------
         (x, y, z) = (dfSrf[HD_IND[0]], dfSrf[HD_IND[1]], dfSrf[HD_DEP])
-        (xN, yN, zN) = (
-                np.array([float(i/scalers[0]) for i in x]),
-                np.array([float(i/scalers[1]) for i in y]),
-                np.array([float(i/scalers[2]) for i in z])
-            )
-        (xRan, yRan, zRan) = (aux.axisRange(i) for i in (xN, yN, zN))
-        (xi, yi) = (
-                np.linspace(xRan[0], xRan[1], ngdx),
-                np.linspace(yRan[0], yRan[1], ngdy)
-            )
-        zi = griddata((xN, yN), zN, (xi[None, :], yi[:, None]), method=mthd)
-        # print(zi)
+        rs = fun.calcResponseSurface(x, y, z, scalers=scalers, mthd=mthd)
+        (rsG, rsS) = (rs['grid'], rs['surface'])
         # Plot the response surface -------------------------------------------
         fig, ax = plt.subplots()
-        # Experiment points, contour lines, resposne surface
-        xy = ax.plot(xN, yN, 'k.', ms=3, alpha=.25, marker='.')
-        cc = ax.contour(
-                xi, yi, zi, levels=lvls, colors='w', linewidths=1, alpha=.5
-            )
-        cs = ax.contourf(xi, yi, zi, levels=lvls, cmap=cmap, extend='max')
+        # Experiment points, contour lines, response surface
+        xy = ax.plot(rsG[0], rsG[1], 'k.', ms=3, alpha=.25, marker='.')
+        cc = ax.contour(rsS[0], rsS[1], rsS[2], levels=lvls, colors='w', linewidths=1, alpha=.5)
+        cs = ax.contourf(rsS[0], rsS[1], rsS[2], levels=lvls, cmap=cmap, extend='max')
+        # Figure Modifiers ----------------------------------------------------
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, .85*sz)
         # Colorbar
         cbar = fig.colorbar(cs)
         cbar.ax.get_yaxis().labelpad = 25
-        cbar.ax.set_ylabel(
-                '{} (1/{})'.format(MOI, scalers[2]), fontsize=15, rotation=270
-            )
+        cbar.ax.set_ylabel('{} (1/{})'.format(MOI, scalers[2]), fontsize=15, rotation=270)
         plt.xlabel(HD_IND[0], fontsize=20)
         plt.ylabel(HD_IND[1], fontsize=20)
         # Grid
         ax.grid(which='both', axis='y', lw=.5, alpha=.5, color=(0, 0, 0))
         ax.grid(which='both', axis='x', lw=.5, alpha=.5, color=(0, 0, 0))
         # Title
-        xpStr = ['{}:{}'.format(i[0], str(i[1]).zfill(4)) for i in zip(headFree, xpId)]
+        xpStr = ['{}:{}'.format(i[0], str(i[1]).zfill(4)) for i in zip(hdFree, xpId)]
         ttlStr = ', '.join(xpStr)
         plt.title(ttlStr, fontsize=10, pad=10)
         # Filename and export

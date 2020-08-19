@@ -30,7 +30,7 @@ for exp in EXP:
         }
     STYLE['aspect'] = monet.scaleAspect(1, STYLE)
     tS = datetime.now()
-    fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces')
+    aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces')
     ###########################################################################
     # Load preprocessed files lists
     ###########################################################################

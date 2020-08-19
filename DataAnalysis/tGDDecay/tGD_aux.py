@@ -56,14 +56,14 @@ def selectPath(USR, DRV, EXP):
     return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
 
 
-def selectIndepVars(MOI, AOI):
+def selectDepVars(MOI, AOI):
     # Select ranges and dependent variable
     if (MOI == 'WOP') or (MOI == 'TTI') or (MOI == 'TTO'):
         scalers = (1, 100, round(2.5*365))
         (HD_DEP, IND_RAN) = ('0.5', 7)
     else:
         scalers = (1, 100, 5000)
-        (HD_DEP, IND_RAN) = (['ren', 'hnf'], 'ssv', 7)
+        (HD_DEP, IND_RAN) = ('ssv', 7)
     # Color Mapping
     if AOI == 'HLT':
         cmap = cmapB
@@ -88,6 +88,21 @@ def getStyle(colors, aspectR, xRange, yRange):
 
 def axisRange(x):
     return (min(x), max(x))
+
+
+# #############################################################################
+# Terminal
+# #############################################################################
+
+def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time, title):
+    print(monet.PAD)
+    (cred, cwht, cend) = (monet.CRED, monet.CWHT, monet.CEND)
+    print(cwht+'UCI '+title+' ['+str(time)+']'+cend)
+    print(monet.PAD)
+    print('{}* Root: {}{}'.format(cred, PATH_ROOT, cend))
+    print('{}* Imgs: {}{}'.format(cred, PATH_IMG, cend))
+    print('{}* Data: {}{}'.format(cred, PATH_DATA, cend))
+    print(monet.PAD)
 
 
 # #############################################################################

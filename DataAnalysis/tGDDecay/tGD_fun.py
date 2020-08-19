@@ -3,17 +3,46 @@
 
 import re
 import numpy as np
+import tGD_aux as aux
 import operator as op
 from glob import glob
 import matplotlib as mpl
 from functools import reduce
 import MoNeT_MGDrivE as monet
-import compress_pickle as pkl
+from scipy.interpolate import griddata
 
-
+###############################################################################
+# Globals
+###############################################################################
+(NDX, NDY) = (1000, 1000)
 mpl.rcParams['axes.linewidth'] = 1
 
 
+###############################################################################
+# Response Surface
+###############################################################################
+def calcResponseSurface(iX, iY, dZ, scalers=(1, 1, 1), mthd='linear'):
+    (xN, yN, zN) = (
+            np.array([float(i/scalers[0]) for i in iX]),
+            np.array([float(i/scalers[1]) for i in iY]),
+            np.array([float(i/scalers[2]) for i in dZ])
+        )
+    (xRan, yRan, zRan) = (aux.axisRange(i) for i in (xN, yN, zN))
+    (xi, yi) = (
+            np.linspace(xRan[0], xRan[1], NDX),
+            np.linspace(yRan[0], yRan[1], NDY)
+        )
+    zi = griddata((xN, yN), zN, (xi[None, :], yi[:, None]), method=mthd)
+    # Return variables
+    ranges = (xRan, yRan, zRan)
+    grid = (xN, yN, zN)
+    surf = (xi, yi, zi)
+    return {'ranges': ranges, 'grid': grid, 'surface': surf}
+
+
+###############################################################################
+# Filters
+###############################################################################
 def getFilteredFiles(filterGlobPattern, unfilteredGlobPattern):
     filterSet = set(glob(filterGlobPattern))
     fullSet = set(glob(unfilteredGlobPattern))
@@ -37,17 +66,6 @@ def getXpId(pFile, idIx):
     splitXpId = re.split('_|-', pFile.split('/')[-1].split('.')[-2])
     xpId = [int(splitXpId[i]) for i in idIx]
     return xpId
-
-
-def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time, title):
-    print(monet.PAD)
-    (cred, cwht, cend) = (monet.CRED, monet.CWHT, monet.CEND)
-    print(cwht+'UCI '+title+' ['+str(time)+']'+cend)
-    print(monet.PAD)
-    print('{}* Root: {}{}'.format(cred, PATH_ROOT, cend))
-    print('{}* Imgs: {}{}'.format(cred, PATH_IMG, cend))
-    print('{}* Data: {}{}'.format(cred, PATH_DATA, cend))
-    print(monet.PAD)
 
 
 def getExpPaths(PATH_DATA):
