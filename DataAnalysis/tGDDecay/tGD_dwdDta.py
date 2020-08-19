@@ -7,7 +7,7 @@ import MoNeT_MGDrivE as monet
 # (drive, download) = ('linkedDrive', 'img')
 
 # Experiments names (folders)
-EXPS = ('000', '001', '005', '010', '100')
+EXPS = ('000', '001')#, '005', '010', '100')
 # Experiments paths
 (LAB_BASE, DSK_BASE) = (
         'lab:/RAID5/marshallShare/tGD/fullSweep/',

@@ -5,7 +5,7 @@ import matplotlib.patches as mpatches
 import MoNeT_MGDrivE as monet
 
 
-def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0]):
+def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[0]):
     figArr = monet.plotLandscapeDataRepetitions(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
     axTemp.set_aspect(aspect=STYLE["aspect"])
@@ -20,6 +20,9 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0]):
     axTemp.grid(which='major', axis='y', lw=.5, ls='-', alpha=0.25, color=(0, 0, 0))
     axTemp.grid(which='major', axis='x', lw=.5, ls='-', alpha=0.25, color=(0, 0, 0))
     axTemp.axvspan(vLines[0], vLines[1], alpha=0.2, facecolor='#3687ff', zorder=0)
+    axTemp.axhline(
+            hLines, alpha=1, zorder=0, ls='--', lw=.5
+        )
     #axTemp.vlines(
     #        vLines, 0, 1, alpha=0,
     #        transform=axTemp.get_xaxis_transform(),

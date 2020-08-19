@@ -2,32 +2,33 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import math
 import pandas as pd
 from glob import glob
 import tGD_aux as aux
-import tGD_gene as drv
 import tGD_fun as fun
+import tGD_gene as drv
+import tGD_plots as plot
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
+# (USR, DRV, AOI() = (sys.argv[1], sys.argv[2], sys.argv[3])
+(USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
 (FMT, SKP, MF, FZ) = ('bz', False, (True, True), True)
 (QNT, THR) = ('10', [.05, .10, .25, .50, .75])
-(SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
-thPlt = ['0.5']
+thPlt = '0.5'
 EXP = ('000', '001', '005', '010', '100')
 GRP = (0, 1)
+###############################################################################
+(grp, exp) = (GRP[0], EXP[0])
 for grp in GRP:
     for exp in EXP:
         grpPad = str(grp).zfill(11)
         #######################################################################
         # Setting up paths and style
         #######################################################################
-        PST_TYP = ('WOP', 'TTI', 'TTO')
-        ptrn = '{}*{}*{}*{}*.csv'
         # Paths ---------------------------------------------------------------
         (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, exp)
         PT_IMG = PT_IMG[:-1] + 'Pst/'
@@ -41,7 +42,7 @@ for grp in GRP:
             }
         STYLE['aspect'] = monet.scaleAspect(1, STYLE)
         tS = datetime.now()
-        fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces ' + AOI)
+        aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces ' + AOI)
         #######################################################################
         # Load preprocessed files lists
         #######################################################################
@@ -69,22 +70,17 @@ for grp in GRP:
             id = [int(i) for i in name.split('-')[0].split('_')[1:]]
             id.extend([grp])
             relNum = id[4]
-            WOPfls = [glob(ptrn.format(PT_OUT, relNum, QNT, z))[0] for z in PST_TYP]
-            WOPpds = [pd.read_csv(z) for z in WOPfls]
-            fltr = fun.filterFromName(WOPpds[0], id)
-            WOPval = [len(df[fltr][thPlt].values) for df in WOPpds]
-            bools = ([i > 0 for i in WOPval])
-
-            fltr
-
-            if all(bools):
-                WOPval = [list(df[fltr][thPlt].values[0]) for df in WOPpds]
-            else:
-                WOPval = [[0], [0], [0]]
+            ttx = (
+                    fun.getTTX(PT_OUT, relNum, AOI, QNT, 'TTI', id, thPlt),
+                    fun.getTTX(PT_OUT, relNum, AOI, QNT, 'TTO', id, thPlt)
+                )
+            ttx = [sumDta['population'].shape[0] if math.isnan(i) else i for i in ttx]
+            ssv = fun.getTTX(PT_OUT, relNum, AOI, QNT, 'TTS', id, 'ssv')
+            ssv = 0 if (math.isnan(ssv)) else ssv
             # Export plots ----------------------------------------------------
-            fun.exportTracesPlot(
+            plot.exportTracesPlot(
                     repDta, name+'_Q'+QNT, STYLE, PT_IMG,
-                    vLines=fun.flatten(WOPval[1:])
+                    vLines=ttx, hLines=ssv
                 )
         cl = [i[:-2]+'cc' for i in CLR]
         monet.exportGeneLegend(
