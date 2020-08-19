@@ -6,6 +6,7 @@ import re
 # import os as os
 # import csv as csv
 import matplotlib
+import pandas as pd
 # import numpy as np
 import MoNeT_MGDrivE as monet
 
@@ -70,6 +71,25 @@ def selectDepVars(MOI, AOI):
     else:
         cmap = cmapM
     return (scalers, HD_DEP, IND_RAN, cmap)
+
+
+def setupFolder(USR, DRV, exp, HD_IND):
+    (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = selectPath(USR, DRV, exp)
+    PT_IMG = PT_IMG[:-1]+'Pst/'
+    fldrName = '{}_{}/'.format(*HD_IND)
+    PT_IMG_XP = PT_IMG+fldrName
+    monet.makeFolder(PT_IMG)
+    monet.makeFolder(PT_IMG_XP)
+    return (PT_ROT, PT_IMG_XP, PT_DTA, PT_PRE, PT_OUT)
+
+
+def loadDFFromFiles(fName, IND_RAN):
+    df = pd.read_csv(fName[0])
+    for filename in fName:
+        df = df.append(pd.read_csv(filename))
+    header = list(df.columns)
+    headerInd = header[:IND_RAN]
+    return (df, header, headerInd)
 
 
 # #############################################################################

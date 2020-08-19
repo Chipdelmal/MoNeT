@@ -3,7 +3,6 @@
 
 import sys
 import warnings
-import pandas as pd
 from glob import glob
 import tGD_aux as aux
 import tGD_fun as fun
@@ -33,25 +32,17 @@ EXPS = ('000', '001', '005', '010', '100')
 # Loop through the experiments
 ###############################################################################
 for exp in EXPS:
-    (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, exp)
-    PT_IMG = PT_IMG[:-1]+'Pst/'
-    fldrName = '{}_{}/'.format(*HD_IND)
-    PT_IMG_XP = PT_IMG+fldrName
-    monet.makeFolder(PT_IMG)
-    monet.makeFolder(PT_IMG_XP)
+    (PT_ROT, PT_IMG_XP, PT_DTA, PT_PRE, PT_OUT) = aux.setupFolder(
+            USR, DRV, exp, HD_IND
+        )
     tS = datetime.now()
-    aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Heatmap ' + AOI)
+    aux.printExperimentHead(PT_ROT, PT_IMG_XP, PT_PRE, tS, 'Heatmap '+AOI)
     ###########################################################################
     # Analyzes
     ###########################################################################
     # Load files into dataframe
     fPtrn = '{}/*{}*{}-{}.csv'.format(PT_OUT, AOI, str(int(ci*100)), MOI)
-    fName = sorted(glob(fPtrn))
-    df = pd.read_csv(fName[0])
-    for filename in fName:
-        df = df.append(pd.read_csv(filename))
-    header = list(df.columns)
-    headerInd = header[:IND_RAN]
+    (df, header, headerInd) = aux.loadDFFromFiles(sorted(glob(fPtrn)), IND_RAN)
     # Filter the dataframe ----------------------------------------------------
     # Get the unique values for each indep-var column of the dataframe
     uniqueValues = {i: list(df[i].unique()) for i in headerInd}
