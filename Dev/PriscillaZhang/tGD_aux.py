@@ -41,6 +41,7 @@ def aggregateGeneAppearances(genotypes, genes):
 # Paths
 # #############################################################################
 def selectPath(USR, DRV, EXP):
+    print('this is exp:', EXP)
     if USR == 'srv':
         PATH_ROOT = '/RAID5/marshallShare/tGD/fullSweep/{}/{}/'.format(DRV, EXP)
     else:
