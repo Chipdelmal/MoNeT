@@ -24,7 +24,7 @@ for EXP in EXPS:
     header = ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, EXP)
     tS = datetime.now()
-    fun.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PostProcess ' + AOI)
+    aux.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PostProcess ' + AOI)
     ###########################################################################
     # Quantiles calculation for experiments
     ###########################################################################
