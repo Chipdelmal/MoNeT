@@ -3,7 +3,6 @@
 
 import sys
 import math
-import pandas as pd
 from glob import glob
 import tGD_aux as aux
 import tGD_fun as fun
@@ -17,8 +16,7 @@ import compress_pickle as pkl
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
 (FMT, SKP, MF, FZ) = ('bz', False, (True, True), True)
-(QNT, THR) = ('10', [.05, .10, .25, .50, .75])
-thPlt = '0.5'
+(QNT, thPlt) = ('10', '0.5')  # Change this QNT when the new pst are out!!!!!!!
 EXP = ('000', '001', '005', '010', '100')
 GRP = (0, 1)
 ###############################################################################
@@ -62,7 +60,10 @@ for grp in GRP:
         (xpNum, digs) = monet.lenAndDigits(fLists)
         msg = '* Analyzing ({}/{})'
         for i in range(0, xpNum):
-            print(msg.format(str(i+1).zfill(digs), str(xpNum).zfill(digs)), end='\r')
+            print(
+                    msg.format(str(i+1).zfill(digs), str(xpNum).zfill(digs)),
+                    end='\r'
+                )
             # Preprocessed data (sum and rep) ---------------------------------
             (sumDta, repDta) = [pkl.load(file) for file in (fLists[i])]
             name = fLists[i][0].split('/')[-1].split('.')[0][:-4]
@@ -87,5 +88,5 @@ for grp in GRP:
                 sumDta['genotypes'], cl, PT_IMG+'/plt_{}.png'.format(AOI), 500
             )
         tE = datetime.now()
-        print('* Analyzed ({}/{})                    '.format(xpNum, xpNum), end='\n')
+        print('* Analyzed ({}/{})             '.format(xpNum, xpNum), end='\n')
         print(monet.PAD)
