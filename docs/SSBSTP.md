@@ -18,7 +18,7 @@ We can make similar observations for the network in Príncipe, which is shown be
 
 Here, we can see that Príncipe contains one bridge community that is completely isolated from São Tomé. The edge colors indicate that most movement generally occurs in the center region of the island as opposed to the borders. This information is useful for modeling how a certain disease will spread throughout the landscape.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hopefully, this brief introduction to SSBD has introduced the types of analysis that can be performed with the technique. There are many more pressing questions we can begin to answer with SSBD, but we will leave it at here for now.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hopefully, this brief introduction to SSBD has introduced the types of analysis that can be performed with the technique. There are many more pressing questions we can begin to answer with SSBD, but we will leave it at here for now. [Here's](https://pypi.org/project/ssb-pkg/0.0.0/) a link to the package used for SSBD.
 
 ### Authors
 
