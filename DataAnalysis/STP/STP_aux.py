@@ -28,11 +28,11 @@ def getStyle(colors, aspectR, xRange, yRange):
 # #############################################################################
 # Paths
 # #############################################################################
-def selectPath(USR, LND):
+def selectPath(USR, LND, EXP):
     if USR == 'srv':
-        PATH_ROOT = '/RAID5/marshallShare/STP/sim/{}/'.format(LND)
+        PATH_ROOT = '/RAID5/marshallShare/STP/sim/{}/{}/'.format(LND, EXP)
     else:
-        PATH_ROOT = '/media/chipdelmal/cache/Sims/STP/sim/{}/'.format(LND)
+        PATH_ROOT = '/media/chipdelmal/cache/Sims/STP/sim/{}/{}/'.format(LND, EXP)
         # PATH_ROOT = '/media/chipdelmal/cache/Sims/SvR/simAlt/{}/'.format(DRV)
     # monet.makeFolder('{}/'.format(PATH_ROOT))
     (PATH_IMG, PATH_DATA) = (

@@ -3,6 +3,7 @@
 
 import re
 import numpy as np
+import pandas as pd
 import tGD_aux as aux
 import operator as op
 from glob import glob
@@ -92,6 +93,15 @@ def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
         colSet = set([i[c] for i in splitFilenames])
         ids.append(sorted(list(colSet)))
     return ids
+
+
+def getTTX(PT_OUT, relNum, AOI, QNT, TTX, id, thPlt):
+    pt = '{}*{}*{}*{}*{}*.csv'
+    WOPfls = glob(pt.format(PT_OUT, str(relNum).zfill(2), AOI, QNT, TTX))[0]
+    WOPpds = pd.read_csv(WOPfls)
+    fltr = filterFromName(WOPpds, id)
+    ttx = WOPpds[fltr][thPlt].values[0]
+    return ttx
 
 
 ###############################################################################
