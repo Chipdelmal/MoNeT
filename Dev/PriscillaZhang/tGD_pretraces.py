@@ -12,6 +12,7 @@ sys.path.append('C:/Users/prisc/Documents/GitHub/MoNeT2/DataAnalysis/tGDDecay/')
 import tGD_aux as aux
 import tGD_gene as drv
 import tGD_fun as fun
+import multiprocessing as mp
 
 (USR, DRV, AOI) = ('Priscilla', 'tGD', 'HLT')
 
@@ -20,8 +21,6 @@ import tGD_fun as fun
 
 (FMT, SKP, MF, FZ) = ('bz2', False, (True, True), True)
 EXP = ['000','001']
-
-
 
 ###############################################################################
 # Setting up paths and style
@@ -40,14 +39,10 @@ for exp in EXP:
     tS = datetime.now()
     fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces')
 
-
     ###########################################################################
     # Load preprocessed files lists
     ###########################################################################
     tyTag = ('sum', 'rep')
-
-    print('this is pt_pre:',PT_PRE + '*_00_*'+AOI+'*')
-
 
     if FZ:
         fLists = list(zip(*[fun.getFilteredFiles(
