@@ -13,11 +13,10 @@ import matplotlib.pyplot as plt
 warnings.filterwarnings("ignore")
 # ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
 
-
+# python tGD_pstHeatmapSSV.py srv linkedDrive HLT WOP
 (USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 # (USR, DRV, AOI, MOI) = ('dsk', 'linkedDrive', 'HLT', 'TTS')
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
-ci = QNT[1]
+(FMT, SKP, MF,  OVW, QNT) = ('bz', False, (False, True), True, .9)
 # Select surface variables ----------------------------------------------------
 HD_IND = ['res', 'hnf']
 (scalers, HD_DEP, IND_RAN, cmap) = aux.selectDepVars(MOI, AOI)
@@ -41,7 +40,7 @@ for exp in EXPS:
     # Analyzes
     ###########################################################################
     # Load files into dataframe
-    fPtrn = '{}/*{}*{}-{}.csv'.format(PT_OUT, AOI, str(int(ci*100)), MOI)
+    fPtrn = '{}/*{}*{}-{}.csv'.format(PT_OUT, AOI, str(int(QNT*100)), MOI)
     (df, header, headerInd) = aux.loadDFFromFiles(sorted(glob(fPtrn)), IND_RAN)
     # Filter the dataframe ----------------------------------------------------
     # Get the unique values for each indep-var column of the dataframe
