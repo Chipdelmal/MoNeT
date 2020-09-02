@@ -19,9 +19,9 @@ python tGD_dwdDta.py tGD img *.png
 Download IMAGES folders:
 
 ```bash
-python tGD_dwdDta.py linkedDrive img
-python tGD_dwdDta.py splitDrive img
-python tGD_dwdDta.py tGD img
+python tGD_dwdDta.py linkedDrive imgPst *Q90.png
+python tGD_dwdDta.py splitDrive imgPst *Q90.png
+python tGD_dwdDta.py tGD imgPst *Q90.png
 ```
 
 ## WIPE
