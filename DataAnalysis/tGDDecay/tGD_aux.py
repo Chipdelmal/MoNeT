@@ -61,7 +61,7 @@ def selectDepVars(MOI, AOI):
     # Select ranges and dependent variable
     if (MOI == 'WOP') or (MOI == 'TTI') or (MOI == 'TTO'):
         scalers = (1, 100, round(2.5*365))
-        (HD_DEP, IND_RAN) = ('0.5', 7)
+        (HD_DEP, IND_RAN) = ('0.1', 7)
     else:
         scalers = (1, 100, 5000)
         (HD_DEP, IND_RAN) = ('ssv', 7)
