@@ -16,7 +16,7 @@ import compress_pickle as pkl
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
 (FMT, SKP, MF, FZ) = ('bz', False, (True, True), True)
-(QNT, thPlt) = ('90', '0.5')  # Change this QNT when the new pst are out!!!!!!!
+(QNT, thPlt) = ('90', '0.1')  # Change this QNT when the new pst are out!!!!!!!
 EXP = ('000', '001', '005', '010', '100')
 GRP = (0, 1)
 ###############################################################################
