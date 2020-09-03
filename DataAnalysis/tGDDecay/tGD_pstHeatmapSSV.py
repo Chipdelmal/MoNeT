@@ -18,7 +18,7 @@ warnings.filterwarnings("ignore")
 # (USR, DRV, AOI, MOI) = ('dsk', 'linkedDrive', 'HLT', 'TTS')
 (FMT, SKP, MF,  OVW, QNT) = ('bz', False, (False, True), True, .9)
 # Select surface variables ----------------------------------------------------
-HD_IND = ['res', 'hnf']
+HD_IND = ['ren', 'hnf']
 (scalers, HD_DEP, IND_RAN, cmap) = aux.selectDepVars(MOI, AOI)
 (ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
