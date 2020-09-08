@@ -43,7 +43,7 @@ def aggregateGeneAppearances(genotypes, genes):
 # #############################################################################
 def selectPath(USR, DRV, EXP):
     if USR == 'srv':
-        PATH_ROOT = '/RAID5/marshallShare/tGD/fullSweep/{}/{}/'.format(DRV, EXP)
+        PATH_ROOT = '/RAID5/marshallShare/tGD/figure2/{}/{}/'.format(DRV, EXP)
     else:
         PATH_ROOT = '/media/chipdelmal/cache/Sims/tGD/fS/{}/{}/'.format(DRV, EXP)
     # monet.makeFolder('{}/'.format(PATH_ROOT))
