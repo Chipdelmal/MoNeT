@@ -12,8 +12,8 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 
-# (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(USR, DRV, AOI) = ('dsk', 'linkedDrive', 'ECO')
+(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+# (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'ECO')
 (FMT, SKP, MF, FZ) = ('bz2', False, (True, True), True)
 EXP = ('000', '001', '005', '010', '100')
 ###############################################################################
