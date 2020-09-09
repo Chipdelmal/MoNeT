@@ -13,7 +13,7 @@ from joblib import Parallel, delayed
 # Drives: LinkedDrive, splitDrive, tGD
 ###############################################################################
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 8)
+(FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 1)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 EXP = ('000', ) #, '001', '005', '010', '100')
 ###############################################################################
@@ -22,15 +22,14 @@ EXP = ('000', ) #, '001', '005', '010', '100')
 for exp in EXP:
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, exp)
     drive = drv.driveSelector(DRV, AOI)
-    (DVP, NOI) = (drive.get('gDict'), [[0], [1]])
+    (DVP, NOI) = (drive.get('gDict'), [[0]]) # [[0], [1]])
     # Time and head -----------------------------------------------------------
     tS = datetime.now()
-    aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Preprocess ' + AOI)
+    aux.printExperimentHead(PT_DTA, PT_IMG, PT_PRE, tS, 'Preprocess ' + AOI)
     ###########################################################################
     # Load folders
     ###########################################################################
     (expDirsMean, expDirsTrac) = fun.getExpPaths(PT_DTA)
-    print(expDirsMean)
     (expNum, nodeDigits) = (len(expDirsMean), len(str(len(NOI)))+1)
     outNames = fun.splitExpNames(PT_OUT)
     outExpNames = set(outNames)
