@@ -11,9 +11,17 @@ scp -rp lab:/RAID5/marshallShare/tGD/images/ '~/Desktop/tGD/images/'
 Download PREPROCESS folders:
 
 ```bash
-python tGD_dwdDta.py linkedDrive img *Q90.png
-python tGD_dwdDta.py splitDrive img *Q90.png
-python tGD_dwdDta.py tGD img *Q90.png
+python tGD_dwdDta.py linkedDrive PREPROCESS *HLT*_rep.bz
+python tGD_dwdDta.py splitDrive PREPROCESS *HLT*_rep.bz
+python tGD_dwdDta.py tGD PREPROCESS *HLT*_rep.bz
+```
+
+Download POSTPROCESS folders:
+
+```bash
+python tGD_dwdDta.py linkedDrive POSTPROCESS *.csv
+python tGD_dwdDta.py splitDrive POSTPROCESS *csv
+python tGD_dwdDta.py tGD POSTPROCESS *.csv
 ```
 
 Download IMAGES folders:
