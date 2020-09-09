@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore")
 # python tGD_pstHeatmapSSV.py srv linkedDrive HLT WOP
 (USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 # (USR, DRV, AOI, MOI) = ('dsk', 'linkedDrive', 'HLT', 'TTS')
-(FMT, SKP, MF,  OVW, QNT) = ('bz', False, (False, True), True, .9)
+(FMT, SKP, MF,  OVW, QNT) = ('bz', False, (False, True), True, .5)
 # Select surface variables ----------------------------------------------------
 HD_IND = ['ren', 'hnf']
 (scalers, HD_DEP, IND_RAN, cmap) = aux.selectDepVars(MOI, AOI)
