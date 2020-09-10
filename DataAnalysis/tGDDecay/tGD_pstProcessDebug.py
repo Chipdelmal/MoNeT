@@ -16,7 +16,7 @@ import compress_pickle as pkl
 (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (SKP, QNT, OVW) = (False, .90, True)
 (gIx, hIx) = (1, 0)
-(thi, tho) = (.1, .1)
+(thi, tho) = (.5, .5)
 
 EXP = '000'
 
@@ -47,14 +47,16 @@ fNum = len(meanFiles)
 # #############################################################################
 # Load data
 # #############################################################################
-pIx = 2
+pIx = 10
 (bFile, mFile, tFile) = (baseFiles[pIx], meanFiles[pIx], traceFiles[pIx])
 (base, mean, trace) = [pkl.load(file) for file in (bFile, mFile, tFile)]
 # #############################################################################
 # Process data
 # #############################################################################
 repsRatios = da.getPopRepsRatios(base, trace, gIx)
-(thI, thO) = (
+(thIBool, thOBool) = (
         da.compRatioToThreshold(repsRatios, thi, op.lt),
         da.compRatioToThreshold(repsRatios, tho, op.gt)
     )
+(repsMin, repsMax) = (repsRatios.min(axis=1), repsRatios.max(axis=1))
+tti = np.argmax(thIBool == 1, axis=1)
