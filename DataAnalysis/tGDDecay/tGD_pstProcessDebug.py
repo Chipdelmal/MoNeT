@@ -16,7 +16,7 @@ import compress_pickle as pkl
 (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (SKP, QNT, OVW) = (False, .90, True)
 (gIx, hIx) = (1, 0)
-(thi, tho) = (.5, .5)
+(thi, tho) = (.35, .75)
 
 EXP = '000'
 
@@ -54,9 +54,16 @@ pIx = 10
 # Process data
 # #############################################################################
 repsRatios = da.getPopRepsRatios(base, trace, gIx)
+(reps, days) = repsRatios.shape
+# Thresholds ------------------------------------------------------------------
 (thIBool, thOBool) = (
         da.compRatioToThreshold(repsRatios, thi, op.lt),
         da.compRatioToThreshold(repsRatios, tho, op.gt)
     )
-(repsMin, repsMax) = (repsRatios.min(axis=1), repsRatios.max(axis=1))
+# Time to first introgression -------------------------------------------------
 tti = np.argmax(thIBool == 1, axis=1)
+tto = np.subtract(days, np.argmin(np.flip(thOBool), axis=1))
+# Min and max -----------------------------------------------------------------
+(repsMin, repsMax) = (repsRatios.min(axis=1), repsRatios.max(axis=1))
+# Window of protection --------------------------------------------------------
+wop = np.subtract(tto, tti)
