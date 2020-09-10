@@ -20,6 +20,7 @@ from joblib import Parallel, delayed
 # Setting up paths and style
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, LND, REL)
+print(PT_DTA)
 (drive, land) = (drv.driveSelector(DRV), lnd.landSelector(LND))
 gene = drive.get(AOI).get('gDict')
 # Time and head ---------------------------------------------------------------
