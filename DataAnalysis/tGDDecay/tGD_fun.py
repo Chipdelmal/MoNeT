@@ -118,6 +118,7 @@ def calcQuantMetrics(
             np.empty((smpNum, len(thresholds))) for i in range(4)
         ]
     (ttsArr, qasArr) = (np.empty((smpNum, 1)), np.empty((smpNum, 1)))
+    mxDays = len(prb[0])
     for s in range(smpNum):
         # TTI, TTO, WOP -------------------------------------------------------
         refPop = meanRef['population']
@@ -133,7 +134,12 @@ def calcQuantMetrics(
             if np.isnan(dayI):
                 ttoTemp.append(np.nan)
             else:
-                ttoTemp.append(list(filter(lambda i: i >= dayI, thsDaysO[j]))[0])
+                ix = np.argmax(thsDaysO[j] > dayI)
+                if ix > 0:
+                    ttoTemp.append(thsDaysO[j][ix])
+                else:
+                    ttoTemp.append(mxDays)
+                # ttoTemp.append(next(val for x, val in enumerate(thsDaysO[j]) if val > dayI))
         ttoArr[s] = ttoTemp
         wopArr[s] = ttoArr[s] - ttiArr[s]
         # print("\nTTO: {}".format(ttoArr[s]))
