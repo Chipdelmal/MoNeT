@@ -9,14 +9,15 @@ import tGD_aux as aux
 import tGD_fun as fun
 import tGD_dataProcess as da
 from datetime import datetime
-import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
+import MoNeT_MGDrivE as monet
+import matplotlib.pyplot as plt
 
 
 (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (SKP, QNT, OVW) = (False, .90, True)
 (gIx, hIx) = (1, 0)
-(thi, tho) = (.35, .75)
+(thi, tho, thw) = (.35, .75, .5)
 
 EXP = '000'
 
@@ -35,26 +36,29 @@ baseFiles = sorted(glob(PT_PRE+basePat))
 #   sum: Analyzed data aggregated into one node
 #   srp: Garbage data aggregated into one node
 # #############################################################################
-rnIt = ren[1]
-# Mean data (Analyzed)
-meanPat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'sum')
-meanFiles = sorted(glob(PT_PRE+meanPat))
-# Repetitions data (Garbage)
-tracePat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'srp')
-traceFiles = sorted(glob(PT_PRE+tracePat))
-#
-fNum = len(meanFiles)
-# #############################################################################
-# Load data
-# #############################################################################
-pIx = 10
-(bFile, mFile, tFile) = (baseFiles[pIx], meanFiles[pIx], traceFiles[pIx])
-(base, mean, trace) = [pkl.load(file) for file in (bFile, mFile, tFile)]
-# #############################################################################
-# Process data
-# #############################################################################
-repsRatios = da.getPopRepsRatios(base, trace, gIx)
-(reps, days) = repsRatios.shape
+for rnIt in ren:
+    # Mean data (Analyzed) ----------------------------------------------------
+    meanPat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'sum')
+    meanFiles = sorted(glob(PT_PRE+meanPat))
+    # Repetitions data (Garbage) ----------------------------------------------
+    tracePat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'srp')
+    traceFiles = sorted(glob(PT_PRE+tracePat))
+    # #########################################################################
+    # Load data
+    # #########################################################################
+    expNum = len(meanFiles)
+    for pIx in range(expNum):
+        (bFile, mFile, tFile) = (baseFiles[pIx], meanFiles[pIx], traceFiles[pIx])
+        (base, mean, trace) = [pkl.load(file) for file in (bFile, mFile, tFile)]
+        # #####################################################################
+        # Process data
+        # #####################################################################
+        fName = '{}{}rto'.format(PT_OUT, mFile.split('/')[-1][:-6])
+        repsRatios = da.getPopRepsRatios(base, trace, gIx)
+        (reps, days) = repsRatios.shape
+        np.save(fName, repsRatios)
+
+
 # Thresholds ------------------------------------------------------------------
 (thIBool, thOBool) = (
         da.compRatioToThreshold(repsRatios, thi, op.lt),
@@ -66,4 +70,15 @@ tto = np.subtract(days, np.argmin(np.flip(thOBool), axis=1))
 # Min and max -----------------------------------------------------------------
 (repsMin, repsMax) = (repsRatios.min(axis=1), repsRatios.max(axis=1))
 # Window of protection --------------------------------------------------------
-wop = np.subtract(tto, tti)
+thwBool = da.compRatioToThreshold(repsRatios, thw, op.lt)
+wop = np.sum(thwBool, axis=1)
+# Quantiles -------------------------------------------------------------------
+np.nanquantile(tti, QNT)
+np.nanquantile(tto, QNT)
+np.nanquantile(wop, 1-QNT)
+
+(fig, ax) = plt.subplots(nrows=3, ncols=1)
+ax[0].imshow(repsRatios, cmap='Purples_r')
+ax[1].imshow(thIBool, cmap='Purples_r')
+ax[2].imshow(thOBool, cmap='Purples_r')
+# monet.quickSaveFigure(fig, './test.png')
