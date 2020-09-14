@@ -12,7 +12,7 @@ import compress_pickle as pkl
 import MoNeT_MGDrivE as monet
 
 
-(USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
+(USR, DRV, AOI) = ('per', 'tGD', 'HLT')
 (SKP, QNT, OVW) = (False, .90, True)
 (gIx, hIx) = (1, 0)
 
