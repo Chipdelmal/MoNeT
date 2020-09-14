@@ -4,28 +4,36 @@ import operator as op
 import tGD_dataProcess as da
 import matplotlib.pyplot as plt
 
+USR = 'chipdelmal'
 (thi, tho, thw, qnt) = (.35, .75, .5, .9)
-# Thresholds ------------------------------------------------------------------
-fName = '/media/hdd/WorkExperiments/tGD/figure2/tGD/000/POSTPROCESS/E_000_075_005_090_03_0100-HLT_00_rto.npy'
-repsRatios = np.load(fName)
-# Thresholds ------------------------------------------------------------------
+# Setup path --------------------------------------------------------------------
+if USR == 'chipdelmal':
+    pth = '/home/chipdelmal/Documents/WorkSims/tGD/figure2/tGD/000/POSTPROCESS/'
+elif USR == 'ameek':
+    pth = '/PATH_TO_FILE/'
+# Load file ---------------------------------------------------------------------
+fName = 'E_005_075_005_090_02_0100-HLT_00_rto.npy'
+repsRatios = np.load(pth+fName)
+# Thresholds --------------------------------------------------------------------
 (reps, days) = repsRatios.shape
 (thIBool, thOBool) = (
         da.compRatioToThreshold(repsRatios, thi, op.lt),
         da.compRatioToThreshold(repsRatios, tho, op.gt)
     )
-# Time to first introgression -------------------------------------------------
+# Time to first introgression ---------------------------------------------------
 tti = np.argmax(thIBool == 1, axis=1)
 tto = np.subtract(days, np.argmin(np.flip(thOBool), axis=1))
-# Min and max -----------------------------------------------------------------
+# Min and max -------------------------------------------------------------------
 (repsMin, repsMax) = (repsRatios.min(axis=1), repsRatios.max(axis=1))
-# Window of protection --------------------------------------------------------
+# Window of protection ----------------------------------------------------------
 thwBool = da.compRatioToThreshold(repsRatios, thw, op.lt)
 wop = np.sum(thwBool, axis=1)
-# Quantiles -------------------------------------------------------------------
-np.nanquantile(tti, qnt)
-np.nanquantile(tto, qnt)
-np.nanquantile(wop, 1-qnt)
+# Quantiles ---------------------------------------------------------------------
+(ttiQ, ttoQ, wopQ) = (
+        np.nanquantile(tti, qnt),
+        np.nanquantile(tto, qnt),
+        np.nanquantile(wop, 1-qnt)
+    )
 
 (fig, ax) = plt.subplots(nrows=3, ncols=1)
 ax[0].imshow(repsRatios, cmap='Purples_r')
