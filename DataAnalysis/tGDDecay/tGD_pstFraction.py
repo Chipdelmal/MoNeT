@@ -12,43 +12,53 @@ import compress_pickle as pkl
 import MoNeT_MGDrivE as monet
 
 
-(USR, DRV, AOI) = ('per', 'tGD', 'HLT')
+(USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (SKP, QNT, OVW) = (False, .90, True)
 (gIx, hIx) = (1, 0)
 
-EXP = '000'
+EXP = ('000', )# '001', '005', '010', '100')
 
-(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, EXP)
-uids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
-(hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
-# #############################################################################
-# Base experiments
-#   These are the experiments without any releases (for fractions)
-# #############################################################################
-basePat = aux.XP_NPAT.format('*', '*', '*', '*', '00', '*', AOI, '*', 'sum')
-baseFiles = sorted(glob(PT_PRE+basePat))
-# #############################################################################
-# Probe experiments
-#   sum: Analyzed data aggregated into one node
-#   srp: Garbage data aggregated into one node
-# #############################################################################
-for rnIt in ren:
-    # Mean data (Analyzed) ----------------------------------------------------
-    meanPat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'sum')
-    meanFiles = sorted(glob(PT_PRE+meanPat))
-    # Repetitions data (Garbage) ----------------------------------------------
-    tracePat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'srp')
-    traceFiles = sorted(glob(PT_PRE+tracePat))
+for exp in EXP:
+    (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, exp)
+    uids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
+    (hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
+    tS = datetime.now()
+    aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Ratios')
     # #########################################################################
-    # Load data
+    # Base experiments
+    #   These are the experiments without any releases (for fractions)
     # #########################################################################
-    expNum = len(meanFiles)
-    for pIx in range(expNum):
-        (bFile, mFile, tFile) = (baseFiles[pIx], meanFiles[pIx], traceFiles[pIx])
-        (base, mean, trace) = [pkl.load(file) for file in (bFile, mFile, tFile)]
+    basePat = aux.XP_NPAT.format('*', '*', '*', '*', '00', '*', AOI, '*', 'sum')
+    baseFiles = sorted(glob(PT_PRE+basePat))
+    # #########################################################################
+    # Probe experiments
+    #   sum: Analyzed data aggregated into one node
+    #   srp: Garbage data aggregated into one node
+    # #########################################################################
+    for rnIt in ren:
+        # Mean data (Analyzed) ------------------------------------------------
+        meanPat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'sum')
+        meanFiles = sorted(glob(PT_PRE+meanPat))
+        # Repetitions data (Garbage) ----------------------------------------------
+        tracePat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'srp')
+        traceFiles = sorted(glob(PT_PRE+tracePat))
         # #####################################################################
-        # Process data
+        # Load data
         # #####################################################################
-        fName = '{}{}rto'.format(PT_OUT, mFile.split('/')[-1][:-6])
-        repsRatios = da.getPopRepsRatios(base, trace, gIx)
-        np.save(fName, repsRatios)
+        (expNum, digs) = monet.lenAndDigits(meanFiles)
+        msg = '* Analyzing ({}/{})'
+        for pIx in range(expNum):
+            print(msg.format(str(pIx+1).zfill(digs), str(expNum).zfill(digs)), end='\r')
+            # Load files ------------------------------------------------------
+            (bFile, mFile, tFile) = (
+                    baseFiles[pIx], meanFiles[pIx], traceFiles[pIx]
+                )
+            files = (bFile, mFile, tFile)
+            (base, mean, trace) = [pkl.load(file) for file in files]
+            # #################################################################
+            # Process data
+            # #################################################################
+            fName = '{}{}rto'.format(PT_OUT, mFile.split('/')[-1][:-6])
+            repsRatios = da.getPopRepsRatios(base, trace, gIx)
+            np.save(fName, repsRatios)
+        print('* Analyzed ({}/{}) on {}-{}'.format(expNum, expNum, exp, rnIt), end='\n')

@@ -2,7 +2,9 @@
 import numpy as np
 import operator as op
 import tGD_dataProcess as da
+import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
+
 
 (thi, tho, thw, qnt) = (.35, .75, .5, .9)
 # Thresholds ------------------------------------------------------------------
@@ -31,4 +33,4 @@ np.nanquantile(wop, 1-qnt)
 ax[0].imshow(repsRatios, cmap='Purples_r')
 ax[1].imshow(thIBool, cmap='Purples_r')
 ax[2].imshow(thOBool, cmap='Purples_r')
-# monet.quickSaveFigure(fig, './test.png')
+monet.quickSaveFigure(fig, './test.png')
