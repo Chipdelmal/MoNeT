@@ -11,7 +11,8 @@ EXPS = ('mixed', 'gravidFemale', 'nonGravidFemale')
 # Experiments paths
 (LAB_BASE, DSK_BASE) = (
         'lab:/RAID5/marshallShare/STP/PAN/sim/',
-        '/home/chipdelmal/Documents/WorkSims/STP/PAN/sim/'
+        '/media/hdd/WorkExperiments/STP/PAN/sim/'
+        # '/home/chipdelmal/Documents/WorkSims/STP/PAN/sim/'
     )
 monet.makeFolder(DSK_BASE+drive)
 # Download loop
