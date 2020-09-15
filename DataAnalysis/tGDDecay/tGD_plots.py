@@ -6,7 +6,7 @@ import MoNeT_MGDrivE as monet
 
 
 def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[0]):
-    figArr = monet.plotLandscapeDataRepetitions(tS, STYLE)
+    figArr = monet.plotNodeTraces(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
     axTemp.set_aspect(aspect=STYLE["aspect"])
     axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])

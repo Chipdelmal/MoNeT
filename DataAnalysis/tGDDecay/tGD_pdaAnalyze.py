@@ -6,29 +6,29 @@ import matplotlib.pyplot as plt
 
 USR = 'chipdelmal'
 (thi, tho, thw, qnt) = (.35, .75, .5, .9)
-# Setup path --------------------------------------------------------------------
+# Setup path -----------------------------------------------------------------
 if USR == 'chipdelmal':
     pth = '/home/chipdelmal/Documents/WorkSims/tGD/figure2/tGD/000/POSTPROCESS/'
 elif USR == 'ameek':
     pth = '/PATH_TO_FILE/'
-# Load file ---------------------------------------------------------------------
+# Load file ------------------------------------------------------------------
 fName = 'E_005_075_005_090_02_0100-HLT_00_rto.npy'
 repsRatios = np.load(pth+fName)
-# Thresholds --------------------------------------------------------------------
+# Thresholds -----------------------------------------------------------------
 (reps, days) = repsRatios.shape
 (thIBool, thOBool) = (
         da.compRatioToThreshold(repsRatios, thi, op.lt),
         da.compRatioToThreshold(repsRatios, tho, op.gt)
     )
-# Time to first introgression ---------------------------------------------------
+# Time to first introgression ------------------------------------------------
 tti = np.argmax(thIBool == 1, axis=1)
 tto = np.subtract(days, np.argmin(np.flip(thOBool), axis=1))
-# Min and max -------------------------------------------------------------------
+# Min and max ----------------------------------------------------------------
 (repsMin, repsMax) = (repsRatios.min(axis=1), repsRatios.max(axis=1))
-# Window of protection ----------------------------------------------------------
+# Window of protection -------------------------------------------------------
 thwBool = da.compRatioToThreshold(repsRatios, thw, op.lt)
 wop = np.sum(thwBool, axis=1)
-# Quantiles ---------------------------------------------------------------------
+# Quantiles ------------------------------------------------------------------
 (ttiQ, ttoQ, wopQ) = (
         np.nanquantile(tti, qnt),
         np.nanquantile(tto, qnt),
