@@ -13,7 +13,6 @@ import MoNeT_MGDrivE as monet
 
 
 (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
-(SKP, QNT, OVW) = (False, .90, True)
 (gIx, hIx) = (1, 0)
 
 EXP = ('000', )# '001', '005', '010', '100')
