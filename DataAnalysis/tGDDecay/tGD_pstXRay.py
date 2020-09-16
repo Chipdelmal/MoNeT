@@ -11,8 +11,9 @@ import matplotlib.pyplot as plt
 
 
 (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
+(gIx, hIx) = (1, 0)
 
-EXP = ('000', )# '001', '005', '010', '100')
+EXP = ('000', )  # '001', '005', '010', '100')
 
 # This will become a for-loop
 exp = EXP[0]
@@ -27,5 +28,12 @@ outputFolder
 # Load the numpy array (should become a for-loop)
 fPath = filepaths[10]
 repsRatios = np.load(fPath)
+# Setup the plot (should use the hIx color)
 (fig, ax) = plt.subplots(nrows=1, ncols=1)
 ax.imshow(repsRatios, cmap='Purples_r')
+
+
+
+#################### COLOR THING ###########################################
+drive = drv.driveSelector(DRV, AOI)
+drive['colors']
