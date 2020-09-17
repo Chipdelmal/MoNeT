@@ -13,7 +13,7 @@ import compress_pickle as pkl
 
 
 # (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(USR, DRV, AOI) = ('dsk', 'linkedDrive', 'ECO')
+(USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (FMT, SKP, MF, FZ) = ('bz2', False, (True, True), True)
 EXP = ('000', '001', '005', '010', '100')
 ###############################################################################
@@ -25,7 +25,7 @@ for exp in EXP:
     (CLR, YRAN) = (drive.get('colors'), (0, drive.get('yRange')))
     STYLE = {
             "width": .5, "alpha": .15, "dpi": 1*200, "legend": True,
-            "aspect": .25, "colors": CLR, "xRange": [0, (365*5)/2],
+            "aspect": .25, "colors": CLR, "xRange": [0, (365*5)/3],
             "yRange": YRAN
         }
     STYLE['aspect'] = monet.scaleAspect(1, STYLE)
@@ -34,7 +34,7 @@ for exp in EXP:
     ###########################################################################
     # Load preprocessed files lists
     ###########################################################################
-    tyTag = ('sum', 'rep')
+    tyTag = ('sum', 'srp')
     if FZ:
         fLists = list(zip(*[fun.getFilteredFiles(
                 PT_PRE+'*_00_*'+AOI+'*'+tp+'*',

@@ -13,10 +13,9 @@ import compress_pickle as pkl
 
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), .9, True) #.75, True)
-(SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
-(thr, gIx, hIx) = ([.05, .10, .50], 1, 0)
-EXPS = ('000', '001', '005', '010', '100')
+(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), .90, True)  # .75, True)
+(thr, gIx, hIx) = ([.05, .10, .50, .90, .95], 1, 0)
+EXPS = ('000', )#'001', '005', '010', '100')
 for EXP in EXPS:
     ###########################################################################
     # Setting up paths and style
@@ -24,7 +23,7 @@ for EXP in EXPS:
     header = ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, EXP)
     tS = datetime.now()
-    fun.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PostProcess ' + AOI)
+    aux.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PostProcess ' + AOI)
     ###########################################################################
     # Quantiles calculation for experiments
     ###########################################################################

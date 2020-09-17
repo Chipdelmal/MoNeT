@@ -11,18 +11,35 @@ scp -rp lab:/RAID5/marshallShare/tGD/images/ '~/Desktop/tGD/images/'
 Download PREPROCESS folders:
 
 ```bash
-python tGD_dwdDta.py linkedDrive img *.png
-python tGD_dwdDta.py splitDrive img *.png
-python tGD_dwdDta.py tGD img *.png
+python tGD_dwdDta.py linkedDrive PREPROCESS *HLT*_rep.bz
+python tGD_dwdDta.py splitDrive PREPROCESS *HLT*_rep.bz
+python tGD_dwdDta.py tGD PREPROCESS *HLT*_rep.bz
+```
+
+Download POSTPROCESS folders:
+
+```bash
+python tGD_dwdDta.py linkedDrive POSTPROCESS *.csv
+python tGD_dwdDta.py splitDrive POSTPROCESS *csv
+python tGD_dwdDta.py tGD POSTPROCESS *.csv
 ```
 
 Download IMAGES folders:
 
 ```bash
-python tGD_dwdDta.py linkedDrive img
-python tGD_dwdDta.py splitDrive img
-python tGD_dwdDta.py tGD img
+python tGD_dwdDta.py linkedDrive imgPst *Q90.png
+python tGD_dwdDta.py splitDrive imgPst *Q90.png
+python tGD_dwdDta.py tGD imgPst *Q90.png
 ```
+
+Download HEATMAPS:
+
+```bash
+python tGD_dwdDta.py linkedDrive imgPst/ren_hnf None
+python tGD_dwdDta.py splitDrive imgPst/ren_hnf None
+python tGD_dwdDta.py tGD imgPst/ren_hnf None
+```
+
 
 ## WIPE
 

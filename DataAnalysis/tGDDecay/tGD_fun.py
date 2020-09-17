@@ -118,15 +118,33 @@ def calcQuantMetrics(
             np.empty((smpNum, len(thresholds))) for i in range(4)
         ]
     (ttsArr, qasArr) = (np.empty((smpNum, 1)), np.empty((smpNum, 1)))
+    mxDays = len(prb[0])
     for s in range(smpNum):
         # TTI, TTO, WOP -------------------------------------------------------
         refPop = meanRef['population']
         ratioOI = monet.getPopRatio(prb[s], refPop, gIx)
-        thsArray = monet.comparePopToThresh(ratioOI, thresholds, cmprOp=op.lt)
-        thsDays = monet.thresholdMet(thsArray)
-        wopArr[s] = [len(i) for i in thsDays]
-        ttiArr[s] = [min(i) for i in thsDays]
-        ttoArr[s] = [max(i) for i in thsDays]
+        thsArrayI = monet.comparePopToThresh(ratioOI, thresholds, cmprOp=op.lt)
+        thsArrayO = monet.comparePopToThresh(ratioOI, thresholds, cmprOp=op.gt)
+        thsDaysI = monet.thresholdMet(thsArrayI)
+        thsDaysO = monet.thresholdMet(thsArrayO)
+        # wopArr[s] = [len(i) for i in thsDaysI]
+        ttiArr[s] = [min(i) for i in thsDaysI]
+        ttoTemp = []
+        for (j, dayI) in enumerate(ttiArr[s]):
+            if np.isnan(dayI):
+                ttoTemp.append(np.nan)
+            else:
+                ix = np.argmax(thsDaysO[j] > dayI)
+                if ix > 0:
+                    ttoTemp.append(thsDaysO[j][ix])
+                else:
+                    ttoTemp.append(mxDays)
+                # ttoTemp.append(next(val for x, val in enumerate(thsDaysO[j]) if val > dayI))
+        ttoArr[s] = ttoTemp
+        wopArr[s] = ttoArr[s] - ttiArr[s]
+        # print("\nTTO: {}".format(ttoArr[s]))
+        # print("TTI: {}".format(ttiArr[s]))
+        # print("WOP: {}".format(wopArr[s]))
         # TTS -----------------------------------------------------------------
         for i in range(len(prb)):
             # Get the population to analyze and its final value from the mean

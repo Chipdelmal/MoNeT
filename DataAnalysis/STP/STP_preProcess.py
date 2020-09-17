@@ -15,11 +15,12 @@ from joblib import Parallel, delayed
 # (USR, DRV, AOI, REL, LND) = (sys.argv[1], 'LDR', sys.argv[2], sys.argv[3], sys.argv[4])
 (USR, DRV, AOI, REL, LND) = ('dsk', 'LDR', 'HLT', 'gravidFemale', 'PAN')
 (FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 2)
-(SUM, AGG, SPA, REP, SRP) = (True, True, True, True, True)
+(SUM, AGG, SPA, REP, SRP) = (True, False, False, True, False)
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, LND, REL)
+print(PT_DTA)
 (drive, land) = (drv.driveSelector(DRV), lnd.landSelector(LND))
 gene = drive.get(AOI).get('gDict')
 # Time and head ---------------------------------------------------------------

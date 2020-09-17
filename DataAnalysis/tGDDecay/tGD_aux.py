@@ -11,7 +11,7 @@ import pandas as pd
 import MoNeT_MGDrivE as monet
 
 
-XP_NPAT = 'E_{}_{}_{}_{}_{}_{}-{}_{}_{}.{}'
+XP_NPAT = 'E_{}_{}_{}_{}_{}_{}-{}_{}_{}.bz'
 
 
 # #############################################################################
@@ -43,9 +43,11 @@ def aggregateGeneAppearances(genotypes, genes):
 # #############################################################################
 def selectPath(USR, DRV, EXP):
     if USR == 'srv':
-        PATH_ROOT = '/RAID5/marshallShare/tGD/fullSweep/{}/{}/'.format(DRV, EXP)
+        PATH_ROOT = '/RAID5/marshallShare/tGD/figure2/{}/{}/'.format(DRV, EXP)
+    elif USR == 'dsk':
+        PATH_ROOT = '/media/hdd/WorkExperiments/tGD/figure2/{}/{}/'.format(DRV, EXP)
     else:
-        PATH_ROOT = '/media/chipdelmal/cache/Sims/tGD/fS/{}/{}/'.format(DRV, EXP)
+        PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/tGD/figure2/{}/{}/'.format(DRV, EXP)
     # monet.makeFolder('{}/'.format(PATH_ROOT))
     (PATH_IMG, PATH_DATA) = (
             '{}img/'.format(PATH_ROOT), '{}'.format(PATH_ROOT)
@@ -61,7 +63,7 @@ def selectDepVars(MOI, AOI):
     # Select ranges and dependent variable
     if (MOI == 'WOP') or (MOI == 'TTI') or (MOI == 'TTO'):
         scalers = (1, 100, round(2.5*365))
-        (HD_DEP, IND_RAN) = ('0.5', 7)
+        (HD_DEP, IND_RAN) = ('0.1', 7)
     else:
         scalers = (1, 100, 5000)
         (HD_DEP, IND_RAN) = ('ssv', 7)

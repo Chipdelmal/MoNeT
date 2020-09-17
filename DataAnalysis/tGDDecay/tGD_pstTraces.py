@@ -15,15 +15,15 @@ import compress_pickle as pkl
 
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'linkedDrive', 'HLT')
-(FMT, SKP, MF, FZ) = ('bz', False, (True, True), True)
-(QNT, thPlt) = ('10', '0.5')  # Change this QNT when the new pst are out!!!!!!!
-EXP = ('000', '001', '005', '010', '100')
-GRP = (0, 1)
+(FMT, SKP, MF, FZ) = ('bz', False, (False, True), True)
+(QNT, thPlt) = (90, 0.1)  # Change this QNT when the new pst are out!!!!!!!
+EXP = ('000', )# '001', '005', '010', '100')
+GRP = (0, ) # 1)
 ###############################################################################
 (grp, exp) = (GRP[0], EXP[0])
 for grp in GRP:
     for exp in EXP:
-        grpPad = str(grp).zfill(11)
+        grpPad = str(grp).zfill(2)
         #######################################################################
         # Setting up paths and style
         #######################################################################
@@ -34,8 +34,8 @@ for grp in GRP:
         drive = drv.driveSelector(DRV, AOI)
         (CLR, YRAN) = (drive.get('colors'), (0, drive.get('yRange')))
         STYLE = {
-                "width": .5, "alpha": .15, "dpi": 1*200, "legend": False,
-                "aspect": .25, "colors": CLR, "xRange": [0, (365*5)/2],
+                "width": .5, "alpha": .15, "dpi": 750, "legend": False,
+                "aspect": .25, "colors": CLR, "xRange": [0, (365*5)/3],
                 "yRange": YRAN
             }
         STYLE['aspect'] = monet.scaleAspect(1, STYLE)
@@ -72,15 +72,15 @@ for grp in GRP:
             id.extend([grp])
             relNum = id[4]
             ttx = (
-                    fun.getTTX(PT_OUT, relNum, AOI, QNT, 'TTI', id, thPlt),
-                    fun.getTTX(PT_OUT, relNum, AOI, QNT, 'TTO', id, thPlt)
+                    fun.getTTX(PT_OUT, relNum, AOI, str(QNT), 'TTI', id, '%0.1f' %(thPlt)),
+                    fun.getTTX(PT_OUT, relNum, AOI, str(QNT), 'TTO', id, '%0.1f' %(thPlt))
                 )
             ttx = [sumDta['population'].shape[0] if math.isnan(i) else i for i in ttx]
             ssv = fun.getTTX(PT_OUT, relNum, AOI, QNT, 'TTS', id, 'ssv')
             ssv = 0 if (math.isnan(ssv)) else ssv
             # Export plots ----------------------------------------------------
             plot.exportTracesPlot(
-                    repDta, name+'_Q'+QNT, STYLE, PT_IMG,
+                    repDta, name+'_Q'+str(QNT), STYLE, PT_IMG,
                     vLines=ttx, hLines=ssv
                 )
         cl = [i[:-2]+'cc' for i in CLR]

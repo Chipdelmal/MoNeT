@@ -59,3 +59,11 @@ scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/islandGravid/out/LD
 
 scp -rp  lab:/RAID5/marshallShare/UCI/Yoosook/gravidReleases/islandnonGravid/out/LDR/POSTPROCESS/ /media/chipdelmal/cache/Sims/Panmictic/wfu/islandnonGravid/out/LDR/
 ```
+
+#### Images
+
+```bash
+scp -rp  lab:/RAID5/marshallShare/STP/PAN/sim/mixed/img/  /media/hdd/WorkExperiments/STP/PAN/sim/mixed/img/*.png
+scp -rp  lab:/RAID5/marshallShare/STP/PAN/sim/gravidFemale/img/  /media/hdd/WorkExperiments/STP/PAN/sim/gravidFemale/img/*.png
+scp -rp  lab:/RAID5/marshallShare/STP/PAN/sim/nonGravidFemale/img/  /media/hdd/WorkExperiments/STP/PAN/sim/nonGravidFemale/img/*.png
+```
