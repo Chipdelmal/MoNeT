@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+import pandas as pd
 import operator as op
 from glob import glob
 import tGD_aux as aux
@@ -14,17 +15,18 @@ import MoNeT_MGDrivE as monet
 (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 # (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 qnt = .9
-(thiS, thoS, thwS, ttpS) = (
+(thiS, thoS, thwS, tapS) = (
         [.05, .10, .50, .90, .95],
         [.05, .10, .50, .90, .95],
         [.05, .10, .50, .90, .95],
         [150, 300, 450, 600]
     )
-header = ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
+header = ['i_hnf', 'i_cac', 'i_frc', 'i_hrt', 'i_ren', 'i_res', 'i_grp']
 EXPS = ('000', )
 
 
 EXP = EXPS[0]
+
 # -----------------------------------------------------------------------------
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)
 tS = datetime.now()
@@ -32,33 +34,49 @@ aux.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PostProcess ' + AOI)
 # Get experiment IDs ----------------------------------------------------------
 uids = fun.getExperimentsIDSets(PT_OUT, skip=-1)
 (hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
-
+# Parse filepaths -------------------------------------------------------------
 ptrn = aux.XP_NPAT.format('*', '*', '*', '*', '*', '*', AOI, '*', 'rto', 'npy')
 fPaths = sorted(glob(PT_OUT+ptrn))
+# Create empty dataframes to store the data -----------------------------------
+emptyDF = da.initEmptyDFs(fPaths, header, thiS, thoS, thwS, tapS)
+(ttiDF, ttoDF, wopDF, ttpDF, rapDF) = emptyDF
+# Iterate through experiments -------------------------------------------------
+for (i, fPath) in enumerate(fPaths):
+    repRto = np.load(fPath)
+    (reps, days) = repRto.shape
+    ###########################################################################
+    # Calculate Metrics
+    ###########################################################################
+    # Thresholds --------------------------------------------------------------
+    (ttiS, ttoS, wopS) = (
+            da.calcTTI(repRto, thiS),
+            da.calcTTO(repRto, thoS),
+            da.calcWOP(repRto, thwS)
+        )
+    (minS, maxS) = da.calcMinMax(repRto)
+    rapS = da.getRatioAtTime(repRto, tapS)
+    ###########################################################################
+    # Calculate Quantiles
+    ###########################################################################
+    ttiSQ = [np.nanquantile(tti, qnt) for tti in ttiS]
+    ttoSQ = [np.nanquantile(tto, qnt) for tto in ttoS]
+    wopSQ = [np.nanquantile(wop, 1-qnt) for wop in wopS]
+    rapSQ = [np.nanquantile(rap, qnt) for rap in rapS]
+    mniSQ = (np.nanquantile(minS[0], qnt), np.nanquantile(minS[1], qnt))
+    mnxSQ = (np.nanquantile(maxS[0], qnt), np.nanquantile(maxS[1], 1-qnt))
+    ###########################################################################
+    # Update in Dataframes
+    ###########################################################################
+    xpid = fun.getXpId(fPath, [1, 2, 3, 4, 5, 6, 8])
+    updates = [xpid+i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, rapSQ)]
+    ttiDF.iloc[i] = updates[0]
+    ttoDF.iloc[i] = updates[1]
+    wopDF.iloc[i] = updates[2]
+    ttpDF.iloc[i] = updates[3]
+    rapDF.iloc[i] = updates[4]
 
-fPath = fPaths[10]
-repRto = np.load(fPath)
-(reps, days) = repRto.shape
-###############################################################################
-# Calculate Metrics
-###############################################################################
-# Thresholds ------------------------------------------------------------------
-(ttiS, ttoS, wopS) = (
-        da.calcTTI(repRto, thiS),
-        da.calcTTO(repRto, thoS),
-        da.calcWOP(repRto, thwS)
-    )
-(minS, maxS) = da.calcMinMax(repRto)
-rapS = da.getRatioAtTime(repRto, ttpS)
-###############################################################################
-# Calculate Quantiles
-###############################################################################
-ttiSQ = [np.nanquantile(tti, qnt) for tti in ttiS]
-ttoSQ = [np.nanquantile(tto, qnt) for tto in ttoS]
-wopSQ = [np.nanquantile(wop, 1-qnt) for wop in wopS]
-rapSQ = [np.nanquantile(rap, qnt) for rap in rapS]
-mniSQ = (np.nanquantile(minS[0], qnt), np.nanquantile(minS[1], qnt))
-mnxSQ = (np.nanquantile(maxS[0], qnt), np.nanquantile(maxS[1], 1-qnt))
-###############################################################################
-# Shape Files
-###############################################################################
+ttiDF.to_csv(PT_MTR+AOI+'_TTI_'+str(int(qnt*100))+'_qnt', index=False)
+ttoDF.to_csv(PT_MTR+AOI+'_TTO_'+str(int(qnt*100))+'_qnt', index=False)
+wopDF.to_csv(PT_MTR+AOI+'_WOP_'+str(int(qnt*100))+'_qnt', index=False)
+ttpDF.to_csv(PT_MTR+AOI+'_TTP_'+str(int(qnt*100))+'_qnt', index=False)
+rapDF.to_csv(PT_MTR+AOI+'_RAP_'+str(int(qnt*100))+'_qnt', index=False)

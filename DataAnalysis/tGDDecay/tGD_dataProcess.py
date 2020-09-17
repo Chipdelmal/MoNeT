@@ -1,5 +1,6 @@
 
 import numpy as np
+import pandas as pd
 import operator as op
 import MoNeT_MGDrivE as monet
 
@@ -44,3 +45,13 @@ def calcMinMax(repRto):
 
 def getRatioAtTime(repRto, ttpS):
     return np.asarray([repRto[:, ttp] for ttp in ttpS])
+
+
+def initEmptyDFs(
+            fPaths, header, thiS, thoS, thwS, ttpS,
+            peak=['min', 'minx', 'max', 'maxx']
+        ):
+    fNum = len(fPaths)
+    heads = [(header+i) for i in (thiS, thoS, thwS, ttpS, peak)]
+    DFEmpty = [pd.DataFrame(np.nan, index=range(fNum), columns=h) for h in heads]
+    return DFEmpty
