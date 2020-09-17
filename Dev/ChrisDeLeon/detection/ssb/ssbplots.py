@@ -8,15 +8,17 @@ import seaborn as sns
 import networkx as nx
 import pandas as pd
 import numpy as np
+import simulator
 import detector
 
 # Helpers
 
-def get_label_counts(results, cluster_num, kernels=None):
+def get_label_counts(results, cluster_num, t=None, kernels=None):
     """
     Input(s):
-        results     : A nested dictionary such that results[c][k] is the detector for kernel k using c clusters
+        results     : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
         cluster_num : The cluster to use for counting labels
+        t           : The time step to use for labels. If None, defaults to the time step used for experiments
         kernels     : A list of kernel names to get label counts for. These names must be in results[c].keys()
         
     Returns:
@@ -26,8 +28,8 @@ def get_label_counts(results, cluster_num, kernels=None):
     df = pd.DataFrame()
     names = results[cluster_num].keys() if kernels is None else kernels
     for name in names:
-        d = results[cluster_num][name]
-        counts = d.cdata().groupby('type').size().to_frame().rename(columns={0 : "count"})
+        s = results[cluster_num][name]
+        counts = s.cdata(t).groupby('type').size().to_frame().rename(columns={0 : "count"})
         if 'bridge' not in counts.index:
             counts = counts.append(pd.DataFrame([0], index=['bridge'], columns=['count']))
         if 'sink'   not in counts.index:
@@ -39,63 +41,67 @@ def get_label_counts(results, cluster_num, kernels=None):
     df['clusters'] = cluster_num
     return df
 
-def get_steps(d, k, start=None, final=None):
+def get_steps(s, k, start=None, final=None):
     """
     Input(s):
-        d       : When `final` is None, use this detector's `ss_step` as the final step
+        s       : When `final` is None, use this simulator's `ss_step` as the final step
         k       : The number of evenly spaced values
         start   : The first time step to show in the plot
         final   : The last time step to show in the plot (should be greater than `start`)
         
     Returns:
-        `k` evenly spaced integer values from `start` to `final`. If `start` and `final` are not specified, 
-        then `start` defaults to 0 and `final` defaults to the step in which steady state occurs. If `k` is
-        not an integer, the function simply returns `k`.
+        `k` evenly spaced integer values from `start` to `final` (inclusive). If `start`
+        and `final` are not specified, then `start` defaults to 0 and `final` defaults to 
+        the step at which steady state occurs. If `k` is not an integer, the function 
+        returns `k`.
     """
-    if type(k) != int:
+    if not isinstance(k, int):
         return k
-    elif start is None and final is None:
-        return np.round(np.linspace(0, d.ss_step, k)).astype(int)
-    elif start is None:
-        return np.round(np.linspace(0, final, k)).astype(int)
-    elif final is None:
-        return np.round(np.linspace(0, d.ss_step, k)).astype(int)
+    
+    if start is None: start = 0
+    if final is None: final = s.ss_step
+    
+    if k == final - start + 1:
+        return np.arange(start, final + 1)
     else:
         return np.round(np.linspace(start, final, k)).astype(int)
 
 # Static Plots
 
-def plot_avg_change_in_population(results, kernels=None, k=200, start=None, final=None, plot_hline=False, fs=(8,8)):
+def plot_avg_abs_change_in_population(results, kernels=None, k=200, start=None, final=None, fs=(8,8)):
     """
     Input(s):
-        results    : A nested dictionary such that results[c][k] is the detector for kernel k using c clusters
+        results    : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
         kernels    : A list of kernel names to plot. These names must be in results[c].keys()
         k          : The number of evenly spaced values
         start      : The first time step to show in the plot
         final      : The last time step to show in the plot (should be greater than `start`)
-        plot_hline : If True, plots a red dotted line at y = 0 for reference
         fs         : The figure size as a tuple of the form (width, height)
         
     Returns:
-        The difference in population between time steps t + 1 and t over all nodes, and calculates the 
-        average of all resulting differences to obtain the average change in population at time step 
-        t + 1 for each kernel. These values are plotted against time over `k` evenly spaced 
-        values over the interval [`start`, `final`]. A custom range may be used if `k` is passed in as 
-        a list of ints. To plot only a specific set of kernels, pass a list of the kernel names as strings
-        to the `kernels` parameter. By default all kernels in `results` are plotted.
+        A graph of the average absolute change in population over the specified interval. 
+        The average absolute change in population is computed by first taking the absolute 
+        difference in population between time steps t + 1 and t over all nodes and 
+        computing the average of the resulting absolute differences. These values are 
+        plotted against time over `k` evenly spaced values in the interval [`start`, 
+        `final`]. A custom range may be used if `k` is passed in as a list of ints. To plot 
+        only a specific set of kernels, pass a list of the kernel names as strings to the
+        `kernels` parameter. By default all kernels in `results` are plotted.
     """
     # Steady state progression does not depend on clustering size,
     # so we can arbitrarily pick the first cluster for plotting
     cluster_num = list(results.keys())[0]
-    
     df = pd.DataFrame()
-    if final   is None: final   = np.max([d.ss_step for d in results[cluster_num].values()])
+    if final   is None: final   = np.max([s.ss_step for d in results[cluster_num].values()])
     if kernels is None: kernels = results[cluster_num]
-    for n, d in results[cluster_num].items():
+    for n, s in results[cluster_num].items():
         if n in kernels:
-            steps = get_steps(d, k, start, final)
+            steps = get_steps(s, k, start, final)
+            start = steps[0]
+            final = steps[-1]
+            popls = s.get_sizes(np.arange(start, final + 1))[:, steps]
             temp = pd.DataFrame()
-            temp['means'] = np.mean(np.diff(np.array([d.migrate(s) for s in steps]), axis=0), axis=1)
+            temp['means'] = np.mean(np.abs(np.diff(popls, axis=1)), axis=0)
             temp['kname'] = str(n)
             temp['steps'] = steps[1:]
             df = pd.concat([df, temp])
@@ -103,38 +109,68 @@ def plot_avg_change_in_population(results, kernels=None, k=200, start=None, fina
     sns.lineplot(x="steps", y="means", hue="kname", data=df, legend='full', palette='muted')
     plt.title("Steady State Progression")
     plt.xlabel("Time Step")
-    plt.ylabel("Average Change in Population")
-    if plot_hline: plt.hlines(0, xmin=0, xmax=final, color='r', linestyle='dashed')
+    plt.ylabel("Mean Absolute Change in Population")
     
-def label_counts_barplot(results, cluster_num, kernels=None, fs=(8,6)):
+def label_counts_barplot(results, cluster_num, t=None, kernels=None, fs=(8,6)):
     """
     Input(s):
-        results     : A nested dictionary such that results[c][k] is the detector for kernel k using c clusters
+        results     : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
         cluster_num : The cluster to use for counting labels
+        t           : The time step to use for labels. If None, defaults to the time step used for experiments
         kernels     : A list of kernel names to get label counts for. These names must be in results[c].keys()
         fs          : The figure size as a tuple of the form (width, height)
         
     Returns:
-        A side by side bar plot of the sink/bridge/source counts for each kernel. To plot only a specific 
-        set of kernels, pass a list of the kernel names as strings to the `kernels` parameter.
+        A side by side bar plot of the sink/bridge/source counts for each kernel. To plot 
+        only a specific set of kernels, pass a list of the kernel names as strings to the 
+        `kernels` parameter.
     """
-    df = get_label_counts(results, cluster_num, kernels).reset_index().rename(columns={'level_1' : 'type'})
+    df = get_label_counts(results, cluster_num, t, kernels).reset_index().rename(columns={'level_1' : 'type'})
     plt.figure(figsize=fs)
     sns.barplot(x="name", y="count", hue="type", data=df)
     plt.title(f"Sink/Bridge/Source Counts using {cluster_num} Cluster(s)")
     plt.xticks(rotation=60);
-
-def label_counts_lineplot(results, kernel_name, fs=(8,6)):
+    
+def label_proportions_barplot(results, cluster_num, t=None, kernels=None, fs=(8,6)):
     """
     Input(s):
-        results     : A nested dictionary such that results[c][k] is the detector for kernel k using c clusters
+        results     : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
+        cluster_num : The cluster to use for counting labels
+        t           : The time step to use for labels. If None, defaults to the time step used for experiments
+        kernels     : A list of kernel names to get label counts for. These names must be in results[c].keys()
+        fs          : The figure size as a tuple of the form (width, height)
+        
+    Returns:
+        A side by side bar plot of the sink/bridge/source counts for each kernel. To plot 
+        only a specific set of kernels, pass a list of the kernel names as strings to the 
+        `kernels` parameter.
+    """
+    df = get_label_counts(results, cluster_num, t, kernels).reset_index().rename(columns={'level_1' : 'type'})
+    df['count'] = df.groupby('name')['count'].apply(lambda x: x / sum(x))
+    plt.figure(figsize=fs)
+    sns.barplot(x="name", y="count", hue="type", data=df)
+    plt.title(f"Sink/Bridge/Source Proportions using {cluster_num} Cluster(s)")
+    plt.ylabel('proportion')
+    plt.xticks(rotation=60);
+
+def label_counts_lineplot(results, kernel_name, t=None, fs=(8,6)):
+    """
+    Input(s):
+        results     : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
         kernel_name : The kernel to use for plotting as a string. This name must be in results[c].keys()
+        t           : The time step to use for labels. If None, defaults to the time step used for experiments
         fs          : The figure size as a tuple of the form (width, height)
     
     Returns:
-        A lineplot of sink/bridge/source count versus clusters for `kernel_name`.
+        A lineplot of sink/bridge/source count (at time step `t`) versus clusters for `kernel_name`.
+        
+    Notes:
+        If `t` is not None, then the experiments will be rerun with the new value. Thus, it is recommended to only use
+        `t` if the number of clusters used for experiments is small. If for whatever reason this function is to be called
+        repeatedly with the same `t`, then it is much more efficient to pass in `t` on the first call and set `t` equal 
+        to None for the rest of the calls.
     """
-    df = pd.concat([get_label_counts(results, c, [kernel_name]) for c in results])\
+    df = pd.concat([get_label_counts(results, c, t, [kernel_name]) for c in results])\
            .reset_index()\
            .rename(columns={'level_1' : 'type'})
     plt.figure(figsize=fs)
@@ -145,7 +181,7 @@ def label_counts_lineplot(results, kernel_name, fs=(8,6)):
 def community_populations_barplot(results, cluster_num, kernel_name, plot_type='bar', t=None, fs=(8,6)):
     """
     Input(s):
-        results     : A nested dictionary such that results[c][k] is the detector for kernel k using c clusters
+        results     : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
         cluster_num : The cluster to use for counting labels
         kernel_name : The kernel to use for plotting as a string. This name must be in results[c].keys()
         plot_type   : Either 'bar' | 'barh'
@@ -153,20 +189,21 @@ def community_populations_barplot(results, cluster_num, kernel_name, plot_type='
         fs          : The figure size as a tuple of the form (width, height)
     
     Returns:
-        A plot of the population size of each community for `kernel_name` when `cluster_num` clusters are used.
+        A plot of the population size of each community for `kernel_name` when 
+        `cluster_num` clusters are used.
     """
-    d = results[cluster_num][kernel_name]
-    c = d.ndata()
-    c['pop'] = d.migrate(d.ss_step if t is None else t)
+    s = results[cluster_num][kernel_name]
+    n = s.ndata()
+    n['pop'] = s.migrate(s.ss_step if t is None else t)
     plt.figure(figsize=fs)
-    c.groupby('cid')['pop'].sum().plot(kind=plot_type)
+    n.groupby('cid')['pop'].sum().plot(kind=plot_type)
     plt.title(f"Distribution of Population Size per Community for {kernel_name}")
     plt.ylabel('Population Size')
-    
+
 def community_populations_lineplot(results, cluster_num, kernel_name, k=200, start=None, final=None, fs=(8,6)):
     """
     Input(s):
-        results     : A nested dictionary such that results[c][k] is the detector for kernel k using c clusters
+        results     : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
         cluster_num : The cluster to use for counting labels
         kernel_name : The kernel to use for plotting as a string. This name must be in results[c].keys()
         k           : The number of evenly spaced values
@@ -177,15 +214,20 @@ def community_populations_lineplot(results, cluster_num, kernel_name, k=200, sta
     Returns:
         A lineplot of sink/bridge/source count versus clusters for `kernel_name`.
     """
-    d = results[cluster_num][kernel_name]
-    steps = get_steps(d, k, start, final)
+    s = results[cluster_num][kernel_name]
     df = pd.DataFrame()
-    copy = d.ndata()
-    for s in steps:
-        copy['pop'] = d.migrate(s)
+    copy = s.ndata()
+    
+    steps = get_steps(s, k, start, final)
+    start = steps[0]
+    final = steps[-1]
+    populations = s.get_sizes(np.arange(start, final + 1))[:, steps]
+    for i in range(populations.shape[1]):
+        copy['pop'] = populations[:, i]
         temp = copy[['cid', 'pop']].groupby('cid').sum()
-        temp['step'] = s
+        temp['step'] = i
         df = pd.concat([df, temp])
+        
     df = df.reset_index()
     plt.figure(figsize=fs)
     sns.lineplot(x="step", y="pop", hue="cid", data=df, legend='full', palette='muted')
@@ -197,13 +239,14 @@ def community_populations_lineplot(results, cluster_num, kernel_name, k=200, sta
 def community_nodes_barplot(results, cluster_num, kernel_name, fs=(8,6)):
     """
     Input(s):
-        results     : A nested dictionary such that results[c][k] is the detector for kernel k using c clusters
+        results     : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
         cluster_num : The cluster to use for counting labels
         kernel_name : The kernel to use for plotting as a string. This name must be in results[c].keys()
         fs          : The figure size as a tuple of the form (width, height)
         
     Returns:
-        A plot of the number of nodes in each community for `kernel_name` when `cluster_num` clusters are used.
+        A plot of the number of nodes in each community for `kernel_name` when
+        `cluster_num` clusters are used.
     """
     plt.figure(figsize=fs)
     results[cluster_num][kernel_name].ndata().groupby('cid').size().plot(kind='bar');
@@ -213,19 +256,19 @@ def community_nodes_barplot(results, cluster_num, kernel_name, fs=(8,6)):
 def community_proportions_barplot(results, cluster_num, kernel_name, t=None, fs=(8,6)):
     """
     Input(s):
-        results     : A nested dictionary such that results[c][k] is the detector for kernel k using c clusters
+        results     : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
         cluster_num : The cluster to use for counting labels
         kernel_name : The kernel to use for plotting as a string. This name must be in results[c].keys()
         t           : The time step to extract population sizes from (default is steady state)
         fs          : The figure size as a tuple of the form (width, height)
         
     Returns:
-        The proportion of the total population and the proportion of the total number of nodes in each community 
-        as a side by side bar plot.
+        The proportion of the total population and the proportion of the total number of 
+        nodes in each community as a side by side bar plot.
     """
-    d = results[cluster_num][kernel_name]
-    c = d.ndata()
-    c['pop'] = d.migrate(d.ss_step if t is None else t)
+    s = results[cluster_num][kernel_name]
+    c = s.ndata()
+    c['pop'] = s.migrate(s.ss_step if t is None else t)
     h = len(c['cid'].unique())
     nds = pd.DataFrame({
         'y'   : c.groupby('cid').size() / c.shape[0],
@@ -244,27 +287,28 @@ def community_proportions_barplot(results, cluster_num, kernel_name, t=None, fs=
     
 # Interactive Plots
     
-def plot_interactive_label_counts(results, kernel_name):
+def plot_interactive_label_counts(results, kernel_name, t=None):
     """
     Input(s):
-        results     : A nested dictionary such that results[c][k] is the detector for kernel k using c clusters
+        results     : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
         kernel_name : The kernel to use for plotting as a string. This name must be in results[c].keys()
+        t           : The time step to use for labels. If None, defaults to the time step used for experiments
     
     Returns:
-        A side by side bar plot of the sink/bridge/source counts for `kernel_name` over all clusters.
+        A side by side bar plot of the sink/bridge/source counts (at time step `t`) for `kernel_name` over all 
+        clusters.
     """
-    df = pd.concat([get_label_counts(results, c, [kernel_name]) for c in results])\
+    df = pd.concat([get_label_counts(results, c, t, [kernel_name]) for c in results])\
            .reset_index()\
            .rename(columns={'level_1' : 'type'})
     fig = px.bar(df, x="type", y="count", color="type",
       animation_frame="clusters", animation_group="clusters", range_y=[0, df["count"].max()])
     fig.show()
     
-    
 def plot_population_distribution(results, kernel_name, cluster_num=None, k=200, start=None, final=None):
     """
     Input(s):
-        results     : A nested dictionary such that results[c][k] is the detector for kernel k using c clusters
+        results     : A nested dictionary such that results[c][k] is the simulator for kernel k using c clusters
         kernel_name : The kernel to use for plotting as a string. This name must be in results[c].keys()
         cluster_num : The cluster to use for goloring nodes
         k           : The number of evenly spaced values
@@ -272,27 +316,31 @@ def plot_population_distribution(results, kernel_name, cluster_num=None, k=200, 
         final       : The last time step to show in the plot (should be greater than `start`)
     
     Returns:
-        An interactive visualization of the population for every state from time step `start` to time step
-        `final` over `k` values for `kernel_name`. A custom range may be used if `k` is passed in as a list of ints.
+        An interactive visualization of the population for every state from time step 
+        `start` to time step `final` (inclusive) over `k` values for `kernel_name`. A 
+        custom range may be used if `k` is passed in as a list of ints.
     """
-    c = None
+    s, c = None, None
     if cluster_num is None:
         # Steady state progression does not depend on clustering size,
         # so we can arbitrarily pick the first cluster for plotting
-        d = results[list(results.keys())[0]][kernel_name]
+        s = results[list(results.keys())[0]][kernel_name]
         c = "node"
     else:
         # If a cluster_num is specified, each node will be colored 
         # according to its community
-        d = results[cluster_num][kernel_name]
+        s = results[cluster_num][kernel_name]
         c = "cid"
     
-    steps = get_steps(d, k, start, final)        
+    steps = get_steps(s, k, start, final)
+    start = steps[0]
+    final = steps[-1]
+    popls = s.get_sizes(np.arange(start, final + 1)).T[steps]
     df = pd.DataFrame({
-        'node'       : list(range(len(d.tmtx))) * len(steps),
-        'population' : np.array([d.migrate(s) for s in steps]).flatten(),
-        'step'       : np.array([[s] * len(d.tmtx) for s in steps]).flatten(),
-        'cid'        : list(d.ndata()['cid']) * len(steps)
+        'node'       : list(range(len(s.tmtx))) * len(popls),
+        'population' : popls.flatten(),
+        'step'       : np.array([[i] * len(s.tmtx) for i in steps]).flatten(),
+        'cid'        : list(s.ndata()['cid']) * len(popls)
     })
     
     fig = px.bar(df, x="node", y="population", color=c, title=f"Population Distribution for {kernel_name}",
@@ -389,8 +437,8 @@ def get_brdr_traces(G, locs, brdr_colorscale, bordr_fn, bordr_cb, bcbx):
     Returns:
         The border traces for plotting the network.
     """
-    brdg_dict = {'sink' : 0, 'bridge' : 1, 'source' : 2}
     sizes = bordr_fn(locs['size'])
+    codes = { t : i for i, t in enumerate(sorted(locs['ctype'].unique())) }
     return go.Scatter(
         x=locs['lon'], y=locs['lat'],
         mode='markers',
@@ -398,20 +446,20 @@ def get_brdr_traces(G, locs, brdr_colorscale, bordr_fn, bordr_cb, bcbx):
         marker=dict(
             showscale=bordr_cb,
             colorscale=brdr_colorscale,
-            color=locs['ctype'].map(brdg_dict),
+            color=locs['ctype'].map(codes),
             size=sizes[0] if len(set(sizes)) == 1 else sizes,
             colorbar=dict(
                 thickness=15,
                 title='Community Type',
                 xanchor='left',
                 titleside='right',
-                tickvals=list(brdg_dict.values()),
-                ticktext=list(brdg_dict.keys()),
+                ticktext=list(codes.keys()),
+                tickvals=list(codes.values()),
                 x=bcbx
             ),
             line_width=0))
 
-def get_node_traces(G, locs, node_colorscale, node_prec, nodes_cb, ncbx):
+def get_node_traces(G, locs, node_colorscale, node_prec, nodes_cb, ncbx, n_offset):
     """
     Input(s):
         G               : the network as a networkx graph
@@ -429,7 +477,7 @@ def get_node_traces(G, locs, node_colorscale, node_prec, nodes_cb, ncbx):
         node_t.append(f'cid: {cid}<br>nid: {nid}<br>ctype: {typ}<br>pop: {pop}')
         
     ticks = locs['color'].unique()
-    ticks = ticks - (ticks / len(ticks)) + 0.4
+    ticks = ticks - (ticks / len(ticks)) + n_offset
     sizes = locs['size']
     return go.Scatter(
         x=locs['lon'], y=locs['lat'],
@@ -454,7 +502,8 @@ def get_node_traces(G, locs, node_colorscale, node_prec, nodes_cb, ncbx):
             line_width=0))
 
 def get_colorbar_positions(bordr_cb, edges_cb, nodes_cb, positions):
-    assert len(positions) <= 3
+    assert len(positions) <= 3, "Too many coordinates specified"
+    assert len(positions) == sum(map(bool, [bordr_cb, edges_cb, nodes_cb])), "Incorrect number of coordinates received"
     positions = np.array(([float('inf')] * (3 - len(positions))) + positions)
     minx, midx, maxx = positions[np.argsort(positions)]
     if not bordr_cb and not edges_cb and not nodes_cb: return (0   , 0   , 0   )
@@ -481,15 +530,16 @@ def extract_geo_coords(geo_data):
             points.append([None, None])
         else:
             pass # Don't need geometry type for plotting the map
-        
     x, y = zip(*pts)
     return x, y
 
 def plot_network(tmtx, locs,
-                 nodes_cm=cmx.get_cmap('cool')   , nodes_cb=False, nodes_fn=lambda n: [4.0] * len(n), min_popl=0, nodes_pr=1,
-                 edges_cm=cmx.get_cmap('Purples'), edges_cb=False, edges_fn=lambda w: [0.5] * len(w), min_prob=0, edges_pr=5,
+                 nodes_cm=cmx.get_cmap('cool')   , nodes_cb=False, nodes_fn=lambda n: [4.0] * len(n),
+                 edges_cm=cmx.get_cmap('Purples'), edges_cb=False, edges_fn=lambda w: [0.5] * len(w),
                  bordr_cm=cmx.get_cmap('gray')   , bordr_cb=False, bordr_fn=lambda b: [7.0] * len(b),
-                 cb_xlocs=[1.225, 1.125, 1.020],
+                 min_popl=0, min_prob=0, max_prob=1,  
+                 nodes_pr=1, edges_pr=5,
+                 n_offset=0.4, cb_xlocs=[],
                  shufflec=False, rng_seed=None, 
                  geo_data=None, geo_wdth=1.5, geocolor='#999999',
                  paper_bg="LightSteelBlue", netwk_bg=None,
@@ -499,19 +549,23 @@ def plot_network(tmtx, locs,
         tmtx     : the state transition matrix corresponding to `locs`
         locs     : the result of detector.run().ndata()
         nodes_cm : a matplotlib colormap object to be used for coloring nodes
+        nodes_cb : if True, shows the colorbar for the community IDs. The location must be specified using `cb_xlocs`
         nodes_fn : a function that takes in all node populations as a pandas series and scales them in some way
         min_popl : if a node's population is very small use this as its population instead
         nodes_pr : the precision to use when displaying node populations
-        nodes_cb : if True, shows the colorbar for the community IDs
         edges_cm : a matplotlib colormap object to be used for coloring edges
         edges_fn : a function that takes in all edge weights as a pandas series and scales them in some way
-        min_prob : draw an edge if its weight is at least this value
+        edges_cb : if True, shows the colorbar for the edge weights. The location must be specified using `cb_xlocs`
+        min_prob : draw an edge if its weight is greater than or equal to this value
+        max_prob : draw an edge if its weight is less than or equal to this value
         edges_pr : the precision to use when displaying edge weights
-        edges_cb : if True, shows the colorbar for the edge weights
         bordr_cm : a matplotlib colormap object to be used for coloring node borders
         bordr_fn : a function that takes in the scaled node sizes as a pandas series and scales them in some way
-        cb_xlocs : a list consisting of x locations for the colorbars. The colorbars will be arranged so that the bridge colorbar is 
-                   always after the node and edges colorbar. This is for readability purposes.
+        bordr_cb : if True, shows the colorbar for the node borders. The location must be specified using `cb_xlocs`
+        n_offset : adjusts the vertical positions of the cid labels on the nodes colorbar
+        cb_xlocs : a list consisting of x locations for the colorbars. For readability purposes, the colorbars will
+                   be arranged in the order: nodes, edges, borders. The number of coordinates must match the number 
+                   of colobars to plot. If not, an error will be raised.
         shufflec : if True, borders can have colors from different segments of its colormap instead of just the lower/middle/upper segments
         rng_seed : seed to be used for shuffling. Only has an effect if `shufflec` is True
         geo_data : a list containing geojson.feaature.Feature objects for plotting the background
@@ -545,53 +599,53 @@ def plot_network(tmtx, locs,
     G = nx.Graph()
     G = nx.from_numpy_matrix(tmtx)
     G.add_nodes_from([ (i, {'pos' : (r['lon'], r['lat'])}) for i, r in ndata.iterrows() ])
-    G.remove_edges_from([(n1, n2) for n1, n2, w in G.edges.data('weight') if w < min_prob])
+    G.remove_edges_from([(n1, n2) for n1, n2, w in G.edges.data('weight') if w < min_prob or w > max_prob])
     
-    # Apply scaling functions to nodes, borders, and edges
-    ndata['size'] = nodes_fn(ndata['pop'])    
-    new_weights = edges_fn(np.array(list(map(lambda t: t[2]['weight'], G.edges(data=True)))))
-    nx.set_edge_attributes(G, {(u, v) : {'scaled' : sw} for (u, v), sw in zip(G.edges, new_weights)})
-    
-    # Set styling for edges
-    edge_colorsdict = defaultdict(list)
-    min_weight, max_weight = np.min(new_weights), np.max(new_weights)
-    for u, v, d in G.edges(data=True):
-        normalized = mpl.colors.Normalize(vmin=min_weight, vmax=max_weight)
-        scalar_map = cmx.ScalarMappable(norm=normalized, cmap=edges_cm)
-        edge_colorsdict[tuple(np.array(scalar_map.to_rgba(d['scaled']))*255)].append((u, v, d['weight'], d['scaled']))
-    
-    # Set styling for nodes and borders
+    # This helps with colorbar formatting
     unique_cids = ndata['cid'].unique()
-    brdr_colorscale = get_discrete_colorscale(bordr_cm,                3, shuffle=shufflec, seed=rng_seed)
-    node_colorscale = get_discrete_colorscale(nodes_cm, len(unique_cids), shuffle=False   , seed=None)
-    
-    # Enumerate cids (this helps the formatting of the node colorbar)
+    bcbx, ecbx, ncbx= get_colorbar_positions(bordr_cb, edges_cb, nodes_cb, cb_xlocs)
     ndata['color'] = ndata['cid'].map({cid : i for i, cid in enumerate(sorted(unique_cids))})
     
-    # Helps with colorbar formatting
-    bcbx, ecbx, ncbx= get_colorbar_positions(bordr_cb, edges_cb, nodes_cb, cb_xlocs)
+    # Apply scaling functions to nodes
+    ndata['size'] = nodes_fn(ndata['pop'])
+    
+    # Apply scaling and styling to edges (if any), then get edge traces + edge colorbar trace
+    if len(G.edges) != 0:
+        new_weights = edges_fn(np.array(list(map(lambda t: t[2]['weight'], G.edges(data=True)))))
+        nx.set_edge_attributes(G, {(u, v) : {'scaled' : sw} for (u, v), sw in zip(G.edges, new_weights)})
+        edge_colorsdict = defaultdict(list)
+        min_weight, max_weight = np.min(new_weights), np.max(new_weights)
+        for u, v, d in G.edges(data=True):
+            normalized = mpl.colors.Normalize(vmin=min_weight, vmax=max_weight)
+            scalar_map = cmx.ScalarMappable(norm=normalized, cmap=edges_cm)
+            edge_colorsdict[tuple(np.array(scalar_map.to_rgba(d['scaled']))*255)].append((u, v, d['weight'], d['scaled']))
+        edge_traces = get_edge_traces(G, ndata, edge_colorsdict, edges_pr)
+        ebar_trace = [go.Scatter(x=[None], y=[None],
+                                 mode='markers',
+                                 marker=dict(
+                                     colorscale=get_discrete_colorscale(edges_cm, 255, shuffle=False), 
+                                     showscale=edges_cb,
+                                     cmin=min_weight,
+                                     cmax=max_weight,
+                                     colorbar=dict(
+                                         thickness=15,
+                                         title='Scaled Edge Weight',
+                                         xanchor='left',
+                                         titleside='right',
+                                         x=ecbx)
+                                 ),
+                                 hoverinfo='none')]
+    else:
+        edge_traces = []
+        ebar_trace  = []
+    
+    # Set styling for nodes and borders
+    brdr_colorscale = get_discrete_colorscale(bordr_cm, len(ndata['ctype'].unique()), shuffle=shufflec, seed=rng_seed)
+    node_colorscale = get_discrete_colorscale(nodes_cm, len(unique_cids)            , shuffle=False   , seed=None)
     
     # Retrieve traces for plotly
-    edge_traces = get_edge_traces(G, ndata, edge_colorsdict, edges_pr)
     brdr_traces = get_brdr_traces(G, ndata, brdr_colorscale, bordr_fn, bordr_cb, bcbx)
-    node_traces = get_node_traces(G, ndata, node_colorscale, nodes_pr, nodes_cb, ncbx)
-    
-    # Add colorbar for edge weight
-    ebar_trace = go.Scatter(x=[None], y=[None],
-                            mode='markers',
-                            marker=dict(
-                                colorscale=get_discrete_colorscale(edges_cm, 255, shuffle=False), 
-                                showscale=edges_cb,
-                                cmin=min_weight,
-                                cmax=max_weight,
-                                colorbar=dict(
-                                    thickness=15,
-                                    title='Scaled Edge Weight',
-                                    xanchor='left',
-                                    titleside='right',
-                                    x=ecbx)
-                            ),
-                            hoverinfo='none')
+    node_traces = get_node_traces(G, ndata, node_colorscale, nodes_pr, nodes_cb, ncbx, n_offset)
     
     # Add map border if specified
     map_trace = []
@@ -604,7 +658,7 @@ def plot_network(tmtx, locs,
                                     hoverinfo='skip'))
     
     # Plot data
-    fig = go.Figure(data=map_trace + edge_traces + [brdr_traces, node_traces, ebar_trace],
+    fig = go.Figure(data=map_trace + edge_traces + ebar_trace + [brdr_traces, node_traces],
                 layout=go.Layout(
                     width=fig_wdth,
                     height=fig_hght,
