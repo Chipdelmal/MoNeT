@@ -5,79 +5,89 @@ import sys
 from glob import glob
 import tGD_aux as aux
 import tGD_fun as fun
+import tGD_dataProcess as da
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 # from joblib import Parallel, delayed
 
 
-# (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), .90, True)  # .75, True)
-(thr, gIx, hIx) = ([.05, .10, .50, .90, .95], 1, 0)
-EXPS = ('000', )#'001', '005', '010', '100')
-for EXP in EXPS:
-    ###########################################################################
-    # Setting up paths and style
-    ###########################################################################
-    header = ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
-    (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, EXP)
+(USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
+# (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+qnt = .9
+(thiS, thoS, thwS, tapS) = (
+        [.05, .10, .50, .90, .95],
+        [.05, .10, .50, .90, .95],
+        [.05, .10, .50, .90, .95],
+        [150, 300, 450, 600]
+    )
+header = ['i_hnf', 'i_cac', 'i_frc', 'i_hrt', 'i_ren', 'i_res', 'i_grp']
+EXPS = ('000', )
+###############################################################################
+# Iterate through experiments
+###############################################################################
+expNum = len(EXPS)
+for (j, EXP) in enumerate(EXPS):
     tS = datetime.now()
+    (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)
     aux.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PostProcess ' + AOI)
-    ###########################################################################
-    # Quantiles calculation for experiments
-    ###########################################################################
-    uids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
+    print('{}* [{}/{}] {}{}'.format(
+            monet.CWHT, str(j+1).zfill(3), str(expNum).zfill(3),
+            EXP, monet.CEND
+        ))
+    # Get experiment IDs ------------------------------------------------------
+    uids = fun.getExperimentsIDSets(PT_OUT, skip=-1)
     (hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
-    # Base experiments
-    bsPat = aux.XP_NPAT.format(
-            '*', '*', '*', '*', '00', '*', AOI, '*', 'sum', FMT
-        )
-    bsFiles = sorted(glob(PT_PRE+bsPat))
-    existing = glob(PT_OUT+'*')
-    for rnIt in ren:
-        # Load repetitions and summed data
-        pbPat = aux.XP_NPAT.format(
-                '*', '*', '*', '*', rnIt, '*', AOI, '*', 'srp', FMT
+    # Parse filepaths ---------------------------------------------------------
+    ptrn = aux.XP_NPAT.format('*', '*', '*', '*', '*', '*', AOI, '*', 'rto', 'npy')
+    fPaths = sorted(glob(PT_OUT+ptrn))
+    # Create empty dataframes to store the data -------------------------------
+    emptyDF = da.initEmptyDFs(fPaths, header, thiS, thoS, thwS, tapS)
+    (ttiDF, ttoDF, wopDF, ttpDF, rapDF) = emptyDF
+    # Iterate through experiments ---------------------------------------------
+    fNum = len(fPaths)
+    for (i, fPath) in enumerate(fPaths):
+        print('{}+ File: {}/{}'.format(
+                 monet.CBBL, str(i+1).zfill(len(str(fNum))), fNum, monet.CEND
+             ), end='\r')
+        repRto = np.load(fPath)
+        (reps, days) = repRto.shape
+        #######################################################################
+        # Calculate Metrics
+        #######################################################################
+        # Thresholds ----------------------------------------------------------
+        (ttiS, ttoS, wopS) = (
+                da.calcTTI(repRto, thiS),
+                da.calcTTO(repRto, thoS),
+                da.calcWOP(repRto, thwS)
             )
-        pbFiles = sorted(glob(PT_PRE+pbPat))
-        psPat = aux.XP_NPAT.format(
-                '*', '*', '*', '*', rnIt, '*', AOI, '*', 'sum', FMT
-            )
-        psFiles = sorted(glob(PT_PRE+psPat))
-        fName = PT_OUT+str(rnIt).zfill(2)+'_'+AOI+'_'+str(int(QNT*100)).zfill(2)
-        print('{}* [{}/{}] {}{}'.format(
-                monet.CWHT,
-                str(rnIt).zfill(3), str(len(ren)-1).zfill(3),
-                fName.split('/')[-1], monet.CEND
-            ))
-        fNum = len(pbFiles)
-        # Calculate metrics ---------------------------------------------------
-        (wopL, mnCuts, mxCuts, tsCuts) = [[None] * fNum for i in range(4)]
-        for pIx in range(fNum):
-            print('{}+ File: {}/{}'.format(
-                     monet.CBBL, str(pIx+1).zfill(len(str(fNum))),
-                     fNum, monet.CEND
-                 ), end='\r')
-            # Load required files (b; base, p: probe, s: steady)
-            (bFile, pFile, sFile) = (bsFiles[pIx], pbFiles[pIx], psFiles[pIx])
-            (mnRef, srpPrb, ssRef) = [
-                    pkl.load(file) for file in (bFile, pFile, sFile)
-                ]
-            # Do the metrics calculations
-            (wop, tti, tto, tts) = [
-                     list(i) for i in fun.calcQuantMetrics(
-                             srpPrb, mnRef, ssRef,
-                             thr, gIx, hIx, quantile=QNT, ssTolerance=1-QNT
-                         )
-                 ]
-            # Assign in list for export
-            xpId = fun.getXpId(pFile, [1, 2, 3, 4, 5, 6, 8])
-            wopL[pIx] = xpId+wop
-            mnCuts[pIx] = xpId+tti
-            mxCuts[pIx] = xpId+tto
-            tsCuts[pIx] = xpId+tts
-        monet.writeListToCSV(fName+'-WOP.csv', wopL, header=header+thr)
-        monet.writeListToCSV(fName+'-TTI.csv', mnCuts, header=header+thr)
-        monet.writeListToCSV(fName+'-TTO.csv', mxCuts, header=header+thr)
-        monet.writeListToCSV(fName+'-TTS.csv', tsCuts, header=header+['ssd', 'ssv'])
+        (minS, maxS) = da.calcMinMax(repRto)
+        rapS = da.getRatioAtTime(repRto, tapS)
+        #######################################################################
+        # Calculate Quantiles
+        #######################################################################
+        ttiSQ = [np.nanquantile(tti, qnt) for tti in ttiS]
+        ttoSQ = [np.nanquantile(tto, qnt) for tto in ttoS]
+        wopSQ = [np.nanquantile(wop, 1-qnt) for wop in wopS]
+        rapSQ = [np.nanquantile(rap, qnt) for rap in rapS]
+        mniSQ = (np.nanquantile(minS[0], qnt), np.nanquantile(minS[1], qnt))
+        mnxSQ = (np.nanquantile(maxS[0], qnt), np.nanquantile(maxS[1], 1-qnt))
+        #######################################################################
+        # Update in Dataframes
+        #######################################################################
+        xpid = fun.getXpId(fPath, [1, 2, 3, 4, 5, 6, 8])
+        updates = [xpid+i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, rapSQ)]
+        ttiDF.iloc[i] = updates[0]
+        ttoDF.iloc[i] = updates[1]
+        wopDF.iloc[i] = updates[2]
+        ttpDF.iloc[i] = updates[3]
+        rapDF.iloc[i] = updates[4]
+    ###########################################################################
+    # Export Dataframes
+    ###########################################################################
+    ttiDF.to_csv(PT_MTR+AOI+'_TTI_'+str(int(qnt*100))+'_qnt', index=False)
+    ttoDF.to_csv(PT_MTR+AOI+'_TTO_'+str(int(qnt*100))+'_qnt', index=False)
+    wopDF.to_csv(PT_MTR+AOI+'_WOP_'+str(int(qnt*100))+'_qnt', index=False)
+    ttpDF.to_csv(PT_MTR+AOI+'_TTP_'+str(int(qnt*100))+'_qnt', index=False)
+    rapDF.to_csv(PT_MTR+AOI+'_RAP_'+str(int(qnt*100))+'_qnt', index=False)
+print(monet.CWHT+'* Finished!                                '+monet.CEND)
