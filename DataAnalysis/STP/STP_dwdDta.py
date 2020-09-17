@@ -25,3 +25,8 @@ for (i, exp) in enumerate(EXPS):
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     p.wait()
     print('Finished!')
+
+
+
+# /RAID5/marshallShare/STP/PAN/sim/mixed/ANALYZED/E_0001000000_05_0001000000_0100000000_0010000000/ANALYZED/
+# /RAID5/marshallShare/STP/PAN/sim/mixed/ANALYZED/E_0001000000_01_0001000000_0100000000_0010000000/ANALYZED/

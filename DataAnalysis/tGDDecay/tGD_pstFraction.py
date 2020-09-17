@@ -18,7 +18,7 @@ import MoNeT_MGDrivE as monet
 EXP = ('000', )# '001', '005', '010', '100')
 
 for exp in EXP:
-    (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, exp)
+    (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, exp)
     uids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
     (hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
     tS = datetime.now()
@@ -27,7 +27,7 @@ for exp in EXP:
     # Base experiments
     #   These are the experiments without any releases (for fractions)
     # #########################################################################
-    basePat = aux.XP_NPAT.format('*', '*', '*', '*', '00', '*', AOI, '*', 'sum')
+    basePat = aux.XP_NPAT.format('*', '*', '*', '*', '00', '*', AOI, '*', 'sum', 'bz')
     baseFiles = sorted(glob(PT_PRE+basePat))
     # #########################################################################
     # Probe experiments

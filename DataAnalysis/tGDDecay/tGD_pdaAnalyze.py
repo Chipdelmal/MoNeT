@@ -8,7 +8,7 @@ USR = 'chipdelmal'
 (thi, tho, thw, qnt) = (.35, .75, .5, .9)
 # Setup path -----------------------------------------------------------------
 if USR == 'chipdelmal':
-    pth = '/home/chipdelmal/Documents/WorkSims/tGD/figure2/tGD/000/POSTPROCESS/'
+    pth = '/media/hdd/WorkExperiments/tGD/figure2/tGD/000/POSTPROCESS/'
 elif USR == 'ameek':
     pth = '/PATH_TO_FILE/'
 # Load file ------------------------------------------------------------------

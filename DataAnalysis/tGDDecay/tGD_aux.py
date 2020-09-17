@@ -11,7 +11,7 @@ import pandas as pd
 import MoNeT_MGDrivE as monet
 
 
-XP_NPAT = 'E_{}_{}_{}_{}_{}_{}-{}_{}_{}.bz'
+XP_NPAT = 'E_{}_{}_{}_{}_{}_{}-{}_{}_{}.{}'
 
 
 # #############################################################################
@@ -56,9 +56,10 @@ def selectPath(USR, DRV, EXP):
         )
     PATH_PRE = PATH_DATA + 'PREPROCESS/'
     PATH_OUT = PATH_DATA + 'POSTPROCESS/'
-    fldrList = [PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT]
+    PATH_MTR = PATH_DATA + 'SUMMARY/'
+    fldrList = [PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT, PATH_MTR]
     [monet.makeFolder(i) for i in fldrList]
-    return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
+    return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT, PATH_MTR)
 
 
 def selectDepVars(MOI, AOI):
