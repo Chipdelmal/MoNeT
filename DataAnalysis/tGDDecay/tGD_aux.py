@@ -11,7 +11,7 @@ import pandas as pd
 import MoNeT_MGDrivE as monet
 
 
-XP_NPAT = 'E_{}_{}_{}_{}_{}_{}-{}_{}_{}.{}'
+XP_NPAT = 'E_{}_{}_{}_{}_{}_{}-{}_{}_{}.bz'
 
 
 # #############################################################################
@@ -46,8 +46,6 @@ def selectPath(USR, DRV, EXP):
         PATH_ROOT = '/RAID5/marshallShare/tGD/figure2/{}/{}/'.format(DRV, EXP)
     elif USR == 'dsk':
         PATH_ROOT = '/media/hdd/WorkExperiments/tGD/figure2/{}/{}/'.format(DRV, EXP)
-    elif USR == 'PZ':
-        PATH_ROOT = '/PATH_TO_FOLDER/tGD/figure2/{}/{}/'.format(DRV, EXP)
     else:
         PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/tGD/figure2/{}/{}/'.format(DRV, EXP)
     # monet.makeFolder('{}/'.format(PATH_ROOT))
@@ -56,10 +54,9 @@ def selectPath(USR, DRV, EXP):
         )
     PATH_PRE = PATH_DATA + 'PREPROCESS/'
     PATH_OUT = PATH_DATA + 'POSTPROCESS/'
-    PATH_MTR = PATH_DATA + 'SUMMARY/'
-    fldrList = [PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT, PATH_MTR]
+    fldrList = [PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT]
     [monet.makeFolder(i) for i in fldrList]
-    return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT, PATH_MTR)
+    return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
 
 
 def selectDepVars(MOI, AOI):
@@ -122,7 +119,7 @@ def axisRange(x):
 def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time, title):
     print(monet.PAD)
     (cred, cwht, cend) = (monet.CRED, monet.CWHT, monet.CEND)
-    print(cwht+'MoNeT '+title+' ['+str(time)+']'+cend)
+    print(cwht+'UCI '+title+' ['+str(time)+']'+cend)
     print(monet.PAD)
     print('{}* Root: {}{}'.format(cred, PATH_ROOT, cend))
     print('{}* Imgs: {}{}'.format(cred, PATH_IMG, cend))
