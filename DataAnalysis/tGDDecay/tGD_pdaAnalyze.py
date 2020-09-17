@@ -7,7 +7,7 @@ USR = 'ameek'
 (thi, tho, thw, qnt) = (.35, .75, .5, .9)
 # Setup path -----------------------------------------------------------------
 if USR == 'chipdelmal':
-    pth = '/media/hdd/WorkExperiments/tGD/figure2/tGD/000/POSTPROCESS/'
+    pth = '/home/chipdelmal/Documents/WorkSims/tGD/figure2/tGD/000/POSTPROCESS/'
 elif USR == 'ameek':
     pth = '/Volumes/GoogleDrive/.shortcut-targets-by-id/1e56Nrp5mAxkyQ0C2zgBXCJ1YMFa2QNXg/AmeekBindra/tGD/000/POSTPROCESS/'
 # Load file ------------------------------------------------------------------
