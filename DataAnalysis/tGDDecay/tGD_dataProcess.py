@@ -33,3 +33,14 @@ def calcWOP(repRto, thwS):
     thwSBool = [compRatioToThreshold(repRto, i, op.lt) for i in thwS]
     wopS = [np.sum(thwBool, axis=1) for thwBool in thwSBool]
     return wopS
+
+
+def calcMinMax(repRto):
+    (mni, mxi) = (repRto.min(axis=1), repRto.max(axis=1))
+    mnx = np.asarray([np.where(repRto[i] == mni[i])[0][0] for i in range(len(mni))])
+    mxx = np.asarray([np.where(repRto[i] == mxi[i])[0][0] for i in range(len(mxi))])
+    return ((mni, mnx), (mxi, mxx))
+
+
+def getRatioAtTime(repRto, ttpS):
+    return np.asarray([repRto[:, ttp] for ttp in ttpS])
