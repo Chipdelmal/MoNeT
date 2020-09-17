@@ -53,5 +53,5 @@ def initEmptyDFs(
         ):
     fNum = len(fPaths)
     heads = [(header+i) for i in (thiS, thoS, thwS, ttpS, peak)]
-    DFEmpty = [pd.DataFrame(np.nan, index=range(fNum), columns=h) for h in heads]
+    DFEmpty = [pd.DataFrame(int(0), index=range(fNum), columns=h) for h in heads]
     return DFEmpty
