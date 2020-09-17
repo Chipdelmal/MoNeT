@@ -23,9 +23,9 @@ qnt = .9
 header = ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
 EXPS = ('000', )
 
-# -----------------------------------------------------------------------------
-EXP = EXPS[0]
 
+EXP = EXPS[0]
+# -----------------------------------------------------------------------------
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)
 tS = datetime.now()
 aux.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PostProcess ' + AOI)
@@ -50,6 +50,8 @@ ttiS = [np.argmax(thiBool == 1, axis=1) for thiBool in thiSBool]
 ttoS = [np.subtract(days, np.argmin(np.flip(thoBool), axis=1)) for thoBool in thoSBool]
 # Min and max -----------------------------------------------------------------
 (mni, mxi) = (repRto.min(axis=1), repRto.max(axis=1))
+mnx = [np.where(repRto[i] == mni[i])[0][0] for i in range(len(mni))]
+mxx = [np.where(repRto[i] == mxi[i])[0][0] for i in range(len(mxi))]
 # Window of protection --------------------------------------------------------
 thwSBool = [da.compRatioToThreshold(repRto, thw, op.lt) for thw in thwS]
 wopS = [np.sum(thwBool, axis=1) for thwBool in thwSBool]
@@ -58,9 +60,16 @@ rapS = [repRto[:, ttp] for ttp in ttpS]
 ###############################################################################
 # Calculate Quantiles
 ###############################################################################
+ttiSQ = [np.nanquantile(tti, qnt) for tti in ttiS]
+ttoSQ = [np.nanquantile(tto, qnt) for tto in ttoS]
+wopSQ = [np.nanquantile(wop, 1-qnt) for wop in wopS]
+rapSQ = [np.nanquantile(rap, qnt) for rap in rapS]
+mniQ = np.nanquantile(mni, qnt)
+mxiQ = np.nanquantile(mxi, qnt)
+mnxQ = np.nanquantile(mnx, qnt)
+mxxQ = np.nanquantile(mxx, 1-qnt)
+###############################################################################
+# Shape Files
+###############################################################################
 
-(ttiQ, ttoQ, wopQ) = (
-        np.nanquantile(tti, qnt),
-        np.nanquantile(tto, qnt),
-        np.nanquantile(wop, 1-qnt)
-    )
+ttiSQ
