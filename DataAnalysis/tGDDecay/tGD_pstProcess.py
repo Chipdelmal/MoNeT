@@ -36,6 +36,9 @@ for (j, EXP) in enumerate(EXPS):
             monet.CWHT, str(j+1).zfill(3), str(expNum).zfill(3),
             EXP, monet.CEND
         ))
+    # Output dataframes paths -------------------------------------------------
+    pth = PT_MTR + AOI + '_{}_' + str(int(qnt*100)) + '_qnt.csv'
+    DFOPths = [pth.format(z) for z in ('TTI', 'TTO', 'WOP', 'TAP', 'RAP')]
     # Get experiment IDs ------------------------------------------------------
     uids = fun.getExperimentsIDSets(PT_OUT, skip=-1)
     (hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
@@ -43,14 +46,14 @@ for (j, EXP) in enumerate(EXPS):
     ptrn = aux.XP_NPAT.format('*', '*', '*', '*', '*', '*', AOI, '*', 'rto', 'npy')
     fPaths = sorted(glob(PT_OUT+ptrn))
     # Create empty dataframes to store the data -------------------------------
-    emptyDF = da.initEmptyDFs(fPaths, header, thiS, thoS, thwS, tapS)
-    (ttiDF, ttoDF, wopDF, ttpDF, rapDF) = emptyDF
+    outDFs = da.initEmptyDFs(fPaths, header, thiS, thoS, thwS, tapS)
+    (ttiDF, ttoDF, wopDF, tapDF, rapDF) = outDFs
     # Iterate through experiments ---------------------------------------------
     fNum = len(fPaths)
+    digits = len(str(fNum))
     for (i, fPath) in enumerate(fPaths):
-        print('{}+ File: {}/{}'.format(
-                 monet.CBBL, str(i+1).zfill(len(str(fNum))), fNum, monet.CEND
-             ), end='\r')
+        fmtStr = '{}+ File: {}/{}'
+        print(fmtStr.format(monet.CBBL, str(i+1).zfill(digits), fNum, monet.CEND), end='\r')
         repRto = np.load(fPath)
         (reps, days) = repRto.shape
         #######################################################################
@@ -74,26 +77,20 @@ for (j, EXP) in enumerate(EXPS):
         mniSQ = (np.nanquantile(minS[0], qnt), np.nanquantile(minS[1], qnt))
         mnxSQ = (np.nanquantile(maxS[0], qnt), np.nanquantile(maxS[1], 1-qnt))
         #######################################################################
-        # Update in Dataframes and dictionary
+        # Update in Dataframes
         #######################################################################
         xpid = fun.getXpId(fPath, [1, 2, 3, 4, 5, 6, 8])
         updates = [xpid+i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, rapSQ)]
-        ttiDF.iloc[i] = updates[0]
-        ttoDF.iloc[i] = updates[1]
-        wopDF.iloc[i] = updates[2]
-        ttpDF.iloc[i] = updates[3]
-        rapDF.iloc[i] = updates[4]
-        outDict = {
-                'tti': ttiS, 'tto': ttoS, 'wop': wopS,
-                'rap': rapS, 'min': minS, 'max': maxS
-            }
+        for df in zip(outDFs, updates):
+            df[0].iloc[i] = df[1]
     ###########################################################################
     # Export Data
     ###########################################################################
-    ttiDF.to_csv(PT_MTR+AOI+'_TTI_'+str(int(qnt*100))+'_qnt.csv', index=False)
-    ttoDF.to_csv(PT_MTR+AOI+'_TTO_'+str(int(qnt*100))+'_qnt.csv', index=False)
-    wopDF.to_csv(PT_MTR+AOI+'_WOP_'+str(int(qnt*100))+'_qnt.csv', index=False)
-    ttpDF.to_csv(PT_MTR+AOI+'_TTP_'+str(int(qnt*100))+'_qnt.csv', index=False)
-    rapDF.to_csv(PT_MTR+AOI+'_RAP_'+str(int(qnt*100))+'_qnt.csv', index=False)
-    pkl.dump(outDict, PT_MTR+AOI+'_'+str(int(qnt*100))+'.bz', compression='bz2')
+    outDict = {
+            'tti': ttiS, 'tto': ttoS, 'wop': wopS,
+            'rap': rapS, 'min': minS, 'max': maxS
+        }
+    for df in zip(outDFs, DFOPths):
+        df[0].to_csv(df[1])
+    pkl.dump(outDict, PT_MTR+AOI+'_mlr_'+str(int(qnt*100))+'.bz', compression='bz2')
 print(monet.CWHT+'* Finished!                                '+monet.CEND)
