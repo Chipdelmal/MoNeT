@@ -18,7 +18,7 @@ import MoNeT_MGDrivE as monet
 
 EXP = '000'
 
-(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV, EXP)
+(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)
 uids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
 (hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
 # #############################################################################

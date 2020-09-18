@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import numpy as np
 from glob import glob
 import tGD_aux as aux
 import tGD_fun as fun
