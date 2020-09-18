@@ -27,6 +27,7 @@ EXPS = ('000', )
 ###############################################################################
 # Iterate through experiments
 ###############################################################################
+xpDict = {}
 expNum = len(EXPS)
 for (j, EXP) in enumerate(EXPS):
     tS = datetime.now()
@@ -79,18 +80,22 @@ for (j, EXP) in enumerate(EXPS):
         #######################################################################
         # Update in Dataframes
         #######################################################################
-        xpid = fun.getXpId(fPath, [1, 2, 3, 4, 5, 6, 8])
+        xpid =fun.getXpId(fPath, [1, 2, 3, 4, 5, 6, 8])
         updates = [xpid+i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, rapSQ)]
         for df in zip(outDFs, updates):
             df[0].iloc[i] = df[1]
+        outDict = {
+                'tti': ttiS, 'tto': ttoS, 'wop': wopS,
+                'rap': rapS, 'min': minS, 'max': maxS
+            }
+        xpDict[tuple(xpid)] = outDict
     ###########################################################################
     # Export Data
     ###########################################################################
-    outDict = {
-            'tti': ttiS, 'tto': ttoS, 'wop': wopS,
-            'rap': rapS, 'min': minS, 'max': maxS
-        }
     for df in zip(outDFs, DFOPths):
         df[0].to_csv(df[1])
-    pkl.dump(outDict, PT_MTR+AOI+'_mlr_'+str(int(qnt*100))+'.bz', compression='bz2')
+    pkl.dump(xpDict, PT_MTR+AOI+'_mlr_'+str(int(qnt*100))+'.bz', compression='bz2')
 print(monet.CWHT+'* Finished!                                '+monet.CEND)
+
+
+xpDict[list(xpDict.keys())[0]]
