@@ -74,7 +74,7 @@ for (j, EXP) in enumerate(EXPS):
         mniSQ = (np.nanquantile(minS[0], qnt), np.nanquantile(minS[1], qnt))
         mnxSQ = (np.nanquantile(maxS[0], qnt), np.nanquantile(maxS[1], 1-qnt))
         #######################################################################
-        # Update in Dataframes
+        # Update in Dataframes and dictionary
         #######################################################################
         xpid = fun.getXpId(fPath, [1, 2, 3, 4, 5, 6, 8])
         updates = [xpid+i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, rapSQ)]
@@ -83,12 +83,17 @@ for (j, EXP) in enumerate(EXPS):
         wopDF.iloc[i] = updates[2]
         ttpDF.iloc[i] = updates[3]
         rapDF.iloc[i] = updates[4]
+        outDict = {
+                'tti': ttiS, 'tto': ttoS, 'wop': wopS,
+                'rap': rapS, 'min': minS, 'max': maxS
+            }
     ###########################################################################
-    # Export Dataframes
+    # Export Data
     ###########################################################################
     ttiDF.to_csv(PT_MTR+AOI+'_TTI_'+str(int(qnt*100))+'_qnt', index=False)
     ttoDF.to_csv(PT_MTR+AOI+'_TTO_'+str(int(qnt*100))+'_qnt', index=False)
     wopDF.to_csv(PT_MTR+AOI+'_WOP_'+str(int(qnt*100))+'_qnt', index=False)
     ttpDF.to_csv(PT_MTR+AOI+'_TTP_'+str(int(qnt*100))+'_qnt', index=False)
     rapDF.to_csv(PT_MTR+AOI+'_RAP_'+str(int(qnt*100))+'_qnt', index=False)
+    pkl.dump(outDict, PT_MTR+AOI+'_'+str(int(qnt*100))+'.bz', compression='bz2')
 print(monet.CWHT+'* Finished!                                '+monet.CEND)
