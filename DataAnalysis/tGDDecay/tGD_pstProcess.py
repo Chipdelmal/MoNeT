@@ -28,7 +28,7 @@ EXPS = ('000', )
 # Iterate through experiments
 ###############################################################################
 xpDict = {}
-expNum = len(EXPS)
+(strQnt, expNum) = (str(int(qnt*100)), len(EXPS))
 for (j, EXP) in enumerate(EXPS):
     tS = datetime.now()
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)
@@ -38,7 +38,7 @@ for (j, EXP) in enumerate(EXPS):
             EXP, monet.CEND
         ))
     # Output dataframes paths -------------------------------------------------
-    pth = PT_MTR + AOI + '_{}_' + str(int(qnt*100)) + '_qnt.csv'
+    pth = PT_MTR + AOI + '_{}_' + strQnt + '_qnt.csv'
     DFOPths = [pth.format(z) for z in ('TTI', 'TTO', 'WOP', 'TAP', 'RAP')]
     # Get experiment IDs ------------------------------------------------------
     uids = fun.getExperimentsIDSets(PT_OUT, skip=-1)
@@ -80,13 +80,17 @@ for (j, EXP) in enumerate(EXPS):
         #######################################################################
         # Update in Dataframes
         #######################################################################
-        xpid =fun.getXpId(fPath, [1, 2, 3, 4, 5, 6, 8])
+        xpid = fun.getXpId(fPath, [1, 2, 3, 4, 5, 6, 8])
         updates = [xpid+i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, rapSQ)]
         for df in zip(outDFs, updates):
             df[0].iloc[i] = df[1]
         outDict = {
-                'tti': ttiS, 'tto': ttoS, 'wop': wopS,
-                'rap': rapS, 'min': minS, 'max': maxS
+                'TTI': {int(i[0]*100): i[1] for i in zip(thiS, ttiS)},
+                'TTO': {int(i[0]*100): i[1] for i in zip(thoS, ttoS)},
+                'WOP': {int(i[0]*100): i[1] for i in zip(thwS, wopS)},
+                'RAP': {int(i[0]*100): i[1] for i in zip(tapS, rapS)},
+                'MIN': {'lvl': minS[0], 'day': minS[1]},
+                'MAX': {'lvl': maxS[0], 'day': maxS[1]}
             }
         xpDict[tuple(xpid)] = outDict
     ###########################################################################
@@ -94,8 +98,7 @@ for (j, EXP) in enumerate(EXPS):
     ###########################################################################
     for df in zip(outDFs, DFOPths):
         df[0].to_csv(df[1])
-    pkl.dump(xpDict, PT_MTR+AOI+'_mlr_'+str(int(qnt*100))+'.bz', compression='bz2')
+    for key in outDict:
+        pth = PT_MTR+AOI+'_'+key+'_'+strQnt+'_mlr.bz'
+        pkl.dump(outDict[key], pth, compression='bz2')
 print(monet.CWHT+'* Finished!                                '+monet.CEND)
-
-
-xpDict[list(xpDict.keys())[0]]
