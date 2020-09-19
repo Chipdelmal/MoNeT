@@ -15,19 +15,21 @@ import compress_pickle as pkl
 
 (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 # (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-qnt = .9
+(qnt, mlr) = (.9, True)
 (thiS, thoS, thwS, tapS) = (
         [.05, .10, .50, .90, .95],
         [.05, .10, .50, .90, .95],
         [.05, .10, .50, .90, .95],
         [150, 300, 450, 600]
     )
-header = ['i_hnf', 'i_cac', 'i_frc', 'i_hrt', 'i_ren', 'i_res', 'i_grp']
 EXPS = ('000', )
+header = ['i_hnf', 'i_cac', 'i_frc', 'i_hrt', 'i_ren', 'i_res', 'i_grp']
+outLabels = ('TTI', 'TTO', 'WOP', 'RAP', 'MNX')
 ###############################################################################
 # Iterate through experiments
 ###############################################################################
 xpDict = {}
+smryDicts = ({}, {}, {}, {}, {})
 (strQnt, expNum) = (str(int(qnt*100)), len(EXPS))
 for (j, EXP) in enumerate(EXPS):
     tS = datetime.now()
@@ -39,7 +41,7 @@ for (j, EXP) in enumerate(EXPS):
         ))
     # Output dataframes paths -------------------------------------------------
     pth = PT_MTR + AOI + '_{}_' + strQnt + '_qnt.csv'
-    DFOPths = [pth.format(z) for z in ('TTI', 'TTO', 'WOP', 'TAP', 'RAP')]
+    DFOPths = [pth.format(z) for z in outLabels]
     # Get experiment IDs ------------------------------------------------------
     uids = fun.getExperimentsIDSets(PT_OUT, skip=-1)
     (hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
@@ -84,21 +86,30 @@ for (j, EXP) in enumerate(EXPS):
         updates = [xpid+i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, rapSQ)]
         for df in zip(outDFs, updates):
             df[0].iloc[i] = df[1]
-        outDict = {
-                'TTI': {int(i[0]*100): i[1] for i in zip(thiS, ttiS)},
-                'TTO': {int(i[0]*100): i[1] for i in zip(thoS, ttoS)},
-                'WOP': {int(i[0]*100): i[1] for i in zip(thwS, wopS)},
-                'RAP': {int(i[0]*100): i[1] for i in zip(tapS, rapS)},
-                'MIN': {'lvl': minS[0], 'day': minS[1]},
-                'MAX': {'lvl': maxS[0], 'day': maxS[1]}
-            }
-        xpDict[tuple(xpid)] = outDict
+        #######################################################################
+        # Update in Dictionaries
+        #######################################################################
+        if mlr:
+            outDict = [
+                    {int(i[0]*100): i[1] for i in zip(thiS, ttiS)},
+                    {int(i[0]*100): i[1] for i in zip(thoS, ttoS)},
+                    {int(i[0]*100): i[1] for i in zip(thwS, wopS)},
+                    {int(i[0]*100): i[1] for i in zip(tapS, rapS)},
+                    {
+                        'mnl': minS[0], 'mnd': minS[1],
+                        'mxl': maxS[0], 'mxd': maxS[1]
+                    }
+                ]
+            for dct in zip(smryDicts, outDict):
+                dct[0][tuple(xpid)] = dct[1]
     ###########################################################################
     # Export Data
     ###########################################################################
     for df in zip(outDFs, DFOPths):
         df[0].to_csv(df[1])
-    for key in outDict:
-        pth = PT_MTR+AOI+'_'+key+'_'+strQnt+'_mlr.bz'
-        pkl.dump(outDict[key], pth, compression='bz2')
+    if mlr:
+        for (i, dict) in enumerate(smryDicts):
+            lbl = outLabels[i]
+            pth = PT_MTR+AOI+'_'+lbl+'_'+strQnt+'_mlr.bz'
+            pkl.dump(dict, pth, compression='bz2')
 print(monet.CWHT+'* Finished!                                '+monet.CEND)
