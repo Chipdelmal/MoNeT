@@ -57,6 +57,7 @@ else:
 ###########################################################################
 # Iterate through experiments
 ###########################################################################
+# repFile = '/media/hdd/WorkExperiments/tGD/figure2/tGD/000/PREPROCESS/E_020_075_005_090_07_0100-HLT_00_srp.bz'
 for repFile in repFiles:
     (repDta, xpid) = (
             pkl.load(repFile),
