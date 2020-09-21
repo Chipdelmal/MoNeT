@@ -83,7 +83,7 @@ for (j, EXP) in enumerate(EXPS):
         # Update in Dataframes
         #######################################################################
         xpid = fun.getXpId(fPath, [1, 2, 3, 4, 5, 6, 8])
-        updates = [xpid+i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, rapSQ)]
+        updates = [xpid+i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, list(mniSQ)+list(mnxSQ))]
         for df in zip(outDFs, updates):
             df[0].iloc[i] = df[1]
         #######################################################################
@@ -106,7 +106,7 @@ for (j, EXP) in enumerate(EXPS):
     # Export Data
     ###########################################################################
     for df in zip(outDFs, DFOPths):
-        df[0].to_csv(df[1])
+        df[0].to_csv(df[1], index=False)
     if mlr:
         for (i, dict) in enumerate(smryDicts):
             lbl = outLabels[i]

@@ -21,6 +21,7 @@ EXP = ('000', '001', '005', '010', '100')
 ###############################################################################
 for exp in EXP:
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, exp)
+    PT_IMG = PT_IMG + 'preTraces/'
     drive = drv.driveSelector(DRV, AOI)
     (CLR, YRAN) = (drive.get('colors'), (0, drive.get('yRange')))
     STYLE = {
@@ -30,7 +31,7 @@ for exp in EXP:
         }
     STYLE['aspect'] = monet.scaleAspect(1, STYLE)
     tS = datetime.now()
-    aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Traces')
+    aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'PreTraces')
     ###########################################################################
     # Load preprocessed files lists
     ###########################################################################

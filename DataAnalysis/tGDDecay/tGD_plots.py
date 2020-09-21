@@ -21,10 +21,10 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[
     axTemp.grid(which='major', axis='x', lw=.5, ls='-', alpha=0.25, color=(0, 0, 0))
     axTemp.axvspan(vLines[0], vLines[1], alpha=0.2, facecolor='#3687ff', zorder=0)
     axTemp.axhline(
-            hLines, alpha=1, zorder=0, ls='--', lw=.5, color='m'
+            hLines, alpha=1, zorder=0, ls='--', lw=.3, color='#3687ff'
         )
-    for vline in vLines:
-        axTemp.axvline(vline, alpha=1, zorder=0, ls='--', lw=.5, color='#3687ff')
+    for vline in vLines[2:]:
+        axTemp.axvline(vline, alpha=1, zorder=0, ls='--', lw=.3, color='#3687ff')
     axTemp.tick_params(color=(0, 0, 0, 0.5))
     figArr[0].savefig(
             "{}/{}.png".format(PATH_IMG, nS),

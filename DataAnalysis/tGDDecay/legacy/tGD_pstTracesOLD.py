@@ -20,7 +20,7 @@ import compress_pickle as pkl
 EXP = ('000', )# '001', '005', '010', '100')
 GRP = (0, ) # 1)
 ###############################################################################
-(grp, exp) = (GRP[0], EXP[0])
+# (grp, exp) = (GRP[0], EXP[0])
 for grp in GRP:
     for exp in EXP:
         grpPad = str(grp).zfill(2)

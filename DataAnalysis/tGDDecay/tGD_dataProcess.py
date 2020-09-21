@@ -54,3 +54,10 @@ def initEmptyDFs(
     heads = [(header+i) for i in (thiS, thoS, thwS, ttpS, peak)]
     DFEmpty = [pd.DataFrame(int(0), index=range(fNum), columns=h) for h in heads]
     return DFEmpty
+
+
+def filterDFWithID(df, xpid):
+    xpidz = list(zip(list(df.columns)[:7], xpid))
+    filters = [df[i[0]] == i[1] for i in xpidz]
+    filter = list(map(all, zip(*filters)))
+    return df[filter]
