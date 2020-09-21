@@ -22,6 +22,7 @@ EXP = ('000', '001', '005', '010', '100')
 for exp in EXP:
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, exp)
     PT_IMG = PT_IMG + 'preTraces/'
+    monet.makeFolder(PT_IMG)
     drive = drv.driveSelector(DRV, AOI)
     (CLR, YRAN) = (drive.get('colors'), (0, drive.get('yRange')))
     STYLE = {

@@ -27,6 +27,7 @@ EXP = EXPS[0]
 
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)
 PT_IMG = PT_IMG + 'pstTraces/'
+monet.makeFolder(PT_IMG)
 drive = drv.driveSelector(DRV, AOI)
 (CLR, YRAN) = (drive.get('colors'), (0, drive.get('yRange')))
 STYLE = {
