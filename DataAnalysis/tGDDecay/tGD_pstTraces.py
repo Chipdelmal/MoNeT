@@ -14,61 +14,56 @@ from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
-# (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
+(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+# (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (SKP, THS, QNT, OVW, FZ) = (False, '0.1', '90', True, True)
 (gIx, hIx) = (1, 0)
-
-
 EXPS = ('000', )# '001', '005', '010', '100')
 
-EXP = EXPS[0]
-
-
-(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)
-PT_IMG = PT_IMG + 'pstTraces/'
-monet.makeFolder(PT_IMG)
-drive = drv.driveSelector(DRV, AOI)
-(CLR, YRAN) = (drive.get('colors'), (0, drive.get('yRange')))
-STYLE = {
-        "width": .5, "alpha": .15, "dpi": 500, "legend": True,
-        "aspect": .25, "colors": CLR, "xRange": [0, (365*5)/3],
-        "yRange": YRAN
-    }
-STYLE['aspect'] = monet.scaleAspect(1, STYLE)
-tS = datetime.now()
-aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'PstTraces')
-###########################################################################
-# Load postprocessed files
-###########################################################################
-pstPat = PT_MTR+AOI+'_{}_'+QNT+'_qnt.csv'
-pstFiles = [pstPat.format(i) for i in ('TTI', 'TTO', 'WOP', 'MNX', 'RAP')]
-(dfTTI, dfTTO, dfWOP, dfMNX, _) = [pd.read_csv(i) for i in pstFiles]
-###########################################################################
-# Load preprocessed files lists
-###########################################################################
-repFiles = glob(PT_PRE+'*'+AOI+'*'+'srp'+'*')
-if FZ:
-    fLists = fun.getFilteredFiles(
-            PT_PRE+'*_00_*'+AOI+'*srp.bz',
-            PT_PRE+'*'+AOI+'*'+'*srp.bz'
-        )
-else:
-    fLists = glob(PT_PRE+'*'+AOI+'*'+'*srp.bz')
-###########################################################################
-# Iterate through experiments
-###########################################################################
-# repFile = '/media/hdd/WorkExperiments/tGD/figure2/tGD/000/PREPROCESS/E_020_075_005_090_07_0100-HLT_00_srp.bz'
-for repFile in repFiles:
-    (repDta, xpid) = (
-            pkl.load(repFile),
-            fun.getXpId(repFile, [1, 2, 3, 4, 5, 6, 8])
-        )
-    xpRow = [da.filterDFWithID(i, xpid) for i in (dfTTI, dfTTO, dfWOP, dfMNX)]
-    (tti, tto, wop) = [float(row[THS]) for row in xpRow[:3]]
-    (mnf, mnd) = (float(xpRow[3]['min']), float(xpRow[3]['minx']))
-    pop = repDta['landscapes'][0][0][-1]
-    plot.exportTracesPlot(
-            repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
-            vLines=[tti, tto, mnd], hLines=[mnf*pop]
-        )
+for EXP in EXPS:
+    (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)
+    PT_IMG = PT_IMG + 'pstTraces/'
+    monet.makeFolder(PT_IMG)
+    drive = drv.driveSelector(DRV, AOI)
+    (CLR, YRAN) = (drive.get('colors'), (0, drive.get('yRange')))
+    STYLE = {
+            "width": .5, "alpha": .15, "dpi": 500, "legend": True,
+            "aspect": .25, "colors": CLR, "xRange": [0, (365*5)/3],
+            "yRange": YRAN
+        }
+    STYLE['aspect'] = monet.scaleAspect(1, STYLE)
+    tS = datetime.now()
+    aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'PstTraces')
+    ###########################################################################
+    # Load postprocessed files
+    ###########################################################################
+    pstPat = PT_MTR+AOI+'_{}_'+QNT+'_qnt.csv'
+    pstFiles = [pstPat.format(i) for i in ('TTI', 'TTO', 'WOP', 'MNX', 'RAP')]
+    (dfTTI, dfTTO, dfWOP, dfMNX, _) = [pd.read_csv(i) for i in pstFiles]
+    ###########################################################################
+    # Load preprocessed files lists
+    ###########################################################################
+    repFiles = glob(PT_PRE+'*'+AOI+'*'+'srp'+'*')
+    if FZ:
+        fLists = fun.getFilteredFiles(
+                PT_PRE+'*_00_*'+AOI+'*srp.bz',
+                PT_PRE+'*'+AOI+'*'+'*srp.bz'
+            )
+    else:
+        fLists = glob(PT_PRE+'*'+AOI+'*'+'*srp.bz')
+    ###########################################################################
+    # Iterate through experiments
+    ###########################################################################
+    for repFile in repFiles:
+        (repDta, xpid) = (
+                pkl.load(repFile),
+                fun.getXpId(repFile, [1, 2, 3, 4, 5, 6, 8])
+            )
+        xpRow = [da.filterDFWithID(i, xpid) for i in (dfTTI, dfTTO, dfWOP, dfMNX)]
+        (tti, tto, wop) = [float(row[THS]) for row in xpRow[:3]]
+        (mnf, mnd) = (float(xpRow[3]['min']), float(xpRow[3]['minx']))
+        pop = repDta['landscapes'][0][0][-1]
+        plot.exportTracesPlot(
+                repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
+                vLines=[tti, tto, mnd], hLines=[mnf*pop]
+            )
