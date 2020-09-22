@@ -6,29 +6,28 @@ import numpy as np
 from glob import glob
 import STP_aux as aux
 import STP_functions as fun
-# import STP_dataProcess as da
+import STP_dataProcess as da
 from datetime import datetime
 import compress_pickle as pkl
 import MoNeT_MGDrivE as monet
 
 
 # (USR, DRV, AOI, REL, LND) = (sys.argv[1], 'LDR', sys.argv[2], sys.argv[3], sys.argv[4])
-(USR, DRV, AOI, REL, LND) = ('dsk', 'LDR', 'HLT', 'gravidFemale', 'PAN')
-
-(SKP, QNT, OVW) = (False, .90, True)
+(USR, DRV, AOI, REL, LND) = ('dsk', 'LDR', 'HLT', 'mixed', 'PAN')
+(SKP, QNT, OVW) = (False, '90', True)
 (gIx, hIx) = (1, 0)
 
 
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, LND, REL)
 uids = fun.getExperimentsIDSets(PT_PRE, skip=-1)
-(hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
+(rer, ren, rsg, fic, gsv, aoi, grp) = uids[1:]
 tS = datetime.now()
 aux.printExperimentHead(PT_ROT, PT_IMG, PT_OUT, tS, 'PstFraction')
 # #########################################################################
 # Base experiments
 #   These are the experiments without any releases (for fractions)
 # #########################################################################
-basePat = aux.XP_NPAT.format('*', '*', '*', '*', '00', '*', AOI, '*', 'sum', 'bz')
+basePat = aux.XP_NPAT.format('*', '00', '*', '*', '*', AOI, '*', 'sum', 'bz')
 baseFiles = sorted(glob(PT_PRE+basePat))
 # #########################################################################
 # Probe experiments
@@ -40,10 +39,10 @@ msg = '* Analyzing ({}/{})'
 for (i, rnIt) in enumerate(ren):
     print(msg.format(str(i+1).zfill(digs), str(xpNum).zfill(digs)), end='\r')
     # Mean data (Analyzed) ------------------------------------------------
-    meanPat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'sum', 'bz')
+    meanPat = aux.XP_NPAT.format('*', rnIt, '*', '*', '*', AOI, '*', 'sum', 'bz')
     meanFiles = sorted(glob(PT_PRE+meanPat))
     # Repetitions data (Garbage) ------------------------------------------
-    tracePat = aux.XP_NPAT.format('*', '*', '*', '*', rnIt, '*', AOI, '*', 'srp', 'bz')
+    tracePat = aux.XP_NPAT.format('*', rnIt, '*', '*', '*', AOI, '*', 'srp', 'bz')
     traceFiles = sorted(glob(PT_PRE+tracePat))
     # #####################################################################
     # Load data
