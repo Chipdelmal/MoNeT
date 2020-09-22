@@ -33,16 +33,15 @@ def selectPath(USR, LND, EXP):
         PATH_ROOT = '/RAID5/marshallShare/STP/{}/sim/{}/'.format(LND, EXP)
     else:
         PATH_ROOT = '/media/hdd/WorkExperiments/STP/{}/sim/{}/'.format(LND, EXP)
-        # PATH_ROOT = '/media/chipdelmal/cache/Sims/SvR/simAlt/{}/'.format(DRV)
-    # monet.makeFolder('{}/'.format(PATH_ROOT))
     (PATH_IMG, PATH_DATA) = (
             '{}img/'.format(PATH_ROOT), '{}'.format(PATH_ROOT)
         )
     PATH_PRE = PATH_DATA + 'PREPROCESS/'
     PATH_OUT = PATH_DATA + 'POSTPROCESS/'
-    fldrList = [PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT]
+    PATH_MTR = PATH_DATA + 'SUMMARY/'
+    fldrList = [PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT, PATH_MTR]
     [monet.makeFolder(i) for i in fldrList]
-    return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT)
+    return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT, PATH_MTR)
 
 
 # #############################################################################

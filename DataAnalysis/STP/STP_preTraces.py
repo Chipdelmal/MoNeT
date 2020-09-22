@@ -17,7 +17,7 @@ import compress_pickle as pkl
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
-(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, LND, REL)
+(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, LND, REL)
 if (AOI == 'ECO'):
     (CLR, CMAPS, YRAN) = (drv.COLEN, drv.COLEM, [0, 200 * 12000])
 else:
