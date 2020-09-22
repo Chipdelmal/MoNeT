@@ -16,11 +16,12 @@ import compress_pickle as pkl
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 (qnt, mlr) = (.9, True)
+
 (thiS, thoS, thwS, tapS) = (
         [.05, .10, .50, .90, .95],
         [.05, .10, .50, .90, .95],
         [.05, .10, .50, .90, .95],
-        [150, 300, 450, 600]
+        [int((i+1) * 365 / 3) for i in range(5)]
     )
 EXPS = ('000', )
 header = ['i_hnf', 'i_cac', 'i_frc', 'i_hrt', 'i_ren', 'i_res', 'i_grp']

@@ -3,7 +3,6 @@
 
 import sys
 import warnings
-from glob import glob
 import tGD_aux as aux
 import tGD_fun as fun
 from itertools import product
@@ -14,12 +13,12 @@ warnings.filterwarnings("ignore")
 # ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
 
 # python tGD_pstHeatmapSSV.py srv linkedDrive HLT WOP
-(USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-# (USR, DRV, AOI, MOI) = ('dsk', 'linkedDrive', 'HLT', 'TTS')
-(FMT, SKP, MF,  OVW, QNT) = ('bz', False, (False, True), True, .5)
+# (USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+(USR, DRV, AOI, MOI) = ('dsk', 'tGD', 'HLT', 'MNX')
+(FMT, SKP, MF,  OVW, QNT) = ('bz', False, (False, True), True, '90')
 # Select surface variables ----------------------------------------------------
-HD_IND = ['ren', 'hnf']
-(scalers, HD_DEP, IND_RAN, cmap) = aux.selectDepVars(MOI, AOI)
+HD_IND = ['i_ren', 'i_hnf']
+(scalers, HD_DEP, _, cmap) = aux.selectDepVars(MOI, AOI)
 (ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
         [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
@@ -31,17 +30,19 @@ EXPS = ('000', ) # '001', '005', '010', '100')
 # Loop through the experiments
 ###############################################################################
 for exp in EXPS:
-    (PT_ROT, PT_IMG_XP, PT_DTA, PT_PRE, PT_OUT) = aux.setupFolder(
-            USR, DRV, exp, HD_IND
-        )
+    (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, exp)
+    PT_IMG = PT_IMG + 'heat/'
+    monet.makeFolder(PT_IMG)
+    PT_IMG = PT_IMG+'-'.join(HD_IND)+'/'
+    monet.makeFolder(PT_IMG)
     tS = datetime.now()
-    aux.printExperimentHead(PT_ROT, PT_IMG_XP, PT_PRE, tS, 'Heatmap '+AOI)
+    aux.printExperimentHead(PT_ROT, PT_IMG, PT_MTR, tS, 'Heatmap '+AOI)
     ###########################################################################
     # Analyzes
     ###########################################################################
     # Load files into dataframe
-    fPtrn = '{}/*{}*{}-{}.csv'.format(PT_OUT, AOI, str(int(QNT*100)), MOI)
-    (df, header, headerInd) = aux.loadDFFromFiles(sorted(glob(fPtrn)), IND_RAN)
+    fPtrn = '{}{}_{}_{}_qnt.csv'.format(PT_MTR, AOI, MOI, QNT)
+    (df, header, headerInd) = aux.loadDFFromSummary(fPtrn)
     # Filter the dataframe ----------------------------------------------------
     # Get the unique values for each indep-var column of the dataframe
     uniqueValues = {i: list(df[i].unique()) for i in headerInd}
@@ -96,5 +97,5 @@ for exp in EXPS:
         # Filename and export
         xpStrNm = '_'.join([str(i).zfill(4) for i in xpId])
         xpFilename = xpStrNm+'_'+AOI+'_'+MOI
-        fun.quickSaveFig(PT_IMG_XP+xpFilename, fig)
+        fun.quickSaveFig(PT_IMG+xpFilename, fig)
     print(monet.CEND, end='\r')

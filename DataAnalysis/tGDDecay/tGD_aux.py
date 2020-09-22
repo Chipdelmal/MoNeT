@@ -63,14 +63,17 @@ def selectPath(USR, DRV, EXP):
 
 
 def selectDepVars(MOI, AOI):
-    # Select ranges and dependent variable
+    # Select ranges and dependent variable-------------------------------------
     if (MOI == 'WOP') or (MOI == 'TTI') or (MOI == 'TTO'):
-        scalers = (1, 100, round(2.5*365))
+        scalers = (1, 100, round(.1*365))
         (HD_DEP, IND_RAN) = ('0.1', 7)
-    else:
-        scalers = (1, 100, 5000)
-        (HD_DEP, IND_RAN) = ('ssv', 7)
-    # Color Mapping
+    elif (MOI == 'RAP'):
+        scalers = (1, 100, 1)
+        (HD_DEP, IND_RAN) = ('486', 7)
+    elif (MOI == 'MNX'):
+        scalers = (1, 100, 1)
+        (HD_DEP, IND_RAN) = ('min', 7)
+    # Color Mapping -----------------------------------------------------------
     if AOI == 'HLT':
         cmap = cmapB
     else:
@@ -96,6 +99,13 @@ def loadDFFromFiles(fName, IND_RAN):
     headerInd = header[:IND_RAN]
     return (df, header, headerInd)
 
+
+def loadDFFromSummary(fName):
+    df = pd.read_csv(fName)
+    header = list(df.columns)
+    indRan = sum([i[0] == 'i' for i in header])
+    headerInd = header[:indRan]
+    return (df, header, headerInd)
 
 # #############################################################################
 # Style
