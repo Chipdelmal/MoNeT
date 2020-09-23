@@ -10,7 +10,6 @@ import STP_dataProcess as da
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
-from datetime import datetime
 
 
 (USR, DRV, AOI, REL, LND) = (sys.argv[1], 'LDR', sys.argv[2], sys.argv[3], sys.argv[4])
