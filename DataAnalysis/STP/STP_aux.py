@@ -3,12 +3,43 @@
 
 import math
 import matplotlib
+import pandas as pd
 import numpy as np
 # import matplotlib.pyplot as plt
 import MoNeT_MGDrivE as monet
 
 
 XP_NPAT = 'E_{}_{}_{}_{}_{}-{}_{}_{}.{}'
+
+
+# #############################################################################
+# Dependent Variables for Heatmaps
+# #############################################################################
+def selectDepVars(MOI, AOI):
+    # Select ranges and dependent variable-------------------------------------
+    if (MOI == 'WOP') or (MOI == 'TTI') or (MOI == 'TTO'):
+        scalers = (1, 1, round(2*365))
+        (HD_DEP, IND_RAN) = ('0.1', 7)
+    elif (MOI == 'RAP'):
+        scalers = (1, 100, 1)
+        (HD_DEP, IND_RAN) = ('486', 7)
+    elif (MOI == 'MNX'):
+        scalers = (1, 100, 1)
+        (HD_DEP, IND_RAN) = ('min', 7)
+    # Color Mapping -----------------------------------------------------------
+    if AOI == 'HLT':
+        cmap = cmapB
+    else:
+        cmap = cmapM
+    return (scalers, HD_DEP, IND_RAN, cmap)
+
+
+def loadDFFromSummary(fName):
+    df = pd.read_csv(fName)
+    header = list(df.columns)
+    indRan = sum([i[0] == 'i' for i in header])
+    headerInd = header[:indRan]
+    return (df, header, headerInd)
 
 
 # #############################################################################

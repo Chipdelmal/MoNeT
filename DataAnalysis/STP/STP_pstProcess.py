@@ -12,9 +12,9 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 
-(USR, DRV, AOI, REL, LND) = (sys.argv[1], 'LDR', sys.argv[2], sys.argv[3], sys.argv[4])
-# (USR, LND, AOI, REL, LND) = ('dsk', 'LDR', 'HLT', 'mixed', 'PAN')
-(QNT, mlr) = ('90', True)
+(USR, AOI, REL, LND) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+# (USR, AOI, REL, LND) = ('dsk', 'HLT', 'gravidFemale', 'PAN')
+(DRV, QNT, mlr) = ('LDR', '90', True)
 (thiS, thoS, thwS, tapS) = (
         [.05, .10, .25, .50, .75, .90, .95],
         [.05, .10, .25, .50, .75, .90, .95],
