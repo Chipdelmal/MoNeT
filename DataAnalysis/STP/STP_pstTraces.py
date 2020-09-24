@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys
-import numpy as np
 import pandas as pd
 from glob import glob
 import STP_aux as aux
