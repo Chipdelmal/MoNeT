@@ -16,13 +16,14 @@ warnings.filterwarnings("ignore")
 (USR, AOI, REL, LND, MOI) = ('dsk', 'HLT', 'mixed', 'PAN', 'WOP')
 (DRV, FMT, QNT, OVW) = ('LDR', 'bz2', '90', True)
 # Select surface variables ----------------------------------------------------
-HD_IND = ['i_gsv', 'i_fic']
+HD_IND = ['i_gsv', 'i_ren']
 (scalers, HD_DEP, _, cmap) = aux.selectDepVars(MOI, AOI)
 (ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
         [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
         'linear', 'log', 'linear'
     )
+xRan = (1E-8, 1E-1)
 ###############################################################################
 # Setup paths
 ###############################################################################
@@ -69,6 +70,7 @@ for (xpNumC, xpId) in enumerate(idTuples):
     #######################################################################
     # Prepare the response surface ----------------------------------------
     (x, y, z) = (dfSrf[HD_IND[0]], dfSrf[HD_IND[1]], dfSrf[HD_DEP])
+    (a, b) = ((min(x), max(x)), (min(y), max(y)))
     rs = fun.calcResponseSurface(x, y, z, scalers=scalers, mthd=mthd)
     (rsG, rsS) = (rs['grid'], rs['surface'])
     # Plot the response surface -------------------------------------------
@@ -79,7 +81,7 @@ for (xpNumC, xpId) in enumerate(idTuples):
     cs = ax.contourf(rsS[0], rsS[1], rsS[2], levels=lvls, cmap=cmap, extend='max')
     # Figure Modifiers ----------------------------------------------------
     sz = fig.get_size_inches()[0]
-    fig.set_size_inches(sz, .85*sz)
+    # ax.set(xscale=xSca, yscale="linear")
     # Colorbar
     cbar = fig.colorbar(cs)
     cbar.ax.get_yaxis().labelpad = 25
@@ -87,9 +89,17 @@ for (xpNumC, xpId) in enumerate(idTuples):
     plt.xlabel(HD_IND[0], fontsize=20)
     plt.ylabel(HD_IND[1], fontsize=20)
     # Grid
-    ax.set(xscale=xSca, yscale="linear")
-    ax.grid(which='both', axis='y', lw=.5, alpha=.5, color=(0, 0, 0))
-    ax.grid(which='both', axis='x', lw=.5, alpha=.5, color=(0, 0, 0))
+    ax.set_xticks(list(set(x)), minor=True)
+    ax.set_yticks(list(set(y)), minor=True)
+    # ax.axes.xaxis.set_ticklabels([])
+    # ax.axes.yaxis.set_ticklabels([])
+    # ax.axes.xaxis.set_ticklabels([], minor=True)
+    # ax.axes.yaxis.set_ticklabels([], minor=True)
+    ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
+    ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
+    # Limits
+    # plt.xlim(xRan[0], xRan[1])
+    # plt.ylim(b[0], b[1])
     # Title
     xpStr = ['{}:{}'.format(i[0], str(i[1]).zfill(4)) for i in zip(hdFree, xpId)]
     ttlStr = ', '.join(xpStr)
