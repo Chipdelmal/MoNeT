@@ -99,7 +99,7 @@ def driveSelector(DRIVE, TYPE):
             colors = COLTN
         elif TYPE == 'WLD':
             aggD = monet.generateAggregationDictionary(
-                    ["W*", "H-", "Total"], gtgd.TGD_WLD
+                    ["W*", "O-", "Total"], gtgd.TGD_WLD
                 )
             yRange = 11000/2
             colors = COLWN
