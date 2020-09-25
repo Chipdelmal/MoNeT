@@ -39,7 +39,7 @@ aux.printExperimentHead(PT_ROT, PT_IMG, PT_MTR, tS, 'Heatmap '+AOI)
 ###########################################################################
 # Load files into dataframe
 fPtrn = '{}{}_{}_{}_qnt.csv'.format(PT_MTR, AOI, MOI, QNT)
-(df, header, headerInd) = aux.loadDFFromSummary(fPtrn)
+(df, header, headerInd) = monet.loadDFFromSummary(fPtrn)
 # Filter the dataframe ----------------------------------------------------
 # Get the unique values for each indep-var column of the dataframe
 uniqueValues = {i: list(df[i].unique()) for i in headerInd}
@@ -106,6 +106,6 @@ for (xpNumC, xpId) in enumerate(idTuples):
     plt.title(ttlStr, fontsize=10, pad=10)
     # Filename and export
     xpStrNm = '_'.join([str(i).zfill(4) for i in xpId])
-    xpFilename = xpStrNm+'_'+AOI+'_'+MOI
+    xpFilename = xpStrNm+'_'+AOI+'_'+MOI+'.png'
     fun.quickSaveFig(PT_IMG+xpFilename, fig)
 print(monet.CEND, end='\r')

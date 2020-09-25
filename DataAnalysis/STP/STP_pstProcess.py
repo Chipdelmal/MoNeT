@@ -6,7 +6,7 @@ import numpy as np
 from glob import glob
 import STP_aux as aux
 import STP_functions as fun
-import STP_dataProcess as da
+# import STP_dataProcess as da
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
@@ -60,12 +60,12 @@ for (i, fPath) in enumerate(fPaths):
     # Calculate Metrics
     #######################################################################
     (ttiS, ttoS, wopS) = (
-            da.calcTTI(repRto, thiS),
-            da.calcTTO(repRto, thoS),
-            da.calcWOP(repRto, thwS)
+            monet.calcTTI(repRto, thiS),
+            monet.calcTTO(repRto, thoS),
+            monet.calcWOP(repRto, thwS)
         )
-    (minS, maxS) = da.calcMinMax(repRto)
-    rapS = da.getRatioAtTime(repRto, tapS)
+    (minS, maxS) = monet.calcMinMax(repRto)
+    rapS = monet.getRatioAtTime(repRto, tapS)
     #######################################################################
     # Calculate Quantiles
     #######################################################################

@@ -79,3 +79,16 @@ wGenes = (('W', (1, 3)), ('R', (1, 3)), ('B', (1, 3)))
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
 TGD_TRS = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
+
+
+###############################################################################
+# Wild genotype counts
+###############################################################################
+# H ---------------------------------------------------------------------------
+hGenes = (('P', (0, 2)), ('M', (0, 2)), ('R', (0, 2)), ('B', (0, 2)))
+hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
+# W* --------------------------------------------------------------------------
+wGenes = (('W', (0, 2)), )
+wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
+# Full set --------------------------------------------------------------------
+TGD_WLD = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
