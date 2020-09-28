@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>MGGraph</title>
+    <!-- Bokeh JS -->
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.0.2.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.0.2.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.0.2.min.js"></script>
+    {{ script | safe }}
+</head>
+
+<body>
+    <h2 style="text-align: center;">MGGraph</h2>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <p> Compare Graphics </p>
+    <!-- Bokeh Div-->
+    {{ div | safe }}
+</body>
+
+</html>
