@@ -39,9 +39,7 @@ nodesAggLst = [[0]]
 sexID = {'m': ['M_'], 'fS': ['FS_'], 'fE': ['FE_'], 'fI': ['FI_']}
 
 files = frame.readExperimentFilenamesV2(pathMean, sexFilenameID=sexID)
-files
-
-monet.listDirectoriesWithPathWithinAPath(pathTraces)
+dirsTraces = monet.listDirectoriesWithPathWithinAPath(pathTraces)
 filesList = [monet.filterFilesByIndex(files, ix) for ix in nodesAggLst]
 
 filesList

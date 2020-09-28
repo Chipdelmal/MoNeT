@@ -38,6 +38,19 @@ def readExperimentFilenamesV2(
 
     return filesDict
 
+
+def filterFilesByIndex(
+            files, ix,
+            m=True, fS=True, fE=True, fI=True
+        ):
+    mL = [files['m'][z] for z in ix] if m else []
+    fSL = [files['fS'][z] for z in ix] if fS else []
+    fEL = [files['fE'][z] for z in ix] if fE else []
+    fIL = [files['fI'][z] for z in ix] if fI else []
+    ffiles = {'m': mL, 'fS': fSL, 'fE': fEL, 'fI': fIL}
+    return ffiles
+
+
 def preProcessSubLandscapeV2(
             pop, landReps, fName, drive,
             nodesAggLst, nodeAggIx,
