@@ -21,7 +21,6 @@ fNames = glob(PT_OUT+'*{}*.npy'.format(AOI))
 i = 1
 fName = fNames[i]
 repsRatios = np.load(fName)
-# fName
 f_list = fName.replace('-', '_').split('_')[1:9]
 del f_list[6]
 f_tuple = tuple(list(map(int, f_list)))

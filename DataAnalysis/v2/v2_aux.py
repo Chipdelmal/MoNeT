@@ -16,4 +16,14 @@ def selectPath(USR):
     PT_IMG = PTR + 'img/'
     fldrList = [PTR, PT_PRE, PT_OUT, PT_MTR, PT_IMG]
     [monet.makeFolder(i) for i in fldrList]
-    return (PTR, PT_PRE, PT_OUT, PT_MTR, PT_IMG)
+    return (PTR, PT_PRE, PT_OUT, PT_MTR, PT_IMG, PT_MTR)
+
+
+def getExpPaths(PATH_DATA):
+    (expDirsMean, expDirsTrac) = (
+            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'analyzed/'),
+            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'traces/')
+        )
+    expDirsMean.sort()
+    expDirsTrac.sort()
+    return (expDirsMean, expDirsTrac)
