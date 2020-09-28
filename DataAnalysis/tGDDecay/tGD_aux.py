@@ -48,6 +48,8 @@ def selectPath(USR, DRV, EXP):
         PATH_ROOT = '/media/hdd/WorkExperiments/tGD/figure2/{}/{}/'.format(DRV, EXP)
     elif USR == 'PZ':
         PATH_ROOT = '/PATH_TO_FOLDER/tGD/figure2/{}/{}/'.format(DRV, EXP)
+    elif USR == 'ameek':
+        PATH_ROOT = '/Volumes/GoogleDrive/.shortcut-targets-by-id/1e56Nrp5mAxkyQ0C2zgBXCJ1YMFa2QNXg/AmeekBindra/{}/{}'.format(DRV, EXP)
     else:
         PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/tGD/figure2/{}/{}/'.format(DRV, EXP)
     # monet.makeFolder('{}/'.format(PATH_ROOT))
