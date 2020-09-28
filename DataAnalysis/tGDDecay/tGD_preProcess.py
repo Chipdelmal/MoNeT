@@ -15,14 +15,14 @@ from joblib import Parallel, delayed
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 (FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 1)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, False, True)
-EXP = ('000', ) #, '001', '005', '010', '100')
+EXP = ('000', '001', '005', '010', '100')
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
 for exp in EXP:
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, exp)
     drive = drv.driveSelector(DRV, AOI)
-    (DVP, NOI) = (drive.get('gDict'), [[0]]) # [[0], [1]])
+    (DVP, NOI) = (drive.get('gDict'),  [[0], [1]])
     # Time and head -----------------------------------------------------------
     tS = datetime.now()
     aux.printExperimentHead(PT_DTA, PT_IMG, PT_PRE, tS, 'Preprocess ' + AOI)

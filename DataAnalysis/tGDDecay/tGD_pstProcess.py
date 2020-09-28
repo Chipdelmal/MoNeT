@@ -23,7 +23,7 @@ import compress_pickle as pkl
         [.05, .10, .50, .90, .95],
         [int((i+1) * 365 / 3) for i in range(5)]
     )
-EXPS = ('000', )
+EXPS = ('000', '001', '005', '010', '100')
 header = ['i_hnf', 'i_cac', 'i_frc', 'i_hrt', 'i_ren', 'i_res', 'i_grp']
 outLabels = ('TTI', 'TTO', 'WOP', 'RAP', 'MNX')
 ###############################################################################
