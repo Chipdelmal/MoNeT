@@ -26,4 +26,4 @@ def getExpPaths(PATH_DATA):
         )
     expDirsMean.sort()
     expDirsTrac.sort()
-    return (expDirsMean, expDirsTrac)
+    return (expDirsMean, [i+'/' for i in expDirsTrac])

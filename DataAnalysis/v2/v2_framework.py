@@ -4,44 +4,39 @@ import MoNeT_MGDrivE as monet
 
 def readExperimentFilenamesV2(
     experimentPath,
-    sexFilenameIdentifiers={
-                "male": "M",
-                "femaleS": "FS",
-                "femaleE": "FE",
-                "femaleI": "FI"
-            }
+    sexFilenameID={"m": ["M_"], "fS": ["FS_"], "fE": ["FE_"], "fI": ["FI_"]}
         ):
-    defaultIdentifiers = {
-            "male": ["M_"],
-            "female": ["FS", "FE", "FI"]
-        }
 
     maleFiles = []
-    if 'male' in sexFilenameIdentifiers:
-        maleFiles = monet.getFileExperimentList(
-                experimentPath, sexFilenameIdentifiers['male']
-            )
-        if not maleFiles:
-            for i in defaultIdentifiers['male']:
-                fileList = monet.getFileExperimentList(experimentPath, i)
-                if fileList:
-                    maleFiles = fileList
-                    break
+    if 'm' in sexFilenameID:
+        for i in sexFilenameID['m']:
+            fileList = monet.getFileExperimentList(experimentPath, i)
+            maleFiles.extend(fileList)
 
-    femaleFiles = []
-    if 'female' in sexFilenameIdentifiers:
-        femaleFiles = monet.getFileExperimentList(
-                experimentPath, sexFilenameIdentifiers['female']
-            )
-        if not femaleFiles:
-            for i in defaultIdentifiers['female']:
-                fileList = monet.getFileExperimentList(experimentPath, i)
-                if fileList:
-                    femaleFiles = fileList
-                    break
+    femaleSFiles = []
+    if 'fS' in sexFilenameID:
+        for i in sexFilenameID['fS']:
+            fileList = monet.getFileExperimentList(experimentPath, i)
+            femaleSFiles.extend(fileList)
 
-    return {"male": maleFiles, "female": femaleFiles}
+    femaleEFiles = []
+    if 'fE' in sexFilenameID:
+        for i in sexFilenameID['fE']:
+            fileList = monet.getFileExperimentList(experimentPath, i)
+            femaleEFiles.extend(fileList)
 
+    femaleIFiles = []
+    if 'fI' in sexFilenameID:
+        for i in sexFilenameID['fI']:
+            fileList = monet.getFileExperimentList(experimentPath, i)
+            femaleIFiles.extend(fileList)
+
+    filesDict = {
+            "m": maleFiles,
+            "fS": femaleSFiles, "fE": femaleEFiles, "fI": femaleIFiles
+        }
+
+    return filesDict
 
 def preProcessSubLandscapeV2(
             pop, landReps, fName, drive,
@@ -79,7 +74,8 @@ def preProcessLandscapeV2(
             pathMean, pathTraces, expName, drive, prePath='./',
             nodesAggLst=[[0]], analysisOI='HLT', fNameFmt='{}/{}-{}_',
             MF=(True, True), cmpr='bz2', nodeDigits=4,
-            SUM=True, AGG=True, SPA=True, REP=True, SRP=True
+            SUM=True, AGG=True, SPA=True, REP=True, SRP=True,
+            sexFilenameID={"male": ["M_"], "female": ["FS_", "FE_", "FI_"]}
         ):
     dirsTraces = monet.listDirectoriesWithPathWithinAPath(pathTraces)
     files = readExperimentFilenamesV2(pathMean)
@@ -106,7 +102,8 @@ def preProcessV2(
             nodesAggLst=[[0]], outExpNames={},
             fNameFmt='{}/{}-{}_', OVW=True,
             MF=(True, True), cmpr='bz2', nodeDigits=4,
-            SUM=True, AGG=True, SPA=True, REP=True, SRP=True
+            SUM=True, AGG=True, SPA=True, REP=True, SRP=True,
+            sexFilenameID={"male": ["M_"], "female": ["FS_", "FE_", "FI_"]}
         ):
     # Setup paths -------------------------------------------------------------
     strInt = str(exIx+1).zfill(len(str(expNum)))
