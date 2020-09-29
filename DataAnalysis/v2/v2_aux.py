@@ -14,9 +14,9 @@ def selectPath(USR):
     PT_OUT = PTR + 'POSTPROCESS/'
     PT_MTR = PTR + 'SUMMARY/'
     PT_IMG = PTR + 'img/'
-    fldrList = [PTR, PT_PRE, PT_OUT, PT_MTR, PT_IMG]
+    fldrList = [PTR, PT_PRE, PT_OUT, PT_IMG, PT_MTR]
     [monet.makeFolder(i) for i in fldrList]
-    return (PTR, PT_PRE, PT_OUT, PT_MTR, PT_IMG, PT_MTR)
+    return (PTR, PT_PRE, PT_OUT, PT_IMG, PT_MTR)
 
 
 def getExpPaths(PATH_DATA):

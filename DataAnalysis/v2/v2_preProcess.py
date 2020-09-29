@@ -9,7 +9,7 @@ import v2_gene as drv
 import v2_framework as frame
 from datetime import datetime
 import MoNeT_MGDrivE as monet
-from joblib import Parallel, delayed
+
 
 ###############################################################################
 #
@@ -36,9 +36,10 @@ exIx = 0
 # )
 
 nodesAggLst = [[0]]
-sexID = {'m': ['M_'], 'fS': ['FS_'], 'fE': ['FE_'], 'fI': ['FI_']}
-
+sexID = {'male': ['M_'], 'female': ["FS_", "FE_", "FI_"]}
 files = frame.readExperimentFilenamesV2(pathMean, sexFilenameID=sexID)
+files
+
 dirsTraces = monet.listDirectoriesWithPathWithinAPath(pathTraces)
 filesList = [monet.filterFilesByIndex(files, ix) for ix in nodesAggLst]
 

@@ -4,51 +4,25 @@ import MoNeT_MGDrivE as monet
 
 def readExperimentFilenamesV2(
     experimentPath,
-    sexFilenameID={"m": ["M_"], "fS": ["FS_"], "fE": ["FE_"], "fI": ["FI_"]}
+    sexFilenameID={
+                "male": ["M_"],
+                "female": ["FS_", "FE_", "FI_"]
+            }
         ):
 
     maleFiles = []
-    if 'm' in sexFilenameID:
-        for i in sexFilenameID['m']:
+    if 'male' in sexFilenameID:
+        for i in sexFilenameID['male']:
             fileList = monet.getFileExperimentList(experimentPath, i)
             maleFiles.extend(fileList)
 
-    femaleSFiles = []
-    if 'fS' in sexFilenameID:
-        for i in sexFilenameID['fS']:
+    femaleFiles = []
+    if 'female' in sexFilenameID:
+        for i in sexFilenameID['female']:
             fileList = monet.getFileExperimentList(experimentPath, i)
-            femaleSFiles.extend(fileList)
+            femaleFiles.extend(fileList)
 
-    femaleEFiles = []
-    if 'fE' in sexFilenameID:
-        for i in sexFilenameID['fE']:
-            fileList = monet.getFileExperimentList(experimentPath, i)
-            femaleEFiles.extend(fileList)
-
-    femaleIFiles = []
-    if 'fI' in sexFilenameID:
-        for i in sexFilenameID['fI']:
-            fileList = monet.getFileExperimentList(experimentPath, i)
-            femaleIFiles.extend(fileList)
-
-    filesDict = {
-            "m": maleFiles,
-            "fS": femaleSFiles, "fE": femaleEFiles, "fI": femaleIFiles
-        }
-
-    return filesDict
-
-
-def filterFilesByIndex(
-            files, ix,
-            m=True, fS=True, fE=True, fI=True
-        ):
-    mL = [files['m'][z] for z in ix] if m else []
-    fSL = [files['fS'][z] for z in ix] if fS else []
-    fEL = [files['fE'][z] for z in ix] if fE else []
-    fIL = [files['fI'][z] for z in ix] if fI else []
-    ffiles = {'m': mL, 'fS': fSL, 'fE': fEL, 'fI': fIL}
-    return ffiles
+    return {"male": sorted(maleFiles), "female": sorted(femaleFiles)}
 
 
 def preProcessSubLandscapeV2(
