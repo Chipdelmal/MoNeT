@@ -1,6 +1,11 @@
 
 import re
+import numpy as np
 import MoNeT_MGDrivE as monet
+
+
+def zeroDivide(a, b):
+    return np.divide(a, b, out=np.zeros_like(a), where=b != 0)
 
 
 def selectPath(USR):
