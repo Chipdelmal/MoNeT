@@ -19,6 +19,9 @@ import matplotlib.pyplot as plt
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, False)
 (PT_ROT, PT_PRE, PT_OUT, PT_IMG, PT_MTR) = aux.selectPath(USR)
 (expDirsMean, expDirsTrac) = aux.getExpPaths(PT_ROT)
+###############################################################################
+# Genotypes
+###############################################################################
 genes = ('WW', 'WH', 'WR', 'WB', 'HH', 'HR', 'HB', 'RR', 'RB', 'BB')
 locs = {
         'H': (('H', (0, 1)), ),
@@ -26,7 +29,10 @@ locs = {
     }
 hset = set(aux.aggregateGeneAppearances(genes, locs['H']))
 oset = set(aux.aggregateGeneAppearances(genes, locs['O']))
-HLT = (hset, oset-hset, oset | hset)
+healthSet = (hset, oset-hset, oset | hset)
+HLT = monet.generateAggregationDictionary(
+        ["H", "W", "Total"], [list(i) for i in healthSet]
+    )
 ###############################################################################
 # Load folders
 ###############################################################################
@@ -38,16 +44,21 @@ humanFiles = [glob(i+'/H_*')[0] for i in dirsTraces]
 hData = [np.loadtxt(i, skiprows=1, delimiter=',', usecols=(1, 2)) for i in humanFiles]
 (days, states) = hData[0].shape
 # Mosquito files --------------------------------------------------------------
-FIfiles = [glob(i+'/FI*.csv')[0] for i in dirsTraces]
-genotypes = monet.readGenotypes(FIfiles[0])
-genes = [i.replace('\"', '').replace('\n', '') for i in genotypes]
-dta = np.loadtxt(FIfiles[0], skiprows=1, delimiter=',', usecols=(1, ))
-
-genes
-monet.loadAndAggregateLandscapeData(FIfiles[0])
+mID = ('FS', 'FE', 'FI')
+mPops = {}
+for id in mID:
+    FIfiles = [glob(i+'/'+id+'*.csv')[0] for i in dirsTraces]
+    pops = []
+    for file in FIfiles:
+        dta = np.loadtxt(file, skiprows=1, delimiter=',', usecols=(1, ))
+        nodeData = monet.loadNodeData(femaleFilename=file)
+        pop = monet.aggregateGenotypesInNode(nodeData, HLT)['population']
+        pops.append(pop)
+    mPops[id] = pops
 ###############################################################################
 # Plot
 ###############################################################################
+# Human -----------------------------------------------------------------------
 colors = ('#1b48e90B', '#ec114c0B')
 (fig, ax) = plt.subplots(nrows=1, figsize=(10, 3))
 for data in hData:
@@ -55,6 +66,9 @@ for data in hData:
     total = np.sum(data, axis=1)
     for i in range(s):
         ax.plot(range(t), data[:, i]/total, lw=.25, color=colors[i])
+# Mosquito --------------------------------------------------------------------
+
+
 # Grid and limits -------------------------------------------------------------
 ax.set_xticks(np.arange(0, days, 365))
 ax.set_yticks(np.arange(0, 1.05, 0.25))
