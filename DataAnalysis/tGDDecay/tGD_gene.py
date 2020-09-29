@@ -53,10 +53,16 @@ def driveSelector(DRIVE, TYPE):
             colors = COLHN
         elif TYPE == 'TRS':
             aggD = monet.generateAggregationDictionary(
-                    ["H*", "O-", "Total"], gld.LD_HLT
+                    ["H*", "O-", "Total"], gld.LD_TRS
                 )
             yRange = 11000/2
             colors = COLTN
+        elif TYPE == 'WLD':
+            aggD = monet.generateAggregationDictionary(
+                    ["W*", "O-", "Total"], gld.LD_WLD
+                )
+            yRange = 11000/2
+            colors = COLWN
     # Split Drive #############################################################
     if DRIVE == 'splitDrive':
         if TYPE == 'ECO':
@@ -77,6 +83,12 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000/2
             colors = COLTN
+        elif TYPE == 'TRS':
+            aggD = monet.generateAggregationDictionary(
+                    ["W*", "O-", "Total"], gsd.SD_WLD
+                )
+            yRange = 11000/2
+            colors = COLWN
     # tGD Drive ###############################################################
     if DRIVE == 'tGD':
         if TYPE == 'ECO':

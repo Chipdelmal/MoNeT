@@ -46,7 +46,6 @@ wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
 SD_HLT = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
 
-
 ###############################################################################
 # Trash genotype counts
 ###############################################################################
@@ -58,3 +57,15 @@ wGenes = (('W', allGeneIx), ('R', allGeneIx), ('B', allGeneIx), ('H', allGeneIx)
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
 SD_TRS = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
+
+###############################################################################
+# Wild genotype counts
+###############################################################################
+# H ---------------------------------------------------------------------------
+hGenes = (('H', allGeneIx), ('R', allGeneIx), ('B', allGeneIx), ('C', allGeneIx))
+hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
+# W ---------------------------------------------------------------------------
+wGenes = (('W', allGeneIx), )
+wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
+# Full set --------------------------------------------------------------------
+SD_WLD = [list(i) for i in (wPos, hPos - wPos, wPos | hPos)]
