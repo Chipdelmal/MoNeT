@@ -26,8 +26,8 @@ COLTN = ["#00a2fe", "#8338EC", "#0C4887"]
 COLTN = [c+'1A' for c in COLTN]
 COLTO = [i[:-2]+'FF' for i in COLTN]
 COLTM = monet.generateAlphaColorMapFromColorArray(COLTO)
-# Trash ----------------------------------------------------------------------
-COLWN = ["#65ff70", "#8338EC", "#0C4887"]
+# Wild ----------------------------------------------------------------------
+COLWN = ["#8338EC", "#65ff70", "#0C4887"]
 COLWN = [c+'1A' for c in COLWN]
 COLWO = [i[:-2]+'FF' for i in COLWN]
 COLWM = monet.generateAlphaColorMapFromColorArray(COLWO)
@@ -59,7 +59,7 @@ def driveSelector(DRIVE, TYPE):
             colors = COLTN
         elif TYPE == 'WLD':
             aggD = monet.generateAggregationDictionary(
-                    ["W*", "O-", "Total"], gld.LD_WLD
+                    ["O-", "W*", "Total"], gld.LD_WLD
                 )
             yRange = 11000/2
             colors = COLWN
@@ -83,9 +83,9 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000/2
             colors = COLTN
-        elif TYPE == 'TRS':
+        elif TYPE == 'WLD':
             aggD = monet.generateAggregationDictionary(
-                    ["W*", "O-", "Total"], gsd.SD_WLD
+                    ["O-", "W*", "Total"], gsd.SD_WLD
                 )
             yRange = 11000/2
             colors = COLWN
@@ -111,7 +111,7 @@ def driveSelector(DRIVE, TYPE):
             colors = COLTN
         elif TYPE == 'WLD':
             aggD = monet.generateAggregationDictionary(
-                    ["W*", "O-", "Total"], gtgd.TGD_WLD
+                    ["O-", "W*", "Total"], gtgd.TGD_WLD
                 )
             yRange = 11000/2
             colors = COLWN

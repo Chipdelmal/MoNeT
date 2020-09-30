@@ -57,4 +57,4 @@ hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 wGenes = (('W', (0, 1)), )
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
-LD_WLD = [list(i) for i in (wPos, hPos - wPos, wPos | hPos)]
+LD_WLD = [list(i) for i in (hPos - wPos, wPos, wPos | hPos)]
