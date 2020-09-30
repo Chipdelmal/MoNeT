@@ -17,7 +17,7 @@ EXPS = ('000', '001', '005', '010', '100')
         # '/home/chipdelmal/Documents/WorkSims/tGD/figure2/'
         # '/media/hdd/WorkExperiments/tGD/fS/',
         #'/media/hdd/WorkExperiments/tGD/figure2/'
-	'/media/hdd/WorkExperiments/tGDML/'
+	    '/media/hdd/WorkExperiments/tGDMLFull/'
     )
 monet.makeFolder(DSK_BASE+drive)
 # Download loop
