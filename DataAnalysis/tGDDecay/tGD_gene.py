@@ -83,7 +83,7 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000/2
             colors = COLTN
-        elif TYPE == 'TRS':
+        elif TYPE == 'WLD':
             aggD = monet.generateAggregationDictionary(
                     ["W*", "O-", "Total"], gsd.SD_WLD
                 )
