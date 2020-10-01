@@ -12,12 +12,12 @@ import MoNeT_MGDrivE as monet
 EXPS = ('000', '001', '005', '010', '100')
 # Experiments paths
 (LAB_BASE, DSK_BASE) = (
-        'lab:/RAID5/marshallShare/tGD/fullSweep/',
-        # 'lab:/RAID5/marshallShare/tGD/figure2/',
+        # 'lab:/RAID5/marshallShare/tGD/fullSweep/',
+        'lab:/RAID5/marshallShare/tGD/figure2/',
         # '/home/chipdelmal/Documents/WorkSims/tGD/figure2/'
         # '/media/hdd/WorkExperiments/tGD/fS/',
-        #'/media/hdd/WorkExperiments/tGD/figure2/'
-	    '/media/hdd/WorkExperiments/tGDMLFull/'
+        '/media/hdd/WorkExperiments/tGD/figure2/'
+	    # '/media/hdd/WorkExperiments/tGDMLFull/'
     )
 monet.makeFolder(DSK_BASE+drive)
 # Download loop

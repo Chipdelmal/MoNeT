@@ -107,7 +107,7 @@ xran = (0, 365*6)
 ###############################################################################
 # Weather
 ###############################################################################
-colors = ('#43e93aA5', '#3a3ae9A5', '#ff2133FF')
+colors = ('#43e93aA5', '#3a3ae9A5', '#ff006eFF')
 tr = len(rainfall)
 tt = len(temperature)
 (maxTemp, maxRain, maxPop) = (
@@ -138,7 +138,7 @@ for rep in sums:
     ax[2].plot(range(t), frac[1], lw=.75, ls='--', color=colors[1])
 infected = [i[:, 2] for i in mPops['FI']]
 for inf in infected:
-    ax[2].plot(range(t), aux.zeroDivide(inf, total), lw=.75, color='#A613800A')
+    ax[2].plot(range(t), aux.zeroDivide(inf, total), lw=.75, color='#bb28950A')
 ###############################################################################
 # Plot B
 ###############################################################################
@@ -165,7 +165,7 @@ for rep in sums:
     frac = [aux.zeroDivide(i, rep[:, 2]) for i in (rep[:, 0], rep[:, 1])]
     ax[3].plot(range(t), frac[0], lw=.75, ls='--', color=colors[0])
     ax[3].plot(range(t), frac[1], lw=.75, ls='--', color=colors[1])
-infected = [i[:, 2] for i in mPops['FI']]
+infected = [i[:, -1] for i in mPops['FI']]
 for inf in infected:
     ax[3].plot(range(t), aux.zeroDivide(inf, total), lw=.75, color='#A613800A')
 ###############################################################################
