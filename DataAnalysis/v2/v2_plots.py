@@ -37,13 +37,14 @@ HLT = monet.generateAggregationDictionary(
 # Ecology ---------------------------------------------------------------------
 locsE = {
         'H': (('H', (0, 1)), ), 'W': (('W', (0, 1)), ),
-        'R': (('R', (0, 1)), ('B', (0, 1)))
+        'R': (('R', (0, 1)), ), 'B': (('B', (0, 1)), )
     }
 hlst = aux.aggregateGeneAppearances(genes, locsE['H'])
 wlst = aux.aggregateGeneAppearances(genes, locsE['W'])
 rlst = aux.aggregateGeneAppearances(genes, locsE['R'])
+blst = aux.aggregateGeneAppearances(genes, locsE['B'])
 ECO = monet.generateAggregationDictionary(
-        ["H", "W", "R"], [hlst, wlst, rlst]
+        ["H", "W", "R", "B"], [hlst, wlst, rlst, blst]
     )
 ###############################################################################
 # Load folders
@@ -87,63 +88,98 @@ for id in mID:
 sumsECO = []
 for r in range(len(dirsTraces)):
     sumsECO.append(mPopsECO['FS'][r] + mPopsECO['FE'][r] + mPopsECO['FI'][r])
+# Mosquito files --------------------------------------------------------------
+rainfall = np.loadtxt(
+    PT_ROT+'km_precip_2010s_daily.csv',
+    skiprows=1, delimiter=',', usecols=(0, )
+)
+temperature = np.loadtxt(
+    PT_ROT+'km_temp_2010s.csv',
+    skiprows=1, delimiter=',', usecols=(0, )
+)
+###############################################################################
+###############################################################################
+# Plots
+###############################################################################
+###############################################################################
+(fig, ax) = plt.subplots(nrows=4, figsize=(10, 5.5), sharex=True)
+xran = (0, 365*6)
+###############################################################################
+# Weather
+###############################################################################
+colors = ('#43e93aA5', '#3a3ae9A5', '#ff2133FF')
+tr = len(rainfall)
+tt = len(temperature)
+(maxTemp, maxRain, maxPop) = (
+    max(temperature),
+    max(rainfall),
+    max([max(i[:, -1]) for i in sums])
+)
+for (j, rep) in enumerate(sums):
+    frac = [i / maxPop for i in rep[:,-1]]
+    ax[0].plot(range(t), frac, lw=.5, ls='-', color=colors[0])
+ax[0].plot(range(tr), [i/maxRain for i in rainfall], lw=1, ls='-', color=colors[1])
+ax[0].plot(np.arange(0, 10*365, 10*365/tt), [i/maxTemp for i in temperature], lw=.075, ls='-', color=colors[2])
 ###############################################################################
 # Plot A
 ###############################################################################
-(fig, ax) = plt.subplots(nrows=2, figsize=(10, 5), sharex=True)
-xran = (0, 365*7)
 # Human -----------------------------------------------------------------------
 colors = ('#6347ff0C', '#FF21330C')
 for data in hData:
     (t, s) = data.shape
     total = np.sum(data, axis=1)
     for i in range(s):
-        ax[0].plot(range(t), data[:, i]/total, lw=.5, color=colors[i])
+        ax[2].plot(range(t), data[:, i]/total, lw=.5, color=colors[i])
 # Mosquito --------------------------------------------------------------------
 colors = ('#B8B8FF15', '#FF616E15')
 for rep in sums:
     frac = [aux.zeroDivide(i, rep[:, 2]) for i in (rep[:, 0], rep[:, 1])]
-    ax[0].plot(range(t), frac[0], lw=.4, ls='--', color=colors[0])
-    ax[0].plot(range(t), frac[1], lw=.4, ls='--', color=colors[1])
-infected = [i[:, 2] * 10 for i in mPops['FI']]
+    ax[2].plot(range(t), frac[0], lw=.75, ls='--', color=colors[0])
+    ax[2].plot(range(t), frac[1], lw=.75, ls='--', color=colors[1])
+infected = [i[:, 2] for i in mPops['FI']]
 for inf in infected:
-    ax[0].plot(range(t), aux.zeroDivide(inf, total), lw=.5, color='#A613800A')
-# Other important lines -------------------------------------------------------
-# ax.axvspan(3*365, days, color='#0A1CC2', alpha=.03)
-# ax[0].axvspan(0, 3*365, color='#544496', alpha=.025)
-for i in [1095, 1102, 1109, 1116, 1123, 1130, 1137, 1144]:
-    ax[0].axvline(i, alpha=.35, lw=.2, color='black')
-# Grid and limits -------------------------------------------------------------
-ax[0].set_xticks(np.arange(0, days, 365))
-ax[0].set_yticks(np.arange(0, 1.05, 0.25))
-ax[0].axes.set_xlim(xran[0], xran[1])
-ax[0].axes.set_ylim(-.0035, 1.0035)
-ax[0].xaxis.set_ticklabels([])
-ax[0].yaxis.set_ticklabels([])
-ax[0].grid(alpha=.25, lw=.5)
+    ax[2].plot(range(t), aux.zeroDivide(inf, total), lw=.75, color='#A613800A')
 ###############################################################################
 # Plot B
 ###############################################################################
-colors = ('#3a86ff0A', '#8338ec0A', '#ff006e0A')
+colors = ('#3a86ff0A', '#8338ec0A', '#72f1740A', '#ff006e0A')
 # Mosquito --------------------------------------------------------------------
 for data in sumsECO:
     (t, s) = data.shape
     total = np.sum(data, axis=1)
     for i in range(s):
-        ax[1].plot(range(t), data[:, i]/total, lw=.5, color=colors[i])
-# Other important lines -------------------------------------------------------
-# ax.axvspan(3*365, days, color='#0A1CC2', alpha=.03)
-ax[1].axvspan(0, 3*365, color='#544496', alpha=.025)
-for i in [1095, 1102, 1109, 1116, 1123, 1130, 1137, 1144]:
-    ax[1].axvline(i, alpha=.35, lw=.2, color='black')
-# Grid and limits -------------------------------------------------------------
-ax[1].set_xticks(np.arange(0, days, 365))
-ax[1].set_yticks(np.arange(0, 1.05, 0.25))
-ax[1].axes.set_xlim(xran[0], xran[1])
-ax[1].axes.set_ylim(-.0035, 1.0035)
-ax[1].xaxis.set_ticklabels([])
-ax[1].yaxis.set_ticklabels([])
-ax[1].grid(alpha=.25, lw=.5)
-#
-plt.subplots_adjust(hspace=.05)
+        ax[1].plot(range(t), data[:, i]/total, lw=.75, color=colors[i])
+###############################################################################
+# Plot C
+###############################################################################
+# Human -----------------------------------------------------------------------
+colors = ('#6347ff0C', '#FF21330C')
+for data in hData:
+    (t, s) = data.shape
+    total = np.sum(data, axis=1)
+    for i in range(s):
+        ax[3].plot(range(t), data[:, i]/total, lw=.75, color=colors[i])
+# Mosquito --------------------------------------------------------------------
+colors = ('#B8B8FF15', '#FF616E15')
+for rep in sums:
+    frac = [aux.zeroDivide(i, rep[:, 2]) for i in (rep[:, 0], rep[:, 1])]
+    ax[3].plot(range(t), frac[0], lw=.75, ls='--', color=colors[0])
+    ax[3].plot(range(t), frac[1], lw=.75, ls='--', color=colors[1])
+infected = [i[:, 2] for i in mPops['FI']]
+for inf in infected:
+    ax[3].plot(range(t), aux.zeroDivide(inf, total), lw=.75, color='#A613800A')
+###############################################################################
+# Export
+###############################################################################
+for j in range(4):
+    for i in [1095, 1102, 1109, 1116, 1123, 1130, 1137, 1144]:
+        ax[j].axvline(i, alpha=.35, lw=.25, color='black')
+    ax[j].set_xticks(np.arange(0, days, 365))
+    ax[j].set_yticks(np.arange(0, 1.05, 0.25))
+    ax[j].axes.set_xlim(xran[0], xran[1])
+    ax[j].axes.set_ylim(-0, 1)
+    ax[j].xaxis.set_ticklabels([])
+    ax[j].yaxis.set_ticklabels([])
+    ax[j].grid(alpha=.25, lw=.5)
+plt.subplots_adjust(hspace=.25)
 fig.savefig(PT_IMG+'/v2.png', dpi=750, bbox_inches='tight', pad_inches=.05)
