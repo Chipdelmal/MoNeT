@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore")
 (USR, AOI, REL, LND, MOI) = ('dsk', 'HLT', 'mixed', 'PAN', 'WOP')
 (DRV, FMT, QNT, OVW) = ('LDR', 'bz2', '90', True)
 # Select surface variables ----------------------------------------------------
-HD_IND = ['i_gsv', 'i_ren']
+HD_IND = ['i_ren', 'i_fic']
 (scalers, HD_DEP, _, cmap) = aux.selectDepVars(MOI, AOI)
 (ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
