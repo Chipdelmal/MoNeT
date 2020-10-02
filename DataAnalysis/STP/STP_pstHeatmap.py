@@ -74,7 +74,7 @@ for (xpNumC, xpId) in enumerate(idTuples):
     rs = fun.calcResponseSurface(x, y, z, scalers=scalers, mthd=mthd)
     (rsG, rsS) = (rs['grid'], rs['surface'])
     # Plot the response surface -------------------------------------------
-    fig, ax = plt.subplots()
+    (fig, ax) = plt.subplots()
     # Experiment points, contour lines, response surface
     xy = ax.plot(rsG[0], rsG[1], 'k.', ms=3, alpha=.25, marker='.')
     cc = ax.contour(rsS[0], rsS[1], rsS[2], levels=lvls, colors='w', linewidths=1, alpha=.5)
