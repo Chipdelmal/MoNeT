@@ -22,13 +22,16 @@ def zeroDivide(a, b):
     return np.divide(a, b, out=np.zeros_like(a), where=b != 0)
 
 
-def errorBetweenDataframes(dfB, dfP, FEATS, LABELS):
+def errorBetweenDataframes(dfB, dfP, FEATS, LABELS, error=True):
     dfO = dfB.copy()
     for i in range(dfB.shape[0]):
         sliceKey = dfB.iloc[i][FEATS]
         outB = dfB.iloc[i][LABELS].values
         boolFltr = getBoolIxFromFeatKey(dfP, sliceKey, FEATS)
         outP = dfP[boolFltr][LABELS].values
-        error = zeroDivide(outP - outB, outB)
-        dfO.iloc[boolFltr.index(True)] = list(sliceKey) + list(error[0])
+        if error:
+            diff = zeroDivide(outP - outB, outB)
+        else:
+            diff = zeroDivide(outP - outB, 1)
+        dfO.iloc[boolFltr.index(True)] = list(sliceKey) + list(diff[0])
     return dfO
