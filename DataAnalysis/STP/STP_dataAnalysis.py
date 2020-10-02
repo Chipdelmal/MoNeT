@@ -16,3 +16,19 @@ def getBoolIxFromFeatKey(df, key, FEATS):
     matches = [list(np.isclose(df[feat], key[feat])) for feat in FEATS]
     ixBool = [all(row) for row in list(zip(*matches))]
     return ixBool
+
+
+def zeroDivide(a, b):
+    return np.divide(a, b, out=np.zeros_like(a), where=b != 0)
+
+
+def errorBetweenDataframes(dfB, dfP, FEATS, LABELS):
+    dfO = dfB.copy()
+    for i in range(dfB.shape[0]):
+        sliceKey = dfB.iloc[i][FEATS]
+        outB = dfB.iloc[i][LABELS].values
+        boolFltr = getBoolIxFromFeatKey(dfP, sliceKey, FEATS)
+        outP = dfP[boolFltr][LABELS].values
+        error = zeroDivide(outP - outB, outB)
+        dfO.iloc[boolFltr.index(True)] = list(sliceKey) + list(error[0])
+    return dfO
