@@ -88,7 +88,7 @@ for id in mID:
 sumsECO = []
 for r in range(len(dirsTraces)):
     sumsECO.append(mPopsECO['FS'][r] + mPopsECO['FE'][r] + mPopsECO['FI'][r])
-# Mosquito files --------------------------------------------------------------
+# Environmental ---------------------------------------------------------------
 rainfall = np.loadtxt(
     PT_ROT+'km_precip_2010s_daily.csv',
     skiprows=1, delimiter=',', usecols=(0, )
@@ -97,6 +97,11 @@ temperature = np.loadtxt(
     PT_ROT+'km_temp_2010s.csv',
     skiprows=1, delimiter=',', usecols=(0, )
 )
+# Epi -------------------------------------------------------------------------
+epiPath = '/media/hdd/WorkExperiments/mgdrive2_paper/epitraces/'
+epiFiles = glob(epiPath+'*.csv')
+epi = [np.loadtxt(i, skiprows=1, delimiter=',', usecols=(1, )) for i in epiFiles]
+epiMx = max([max(i) for i in epi])
 ###############################################################################
 ###############################################################################
 # Plots
@@ -117,28 +122,28 @@ tt = len(temperature)
 )
 for (j, rep) in enumerate(sums):
     frac = [i / maxPop for i in rep[:,-1]]
-    ax[0].plot(range(t), frac, lw=.5, ls='-', color=colors[0])
+    ax[0].plot(range(days), frac, lw=.5, ls='-', color=colors[0])
 ax[0].plot(range(tr), [i/maxRain for i in rainfall], lw=1, ls='-', color=colors[1])
 ax[0].plot(np.arange(0, 10*365, 10*365/tt), [i/maxTemp for i in temperature], lw=.075, ls='-', color=colors[2])
 ###############################################################################
 # Plot A
 ###############################################################################
 # Human -----------------------------------------------------------------------
-colors = ('#6347ff0C', '#FF21330C')
+colors = ('#6347ff0C', '#ff006e0C')
 for data in hData:
     (t, s) = data.shape
     total = np.sum(data, axis=1)
     for i in range(s):
         ax[2].plot(range(t), data[:, i]/total, lw=.5, color=colors[i])
 # Mosquito --------------------------------------------------------------------
-colors = ('#B8B8FF15', '#FF616E15')
+colors = ('#B8B8FF15', '#f192bb15')
 for rep in sums:
     frac = [aux.zeroDivide(i, rep[:, 2]) for i in (rep[:, 0], rep[:, 1])]
-    ax[2].plot(range(t), frac[0], lw=.75, ls='--', color=colors[0])
-    ax[2].plot(range(t), frac[1], lw=.75, ls='--', color=colors[1])
+    ax[2].plot(range(days), frac[0], lw=.75, ls='--', color=colors[0])
+    ax[2].plot(range(days), frac[1], lw=.75, ls='--', color=colors[1])
 infected = [i[:, 2] for i in mPops['FI']]
 for inf in infected:
-    ax[2].plot(range(t), aux.zeroDivide(inf, total), lw=.75, color='#bb28950A')
+    ax[2].plot(range(days), aux.zeroDivide(inf, total), lw=.75, color='#bb28950A')
 ###############################################################################
 # Plot B
 ###############################################################################
@@ -148,26 +153,14 @@ for data in sumsECO:
     (t, s) = data.shape
     total = np.sum(data, axis=1)
     for i in range(s):
-        ax[1].plot(range(t), data[:, i]/total, lw=.75, color=colors[i])
+        ax[1].plot(range(days), data[:, i]/total, lw=.75, color=colors[i])
 ###############################################################################
 # Plot C
 ###############################################################################
 # Human -----------------------------------------------------------------------
-colors = ('#6347ff0C', '#FF21330C')
-for data in hData:
-    (t, s) = data.shape
-    total = np.sum(data, axis=1)
-    for i in range(s):
-        ax[3].plot(range(t), data[:, i]/total, lw=.75, color=colors[i])
-# Mosquito --------------------------------------------------------------------
-colors = ('#B8B8FF15', '#FF616E15')
-for rep in sums:
-    frac = [aux.zeroDivide(i, rep[:, 2]) for i in (rep[:, 0], rep[:, 1])]
-    ax[3].plot(range(t), frac[0], lw=.75, ls='--', color=colors[0])
-    ax[3].plot(range(t), frac[1], lw=.75, ls='--', color=colors[1])
-infected = [i[:, -1] for i in mPops['FI']]
-for inf in infected:
-    ax[3].plot(range(t), aux.zeroDivide(inf, total), lw=.75, color='#A613800A')
+colors = ('#6347ff0C', '#0a1cc20C')
+for i in epi:
+    ax[3].plot(range(days-1), i/epiMx, lw=.075, color=colors[1])
 ###############################################################################
 # Export
 ###############################################################################
