@@ -14,7 +14,7 @@ warnings.filterwarnings("ignore")
 
 # python tGD_pstHeatmapSSV.py srv linkedDrive HLT WOP
 (USR, DRV, AOI, MOI) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-# (USR, DRV, AOI, MOI) = ('dsk', 'tGD', 'TRS', 'RAP')
+# (USR, DRV, AOI, MOI) = ('dsk', 'tGD', 'WLD', 'MNX')
 (FMT, SKP, MF,  OVW, QNT) = ('bz', False, (False, True), True, '90')
 # Select surface variables ----------------------------------------------------
 HD_IND = ['i_ren', 'i_hnf']
@@ -81,6 +81,8 @@ for exp in EXPS:
         # Figure Modifiers ----------------------------------------------------
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, .85*sz)
+        ax.set_xscale(xSca)
+        ax.set_yscale(ySca)
         # Colorbar
         cbar = fig.colorbar(cs)
         cbar.ax.get_yaxis().labelpad = 25
