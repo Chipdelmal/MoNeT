@@ -23,7 +23,7 @@ EXP = ('000',  ) # '001', '005', '010', '100')
 for exp in EXP:
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, exp)
     drive = drv.driveSelector(DRV, AOI)
-    (DVP, NOI) = (drive.get('gDict'),  [[0], [1]])
+    (DVP, NOI) = (drive.get('gDict'),  [[0]]) # , [1]])
     # Time and head -----------------------------------------------------------
     tS = datetime.now()
     aux.printExperimentHead(PT_DTA, PT_IMG, PT_PRE, tS, 'Preprocess ' + AOI)
