@@ -15,7 +15,8 @@ from joblib import Parallel, delayed
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 (FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 4)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, False, True)
-EXP = ('000', '001', '005', '010', '100')
+EXP = ('000',  ) # '001', '005', '010', '100')
+
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
