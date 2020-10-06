@@ -45,9 +45,9 @@ for fName in fNames:
     ax.imshow(repsRatios, cmap=cmap_reversed)
 
     # add TTI----------------------------------------------------------------------
-    [plt.axvline(i, alpha=.75, linewidth=0.2) for i in tti]
+    [plt.axvline(i, color='#3DFE70', alpha=.75, linewidth=0.2) for i in tti]
     # add TTO----------------------------------------------------------------------
-    [plt.axvline(j, alpha=.75, linewidth=0.2) for j in tto]
+    [plt.axvline(j, color='#3DFE70', alpha=.75, linewidth=0.2) for j in tto]
     # Save the figure--------------------------------------------------------------
     outName = fName.split('/')[-1].split('.')[0][:-4]
     plt.savefig(PT_IMG+outName+ '.png', bbox_inches='tight', pad_inches=0, dpi=500)
