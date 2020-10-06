@@ -18,7 +18,8 @@ warnings.filterwarnings("ignore")
 (FMT, SKP, MF,  OVW, QNT) = ('bz', False, (False, True), True, '90')
 # Select surface variables ----------------------------------------------------
 HD_IND = ['i_ren', 'i_hnf']
-(scalers, HD_DEP, _, cmap) = aux.selectDepVars(MOI, AOI)
+(scalers, HD_DEP, _, cmapR) = aux.selectDepVars(MOI, AOI)
+cmap = cmapR.reversed()
 (ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
         [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
