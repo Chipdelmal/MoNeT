@@ -26,6 +26,7 @@ from django.urls import reverse_lazy
 from bokeh.models import ColumnDataSource, LayoutDOM
 from bokeh.core.properties import Instance, String
 from bokeh.util.compiler import TypeScript
+import compress_pickle as pkl
 
 TS_CODE = """
 // This custom model wraps one part of the third-party vis.js library:
