@@ -38,7 +38,7 @@ for exp in EXPS:
         # AOI = re.split(r'[0-9_./-]+', fName)[18]
         # Select cmap --------------------------------------------------------
         (scalers, HD_DEP, IND_RAN, palette) = aux.selectDepVars('TTI', AOI)
-        cmap_reversed = palette.reversed()
+        cmap = palette.reversed()
         # load TTI and TTO ---------------------------------------------------
         ttiR = pkl.load(PT_MTR+'{}_TTI_{}_mlr.bz'.format(AOI, QNT))
         tti = ttiR[fKeys][int(thi*100)]
@@ -46,11 +46,11 @@ for exp in EXPS:
         tto = ttoR[fKeys][int(tho*100)]
         # Plotting-------------------------------------------------------------
         (fig, ax) = plt.subplots(nrows=1, ncols=1)
-        ax.imshow(repsRatios, cmap=cmap_reversed)
+        ax.imshow(repsRatios, cmap=cmap)
         # add TTI-------------------------------------------------------------
-        [plt.axvline(i, color='#3DFE70', alpha=.5, linewidth=0.15) for i in tti]
+        [plt.axvline(i, color='#f8f7ff', alpha=.6, linewidth=0.175) for i in tti]
         # add TTO-------------------------------------------------------------
-        [plt.axvline(j, color='#d914b5', alpha=.5, linewidth=0.15) for j in tto]
+        [plt.axvline(j, color='#888888', alpha=.6, linewidth=0.175) for j in tto]
         # Save the figure------------------------------------------------------
         outName = fName.split('/')[-1].split('.')[0][:-4]
         plt.xlim(X_RAN)
