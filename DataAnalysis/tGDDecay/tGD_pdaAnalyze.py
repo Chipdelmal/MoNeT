@@ -17,11 +17,6 @@ USR = 'ameek'
 PT_IMG = PT_IMG+'xRay/'
 monet.makeFolder(PT_IMG)
 
-# Select cmap ------------------------------------------------------------------
-(scalers, HD_DEP, IND_RAN, palette) = aux.selectDepVars('TTI', AOI)
-
-cmap_reversed = palette.reversed()
-
 
 # Load file ------------------------------------------------------------------
 fNames = glob(PT_OUT+'*.npy'.format(AOI))
@@ -32,7 +27,14 @@ for fName in fNames:
     repsRatios = np.load(fName)
     fList = re.split(r'[a-zA-Z_/.-]+', fName)[9:16]
     fKeys = tuple(list(map(int, fList)))
+    AOI = re.split(r'[0-9_./-]+', fName)[18]
 
+    # Select cmap ------------------------------------------------------------------
+    (scalers, HD_DEP, IND_RAN, palette) = aux.selectDepVars('TTI', AOI)
+    cmap_reversed = palette.reversed()
+
+
+    # load TTI and TTO ------------------------------------------------------------------
     ttiR = pkl.load(PT_MTR+'{}_TTI_{}_mlr.bz'.format(AOI, QNT))
     tti = ttiR[fKeys][int(thi*100)]
     ttoR = pkl.load(PT_MTR+'{}_TTO_{}_mlr.bz'.format(AOI, QNT))
@@ -43,9 +45,9 @@ for fName in fNames:
     ax.imshow(repsRatios, cmap=cmap_reversed)
 
     # add TTI----------------------------------------------------------------------
-    [plt.axvline(i, alpha=.75, linewidth=0.2) for i in tti]
+    [plt.axvline(i, color='#3DFE70', alpha=.75, linewidth=0.2) for i in tti]
     # add TTO----------------------------------------------------------------------
-    [plt.axvline(j, alpha=.75, linewidth=0.2) for j in tto]
+    [plt.axvline(j, color='#3DFE70', alpha=.75, linewidth=0.2) for j in tto]
     # Save the figure--------------------------------------------------------------
     outName = fName.split('/')[-1].split('.')[0][:-4]
     plt.savefig(PT_IMG+outName+ '.png', bbox_inches='tight', pad_inches=0, dpi=500)
