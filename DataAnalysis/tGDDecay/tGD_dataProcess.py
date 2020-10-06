@@ -16,10 +16,15 @@ def compRatioToThreshold(repsRatios, thld, cmprOp=op.lt):
     return thresholdArray
 
 
-def calcTTI(repRto, thiS):
+def calcTTI(repRto, thiS, clipValue=None):
+    if clipValue is None:
+        (_, days) = repRto.shape
+    else:
+        days = clipValue
     thiSBool = [compRatioToThreshold(repRto, i, op.lt) for i in thiS]
     ttiS = [np.argmax(thiBool == 1, axis=1) for thiBool in thiSBool]
-    return ttiS
+    clipped = [[x if x > 0 else days for x in i] for i in ttiS]
+    return clipped
 
 
 def calcTTO(repRto, thoS):

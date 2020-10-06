@@ -67,7 +67,7 @@ def selectPath(USR, DRV, EXP):
 def selectDepVars(MOI, AOI):
     # Select ranges and dependent variable-------------------------------------
     if (MOI == 'WOP') or (MOI == 'TTI') or (MOI == 'TTO'):
-        scalers = (1, 1000, round(.1*365))
+        scalers = (1, 1000, round(610))
         (HD_DEP, IND_RAN) = ('0.5', 7)
     elif (MOI == 'RAP'):
         scalers = (1, 1000, 1)
@@ -164,7 +164,7 @@ cmapC = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
 cdict = {
         'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0, 0)),
         'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.65, 0.65)),
-        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 1, 1))
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, .95, .95))
     }
 cmapM = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
 

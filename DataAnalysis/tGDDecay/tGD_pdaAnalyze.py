@@ -10,7 +10,7 @@ from datetime import datetime
 # import re
 
 
-(thi, tho, QNT) = (.5, .5, '90')
+(thi, tho, QNT) = (.1, .1, '90')
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 X_RAN = [0, 5*365/3]
@@ -48,9 +48,9 @@ for exp in EXPS:
         (fig, ax) = plt.subplots(nrows=1, ncols=1)
         ax.imshow(repsRatios, cmap=cmap)
         # add TTI-------------------------------------------------------------
-        [plt.axvline(i, color='#f8f7ff', alpha=.75, lw=0.2, ls='dotted') for i in tti]
+        [plt.axvline(i, color='#f8f7ff', alpha=.65, lw=0.175, ls='-.') for i in tti]
         # add TTO-------------------------------------------------------------
-        [plt.axvline(j, color='#f8f7ff', alpha=.65, lw=0.175, ls='-') for j in tto]
+        [plt.axvline(j, color='#f8f7ff', alpha=.75, lw=0.2, ls='dotted') for j in tto]
         # Save the figure------------------------------------------------------
         outName = fName.split('/')[-1].split('.')[0][:-4]
         plt.xlim(X_RAN)
