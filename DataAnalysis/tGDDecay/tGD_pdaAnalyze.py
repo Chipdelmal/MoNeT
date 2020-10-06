@@ -17,11 +17,6 @@ USR = 'ameek'
 PT_IMG = PT_IMG+'xRay/'
 monet.makeFolder(PT_IMG)
 
-# Select cmap ------------------------------------------------------------------
-(scalers, HD_DEP, IND_RAN, palette) = aux.selectDepVars('TTI', AOI)
-
-cmap_reversed = palette.reversed()
-
 
 # Load file ------------------------------------------------------------------
 fNames = glob(PT_OUT+'*.npy'.format(AOI))
@@ -32,7 +27,14 @@ for fName in fNames:
     repsRatios = np.load(fName)
     fList = re.split(r'[a-zA-Z_/.-]+', fName)[9:16]
     fKeys = tuple(list(map(int, fList)))
+    AOI = re.split(r'[0-9_./-]+', fName)[18]
 
+    # Select cmap ------------------------------------------------------------------
+    (scalers, HD_DEP, IND_RAN, palette) = aux.selectDepVars('TTI', AOI)
+    cmap_reversed = palette.reversed()
+
+
+    # load TTI and TTO ------------------------------------------------------------------
     ttiR = pkl.load(PT_MTR+'{}_TTI_{}_mlr.bz'.format(AOI, QNT))
     tti = ttiR[fKeys][int(thi*100)]
     ttoR = pkl.load(PT_MTR+'{}_TTO_{}_mlr.bz'.format(AOI, QNT))
