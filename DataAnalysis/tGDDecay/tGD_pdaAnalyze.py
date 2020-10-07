@@ -50,7 +50,7 @@ for exp in EXPS:
         # add TTI-------------------------------------------------------------
         [plt.axvline(i, color='#f8f7ff', alpha=.65, lw=0.175, ls='-.') for i in tti]
         # add TTO-------------------------------------------------------------
-        [plt.axvline(j, color='#f8f7ff', alpha=.75, lw=0.2, ls='dotted') for j in tto]
+        [plt.axvline(j, color='cyan', alpha=.75, lw=0.2, ls='dotted') for j in tto]
         # Save the figure------------------------------------------------------
         outName = fName.split('/')[-1].split('.')[0][:-4]
         plt.xlim(X_RAN)

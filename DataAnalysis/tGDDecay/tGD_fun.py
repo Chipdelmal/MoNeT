@@ -84,7 +84,7 @@ def splitExpNames(PATH_OUT, ext='bz'):
     return sorted(list(set(out)))
 
 
-def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
+def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.bz'):
     filesList = glob(PATH_EXP+'E*')
     fileNames = [i.split('/')[-1].split('.')[-2] for i in filesList]
     splitFilenames = [re.split('_|-', i)[:skip] for i in fileNames]

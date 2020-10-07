@@ -67,4 +67,3 @@ for EXP in EXPS:
                 repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
                 vLines=[tti, tto, mnd], hLines=[mnf*pop]
             )
-        plt.close("all")
