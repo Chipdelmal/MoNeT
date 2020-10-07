@@ -228,6 +228,7 @@ def time_function(function):
     return wrapper
 
 
+
 @time_function
 def index(request):
     # Check that the request is POST type
@@ -253,21 +254,27 @@ def index(request):
         # Check if it is a csv file
             try:
                 if csv.name.endswith('.csv'):
+                    ftype = 'csv'
                     df = pd.read_csv(csv)
                 else:
-                    df = pd.read_pickle(csv)
+                    ftype = 'pkl'
+                    data = pd.read_pickle(csv, compression="bz2")
+                    data_transposed = zip(data['population'])
+                    df = pd.DataFrame.from_records(data['population'])
+                    df.columns = data['genotypes']
             except Exception as e:
                 messages.error(
                     request,
-                    'One of the files uploaded is not a csv or pickle file: ' +
-                    csv.name)
+                    'Error: ' +
+                    str(e))
                 return HttpResponseRedirect(reverse_lazy('charts:index'))
 
             # Add row total
             col_list = list(df)
-            col_list.remove('Time')
+            if 'Time' in col_list:
+              col_list.remove('Time')
+            
             df['sumTime'] = df[col_list].sum(axis=1)
-
             # Add csv id
             df.insert(0, 'id', count)
 
@@ -286,18 +293,19 @@ def index(request):
         # export csvList
         csv_name = request.POST.get(
             'experiment') + '_' + str(date.today()) + '.csv'
+        if ftype == 'pkl':
+          df_csv['Time'] = range(len(df_csv['id'])) 
         df_csv.to_csv(csv_name)
 
-        return redirect('charts:graph', csv=csv_name)
+        return redirect('charts:graph', csv=csv_name, ftype=ftype)
 
     template = 'pages/index.html'
     return render(request, template)
 
 
-def one_experiment(csv):
+def one_experiment(csv, ftype):
     # Get csv
     df = pd.read_csv(csv)
-    print(df)
     # Get Data
     # Coordenates
     df2 = df.drop_duplicates('coordX')
@@ -393,8 +401,11 @@ def one_experiment(csv):
     
   
     heatmap_data = np.array(gene_list).sum(axis=0).T
-    heatmap_genes = ('WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
+    if ftype == 'csv':
+      heatmap_genes = ('WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
                      'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB')
+    elif ftype == 'pkl':
+      heatmap_genes = ('H*', 'O-', 'Total')
     heatmap_df = pd.DataFrame(data=heatmap_data, index=heatmap_genes)
     heatmap_df.columns.name = 'time'
     heatmap_df.index.name = 'gene'
@@ -468,8 +479,8 @@ def one_experiment(csv):
 
 
 @time_function
-def graph(request, csv):
-    scatter, bar, heatmap, slider, select, surface = one_experiment(csv)
+def graph(request, csv, ftype):
+    scatter, bar, heatmap, slider, select, surface = one_experiment(csv, ftype)
     
     controls = row(slider, select)
     # Create grid for graphics
