@@ -4,16 +4,15 @@
 import sys
 from glob import glob
 import SDY_aux as aux
-# import SDY_fun as fun
 import SDY_gene as drv
-# import tGD_plots as plots
+import SDY_plot as plot
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
 
-# (USR, AOI) = (sys.argv[1], sys.argv[1])
-(USR, AOI) = ('dsk', 'HLT')
+(USR, AOI) = (sys.argv[1], sys.argv[1])
+# (USR, AOI) = ('dsk', 'HLT')
 (DRV, EXP) = ('SD', 'factorial')
 (OVW, FZ, JOB) = (True, False, 1)
 # #############################################################################
@@ -38,3 +37,15 @@ aux.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'SDY PreTraces')
 fLists = aux.getZeroFilteredFiles(PT_PRE, AOI, FZ=FZ, tyTag=('sum', 'srp'))
 (xpNum, digs) = monet.lenAndDigits(fLists)
 msg = '* Analyzing ({}/{})'
+for i in range(0, xpNum):
+    print(msg.format(str(i+1).zfill(digs), str(xpNum).zfill(digs)), end='\r')
+    (sumDta, repDta) = [pkl.load(file) for file in (fLists[i])]
+    name = fLists[i][0].split('/')[-1].split('.')[0][:-4]
+    plot.exportTracesPlot(repDta, name, STYLE, PT_IMG, append='TRA')
+    cl = [i[:-2]+'cc' for i in CLR]
+monet.exportGeneLegend(
+        sumDta['genotypes'], cl, PT_IMG+'/plt_{}.png'.format(AOI), 500
+    )
+tE = datetime.now()
+print('* Analyzed ({}/{})                    '.format(xpNum, xpNum), end='\n')
+print(monet.PAD)
