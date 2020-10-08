@@ -1,4 +1,5 @@
 
+from glob import glob
 import MoNeT_MGDrivE as monet
 
 
@@ -21,6 +22,21 @@ def selectPath(USR, EXP):
     fldrList = [PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT, PATH_MTR]
     [monet.makeFolder(i) for i in fldrList]
     return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT, PATH_MTR)
+
+
+def getExpPaths(PATH_DATA):
+    (expDirsMean, expDirsTrac) = (
+            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'ANALYZED/'),
+            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'TRACES/')
+        )
+    expDirsMean.sort()
+    expDirsTrac.sort()
+    return (expDirsMean, expDirsTrac)
+
+
+def splitExpNames(PATH_OUT, ext='bz'):
+    out = [i.split('/')[-1].split('-')[0] for i in glob(PATH_OUT+'*.'+ext)]
+    return sorted(list(set(out)))
 
 
 # #############################################################################
