@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# import sys
+import sys
 import SDY_aux as aux
 import SDY_gene as drv
 import SDY_land as lnd
@@ -10,10 +10,10 @@ import MoNeT_MGDrivE as monet
 from joblib import Parallel, delayed
 
 
-# (USR, AOI) = (sys.argv[1], sys.argv[1])
-(USR, AOI) = ('dsk', 'HLT')
+(USR, AOI) = (sys.argv[1], sys.argv[2])
+# (USR, AOI) = ('dsk', 'HLT')
 (DRV, EXP) = ('SD', 'factorial')
-(OVW, MF, JOB) = (True, (False, True), 1)
+(OVW, MF, JOB) = (True, (False, True), 4)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, False, True)
 # #############################################################################
 # Setup paths and drive

@@ -8,7 +8,7 @@ import MoNeT_MGDrivE as monet
 # #############################################################################
 def selectPath(USR, EXP):
     if USR == 'srv':
-        PATH_ROOT = '/RAID5/marshallShare/SDY/{}/'.format(EXP)
+        PATH_ROOT = '/RAID5/marshallShare/SplitDrive_Yorkeys/{}/'.format(EXP)
     elif USR == 'dsk':
         PATH_ROOT = '/media/hdd/WorkExperiments/SDY/{}/'.format(EXP)
     else:
@@ -27,7 +27,7 @@ def selectPath(USR, EXP):
 def getExpPaths(PATH_DATA):
     (expDirsMean, expDirsTrac) = (
             monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'ANALYZED/'),
-            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'TRACES/')
+            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'TRACE/')
         )
     expDirsMean.sort()
     expDirsTrac.sort()
