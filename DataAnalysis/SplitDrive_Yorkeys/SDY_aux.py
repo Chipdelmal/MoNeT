@@ -39,13 +39,36 @@ def splitExpNames(PATH_OUT, ext='bz'):
     return sorted(list(set(out)))
 
 
+def getZeroFilteredFiles(PT_PRE, AOI, FZ=False, tyTag=('sum', 'srp')):
+    if FZ:
+        fLists = list(zip(*[getFilteredFiles(
+                PT_PRE+'*_00_*'+AOI+'*'+tp+'*',
+                PT_PRE+'*'+AOI+'*'+tp+'*') for tp in tyTag]
+            ))
+    else:
+        fLists = list(zip(
+                *[sorted(glob(PT_PRE+'*'+AOI+'*'+tp+'*')) for tp in tyTag]
+            ))
+    return fLists
+
+
+# #############################################################################
+# Filtered lists
+# #############################################################################
+def getFilteredFiles(filterGlobPattern, unfilteredGlobPattern):
+    filterSet = set(glob(filterGlobPattern))
+    fullSet = set(glob(unfilteredGlobPattern))
+    filteredList = sorted(list(fullSet - filterSet))
+    return filteredList
+
+
 # #############################################################################
 # Terminal
 # #############################################################################
 def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time, title):
     print(monet.PAD)
     (cred, cwht, cend) = (monet.CRED, monet.CWHT, monet.CEND)
-    print(cwht+'MoNeT '+title+' ['+str(time)+']'+cend)
+    print(cwht+'MoNeT: '+title+' ['+str(time)+']'+cend)
     print(monet.PAD)
     print('{}* Root: {}{}'.format(cred, PATH_ROOT, cend))
     print('{}* Imgs: {}{}'.format(cred, PATH_IMG, cend))
