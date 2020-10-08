@@ -20,7 +20,7 @@ warnings.filterwarnings("ignore")
 HD_IND = ['i_ren', 'i_hnf']
 (ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
-        [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
+        [-.05, 0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
         'linear', 'linear', 'linear'
     )
 MOI = ('TTI', 'TTO', 'WOP', 'MNX')
@@ -73,6 +73,9 @@ for moi in MOI:
             ###################################################################
             # Prepare the response surface ------------------------------------
             (x, y, z) = (dfSrf[HD_IND[0]], dfSrf[HD_IND[1]], dfSrf[HD_DEP])
+            # if moi == 'MNX':
+            #     z = [i for i in z]
+            #     print(list(z))
             rs = fun.calcResponseSurface(x, y, z, scalers=scalers, mthd=mthd)
             (rsG, rsS) = (rs['grid'], rs['surface'])
             # Plot the response surface ---------------------------------------
