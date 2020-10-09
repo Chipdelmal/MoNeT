@@ -7,14 +7,16 @@ import compress_pickle as pkl
 import matplotlib.pyplot as plt
 import MoNeT_MGDrivE as monet
 from datetime import datetime
+import pandas as pandas
 # import re
 
 
 (thi, tho, QNT) = (.1, .1, '90')
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
+# (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+(USR, DRV, AOI) = ('ameek', 'tGD', 'HLT')
 X_RAN = [0, 5*365/3]
 EXPS = ('000', )
+
 
 for exp in EXPS:
     # Select path ------------------------------------------------------------
@@ -44,6 +46,11 @@ for exp in EXPS:
         tti = ttiR[fKeys][int(thi*100)]
         ttoR = pkl.load(PT_MTR+'{}_TTO_{}_mlr.bz'.format(AOI, QNT))
         tto = ttoR[fKeys][int(tho*100)]
+        # load Summary.csv TTI and TTO ----------------------------------------
+        summ_ttiR = pandas.read_csv(PT_MTR+'{}_TTI_{}_qnt.csv'.format(AOI, QNT))
+        summ_tti = ttiR[fKeys][int(thi*100)]
+        summ_ttoR = pandas.read_csv(PT_MTR+'{}_TTO_{}_qnt.csv'.format(AOI, QNT))
+        summ_tto = ttoR[fKeys][int(tho*100)]
         # Plotting-------------------------------------------------------------
         (fig, ax) = plt.subplots(nrows=1, ncols=1)
         ax.imshow(repsRatios, cmap=cmap)
@@ -51,6 +58,9 @@ for exp in EXPS:
         [plt.axvline(i, color='#f8f7ff', alpha=.65, lw=0.175, ls='-.') for i in tti]
         # add TTO-------------------------------------------------------------
         [plt.axvline(j, color='cyan', alpha=.75, lw=0.2, ls='dotted') for j in tto]
+        # TTO and TTI from Summary.csv
+        [plt.axvline(i, color='#3DFE70', alpha=.9, lw=0.3) for i in summ_tti]
+        [plt.axvline(j, color='#3DFE70', alpha=.9, lw=0.3) for j in summ_tto]
         # Save the figure------------------------------------------------------
         outName = fName.split('/')[-1].split('.')[0][:-4]
         plt.xlim(X_RAN)
