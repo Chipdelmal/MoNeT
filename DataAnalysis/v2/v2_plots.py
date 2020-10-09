@@ -98,9 +98,11 @@ temperature = np.loadtxt(
     skiprows=1, delimiter=',', usecols=(0, )
 )
 # Epi -------------------------------------------------------------------------
+stpPop = 350998
 epiPath = '/media/hdd/WorkExperiments/mgdrive2_paper/epitraces/'
 epiFiles = glob(epiPath+'*.csv')
 epi = [np.loadtxt(i, skiprows=1, delimiter=',', usecols=(1, )) for i in epiFiles]
+epi = [[i / stpPop * 1000 for i in j] for j in epi]
 epiMx = max([max(i) for i in epi])
 ###############################################################################
 ###############################################################################
@@ -160,7 +162,8 @@ for data in sumsECO:
 # Human -----------------------------------------------------------------------
 colors = ('#6347ff0C', '#0a1cc20C')
 for i in epi:
-    ax[3].plot(range(days-1), i/epiMx, lw=.075, color=colors[1])
+    tmp = [j/epiMx for j in i]
+    ax[3].plot(range(days-1), tmp, lw=.075, color=colors[1])
 ###############################################################################
 # Export
 ###############################################################################
@@ -176,3 +179,5 @@ for j in range(4):
     ax[j].grid(alpha=.25, lw=.5)
 plt.subplots_adjust(hspace=.25)
 fig.savefig(PT_IMG+'/v2.png', dpi=750, bbox_inches='tight', pad_inches=.05)
+
+epi
