@@ -23,7 +23,7 @@ HD_IND = ['i_ren', 'i_hnf']
         [-.05, 0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
         'linear', 'linear', 'linear'
     )
-MOI = ('TTI', 'TTO', 'WOP', 'MNX')
+MOI = ('TTI', 'TTO', 'WOP', 'MNX', 'RAP')
 for moi in MOI:
     (scalers, HD_DEP, _, cmapR) = aux.selectDepVars(moi, AOI)
     cmap = cmapR.reversed()

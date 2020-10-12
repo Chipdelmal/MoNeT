@@ -145,7 +145,7 @@ for rep in sums:
     ax[2].plot(range(days), frac[1], lw=.75, ls='--', color=colors[1])
 infected = [i[:, 2] for i in mPops['FI']]
 for inf in infected:
-    ax[2].plot(range(days), aux.zeroDivide(inf, total), lw=.75, color='#bb28950A')
+    ax[2].plot(range(days), aux.zeroDivide(inf, total), lw=.75, ls='--', color='#bb28950A')
 ###############################################################################
 # Plot B
 ###############################################################################
@@ -179,5 +179,3 @@ for j in range(4):
     ax[j].grid(alpha=.25, lw=.5)
 plt.subplots_adjust(hspace=.25)
 fig.savefig(PT_IMG+'/v2.png', dpi=750, bbox_inches='tight', pad_inches=.05)
-
-epi
