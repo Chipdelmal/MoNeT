@@ -3,7 +3,7 @@ import re
 from glob import glob
 
 
-XP_NPAT = 'E_{}_{}_{}_{}_{}-{}_{}_{}.bz'
+XP_NPAT = 'E_{}_{}_{}_{}_{}-{}_{}_{}.{}'
 
 
 def getExperimentsIDSets(PATH_EXP, skip=-1):
@@ -15,3 +15,9 @@ def getExperimentsIDSets(PATH_EXP, skip=-1):
         colSet = set([i[c] for i in splitFilenames])
         ids.append(sorted(list(colSet)))
     return ids
+
+
+def getXpId(pFile, idIx):
+    splitXpId = re.split('_|-', pFile.split('/')[-1].split('.')[-2])
+    xpId = [int(splitXpId[i]) for i in idIx]
+    return xpId

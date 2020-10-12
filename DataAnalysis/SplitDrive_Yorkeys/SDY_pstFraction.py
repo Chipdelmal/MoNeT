@@ -29,7 +29,7 @@ aux.printExperimentHead(PT_ROT, PT_IMG, PT_PST, tS, 'PstFraction')
 # Base experiments
 #   These are the experiments without any releases (for fractions)
 # #############################################################################
-basePat = exp.XP_NPAT.format('*', '*', '*', '00', '*', AOI, '*', 'sum')
+basePat = exp.XP_NPAT.format('*', '*', '*', '00', '*', AOI, '*', 'sum', 'bz')
 baseFiles = sorted(glob(PT_PRE+basePat))
 # #############################################################################
 # Probe experiments
@@ -41,10 +41,10 @@ msg = '* Analyzing ({}/{})'
 for (i, rnIt) in enumerate(ren):
     print(msg.format(str(i+1).zfill(digs), str(xpNum).zfill(digs)), end='\r')
     # Mean data (Analyzed) ----------------------------------------------------
-    meanPat = exp.XP_NPAT.format('*', '*', '*', rnIt, '*', AOI, '*', 'sum')
+    meanPat = exp.XP_NPAT.format('*', '*', '*', rnIt, '*', AOI, '*', 'sum', 'bz')
     meanFiles = sorted(glob(PT_PRE+meanPat))
     # Repetitions data (Garbage) ----------------------------------------------
-    tracePat = exp.XP_NPAT.format('*', '*', '*', rnIt, '*', AOI, '*', 'srp')
+    tracePat = exp.XP_NPAT.format('*', '*', '*', rnIt, '*', AOI, '*', 'srp', 'bz')
     traceFiles = sorted(glob(PT_PRE+tracePat))
     # #########################################################################
     # Load data
