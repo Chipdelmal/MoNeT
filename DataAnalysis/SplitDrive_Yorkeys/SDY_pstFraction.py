@@ -13,8 +13,8 @@ import compress_pickle as pkl
 import MoNeT_MGDrivE as monet
 
 
-# (USR, AOI) = (sys.argv[1], sys.argv[2])
-(USR, AOI) = ('dsk', 'HLT')
+(USR, AOI) = (sys.argv[1], sys.argv[2])
+# (USR, AOI) = ('dsk', 'HLT')
 (DRV, EXP) = ('SD', 'factorial')
 (OVW, JOB, gIx) = (True, 4, 1)
 # #############################################################################
