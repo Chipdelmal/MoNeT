@@ -71,7 +71,7 @@ for (i, threshold) in enumerate(thr):
                 xi, yi, zi, levels=mapLevels,
                 cmap=aux.cmapB, extend='max'
             )
-        htmp.cmap.set_over('#090446')
+        htmp.cmap.set_over('#04021f')
         ax.set(xscale=xSca, yscale="linear")
         ax.set_xlabel('Standing Variation', fontsize=22.5)
         ax.set_ylabel('Fitness Cost', fontsize=22.5)
@@ -110,7 +110,7 @@ for (i, threshold) in enumerate(thr):
                 xi, yi, zi, levels=mapLevels,
                 cmap=aux.cmapB, extend='max'
             )
-        htmp.cmap.set_over('#090446')
+        htmp.cmap.set_over('#04021f')
         ax.set(xscale=xSca, yscale="linear")
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, 1*sz)
