@@ -71,4 +71,8 @@ for (i, repFile) in enumerate(repFiles):
             repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
             vLines=[tti, tto, mnd], hLines=[mnf*pop]
         )
+monet.exportGeneLegend(
+        repDta['genotypes'], [i[:-2]+'cc' for i in CLR],
+        PT_IMG+'/plt_{}.png'.format(AOI), 500
+    )
 print(msg.format(i+1, filesNum), end='\r')

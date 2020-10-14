@@ -30,12 +30,13 @@ def countGeneAppearances(genotypes, gene, pos):
     return appearances
 
 
-def flatten(l): return [item for sublist in l for item in sublist]
-
-
 def aggregateGeneAppearances(genotypes, genes):
     gcnt = [countGeneAppearances(genotypes, gn[0], gn[1]) for gn in genes]
     return sorted(flatten(gcnt))
+
+
+def flatten(l): return [item for sublist in l for item in sublist]
+
 
 
 # #############################################################################
