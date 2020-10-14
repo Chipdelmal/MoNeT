@@ -37,7 +37,10 @@ def exportTracesPlot(
             "{}/{}.png".format(PATH_IMG, nS),
             dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
             orientation='portrait', papertype=None, format='png',
-            transparent=True, bbox_inches='tight', pad_inches=0.05
+            transparent=True, bbox_inches='tight', pad_inches=0.025
         )
     plt.close('all')
     return True
+
+
+1400/365
