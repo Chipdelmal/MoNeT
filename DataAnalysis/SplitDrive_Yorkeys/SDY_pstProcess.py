@@ -19,9 +19,9 @@ from joblib import Parallel, delayed
 (DRV, EXP) = ('SD', 'factorial')
 (QNT, MLR) = ('90', True)
 (thiS, thoS, thwS, tapS) = (
-        [.05, .10, .50, .90, .95],
-        [.05, .10, .50, .90, .95],
-        [.05, .10, .50, .90, .95],
+        [.05, .10, .20, .25, .50, .75, .80, .90, .95],
+        [.05, .10, .20, .25, .50, .75, .80, .90, .95],
+        [.05, .10, .20, .25, .50, .75, .80, .90, .95],
         [int((i+1) * 365 / 3) for i in range(5)]
     )
 header = ['i_drv', 'i_cas', 'i_gna', 'i_ren', 'i_cov', 'i_grp']

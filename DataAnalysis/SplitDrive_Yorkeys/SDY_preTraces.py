@@ -50,4 +50,3 @@ monet.exportGeneLegend(sumDta['genotypes'], cl, cpltName, 500)
 tE = datetime.now()
 print('* Analyzed ({}/{})                    '.format(xpNum, xpNum), end='\n')
 print(monet.PAD)
-sumDta
