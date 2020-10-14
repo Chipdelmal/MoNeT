@@ -104,6 +104,6 @@ for moi in MOI:
             plt.title(ttlStr, fontsize=10, pad=10)
             # Filename and export
             xpStrNm = '_'.join([str(i).zfill(4) for i in xpId])
-            xpFilename = xpStrNm+'_'+AOI+'_'+moi
+            xpFilename = xpStrNm+'-'+AOI+'_'+moi+'_'+QNT
             fun.quickSaveFig(PT_IMG+xpFilename+'.png', fig)
         print(monet.CEND, end='\r')

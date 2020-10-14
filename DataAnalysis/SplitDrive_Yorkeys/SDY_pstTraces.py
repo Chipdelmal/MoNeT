@@ -14,8 +14,8 @@ import compress_pickle as pkl
 import MoNeT_MGDrivE as monet
 
 
-(USR, AOI, THS, QNT) = (sys.argv[1], sys.argv[2], 0.2, '90')
-# (USR, AOI, THS, QNT) = ('dsk', 'HLT', 0.5, '90')
+# (USR, AOI, THS, QNT) = (sys.argv[1], sys.argv[2], 0.2, '90')
+(USR, AOI, THS, QNT) = ('dsk', 'HLT', 0.5, '90')
 (DRV, EXP) = ('SD', 'factorial')
 (OVW, JOB, gIx, FZ) = (True, 4, 1, False)
 # #############################################################################
@@ -71,4 +71,8 @@ for (i, repFile) in enumerate(repFiles):
             repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
             vLines=[tti, tto, mnd], hLines=[mnf*pop]
         )
+monet.exportGeneLegend(
+        repDta['genotypes'], [i[:-2]+'cc' for i in CLR],
+        PT_IMG+'/plt_{}.png'.format(AOI), 500
+    )
 print(msg.format(i+1, filesNum), end='\r')

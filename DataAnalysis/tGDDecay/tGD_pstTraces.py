@@ -54,7 +54,10 @@ for EXP in EXPS:
     ###########################################################################
     # Iterate through experiments
     ###########################################################################
-    for repFile in repFiles:
+    msg = '* Plotting ({}/{})'
+    filesNum = len(repFiles)
+    for (i, repFile) in enumerate(repFiles):
+        print(msg.format(i+1, filesNum), end='\r')
         (repDta, xpid) = (
                 pkl.load(repFile),
                 fun.getXpId(repFile, [1, 2, 3, 4, 5, 6, 8])
@@ -67,3 +70,7 @@ for EXP in EXPS:
                 repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
                 vLines=[tti, tto, mnd], hLines=[mnf*pop]
             )
+monet.exportGeneLegend(
+        repDta['genotypes'], [i[:-2]+'cc' for i in CLR],
+        PT_IMG+'/plt_{}.png'.format(AOI), 500
+    )
