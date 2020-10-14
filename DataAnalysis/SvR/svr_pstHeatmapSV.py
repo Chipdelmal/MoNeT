@@ -21,8 +21,9 @@ from scipy.interpolate import griddata
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
-(threshold, lvls, mthd, xSca) = (thr[1], 10, 'nearest', 'log')
-mapLevels = np.arange(0, 4*365, 200)
+(threshold, lvls, mthd, xSca) = (thr[1], 10, 'linear', 'log')
+mapLevels = np.arange(0, 4*365, 365/6)
+mapLevelsB = np.arange(0, 4*365, 4*365)
 xRan = (1E-6, 1E-1)
 fNScaler = 100000000
 ###############################################################################
@@ -64,7 +65,7 @@ for (i, threshold) in enumerate(thr):
         fig, ax = plt.subplots()
         ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
         ax.contour(
-                xi, yi, zi, levels=mapLevels,
+                xi, yi, zi, levels=mapLevelsB,
                 linewidths=.5, colors='k', alpha=.5,
             )
         htmp = ax.contourf(
@@ -82,8 +83,8 @@ for (i, threshold) in enumerate(thr):
         ax.set_xticklabels([], minor=True)
         ax.set_yticks(list(set(y)), minor=True)
         ax.set_yticklabels([], minor=True)
-        ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
-        ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
+        ax.grid(which='both', axis='y', lw=.1, alpha=0.2, color=(.5, .5, .5))
+        ax.grid(which='minor', axis='x', lw=.1, alpha=0.2, color=(.5, .5, .5))
         # Limits
         plt.xlim(xRan[0], xRan[1])
         plt.ylim(b[0], b[1])
@@ -103,14 +104,14 @@ for (i, threshold) in enumerate(thr):
         fig, ax = plt.subplots()
         ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
         ax.contour(
-                xi, yi, zi, levels=mapLevels,
+                xi, yi, zi, levels=mapLevelsB,
                 linewidths=.5, colors='k', alpha=.5,
             )
         htmp = ax.contourf(
                 xi, yi, zi, levels=mapLevels,
                 cmap=aux.cmapB, extend='max'
             )
-        htmp.cmap.set_over('#04021f')
+        htmp.cmap.set_over('#07042e')
         ax.set(xscale=xSca, yscale="linear")
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, 1*sz)
@@ -121,8 +122,8 @@ for (i, threshold) in enumerate(thr):
         ax.axes.yaxis.set_ticklabels([])
         ax.axes.xaxis.set_ticklabels([], minor=True)
         ax.axes.yaxis.set_ticklabels([], minor=True)
-        ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(0, 0, 0))
-        ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(0, 0, 0))
+        ax.grid(which='both', axis='y', lw=.1, alpha=0.2, color=(.5, .5, .5))
+        ax.grid(which='minor', axis='x', lw=.1, alpha=0.2, color=(.5, .5, .5))
         # Limits
         plt.xlim(xRan[0], xRan[1])
         plt.ylim(b[0], b[1])
