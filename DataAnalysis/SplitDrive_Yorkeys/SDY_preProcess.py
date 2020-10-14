@@ -13,7 +13,7 @@ from joblib import Parallel, delayed
 (USR, AOI) = (sys.argv[1], sys.argv[2])
 # (USR, AOI) = ('dsk', 'HLT')
 (DRV, EXP) = ('SD', 'factorial')
-(OVW, MF, JOB) = (True, (False, True), 4)
+(OVW, MF, JOB) = (True, (False, True), 16)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, False, True)
 # #############################################################################
 # Setup paths and drive
