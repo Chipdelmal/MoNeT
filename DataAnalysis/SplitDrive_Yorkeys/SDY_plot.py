@@ -25,7 +25,8 @@ def exportTracesPlot(
     axTemp.grid(which='major', axis='y', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
     axTemp.grid(which='major', axis='x', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
 
-    if vLines[0] > 0:
+    days = tS['landscapes'][0].shape[0]
+    if (vLines[0] > 0) and (days > vLines[1]) and (days > vLines[0]):
         axTemp.axvspan(vLines[0], vLines[1], alpha=0.2, facecolor='#3687ff', zorder=0)
     axTemp.axhline(
             hLines, alpha=.25, zorder=10, ls='--', lw=.35, color='#000000'
@@ -41,6 +42,3 @@ def exportTracesPlot(
         )
     plt.close('all')
     return True
-
-
-1400/365

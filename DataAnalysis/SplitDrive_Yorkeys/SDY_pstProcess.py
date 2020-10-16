@@ -17,7 +17,7 @@ from joblib import Parallel, delayed
 (USR, AOI) = (sys.argv[1], sys.argv[2])
 # (USR, AOI) = ('dsk', 'HLT')
 (DRV, EXP) = ('SD', 'factorial')
-(QNT, MLR) = ('50', True)
+(QNT, MLR) = ('90', True)
 (thiS, thoS, thwS, tapS) = (
         [.05, .10, .20, .25, .50, .75, .80, .90, .95],
         [.05, .10, .20, .25, .50, .75, .80, .90, .95],
@@ -70,7 +70,7 @@ for (i, fPath) in enumerate(fPaths):
     #######################################################################
     qnt = int(QNT) / 100
     ttiSQ = [np.nanquantile(tti, qnt) for tti in ttiS]
-    ttoSQ = [np.nanquantile(tto, qnt) for tto in ttoS]
+    ttoSQ = [np.nanquantile(tto, 1-qnt) for tto in ttoS]
     wopSQ = [np.nanquantile(wop, 1-qnt) for wop in wopS]
     rapSQ = [np.nanquantile(rap, qnt) for rap in rapS]
     mniSQ = (np.nanquantile(minS[0], qnt), np.nanquantile(minS[1], qnt))

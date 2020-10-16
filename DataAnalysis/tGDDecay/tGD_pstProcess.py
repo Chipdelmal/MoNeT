@@ -75,7 +75,7 @@ for (j, EXP) in enumerate(EXPS):
         # Calculate Quantiles
         #######################################################################
         ttiSQ = [np.nanquantile(tti, qnt) for tti in ttiS]
-        ttoSQ = [np.nanquantile(tto, qnt) for tto in ttoS]
+        ttoSQ = [np.nanquantile(tto, 1-qnt) for tto in ttoS]
         wopSQ = [np.nanquantile(wop, 1-qnt) for wop in wopS]
         rapSQ = [np.nanquantile(rap, qnt) for rap in rapS]
         mniSQ = (np.nanquantile(minS[0], qnt), np.nanquantile(minS[1], qnt))
