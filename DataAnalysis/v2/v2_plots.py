@@ -114,7 +114,7 @@ xran = (0, 365*6)
 ###############################################################################
 # Weather
 ###############################################################################
-colors = ('#43e93aA5', '#3a3ae9A5', '#ff006eFF')
+colors = ('#56e96fff', '#8369ecff', '#f42330ff')
 tr = len(rainfall)
 tt = len(temperature)
 (maxTemp, maxRain, maxPop) = (
@@ -126,19 +126,19 @@ for (j, rep) in enumerate(sums):
     frac = [i / maxPop for i in rep[:,-1]]
     ax[0].plot(range(days), frac, lw=.5, ls='-', color=colors[0])
 ax[0].plot(range(tr), [i/maxRain for i in rainfall], lw=1, ls='-', color=colors[1])
-ax[0].plot(np.arange(0, 10*365, 10*365/tt), [i/maxTemp for i in temperature], lw=.075, ls='-', color=colors[2])
+ax[0].plot(np.arange(0, 10*365, 10*365/tt), [i/maxTemp for i in temperature], lw=.1, ls='-', color=colors[2])
 ###############################################################################
 # Plot A
 ###############################################################################
 # Human -----------------------------------------------------------------------
-colors = ('#6347ff0C', '#ff006e0C')
+colors = ('#8369ecff', '#f42330ff')
 for data in hData:
     (t, s) = data.shape
     total = np.sum(data, axis=1)
     for i in range(s):
         ax[2].plot(range(t), data[:, i]/total, lw=.5, color=colors[i])
 # Mosquito --------------------------------------------------------------------
-colors = ('#B8B8FF15', '#f192bb15')
+colors = ('#a190e835', '#f15f6835')
 for rep in sums:
     frac = [aux.zeroDivide(i, rep[:, 2]) for i in (rep[:, 0], rep[:, 1])]
     ax[2].plot(range(days), frac[0], lw=.75, ls='--', color=colors[0])
@@ -149,7 +149,7 @@ for inf in infected:
 ###############################################################################
 # Plot B
 ###############################################################################
-colors = ('#3a86ff0A', '#8338ec0A', '#72f1740A', '#ff006e0A')
+colors = ('#a8d6ffff', '#8369ecff', '#56e96fff', '#f42330ff')
 # Mosquito --------------------------------------------------------------------
 for data in sumsECO:
     (t, s) = data.shape
@@ -160,7 +160,7 @@ for data in sumsECO:
 # Plot C
 ###############################################################################
 # Human -----------------------------------------------------------------------
-colors = ('#6347ff0C', '#0a1cc20C')
+colors = ('#6347ff0C', '#8369ec19')
 for i in epi:
     tmp = [j/epiMx for j in i]
     ax[3].plot(range(days-1), tmp, lw=.075, color=colors[1])
