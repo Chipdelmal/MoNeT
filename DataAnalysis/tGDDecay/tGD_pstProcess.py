@@ -15,12 +15,12 @@ import compress_pickle as pkl
 
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(qnt, mlr) = (.5, True)
+(qnt, mlr) = (.75, True)
 
 (thiS, thoS, thwS, tapS) = (
-        [.05, .10, .50, .90, .95],
-        [.05, .10, .50, .90, .95],
-        [.05, .10, .50, .90, .95],
+        [.05, .10, .25, .50, .75, .90, .95],
+        [.05, .10, .25, .50, .75, .90, .95],
+        [.05, .10, .25, .50, .75, .90, .95],
         [int((i+1) * 365 / 3) for i in range(5)]
     )
 EXPS = ('000',  ) # '001', '005', '010', '100')
