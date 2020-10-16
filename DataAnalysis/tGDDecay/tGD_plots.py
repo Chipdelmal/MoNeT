@@ -26,8 +26,9 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[
     days = tS['landscapes'][0].shape[0]
     if (vLines[0] > 0) and (days > vLines[1]) and (days > vLines[0]):
         axTemp.axvspan(vLines[0], vLines[1], alpha=0.2, facecolor='#3687ff', zorder=0)
-    axTemp.axvline(vLines[0], alpha=0.75, color='#3687ff', zorder=0)
-    axTemp.axvline(vLines[1], alpha=0.75, color='#3687ff', zorder=0)
+
+    axTemp.axvline(vLines[0], alpha=0.75, ls='-.', lw=.35, color='#3687ff', zorder=0)
+    axTemp.axvline(vLines[1], alpha=0.75, ls='-.', lw=.35, color='#3687ff', zorder=0)
 
     axTemp.axhline(
             hLines, alpha=.25, zorder=10, ls='--', lw=.35, color='#000000'
