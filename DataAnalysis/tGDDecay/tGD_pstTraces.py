@@ -68,7 +68,7 @@ for EXP in EXPS:
         pop = repDta['landscapes'][0][0][-1]
         plot.exportTracesPlot(
                 repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
-                vLines=[tti, tto, mnd], hLines=[mnf*pop]
+                vLines=[tti, tto, mnd], hLines=[mnf*pop], wop=wop
             )
 monet.exportGeneLegend(
         repDta['genotypes'], [i[:-2]+'cc' for i in CLR],
