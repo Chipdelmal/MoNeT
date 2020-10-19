@@ -7,7 +7,7 @@ from datetime import datetime
 import MoNeT_MGDrivE as monet
 
 
-# (USR, AOI, QNT) = ('dsk', 'HLT', ['50', '75', '90'])
+# (USR, AOI) = ('dsk', 'HLT')
 (USR, AOI) = (sys.argv[1], sys.argv[2])
 QNT = ['50', '75', '90']
 (DRV, EXP) = ('SD', 'factorial')
@@ -27,7 +27,7 @@ imgTuples = list(zip(*[sorted(i) for i in imgLists]))
 # #############################################################################
 fmt = 'Processing {}/' + str(len(imgTuples))
 for (i, tp) in enumerate(imgTuples):
-    print(fmt.format(str(i + 1).zfill(4)), end='\r')
+    print(fmt.format(str(i + 1).zfill(3)), end='\r')
     fName = tp[0].split('/')[-1][:-7]
     imgArray = [cv2.imread(i) for i in tp]
     vertical = cv2.vconcat(imgArray)
