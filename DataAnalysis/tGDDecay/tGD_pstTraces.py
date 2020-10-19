@@ -16,7 +16,7 @@ import compress_pickle as pkl
 
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
-(SKP, THS, QNT, OVW, FZ) = (False, '0.5', '90', True, True)
+(SKP, THS, QNT, OVW, FZ) = (False, '0.5', '75', True, True)
 (gIx, hIx) = (1, 0)
 EXPS = ('000',  ) # '001', '005', '010', '100')
 

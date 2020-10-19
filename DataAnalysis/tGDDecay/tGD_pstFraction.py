@@ -14,7 +14,7 @@ import MoNeT_MGDrivE as monet
 
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(SKP, QNT, OVW) = (False, .90, True)
+(SKP, QNT, OVW) = (False, .75, True)
 (gIx, hIx) = (1, 0)
 EXPS = ('000',  ) # '001', '005', '010', '100')
 
