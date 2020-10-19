@@ -25,7 +25,7 @@ COLTN = [c+'1A' for c in COLTN]
 COLTO = [i[:-2]+'FF' for i in COLTN]
 COLTM = monet.generateAlphaColorMapFromColorArray(COLTO)
 # Wild ----------------------------------------------------------------------
-COLWN = ["#8337ec", "#65ff70", "#0C4887"]
+COLWN = ["#65ff66", "#8337ec", "#0C4887"]
 COLWN = [c+'1A' for c in COLWN]
 COLWO = [i[:-2]+'FF' for i in COLWN]
 COLWM = monet.generateAlphaColorMapFromColorArray(COLWO)

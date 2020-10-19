@@ -18,9 +18,9 @@ QNT = ['50', '75', '90']
 (PT_IMG_I, PT_IMG_O) = (PT_IMG + 'pstTraces/', PT_IMG + 'stacksQNT/')
 monet.makeFolder(PT_IMG_O)
 tS = datetime.now()
-aux.printExperimentHead(PT_ROT, PT_IMG_I, PT_IMG_O, tS, 'PostProcess ' + AOI)
+aux.printExperimentHead(PT_ROT, PT_IMG_I, PT_IMG_O, tS, 'QNT VConcat ' + AOI)
 # Get files -------------------------------------------------------------------
-imgLists = [glob(PT_IMG_I + '*HLT*' + i + '*') for i in QNT]
+imgLists = [glob('{}*{}*{}*'.format(PT_IMG_I, AOI, i)) for i in QNT]
 imgTuples = list(zip(*[sorted(i) for i in imgLists]))
 # #############################################################################
 # Iterate through images
