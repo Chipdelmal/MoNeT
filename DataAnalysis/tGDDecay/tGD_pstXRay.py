@@ -1,12 +1,13 @@
 
 import sys
 import numpy as np
+import pandas as pd
 import tGD_aux as aux
 from glob import glob
 import compress_pickle as pkl
-import matplotlib.pyplot as plt
 import MoNeT_MGDrivE as monet
 from datetime import datetime
+import matplotlib.pyplot as plt
 # import re
 
 
@@ -44,13 +45,21 @@ for exp in EXPS:
         tti = ttiR[fKeys][int(thi*100)]
         ttoR = pkl.load(PT_MTR+'{}_TTO_{}_mlr.bz'.format(AOI, QNT))
         tto = ttoR[fKeys][int(tho*100)]
+        # load Summary.csv TTI and TTO ----------------------------------------
+        summ_ttiR = pd.read_csv(PT_MTR+'{}_TTI_{}_qnt.csv'.format(AOI, QNT))
+        summ_tti = ttiR[fKeys][int(thi*100)]
+        summ_ttoR = pd.read_csv(PT_MTR+'{}_TTO_{}_qnt.csv'.format(AOI, QNT))
+        summ_tto = ttoR[fKeys][int(tho*100)]
         # Plotting-------------------------------------------------------------
         (fig, ax) = plt.subplots(nrows=1, ncols=1)
         ax.imshow(repsRatios, cmap=cmap)
         # add TTI-------------------------------------------------------------
-        [plt.axvline(i, color='black', alpha=.65, lw=0.175, ls='-.') for i in tti]
+        [plt.axvline(i, color='#f8f7ff', alpha=.65, lw=0.175, ls='-.') for i in tti]
         # add TTO-------------------------------------------------------------
-        [plt.axvline(j, color='black', alpha=.75, lw=0.2, ls='dotted') for j in tto]
+        [plt.axvline(j, color='cyan', alpha=.75, lw=0.2, ls='dotted') for j in tto]
+        # TTO and TTI from Summary.csv
+        [plt.axvline(i, color='#3DFE70', alpha=.9, lw=0.3) for i in summ_tti]
+        [plt.axvline(j, color='#3DFE70', alpha=.9, lw=0.3) for j in summ_tto]
         # Save the figure------------------------------------------------------
         outName = fName.split('/')[-1].split('.')[0][:-4]
         plt.xlim(X_RAN)
