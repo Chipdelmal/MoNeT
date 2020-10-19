@@ -27,8 +27,8 @@ imgTuples = list(zip(*[sorted(i) for i in imgLists]))
 # #############################################################################
 fmt = 'Processing {}/' + str(len(imgTuples))
 for (i, tp) in enumerate(imgTuples):
-    print(fmt.format(str(i + 1).zfill(4)), end='\r')
-    fName = tp[0].split('/')[-1].replace('-HLT_', '-')
+    print(fmt.format(str(i + 1).zfill(3)), end='\r')
+    fName = tp[0].split('/')[-1][:-4].replace('-HLT_', '-')
     imgArray = [cv2.imread(i) for i in tp]
     vertical = cv2.hconcat(imgArray)
     # show the output image
