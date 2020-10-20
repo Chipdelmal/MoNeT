@@ -14,10 +14,10 @@ from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
+
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
-(SKP, THS, QNT, OVW, FZ) = (False, '0.5', '75', True, True)
-(gIx, hIx) = (1, 0)
+(SKP, THS, QNT, OVW, FZ) = (False, 0.5, '50', True, True)
 EXPS = ('000',  ) # '001', '005', '010', '100')
 
 for EXP in EXPS:
@@ -63,7 +63,7 @@ for EXP in EXPS:
                 fun.getXpId(repFile, [1, 2, 3, 4, 5, 6, 8])
             )
         xpRow = [da.filterDFWithID(i, xpid) for i in (dfTTI, dfTTO, dfWOP, dfMNX)]
-        (tti, tto, wop) = [float(row[THS]) for row in xpRow[:3]]
+        (tti, tto, wop) = [float(row[str(THS)]) for row in xpRow[:3]]
         (mnf, mnd) = (float(xpRow[3]['min']), float(xpRow[3]['minx']))
         pop = repDta['landscapes'][0][0][-1]
         plot.exportTracesPlot(

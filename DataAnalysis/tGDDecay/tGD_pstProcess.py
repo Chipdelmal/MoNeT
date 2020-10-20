@@ -6,7 +6,7 @@ import numpy as np
 from glob import glob
 import tGD_aux as aux
 import tGD_fun as fun
-import tGD_dataProcess as da
+# import tGD_dataProcess as da
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
@@ -15,7 +15,7 @@ import compress_pickle as pkl
 
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(qnt, mlr) = (.75, True)
+(QNT, MLR) = ('50', True)
 
 (thiS, thoS, thwS, tapS) = (
         [.05, .10, .25, .50, .75, .90, .95],
@@ -31,7 +31,7 @@ outLabels = ('TTI', 'TTO', 'WOP', 'RAP', 'MNX')
 ###############################################################################
 xpDict = {}
 smryDicts = ({}, {}, {}, {}, {})
-(strQnt, expNum) = (str(int(qnt*100)), len(EXPS))
+expNum = len(EXPS)
 for (j, EXP) in enumerate(EXPS):
     tS = datetime.now()
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)
@@ -41,7 +41,7 @@ for (j, EXP) in enumerate(EXPS):
             EXP, monet.CEND
         ))
     # Output dataframes paths -------------------------------------------------
-    pth = PT_MTR + AOI + '_{}_' + strQnt + '_qnt.csv'
+    pth = PT_MTR + AOI + '_{}_' + QNT + '_qnt.csv'
     DFOPths = [pth.format(z) for z in outLabels]
     # Get experiment IDs ------------------------------------------------------
     uids = fun.getExperimentsIDSets(PT_OUT, skip=-1)
@@ -50,7 +50,7 @@ for (j, EXP) in enumerate(EXPS):
     ptrn = aux.XP_NPAT.format('*', '*', '*', '*', '*', '*', AOI, '*', 'rto', 'npy')
     fPaths = sorted(glob(PT_OUT+ptrn))
     # Create empty dataframes to store the data -------------------------------
-    outDFs = da.initEmptyDFs(fPaths, header, thiS, thoS, thwS, tapS)
+    outDFs = monet.initDFsForDA(fPaths, header, thiS, thoS, thwS, tapS)
     (ttiDF, ttoDF, wopDF, tapDF, rapDF) = outDFs
     # Iterate through experiments ---------------------------------------------
     fNum = len(fPaths)
@@ -74,6 +74,7 @@ for (j, EXP) in enumerate(EXPS):
         #######################################################################
         # Calculate Quantiles
         #######################################################################
+        qnt = int(QNT) / 100
         ttiSQ = [np.nanquantile(tti, qnt) for tti in ttiS]
         ttoSQ = [np.nanquantile(tto, 1-qnt) for tto in ttoS]
         wopSQ = [np.nanquantile(wop, 1-qnt) for wop in wopS]
@@ -90,7 +91,7 @@ for (j, EXP) in enumerate(EXPS):
         #######################################################################
         # Update in Dictionaries
         #######################################################################
-        if mlr:
+        if MLR:
             outDict = [
                     {int(i[0]*100): i[1] for i in zip(thiS, ttiS)},
                     {int(i[0]*100): i[1] for i in zip(thoS, ttoS)},
@@ -108,9 +109,9 @@ for (j, EXP) in enumerate(EXPS):
     ###########################################################################
     for df in zip(outDFs, DFOPths):
         df[0].to_csv(df[1], index=False)
-    if mlr:
+    if MLR:
         for (i, dict) in enumerate(smryDicts):
             lbl = outLabels[i]
-            pth = PT_MTR+AOI+'_'+lbl+'_'+strQnt+'_mlr.bz'
+            pth = PT_MTR + AOI + '_' + lbl + '_' + QNT + '_mlr.bz'
             pkl.dump(dict, pth, compression='bz2')
 print(monet.CWHT+'* Finished!                                '+monet.CEND)
