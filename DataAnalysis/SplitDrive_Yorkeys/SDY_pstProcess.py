@@ -17,7 +17,7 @@ from joblib import Parallel, delayed
 (USR, AOI) = (sys.argv[1], sys.argv[2])
 # (USR, AOI) = ('dsk', 'HLT')
 (DRV, EXP) = ('SD', 'factorial')
-(QNT, MLR) = ('50', True)
+(QNT, MLR) = ('75', True)
 (thiS, thoS, thwS, tapS) = (
         [.05, .10, .20, .25, .50, .75, .80, .90, .95],
         [.05, .10, .20, .25, .50, .75, .80, .90, .95],
