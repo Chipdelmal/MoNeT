@@ -7,8 +7,8 @@ from datetime import datetime
 import MoNeT_MGDrivE as monet
 
 
-(USR, DRV, QNT) = ('dsk', 'tGD', '50')
-# (USR, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+# (USR, DRV, QNT) = ('dsk', 'tGD', '50')
+(USR, DRV, QNT) = (sys.argv[1], sys.argv[2], sys.argv[3])
 AOI = ['HLT', 'TRS', 'WLD']
 EXP = '000'
 # #############################################################################
