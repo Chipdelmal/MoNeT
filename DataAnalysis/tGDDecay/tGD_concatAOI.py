@@ -2,19 +2,19 @@
 import sys
 import cv2
 from glob import glob
-import SDY_aux as aux
+import tGD_aux as aux
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 
 
-# (USR, QNT) = ('dsk', '50')
-(USR, QNT) = (sys.argv[1], sys.argv[2])
+(USR, DRV, QNT) = ('dsk', 'tGD', '50')
+# (USR, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 AOI = ['HLT', 'TRS', 'WLD']
-(DRV, EXP) = ('SD', 'factorial')
+EXP = '000'
 # #############################################################################
 # Setup paths and drive
 # #############################################################################
-(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_PST, PT_MTR) = aux.selectPath(USR, EXP)
+(PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)
 (PT_IMG_I, PT_IMG_O) = (PT_IMG + 'pstTraces/', PT_IMG + 'stacksAOI/')
 monet.makeFolder(PT_IMG_O)
 tS = datetime.now()
