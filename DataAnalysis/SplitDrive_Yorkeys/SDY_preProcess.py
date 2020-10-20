@@ -28,7 +28,7 @@ aux.printExperimentHead(PT_DTA, PT_IMG, PT_PRE, tS, 'SDY Preprocess ' + AOI)
 # Load folders
 ###############################################################################
 (expDirsMean, expDirsTrac) = aux.getExpPaths(PT_DTA)
-(expNum, nodeDigits) = (len(expDirsMean), len(str(len(NOI)))+1)
+(expNum, nodeDigits) = (len(expDirsMean), len(str(len(NOI))) + 1)
 # Check if some experiments have already been analyzed ------------------------
 outNames = aux.splitExpNames(PT_PST)
 outExpNames = set(outNames)

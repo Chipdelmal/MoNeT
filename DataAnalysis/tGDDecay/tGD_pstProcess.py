@@ -65,12 +65,12 @@ for (j, EXP) in enumerate(EXPS):
         #######################################################################
         # Thresholds ----------------------------------------------------------
         (ttiS, ttoS, wopS) = (
-                da.calcTTI(repRto, thiS),
-                da.calcTTO(repRto, thoS),
-                da.calcWOP(repRto, thwS)
+                monet.calcTTI(repRto, thiS),
+                monet.calcTTO(repRto, thoS),
+                monet.calcWOP(repRto, thwS)
             )
-        (minS, maxS) = da.calcMinMax(repRto)
-        rapS = da.getRatioAtTime(repRto, tapS)
+        (minS, maxS) = monet.calcMinMax(repRto)
+        rapS = monet.getRatioAtTime(repRto, tapS)
         #######################################################################
         # Calculate Quantiles
         #######################################################################
