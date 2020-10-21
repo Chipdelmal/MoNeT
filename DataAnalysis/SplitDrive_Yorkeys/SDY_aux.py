@@ -1,6 +1,31 @@
 
 from glob import glob
+import matplotlib
 import MoNeT_MGDrivE as monet
+
+
+def selectDepVars(MOI, THS, AOI):
+    # Select ranges and dependent variable-------------------------------------
+    if (MOI == 'WOP'):
+        days = 250
+        (scalers, HD_DEP) = ((1, 100, round(days)), str(THS))
+    elif (MOI == 'TTI') or (MOI == 'TTO'):
+        days = 750
+        (scalers, HD_DEP) = ((1, 100, round(days)), str(THS))
+    elif (MOI == 'RAP'):
+        maxPop = 12500
+        (scalers, HD_DEP) = ((1, 100, maxPop), '486')
+    elif (MOI == 'MNX'):
+        maxPop = 12500
+        (scalers, HD_DEP) = ((1, 100, maxPop), 'min')
+    # Color Mapping -----------------------------------------------------------
+    if AOI == 'HLT':
+        cmap = cmapC
+    elif AOI == 'TRS':
+        cmap = cmapM
+    elif AOI == 'WLD':
+        cmap = cmapW
+    return (scalers, HD_DEP, cmap)
 
 
 # #############################################################################
@@ -74,3 +99,47 @@ def printExperimentHead(PATH_ROOT, PATH_IMG, PATH_DATA, time, title):
     print('{}* Imgs: {}{}'.format(cred, PATH_IMG, cend))
     print('{}* Data: {}{}'.format(cred, PATH_DATA, cend))
     print(monet.PAD)
+
+
+# #############################################################################
+# Plot
+# #############################################################################
+def quickSaveFig(filename, fig):
+    fig.savefig(
+         filename,
+         dpi=750, facecolor=None, edgecolor='w',
+         orientation='portrait', papertype=None, format='png',
+         transparent=True, bbox_inches='tight', pad_inches=.01
+     )
+
+
+# #############################################################################
+# Color Palette
+# #############################################################################
+cdict = {
+        'red':  ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.25, 0.25), (1.0, 0.0, 0.0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 0.3, 0.3), (1.0, 0.0, 0.0)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (0.5, 1.0, 1.0), (1.0, 0.25, 0.25))
+    }
+cmapB = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.95, 0.95)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0, 0)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.4, 0.4))
+    }
+cmapC = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0, 0)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.65, 0.65)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, .95, .95))
+    }
+cmapM = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.05, 0.05)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.91, 0.91)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.06, 0.06))
+    }
+cmapW = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)

@@ -21,7 +21,7 @@ import compress_pickle as pkl
         [.05, .10, .25, .50, .75, .90, .95],
         [.05, .10, .25, .50, .75, .90, .95],
         [.05, .10, .25, .50, .75, .90, .95],
-        [int((i+1) * 365 / 3) for i in range(5)]
+        [int((i + 1) * 365 / 3) for i in range(5)]
     )
 EXPS = ('000',  ) # '001', '005', '010', '100')
 header = ['i_hnf', 'i_cac', 'i_frc', 'i_hrt', 'i_ren', 'i_res', 'i_grp']
@@ -54,10 +54,13 @@ for (j, EXP) in enumerate(EXPS):
     (ttiDF, ttoDF, wopDF, tapDF, rapDF) = outDFs
     # Iterate through experiments ---------------------------------------------
     fNum = len(fPaths)
-    digits = len(str(fNum))
+    digs = len(str(fNum))
     for (i, fPath) in enumerate(fPaths):
         fmtStr = '{}+ File: {}/{}'
-        print(fmtStr.format(monet.CBBL, str(i+1).zfill(digits), fNum, monet.CEND), end='\r')
+        print(
+            fmtStr.format(monet.CBBL, str(i+1).zfill(digs), fNum, monet.CEND),
+            end='\r'
+        )
         repRto = np.load(fPath)
         (reps, days) = repRto.shape
         #######################################################################
@@ -85,7 +88,8 @@ for (j, EXP) in enumerate(EXPS):
         # Update in Dataframes
         #######################################################################
         xpid = fun.getXpId(fPath, [1, 2, 3, 4, 5, 6, 8])
-        updates = [xpid+i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, list(mniSQ)+list(mnxSQ))]
+        mnxAppend = list(mniSQ)+list(mnxSQ)
+        updates = [xpid + i for i in (ttiSQ, ttoSQ, wopSQ, rapSQ, mnxAppend)]
         for df in zip(outDFs, updates):
             df[0].iloc[i] = df[1]
         #######################################################################
