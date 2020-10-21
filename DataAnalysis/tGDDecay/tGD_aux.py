@@ -67,16 +67,22 @@ def selectPath(USR, DRV, EXP):
     return (PATH_ROOT, PATH_IMG, PATH_DATA, PATH_PRE, PATH_OUT, PATH_MTR)
 
 
-def selectDepVars(MOI, AOI):
+def selectDepVars(MOI, THS, AOI):
     # Select ranges and dependent variable-------------------------------------
-    if (MOI == 'WOP') or (MOI == 'TTI') or (MOI == 'TTO'):
+    if (MOI == 'WOP'):
+        scalers = (1, 1000, round(450))
+        (HD_DEP, IND_RAN) = (str(THS), 7)
+    elif (MOI == 'TTI'):
+        scalers = (1, 1000, round(250))
+        (HD_DEP, IND_RAN) = (str(THS), 7)
+    elif (MOI == 'TTO'):
         scalers = (1, 1000, round(610))
-        (HD_DEP, IND_RAN) = ('0.5', 7)
+        (HD_DEP, IND_RAN) = (str(THS), 7)
     elif (MOI == 'RAP'):
         scalers = (1, 1000, 1)
         (HD_DEP, IND_RAN) = ('486', 7)
     elif (MOI == 'MNX'):
-        scalers = (1, 1000, 1)
+        scalers = (1, 1, 1)
         (HD_DEP, IND_RAN) = ('min', 7)
     # Color Mapping -----------------------------------------------------------
     if AOI == 'HLT':

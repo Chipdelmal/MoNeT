@@ -9,15 +9,17 @@ def selectDepVars(MOI, THS, AOI):
     if (MOI == 'WOP'):
         days = 250
         (scalers, HD_DEP) = ((1, 100, round(days)), str(THS))
-    elif (MOI == 'TTI') or (MOI == 'TTO'):
+    elif (MOI == 'TTI'):
+        days = 250
+        (scalers, HD_DEP) = ((1, 100, round(days)), str(THS))
+    elif (MOI == 'TTO'):
         days = 750
         (scalers, HD_DEP) = ((1, 100, round(days)), str(THS))
     elif (MOI == 'RAP'):
         maxPop = 12500
         (scalers, HD_DEP) = ((1, 100, maxPop), '486')
     elif (MOI == 'MNX'):
-        maxPop = 12500
-        (scalers, HD_DEP) = ((1, 100, maxPop), 'min')
+        (scalers, HD_DEP) = ((1, 1, 1), 'min')
     # Color Mapping -----------------------------------------------------------
     if AOI == 'HLT':
         cmap = cmapC

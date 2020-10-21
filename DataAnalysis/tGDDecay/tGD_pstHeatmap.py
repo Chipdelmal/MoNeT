@@ -15,7 +15,7 @@ warnings.filterwarnings("ignore")
 # python tGD_pstHeatmapSSV.py srv linkedDrive HLT WOP
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI, MOI) = ('dsk', 'tGD', 'WLD', 'MNX')
-(FMT, SKP, MF,  OVW, QNT) = ('bz', False, (False, True), True, '50')
+(FMT, SKP, MF, OVW, THR, QNT) = ('bz', False, (False, True), True, 0.5, '90')
 # Select surface variables ----------------------------------------------------
 HD_IND = ['i_ren', 'i_hnf']
 (ngdx, ngdy) = (1000, 1000)
@@ -23,9 +23,9 @@ HD_IND = ['i_ren', 'i_hnf']
         [-.05, 0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1.05],
         'linear', 'linear', 'linear'
     )
-MOI = ('TTI', 'TTO', 'WOP', 'MNX', 'RAP')
+MOI = ('TTI', 'TTO', 'WOP', 'MNX') #, 'RAP')
 for moi in MOI:
-    (scalers, HD_DEP, _, cmapR) = aux.selectDepVars(moi, AOI)
+    (scalers, HD_DEP, _, cmapR) = aux.selectDepVars(moi, THR, AOI)
     cmap = cmapR.reversed()
     # Spatial settings to sweep through ---------------------------------------
     EXPS = ('000', ) # '001', '005', '010', '100')
