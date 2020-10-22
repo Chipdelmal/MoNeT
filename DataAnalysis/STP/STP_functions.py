@@ -129,13 +129,14 @@ def calcResponseSurface(
 def axisRange(x):
     return (min(x), max(x))
 
+
 ###############################################################################
 # Save Figure
 ###############################################################################
-def quickSaveFig(filename, fig):
+def quickSaveFig(filename, fig, dpi=750):
     fig.savefig(
          filename,
-         dpi=750, facecolor=None, edgecolor='w',
+         dpi=dpi, facecolor=None, edgecolor='w',
          orientation='portrait', papertype=None, format='png',
          transparent=True, bbox_inches='tight', pad_inches=.01
      )
