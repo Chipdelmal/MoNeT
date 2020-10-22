@@ -52,7 +52,7 @@ gPos = aux.aggregateGeneAppearances(genotypes, gGenes)
 wBGenes = (('W', (1, 3)), )
 wBPos = aux.aggregateGeneAppearances(genotypes, wBGenes)
 # Full set --------------------------------------------------------------------
-TGD_ECO = (wAPos, hPos, rAPos, rBPos, gPos,  wBPos)
+TGD_ECO = (wAPos, hPos, rAPos, rBPos, gPos, wBPos)
 
 
 ###############################################################################
