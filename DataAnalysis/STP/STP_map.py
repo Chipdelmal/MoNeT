@@ -107,3 +107,22 @@ mH.scatter(
     color='#E048B8', zorder=3
 )
 fun.quickSaveFig(PTH_pts + 'PP.png', fig, dpi=750)
+# #############################################################################
+# Principe
+# #############################################################################
+(x1, y1) = (6.602781, 0.255436)
+fig = plt.figure(figsize=(5, 5))
+ax = fig.add_subplot(111, label="1")
+map = Basemap(projection='ortho', lat_0=y1, lon_0=x1-0)
+map.drawmapboundary(color=COLORS[0], linewidth=1)
+# map.drawmapboundary(fill_color='aqua')
+# map.fillcontinents(color='white', lake_color='white')
+# map.drawcoastlines()
+map.drawcoastlines(color=COLORS[4], linewidth=10)
+map.drawcoastlines(color=COLORS[0], linewidth=2)
+map.drawcoastlines(color=COLORS[3], linewidth=0.25)
+map.drawparallels(np.arange(-90., 120., 30.),labels=[1,0,0,0], linewidth=.2)
+map.drawmeridians(np.arange(0., 420., 60.),labels=[0,0,0,1], linewidth=.2)
+(x, y) = map(x1, y1)
+map.plot(x, y, marker='D', color='#E048B855')
+fun.quickSaveFig(PTH_pts + 'GB.png', fig, dpi=750)
