@@ -14,6 +14,12 @@ from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.mplot3d import Axes3D
 
 
+plt.rcParams.update({
+    "figure.facecolor":  (1.0, 0.0, 0.0, 0),  # red   with alpha = 30%
+    "axes.facecolor":    (0.0, 1.0, 0.0, 0),  # green with alpha = 50%
+    "savefig.facecolor": (0.0, 0.0, 1.0, 0),  # blue  with alpha = 20%
+})
+
 
 def rescaleRGBA(colorsTuple, colors=255):
     return [i/colors for i in colorsTuple]
@@ -104,25 +110,32 @@ ax.spines["left"].set_visible(False)
 mH.scatter(
     list(pts['lon']), list(pts['lat']), latlon=True,
     alpha=.2, marker='.', s=[10 * math.log(i) for i in list(pts['pop'])],
-    color='#E048B8', zorder=3
+    color='#E048B8', zorder=5
 )
 fun.quickSaveFig(PTH_pts + 'PP.png', fig, dpi=750)
 # #############################################################################
-# Principe
+# Globe
 # #############################################################################
 (x1, y1) = (6.602781, 0.255436)
 fig = plt.figure(figsize=(5, 5))
 ax = fig.add_subplot(111, label="1")
-map = Basemap(projection='ortho', lat_0=y1, lon_0=x1-0)
-map.drawmapboundary(color=COLORS[0], linewidth=1)
+map = Basemap(projection='ortho', lat_0=y1, lon_0=x1-20, ax=ax, resolution='c')
+# map = Basemap(projection='geos', lon_0=-89.5, lat_0=0.0, satellite_height=45786023.0, ellps='GRS80')
+map.drawmapboundary(color=COLORS[3], linewidth=5, zorder=5, ax=ax)
+pad = 500000
+(limx, limy) = (ax.get_xlim(), ax.get_ylim())
+ax.set_xlim(limx[0] - pad, limx[1] + pad)
+ax.set_ylim(limy[0] - pad, limy[1] + pad)
 # map.drawmapboundary(fill_color='aqua')
-# map.fillcontinents(color='white', lake_color='white')
+map.fillcontinents(color="#ffffff", lake_color="#ffffff00")
 # map.drawcoastlines()
-map.drawcoastlines(color=COLORS[4], linewidth=10)
-map.drawcoastlines(color=COLORS[0], linewidth=2)
+map.drawcoastlines(color=COLORS[3], linewidth=0)
+# map.drawcoastlines(color=COLORS[0], linewidth=2)
 map.drawcoastlines(color=COLORS[3], linewidth=0.25)
-map.drawparallels(np.arange(-90., 120., 30.),labels=[1,0,0,0], linewidth=.2)
-map.drawmeridians(np.arange(0., 420., 60.),labels=[0,0,0,1], linewidth=.2)
+map.drawparallels(np.arange(-90., 120., 30.), labels=[1,0,0,0], color='w', linewidth=.2)
+map.drawmeridians(np.arange(0., 420., 60.), labels=[0,0,0,1], color='w',  linewidth=.2)
 (x, y) = map(x1, y1)
-map.plot(x, y, marker='D', color='#E048B855')
+map.plot(x, y, marker='o', color="#e048b8F5")
 fun.quickSaveFig(PTH_pts + 'GB.png', fig, dpi=750)
+
+help(map.fillcontinents)

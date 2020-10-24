@@ -136,7 +136,16 @@ def axisRange(x):
 def quickSaveFig(filename, fig, dpi=750):
     fig.savefig(
          filename,
-         dpi=dpi, facecolor=None, edgecolor='w',
+         dpi=dpi, facecolor=None, edgecolor=None,
          orientation='portrait', papertype=None, format='png',
-         transparent=True, bbox_inches='tight', pad_inches=.01
+         transparent=True, bbox_inches='tight', pad_inches=.02
+     )
+
+
+def quickSaveFigPad(filename, fig, dpi=750):
+    fig.savefig(
+         filename,
+         dpi=dpi, facecolor=None, edgecolor=None,
+         orientation='portrait', papertype=None, format='png',
+         transparent=True, pad_inches=1
      )
