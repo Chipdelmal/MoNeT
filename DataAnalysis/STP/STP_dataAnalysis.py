@@ -32,6 +32,6 @@ def errorBetweenDataframes(dfB, dfP, FEATS, LABELS, error=True):
         if error:
             diff = zeroDivide(outP - outB, outB)
         else:
-            diff = zeroDivide(outP - outB, 1)
+            diff = zeroDivide(outP, outB)
         dfO.iloc[boolFltr.index(True)] = list(sliceKey) + list(diff[0])
     return dfO

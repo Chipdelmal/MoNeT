@@ -11,7 +11,8 @@ import matplotlib.pyplot as plt
 from matplotlib import gridspec
 
 
-ID_MTR = 'HLT_WOP_90_qnt.csv'
+MTR = 'WOP'
+ID_MTR = 'HLT_{}_90_qnt.csv'.format(MTR)
 EXPS = ('mixed', 'gravidFemale', 'nonGravidFemale')
 FEATS = ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv', 'i_grp']
 SCA = 100000000
@@ -49,23 +50,24 @@ dfDNonGravid.to_csv('{}{}_{}'.format(PT_OUT, EXPS[2], ID_MTR))
 # Plot tests
 ###############################################################################
 THS = '0.1'
-(height, jitter, size) = (.05, .045, .75)
-clrs = ('#b8b8ffff', '#d914b5ff', '#04021fff')
-fig = plt.figure(figsize=(10, 2.5))
+(height, jitter, size, alpha) = (.03, .0275, 2.5, .35)
+clrs = ('#b8b8ffff', '#d914b5ff', '#3c47edff')
+fig = plt.figure(figsize=(10, 2))
 spec = gridspec.GridSpec(3, 1, height_ratios=[.5, .5, .5], hspace=0)
 ax = []
 for i in range(3):
     ax.append(fig.add_subplot(spec[i]))
-sns.stripplot(x=dfNonGravid[THS], jitter=jitter, size=size, color=clrs[0], ax=ax[0])
-sns.stripplot(x=dfGravid[THS], jitter=jitter, size=size, color=clrs[1], ax=ax[1])
-sns.stripplot(x=dfMixed[THS], jitter=jitter, size=size, color=clrs[2], ax=ax[2])
+sns.stripplot(x=dfNonGravid[THS], jitter=jitter, size=size, color=clrs[0], ax=ax[0], alpha=alpha)
+sns.stripplot(x=dfGravid[THS], jitter=jitter, size=size, color=clrs[1], ax=ax[1], alpha=alpha)
+sns.stripplot(x=dfMixed[THS], jitter=jitter, size=size, color=clrs[2], ax=ax[2], alpha=alpha)
 for axt in ax:
     axt.set_ylim(-height, height)
+    axt.set_xlim(0, 6 * 365)
     axt.set_yticklabels('')
     axt.set_xticklabels('')
     axt.set_title('')
     axt.set(xlabel=None)
-fun.quickSaveFig(PT_IMG + 'timeResponse.png', fig)
+fun.quickSaveFig(PT_IMG + MTR + '_tResponse.png', fig)
 
 
 (height, jitter) = (.05, .04)
@@ -83,7 +85,7 @@ for axt in ax:
     axt.set_yticklabels('')
     axt.set_xticklabels('')
     axt.set(xlabel=None)
-fun.quickSaveFig(PT_IMG + 'timeError.png', fig)
+fun.quickSaveFig(PT_IMG + MTR + '_tError.png', fig)
 
 
 

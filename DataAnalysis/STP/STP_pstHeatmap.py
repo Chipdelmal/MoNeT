@@ -13,15 +13,15 @@ warnings.filterwarnings("ignore")
 
 
 # (USR, AOI, REL, LND) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-(USR, AOI, REL, LND, MOI) = ('dsk', 'HLT', 'mixed', 'PAN', 'WOP')
+(USR, AOI, REL, LND, MOI) = ('dsk', 'HLT', 'mixed', 'Backup', 'WOP')
 (DRV, FMT, QNT, OVW) = ('LDR', 'bz2', '90', True)
 # Select surface variables ----------------------------------------------------
-HD_IND = ['i_ren', 'i_fic']
+HD_IND = ['i_gsv', 'i_ren']
 (scalers, HD_DEP, _, cmap) = aux.selectDepVars(MOI, AOI)
 (ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
         [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
-        'linear', 'log', 'linear'
+        'linear', 'linear', 'linear'
     )
 xRan = (1E-8, 1E-1)
 ###############################################################################
@@ -89,6 +89,8 @@ for (xpNumC, xpId) in enumerate(idTuples):
     plt.xlabel(HD_IND[0], fontsize=20)
     plt.ylabel(HD_IND[1], fontsize=20)
     # Grid
+    ax.set_xscale(xSca)
+    ax.set_yscale(ySca)
     ax.set_xticks(list(set(x)), minor=True)
     ax.set_yticks(list(set(y)), minor=True)
     # ax.axes.xaxis.set_ticklabels([])
