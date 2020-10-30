@@ -133,19 +133,19 @@ def axisRange(x):
 ###############################################################################
 # Save Figure
 ###############################################################################
-def quickSaveFig(filename, fig, dpi=750):
+def quickSaveFig(filename, fig, dpi=750, transparent=True):
     fig.savefig(
          filename,
          dpi=dpi, facecolor=None, edgecolor=None,
          orientation='portrait', papertype=None, format='png',
-         transparent=True, bbox_inches='tight', pad_inches=.02
+         transparent=transparent, bbox_inches='tight', pad_inches=.02
      )
 
 
-def quickSaveFigPad(filename, fig, dpi=750):
+def quickSaveFigPad(filename, fig, dpi=750, transparent=True):
     fig.savefig(
          filename,
          dpi=dpi, facecolor=None, edgecolor=None,
          orientation='portrait', papertype=None, format='png',
-         transparent=True, pad_inches=1
+         transparent=transparent, pad_inches=1
      )

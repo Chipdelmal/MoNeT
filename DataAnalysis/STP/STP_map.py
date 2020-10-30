@@ -10,6 +10,7 @@ import matplotlib.patches as mpatches
 import numpy as np
 import pandas as pd
 import STP_functions as fun
+import STP_plots as plo
 from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -21,24 +22,11 @@ plt.rcParams.update({
 })
 
 
-def rescaleRGBA(colorsTuple, colors=255):
-    return [i/colors for i in colorsTuple]
-
-
-COLORS = [
-        rescaleRGBA((47, 28, 191, 255/2.5)),    # 0: Faded navy blue
-        rescaleRGBA((255, 0, 152, 255/1)),      # 1: Magenta
-        rescaleRGBA((37, 216, 17, 255/6)),      # 2: Bright green
-        rescaleRGBA((255, 255, 255, 255/1)),    # 3: White
-        rescaleRGBA((0, 169, 255, 255/7.5)),    # 4: Cyan
-        rescaleRGBA((0, 0, 0, 255/5))           # 5: Black
-    ]
 
 
 PTH_pts = '/media/hdd/WorkExperiments/STP/'
 pts = pd.read_csv(PTH_pts+'stp_all_sites_v5.csv')
-
-
+COLORS = plo.COLORS
 # #############################################################################
 # Sao Tome
 # #############################################################################
@@ -138,4 +126,3 @@ map.drawmeridians(np.arange(0., 420., 60.), labels=[0,0,0,1], color='w',  linewi
 map.plot(x, y, marker='o', color="#e048b8F5")
 fun.quickSaveFig(PTH_pts + 'GB.png', fig, dpi=750)
 
-help(map.fillcontinents)
