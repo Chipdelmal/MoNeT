@@ -51,7 +51,7 @@ dfDNonGravid.to_csv('{}{}_{}'.format(PT_OUT, EXPS[2], ID_MTR))
 ###############################################################################
 THS = '0.5'
 (height, jitter, size, alpha) = (.03, .0225, 1, .35)
-clrs = ('#b8b8ffFF', '#3c47edFF', '#ed174bff')
+clrs = ('#ff36b3ff', '#3c47edFF', '#ddf3ffff')
 fig = plt.figure(figsize=(10, 1))
 spec = gridspec.GridSpec(3, 1, height_ratios=[.5, .5, .5], hspace=0)
 ax = []
@@ -62,7 +62,7 @@ sns.stripplot(x=dfGravid[THS], jitter=jitter, size=size, color=clrs[1], ax=ax[1]
 sns.stripplot(x=dfMixed[THS], jitter=jitter, size=size, color=clrs[2], ax=ax[2], alpha=alpha)
 for axt in ax:
     axt.set_ylim(-height, height)
-    axt.set_xlim(0, 6 * 365)
+    axt.set_xlim(0, 10 * 365)
     axt.set_yticklabels('')
     axt.set_xticklabels('')
     axt.set_title('')
@@ -89,34 +89,38 @@ fun.quickSaveFig(PT_IMG + MTR + '_tError.png', fig)
 ###############################################################################
 # Density
 ###############################################################################
-fig = plt.figure(figsize=(24, 10))
-ax = fig.add_axes([0, 0, 1, 1])
+plt.rcParams.update({
+    "figure.facecolor":  (1.0, 0.0, 0.0, 0),  # red   with alpha = 30%
+    "axes.facecolor":    (0.0, 1.0, 0.0, 0),  # green with alpha = 50%
+    "savefig.facecolor": (1.0, 1.0, 1.0, 1),  # blue  with alpha = 20%
+})
 # Violin plot -------------------------------------------------------------
-sns.kdeplot(dfNonGravid[THS], fill=False, cut=0, color=clrs[0], linewidth=2.5, alpha=.65, zorder=0, common_norm=False)
-sns.kdeplot(dfGravid[THS], fill=False, cut=0, color=clrs[1], linewidth=2.5, alpha=.65, zorder=2, common_norm=False)
-sns.kdeplot(dfMixed[THS], fill=False, cut=0, color=clrs[2], linewidth=2.5, alpha=.65, zorder=1, common_norm=False)
-sns.kdeplot(dfNonGravid[THS], fill=True, cut=0, color=clrs[0], linewidth=0, alpha=.025, zorder=0, common_norm=False)
-sns.kdeplot(dfGravid[THS], fill=True, cut=0, color=clrs[1], linewidth=0, alpha=.025, zorder=2, common_norm=False)
-sns.kdeplot(dfMixed[THS], fill=True, cut=0, color=clrs[2], linewidth=0, alpha=.025, zorder=1, common_norm=False)
-ax.set_yticklabels('')
-ax.set_xticklabels('')
-ax.set_title('')
-mxRan = max([max(i) for i in (dfNonGravid[THS], dfGravid[THS], dfMixed[THS])])
-ax.set_xlim(0, mxRan)
-(xrange, yrange) = (ax.get_xlim(), ax.get_ylim())
-ax.set_aspect(.25 * (xrange[1]-xrange[0])/(yrange[1]-yrange[0]))
-fig.savefig(PT_IMG+'densities.png', dpi=250)
-###############################################################################
-# Density
-###############################################################################
-# fig = plt.figure(figsize=(24, 12))
-# ax = fig.add_axes([0, 0, 1, 1])
-# # Violin plot -------------------------------------------------------------
-# sns.kdeplot(dfDNonGravid[THS], fill=True, cut=0, color=clrs[0], linewidth=5, alpha=.25, zorder=0)
-# sns.kdeplot(dfDGravid[THS], fill=True, cut=0, color=clrs[1], linewidth=5, alpha=.25, zorder=2)
-# sns.kdeplot(dfDMixed[THS], fill=True, cut=0, color=clrs[2], linewidth=5, alpha=.25, zorder=1)
-# mxRan = max([max(i) for i in (dfDNonGravid[THS], dfDGravid[THS], dfDMixed[THS])])
-# ax.set_xlim(0, mxRan)
-# (xrange, yrange) = (ax.get_xlim(), ax.get_ylim())
-# ax.set_aspect(.5 * (xrange[1]-xrange[0])/(yrange[1]-yrange[0]))
-# fig.savefig(PT_IMG+'densities.png', dpi=500)
+(az, bz, cz) = (
+    dfNonGravid[THS][dfNonGravid[THS] > 0],
+    dfGravid[THS][dfNonGravid[THS] > 0],
+    dfMixed[THS][dfNonGravid[THS] > 0]
+)
+fig = plt.figure(figsize=(7, .75))
+gs = gridspec.GridSpec(
+    nrows=3, ncols=1, figure=fig, 
+    width_ratios= [1], height_ratios=[.5, .5, .5],
+    wspace=0.3, hspace=-.85
+)
+df = (az, bz, cz)
+for (i, data) in enumerate(df):
+    fig.add_subplot(gs[i, 0])
+    ax = sns.kdeplot(data, fill=True, cut=0, color=clrs[i], linewidth=1, alpha=.8, zorder=0, common_norm=False)
+    ax = sns.kdeplot(data, fill=False, cut=0, color='#ffffff', linewidth=1.5, alpha=.75, zorder=0, common_norm=False)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    [t.set_visible(False) for t in ax.get_yticklines()]
+    ax.set_yticklabels('')
+    ax.set_xticklabels('')
+    ax.set_xlabel('')
+    ax.set_ylabel('')
+    ax.set_title('')
+    mxRan = max([max(i) for i in df])
+    ax.set_xlim(0, mxRan)
+plt.show()
+fun.quickSaveFig(PT_IMG+'ridge.png', fig, dpi=250, transparent=False)
