@@ -49,43 +49,38 @@ dfDNonGravid.to_csv('{}{}_{}'.format(PT_OUT, EXPS[2], ID_MTR))
 ###############################################################################
 # Plot tests
 ###############################################################################
-THS = '0.5'
+(az, bz, cz) = (
+    dfNonGravid[THS][dfNonGravid[THS] > 0],
+    dfGravid[THS][dfNonGravid[THS] > 0],
+    dfMixed[THS][dfNonGravid[THS] > 0]
+)
+# Violin plot -------------------------------------------------------------
+THS = '0.1'
 (height, jitter, size, alpha) = (.03, .0225, 1, .35)
 clrs = ('#ff36b3ff', '#3c47edFF', '#ddf3ffff')
-fig = plt.figure(figsize=(10, 1))
+fig = plt.figure(figsize=(7, .75))
 spec = gridspec.GridSpec(3, 1, height_ratios=[.5, .5, .5], hspace=0)
 ax = []
 for i in range(3):
     ax.append(fig.add_subplot(spec[i]))
-sns.stripplot(x=dfNonGravid[THS], jitter=jitter, size=size, color=clrs[0], ax=ax[0], alpha=alpha)
-sns.stripplot(x=dfGravid[THS], jitter=jitter, size=size, color=clrs[1], ax=ax[1], alpha=alpha)
-sns.stripplot(x=dfMixed[THS], jitter=jitter, size=size, color=clrs[2], ax=ax[2], alpha=alpha)
+sns.stripplot(x=az, jitter=jitter, size=size, color=clrs[0], ax=ax[0], alpha=alpha)
+sns.stripplot(x=bz, jitter=jitter, size=size, color=clrs[1], ax=ax[1], alpha=alpha)
+sns.stripplot(x=cz, jitter=jitter, size=size, color=clrs[2], ax=ax[2], alpha=alpha)
 for axt in ax:
     axt.set_ylim(-height, height)
     axt.set_xlim(0, 10 * 365)
     axt.set_yticklabels('')
     axt.set_xticklabels('')
+    axt.set_xticks(np.arange(0, 365 * 10, 365))
     axt.set_title('')
     axt.set(xlabel=None)
-fun.quickSaveFig(PT_IMG + MTR + '_tResponse.png', fig, transparent=False)
-
-
-(height, jitter) = (.05, .04)
-fig = plt.figure(figsize=(10, 2.5))
-spec = gridspec.GridSpec(3, 1, height_ratios=[.5, .5, .5], hspace=0)
-ax = []
-for i in range(3):
-    ax.append(fig.add_subplot(spec[i]))
-sns.stripplot(x=dfDNonGravid[THS], jitter=jitter, size=size, color=clrs[0], ax=ax[0])
-sns.stripplot(x=dfDGravid[THS], jitter=jitter, size=size, color=clrs[1], ax=ax[1])
-sns.stripplot(x=dfDMixed[THS], jitter=jitter, size=size, color=clrs[2], ax=ax[2])
-for axt in ax:
-    axt.set_ylim(-height, height)
-    axt.set_xlim(-.25, .25)
-    axt.set_yticklabels('')
-    axt.set_xticklabels('')
-    axt.set(xlabel=None)
-fun.quickSaveFig(PT_IMG + MTR + '_tError.png', fig)
+    [t.set_visible(False) for t in axt.get_yticklines()]
+    [t.set_visible(False) for t in axt.get_xticklines()]
+    axt.spines['top'].set_visible(False)
+    axt.spines['right'].set_visible(False)
+    axt.spines['bottom'].set_visible(False)
+    axt.spines['left'].set_visible(False)
+fun.quickSaveFig(PT_IMG + MTR + '_tResponse.png', fig, transparent=False, dpi=500)
 ###############################################################################
 # Density
 ###############################################################################
@@ -94,12 +89,6 @@ plt.rcParams.update({
     "axes.facecolor":    (0.0, 1.0, 0.0, 0),  # green with alpha = 50%
     "savefig.facecolor": (1.0, 1.0, 1.0, 1),  # blue  with alpha = 20%
 })
-# Violin plot -------------------------------------------------------------
-(az, bz, cz) = (
-    dfNonGravid[THS][dfNonGravid[THS] > 0],
-    dfGravid[THS][dfNonGravid[THS] > 0],
-    dfMixed[THS][dfNonGravid[THS] > 0]
-)
 fig = plt.figure(figsize=(7, .75))
 gs = gridspec.GridSpec(
     nrows=3, ncols=1, figure=fig, 
@@ -117,10 +106,11 @@ for (i, data) in enumerate(df):
     [t.set_visible(False) for t in ax.get_yticklines()]
     ax.set_yticklabels('')
     ax.set_xticklabels('')
+    axt.set_xticks(np.arange(0, 365 * 10, 365))
     ax.set_xlabel('')
     ax.set_ylabel('')
     ax.set_title('')
     mxRan = max([max(i) for i in df])
-    ax.set_xlim(0, mxRan)
+    ax.set_xlim(0, 10 * 365)
 plt.show()
-fun.quickSaveFig(PT_IMG+'ridge.png', fig, dpi=250, transparent=False)
+fun.quickSaveFig(PT_IMG+'ridge.png', fig, dpi=250, transparent=True)
