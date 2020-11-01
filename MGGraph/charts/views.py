@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from bokeh.transform import transform
-from bokeh.models import (ColumnDataSource, Plot,
+from bokeh.models import (ColumnDataSource, Plot, Line, LabelSet, Scatter,
                           Grid, HoverTool, LogColorMapper, LogTicker,
                           ColorBar, PrintfTickFormatter, LinearAxis)
 from bokeh.models.widgets import Slider
@@ -12,7 +12,6 @@ from bokeh.layouts import gridplot, layout, column, row
 from bokeh.embed import components
 from bokeh.transform import cumsum
 from bokeh.palettes import inferno, viridis, cividis, Viridis256, Blues256
-
 import pandas as pd
 import numpy as np
 from numpy.random import random
@@ -227,7 +226,14 @@ def time_function(function):
         return result
     return wrapper
 
-
+def get_colors(color_list, llen):
+  new_color_list = list()
+  i = 0
+  cllen = len(color_list)
+  while i < llen:
+    new_color_list.append(color_list[i%cllen])
+    i+=1
+  return new_color_list
 
 @time_function
 def index(request):
@@ -260,7 +266,7 @@ def index(request):
                     ftype = 'pkl'
                     data = pd.read_pickle(csv, compression="bz2")
                     data_transposed = zip(data['population'])
-                    df = pd.DataFrame.from_records(data['population'])
+                    df = pd.DataFrame.from_records(data['population'])           
                     df.columns = data['genotypes']
             except Exception as e:
                 messages.error(
@@ -270,6 +276,8 @@ def index(request):
                 return HttpResponseRedirect(reverse_lazy('charts:index'))
 
             # Add row total
+            if not 'includeTotal' in request.POST and 'Total' in df.columns:
+                del df['Total']
             col_list = list(df)
             if 'Time' in col_list:
               col_list.remove('Time')
@@ -289,32 +297,43 @@ def index(request):
             df_csv = df_csv.append(df)
 
             count = count + 1
-
+        colors_name = None
+        if 'colorPalette' in request.FILES:
+          csv_colors = pd.read_csv(request.FILES.get('colorPalette'))
+          colors_name = request.POST.get(
+            'experiment') + '_' + str(date.today()) +'_colors'+ '.csv'
+          csv_colors.to_csv(colors_name)
         # export csvList
         csv_name = request.POST.get(
             'experiment') + '_' + str(date.today()) + '.csv'
         if ftype == 'pkl':
-          df_csv['Time'] = range(len(df_csv['id'])) 
+          df_csv['Time'] = range(len(df_csv['id']))
         df_csv.to_csv(csv_name)
 
-        return redirect('charts:graph', csv=csv_name, ftype=ftype)
+        return redirect('charts:graph', csv=csv_name, color_csv=colors_name, ftype=ftype)
 
     template = 'pages/index.html'
     return render(request, template)
 
 
-def one_experiment(csv, ftype):
+def filter_words(elements, words):
+    d = []
+    for e in elements:
+      if not e in words:
+        d.append(e)
+    return d
+
+def one_experiment(csv, color_csv, ftype):
     # Get csv
     df = pd.read_csv(csv)
+    print(df)
+    if color_csv != 'None':
+      color_list = pd.read_csv(color_csv)['color'].to_list()
+    else:
+      color_list = None
     # Get Data
-    # Coordenates
-    df2 = df.drop_duplicates('coordX')
-    df2 = df.drop_duplicates('coordY')
-    xx = df2['coordX']
-    yy = df2['coordY']
-    zz = df2['sumTime']
-    x = df['coordX'].unique()
-    y = df['coordY'].unique()
+    x = df['coordX']
+    y = df['coordY']
 
     # Get csv Count
     sumtime = df.loc[df['Time'] == 1]
@@ -333,6 +352,7 @@ def one_experiment(csv, ftype):
         lList = list(res['sumTime'])
         timeList.append(lList)
 
+
     # Scatter Graphic:
     # Colors
     N = len(sumtime['sumTime'])
@@ -349,13 +369,6 @@ def one_experiment(csv, ftype):
         count=countList,
         colors=colors))
 
-    xx, yy, zz = np.meshgrid(xx, yy, zz)
-
-    surface_source = ColumnDataSource(dict(
-        x=xx,
-        y=yy,
-        z=zz
-    ))
 
 
     # Hover
@@ -398,14 +411,9 @@ def one_experiment(csv, ftype):
             aux_gene.append(x)
 
         gene_list.append(aux_gene)
-    
   
     heatmap_data = np.array(gene_list).sum(axis=0).T
-    if ftype == 'csv':
-      heatmap_genes = ('WW', 'WH', 'WE', 'WR', 'WB', 'HH', 'HE', 'HR',
-                     'HB', 'EE', 'ER', 'EB', 'RR', 'RB', 'BB')
-    elif ftype == 'pkl':
-      heatmap_genes = ('H*', 'O-', 'Total')
+    heatmap_genes = filter_words(df.columns, ['Unnamed: 0', 'id', 'coordY', 'coordX', 'csvName', 'sumTime', 'Time'])
     heatmap_df = pd.DataFrame(data=heatmap_data, index=heatmap_genes)
     heatmap_df.columns.name = 'time'
     heatmap_df.index.name = 'gene'
@@ -423,9 +431,17 @@ def one_experiment(csv, ftype):
     hm_max = heatmap_data.value.max()
 
     # Using 0 as low prevents it from using LogTicker
-    mapper = LogColorMapper(palette=Blues256,
+    if not color_list:
+      mapper = LogColorMapper(palette=Blues256,
+                               low=1,
+                               high=hm_max) 
+      bar_colors = cividis(len(col_list))
+    else:
+      mapper = LogColorMapper(palette=color_list,
                                low=1,
                                high=hm_max)
+      llen = len(col_list)
+      bar_colors = get_colors(color_list, llen)
 
     heatmap = figure(
         title="Heatmap",
@@ -433,11 +449,11 @@ def one_experiment(csv, ftype):
         y_range=heatmap_genes,
         tools="save,pan,box_zoom,reset,wheel_zoom"
     )
+    
     heatmap.add_tools(hm_hover)
-    heatmap.rect(x="time", y="gene", width=1, height=1, source=heatmap_source,
+    rect = heatmap.rect(x="time", y="gene", width=1, height=1, source=heatmap_source,
                  line_color=None, fill_color=transform('value', mapper), dilate=True)
     
-    surface = Surface3d(x="x", y="y", z="z", data_source=surface_source, width=600, height=600)
 
     color_bar = ColorBar(
         color_mapper=mapper,
@@ -451,12 +467,43 @@ def one_experiment(csv, ftype):
 
     csv_selected = gene_list[0]
 
+    # Multiple line plot
+    multiple_line_df = pd.melt(df, id_vars='Time', value_vars=col_list, var_name='Gene', value_name='Value')
+    xs = [multiple_line_df.loc[multiple_line_df.Gene == i].Time for i in col_list]
+    ys = [multiple_line_df.loc[multiple_line_df.Gene == i].Value for i in col_list]
+    source = ColumnDataSource(data=dict(
+        x = xs,
+        y = ys,
+        group = col_list))
+    multi_line_plot = figure(plot_width=600, plot_height=600)
+    multi_line_plot.multi_line(
+        xs='x',
+        ys='y',
+        legend='group',
+        source=source
+        )
+    #Add hover tools, basically an invisible line
+    source2 = ColumnDataSource(dict(
+        invisible_xs=multiple_line_df.Time,
+        invisible_ys=multiple_line_df.Value,
+        group = multiple_line_df.Gene))
+    line = multi_line_plot.line(
+        'invisible_xs',
+        'invisible_ys',
+        source=source2,
+        alpha=0)
+    hover = HoverTool(tooltips =[
+        ('Gene','@group'),
+        ('Time','@invisible_xs'),
+        ('Value','@invisible_ys')])
+    hover.renderers = [line]
+    multi_line_plot.add_tools(hover)
+    
+
     # Get data for graph
     counts = csv_selected[0]
 
     # Get colors
-    bar_colors = cividis(len(col_list))
-
     bar_source = ColumnDataSource(data=dict(
         col_list=col_list,
         counts=counts,
@@ -475,17 +522,17 @@ def one_experiment(csv, ftype):
 
     # Select
     select = mg_select(csvList, bar_source, status)
-    return scatter, bar, heatmap, slider, select, surface
+    return scatter, bar, heatmap, slider, select, multi_line_plot
 
 
 @time_function
-def graph(request, csv, ftype):
-    scatter, bar, heatmap, slider, select, surface = one_experiment(csv, ftype)
+def graph(request, csv, color_csv, ftype):
+    scatter, bar, heatmap, slider, select, multi_line_plot = one_experiment(csv, color_csv, ftype)
     
     controls = row(slider, select)
     # Create grid for graphics
     grid = layout([
-        [heatmap, surface],
+        [heatmap, multi_line_plot],
         [controls],
         [scatter, bar]
     ], sizing_mode="stretch_width")
