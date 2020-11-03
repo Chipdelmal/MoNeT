@@ -34,7 +34,7 @@ FEAT_LVLS = [set(dfMixed[i].unique()) for i in FEATS]
 ###############################################################################
 # Clean the datasets
 ###############################################################################
-err = True
+err = False
 (dfDMixed, dfDGravid, dfDNonGravid) = (
     da.errorBetweenDataframes(dfMixed, dfMixed, FEATS, LBLS, error=err),
     da.errorBetweenDataframes(dfMixed, dfGravid, FEATS, LBLS, error=err),
@@ -56,8 +56,8 @@ THS = '0.1'
 clrs = ('#ff36b3ff', '#3c47edFF', '#ddf3ffff')
 (az, bz, cz) = (
     dfNonGravid[THS][dfNonGravid[THS] > 0],
-    dfGravid[THS][dfNonGravid[THS] > 0],
-    dfMixed[THS][dfNonGravid[THS] > 0]
+    dfGravid[THS][dfGravid[THS] > 0],
+    dfMixed[THS][dfMixed[THS] > 0]
 )
 fig = plt.figure(figsize=(7, .75))
 spec = gridspec.GridSpec(3, 1, height_ratios=[.5, .5, .5], hspace=0)
@@ -107,7 +107,7 @@ for (i, data) in enumerate(df):
     [t.set_visible(False) for t in ax.get_yticklines()]
     ax.set_yticklabels('')
     ax.set_xticklabels('')
-    axt.set_xticks(np.arange(0, 365 * 10, 365))
+    ax.set_xticks(np.arange(0, 365 * 10, 365))
     ax.set_xlabel('')
     ax.set_ylabel('')
     ax.set_title('')
