@@ -5,6 +5,7 @@ import numpy as np
 from os import path
 import pandas as pd
 import seaborn as sns
+from scipy import stats
 import STP_functions as fun
 import MoNeT_MGDrivE as monet
 import STP_dataAnalysis as da
@@ -12,7 +13,7 @@ import matplotlib.pyplot as plt
 from matplotlib import gridspec
 
 
-(MTR, ERR, OVW, THS, QNT) = ('WOP', False, True, '0.1', '50')
+(MTR, ERR, OVW, THS, QNT) = ('WOP', False, False, '0.1', '50')
 ID_MTR = 'HLT_{}_{}_qnt.csv'.format(MTR, QNT)
 EXPS = ('mixed', 'gravidFemale', 'nonGravidFemale')
 FEATS = ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv', 'i_grp']
@@ -29,7 +30,7 @@ monet.makeFolder(PT_OUT)
 # Read and clean datasets
 ###############################################################################
 dfRC = {
-    i[0]: da.rescaleDataset(pd.read_csv(i[1]), SCA) 
+    i[0]: da.rescaleDataset(pd.read_csv(i[1]), SCA)
     for i in zip(EXPS, PT_DTA)
 }
 HEADER = list(dfRC['mixed'].columns)
@@ -40,7 +41,10 @@ HEADER = list(dfRC['mixed'].columns)
 ###############################################################################
 # Clean the datasets and Export (if needed)
 ###############################################################################
-strRCDiff = {i: '{}{}_{}'.format(PT_OUT, i, ID_MTR) for i in EXPS}
+strErr = 'D'
+if ERR:
+    strErr = 'E'
+strRCDiff = {i: '{}{}_{}_{}'.format(PT_OUT, strErr, i, ID_MTR) for i in EXPS}
 dfExist = all([path.isfile(strRCDiff[i]) for i in strRCDiff])
 if (not dfExist) or (OVW):
     dfRCDiff = {
@@ -57,14 +61,21 @@ if (not dfExist) or (OVW):
 # Read differences datasets
 ###############################################################################
 if (dfExist) or (not OVW):
-    dfRCDiff = {i[0]: pd.read_csv(i[1]) for i in zip(EXPS, strRCDiff)}
+    dfRCDiff = {i: pd.read_csv(strRCDiff[i]) for i in EXPS}
 ###############################################################################
 # Analyzes
 ###############################################################################
-data = dfRC['mixed']
+data = dfRCDiff['gravidFemale']
 data.corr(method='spearman')[THS]
-dataNZ = data[THS][data[THS] > 0]
+dataNZ = data[THS][data[THS] >= 0]
+(fig, ax) = plt.subplots(figsize=(7, 2))
 sns.kdeplot(
     dataNZ, 
     fill=True, cut=0, linewidth=1, alpha=.8, zorder=0, common_norm=False
 )
+# ax.set_xlim(0, 2)
+# ax.set_ylim(0, 10)
+# Kolmogorov-Smirnov ----------------------------------------------------------
+data = (dfRC['mixed'], dfRC['nonGravidFemale'])
+dataNZ = [i[THS][i[THS] >= 0] for i in data]
+stats.ks_2samp(dataNZ[0], dataNZ[1])

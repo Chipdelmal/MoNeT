@@ -30,8 +30,8 @@ def errorBetweenDataframes(dfB, dfP, FEATS, LABELS, error=True):
         boolFltr = getBoolIxFromFeatKey(dfP, sliceKey, FEATS)
         outP = dfP[boolFltr][LABELS].values
         if error:
-            diff = zeroDivide(outP - outB, outB)
-        else:
             diff = zeroDivide(outP, outB)
+        else:
+            diff = zeroDivide(outP - outB, 1)
         dfO.iloc[boolFltr.index(True)] = list(sliceKey) + list(diff[0])
     return dfO
