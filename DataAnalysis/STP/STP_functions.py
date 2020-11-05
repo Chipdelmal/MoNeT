@@ -106,7 +106,7 @@ def getExperimentsIDSets(PATH_EXP, skip=-1, ext='.lzma'):
 ###############################################################################
 def calcResponseSurface(
             iX, iY, dZ, scalers=(1, 1, 1),
-            mthd='linear', NDX=5000, NDY=5000
+            mthd='linear', NDX=1000, NDY=1000
         ):
     (xN, yN, zN) = (
             np.array([float(i/scalers[0]) for i in iX]),

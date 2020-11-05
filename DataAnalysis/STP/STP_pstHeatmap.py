@@ -16,14 +16,17 @@ warnings.filterwarnings("ignore")
 (USR, AOI, REL, LND, MOI) = ('dsk', 'HLT', 'mixed', 'PAN', 'WOP')
 (DRV, FMT, QNT, OVW) = ('LDR', 'bz2', '50', True)
 # Select surface variables ----------------------------------------------------
-HD_IND = ['i_rer', 'i_ren']
+HD_IND = ['i_ren', 'i_rer']
 (scalers, HD_DEP, _, cmap) = aux.selectDepVars(MOI, AOI)
-(ngdx, ngdy) = (1000, 1000)
+(ngdx, ngdy) = (5000, 5000)
 (lvls, mthd, xSca, ySca) = (
         [-.1, 0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1, 1.1],
         'linear', 'linear', 'linear'
     )
 xRan = (1E-8, 1E-1)
+# Patch scalers for experiment id ---------------------------------------------
+sclr = [1e8, 1e8, scalers[2]]
+sclr[HD_IND.index('i_ren')] = 1
 ###############################################################################
 # Setup paths
 ###############################################################################
@@ -71,7 +74,7 @@ for (xpNumC, xpId) in enumerate(idTuples):
     # Prepare the response surface ----------------------------------------
     (x, y, z) = (dfSrf[HD_IND[0]], dfSrf[HD_IND[1]], dfSrf[HD_DEP])
     (a, b) = ((min(x), max(x)), (min(y), max(y)))
-    rs = fun.calcResponseSurface(x, y, z, scalers=scalers, mthd=mthd)
+    rs = fun.calcResponseSurface(x, y, z, scalers=sclr, mthd=mthd)
     (rsG, rsS) = (rs['grid'], rs['surface'])
     # Plot the response surface -------------------------------------------
     (fig, ax) = plt.subplots(figsize=(8, 7))
@@ -80,20 +83,20 @@ for (xpNumC, xpId) in enumerate(idTuples):
     cc = ax.contour(rsS[0], rsS[1], rsS[2], levels=lvls, colors='w', linewidths=1, alpha=.5)
     cs = ax.contourf(rsS[0], rsS[1], rsS[2], levels=lvls, cmap=cmap, extend='max')
     # Figure Modifiers ----------------------------------------------------
-    cs.cmap.set_over('#000000')
+    # cs.cmap.set_over('#000000')
     sz = fig.get_size_inches()[0]
     # ax.set(xscale=xSca, yscale="linear")
     # Colorbar
     cbar = fig.colorbar(cs)
     cbar.ax.get_yaxis().labelpad = 25
-    cbar.ax.set_ylabel('{} (1/{})'.format(MOI, scalers[2]), fontsize=15, rotation=270)
+    cbar.ax.set_ylabel('{} (1/{})'.format(MOI, sclr[2]), fontsize=15, rotation=270)
     plt.xlabel(HD_IND[0], fontsize=20)
     plt.ylabel(HD_IND[1], fontsize=20)
     # Grid
-    ax.set_xscale(xSca)
-    ax.set_yscale(ySca)
-    ax.set_xticks(list(set(x)), minor=True)
-    ax.set_yticks(list(set(y)), minor=True)
+    # ax.set_xscale(xSca)
+    # ax.set_yscale(ySca)
+    ax.set_xticks([i/sclr[0] for i in list(set(x))], minor=True)
+    ax.set_yticks([i/sclr[1] for i in list(set(y))], minor=True)
     # ax.axes.xaxis.set_ticklabels([])
     # ax.axes.yaxis.set_ticklabels([])
     # ax.axes.xaxis.set_ticklabels([], minor=True)
