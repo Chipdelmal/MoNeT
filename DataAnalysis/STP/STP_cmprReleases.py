@@ -53,9 +53,7 @@ if (not dfExist) or (OVW):
         ) 
         for i in dfRC
     }
-    ###########################################################################
-    # Export datasets
-    ###########################################################################
+    # Export datasets ---------------------------------------------------------
     [dfRCDiff[i].to_csv(strRCDiff[i]) for i in dfRCDiff]
 ###############################################################################
 # Read differences datasets
@@ -63,19 +61,39 @@ if (not dfExist) or (OVW):
 if (dfExist) or (not OVW):
     dfRCDiff = {i: pd.read_csv(strRCDiff[i]) for i in EXPS}
 ###############################################################################
-# Analyzes
+# Analyses
 ###############################################################################
+# Correlation -----------------------------------------------------------------
 data = dfRCDiff['gravidFemale']
-data.corr(method='spearman')[THS]
-dataNZ = data[THS][data[THS] >= 0]
+fltr = [all(i) for i in zip(data[THS] >= 0, data['i_ren'] > 0)]
+dataNZ = data[fltr]
+dataNZ.corr(method='spearman')[THS]
+# Kolmogorov-Smirnov ----------------------------------------------------------
+data = (dfRC['mixed'], dfRC['gravidFemale'])
+filters = [
+    [all(f) for f in zip(i[THS] >= 0, i['i_ren'] > 0)] 
+    for i in data
+]
+dataNZ = [i[0][THS][i[1]] for i in zip(data, filters)]
+stats.ks_2samp(dataNZ[0], dataNZ[1])
+# Quantile --------------------------------------------------------------------
+(days, qnt) = (60, .9)
+data = dfRCDiff['gravidFemale']
+fltr = [all(i) for i in zip(data[THS] >= 0, data['i_ren'] > 0)]
+dataNZ = data[THS][fltr]
+dataNZSort = sorted(dataNZ)
+dataEntries = len(dataNZSort)
+tDays = len([i for i in dataNZSort if i < days]) / dataEntries
+tQnt = np.quantile(dataNZ, qnt)
+(tDays, tQnt)
+# Plot ------------------------------------------------------------------------
 (fig, ax) = plt.subplots(figsize=(7, 2))
 sns.kdeplot(
     dataNZ, 
     fill=True, cut=0, linewidth=1, alpha=.8, zorder=0, common_norm=False
 )
-# ax.set_xlim(0, 2)
-# ax.set_ylim(0, 10)
-# Kolmogorov-Smirnov ----------------------------------------------------------
-data = (dfRC['mixed'], dfRC['nonGravidFemale'])
-dataNZ = [i[THS][i[THS] >= 0] for i in data]
-stats.ks_2samp(dataNZ[0], dataNZ[1])
+ax.set_xlim(0, 500)
+if ERR:
+    ax.set_xlim(0, 2)
+    ax.set_ylim(0, 10)
+ax.axvline(x=days, zorder=10)

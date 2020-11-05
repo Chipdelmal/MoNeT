@@ -125,4 +125,3 @@ map.drawmeridians(np.arange(0., 420., 60.), labels=[0,0,0,1], color='w',  linewi
 (x, y) = map(x1, y1)
 map.plot(x, y, marker='o', color="#e048b8F5")
 fun.quickSaveFig(PTH_pts + 'GB.png', fig, dpi=750)
-

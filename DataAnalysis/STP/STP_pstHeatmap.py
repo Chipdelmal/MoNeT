@@ -13,14 +13,14 @@ warnings.filterwarnings("ignore")
 
 
 # (USR, AOI, REL, LND) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-(USR, AOI, REL, LND, MOI) = ('dsk', 'HLT', 'mixed', 'Backup', 'WOP')
-(DRV, FMT, QNT, OVW) = ('LDR', 'bz2', '90', True)
+(USR, AOI, REL, LND, MOI) = ('dsk', 'HLT', 'mixed', 'PAN', 'WOP')
+(DRV, FMT, QNT, OVW) = ('LDR', 'bz2', '50', True)
 # Select surface variables ----------------------------------------------------
-HD_IND = ['i_gsv', 'i_ren']
+HD_IND = ['i_rer', 'i_ren']
 (scalers, HD_DEP, _, cmap) = aux.selectDepVars(MOI, AOI)
 (ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
-        [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1],
+        [-.1, 0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1, 1.1],
         'linear', 'linear', 'linear'
     )
 xRan = (1E-8, 1E-1)
@@ -74,12 +74,13 @@ for (xpNumC, xpId) in enumerate(idTuples):
     rs = fun.calcResponseSurface(x, y, z, scalers=scalers, mthd=mthd)
     (rsG, rsS) = (rs['grid'], rs['surface'])
     # Plot the response surface -------------------------------------------
-    (fig, ax) = plt.subplots()
+    (fig, ax) = plt.subplots(figsize=(8, 7))
     # Experiment points, contour lines, response surface
     xy = ax.plot(rsG[0], rsG[1], 'k.', ms=3, alpha=.25, marker='.')
     cc = ax.contour(rsS[0], rsS[1], rsS[2], levels=lvls, colors='w', linewidths=1, alpha=.5)
     cs = ax.contourf(rsS[0], rsS[1], rsS[2], levels=lvls, cmap=cmap, extend='max')
     # Figure Modifiers ----------------------------------------------------
+    cs.cmap.set_over('#000000')
     sz = fig.get_size_inches()[0]
     # ax.set(xscale=xSca, yscale="linear")
     # Colorbar
@@ -103,11 +104,14 @@ for (xpNumC, xpId) in enumerate(idTuples):
     # plt.xlim(xRan[0], xRan[1])
     # plt.ylim(b[0], b[1])
     # Title
-    xpStr = ['{}:{}'.format(i[0], str(i[1]).zfill(4)) for i in zip(hdFree, xpId)]
+    xpStr = [
+        '{}:{}'.format(i[0], str(i[1]).zfill(4)) for i in zip(hdFree, xpId)
+    ]
     ttlStr = ', '.join(xpStr)
     plt.title(ttlStr, fontsize=10, pad=10)
     # Filename and export
     xpStrNm = '_'.join([str(i).zfill(4) for i in xpId])
     xpFilename = xpStrNm+'_'+AOI+'_'+MOI+'.png'
     fun.quickSaveFig(PT_IMG+xpFilename, fig)
+    plt.close('all')
 print(monet.CEND, end='\r')
