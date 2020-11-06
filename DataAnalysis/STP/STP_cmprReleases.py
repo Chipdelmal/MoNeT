@@ -1,16 +1,21 @@
 
 import os
+import math
 import matplotlib
 import numpy as np
 from os import path
 import pandas as pd
 import seaborn as sns
 from scipy import stats
+import plotly.express as px
 import STP_functions as fun
 import MoNeT_MGDrivE as monet
 import STP_dataAnalysis as da
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
+import plotly.graph_objects as go
+from sklearn.cluster import KMeans
+from mpl_toolkits.mplot3d import Axes3D 
 
 
 (MTR, ERR, OVW, THS, QNT) = ('WOP', False, False, '0.1', '50')
@@ -97,3 +102,44 @@ if ERR:
     ax.set_xlim(0, 2)
     ax.set_ylim(0, 10)
 ax.axvline(x=days, zorder=10)
+###############################################################################
+# Clustering
+###############################################################################
+data = dfRC['mixed']
+fltr = [
+    all(i) for i in 
+    zip(data[THS] >= 0, data['i_ren'] > 0, data['i_gsv'] == 0, data['i_rsg'] == 1.e-04)
+]
+dataNZ = data[fltr]
+X = np.asarray(data[THS])
+kmeans = KMeans(n_clusters=3, random_state=0).fit(X.reshape(-1, 1))
+kmeans.labels_
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+s = [(i/(10*365)) for i in dataNZ[THS]]
+ax.scatter(
+    dataNZ['i_fic'], dataNZ['i_rer'], dataNZ['i_ren'], 
+    zdir='z', s=s, 
+    c=[(.6, .2, i, i) for i in s], 
+    depthshade=False
+)
+fun.quickSaveFig(PT_IMG+'Multivariable.png', fig)
+
+
+
+s = [(i/(10*365)) for i in dataNZ[THS]]
+sz = [(2 + 10 * i/(10*365)) for i in dataNZ[THS]]
+fig = go.Figure(data=[go.Scatter3d(
+    x=dataNZ['i_fic'],
+    y=dataNZ['i_rer'],
+    z=dataNZ['i_ren'],
+    mode='markers',
+    marker=dict(
+        size=sz,
+        color=[(.6, .2, i) for i in s],
+        opacity=0.8
+    )
+)])
+fig.update_layout(margin=dict(l=0, r=0, b=0, t=0))
+fig.show()

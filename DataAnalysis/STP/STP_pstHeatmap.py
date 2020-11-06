@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore")
 (USR, AOI, REL, LND, MOI) = ('dsk', 'HLT', 'mixed', 'PAN', 'WOP')
 (DRV, FMT, QNT, OVW) = ('LDR', 'bz2', '50', True)
 # Select surface variables ----------------------------------------------------
-HD_IND = ['i_ren', 'i_rer']
+HD_IND = ['i_ren', 'i_fic']
 (scalers, HD_DEP, _, cmap) = aux.selectDepVars(MOI, AOI)
 (ngdx, ngdy) = (5000, 5000)
 (lvls, mthd, xSca, ySca) = (
@@ -26,7 +26,8 @@ HD_IND = ['i_ren', 'i_rer']
 xRan = (1E-8, 1E-1)
 # Patch scalers for experiment id ---------------------------------------------
 sclr = [1e8, 1e8, scalers[2]]
-sclr[HD_IND.index('i_ren')] = 1
+if 'i_ren' in HD_IND:
+    sclr[HD_IND.index('i_ren')] = 1
 ###############################################################################
 # Setup paths
 ###############################################################################
