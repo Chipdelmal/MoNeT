@@ -16,6 +16,9 @@ from matplotlib import gridspec
 import plotly.graph_objects as go
 from sklearn.cluster import KMeans
 from mpl_toolkits.mplot3d import Axes3D 
+from sklearn.tree import export_graphviz
+from sklearn import tree
+from dtreeviz.trees import dtreeviz 
 from sklearn.ensemble import RandomForestRegressor
 
 
@@ -115,24 +118,11 @@ dataNZ = data[fltr]
 X = np.asarray(data[THS])
 kmeans = KMeans(n_clusters=3, random_state=0).fit(X.reshape(-1, 1))
 kmeans.labels_
-# Static 3D figure ------------------------------------------------------------
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-s = [(i/(10*365)) for i in dataNZ[THS]]
-ax.scatter(
-    dataNZ['i_fic'], dataNZ['i_rer'], dataNZ['i_ren'], 
-    zdir='z', s=s, 
-    c=[(.6, .2, i, i) for i in s], 
-    depthshade=False
-)
-fun.quickSaveFig(PT_IMG+'Multivariable.png', fig)
 # 3D Interactive figure -------------------------------------------------------
 s = [(i/(10*365)) for i in dataNZ[THS]]
 sz = [(2 + 10 * i/(10*365)) for i in dataNZ[THS]]
 fig = go.Figure(data=[go.Scatter3d(
-    x=dataNZ['i_fic'],
-    y=dataNZ['i_rer'],
-    z=dataNZ['i_ren'],
+    x=dataNZ['i_fic'], y=dataNZ['i_rer'], z=dataNZ['i_ren'],
     mode='markers',
     marker=dict(
         size=sz,
@@ -145,20 +135,25 @@ fig.show()
 # Inspect the classes ---------------------------------------------------------
 feats = np.asarray(data[THS])
 Y = kmeans.labels_
-[i[0] for i in zip(X, labs) if i[1] == 2]
+# [i[0] for i in zip(X, labs) if i[1] == 2]
 ###############################################################################
 # Classification
 ###############################################################################
 data = dfRC['mixed']
 fltr = [
     all(i) for i in 
-    zip(data[THS] >= 0, data['i_ren'] > 0, data['i_gsv'] == 0, data['i_rsg'] == 1.e-05)
+    zip(data['i_ren'] > 0)
 ]
 dataNZ = data[fltr]
-
+X = np.asarray(dataNZ[THS])
+kmeans = KMeans(n_clusters=3, random_state=0).fit(X.reshape(-1, 1))
+iLabels = ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv']
+(features, labels) = (
+    dataNZ[iLabels],
+    kmeans.labels_
+)
 rf = RandomForestRegressor(n_estimators=10, random_state=42)
-rf.fit(train_features, train_labels);
-
-
-data.head()
-data[['i_rer', 'i_ren', 'i_gsv', 'i_rsg']]
+rf.fit(features, labels)
+# _ = tree.plot_tree(rf.estimators_[0], feature_names=iLabels, filled=True)
+viz = dtreeviz(rf.estimators_[0], features, labels, feature_names=iLabels,  fancy=False)
+viz
