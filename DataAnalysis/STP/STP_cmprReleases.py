@@ -22,7 +22,7 @@ from dtreeviz.trees import dtreeviz
 from sklearn.ensemble import RandomForestRegressor
 
 
-(MTR, ERR, OVW, THS, QNT) = ('WOP', False, False, '0.1', '50')
+(MTR, ERR, OVW, THS, QNT) = ('WOP', False, True, '0.1', '50')
 ID_MTR = 'HLT_{}_{}_qnt.csv'.format(MTR, QNT)
 EXPS = ('mixed', 'gravidFemale', 'nonGravidFemale')
 FEATS = ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv', 'i_grp']
@@ -48,6 +48,19 @@ HEADER = list(dfRC['mixed'].columns)
     [set(dfRC['mixed'][i].unique()) for i in FEATS]
 )
 ###############################################################################
+# Unify Dataframe
+###############################################################################
+strFull = '{}{}_{}'.format(PT_OUT, 'Full', ID_MTR)
+if (not path.isfile(strFull)) or (OVW):
+    df = pd.DataFrame(columns=['i_sex']+FEATS+LBLS)
+    for i in range(len(EXPS)):
+        dfTemp = dfRC[EXPS[i]]
+        for j in range(dfTemp.shape[0]):
+            row = dict(dfTemp.iloc[j])
+            row['i_sex'] = EXPS[i]
+            df = df.append(row, ignore_index=True)
+    df.to_csv(strFull)
+###############################################################################
 # Clean the datasets and Export (if needed)
 ###############################################################################
 strErr = 'D'
@@ -72,11 +85,6 @@ if (dfExist) or (not OVW):
 ###############################################################################
 # Analyses
 ###############################################################################
-# Correlation -----------------------------------------------------------------
-data = dfRCDiff['gravidFemale']
-fltr = [all(i) for i in zip(data[THS] >= 0, data['i_ren'] > 0)]
-dataNZ = data[fltr]
-dataNZ.corr(method='spearman')[THS]
 # Kolmogorov-Smirnov ----------------------------------------------------------
 data = (dfRC['mixed'], dfRC['gravidFemale'])
 filters = [
@@ -109,53 +117,53 @@ ax.axvline(x=days, zorder=10)
 ###############################################################################
 # Clustering
 ###############################################################################
-data = dfRC['mixed']
-fltr = [
-    all(i) for i in 
-    zip(data[THS] >= 0, data['i_ren'] > 0, data['i_gsv'] == 0, data['i_rsg'] == 1.e-05)
-]
-dataNZ = data[fltr]
-X = np.asarray(data[THS])
-kmeans = KMeans(n_clusters=3, random_state=0).fit(X.reshape(-1, 1))
-kmeans.labels_
-# 3D Interactive figure -------------------------------------------------------
-s = [(i/(10*365)) for i in dataNZ[THS]]
-sz = [(2 + 10 * i/(10*365)) for i in dataNZ[THS]]
-fig = go.Figure(data=[go.Scatter3d(
-    x=dataNZ['i_fic'], y=dataNZ['i_rer'], z=dataNZ['i_ren'],
-    mode='markers',
-    marker=dict(
-        size=sz,
-        color=[(.6, .2, i) for i in s],
-        opacity=0.8
-    )
-)])
-fig.update_layout(margin=dict(l=0, r=0, b=0, t=0))
-fig.show()
-# Inspect the classes ---------------------------------------------------------
-feats = np.asarray(data[THS])
-Y = kmeans.labels_
-# [i[0] for i in zip(X, labs) if i[1] == 2]
-###############################################################################
-# Classification
-###############################################################################
-data = dfRC['mixed']
-fltr = [
-    all(i) for i in 
-    zip(data['i_ren'] > 0)
-]
-dataNZ = data[fltr]
-X = np.asarray(dataNZ[THS])
-kmeans = KMeans(n_clusters=3, random_state=0).fit(X.reshape(-1, 1))
-iLabels = ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv']
-(features, labels) = (
-    dataNZ[iLabels],
-    kmeans.labels_
-)
-rf = RandomForestRegressor(n_estimators=10, random_state=42)
-rf.fit(features, labels)
-# _ = tree.plot_tree(rf.estimators_[0], feature_names=iLabels, filled=True)
-fig = plt.figure()
-ax = fig.gca()
-t = dtreeviz(rf.estimators_[0], features, labels, feature_names=iLabels,  fancy=False)
-t.save(PT_IMG+'test.svg')
+# data = dfRC['mixed']
+# fltr = [
+#     all(i) for i in 
+#     zip(data[THS] >= 0, data['i_ren'] > 0, data['i_gsv'] == 0, data['i_rsg'] == 1.e-05)
+# ]
+# dataNZ = data[fltr]
+# X = np.asarray(data[THS])
+# kmeans = KMeans(n_clusters=3, random_state=0).fit(X.reshape(-1, 1))
+# kmeans.labels_
+# # 3D Interactive figure -------------------------------------------------------
+# s = [(i/(10*365)) for i in dataNZ[THS]]
+# sz = [(2 + 10 * i/(10*365)) for i in dataNZ[THS]]
+# fig = go.Figure(data=[go.Scatter3d(
+#     x=dataNZ['i_fic'], y=dataNZ['i_rer'], z=dataNZ['i_ren'],
+#     mode='markers',
+#     marker=dict(
+#         size=sz,
+#         color=[(.6, .2, i) for i in s],
+#         opacity=0.8
+#     )
+# )])
+# fig.update_layout(margin=dict(l=0, r=0, b=0, t=0))
+# fig.show()
+# # Inspect the classes ---------------------------------------------------------
+# feats = np.asarray(data[THS])
+# Y = kmeans.labels_
+# # [i[0] for i in zip(X, labs) if i[1] == 2]
+# ###############################################################################
+# # Classification
+# ###############################################################################
+# data = dfRC['mixed']
+# fltr = [
+#     all(i) for i in 
+#     zip(data['i_ren'] > 0)
+# ]
+# dataNZ = data[fltr]
+# X = np.asarray(dataNZ[THS])
+# kmeans = KMeans(n_clusters=3, random_state=0).fit(X.reshape(-1, 1))
+# iLabels = ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv']
+# (features, labels) = (
+#     dataNZ[iLabels],
+#     kmeans.labels_
+# )
+# rf = RandomForestRegressor(n_estimators=10, random_state=42)
+# rf.fit(features, labels)
+# # _ = tree.plot_tree(rf.estimators_[0], feature_names=iLabels, filled=True)
+# fig = plt.figure()
+# ax = fig.gca()
+# t = dtreeviz(rf.estimators_[0], features, labels, feature_names=iLabels,  fancy=False)
+# t.save(PT_IMG+'test.svg')
