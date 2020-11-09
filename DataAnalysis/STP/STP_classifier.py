@@ -10,9 +10,11 @@ import MoNeT_MGDrivE as monet
 import STP_dataAnalysis as da
 from sklearn import tree
 from sklearn import metrics
-from dtreeviz.trees import dtreeviz 
+from sklearn.metrics import plot_confusion_matrix
+from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+
 
 
 (MTR, ERR, OVW, THS, QNT) = ('WOP', False, False, '0.5', '50')
@@ -54,21 +56,39 @@ dataFiltered.corr(method='spearman')[THS]
 groupMtr = np.asarray(dataFiltered[THS])
 groupBools = [[i[0] <= feat < i[1] for i in OPRAN] for feat in groupMtr]
 groupIx = [i.index(True) for i in groupBools]
-# kmeans = KMeans(n_clusters=3, random_state=0).fit(kfeats.reshape(-1, 1))
-# klabels = kmeans.labels_
-###############################################################################
-# Split Dataset
-###############################################################################
-###############################################################################
-# Train
-###############################################################################
-modelFeats = ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv']
+# Features/Labels Separate ----------------------------------------------------
+(modelFeats, classNames) = (
+    ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv'],
+    ['None', 'Low', 'High']
+)
 (features, labels) = (dataFiltered[modelFeats], groupIx)
+###############################################################################
+# Split and preprocess dataset
+###############################################################################
 (X_train, X_test, y_train, y_test) = train_test_split(
     features, labels, test_size=0.3
 )
-rf = RandomForestClassifier(n_estimators=100, random_state=42)
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+###############################################################################
+# Train
+###############################################################################
+rf = RandomForestClassifier(n_estimators=100, random_state=42, max_depth=5)
 rf.fit(X_train, y_train)
 y_pred = rf.predict(X_test)
 print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
-rf.feature_importances_
+[print(i) for i in zip(modelFeats, rf.feature_importances_)]
+tree_in_forest = rf.estimators_[0]
+tree.plot_tree(
+    rf.estimators_[0], filled=True,
+    class_names=classNames, feature_names=modelFeats
+)
+###############################################################################
+# Test
+###############################################################################
+rf.predict(sc.transform([[.1, 1, 0, 0, 0]])) 
+plot_confusion_matrix(
+    rf, X_test, y_test,
+    display_labels=classNames
+)
