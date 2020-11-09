@@ -155,5 +155,7 @@ iLabels = ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv']
 rf = RandomForestRegressor(n_estimators=10, random_state=42)
 rf.fit(features, labels)
 # _ = tree.plot_tree(rf.estimators_[0], feature_names=iLabels, filled=True)
-viz = dtreeviz(rf.estimators_[0], features, labels, feature_names=iLabels,  fancy=False)
-viz
+fig = plt.figure()
+ax = fig.gca()
+t = dtreeviz(rf.estimators_[0], features, labels, feature_names=iLabels,  fancy=False)
+t.save(PT_IMG+'test.svg')
