@@ -1,5 +1,17 @@
 
 import numpy as np
+import pandas as pd
+
+
+def unifySexesDataframe(dfRC, EXPS, FEATS, LBLS):
+    df = pd.DataFrame(columns=['i_sex']+FEATS+LBLS)
+    for i in range(len(EXPS)):
+        dfTemp = dfRC[EXPS[i]]
+        for j in range(dfTemp.shape[0]):
+            row = dict(dfTemp.iloc[j])
+            row['i_sex'] = EXPS[i]
+            df = df.append(row, ignore_index=True)
+    return df
 
 
 def rescaleDataset(df, SCA):

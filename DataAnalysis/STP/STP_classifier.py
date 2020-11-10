@@ -17,6 +17,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
+from sklearn.metrics import classification_report
 
 
 (MTR, ERR, OVW, THS, QNT) = ('WOP', False, True, '0.1', '50')
@@ -60,7 +61,7 @@ filterRules = (
 # Filter with rules -----------------------------------------------------------
 fltr = [all(i) for i in zip(*filterRules)]
 dataFiltered = data[fltr]
-dataFiltered.corr(method='spearman')[THS]
+corrScores = dataFiltered.corr(method='spearman')[THS][modelFeats]
 # sns.pairplot(dataFiltered)
 # Calculate Operational Ranges ------------------------------------------------
 grpMtr = np.asarray(dataFiltered[THS])
@@ -71,12 +72,12 @@ groupIx = [i.index(True) for i in groupBools]
 ###############################################################################
 # Split and preprocess dataset
 ###############################################################################
-(X_train, X_test, y_train, y_test) = train_test_split(
+(xtrn, xval, ytrn, yval) = train_test_split(
     features, labels, test_size=TV_SPLT
 )
 sc = StandardScaler()
-X_train = sc.fit_transform(X_train)
-X_test = sc.transform(X_test)
+X_train = sc.fit_transform(xtrn)
+X_test = sc.transform(xval)
 ###############################################################################
 # Train
 ###############################################################################
@@ -85,16 +86,16 @@ if (not path.exists(strMod)) or (OVW):
     print('* Cross validating...')
     rf = RandomForestClassifier(n_estimators=50, random_state=42, max_depth=8)
     # Cross-Validate ----------------------------------------------------------
-    scores = cross_val_score(rf, X_train, y_train, cv=5)
+    scores = cross_val_score(rf, xtrn, ytrn, cv=10)
     print('\t* Accuracy: %0.2f (+/- %0.2f)' % (scores.mean(), scores.std() * 2))
     # Train -------------------------------------------------------------------
     print('* Training...')
-    rf.fit(X_train, y_train)
+    rf = RandomForestClassifier(n_estimators=50, random_state=42, max_depth=8)
+    rf.fit(xtrn, ytrn)
     dump(rf, strMod)
 else:
     print('* Loading...')
     rf = load(strMod)
-y_pred = rf.predict(X_test)
 ###############################################################################
 # Test
 ###############################################################################
@@ -104,12 +105,16 @@ classNames[rf.predict(sc.transform([inProbe]))[0]]
 ###############################################################################
 # Test
 ###############################################################################
-print('\t* Accuracy:', metrics.accuracy_score(y_test, y_pred))
-[print(i) for i in zip(modelFeats, rf.feature_importances_)]
+ypred = rf.predict(xval)
+print('\t* Accuracy:', metrics.accuracy_score(yval, ypred))
+print('* Feature Correlations and Importances...')
+for i in zip(modelFeats, corrScores, rf.feature_importances_):
+    print('\t* {}: \t{:.3f} \t{:.3f}'.format(*i))
 plot_confusion_matrix(
-    rf, X_test, y_test,
+    rf, xval, yval,
     display_labels=classNames, cmap=plt.cm.Blues
 )
+print(classification_report(yval, ypred, target_names=classNames))
 # tree_in_forest = rf.estimators_[0]
 # tree.plot_tree(
 #     rf.estimators_[0], filled=True,
