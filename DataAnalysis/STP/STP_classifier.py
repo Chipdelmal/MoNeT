@@ -5,8 +5,7 @@ import matplotlib
 import numpy as np
 from os import path
 import pandas as pd
-from scipy import stats
-from sklearn import tree
+import seaborn as sns
 from sklearn import metrics
 from joblib import dump, load
 import MoNeT_MGDrivE as monet
@@ -15,14 +14,14 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import plot_confusion_matrix
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 
 
 (MTR, ERR, OVW, THS, QNT) = ('WOP', False, True, '0.1', '50')
 ID_MTR = 'HLT_{}_{}_qnt.csv'.format(MTR, QNT)
 FEATS = ['i_sex', 'i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv', 'i_grp']
-SCA = 100000000
 # Classifier Variables --------------------------------------------------------
 (OPRAN, TV_SPLT) = (
     ((0, 1), (1, 2), (2, 5), (5, 100)),
@@ -40,12 +39,12 @@ PT_OUT = PT_ROT + 'SUMMARY/'
 PT_DTA = '{}{}_{}'.format(PT_OUT, 'Full', ID_MTR)
 PT_IMG = PT_ROT + 'img/'
 PT_MOD = PT_ROT + 'MODELS/'
-monet.makeFolder(PT_OUT)
-monet.makeFolder(PT_MOD)
+[monet.makeFolder(i) for i in (PT_OUT, PT_MOD)]
 ###############################################################################
 # Read and clean datasets
 ###############################################################################
-dfRC = da.rescaleDataset(pd.read_csv(PT_DTA), SCA)
+print('* Reading datasets...')
+dfRC = da.rescaleDataset(pd.read_csv(PT_DTA), 1)
 data = dfRC.drop(dfRC.columns[0], axis=1)
 HEADER = list(dfRC.columns)
 LBLS = sorted(list(set(HEADER) - set(FEATS))),
@@ -53,6 +52,7 @@ FEATS_LVLS = {i: list(data[i].unique()) for i in FEATS}
 ###############################################################################
 # Preprocess
 ###############################################################################
+print('* Filtering datasets...')
 # Select dataset and create filter rules --------------------------------------
 filterRules = (
     data['i_grp'] == 0,
@@ -80,13 +80,19 @@ X_test = sc.transform(X_test)
 ###############################################################################
 # Train
 ###############################################################################
-strMod = PT_MOD+'RandomForest.joblib'
+strMod = PT_MOD + 'RandomForest.joblib'
 if (not path.exists(strMod)) or (OVW):
-    print("Training...")
-    rf = RandomForestClassifier(n_estimators=100, random_state=42, max_depth=8)
+    print('* Cross validating...')
+    rf = RandomForestClassifier(n_estimators=50, random_state=42, max_depth=8)
+    # Cross-Validate ----------------------------------------------------------
+    scores = cross_val_score(rf, X_train, y_train, cv=5)
+    print('\t* Accuracy: %0.2f (+/- %0.2f)' % (scores.mean(), scores.std() * 2))
+    # Train -------------------------------------------------------------------
+    print('* Training...')
     rf.fit(X_train, y_train)
     dump(rf, strMod)
 else:
+    print('* Loading...')
     rf = load(strMod)
 y_pred = rf.predict(X_test)
 ###############################################################################
@@ -98,7 +104,7 @@ classNames[rf.predict(sc.transform([inProbe]))[0]]
 ###############################################################################
 # Test
 ###############################################################################
-print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
+print('\t* Accuracy:', metrics.accuracy_score(y_test, y_pred))
 [print(i) for i in zip(modelFeats, rf.feature_importances_)]
 plot_confusion_matrix(
     rf, X_test, y_test,
