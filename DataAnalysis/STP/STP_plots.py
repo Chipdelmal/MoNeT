@@ -1,7 +1,9 @@
 
+import math
 import numpy as np
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
 
 
 def rescaleRGBA(colorsTuple, colors=255):
@@ -51,3 +53,39 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[
         )
     plt.close('all')
     return True
+
+
+def plotMap(fig, ax, pts, BLAT, BLNG, drawCoasts=True):
+    # Hi-Res Basemap ----------------------------------------------------------
+    mH = Basemap(
+        projection='merc', ax=ax, lat_ts=20, resolution='h',
+        llcrnrlat=BLAT[0], urcrnrlat=BLAT[1],
+        llcrnrlon=BLNG[0], urcrnrlon=BLNG[1],
+    )
+    mL = Basemap(
+        projection='merc', ax=ax, lat_ts=20, resolution='i',
+        llcrnrlat=BLAT[0], urcrnrlat=BLAT[1],
+        llcrnrlon=BLNG[0], urcrnrlon=BLNG[1],
+    )
+    if drawCoasts:
+        mH.drawcoastlines(color=COLORS[0], linewidth=2, zorder=1)
+        mH.drawcoastlines(color=COLORS[3], linewidth=.25, zorder=2)
+        mL.drawcoastlines(color=COLORS[4], linewidth=10, zorder=0)
+    # Lo-Res Basemap ----------------------------------------------------------
+    mH.scatter(
+        list(pts['lon']), list(pts['lat']), latlon=True,
+        alpha=.2, marker='.', s=[10 * math.log(i) for i in list(pts['pop'])],
+        color='#E048B8', zorder=3
+    )
+    # Ax parameters -----------------------------------------------------------
+    ax.tick_params(
+        axis='both', which='both',
+        bottom=True, top=False, left=True, right=False,
+        labelbottom=True, labelleft=True
+    )
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["bottom"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    # Return values -----------------------------------------------------------
+    return (fig, ax)

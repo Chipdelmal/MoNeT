@@ -6,6 +6,7 @@ import numpy as np
 from os import path
 import pandas as pd
 import seaborn as sns
+from sklearn import tree
 from sklearn import metrics
 from joblib import dump, load
 import MoNeT_MGDrivE as monet
@@ -18,11 +19,13 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import classification_report
+from pandas.plotting import scatter_matrix
 
 
 (MTR, ERR, OVW, THS, QNT) = ('WOP', False, True, '0.1', '50')
 ID_MTR = 'HLT_{}_{}_qnt.csv'.format(MTR, QNT)
 FEATS = ['i_sex', 'i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv', 'i_grp']
+(ESTRS, DPTH) = (20, 10)
 # Classifier Variables --------------------------------------------------------
 (OPRAN, TV_SPLT) = (
     ((0, 1), (1, 2), (2, 5), (5, 100)),
@@ -76,37 +79,31 @@ groupIx = [i.index(True) for i in groupBools]
     features, labels, test_size=TV_SPLT
 )
 sc = StandardScaler()
-X_train = sc.fit_transform(xtrn)
-X_test = sc.transform(xval)
+xtrn = sc.fit_transform(xtrn)
+xval = sc.transform(xval)
 ###############################################################################
 # Train
 ###############################################################################
 strMod = PT_MOD + 'RandomForest.joblib'
 if (not path.exists(strMod)) or (OVW):
     print('* Cross validating...')
-    rf = RandomForestClassifier(n_estimators=50, random_state=42, max_depth=8)
+    rf = RandomForestClassifier(n_estimators=ESTRS, max_depth=DPTH)
     # Cross-Validate ----------------------------------------------------------
     scores = cross_val_score(rf, xtrn, ytrn, cv=10)
-    print('\t* Accuracy: %0.2f (+/- %0.2f)' % (scores.mean(), scores.std() * 2))
+    print('\t* Accuracy: %0.3f (+/- %0.2f)' % (scores.mean(), scores.std()*2))
     # Train -------------------------------------------------------------------
     print('* Training...')
-    rf = RandomForestClassifier(n_estimators=50, random_state=42, max_depth=8)
+    rf = RandomForestClassifier(n_estimators=ESTRS, max_depth=DPTH)
     rf.fit(xtrn, ytrn)
     dump(rf, strMod)
 else:
     print('* Loading...')
     rf = load(strMod)
 ###############################################################################
-# Test
-###############################################################################
-FEATS_LVLS
-inProbe = [3.65716e-09, 3, 0, 0, 0]
-classNames[rf.predict(sc.transform([inProbe]))[0]]
-###############################################################################
-# Test
+# Metrics
 ###############################################################################
 ypred = rf.predict(xval)
-print('\t* Accuracy:', metrics.accuracy_score(yval, ypred))
+print('\t* Accuracy: {:.3f}'.format(metrics.accuracy_score(yval, ypred)))
 print('* Feature Correlations and Importances...')
 for i in zip(modelFeats, corrScores, rf.feature_importances_):
     print('\t* {}: \t{:.3f} \t{:.3f}'.format(*i))
@@ -120,3 +117,13 @@ print(classification_report(yval, ypred, target_names=classNames))
 #     rf.estimators_[0], filled=True,
 #     class_names=classNames, feature_names=modelFeats
 # )
+###############################################################################
+# Probes
+#   ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv']
+###############################################################################
+FEATS_LVLS
+inProbe = [.1, 1, 1e-2, 1, 1e-3]
+inTransform = sc.transform([inProbe])
+classNames[rf.predict(inTransform)[0]]
+rf.predict_log_proba(inTransform)
+# scatter_matrix(dataFiltered[modelFeats], figsize=(12, 8))
