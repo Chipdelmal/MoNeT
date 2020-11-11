@@ -4,7 +4,7 @@ import numpy as np
 import MoNeT_MGDrivE as monet
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
-
+import STP_dataAnalysis as da
 
 def rescaleRGBA(colorsTuple, colors=255):
     return [i/colors for i in colorsTuple]
@@ -105,3 +105,36 @@ def floatToHex(a, minVal=0, maxVal=1):
 
 def popsToPtSize(pops, offset=10, amplitude=10):
     return [max(offset, amplitude * math.sqrt(i)) for i in pops]
+
+
+def plotPopsOnMap(
+    fig, ax, mapR, 
+    lngs, lats, fractions, pops, 
+    color='#ed174b', marker=(6, 0),
+    offset=10, amplitude=10
+):
+    colors = [color + '%02x' % floatToHex(i) for i in fractions]
+    mapR.scatter(
+        lngs, lats, 
+        latlon=True, marker=marker,
+        s=popsToPtSize(pops, offset=offset, amplitude=amplitude),
+        c=colors, ax=ax
+    )
+    return (fig, ax, mapR)
+
+
+def plotGenePopsOnMap(
+    fig, ax, mapR,
+    lngs, lats, colors, 
+    GC_FRA, time,
+    marker=(6, 0), offset=10, amplitude=10
+):
+    geneFraSlice = np.asarray([i[time] for i in GC_FRA]).T
+    for gIx in range(geneFraSlice.shape[0]-1):
+        (fig, ax, mapR) = plotPopsOnMap(
+            fig, ax, mapR, 
+            lngs, lats, geneFraSlice[gIx], geneFraSlice[-1],
+            color=colors[gIx], marker=marker,
+            offset=offset, amplitude=amplitude
+        )
+    return (fig, ax, mapR)
