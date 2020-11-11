@@ -55,7 +55,13 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[
     return True
 
 
-def plotMap(fig, ax, pts, BLAT, BLNG, drawCoasts=True):
+# #############################################################################
+# Videos
+# #############################################################################
+def plotMap(
+        fig, ax, pts, BLAT, BLNG, 
+        drawCoasts=True, ptColor='#66ff00'
+):
     # Hi-Res Basemap ----------------------------------------------------------
     mH = Basemap(
         projection='merc', ax=ax, lat_ts=20, resolution='h',
@@ -74,8 +80,9 @@ def plotMap(fig, ax, pts, BLAT, BLNG, drawCoasts=True):
     # Lo-Res Basemap ----------------------------------------------------------
     mH.scatter(
         list(pts['lon']), list(pts['lat']), latlon=True,
-        alpha=.2, marker='.', s=[10 * math.log(i) for i in list(pts['pop'])],
-        color='#E048B8', zorder=3
+        alpha=.15, marker='.', 
+        s=popsToPtSize(list(pts['pop']), offset=10, amplitude=10),
+        color=ptColor, zorder=3
     )
     # Ax parameters -----------------------------------------------------------
     ax.tick_params(
@@ -88,4 +95,13 @@ def plotMap(fig, ax, pts, BLAT, BLNG, drawCoasts=True):
     ax.spines["bottom"].set_visible(False)
     ax.spines["left"].set_visible(False)
     # Return values -----------------------------------------------------------
-    return (fig, ax)
+    return (fig, ax, mL)
+
+
+def floatToHex(a, minVal=0, maxVal=1):
+    intVal = round(np.interp(a, (minVal, maxVal), (0, 255)))
+    return intVal
+
+
+def popsToPtSize(pops, offset=10, amplitude=10):
+    return [max(offset, amplitude * math.sqrt(i)) for i in pops]
