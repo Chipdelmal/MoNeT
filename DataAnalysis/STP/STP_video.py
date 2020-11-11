@@ -1,12 +1,10 @@
 
-# !/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import os
 import math
 import glob
 import numpy as np
 import pandas as pd
+import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
@@ -23,12 +21,16 @@ import STP_dataAnalysis as da
 # Paths
 # #############################################################################
 PT_ROT = '/media/hdd/WorkExperiments/STP/'
-(UA_sites, PT_PRE) = (
+(UA_sites, PT_PRE, PT_VID) = (
     pd.read_csv(path.join(PT_ROT, 'stp_all_sites_v5.csv')),
-    path.join(PT_ROT, 'PAN', 'sim/mixed/PREPROCESS/')
+    path.join(PT_ROT, 'PAN', 'sim/mixed/PREPROCESS/'),
+    path.join(PT_ROT, 'PAN', 'sim/mixed/video/')
 )
-EXP_PAT = 'E_0100000000_04_0000000000_0000000000_0000000000-HLT*sum.bz'
-EXP_FLS = glob(path.join(PT_PRE, EXP_PAT))
+EXP_NAM = 'E_0100000000_04_0000000000_0000000000_0000000000-HLT'
+EXP_FLS = glob(path.join(PT_PRE, EXP_NAM + '*sum.bz'))
+EXP_VID = path.join(PT_VID, EXP_NAM)
+monet.makeFolder(PT_VID)
+monet.makeFolder(EXP_VID)
 # #############################################################################
 # Pops counts
 # #############################################################################
@@ -53,22 +55,28 @@ popsMatch = len(GC_FRA) == len(AGG_lonlats)
 # #############################################################################
 # Map
 # #############################################################################
-GC_FRA
 # Coordinates -----------------------------------------------------------------
 (lngs, lats) = (AGG_centroids[:, 0], AGG_centroids[:, 1])
-time = 100
-# Create map ------------------------------------------------------------------
-(fig, ax) = plt.subplots(figsize=(10, 10))
-(fig, ax, mapR) = plo.plotMap(fig, ax, UA_sites, BLAT, BLNG, ptColor='#6347ff')
-# Pops ------------------------------------------------------------------------
-(fig, ax, mapR) = plo.plotGenePopsOnMap(
-    fig, ax, mapR,
-    lngs, lats, DRV_COL, 
-    GC_FRA, time,
-    marker=(6, 0), offset=10, amplitude=10
-)
-ax.text(
-    0.4, 0.4, str(time).zfill(4), 
-    horizontalalignment='center', verticalalignment='center', 
-    transform=ax.transAxes, fontsize=30
-)
+for time in range(GC_FRA[0].shape[0]):
+    print('* Exporting {}'.format(str(time).zfill(4)), end='\r')
+    # Create map ------------------------------------------------------------------
+    (fig, ax) = plt.subplots(figsize=(10, 10))
+    (fig, ax, mapR) = plo.plotMap(
+        fig, ax, UA_sites, BLAT, BLNG, ptColor='#6347ff'
+    )
+    # Pops ------------------------------------------------------------------------
+    (fig, ax, mapR) = plo.plotGenePopsOnMap(
+        fig, ax, mapR,
+        lngs, lats, DRV_COL, 
+        GC_FRA, time,
+        marker=(6, 0), offset=10, amplitude=10
+    )
+    ax.text(
+        0.75, 0.1, str(time).zfill(4), 
+        horizontalalignment='center', verticalalignment='center', 
+        transform=ax.transAxes, fontsize=30
+    )
+    fun.quickSaveFig(
+        '{}/{}.png'.format(EXP_VID, str(time).zfill(4)),
+        fig, dpi=500
+    )
