@@ -25,15 +25,15 @@ from pandas.plotting import scatter_matrix
 (MTR, ERR, OVW, THS, QNT) = ('WOP', False, True, '0.1', '50')
 ID_MTR = 'HLT_{}_{}_qnt.csv'.format(MTR, QNT)
 FEATS = ['i_sex', 'i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv', 'i_grp']
-(ESTRS, DPTH) = (20, 10)
+(ESTRS, DPTH) = (20, 8)
 # Classifier Variables --------------------------------------------------------
 (OPRAN, TV_SPLT) = (
-    ((0, 1), (1, 2), (2, 5), (5, 100)),
+    ((0, 1), (1, 5), (5, 100)),
     .3
 )
 (modelFeats, classNames) = (
     ['i_rer', 'i_ren', 'i_rsg', 'i_fic', 'i_gsv'],
-    ['None', 'Low', 'Mid', 'High']
+    ['None', 'Transient', 'Permanent']
 )
 ###############################################################################
 # Create directories structure

@@ -72,7 +72,7 @@ for (j, EXP) in enumerate(EXPS):
                 monet.calcTTO(repRto, thoS),
                 monet.calcWOP(repRto, thwS)
             )
-        (minS, maxS) = monet.calcMinMax(repRto)
+        (_, _, minS, maxS) = monet.calcMinMax(repRto)
         rapS = monet.getRatioAtTime(repRto, tapS)
         #######################################################################
         # Calculate Quantiles
@@ -82,8 +82,8 @@ for (j, EXP) in enumerate(EXPS):
         ttoSQ = [np.nanquantile(tto, 1-qnt) for tto in ttoS]
         wopSQ = [np.nanquantile(wop, 1-qnt) for wop in wopS]
         rapSQ = [np.nanquantile(rap, qnt) for rap in rapS]
-        mniSQ = (np.nanquantile(minS[0], qnt), np.nanquantile(minS[1], qnt))
-        mnxSQ = (np.nanquantile(maxS[0], qnt), np.nanquantile(maxS[1], 1-qnt))
+        mniSQ = (np.nanquantile(minS[0], 1-qnt), np.nanquantile(minS[1], qnt))
+        mnxSQ = (np.nanquantile(maxS[0], 1-qnt), np.nanquantile(maxS[1], 1-qnt))
         #######################################################################
         # Update in Dataframes
         #######################################################################

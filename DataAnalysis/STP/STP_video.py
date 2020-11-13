@@ -59,12 +59,12 @@ popsMatch = len(GC_FRA) == len(AGG_lonlats)
 (lngs, lats) = (AGG_centroids[:, 0], AGG_centroids[:, 1])
 for time in range(GC_FRA[0].shape[0]):
     print('* Exporting {}'.format(str(time).zfill(4)), end='\r')
-    # Create map ------------------------------------------------------------------
+    # Create map --------------------------------------------------------------
     (fig, ax) = plt.subplots(figsize=(10, 10))
     (fig, ax, mapR) = plo.plotMap(
         fig, ax, UA_sites, BLAT, BLNG, ptColor='#6347ff'
     )
-    # Pops ------------------------------------------------------------------------
+    # Pops --------------------------------------------------------------------
     (fig, ax, mapR) = plo.plotGenePopsOnMap(
         fig, ax, mapR,
         lngs, lats, DRV_COL, 
@@ -80,3 +80,4 @@ for time in range(GC_FRA[0].shape[0]):
         '{}/{}.png'.format(EXP_VID, str(time).zfill(4)),
         fig, dpi=500
     )
+    plt.close('all')
