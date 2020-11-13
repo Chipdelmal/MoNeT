@@ -82,7 +82,7 @@ def selectDepVars(MOI, THS, AOI):
         scalers = (1, 1000, 1)
         (HD_DEP, IND_RAN) = ('486', 7)
     elif (MOI == 'MNX'):
-        scalers = (1, 1, 1)
+        scalers = (1, 1000, 1)
         (HD_DEP, IND_RAN) = ('min', 7)
     # Color Mapping -----------------------------------------------------------
     if AOI == 'HLT':
