@@ -1,6 +1,6 @@
 
+import SDY_aux as aux
 import MoNeT_MGDrivE as monet
-
 
 genotypes = [
         'WWWW', 'WWWH', 'WWWR', 'WWWB', 'WWHH', 'WWHR', 'WWHB', 'WWRR', 'WWRB',
@@ -15,22 +15,22 @@ allGeneIx = list(range(len(genotypes[0])))
 ###############################################################################
 # WA --------------------------------------------------------------------------
 wAGenes = (('W', (0, 1)), )
-wAPos = monet.aggregateGeneAppearances(genotypes, wAGenes)
+wAPos = aux.aggregateGeneAppearances(genotypes, wAGenes)
 # H ---------------------------------------------------------------------------
 hGenes = (('H', allGeneIx), )
-hPos = monet.aggregateGeneAppearances(genotypes, hGenes)
+hPos = aux.aggregateGeneAppearances(genotypes, hGenes)
 # RA --------------------------------------------------------------------------
 rGenes = (('R', allGeneIx), )
-rPos = monet.aggregateGeneAppearances(genotypes, rGenes)
+rPos = aux.aggregateGeneAppearances(genotypes, rGenes)
 # RB --------------------------------------------------------------------------
 bGenes = (('B', allGeneIx), )
-bPos = monet.aggregateGeneAppearances(genotypes, bGenes)
+bPos = aux.aggregateGeneAppearances(genotypes, bGenes)
 # G ---------------------------------------------------------------------------
 cGenes = (('C', allGeneIx), )
-cPos = monet.aggregateGeneAppearances(genotypes, cGenes)
+cPos = aux.aggregateGeneAppearances(genotypes, cGenes)
 # WB --------------------------------------------------------------------------
 wBGenes = (('W', (2, 3)), )
-wBPos = monet.aggregateGeneAppearances(genotypes, wBGenes)
+wBPos = aux.aggregateGeneAppearances(genotypes, wBGenes)
 # Full set --------------------------------------------------------------------
 SD_ECO = (wAPos, hPos, rPos, bPos, cPos, wBPos)
 
@@ -39,10 +39,10 @@ SD_ECO = (wAPos, hPos, rPos, bPos, cPos, wBPos)
 ###############################################################################
 # H ---------------------------------------------------------------------------
 hGenes = (('H', allGeneIx), )
-hPos = set(monet.aggregateGeneAppearances(genotypes, hGenes))
+hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 # W ---------------------------------------------------------------------------
 wGenes = (('W', allGeneIx), ('R', allGeneIx), ('B', allGeneIx), ('C', allGeneIx))
-wPos = set(monet.aggregateGeneAppearances(genotypes, wGenes))
+wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
 SD_HLT = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
 
@@ -51,10 +51,10 @@ SD_HLT = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
 ###############################################################################
 # H ---------------------------------------------------------------------------
 hGenes = (('C', allGeneIx), )
-hPos = set(monet.aggregateGeneAppearances(genotypes, hGenes))
+hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 # W ---------------------------------------------------------------------------
 wGenes = (('W', allGeneIx), ('R', allGeneIx), ('B', allGeneIx), ('H', allGeneIx))
-wPos = set(monet.aggregateGeneAppearances(genotypes, wGenes))
+wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
 SD_TRS = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
 
@@ -63,9 +63,9 @@ SD_TRS = [list(i) for i in (hPos, wPos - hPos, wPos | hPos)]
 ###############################################################################
 # H ---------------------------------------------------------------------------
 hGenes = (('H', allGeneIx), ('R', allGeneIx), ('B', allGeneIx), ('C', allGeneIx))
-hPos = set(monet.aggregateGeneAppearances(genotypes, hGenes))
+hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 # W ---------------------------------------------------------------------------
 wGenes = (('W', allGeneIx), )
-wPos = set(monet.aggregateGeneAppearances(genotypes, wGenes))
+wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
 SD_WLD = [list(i) for i in (hPos - wPos, wPos, wPos | hPos)]
