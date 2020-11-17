@@ -1,5 +1,6 @@
 
 import SDY_gene_split as gsd
+import SDY_aux as aux
 import MoNeT_MGDrivE as monet
 
 

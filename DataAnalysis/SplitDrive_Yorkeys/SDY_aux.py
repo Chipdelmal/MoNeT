@@ -1,5 +1,6 @@
 
 from glob import glob
+import re
 import matplotlib
 import MoNeT_MGDrivE as monet
 
@@ -38,6 +39,8 @@ def selectPath(USR, EXP):
         PATH_ROOT = '/RAID5/marshallShare/SplitDrive_Yorkeys/{}/'.format(EXP)
     elif USR == 'dsk':
         PATH_ROOT = '/media/hdd/WorkExperiments/SDY/{}/'.format(EXP)
+    elif USR == 'ameek':
+        PATH_ROOT = '/Volumes/GoogleDrive/.shortcut-targets-by-id/1e56Nrp5mAxkyQ0C2zgBXCJ1YMFa2QNXg/AmeekBindra/SDY/{}/'.format(EXP)
     else:
         PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/SDY/{}/'.format(EXP)
     (PATH_IMG, PATH_DATA) = (
@@ -145,3 +148,26 @@ cdict = {
         'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.06, 0.06))
     }
 cmapW = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+
+# #############################################################################
+# Count genotypes
+# #############################################################################
+def countGeneAppearances(genotypes, gene, pos):
+    # Split genotypes
+    splitGenotypes = [list(genes) for genes in genotypes]
+    # Count
+    appearances = []
+    for p in pos:
+        slot = [gene[p] for gene in splitGenotypes]
+        matches = re.finditer(gene, ''.join(slot))
+        appearances.extend([match.start() for match in matches])
+    appearances.sort()
+    return appearances
+
+
+def aggregateGeneAppearances(genotypes, genes):
+    gcnt = [countGeneAppearances(genotypes, gn[0], gn[1]) for gn in genes]
+    return sorted(flatten(gcnt))
+
+
+def flatten(l): return [item for sublist in l for item in sublist]
