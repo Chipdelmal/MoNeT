@@ -17,9 +17,9 @@ import compress_pickle as pkl
 
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
-(THS, QNT, OVW, FZ) = (0.1, '90', True, True)
-#EXPS = ('050', '100', '400', '800')   # '001', '005', '010', '100')
-EXPS = ('000', )
+(THS, QNT, OVW, FZ) = (0.1, '50', True, True)
+EXPS = ('050', '100', '400', '800')   # '001', '005', '010', '100')
+# EXPS = ('000', )
 
 for EXP in EXPS:
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, EXP)

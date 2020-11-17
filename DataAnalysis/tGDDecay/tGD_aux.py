@@ -44,6 +44,8 @@ def flatten(l): return [item for sublist in l for item in sublist]
 # #############################################################################
 def selectPath(USR, DRV, EXP):
     if USR == 'srv':
+        PATH_ROOT = '/RAID5/marshallShare/tGD/figure3/{}/{}/'.format(DRV, EXP)
+    elif USR == 'srv2':
         PATH_ROOT = '/RAID5/marshallShare/tGD/figure2/{}/{}/'.format(DRV, EXP)
     elif USR == 'dsk':
         PATH_ROOT = '/media/hdd/WorkExperiments/tGD/figure2/{}/{}/'.format(DRV, EXP)
