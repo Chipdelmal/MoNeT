@@ -9,25 +9,24 @@ import MoNeT_MGDrivE as monet
 # (drive, download) = ('linkedDrive', 'img')
 
 # Experiments names (folders)
-EXPS = ('000', )#'001', '005', '010', '100')
+EXPS = ('050', '100', '400', '800') #'001', '005', '010', '100')
+# EXPS = ('000', )
 # Experiments paths
 (LAB_BASE, DSK_BASE) = (
-        # 'lab:/RAID5/marshallShare/tGD/fullSweep/',
-        'lab:/RAID5/marshallShare/tGD/figure2/',
-        # '/home/chipdelmal/Documents/WorkSims/tGD/figure2/'
-        # '/media/hdd/WorkExperiments/tGD/fS/',
-        '/media/hdd/WorkExperiments/tGD/figure2/'
-	    # '/media/hdd/WorkExperiments/tGDMLFull/'
+        'lab:/RAID5/marshallShare/tGD/figure3/',
+        '/home/chipdelmal/Documents/WorkSims/tGD/figure3/'
     )
 monet.makeFolder(DSK_BASE+drive)
 # Download loop
 for (i, exp) in enumerate(EXPS):
     (fm, to) = [pth+drive+'/'+exp+'/' for pth in (LAB_BASE, DSK_BASE)]
     fullTo = to+download+'/'
+    fullNone = to+'/'
     monet.makeFolder(to)
+    monet.makeFolder(to+'img/')
     monet.makeFolder(fullTo)
     if pattern == 'None':
-        cmd = 'scp -rp '+fm+download+'*'+' '+fullTo
+        cmd = 'scp -rp '+fm+download+'*'+' '+fullNone
     else:
         cmd = 'scp -rp '+fm+download+'/'+pattern+' '+fullTo
     print('* Downloading {} part {}/{}... '.format(drive, i+1, len(EXPS)))
