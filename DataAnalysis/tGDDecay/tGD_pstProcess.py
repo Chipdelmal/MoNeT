@@ -23,7 +23,7 @@ import compress_pickle as pkl
         [.05, .10, .25, .50, .75, .90, .95],
         [int((i + 1) * 365 / 3) for i in range(5)]
     )
-EXPS = ('000',  ) # '001', '005', '010', '100')
+EXPS = ('050', '100', '400', '800')   # ('000',  ) # '001', '005', '010', '100')
 header = ['i_hnf', 'i_cac', 'i_frc', 'i_hrt', 'i_ren', 'i_res', 'i_grp']
 outLabels = ('TTI', 'TTO', 'WOP', 'RAP', 'MNX')
 ###############################################################################
@@ -44,6 +44,7 @@ for (j, EXP) in enumerate(EXPS):
     pth = PT_MTR + AOI + '_{}_' + QNT + '_qnt.csv'
     DFOPths = [pth.format(z) for z in outLabels]
     # Get experiment IDs ------------------------------------------------------
+    # print(PT_OUT)
     uids = fun.getExperimentsIDSets(PT_OUT, skip=-1)
     (hnf, cac, frc, hrt, ren, res, typ, grp) = uids[1:]
     # Parse filepaths ---------------------------------------------------------

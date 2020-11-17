@@ -72,7 +72,7 @@ def getXpId(pFile, idIx):
 def getExpPaths(PATH_DATA):
     (expDirsMean, expDirsTrac) = (
             monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'ANALYZED/'),
-            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'GARBAGE/')
+            monet.listDirectoriesWithPathWithinAPath(PATH_DATA + 'TRACES/')
         )
     expDirsMean.sort()
     expDirsTrac.sort()
