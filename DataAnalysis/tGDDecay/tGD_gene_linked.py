@@ -2,7 +2,7 @@
 import tGD_aux as aux
 
 
-genotypes = ['WW', 'WH', 'WR', 'WB', 'HH', 'HR', 'HB', 'RR', 'RB', 'BB']
+genotypes = ('WW', 'WH', 'WR', 'WB', 'HH', 'HR', 'HB', 'RR', 'RB', 'BB')
 allGeneIx = range(len(genotypes))
 
 ###############################################################################
