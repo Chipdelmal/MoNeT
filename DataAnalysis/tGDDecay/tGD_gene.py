@@ -2,6 +2,7 @@
 import tGD_gene_tGD as gtgd
 import tGD_gene_split as gsd
 import tGD_gene_linked as gld
+import tGD_gene_clvr as clv
 import MoNeT_MGDrivE as monet
 
 
@@ -116,4 +117,30 @@ def driveSelector(DRIVE, TYPE):
             yRange = 11000/2
             colors = COLWN
     # Return values ###########################################################
+    # tGD Drive ###############################################################
+    if DRIVE == 'ClvR':
+        if TYPE == 'ECO':
+            aggD = monet.generateAggregationDictionary(
+                    ["WA", "H", "RA", "RB", "G", "WB"], gtgd.TGD_ECO
+                )
+            yRange = 11000
+            colors = COLEN
+        elif TYPE == 'HLT':
+            aggD = monet.generateAggregationDictionary(
+                    ["H*", "O-", "Total"], clv.TGD_HLT
+                )
+            yRange = 11000/2
+            colors = COLHN
+        elif TYPE == 'TRS':
+            aggD = monet.generateAggregationDictionary(
+                    ["G*", "O-", "Total"], clv.TGD_TRS
+                )
+            yRange = 11000/2
+            colors = COLTN
+        elif TYPE == 'WLD':
+            aggD = monet.generateAggregationDictionary(
+                    ["O-", "W*", "Total"], clv.TGD_WLD
+                )
+            yRange = 11000/2
+            colors = COLWN
     return {'gDict': aggD, 'yRange': yRange, 'colors': colors}
