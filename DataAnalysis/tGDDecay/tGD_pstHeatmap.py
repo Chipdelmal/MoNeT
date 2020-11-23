@@ -24,12 +24,15 @@ HD_IND = ['i_ren', 'i_hnf']
         'linear', 'linear', 'linear'
     )
 MOI = ('TTI', 'TTO', 'WOP', 'MNX') #, 'RAP')
+if (USR == 'srv2') or (USR == 'dsk'):
+    EXPS = ('000', )
+    NOI = [[0]]
+else:
+    EXPS = ('050', '100', '400', '800')
+    NOI = [[0], [1]]
 for moi in MOI:
     (scalers, HD_DEP, _, cmapR) = aux.selectDepVars(moi, THR, AOI)
     cmap = cmapR.reversed()
-    # Spatial settings to sweep through ---------------------------------------
-    # EXPS = ('000', ) # '001', '005', '010', '100')
-    EXPS = ('050', '100', '400', '800')
     ###########################################################################
     # Loop through the experiments
     ###########################################################################
