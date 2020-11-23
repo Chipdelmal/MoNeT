@@ -10,8 +10,12 @@ import MoNeT_MGDrivE as monet
 # (USR, DRV, QNT) = ('dsk', 'tGD', '50')
 (USR, DRV, QNT) = (sys.argv[1], sys.argv[2], sys.argv[3])
 AOI = ['HLT', 'TRS', 'WLD']
-# EXP = '000'
-EXPS = ('050', '100', '400', '800')
+if (USR == 'srv2') or (USR == 'dsk'):
+    EXPS = ('000', )
+    NOI = [[0]]
+else:
+    EXPS = ('050', '100', '400', '800')
+    NOI = [[0], [1]]
 for EXP in EXPS:
     # #############################################################################
     # Setup paths and drive
