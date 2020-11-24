@@ -9,23 +9,26 @@ import compress_pickle as pkl
 import matplotlib.pyplot as plt
 from os import path
 from glob import glob
-import STP_gene as drv
-import STP_land as lnd
-import STP_plots as plo
-import STP_functions as fun
-import STP_dataAnalysis as da
+import SDY_gene as drv
+import SDY_land as lnd
+import SDY_plots as plo
+import SDY_functions as fun
+import SDY_dataAnalysis as da
 
 
 # #############################################################################
 # Paths
 # #############################################################################
-PT_ROT = '/media/hdd/WorkExperiments/STP/'
+PT_ROT = '/home/chipdelmal/Documents/WorkSims/SDY'
 (UA_sites, PT_PRE, PT_VID) = (
-    pd.read_csv(path.join(PT_ROT, 'stp_all_sites_v5.csv')),
-    path.join(PT_ROT, 'PAN', 'sim/mixed/PREPROCESS/'),
-    path.join(PT_ROT, 'PAN', 'sim/mixed/video/')
+    pd.read_csv(path.join(
+        PT_ROT,  'Landscapes/LandAggregated/Filtered/C000200/', 
+        'Yorkeys01_0010_I.csv'
+    )),
+    path.join(PT_ROT, 'factorial', 'PREPROCESS/'),
+    path.join(PT_ROT, 'factorial', 'video/')
 )
-EXP_NAM = 'E_0100000000_04_0000000000_0000000000_0000000000-HLT'
+EXP_NAM = 'E_1_005_005_10_050-HLT'
 EXP_FLS = glob(path.join(PT_PRE, EXP_NAM + '*sum.bz'))
 EXP_VID = path.join(PT_VID, EXP_NAM)
 monet.makeFolder(PT_VID)
@@ -40,17 +43,15 @@ DRV_COL = [i[:-2] for i in drv.COLHO]
 # Geography
 # #############################################################################
 # Bounding box ----------------------------------------------------------------
-(BLAT, BLNG) = ((-0.045, .5), (6.4, 6.8))
+(BLAT, BLNG) = ((-16.821, -16.80), (145.69, 145.73))
 # LonLats and populations -----------------------------------------------------
-(lonLat, pop) = (UA_sites[['lon', 'lat']], UA_sites['pop'])
+lonLat = UA_sites[['Lon', 'Lat']]
+pop = [20] * lonLat.shape[0]
+UA_sites['Pop'] = pop
 # Landscape aggregation -------------------------------------------------------
-AG_IDs = lnd.STP_AGG
+AG_IDs = lnd.VID_IX
 AGG_lonlats = [np.asarray([list(lonLat.iloc[i]) for i in j]) for j in AG_IDs]
 AGG_centroids = da.aggCentroids(AGG_lonlats)
-# #############################################################################
-# Checks
-# #############################################################################
-popsMatch = len(GC_FRA) == len(AGG_lonlats)
 # #############################################################################
 # Map
 # #############################################################################
@@ -67,11 +68,11 @@ for time in range(GC_FRA[0].shape[0]):
     (fig, ax, mapR) = plo.plotGenePopsOnMap(
         fig, ax, mapR,
         lngs, lats, DRV_COL, 
-        GC_FRA, time,
-        marker=(6, 0), offset=2, amplitude=10
+        GC_FRA, time, alphaScaler=.5,
+        marker=(6, 0), offset=150, amplitude=200, lw=4, ec=(0, 0, 0, .75)
     )
     ax.text(
-        0.75, 0.1, str(time).zfill(4), 
+        0.5, 0.5, str(time).zfill(4), 
         horizontalalignment='center', verticalalignment='center', 
         transform=ax.transAxes, fontsize=30
     )

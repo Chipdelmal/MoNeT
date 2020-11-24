@@ -13,6 +13,29 @@ genotypes = (
     'CGCGWW', 'CGCGRW', 'CGCGBW', 'CGCGRR', 'CGCGBR', 'CGCGBB'
 )
 
+###############################################################################
+# Ecology genotype counts
+###############################################################################
+# WA --------------------------------------------------------------------------
+wAGenes = (('W', (0, 2)), )
+wAPos = aux.aggregateGeneAppearances(genotypes, wAGenes)
+# H ---------------------------------------------------------------------------
+hGenes = (('G', (1, 3)), )
+hPos = aux.aggregateGeneAppearances(genotypes, hGenes)
+# RA --------------------------------------------------------------------------
+rAGenes = (('R', (0, 2)), ('B', (0, 2)))
+rAPos = aux.aggregateGeneAppearances(genotypes, rAGenes)
+# RB --------------------------------------------------------------------------
+rBGenes = (('R', (1, 3)), ('B', (1, 3)))
+rBPos = aux.aggregateGeneAppearances(genotypes, rBGenes)
+# G ---------------------------------------------------------------------------
+gGenes = (('C', (0, 2)), )
+gPos = aux.aggregateGeneAppearances(genotypes, gGenes)
+# WB --------------------------------------------------------------------------
+wBGenes = (('W', (1, 3)), )
+wBPos = aux.aggregateGeneAppearances(genotypes, wBGenes)
+# Full set --------------------------------------------------------------------
+TGD_ECO = (wAPos, hPos, rAPos, rBPos, gPos, wBPos)
 
 
 ###############################################################################
