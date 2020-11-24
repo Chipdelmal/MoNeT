@@ -326,7 +326,6 @@ def filter_words(elements, words):
 def one_experiment(csv, color_csv, ftype):
     # Get csv
     df = pd.read_csv(csv)
-    print(df)
     if color_csv != 'None':
       color_list = pd.read_csv(color_csv)['color'].to_list()
     else:
