@@ -68,6 +68,6 @@ A la herramienta ahora se le puede pasar un .csv que cambiará los colores a ren
 
 Este .csv solo debe de tener una columna llamada "color".
 
-Ejemplo:
+Ejemplo:<br>
 ![Index](rsc/color.PNG)
 
