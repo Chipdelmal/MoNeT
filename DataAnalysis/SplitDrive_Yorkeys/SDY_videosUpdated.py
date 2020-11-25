@@ -69,7 +69,7 @@ for time in range(GC_FRA[0].shape[0]):
         fig, ax, mapR,
         lngs, lats, DRV_COL, 
         GC_FRA, time, alphaScaler=.5,
-        marker=(6, 0), offset=150, amplitude=200, lw=4, ec=(0, 0, 0, .75)
+        marker=(6, 0), offset=150, amplitude=200, lw=4, ec=(.05, 0, .4, .5)
     )
     ax.text(
         0.5, 0.5, str(time).zfill(4), 

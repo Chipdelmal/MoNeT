@@ -1,17 +1,17 @@
 import subprocess
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Define inputs
-id = "Days"
-basePath = "/Volumes/marshallShare/ERACR/Bakersfield/Riverside/Experiment/MultipleRelease8/ANALYZED/Frames/"
+id = "E_1_005_005_10_050-HLT"
+basePath = "/home/chipdelmal/Documents/WorkSims/SDY/factorial/video/"
 rate = 24
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Define paths
 outName = id
 outPath = basePath + outName + '.mp4'
-inPath = basePath + id + "/" + id + '%06d.png'
+inPath = basePath + id + "/" + '%04d.png'
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Launch process
-subprocess.Popen([
+sp = subprocess.Popen([
     'ffmpeg',
     '-loglevel', '+info',
     '-start_number', '1',
@@ -27,4 +27,5 @@ subprocess.Popen([
     '-pix_fmt', 'yuv420p',
     outPath
 ])
+sp.wait()
 print("I: " + inPath +"\n" + "O: " + outPath)
