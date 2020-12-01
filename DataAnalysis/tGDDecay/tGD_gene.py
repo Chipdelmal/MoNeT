@@ -56,13 +56,13 @@ def driveSelector(DRIVE, TYPE):
             aggD = monet.generateAggregationDictionary(
                     ["H*", "O-", "Total"], gld.LD_TRS
                 )
-            yRange = 11000/2
+            yRange = 11000
             colors = COLTN
         elif TYPE == 'WLD':
             aggD = monet.generateAggregationDictionary(
                     ["O-", "W*", "Total"], gld.LD_WLD
                 )
-            yRange = 11000/2
+            yRange = 11000
             colors = COLWN
     # Split Drive #############################################################
     if DRIVE == 'splitDrive':
@@ -82,13 +82,13 @@ def driveSelector(DRIVE, TYPE):
             aggD = monet.generateAggregationDictionary(
                     ["C*", "O-", "Total"], gsd.SD_TRS
                 )
-            yRange = 11000/2
+            yRange = 11000
             colors = COLTN
         elif TYPE == 'WLD':
             aggD = monet.generateAggregationDictionary(
                     ["O-", "W*", "Total"], gsd.SD_WLD
                 )
-            yRange = 11000/2
+            yRange = 11000
             colors = COLWN
     # tGD Drive ###############################################################
     if DRIVE == 'tGD':
@@ -108,13 +108,13 @@ def driveSelector(DRIVE, TYPE):
             aggD = monet.generateAggregationDictionary(
                     ["G*", "O-", "Total"], gtgd.TGD_TRS
                 )
-            yRange = 11000/2
+            yRange = 11000
             colors = COLTN
         elif TYPE == 'WLD':
             aggD = monet.generateAggregationDictionary(
                     ["O-", "W*", "Total"], gtgd.TGD_WLD
                 )
-            yRange = 11000/2
+            yRange = 11000
             colors = COLWN
     # Return values ###########################################################
     # tGD Drive ###############################################################
@@ -135,12 +135,12 @@ def driveSelector(DRIVE, TYPE):
             aggD = monet.generateAggregationDictionary(
                     ["G*", "O-", "Total"], clv.TGD_TRS
                 )
-            yRange = 11000/2
+            yRange = 11000
             colors = COLTN
         elif TYPE == 'WLD':
             aggD = monet.generateAggregationDictionary(
                     ["O-", "W*", "Total"], clv.TGD_WLD
                 )
-            yRange = 11000/2
+            yRange = 11000
             colors = COLWN
     return {'gDict': aggD, 'yRange': yRange, 'colors': colors}
