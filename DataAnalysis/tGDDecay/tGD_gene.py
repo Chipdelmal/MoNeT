@@ -98,6 +98,12 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000
             colors = COLEN
+        elif TYPE == 'CAS':
+            aggD = monet.generateAggregationDictionary(
+                    ["W", "H", "R", "B"], gtgd.TGD_CAS
+                )
+            yRange = 11000
+            colors = COLEN
         elif TYPE == 'HLT':
             aggD = monet.generateAggregationDictionary(
                     ["H*", "O-", "Total"], gtgd.TGD_HLT
@@ -116,8 +122,7 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000
             colors = COLWN
-    # Return values ###########################################################
-    # tGD Drive ###############################################################
+    # ClvR Drive ###############################################################
     if DRIVE == 'ClvR':
         if TYPE == 'ECO':
             aggD = monet.generateAggregationDictionary(
@@ -143,4 +148,5 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000
             colors = COLWN
+    # Return values ###########################################################
     return {'gDict': aggD, 'yRange': yRange, 'colors': colors}
