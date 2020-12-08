@@ -70,7 +70,7 @@ rAPos = aux.aggregateGeneAppearances(genotypes, rAGenes)
 bAGenes = (('B', (0, 2)), )
 bAPos = aux.aggregateGeneAppearances(genotypes, bAGenes)
 # Full set --------------------------------------------------------------------
-TGD_CAS = (wAPos, hPos, rAPos, bAPos)
+TGD_CAS = (wAPos, hPos, rAPos, bAPos, wAPos | hPos | rAPos | bAPos)
 
 
 ###############################################################################
