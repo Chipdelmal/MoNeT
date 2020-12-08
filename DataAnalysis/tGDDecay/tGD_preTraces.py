@@ -59,7 +59,7 @@ for exp in EXP:
         (sumDta, repDta) = [pkl.load(file) for file in (fLists[i])]
         name = fLists[i][0].split('/')[-1].split('.')[0][:-4]
         # Export plots --------------------------------------------------------
-        plots.exportTracesPlot(repDta, name, STYLE, PT_IMG, append='TRA')
+        monet.exportTracesPlot(repDta, name, STYLE, PT_IMG, append='TRA', wopPrint=False)
         cl = [i[:-2]+'cc' for i in CLR]
     monet.exportGeneLegend(
             sumDta['genotypes'], cl, PT_IMG+'/plt_{}.png'.format(AOI), 500
