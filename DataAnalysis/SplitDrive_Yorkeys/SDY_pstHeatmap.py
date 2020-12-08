@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 warnings.filterwarnings("ignore")
 
 
-(USR, AOI, THS, QNT) = (sys.argv[1], sys.argv[2], 0.50, '50')
+(USR, AOI, THS, QNT) = (sys.argv[1], sys.argv[2], 0.50, '90')
 # (USR, AOI, THS, QNT) = ('dsk', 'HLT', 0.5, '50')
 (DRV, EXP) = ('SD', 'factorial')
 (OVW, gIx, FZ) = (True, 1, False)

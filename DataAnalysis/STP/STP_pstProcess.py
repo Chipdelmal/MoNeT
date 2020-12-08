@@ -14,7 +14,7 @@ import compress_pickle as pkl
 
 (USR, AOI, REL, LND) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 # (USR, AOI, REL, LND) = ('dsk', 'HLT', 'gravidFemale', 'PAN')
-(DRV, QNT, mlr) = ('LDR', '90', True)
+(DRV, QNT, mlr) = ('LDR', '50', True)
 (thiS, thoS, thwS, tapS) = (
         [.05, .10, .25, .50, .75, .90, .95],
         [.05, .10, .25, .50, .75, .90, .95],
