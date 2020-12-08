@@ -59,18 +59,18 @@ TGD_ECO = (wAPos, hPos, rAPos, rBPos, gPos, wBPos)
 ###############################################################################
 # WA --------------------------------------------------------------------------
 wAGenes = (('W', (0, 2)), )
-wAPos = aux.aggregateGeneAppearances(genotypes, wAGenes)
+wAPos = set(aux.aggregateGeneAppearances(genotypes, wAGenes))
 # H ---------------------------------------------------------------------------
 hGenes = (('P', (0, 2)), ('M', (0, 2)))
-hPos = aux.aggregateGeneAppearances(genotypes, hGenes)
+hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 # RA --------------------------------------------------------------------------
 rAGenes = (('R', (0, 2)), )
-rAPos = aux.aggregateGeneAppearances(genotypes, rAGenes)
+rAPos = set(aux.aggregateGeneAppearances(genotypes, rAGenes))
 # BA --------------------------------------------------------------------------
 bAGenes = (('B', (0, 2)), )
-bAPos = aux.aggregateGeneAppearances(genotypes, bAGenes)
+bAPos = set(aux.aggregateGeneAppearances(genotypes, bAGenes))
 # Full set --------------------------------------------------------------------
-TGD_CAS = (wAPos, hPos, rAPos, bAPos, wAPos | hPos | rAPos | bAPos)
+TGD_CAS = [list(i) for i in (wAPos, hPos, rAPos, bAPos, wAPos | hPos | rAPos | bAPos)]
 
 
 ###############################################################################
