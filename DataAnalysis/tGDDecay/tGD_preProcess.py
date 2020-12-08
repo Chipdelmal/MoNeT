@@ -14,7 +14,7 @@ from joblib import Parallel, delayed
 ###############################################################################
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
-(FMT, OVW, JOB) = ('bz2', True, 8)
+(FMT, OVW, JOB) = ('bz2', True, 16)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, False, True)
 if (USR == 'srv2') or (USR == 'dsk'):
     EXP = ('000', )

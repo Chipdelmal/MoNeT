@@ -102,7 +102,7 @@ def driveSelector(DRIVE, TYPE):
             aggD = monet.generateAggregationDictionary(
                     ["W", "H", "R", "B"], gtgd.TGD_CAS
                 )
-            yRange = 11000
+            yRange =2 * 11000
             colors = COLEN
         elif TYPE == 'HLT':
             aggD = monet.generateAggregationDictionary(
