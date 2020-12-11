@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# argv1: User
+# argv2: Drive
 
 python tGD_pstFraction.py $1 $2 ECO
 python tGD_pstFraction.py $1 $2 HLT
