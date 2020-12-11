@@ -47,8 +47,10 @@ def selectPath(USR, DRV, EXP):
         PATH_ROOT = '/RAID5/marshallShare/tGD/figure3/{}/{}/'.format(DRV, EXP)
     elif USR == 'srv2':
         PATH_ROOT = '/RAID5/marshallShare/tGD/figure2/{}/{}/'.format(DRV, EXP)
+    elif USR == 'dsk2':
+        PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/tGD/figure3/{}/{}/'.format(DRV, EXP)
     elif USR == 'dsk':
-        PATH_ROOT = '/media/hdd/WorkExperiments/tGD/figure2/{}/{}/'.format(DRV, EXP)
+        PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/tGD/figure3/{}/{}/'.format(DRV, EXP)
     elif USR == 'PZ':
         PATH_ROOT = '/PATH_TO_FOLDER/tGD/figure2/{}/{}/'.format(DRV, EXP)
     elif USR == 'ameek':

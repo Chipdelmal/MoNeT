@@ -14,17 +14,18 @@ warnings.filterwarnings("ignore")
 
 # python tGD_pstHeatmapSSV.py srv linkedDrive HLT WOP
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, DRV, AOI, MOI) = ('dsk', 'tGD', 'WLD', 'MNX')
+# (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (FMT, SKP, MF, OVW, THR, QNT) = ('bz', False, (False, True), True, 0.1, '50')
 # Select surface variables ----------------------------------------------------
 HD_IND = ['i_ren', 'i_hnf']
+# HD_IND = ['i_hnf', 'i_hrt']
 (ngdx, ngdy) = (1000, 1000)
 (lvls, mthd, xSca, ySca) = (
         [-.05, 0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1.05],
         'linear', 'linear', 'linear'
     )
 MOI = ('TTI', 'TTO', 'WOP', 'MNX') #, 'RAP')
-if (USR == 'srv2') or (USR == 'dsk'):
+if (USR == 'srv2') or (USR == 'dsk2'):
     EXPS = ('000', )
     NOI = [[0]]
 else:
