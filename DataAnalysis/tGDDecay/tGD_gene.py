@@ -44,7 +44,7 @@ def driveSelector(DRIVE, TYPE):
             aggD = monet.generateAggregationDictionary(
                     ["W", "H", "R", "B"], gld.LD_ECO
                 )
-            yRange = 11000
+            yRange = 11000*2
             colors = COLEN
         elif TYPE == 'HLT':
             aggD = monet.generateAggregationDictionary(
@@ -70,7 +70,7 @@ def driveSelector(DRIVE, TYPE):
             aggD = monet.generateAggregationDictionary(
                     ["WA", "H", "R", "B", "C", "WB"], gsd.SD_ECO
                 )
-            yRange = 11000
+            yRange = 11000*2
             colors = COLEN
         elif TYPE == 'HLT':
             aggD = monet.generateAggregationDictionary(
@@ -96,7 +96,7 @@ def driveSelector(DRIVE, TYPE):
             aggD = monet.generateAggregationDictionary(
                     ["WA", "H", "RA", "RB", "G", "WB"], gtgd.TGD_ECO
                 )
-            yRange = 11000
+            yRange = 11000*2
             colors = COLEN
         elif TYPE == 'CAS':
             aggD = monet.generateAggregationDictionary(
@@ -128,7 +128,7 @@ def driveSelector(DRIVE, TYPE):
             aggD = monet.generateAggregationDictionary(
                     ["WA", "H", "RA", "RB", "G", "WB"], gtgd.TGD_ECO
                 )
-            yRange = 11000
+            yRange = 11000*2
             colors = COLEN
         elif TYPE == 'HLT':
             aggD = monet.generateAggregationDictionary(
