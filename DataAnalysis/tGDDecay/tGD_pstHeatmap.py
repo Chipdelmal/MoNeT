@@ -13,8 +13,8 @@ warnings.filterwarnings("ignore")
 # ['hnf', 'cac', 'frc', 'hrt', 'ren', 'res', 'grp']
 
 # python tGD_pstHeatmapSSV.py srv linkedDrive HLT WOP
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
+# (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+(USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (FMT, SKP, MF, OVW, THR, QNT) = ('bz', False, (False, True), True, 0.1, '50')
 # Select surface variables ----------------------------------------------------
 HD_IND = ['i_ren', 'i_hnf']
@@ -57,6 +57,7 @@ for moi in MOI:
         idTuplesAll = list(product(*uniqueValues.values()))
         # Filtering all the experiments of the non-free columns
         hdFree = [col for col in headerInd if col not in HD_IND]
+        print(hdFree)
         # Get the unique IDs of the experiments
         uniqueIds = [uniqueValues.get(head) for head in hdFree]
         idTuples = list(product(*uniqueIds))
@@ -65,6 +66,7 @@ for moi in MOI:
         xpNumS = str(xpNum).zfill(4)
         print(monet.CBBL, end='\r')
         for (xpNumC, xpId) in enumerate(idTuples):
+            print(xpId)
             xpNumCS = str(xpNumC+1).zfill(4)
             print('* Exporting {}/{}'.format(xpNumCS, xpNumS), end='\r')
             ###################################################################

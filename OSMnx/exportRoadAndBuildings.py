@@ -36,4 +36,4 @@ ox.save_gdf_shapefile(buildings,filename=placeName,folder="SHP/Buildings")
 #ox.save_graphml(roads,filename=placeName,folder="NTW/Roads")
 #ox.save_graph_shapefile(roads, filename=placeName,folder="SHP/Roads")
 # Image ##########################################################
-make_plot(placeName,locCoord,dpi=500,dist=distance,default_width=1)
+# make_plot(placeName,locCoord,dpi=500,dist=distance,default_width=1)

@@ -28,4 +28,4 @@ sp = subprocess.Popen([
     outPath
 ])
 sp.wait()
-print("I: " + inPath +"\n" + "O: " + outPath)
+print("I: " + inPath + "\n" + "O: " + outPath)
