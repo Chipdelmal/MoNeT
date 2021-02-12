@@ -69,3 +69,15 @@ wGenes = (('W', (0, 1)), )
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
 SD_WLD = [list(i) for i in (hPos - wPos, wPos, wPos | hPos)]
+
+###############################################################################
+# Custom genotype counts
+###############################################################################
+# H ---------------------------------------------------------------------------
+hGenes = (('C', (0, 1)), )
+hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
+# W ---------------------------------------------------------------------------
+hGenes = (('H', (2, 3)), )
+wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
+# Full set --------------------------------------------------------------------
+SD_CST = [list(i) for i in (hPos - wPos, wPos, wPos | hPos)]

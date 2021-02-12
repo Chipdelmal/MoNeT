@@ -32,6 +32,11 @@ COLWN = ["#0eeb10", "#8337ec", "#0C4887"]
 COLWN = [c+'1A' for c in COLWN]
 COLWO = [i[:-2]+'FF' for i in COLWN]
 COLWM = monet.generateAlphaColorMapFromColorArray(COLWO)
+# CLS ----------------------------------------------------------------------
+COLCN = ["#0eeb10", "#8337ec", "#ffffff"]
+COLCN = [c+'1A' for c in COLCN]
+COLCO = [i[:-2]+'FF' for i in COLCN]
+COLCM = monet.generateAlphaColorMapFromColorArray(COLCO)
 
 
 ###############################################################################
@@ -64,6 +69,12 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000
             colors = COLWN
+        elif TYPE == 'CST':
+            aggD = monet.generateAggregationDictionary(
+                    ["O-", "W*", "Total"], gld.LD_CST
+                )
+            yRange = 11000
+            colors = COLCN
     # Split Drive #############################################################
     if DRIVE == 'splitDrive':
         if TYPE == 'ECO':
@@ -90,6 +101,12 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000
             colors = COLWN
+        elif TYPE == 'CST':
+            aggD = monet.generateAggregationDictionary(
+                    ["O-", "W*", "Total"], gsd.SD_CST
+                )
+            yRange = 11000
+            colors = COLCN
     # tGD Drive ###############################################################
     if DRIVE == 'tGD':
         if TYPE == 'ECO':
@@ -127,12 +144,12 @@ def driveSelector(DRIVE, TYPE):
                     ["C", "G", "Total"], gtgd.TGD_CST
                 )
             yRange = 11000
-            colors = COLWN
+            colors = COLCN
     # ClvR Drive ###############################################################
     if DRIVE == 'ClvR':
         if TYPE == 'ECO':
             aggD = monet.generateAggregationDictionary(
-                    ["WA", "H", "RA", "RB", "G", "WB"], gtgd.TGD_ECO
+                    ["WA", "H", "RA", "RB", "G", "WB"], clv.TGD_ECO
                 )
             yRange = 11000*2
             colors = COLEN
@@ -154,5 +171,11 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000
             colors = COLWN
+        elif TYPE == 'CST':
+            aggD = monet.generateAggregationDictionary(
+                    ["C", "G", "Total"], clv.TGD_CST
+                )
+            yRange = 11000
+            colors = COLCN
     # Return values ###########################################################
     return {'gDict': aggD, 'yRange': yRange, 'colors': colors}
