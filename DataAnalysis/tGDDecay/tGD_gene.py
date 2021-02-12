@@ -122,6 +122,12 @@ def driveSelector(DRIVE, TYPE):
                 )
             yRange = 11000
             colors = COLWN
+        elif TYPE == 'CST':
+            aggD = monet.generateAggregationDictionary(
+                    ["C", "G", "Total"], gtgd.TGD_CST
+                )
+            yRange = 11000
+            colors = COLWN
     # ClvR Drive ###############################################################
     if DRIVE == 'ClvR':
         if TYPE == 'ECO':
