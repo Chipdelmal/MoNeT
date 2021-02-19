@@ -77,7 +77,7 @@ SD_WLD = [list(i) for i in (hPos - wPos, wPos, wPos | hPos)]
 hGenes = (('C', (0, 1)), )
 hPos = set(aux.aggregateGeneAppearances(genotypes, hGenes))
 # W ---------------------------------------------------------------------------
-hGenes = (('H', (2, 3)), )
+wGenes = (('H', (2, 3)), )
 wPos = set(aux.aggregateGeneAppearances(genotypes, wGenes))
 # Full set --------------------------------------------------------------------
 SD_CST = [list(i) for i in (hPos - wPos, wPos, wPos | hPos)]
