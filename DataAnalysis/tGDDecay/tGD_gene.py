@@ -23,12 +23,12 @@ COLHN = [c+'1A' for c in COLHN]
 COLHO = [i[:-2]+'FF' for i in COLHN]
 COLHM = monet.generateAlphaColorMapFromColorArray(COLHO)
 # Trash ----------------------------------------------------------------------
-COLTN = ["#00a2fe", "#8337ec", "#0C4887"]
+COLTN = ["#0eeb10", "#8337ec", "#0C4887"]
 COLTN = [c+'1A' for c in COLTN]
 COLTO = [i[:-2]+'FF' for i in COLTN]
 COLTM = monet.generateAlphaColorMapFromColorArray(COLTO)
 # Wild ----------------------------------------------------------------------
-COLWN = ["#0eeb10", "#8337ec", "#0C4887"]
+COLWN = ["#8337ec", "#00a2fe", "#0C4887"]
 COLWN = [c+'1A' for c in COLWN]
 COLWO = [i[:-2]+'FF' for i in COLWN]
 COLWM = monet.generateAlphaColorMapFromColorArray(COLWO)

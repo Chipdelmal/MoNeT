@@ -23,7 +23,7 @@ import compress_pickle as pkl
         [.05, .10, .25, .50, .75, .90, .95],
         [int((i + 1) * 365 / 3) for i in range(5)]
     )
-if (USR == 'srv2') or (USR == 'dsk'):
+if (USR == 'srv2') or (USR == 'dsk2'):
     EXPS = ('000', )
     NOI = [[0]]
 else:

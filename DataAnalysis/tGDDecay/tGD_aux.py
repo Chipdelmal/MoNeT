@@ -74,13 +74,13 @@ def selectPath(USR, DRV, EXP):
 def selectDepVars(MOI, THS, AOI):
     # Select ranges and dependent variable-------------------------------------
     if (MOI == 'WOP'):
-        scalers = (1, 1000, round(450))
+        scalers = (1, 1000, round(1*365))
         (HD_DEP, IND_RAN) = (str(THS), 7)
     elif (MOI == 'TTI'):
-        scalers = (1, 1000, round(250))
+        scalers = (1, 1000, round(365))
         (HD_DEP, IND_RAN) = (str(THS), 7)
     elif (MOI == 'TTO'):
-        scalers = (1, 1000, round(610))
+        scalers = (1, 1000, round(1.75*365))
         (HD_DEP, IND_RAN) = (str(THS), 7)
     elif (MOI == 'RAP'):
         scalers = (1, 1000, 1)
@@ -92,9 +92,9 @@ def selectDepVars(MOI, THS, AOI):
     if AOI == 'HLT':
         cmap = cmapC
     elif AOI == 'TRS':
-        cmap = cmapM
-    elif AOI == 'WLD':
         cmap = cmapW
+    elif AOI == 'WLD':
+        cmap = monet.cmapP
     return (scalers, HD_DEP, IND_RAN, cmap)
 
 

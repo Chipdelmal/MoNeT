@@ -15,7 +15,7 @@ import MoNeT_MGDrivE as monet
 # (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
 (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 (OVW, gIx, hIx) = (True, 1, 0)
-if (USR == 'srv2') or (USR == 'dsk'):
+if (USR == 'srv2') or (USR == 'dsk2'):
     EXPS = ('000', )
 else:
     EXPS = ('050', '100', '400', '800')
