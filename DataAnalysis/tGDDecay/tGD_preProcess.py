@@ -29,7 +29,6 @@ else:
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
-print(DRV)
 for exp in EXP:
     (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(USR, DRV, exp)
     drive = drv.driveSelector(DRV, AOI)
