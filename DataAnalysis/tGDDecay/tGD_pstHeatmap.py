@@ -36,7 +36,7 @@ else:
 for moi in MOI:
     # Figure 3 was run for a different amount of time -------------------------
     if ((moi == 'WOP') or (moi == 'TTO')) and ((USR == 'srv') or (USR == 'dsk')):
-        TMOD = 2.5
+        TMOD = 2
     else:
         TMOD = 1
     # -------------------------------------------------------------------------
