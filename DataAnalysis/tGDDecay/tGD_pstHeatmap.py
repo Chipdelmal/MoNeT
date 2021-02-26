@@ -31,7 +31,7 @@ if (USR == 'srv2') or (USR == 'dsk2'):
     EXPS = ('000', )
     NOI = [[0]]
 else:
-    EXPS = ('050', )    # '100', '400', '800')
+    EXPS = ('050', '100', '400', '800')
     NOI = [[0], [1]]
 for moi in MOI:
     # Figure 3 was run for a different amount of time -------------------------
