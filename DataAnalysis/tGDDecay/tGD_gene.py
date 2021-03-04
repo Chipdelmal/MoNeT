@@ -34,7 +34,7 @@ COLWO = [i[:-2]+'FF' for i in COLWN]
 COLWM = monet.generateAlphaColorMapFromColorArray(COLWO)
 # CLS ----------------------------------------------------------------------
 COLCN = ["#0eeb10", "#FF006E", "#ffffff"]
-COLCN = [c+'7A' for c in COLCN]
+COLCN = [c+'AA' for c in COLCN]
 COLCO = [i[:-2]+'FF' for i in COLCN]
 COLCM = monet.generateAlphaColorMapFromColorArray(COLCO)
 
