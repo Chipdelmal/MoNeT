@@ -13,4 +13,4 @@ Given that we already generate large datasets for our gene drive modelling exper
 
 ## Authors
 
-Christopher De Leon, Héctor M. Sánchez C.
+Christopher De Leon, Guillermo O. Cota M., Ana L. Dueñas C., Juán J. Olivera L., Héctor M. Sánchez C.
