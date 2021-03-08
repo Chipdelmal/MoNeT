@@ -24,9 +24,9 @@ Click on each on the corresponding images to learn more about our projects!
 
 <p style="font-size:12px">
   <b>Lead:</b> <a href="https://chipdelmal.github.io/">Héctor M. Sánchez C.</a> [UCB]<br>
-  <b>Active Dev/Research</b>: Chris De León [UCB], Guillermo O. Cota M. [UNAM], Ana L. Dueñas C. [ITESM], Juán J. Olivera L. [ITESM], Eugenio S. Almanza [ITESM]<br>
-  <b>Former Research:</b> Gillian Chu [UCB], Maya Shen [UCB], Yunwen Ji [McGill], Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Sabrina Wong [UCB]<br>
-  <b>Former Software: </b> Priscilla Zhang [UCB], Victor Ferman [UCB], Jorge Alberto Niño Cabal [ITESM], Marco Luna [ITESM], Martín Alejandro Molinero Morales [ITESM], Christian Ricardo Solís Cortés [ITESM], Salomón Olivera Abud [ITESM], Esteban Quintana Cueto [ITESM], Moisés Montaño Copca [ITESM]<br>
+  <b>Active Dev/Research</b>: Chris De Leon [UCB], Guillermo O. Cota M. [UNAM], Ana L. Dueñas C. [ITESM], Juán J. Olivera L. [ITESM], Eugenio S. Almanza [ITESM]<br>
+  <b>Former Research:</b> <a href="https://gillichu.github.io/">Gillian Chu</a> [UCB], Maya Shen [UCB], Yunwen Ji [McGill], Sarafina Smith  [UCB], <a href="https://www.linkedin.com/in/biyonkaliang">Biyonka Liang</a> [UCB], Sabrina Wong [UCB]<br>
+  <b>Former Software: </b> Priscilla Zhang [UCB], Victor Ferman [UCB], Jorge A. Niño C. [ITESM], Marco Luna [ITESM], Martín A. Molinero M. [ITESM], Christian R. Solís C. [ITESM], Salomón O. Abud [ITESM], Esteban Q. Cueto [ITESM], Moisés M. Copca [ITESM]<br>
   <b>Collaborators:</b> <a href="https://www.researchgate.net/profile/Benjamin_Valdes">Benjamín Valdés</a> [ITESM],  <a href="http://homepage.cem.itesm.mx/mgonza/">Miguel Gonzalez Mendoza</a> [ITESM]<br>
   <b>Former Collaborators:</b> <a href="https://www.researchgate.net/profile/Edgar_Vallejo">Edgar Emmanuel Vallejo Clemente</a> [ITESM]<br>
   <b>PI's:</b> <a href="http://sph.berkeley.edu/john-marshall">John M. Marshall</a> [UCB] and <a href="http://www.healthdata.org/about/david-smith">David L. Smith</a> [IHME]
