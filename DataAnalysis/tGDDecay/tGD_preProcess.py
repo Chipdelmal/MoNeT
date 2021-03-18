@@ -8,20 +8,31 @@ import tGD_fun as fun
 from datetime import datetime
 import MoNeT_MGDrivE as monet
 from joblib import Parallel, delayed
+import compress_pickle as pkl
 
 ###############################################################################
 # Drives: LinkedDrive, splitDrive, tGD
 ###############################################################################
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
+if monet.isNotebook():
+    (USR, DRV, AOI) = ('srv3', 'tGD', 'HLT')
+else:
+    (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+# Settings -------------------------------------------------------------------
 (FMT, OVW, JOB) = ('bz2', True, 8)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, False, True)
+# Paths ----------------------------------------------------------------------
 if (USR == 'srv2') or (USR == 'dsk'):
     EXP = ('000', )
     NOI = [[0]]
+elif USR == 'srv3':
+    EXPS = ('000', )
+    NOI = pkl.load(
+        '/RAID5/marshallShare/tGD/GEO/clusters.bz'
+    )
 else:
     EXP = ('050', '100', '400', '800')
     NOI = [[0], [1]]
+# Sex selector ---------------------------------------------------------------
 if AOI == 'HLT':
     MF = (False, True)
 else:
