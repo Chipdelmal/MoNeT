@@ -24,14 +24,14 @@ warnings.filterwarnings("ignore", category=UserWarning)
 if monet.isNotebook():
     (USR, DRV, AOI, EXP) = ('dsk3', 'tGD', 'HLT', 'E_01_100_01')
 else:
-    (USR, DRV, AOI, EXP) = (sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-(JOB, TMIN, TMAX) = (8, 1, int(2*365))
+    (USR, DRV, AOI, EXP) = (sys.argv[1], 'tGD', sys.argv[2], sys.argv[3])
+(JOB, TMIN, TMAX) = (4, 1, 913)
 EXP_NAM = '{}-{}'.format(EXP, AOI)
 ###############################################################################
 # Setting up paths
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT, PT_MTR) = aux.selectPath(
-    USR, DRV, EXP
+    USR, DRV, ''
 )
 PT_VID = path.join(PT_ROT, 'video')
 EXP_FLS = sorted(glob(path.join(PT_PRE, EXP_NAM + '*sum.bz')))
@@ -63,8 +63,10 @@ AG_IDs = pkl.load(PTH_PTS+'clusters.bz')
 # Bounding box ----------------------------------------------------------------
 PAD = .025
 point = (-16.8095511, 145.711106)
-(minLat, minLong) = [i-PAD for i in point]
-(maxLat, maxLong) = [i+PAD for i in point]
+# (minLat, minLong) = [i-PAD for i in point]
+# (maxLat, maxLong) = [i+PAD for i in point]
+(minLat, maxLat) = (-16.825, -16.797)
+(minLong, maxLong) = (145.690, 145.730)
 # LonLats and populations -----------------------------------------------------
 lonLat = UA_sites[['Lat', 'Lon']]
 # Landscape aggregation -------------------------------------------------------
@@ -80,13 +82,19 @@ monet.printExperimentHead(PT_ROT, PT_VID, tS, 'PYF PreVideo '+AOI)
 # #############################################################################
 # Map
 # #############################################################################
+if AOI == 'HLT':
+    cols = ['#FF006E', '#22a5f1', '#22a5f1']
+elif AOI == 'TRS':
+    cols = ['#45d40c', '#22a5f1', '#22a5f1']
+elif AOI == 'CST':
+    cols = ['#8338EC', '#22a5f1', '#22a5f1']
 # Coordinates -----------------------------------------------------------------
 (lngs, lats) = (AGG_centroids[:, 0], AGG_centroids[:, 1])
 Parallel(n_jobs=JOB)(
     delayed(plo.plotMapFrame)(
         'DUMMY',
         time, UA_sites, (minLat, maxLat), (minLong, maxLong), 
-        ['#8338EC', '#FF006E', '#0C4887'], GC_FRA, lngs, lats, EXP_VID,
-        offset=100, amplitude=150, alpha=.4, marker=(6, 0),
-        edgecolor='#F5006A', lw=2
+        cols, GC_FRA, lngs, lats, EXP_VID,
+        offset=100, amplitude=35, alpha=.4, marker=(6, 0),
+        edgecolor='#F5006A00', lw=2
     ) for time in range(TMIN, TMAX))

@@ -4,6 +4,8 @@ import pandas as pd
 from mpl_toolkits.basemap import Basemap
 import matplotlib.patches as mpatches
 import MoNeT_MGDrivE as monet
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
 
 def rescaleRGBA(colorsTuple, colors=255):
@@ -266,10 +268,10 @@ def plotMapSHP(
     )
     # Lo-Res Basemap ----------------------------------------------------------
     mH.scatter(
-        list(pts['lons']), list(pts['lats']), latlon=True,
-        alpha=.1, marker='.', 
-        s=popsToPtSize(list(pts['pops']), offset=10, amplitude=50),
-        color=ptColor, zorder=3
+        list(pts['Lat']), list(pts['Lon']), latlon=True,
+        alpha=.05, marker='X', 
+        s=.75,    # popsToPtSize(list(pts['pops']), offset=1, amplitude=2),
+        color=ptColor, zorder=-4
     )
     # Ax parameters -----------------------------------------------------------
     ax.tick_params(
@@ -331,7 +333,7 @@ def plotMapFrame(
     # Create map --------------------------------------------------------------
     (fig, ax) = plt.subplots(figsize=(10, 10))
     (fig, ax, mapR) = plotMapSHP(
-        filenameSHP, fig, ax, UA_sites, BLAT, BLNG, ptColor='#6347ff'
+        filenameSHP, fig, ax, UA_sites, BLAT, BLNG, ptColor='#2614ed00'
     )
     # Pops --------------------------------------------------------------------
     (fig, ax, mapR) = plotGenePopsOnMap(
@@ -341,7 +343,7 @@ def plotMapFrame(
         marker=marker, offset=offset, amplitude=amplitude, alpha=alpha, lw=lw
     )
     ax.text(
-        0.75, 0.1, str(time).zfill(4), 
+        0.5, 0.5, str(time).zfill(4), 
         horizontalalignment='center', verticalalignment='center', 
         transform=ax.transAxes, fontsize=30
     )
