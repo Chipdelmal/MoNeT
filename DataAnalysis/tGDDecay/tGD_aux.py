@@ -49,10 +49,12 @@ def selectPath(USR, DRV, EXP):
         PATH_ROOT = '/RAID5/marshallShare/tGD/figure2/{}/{}/'.format(DRV, EXP)
     elif USR == 'srv3':
         PATH_ROOT = '/RAID5/marshallShare/tGD/video/{}/{}/'.format(DRV, EXP)
-    elif USR == 'dsk2':
-        PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/tGD/figure2/{}/{}/'.format(DRV, EXP)
     elif USR == 'dsk':
         PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/tGD/figure3/{}/{}/'.format(DRV, EXP)
+    elif USR == 'dsk2':
+        PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/tGD/figure2/{}/{}/'.format(DRV, EXP)
+    elif USR == 'dsk3':
+        PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/tGD/video/{}/{}/'.format(DRV, EXP)
     else:
         PATH_ROOT = '/home/chipdelmal/Documents/WorkSims/tGD/figure2/{}/{}/'.format(DRV, EXP)
     # monet.makeFolder('{}/'.format(PATH_ROOT))

@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from mpl_toolkits.basemap import Basemap
 import matplotlib.patches as mpatches
 import MoNeT_MGDrivE as monet
 
@@ -238,3 +239,114 @@ def plotMeanGenotypeTrace(
     ax.yaxis.set_label_text("")
     # plt.ylabel("Allele Count")
     return fig
+
+
+# #############################################################################
+# Videos
+# #############################################################################
+def floatToHex(a, minVal=0, maxVal=1):
+    intVal = int(np.interp(a, (minVal, maxVal), (0, 255)))
+    return intVal
+
+
+def popsToPtSize(pops, offset=10, amplitude=10):
+    # return [max(offset, amplitude * math.log(i, 1.1)) for i in pops]
+    return [max(offset, amplitude * (i**(1/2.5))) for i in pops]
+
+
+def plotMapSHP(
+        filename, fig, ax, pts, BLAT, BLNG, 
+        drawCoasts=True, ptColor='#66ff00'
+):
+    # Hi-Res Basemap ----------------------------------------------------------
+    mH = Basemap(
+        projection='merc', lat_ts=20, resolution='h', ax=ax,
+        llcrnrlat=BLAT[0], urcrnrlat=BLAT[1], 
+        llcrnrlon=BLNG[0], urcrnrlon=BLNG[1]   
+    )
+    # Lo-Res Basemap ----------------------------------------------------------
+    mH.scatter(
+        list(pts['lons']), list(pts['lats']), latlon=True,
+        alpha=.1, marker='.', 
+        s=popsToPtSize(list(pts['pops']), offset=10, amplitude=50),
+        color=ptColor, zorder=3
+    )
+    # Ax parameters -----------------------------------------------------------
+    ax.tick_params(
+        axis='both', which='both',
+        bottom=True, top=False, left=True, right=False,
+        labelbottom=True, labelleft=True
+    )
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["bottom"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    # Return values -----------------------------------------------------------
+    return (fig, ax, mH)
+
+
+def plotPopsOnMap(
+    fig, ax, mapR, 
+    lngs, lats, fractions, pops, 
+    color='#ed174b', marker=(6, 0), edgecolor='#ffffff', lw=10,
+    offset=10, amplitude=10, alpha=.85
+):
+    # print(fractions)
+    colors = [color + '%02x' % floatToHex(i*alpha) for i in fractions]
+    # ptSize = popsToPtSize(pops, offset=offset, amplitude=amplitude)
+    mapR.scatter(
+        lngs, lats, 
+        latlon=True, marker=marker,
+        s=popsToPtSize(pops, offset=offset, amplitude=amplitude),
+        c=colors, ax=ax, edgecolors=edgecolor, lw=lw
+    )
+    return (fig, ax, mapR)
+
+
+def plotGenePopsOnMap(
+    fig, ax, mapR,
+    lngs, lats, colors, 
+    GC_FRA, time, edgecolor='#ffffff',
+    marker=(6, 0), offset=10, amplitude=10, alpha=.85, lw=2
+):
+    geneFraSlice = np.asarray([i[time] for i in GC_FRA]).T
+    for gIx in range(geneFraSlice.shape[0]-1):
+        (fig, ax, mapR) = plotPopsOnMap(
+            fig, ax, mapR, 
+            lngs, lats, geneFraSlice[gIx], geneFraSlice[-1],
+            color=colors[gIx], marker=marker,
+            offset=offset, amplitude=amplitude,
+            alpha=alpha, edgecolor=edgecolor, lw=lw
+        )
+    return (fig, ax, mapR)
+
+
+def plotMapFrame(
+    filenameSHP,
+    time, UA_sites, BLAT, BLNG, DRV_COL, GC_FRA, lngs, lats, EXP_VID,
+    offset=2.5, amplitude=2, alpha=.35, marker=(6, 0), DPI=250, 
+    edgecolor='#ffffff', lw=2
+):
+    print('* Exporting {}'.format(str(time).zfill(4)), end='\r')
+    # Create map --------------------------------------------------------------
+    (fig, ax) = plt.subplots(figsize=(10, 10))
+    (fig, ax, mapR) = plotMapSHP(
+        filenameSHP, fig, ax, UA_sites, BLAT, BLNG, ptColor='#6347ff'
+    )
+    # Pops --------------------------------------------------------------------
+    (fig, ax, mapR) = plotGenePopsOnMap(
+        fig, ax, mapR,
+        lngs, lats, DRV_COL, 
+        GC_FRA, time, edgecolor=edgecolor,
+        marker=marker, offset=offset, amplitude=amplitude, alpha=alpha, lw=lw
+    )
+    ax.text(
+        0.75, 0.1, str(time).zfill(4), 
+        horizontalalignment='center', verticalalignment='center', 
+        transform=ax.transAxes, fontsize=30
+    )
+    quickSaveFig(
+        '{}/{}.png'.format(EXP_VID, str(time).zfill(4)),
+        fig, dpi=DPI
+    )
+    plt.close(fig)

@@ -179,3 +179,18 @@ def driveSelector(DRIVE, TYPE):
             colors = COLCN
     # Return values ###########################################################
     return {'gDict': aggD, 'yRange': yRange, 'colors': colors}
+
+
+
+def colorSelector(AOI):
+    if AOI == 'ECO':
+        colors = monet.COLEO
+    elif AOI == 'HLT':
+        colors = monet.COLHO
+    elif AOI == 'TRS':
+        colors = monet.COLTO
+    elif AOI == 'WLD':
+        colors = monet.COLWO
+    elif AOI == 'CST':
+        colors = monet.COLEO
+    return colors
