@@ -42,8 +42,8 @@ for moi in MOI:
     # -------------------------------------------------------------------------
     (scalers, HD_DEP, _, cmapR) = aux.selectDepVars(moi, THR, AOI)
     cmap = cmapR    # cmapR.reversed()
-    if AOI == 'WLD':
-        cmap = cmapR.reversed()
+    # if AOI == 'WLD':
+        # cmap = cmapR.reversed()
     ###########################################################################
     # Loop through the experiments
     ###########################################################################
