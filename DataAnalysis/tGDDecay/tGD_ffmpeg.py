@@ -31,7 +31,7 @@ monet.printExperimentHead(basePath, outPath, tS, 'tGD ffmpeg '+AOI)
 sp = subprocess.Popen([
     'ffmpeg',
     '-y', 
-    '-loglevel', 'quiet',
+    # '-loglevel', 'quiet',
     '-start_number', '1',
     '-r', str(rate),
     '-f', 'image2',

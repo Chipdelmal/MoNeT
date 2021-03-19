@@ -267,12 +267,12 @@ def plotMapSHP(
         llcrnrlon=BLNG[0], urcrnrlon=BLNG[1]   
     )
     # Lo-Res Basemap ----------------------------------------------------------
-    mH.scatter(
-        list(pts['Lat']), list(pts['Lon']), latlon=True,
-        alpha=.05, marker='X', 
-        s=.75,    # popsToPtSize(list(pts['pops']), offset=1, amplitude=2),
-        color=ptColor, zorder=-4
-    )
+    # mH.scatter(
+    #     list(pts['Lat']), list(pts['Lon']), latlon=True,
+    #     alpha=.05, marker='X', 
+    #     s=0,    # popsToPtSize(list(pts['pops']), offset=1, amplitude=2),
+    #     color=ptColor, zorder=-4
+    # )
     # Ax parameters -----------------------------------------------------------
     ax.tick_params(
         axis='both', which='both',
@@ -343,9 +343,9 @@ def plotMapFrame(
         marker=marker, offset=offset, amplitude=amplitude, alpha=alpha, lw=lw
     )
     ax.text(
-        0.5, 0.5, str(time).zfill(4), 
+        0.525, 0.5, str(time*2).zfill(4), 
         horizontalalignment='center', verticalalignment='center', 
-        transform=ax.transAxes, fontsize=30
+        transform=ax.transAxes, fontsize=30, color='#888BA155'
     )
     quickSaveFig(
         '{}/{}.png'.format(EXP_VID, str(time).zfill(4)),
