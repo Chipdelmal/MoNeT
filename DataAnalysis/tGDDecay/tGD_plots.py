@@ -7,12 +7,12 @@ import MoNeT_MGDrivE as monet
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
-plt.rcParams.update({
-    "figure.facecolor":  (1.0, 0.0, 0.0, 0),  # red   with alpha = 30%
-    "axes.facecolor":    (0.0, 1.0, 0.0, 0),  # green with alpha = 50%
-    "savefig.facecolor": (1.0, 1.0, 1.0, 0),  # blue  with alpha = 20%
-})
 
+# plt.rcParams.update({
+#     "figure.facecolor":  (1.0, 0.0, 0.0, 0),  # red   with alpha = 30%
+#     "axes.facecolor":    (0.0, 1.0, 0.0, 0),  # green with alpha = 50%
+#     "savefig.facecolor": (1.0, 1.0, 1.0, 0),  # blue  with alpha = 20%
+# })
 
 
 def rescaleRGBA(colorsTuple, colors=255):
@@ -296,18 +296,24 @@ def plotMapSHP(
 
 def plotPopsOnMap(
     fig, ax, mapR, 
-    lngs, lats, fractions, pops, 
-    color='#ed174b', marker=(6, 0), edgecolor='#ffffff', lw=10,
+    lngs, lats, fractions, fractionsBase, pops, 
+    color='#ed174b', marker=(6, 0), edgecolor='#000000', lw=10,
     offset=10, amplitude=10, alpha=.85
 ):
     # print(fractions)
     colors = [color + '%02x' % floatToHex(i*alpha) for i in fractions]
+    if fractionsBase is not None:
+        edgeColors = [edgecolor + '%02x' % floatToHex(i*alpha) for i in fractionsBase]
+    else:
+        edgeColors = edgecolor
+    # print(fractionsBase[0])
     # ptSize = popsToPtSize(pops, offset=offset, amplitude=amplitude)
+    # Modify here to take edge color
     mapR.scatter(
         lngs, lats, 
         latlon=True, marker=marker,
         s=popsToPtSize(pops, offset=offset, amplitude=amplitude),
-        c=colors, ax=ax, edgecolors=edgecolor, lw=lw
+        c=colors, ax=ax, edgecolors=edgeColors, lw=lw
     )
     return (fig, ax, mapR)
 
@@ -315,14 +321,19 @@ def plotPopsOnMap(
 def plotGenePopsOnMap(
     fig, ax, mapR,
     lngs, lats, colors, 
-    GC_FRA, time, edgecolor='#ffffff',
+    GC_FRA, GC_FRA_BASE, time, edgecolor='#ffffff',
     marker=(6, 0), offset=10, amplitude=10, alpha=.85, lw=2
 ):
     geneFraSlice = np.asarray([i[time] for i in GC_FRA]).T
+    if GC_FRA_BASE is not None:
+        geneFraSliceBase = np.asarray([i[time] for i in GC_FRA_BASE]).T[0]
+    else:
+        geneFraSliceBase = None
     for gIx in range(geneFraSlice.shape[0]-1):
         (fig, ax, mapR) = plotPopsOnMap(
             fig, ax, mapR, 
-            lngs, lats, geneFraSlice[gIx], geneFraSlice[-1],
+            lngs, lats, geneFraSlice[gIx], geneFraSliceBase,
+            geneFraSlice[-1],
             color=colors[gIx], marker=marker,
             offset=offset, amplitude=amplitude,
             alpha=alpha, edgecolor=edgecolor, lw=lw
@@ -332,7 +343,8 @@ def plotGenePopsOnMap(
 
 def plotMapFrame(
     filenameSHP,
-    time, UA_sites, BLAT, BLNG, DRV_COL, GC_FRA, lngs, lats, EXP_VID,
+    time, UA_sites, BLAT, BLNG, DRV_COL, GC_FRA, GC_FRA_BASE, 
+    lngs, lats, EXP_VID,
     offset=2.5, amplitude=2, alpha=.35, marker=(6, 0), DPI=250, 
     edgecolor='#ffffff', lw=2
 ):
@@ -346,7 +358,7 @@ def plotMapFrame(
     (fig, ax, mapR) = plotGenePopsOnMap(
         fig, ax, mapR,
         lngs, lats, DRV_COL, 
-        GC_FRA, time, edgecolor=edgecolor,
+        GC_FRA, GC_FRA_BASE, time, edgecolor=edgecolor,
         marker=marker, offset=offset, amplitude=amplitude, alpha=alpha, lw=lw
     )
     ax.text(

@@ -20,19 +20,12 @@ import tGD_fun as fun
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
-
-plt.rcParams.update({
-    "figure.facecolor":  (1.0, 0.0, 0.0, 0),  # red   with alpha = 30%
-    "axes.facecolor":    (0.0, 1.0, 0.0, 0),  # green with alpha = 50%
-    "savefig.facecolor": (1.0, 1.0, 1.0, 0),  # blue  with alpha = 20%
-})
-
 if monet.isNotebook():
     (USR, DRV, AOI, EXP) = ('dsk3', 'tGD', 'HLT', 'E_01_100_01')
 else:
     (USR, DRV, AOI, EXP) = (sys.argv[1], 'tGD', sys.argv[2], sys.argv[3])
-(JOB, TMIN, TMAX) = (8, 1, 913)
-STYLE = 1
+(JOB, TMIN, TMAX) = (8, 1, 910)
+STYLE = 2
 EXP_NAM = '{}-{}'.format(EXP, AOI)
 ###############################################################################
 # Setting up paths
@@ -75,6 +68,15 @@ if STYLE == 0:
     for nIx in range(len(GC_RAW)):
         for tIx in range(GC_RAW[0].shape[0]):
             GC_RAW[nIx][tIx][-2] = 0
+    GC_FRA_BASE = None
+if STYLE == 1:
+    GC_FRA_BASE = None
+if STYLE == 2:
+    EXP_FLS_BASE = sorted(glob(
+        path.join(PT_PRE, EXP_NAM.split('-')[0]+'-TRS'+ '*sum.bz'))
+    )
+    GC_RAW_BASE = [pkl.load(i)['population'] for i in EXP_FLS_BASE]
+    GC_FRA_BASE = [fun.geneCountsToFractions(i) for i in GC_RAW_BASE]
 # Calculate populations fractions ---------------------------------------------
 GC_FRA = [fun.geneCountsToFractions(i) for i in GC_RAW]
 DRV_COL = [i[:-2] for i in drv.colorSelector(AOI)]
@@ -107,7 +109,7 @@ monet.printExperimentHead(PT_ROT, EXP_VID, tS, 'PYF PreVideo '+AOI)
 # AOI colors ------------------------------------------------------------------
 if AOI == 'HLT':
     cols = ['#FF006E', '#22a5f1', '#22a5f1']
-    edgeColor = '#8693ab'
+    edgeColor = '#000000'
 elif AOI == 'TRS':
     cols = ['#45d40c', '#22a5f1', '#22a5f1']
     edgeColor = '#8693ab'
@@ -117,7 +119,7 @@ elif AOI == 'CST':
 # Edge colors -----------------------------------------------------------------
 if STYLE == 0:
     edgeColor = edgeColor + '55'
-else:
+if STYLE == 1:
     edgeColor = edgeColor + '00'
 # Coordinates -----------------------------------------------------------------
 (lngs, lats) = (AGG_centroids[:, 0], AGG_centroids[:, 1])
@@ -125,7 +127,7 @@ Parallel(n_jobs=JOB)(
     delayed(plo.plotMapFrame)(
         'DUMMY',
         time, UA_sites, (minLat, maxLat), (minLong, maxLong), 
-        cols, GC_FRA, lngs, lats, EXP_VID,
+        cols, GC_FRA, GC_FRA_BASE, lngs, lats, EXP_VID,
         offset=100, amplitude=37.5, alpha=.4, marker=(6, 0),
-        edgecolor=edgeColor, lw=.75
+        edgecolor=edgeColor, lw=1.25
     ) for time in range(TMIN, TMAX))
