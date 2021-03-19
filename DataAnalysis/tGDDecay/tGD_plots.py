@@ -7,6 +7,13 @@ import MoNeT_MGDrivE as monet
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
+plt.rcParams.update({
+    "figure.facecolor":  (1.0, 0.0, 0.0, 0),  # red   with alpha = 30%
+    "axes.facecolor":    (0.0, 1.0, 0.0, 0),  # green with alpha = 50%
+    "savefig.facecolor": (1.0, 1.0, 1.0, 0),  # blue  with alpha = 20%
+})
+
+
 
 def rescaleRGBA(colorsTuple, colors=255):
     return [i/colors for i in colorsTuple]
@@ -349,6 +356,6 @@ def plotMapFrame(
     )
     quickSaveFig(
         '{}/{}.png'.format(EXP_VID, str(time).zfill(4)),
-        fig, dpi=DPI
+        fig, dpi=DPI, transparent=True
     )
     plt.close(fig)

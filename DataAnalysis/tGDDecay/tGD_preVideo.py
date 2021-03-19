@@ -21,11 +21,18 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
+plt.rcParams.update({
+    "figure.facecolor":  (1.0, 0.0, 0.0, 0),  # red   with alpha = 30%
+    "axes.facecolor":    (0.0, 1.0, 0.0, 0),  # green with alpha = 50%
+    "savefig.facecolor": (1.0, 1.0, 1.0, 0),  # blue  with alpha = 20%
+})
+
 if monet.isNotebook():
     (USR, DRV, AOI, EXP) = ('dsk3', 'tGD', 'HLT', 'E_01_100_01')
 else:
     (USR, DRV, AOI, EXP) = (sys.argv[1], 'tGD', sys.argv[2], sys.argv[3])
 (JOB, TMIN, TMAX) = (8, 1, 913)
+STYLE = 1
 EXP_NAM = '{}-{}'.format(EXP, AOI)
 ###############################################################################
 # Setting up paths
@@ -54,6 +61,21 @@ filename = 'clusters.bz'
 UA_sites = pd.read_csv(PTH_PTS+'Yorkeys01_0000_I.csv', sep=',')
 UA_sites['pops'] = [int(EXP.split('_')[1])] * UA_sites.shape[0]
 GC_RAW = [pkl.load(i)['population'] for i in EXP_FLS]
+# Use a different set for pop sizes -------------------------------------------
+# if AOI == 'CST':
+if STYLE == 0:
+    EXP_FLS_BASE = sorted(glob(
+        path.join(PT_PRE, EXP_NAM.split('-')[0]+'-HLT'+ '*sum.bz'))
+    )
+    GC_RAW_BASE = [pkl.load(i)['population'] for i in EXP_FLS_BASE]
+    for nIx in range(len(GC_RAW)):
+        for tIx in range(GC_RAW[0].shape[0]):
+            GC_RAW[nIx][tIx][-1] = GC_RAW_BASE[nIx][tIx][-1]
+        GC_RAW_BASE = [pkl.load(i)['population'] for i in EXP_FLS_BASE]
+    for nIx in range(len(GC_RAW)):
+        for tIx in range(GC_RAW[0].shape[0]):
+            GC_RAW[nIx][tIx][-2] = 0
+# Calculate populations fractions ---------------------------------------------
 GC_FRA = [fun.geneCountsToFractions(i) for i in GC_RAW]
 DRV_COL = [i[:-2] for i in drv.colorSelector(AOI)]
 AG_IDs = pkl.load(PTH_PTS+'clusters.bz')
@@ -65,8 +87,8 @@ PAD = .025
 point = (-16.8095511, 145.711106)
 # (minLat, minLong) = [i-PAD for i in point]
 # (maxLat, maxLong) = [i+PAD for i in point]
-(minLat, maxLat) = (-16.825, -16.797)
-(minLong, maxLong) = (145.690, 145.730)
+(minLat, maxLat) = (-16.821, -16.8015)
+(minLong, maxLong) = (145.692, 145.728)
 # LonLats and populations -----------------------------------------------------
 lonLat = UA_sites[['Lat', 'Lon']]
 # Landscape aggregation -------------------------------------------------------
@@ -82,12 +104,21 @@ monet.printExperimentHead(PT_ROT, EXP_VID, tS, 'PYF PreVideo '+AOI)
 # #############################################################################
 # Map
 # #############################################################################
+# AOI colors ------------------------------------------------------------------
 if AOI == 'HLT':
     cols = ['#FF006E', '#22a5f1', '#22a5f1']
+    edgeColor = '#8693ab'
 elif AOI == 'TRS':
     cols = ['#45d40c', '#22a5f1', '#22a5f1']
+    edgeColor = '#8693ab'
 elif AOI == 'CST':
-    cols = ['#8338EC', '#22a5f1', '#22a5f1']
+    cols = ['#45d40c', '#FF006E', '#22a5f1']
+    edgeColor = '#8693ab'
+# Edge colors -----------------------------------------------------------------
+if STYLE == 0:
+    edgeColor = edgeColor + '55'
+else:
+    edgeColor = edgeColor + '00'
 # Coordinates -----------------------------------------------------------------
 (lngs, lats) = (AGG_centroids[:, 0], AGG_centroids[:, 1])
 Parallel(n_jobs=JOB)(
@@ -96,5 +127,5 @@ Parallel(n_jobs=JOB)(
         time, UA_sites, (minLat, maxLat), (minLong, maxLong), 
         cols, GC_FRA, lngs, lats, EXP_VID,
         offset=100, amplitude=37.5, alpha=.4, marker=(6, 0),
-        edgecolor='#F5006A00', lw=2
+        edgecolor=edgeColor, lw=.75
     ) for time in range(TMIN, TMAX))

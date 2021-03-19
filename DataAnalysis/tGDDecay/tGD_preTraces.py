@@ -11,14 +11,16 @@ from datetime import datetime
 import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 
-
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-# (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
+if monet.isNotebook():
+    (USR, DRV, AOI) = ('dsk', 'tGD', 'HLT')
+else:
+    (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+# Select variables ------------------------------------------------------------
 (FMT, SKP, MF, FZ) = ('bz2', False, (True, True), False)
-if (USR == 'srv2') or (USR == 'dsk'):
+if (USR == 'srv2') or (USR == 'dsk') or (USR == 'dsk3'):
     EXP = ('000', )
 else:
-    EXP = ('050', '100', '400', '800') # '001', '005', '010', '100')
+    EXP = ('050', '100', '400', '800')
 ###############################################################################
 # Setting up paths and style
 ###############################################################################
