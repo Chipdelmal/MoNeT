@@ -9,8 +9,10 @@ from datetime import datetime
 import MoNeT_MGDrivE as monet
 from joblib import Parallel, delayed
 
-
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+if monet.isNotebook():
+        (USR, DRV, AOI) = ('dsk', 'HF', 'HLT')        
+else:
+        (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 (FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 20)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 ###############################################################################

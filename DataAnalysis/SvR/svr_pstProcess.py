@@ -11,9 +11,10 @@ import MoNeT_MGDrivE as monet
 import compress_pickle as pkl
 # from joblib import Parallel, delayed
 
-
-# (USR, DRV, AOI) = ('dsk', 'replacement', 'HLT')
-(USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
+if monet.isNotebook():
+    (USR, DRV, AOI) = ('dsk', 'HF', 'HLT')
+else:
+    (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.10, .05, .50], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, gIx) = ([.05, .10, .25, .50, .75], 1, 0, 1)
