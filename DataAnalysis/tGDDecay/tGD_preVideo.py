@@ -25,7 +25,7 @@ if monet.isNotebook():
 else:
     (USR, DRV, AOI, EXP) = (sys.argv[1], 'tGD', sys.argv[2], sys.argv[3])
 (JOB, TMIN, TMAX) = (8, 1, 910)
-STYLE = 2
+STYLE = 0
 EXP_NAM = '{}-{}'.format(EXP, AOI)
 ###############################################################################
 # Setting up paths
@@ -109,7 +109,7 @@ monet.printExperimentHead(PT_ROT, EXP_VID, tS, 'PYF PreVideo '+AOI)
 # AOI colors ------------------------------------------------------------------
 if AOI == 'HLT':
     cols = ['#FF006E', '#22a5f1', '#22a5f1']
-    edgeColor = '#000000'
+    edgeColor = '#8693ab'
 elif AOI == 'TRS':
     cols = ['#45d40c', '#22a5f1', '#22a5f1']
     edgeColor = '#8693ab'

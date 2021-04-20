@@ -366,6 +366,11 @@ def plotMapFrame(
         horizontalalignment='center', verticalalignment='center', 
         transform=ax.transAxes, fontsize=30, color='#888BA155'
     )
+    ax.text(
+        0.92, 0.05, "chipdelmal", 
+        horizontalalignment='center', verticalalignment='center', 
+        transform=ax.transAxes, fontsize=10, color='#888BA100'
+    )
     quickSaveFig(
         '{}/{}.png'.format(EXP_VID, str(time).zfill(4)),
         fig, dpi=DPI, transparent=True

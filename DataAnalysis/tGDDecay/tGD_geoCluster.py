@@ -55,7 +55,7 @@ for clstID in clstIDs:
     tmpDF = df[df['clst'] == clstID]
     centroid.append([np.mean(i) for i in (tmpDF['Lon'], tmpDF['Lat'])])
     groupings.append(list(tmpDF['id']))
-pkl.dump(groupings, PTH_PTS + 'clusters', compression='bz2')
+pkl.dump(groupings, PTH_PTS + 'clusters_' + str(CLS), compression='bz2')
 # #############################################################################
 # Export Map
 # #############################################################################
@@ -104,7 +104,7 @@ mH.scatter(
 for i in range(CLS):
     (x, y) = mH(centroid[i][1], centroid[i][0])
     ax.annotate(i, xy=(x, y), size=2, ha='center', va='center', zorder=4)
-plo.quickSaveFig(PTH_PTS + 'clusters.png', fig, dpi=1000)
+plo.quickSaveFig(PTH_PTS + 'clusters_' + str(CLS) + '.png', fig, dpi=1000)
 # #############################################################################
 # Kernel Heatmap
 # #############################################################################
