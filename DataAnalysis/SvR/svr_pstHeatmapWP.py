@@ -24,7 +24,7 @@ else:
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
 (threshold, lvls, mthd, xSca) = (thr[1], 10, 'linear', 'log')
-mapLevels = np.arange(0, 3*365, 50)
+mapLevels = np.arange(0, 4*365, 50)
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
