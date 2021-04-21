@@ -15,7 +15,7 @@ if monet.isNotebook():
     (USR, DRV, AOI) = ('dsk', 'HF', 'HLT')
 else:
     (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.10], True) #.05, .50], True)
+(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.10, ], True)  # [.05, .50]
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, gIx) = ([.05, .10, .25, .50, .75], 1, 0, 1)
 ###############################################################################
