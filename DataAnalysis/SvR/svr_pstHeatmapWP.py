@@ -16,12 +16,14 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 
 
-(USR, DRV, AOI, WLA) = (sys.argv[1], sys.argv[2], 'HLT', sys.argv[3])
-# (USR, DRV, AOI) = ('dsk', 'HH', 'HLT')
+if monet.isNotebook():
+    (USR, DRV, AOI, WLA) = ('dsk', 'LF', 'HLT', 'WOP')
+else:
+    (USR, DRV, AOI, WLA) = (sys.argv[1], sys.argv[2], 'HLT', sys.argv[3])
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
-(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
-(threshold, lvls, mthd, xSca) = (thr[1], 10, 'nearest', 'log')
+(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
+(threshold, lvls, mthd, xSca) = (thr[1], 10, 'linear', 'log')
 mapLevels = np.arange(0, 3*365, 50)
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
@@ -37,12 +39,14 @@ fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Heatmap ' + AOI)
 # Analyzes
 ###############################################################################
 msg = '* Analyzing ({}/{})'
+(i, threshold) = (1, thr[1])
 for (i, threshold) in enumerate(thr):
     print(msg.format(i+1, len(thr)), end='\r')
-    fPtrn = '{}/*{}*{}-{}.csv'.format(PT_OUT, AOI, str(int(ci*100)), WLA)
+    fPtrn = '{}*{}*{}-{}.csv'.format(PT_OUT, AOI, str(int(ci*100)), WLA)
     fName = sorted(glob(fPtrn))[0]
     df = pd.read_csv(fName, header=None, names=header)
     (ratR, rnm, resR, fitR, svrR, grpP) = [list(df[i].unique()) for i in header[:6]]
+    res = resR[0]
     for res in resR:
         # Filters -------------------------------------------------------------
         (grpF, ratF) = ((df['group'] == 0), (df['ratio'] == ratR[0]))
@@ -66,7 +70,7 @@ for (i, threshold) in enumerate(thr):
         ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
         ax.contour(
                 xi, yi, zi, levels=mapLevels,
-                linewidths=.5, colors='k', alpha=.5,
+                linewidths=.5, colors='k', alpha=0,
             )
         htmp = ax.contourf(
                 xi, yi, zi, levels=mapLevels,
@@ -110,7 +114,7 @@ for (i, threshold) in enumerate(thr):
         ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
         ax.contour(
                 xi, yi, zi, levels=mapLevels,
-                linewidths=.5, colors='k', alpha=.5,
+                linewidths=.5, colors='k', alpha=0,
             )
         htmp = ax.contourf(
                 xi, yi, zi, levels=mapLevels,
