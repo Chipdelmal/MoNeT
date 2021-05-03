@@ -15,7 +15,7 @@ if monet.isNotebook():
     (USR, DRV, AOI) = ('dsk', 'HF', 'HLT')
 else:
     (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.25, .1, .50], True)  # [.05, .10, .50]
+(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.25, .50, .1], True)  # [.05, .10, .50]
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 (thr, REL_STRT, WRM, gIx) = ([.05, .10, .25, .50, .75], 1, 0, 1)
 ###############################################################################
@@ -77,3 +77,5 @@ for qnt in QNT:
     monet.writeListToCSV(fName+'-WOP.csv', wopL)  # , header=header)
     monet.writeListToCSV(fName+'-TTI.csv', mnCuts)  # , header=header)
     monet.writeListToCSV(fName+'-TTO.csv', mxCuts)  # , header=header)
+
+

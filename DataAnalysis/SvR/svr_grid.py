@@ -1,6 +1,7 @@
 
 import decimal
 import numpy as np
+import matplotlib.pyplot as plt
 
 np.arange(0, 1, .025)
 
@@ -30,14 +31,15 @@ def float_to_str(f):
 # Sampling evenly through log-scale
 # https://stackoverflow.com/questions/32784047/numbers-logarithmically-spaced-between-two-floats-in-numpy
 # #############################################################################
-N = 5
-(lo, hi) = (10E-4, .001)
+N = 30
+(lo, hi) = (10E-4, .01)
 yStep = .025
-y1 = np.arange(yStep, 1, yStep)
-x1 = np.geomspace(lo-10E-7/10, hi, num=N)
-stry = ', '.join([float_to_str(i)[:9] for i in x1])
+y1 = np.arange(0, 1, yStep)
+x1 = np.geomspace(1E-8, hi, num=N)
+stry = ', '.join([float_to_str(i)[:12] for i in x1])
 'c(0.0, {})'.format(stry)
 
+plt.plot(x1, y1)
 
 (929880/60)
 15498*100

@@ -19,33 +19,37 @@ if monet.isNotebook():
     (USR, DRV, AOI) = ('dsk', 'LF', 'HLT')
 else:
     (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.05, .1, .5], True)
+(FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.1, .25, .5], True)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
-(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[1])
+(thr, REL_STRT, WRM, ci) = ([.05, .10, .25, .50, .75], 1, 0, QNT[0])
 (threshold, lvls, mthd, xSca) = (thr[1], 10, 'linear', 'log')
-mapLevels = np.arange(0, 4*365, 365/6)
-mapLevelsB = np.arange(0, 4*365, 4*365)
-xRan = (1E-6, 1E-1)
-fNScaler = 100000000
+mapLevels = np.arange(0, 4*365, 365/4)
+mapLevelsB = np.arange(0, 4*365, 365/2)
+xRan = (1E-8, 1E-2)
+fNScaler = 1000000000
 ###############################################################################
 (PT_ROT, PT_IMG, PT_DTA, PT_PRE, PT_OUT) = aux.selectPath(USR, DRV)
 header = ['ratio', 'releases', 'resistance', 'fitness', 'sv', 'group']
 header.extend(thr)
 drvPars = drv.driveSelector(DRV)
 monet.makeFolder(PT_IMG)
-(ngdx, ngdy) = (1000, 1000)
+(ngdx, ngdy) = (2000, 2000)
 tS = datetime.now()
 fun.printExperimentHead(PT_ROT, PT_IMG, PT_PRE, tS, 'Heatmap ' + AOI)
 ###############################################################################
 # Analyzes
 ###############################################################################
 msg = '* Analyzing ({}/{})'
+(i, threshold) = (0, .05)
 for (i, threshold) in enumerate(thr):
     print(msg.format(i+1, len(thr)), end='\r')
     fPtrn = '{}/*{}*{}-WOP.csv'.format(PT_OUT, AOI, str(int(ci*100)))
     fName = sorted(glob(fPtrn))[0]
     df = pd.read_csv(fName, header=None, names=header)
-    (ratR, rnm, resR, fitR, svrR, grpP) = [list(df[i].unique()) for i in header[:6]]
+    (ratR, rnm, resR, fitR, svrR, grpP) = [
+        list(df[i].unique()) for i in header[:6]
+    ]
+    res = 0
     for res in resR:
         # Filters -------------------------------------------------------------
         (grpF, ratF) = ((df['group'] == 0), (df['ratio'] == ratR[0]))
@@ -60,15 +64,20 @@ for (i, threshold) in enumerate(thr):
                 np.array([float(i) for i in z])
             )
         (a, b) = ((min(x), max(x)), (min(y), max(y)))
-        (xi, yi) = (np.linspace(a[0], a[1], ngdx), np.linspace(b[0], b[1], ngdy))
+        (xi, yi) = (
+            np.geomspace(xRan[0], a[1], ngdx),
+            # np.asarray(sorted(list(set(x)))),
+            # np.linspace(a[0], a[1], ngdx*100), 
+            np.linspace(b[0], b[1], ngdy)
+        )
         zi = griddata((x, y), z, (xi[None, :], yi[:, None]), method=mthd)
         # Plots Label ---------------------------------------------------------
         fig, ax = plt.subplots()
-        ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
-        ax.contour(
-                xi, yi, zi, levels=mapLevelsB,
-                linewidths=.5, colors='k', alpha=.5,
-            )
+        ax.plot(x, y, 'k.', ms=1, alpha=0, marker='.')
+        # ax.contour(
+        #         xi, yi, zi, levels=mapLevelsB,
+        #         linewidths=.5, colors='k', alpha=.5,
+        #     )
         htmp = ax.contourf(
                 xi, yi, zi, levels=mapLevels,
                 cmap=aux.cmapB, extend='max'
@@ -84,8 +93,8 @@ for (i, threshold) in enumerate(thr):
         ax.set_xticklabels([], minor=True)
         ax.set_yticks(list(set(y)), minor=True)
         ax.set_yticklabels([], minor=True)
-        ax.grid(which='both', axis='y', lw=.1, alpha=0.2, color=(.5, .5, .5))
-        ax.grid(which='minor', axis='x', lw=.1, alpha=0.2, color=(.5, .5, .5))
+        ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(.5, .5, .5))
+        ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(.5, .5, .5))
         # Limits
         plt.xlim(xRan[0], xRan[1])
         plt.ylim(b[0], b[1])
@@ -103,11 +112,11 @@ for (i, threshold) in enumerate(thr):
         plt.close('all')
         # Plots NL-------------------------------------------------------------
         fig, ax = plt.subplots()
-        ax.plot(x, y, 'k.', ms=1, alpha=.25, marker='.')
-        ax.contour(
-                xi, yi, zi, levels=mapLevelsB,
-                linewidths=.5, colors='k', alpha=.5,
-            )
+        ax.plot(x, y, 'k.', ms=1, alpha=0, marker='.')
+        # ax.contour(
+        #         xi, yi, zi, levels=mapLevelsB,
+        #         linewidths=.5, colors='k', alpha=.5,
+        #     )
         htmp = ax.contourf(
                 xi, yi, zi, levels=mapLevels,
                 cmap=aux.cmapB, extend='max'
@@ -116,15 +125,15 @@ for (i, threshold) in enumerate(thr):
         ax.set(xscale=xSca, yscale="linear")
         sz = fig.get_size_inches()[0]
         fig.set_size_inches(sz, 1*sz)
-        # Axes
+        # Axes ----------------------------------------------------------------
         ax.set_xticks(list(set(x)), minor=True)
         ax.set_yticks(list(set(y)), minor=True)
         ax.axes.xaxis.set_ticklabels([])
         ax.axes.yaxis.set_ticklabels([])
         ax.axes.xaxis.set_ticklabels([], minor=True)
         ax.axes.yaxis.set_ticklabels([], minor=True)
-        ax.grid(which='both', axis='y', lw=.1, alpha=0.2, color=(.5, .5, .5))
-        ax.grid(which='minor', axis='x', lw=.1, alpha=0.2, color=(.5, .5, .5))
+        ax.grid(which='both', axis='y', lw=.1, alpha=0.1, color=(.5, .5, .5))
+        ax.grid(which='minor', axis='x', lw=.1, alpha=0.1, color=(.5, .5, .5))
         # Limits
         plt.xlim(xRan[0], xRan[1])
         plt.ylim(b[0], b[1])
@@ -135,3 +144,21 @@ for (i, threshold) in enumerate(thr):
         plt.close('all')
 print('* Analyzed ({}/{})                         '.format(len(thr), len(thr)))
 print(monet.PAD)
+###############################################################################
+# Sanity Check
+###############################################################################
+(i, threshold) = (0, .05)
+fPtrn = '{}/*{}*{}-WOP.csv'.format(PT_OUT, AOI, str(int(ci*100)))
+fName = sorted(glob(fPtrn))[0]
+df = pd.read_csv(fName, header=None, names=header)
+res = 0
+(grpF, ratF) = ((df['group'] == 0), (df['ratio'] == ratR[0]))
+(resF, relF) = ((df['resistance'] == res), df['releases'] == 1)
+filter = grpF & ratF & resF & relF
+dff = df[filter]
+# Data filter -----------------------------------------------------------------
+fltr = [
+    dff['fitness'] == 500000000, 
+    dff[0.05] > 3*365
+]
+dff[[all(i) for i in zip(*fltr)]]['sv']/1e9

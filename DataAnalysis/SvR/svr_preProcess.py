@@ -13,7 +13,7 @@ if monet.isNotebook():
         (USR, DRV, AOI) = ('dsk', 'HF', 'HLT')        
 else:
         (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
-(FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 20)
+(FMT, OVW, MF, JOB) = ('bz2', True, (False, True), 40)
 (SUM, AGG, SPA, REP, SRP) = (True, False, False, True, True)
 ###############################################################################
 # Setting up paths and style
@@ -47,5 +47,5 @@ Parallel(n_jobs=JOB)(
                 outExpNames=outExpNames, fNameFmt='{}/{}-{}_', OVW=OVW,
                 MF=MF, cmpr=FMT, nodeDigits=nodeDigits,
                 SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
-            ) for exIx in range(0, expNum)
-    )
+        ) for exIx in range(0, expNum)
+)
