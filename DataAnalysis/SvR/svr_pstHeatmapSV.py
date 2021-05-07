@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 
 if monet.isNotebook():
-    (USR, DRV, AOI) = ('dsk', 'LF', 'HLT')
+    (USR, DRV, AOI) = ('dsk', 'HF', 'HLT')
 else:
     (USR, DRV, AOI) = (sys.argv[1], sys.argv[2], sys.argv[3])
 (FMT, SKP, MF, QNT, OVW) = ('bz', False, (False, True), [.1, .25, .5], True)
@@ -148,7 +148,7 @@ print(monet.PAD)
 # Sanity Check
 ###############################################################################
 (i, threshold) = (0, .05)
-fPtrn = '{}/*{}*{}-WOP.csv'.format(PT_OUT, AOI, str(int(ci*100)))
+fPtrn = '{}/*{}*{}-TTI.csv'.format(PT_OUT, AOI, str(int(ci*100)))
 fName = sorted(glob(fPtrn))[0]
 df = pd.read_csv(fName, header=None, names=header)
 res = 0
@@ -156,9 +156,22 @@ res = 0
 (resF, relF) = ((df['resistance'] == res), df['releases'] == 1)
 filter = grpF & ratF & resF & relF
 dff = df[filter]
-# Data filter -----------------------------------------------------------------
+# Data filter: gsv threshold --------------------------------------------------
 fltr = [
     dff['fitness'] == 500000000, 
     dff[0.05] > 3*365
 ]
 dff[[all(i) for i in zip(*fltr)]]['sv']/1e9
+# Data filter: tti grid -------------------------------------------------------
+for j in [108, 12689, 10000000]:
+    for i in [0, 500000000, 1000000000]:
+        fltr = [
+            dff['fitness'] == i,
+            dff['sv'] == j
+        ]
+        print(
+            '[gsv {}, fc: {}]: {}'.format(
+                j/1e9, i/1e9,
+                dff[[all(i) for i in zip(*fltr)]][0.05].values[0]
+            )
+        )
